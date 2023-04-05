@@ -1,18 +1,20 @@
-import { parse, print, types } from "recast";
+import { print, types } from "recast";
 import { readFile } from "node:fs/promises";
-import { createRequire } from "module";
 import ts from "typescript";
+import { parse } from "@typescript-eslint/typescript-estree";
 import tsconfig from "./tsconfig.json" assert { type: "json" };
-
-const require = createRequire(import.meta.url);
 
 const ast = parse(
   await readFile("./files/tsconfig.json.ts", { encoding: "utf8" }),
-  { parser: require("recast/parsers/typescript") }
+  {
+    loc: true,
+    range: true,
+  }
 );
 
 const refVikeFramework = parse("import.meta.VIKE_FRAMEWORK", {
-  parser: require("recast/parsers/typescript"),
+  loc: true,
+  range: true,
 });
 
 function looseJsonParse(obj, meta = {}) {
@@ -36,7 +38,7 @@ types.visit(ast, {
         if (
           types.astNodesAreEquivalent(
             path2.value,
-            refVikeFramework.program.body[0].expression
+            refVikeFramework.body[0].expression
           )
         ) {
           console.log("Found import.meta.VIKE_FRAMEWORK");
@@ -47,14 +49,18 @@ types.visit(ast, {
       },
     });
 
-    if (
-      found &&
-      !looseJsonParse(print(path.value.test).code, {
-        VIKE_FRAMEWORK: "solid",
-      })
-    ) {
-      console.log("Deleting block");
-      path.replace();
+    if (found) {
+      if (
+        !looseJsonParse(print(path.value.test).code, {
+          VIKE_FRAMEWORK: "solid",
+        })
+      ) {
+        console.log("Deleting block");
+        // remove the whole `if` block
+        path.replace();
+      } else {
+        // remove the condition and keep the block
+      }
     }
 
     this.traverse(path.get("consequent"));
