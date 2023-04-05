@@ -1,4 +1,4 @@
-export interface UserConfig {
+interface ImportMeta {
   VIKE_FRAMEWORK?: "react" | "solid" | "vue";
   VIKE_DATABASE?: "edgedb" | "prisma" | string;
   VIKE_AUTH?: "authjs" | string;
