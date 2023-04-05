@@ -33,5 +33,7 @@ export default function getTsConfig() {
     console.log("NOT REACT!");
   }
 
+  if (import.meta.VIKE_FRAMEWORK !== "react") console.log("NOT REACT BIS!");
+
   return content;
 }

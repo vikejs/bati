@@ -56,10 +56,15 @@ types.visit(ast, {
         })
       ) {
         console.log("Deleting block");
-        // remove the whole `if` block
+        // remove the whole if-block
         path.replace();
       } else {
-        // remove the condition and keep the block
+        // Replace if-block by its content
+        if (types.namedTypes.BlockStatement.check(path.value.consequent)) {
+          path.replace(...path.value.consequent.body);
+        } else {
+          path.replace(path.value.consequent);
+        }
       }
     }
 
