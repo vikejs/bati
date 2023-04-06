@@ -1,4 +1,4 @@
-interface ImportMeta {
+interface VikeMeta {
   VIKE_FRAMEWORK?: "react" | "solid" | "vue";
   VIKE_DATABASE?: "edgedb" | "prisma" | string;
   VIKE_AUTH?: "authjs" | string;
@@ -8,3 +8,5 @@ interface ImportMeta {
   VIKE_RPC?: "telefunc" | "trpc";
   VIKE_PRERENDERING?: boolean;
 }
+
+interface ImportMeta extends VikeMeta {}

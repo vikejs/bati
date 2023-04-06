@@ -3,7 +3,7 @@ import * as assert from "uvu/assert";
 import { ast, transformAst } from "../src/parse";
 import { assertEquivalentAst } from "../src/testUtils";
 
-function testAst(code: string, meta: Omit<ImportMeta, "url">) {
+function testAst(code: string, meta: VikeMeta) {
   const tree = ast(expected(code));
 
   return transformAst(tree, meta);

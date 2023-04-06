@@ -1,7 +1,7 @@
 import ts, { type CompilerOptions } from "typescript";
 import tsconfig from "../tsconfig.json" assert { type: "json" };
 
-export function evalCondition(obj: string, meta: Omit<ImportMeta, "url"> = {}) {
+export function evalCondition(obj: string, meta: VikeMeta = {}) {
   obj = obj.replaceAll("import.meta", "VIKE_META");
   obj = `var VIKE_META = ${JSON.stringify(meta)};(${obj})`;
 

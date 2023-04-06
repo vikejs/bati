@@ -19,10 +19,7 @@ export const metaAst = lazyfy({
   VIKE_DATABASE: () => simpleAstExpression("import.meta.VIKE_DATABASE"),
 });
 
-export function transformAst(
-  tree: ReturnType<typeof ast>,
-  meta: Omit<ImportMeta, "url">
-) {
+export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
   types.visit(tree, {
     visitIfStatement(path) {
       let found = false;
@@ -70,10 +67,7 @@ export function transformAst(
   return tree;
 }
 
-export function transform(
-  tree: ReturnType<typeof ast>,
-  meta: Omit<ImportMeta, "url">
-) {
+export function transform(tree: ReturnType<typeof ast>, meta: VikeMeta) {
   return prettyPrint(transformAst(tree, meta), {
     tabWidth: 2,
     reuseWhitespace: false,
