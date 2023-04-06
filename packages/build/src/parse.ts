@@ -30,12 +30,7 @@ export function transformAst(
       // traverse condition content to check if `import.meta.VIKE_*` are used
       this.traverse(path.get("test"), {
         visitMemberExpression(path2) {
-          if (
-            types.astNodesAreEquivalent(
-              path2.value,
-              metaAst.VIKE_FRAMEWORK.expression
-            )
-          ) {
+          if (print(path2.value).code.startsWith("import.meta.VIKE_")) {
             found = true;
           }
 
