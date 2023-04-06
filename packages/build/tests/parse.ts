@@ -29,14 +29,7 @@ Suite("===:react", () => {
 
   assertEquivalentAst(
     tree,
-    ast(
-      expected(`
-      content = {
-        ...content,
-        jsx: "react"
-      };
-    `)
-    )
+    ast(expected(`content = { ...content, jsx: "react" };`))
   );
 });
 
@@ -87,6 +80,67 @@ Suite("includes:solid", () => {
   );
 
   assertEquivalentAst(tree, ast(expected(``)));
+});
+
+Suite("if-elseif-else:react", () => {
+  const tree = testAst(
+    `if (import.meta.VIKE_FRAMEWORK === "react") {
+      content = { ...content, jsx: "react" };
+    } else if (import.meta.VIKE_FRAMEWORK === "solid") {
+      content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    } else {
+      console.log('NOTHING TO DO');
+    }`,
+    {
+      VIKE_FRAMEWORK: "react",
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(expected(`content = { ...content, jsx: "react" };`))
+  );
+});
+
+Suite("if-elseif-else:solid", () => {
+  const tree = testAst(
+    `if (import.meta.VIKE_FRAMEWORK === "react") {
+      content = { ...content, jsx: "react" };
+    } else if (import.meta.VIKE_FRAMEWORK === "solid") {
+      content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    } else {
+      console.log('NOTHING TO DO');
+    }`,
+    {
+      VIKE_FRAMEWORK: "solid",
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(
+      expected(
+        `content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`
+      )
+    )
+  );
+});
+
+Suite("if-elseif-else:other", () => {
+  const tree = testAst(
+    `if (import.meta.VIKE_FRAMEWORK === "react") {
+      content = { ...content, jsx: "react" };
+    } else if (import.meta.VIKE_FRAMEWORK === "solid") {
+      content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    } else {
+      console.log('NOTHING TO DO');
+    }`,
+    {
+      VIKE_FRAMEWORK: "vue",
+    }
+  );
+
+  assertEquivalentAst(tree, ast(expected(`console.log('NOTHING TO DO');`)));
 });
 
 Suite("external variable", () => {

@@ -27,6 +27,7 @@ export function transformAst(
     visitIfStatement(path) {
       let found = false;
 
+      // traverse condition content to check if `import.meta.VIKE_*` are used
       this.traverse(path.get("test"), {
         visitMemberExpression(path2) {
           if (
@@ -42,21 +43,32 @@ export function transformAst(
         },
       });
 
-      if (found) {
-        if (!evalCondition(print(path.value.test).code, meta)) {
+      // Ensure deep nodes are handled first
+      this.traverse(path);
+
+      if (!found) return;
+
+      if (!evalCondition(print(path.value.test).code, meta)) {
+        // else-block exists
+        if (path.value.alternate) {
+          // Replace the whole if-block by its else-block content
+          if (types.namedTypes.BlockStatement.check(path.value.alternate)) {
+            path.replace(...path.value.alternate.body);
+          } else {
+            path.replace(path.value.alternate);
+          }
+        } else {
           // remove the whole if-block
           path.replace();
+        }
+      } else {
+        // Replace if-block by its content
+        if (types.namedTypes.BlockStatement.check(path.value.consequent)) {
+          path.replace(...path.value.consequent.body);
         } else {
-          // Replace if-block by its content
-          if (types.namedTypes.BlockStatement.check(path.value.consequent)) {
-            path.replace(...path.value.consequent.body);
-          } else {
-            path.replace(path.value.consequent);
-          }
+          path.replace(path.value.consequent);
         }
       }
-
-      this.traverse(path.get("consequent"));
     },
   });
 

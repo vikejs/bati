@@ -17,23 +17,11 @@ export default function getTsConfig() {
     },
   };
 
-  if (["react"].includes(import.meta.VIKE_FRAMEWORK!)) {
-    content = { ...content, jsx: "react" };
-  }
-
   if (import.meta.VIKE_FRAMEWORK === "react") {
-    console.log("REACT!");
+    content = { ...content, jsx: "react" };
+  } else if (import.meta.VIKE_FRAMEWORK === "solid") {
+    content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
   }
-
-  if (import.meta.VIKE_FRAMEWORK === "solid") {
-    console.log("SOLID!");
-  }
-
-  if (import.meta.VIKE_FRAMEWORK !== "react") {
-    console.log("NOT REACT!");
-  }
-
-  if (import.meta.VIKE_FRAMEWORK !== "react") console.log("NOT REACT BIS!");
 
   return content;
 }
