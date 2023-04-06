@@ -1,6 +1,5 @@
 export { getTitle };
 
-import { isCallable } from "./utils/isCallable";
 import type { ConfigEntries } from "vite-plugin-ssr/types";
 
 function getTitle(pageContext: {
@@ -22,7 +21,7 @@ function getTitle(pageContext: {
     return null;
   }
   const { configDefinedAt } = pageContext.configEntries.title![0]!;
-  if (isCallable(title)) {
+  if (typeof title === "function") {
     const val = title(pageContext);
     if (typeof val === "string") {
       return val;

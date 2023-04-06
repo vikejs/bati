@@ -1,7 +1,3 @@
-export interface PackageJsonOptions {
-  name: string;
-}
-
 export interface SimplePackageJson {
   name: string;
   version: string;
@@ -14,9 +10,9 @@ export interface SimplePackageJson {
   dependencies: Record<string, string>;
 }
 
-export default function getPackageJson(options: PackageJsonOptions) {
+export default function getPackageJson() {
   let content: SimplePackageJson = {
-    name: options.name,
+    name: "PLACEHOLDER",
     version: "0.0.1",
     description: "",
     type: "module",
