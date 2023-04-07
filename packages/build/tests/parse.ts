@@ -1,8 +1,7 @@
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
-import { ast, transform, transformAst } from "../src/parse";
+import { ast, transformAst } from "../src/parse";
 import { assertEquivalentAst } from "../src/testUtils";
-import { prettyPrint } from "recast";
 
 function testAst(code: string, meta: VikeMeta) {
   const tree = ast(expected(code));

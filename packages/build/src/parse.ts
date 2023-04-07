@@ -79,7 +79,7 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
           }
         } else {
           // remove the whole if-block
-          path.replace();
+          path.prune();
         }
       } else {
         // Replace if-block by its content
@@ -102,7 +102,7 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
   );
 
   // Remove unused imports
-  importsToRemove.forEach((node) => node.replace());
+  importsToRemove.forEach((node) => node.prune());
 
   return tree;
 }
