@@ -21,6 +21,10 @@ export const metaAst = lazyfy({
 
 export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
   types.visit(tree, {
+    visitConditionalExpression(path) {
+      // typing definition is all wrong
+      (this as any).visitIfStatement(path);
+    },
     visitIfStatement(path) {
       let found = false;
 

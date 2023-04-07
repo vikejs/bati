@@ -1,14 +1,15 @@
 import ssr from "vite-plugin-ssr/plugin";
-import { type PluginOption, defineConfig } from "vite";
-
-let Framework: Promise<PluginOption> | undefined = undefined;
-
-if (import.meta.VIKE_FRAMEWORK === "react") {
-  Framework = import("@vitejs/plugin-react").then((x) => x.default());
-} else if (import.meta.VIKE_FRAMEWORK === "solid") {
-  Framework = import("vite-plugin-solid").then((x) => x.default());
-}
+import react from "@vitejs/plugin-react";
+import solid from "vite-plugin-solid";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [Framework, ssr()],
+  plugins: [
+    import.meta.VIKE_FRAMEWORK === "react"
+      ? react()
+      : import.meta.VIKE_FRAMEWORK === "solid"
+      ? solid()
+      : null,
+    ssr(),
+  ],
 });

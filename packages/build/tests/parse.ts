@@ -158,4 +158,49 @@ Suite("external variable", () => {
   );
 });
 
+Suite("ternary:react", () => {
+  const tree = testAst(
+    `import.meta.VIKE_FRAMEWORK === "react"
+    ? 1
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? 2
+    : null`,
+    {
+      VIKE_FRAMEWORK: "react",
+    }
+  );
+
+  assertEquivalentAst(tree, ast(expected(`1`)));
+});
+
+Suite("ternary:solid", () => {
+  const tree = testAst(
+    `import.meta.VIKE_FRAMEWORK === "react"
+    ? 1
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? 2
+    : null`,
+    {
+      VIKE_FRAMEWORK: "solid",
+    }
+  );
+
+  assertEquivalentAst(tree, ast(expected(`2`)));
+});
+
+Suite("ternary:other", () => {
+  const tree = testAst(
+    `import.meta.VIKE_FRAMEWORK === "react"
+    ? 1
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? 2
+    : null`,
+    {
+      VIKE_FRAMEWORK: "vue",
+    }
+  );
+
+  assertEquivalentAst(tree, ast(expected(`null`)));
+});
+
 Suite.run();
