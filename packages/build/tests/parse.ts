@@ -278,4 +278,12 @@ Suite("import cleanup:other", () => {
   assertEquivalentAst(tree, ast(`const framework = null;`));
 });
 
+Suite("remove VIKE_REMOVE", () => {
+  const tree = transformAst(ast(`const a = [import.meta.VIKE_REMOVE, 'a']`), {
+    VIKE_FRAMEWORK: "vue",
+  });
+
+  assertEquivalentAst(tree, ast(`const a = ['a']`));
+});
+
 Suite.run();

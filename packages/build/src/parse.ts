@@ -28,6 +28,22 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
 
   types.visit(tree, {
     visitIdentifier(path) {
+      if (path.value.name === "VIKE_REMOVE") {
+        if (!path.parent) {
+          throw new Error("TODO");
+        }
+        // Currently supported:
+        //   - Removing an element of a statically declared array
+        if (
+          !types.namedTypes.ArrayExpression.check(path.parent?.parent?.value)
+        ) {
+          throw new Error("TODO: Not supported");
+        }
+        path.parent.prune();
+        this.traverse(path);
+        return;
+      }
+
       if (
         types.namedTypes.ImportDefaultSpecifier.check(path.parent.value) ||
         types.namedTypes.ImportSpecifier.check(path.parent.value)

@@ -9,7 +9,7 @@ export default defineConfig({
       ? react()
       : import.meta.VIKE_FRAMEWORK === "solid"
       ? solid()
-      : null,
+      : import.meta.VIKE_REMOVE,
     ssr(),
   ],
 });

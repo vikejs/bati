@@ -1,4 +1,5 @@
 interface VikeMeta {
+  VIKE_REMOVE?: undefined;
   VIKE_FRAMEWORK?: "react" | "solid" | "vue";
   VIKE_DATABASE?: "edgedb" | "prisma" | string;
   VIKE_AUTH?: "authjs" | string;
