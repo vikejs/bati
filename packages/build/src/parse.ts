@@ -20,7 +20,31 @@ export const metaAst = lazyfy({
 });
 
 export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
+  const imports = new Map<
+    string,
+    InstanceType<typeof types.NodePath<types.namedTypes.ImportDeclaration>>
+  >();
+  const identifiers = new Set<string>();
+
   types.visit(tree, {
+    visitIdentifier(path) {
+      if (
+        types.namedTypes.ImportDefaultSpecifier.check(path.parent.value) ||
+        types.namedTypes.ImportSpecifier.check(path.parent.value)
+      ) {
+        let importParent = path.parent;
+        while (
+          importParent.value &&
+          importParent.value.type !== "ImportDeclaration"
+        ) {
+          importParent = importParent.parent;
+        }
+        imports.set(path.value.name, importParent);
+      } else {
+        identifiers.add(path.value.name);
+      }
+      this.traverse(path);
+    },
     visitConditionalExpression(path) {
       // typing definition is all wrong
       (this as any).visitIfStatement(path);
@@ -39,10 +63,10 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
         },
       });
 
-      // Ensure deep nodes are handled first
-      this.traverse(path);
-
-      if (!found) return;
+      if (!found) {
+        this.traverse(path);
+        return;
+      }
 
       if (!evalCondition(print(path.value.test).code, meta)) {
         // else-block exists
@@ -65,8 +89,20 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
           path.replace(path.value.consequent);
         }
       }
+
+      // path was modified, so scan the parent again if possible
+      this.traverse(path.parent ? path.parent : path);
     },
   });
+
+  const importsToRemove = new Set(
+    Array.from(imports.entries())
+      .filter(([name]) => !identifiers.has(name))
+      .map(([, node]) => node)
+  );
+
+  // Remove unused imports
+  importsToRemove.forEach((node) => node.replace());
 
   return tree;
 }

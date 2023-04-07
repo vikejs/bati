@@ -1,7 +1,8 @@
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
-import { ast, transformAst } from "../src/parse";
+import { ast, transform, transformAst } from "../src/parse";
 import { assertEquivalentAst } from "../src/testUtils";
+import { prettyPrint } from "recast";
 
 function testAst(code: string, meta: VikeMeta) {
   const tree = ast(expected(code));
@@ -201,6 +202,81 @@ Suite("ternary:other", () => {
   );
 
   assertEquivalentAst(tree, ast(expected(`null`)));
+});
+
+Suite("import cleanup:react", () => {
+  const tree = transformAst(
+    ast(
+      `import react from 'react';
+    import { solid } from 'solid';
+    
+    const framework = import.meta.VIKE_FRAMEWORK === "react"
+    ? react()
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? solid()
+    : null;
+    `
+    ),
+    {
+      VIKE_FRAMEWORK: "react",
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(
+      `import react from 'react';
+    const framework = react();`
+    )
+  );
+});
+
+Suite("import cleanup:solid", () => {
+  const tree = transformAst(
+    ast(
+      `import react from 'react';
+    import { solid } from 'solid';
+    
+    const framework = import.meta.VIKE_FRAMEWORK === "react"
+    ? react()
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? solid()
+    : null;
+    `
+    ),
+    {
+      VIKE_FRAMEWORK: "solid",
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(
+      `import { solid } from 'solid';
+    const framework = solid();`
+    )
+  );
+});
+
+Suite("import cleanup:other", () => {
+  const tree = transformAst(
+    ast(
+      `import react from 'react';
+    import { solid } from 'solid';
+    
+    const framework = import.meta.VIKE_FRAMEWORK === "react"
+    ? react()
+    : import.meta.VIKE_FRAMEWORK === "solid"
+    ? solid()
+    : null;
+    `
+    ),
+    {
+      VIKE_FRAMEWORK: "vue",
+    }
+  );
+
+  assertEquivalentAst(tree, ast(`const framework = null;`));
 });
 
 Suite.run();
