@@ -18,9 +18,7 @@ type MapGetter<T extends Record<string, () => any>> = {
   [K in keyof T]: ReturnType<T[K]>;
 };
 
-export function lazyfy<T extends Record<string, () => any>>(
-  obj: T
-): MapGetter<T> {
+export function lazyfy<T extends Record<string, () => any>>(obj: T): MapGetter<T> {
   const ret = {};
   for (const [k, getter] of Object.entries(obj)) {
     lazyGetter(ret, k, getter);

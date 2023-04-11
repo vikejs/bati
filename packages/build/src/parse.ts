@@ -20,10 +20,7 @@ export const metaAst = lazyfy({
 });
 
 export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
-  const imports = new Map<
-    string,
-    InstanceType<typeof types.NodePath<types.namedTypes.ImportDeclaration>>
-  >();
+  const imports = new Map<string, InstanceType<typeof types.NodePath<types.namedTypes.ImportDeclaration>>>();
   const identifiers = new Set<string>();
 
   types.visit(tree, {
@@ -34,9 +31,7 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
         }
         // Currently supported:
         //   - Removing an element of a statically declared array
-        if (
-          !types.namedTypes.ArrayExpression.check(path.parent?.parent?.value)
-        ) {
+        if (!types.namedTypes.ArrayExpression.check(path.parent?.parent?.value)) {
           throw new Error("TODO: Not supported");
         }
         path.parent.prune();
@@ -49,10 +44,7 @@ export function transformAst(tree: ReturnType<typeof ast>, meta: VikeMeta) {
         types.namedTypes.ImportSpecifier.check(path.parent.value)
       ) {
         let importParent = path.parent;
-        while (
-          importParent.value &&
-          importParent.value.type !== "ImportDeclaration"
-        ) {
+        while (importParent.value && importParent.value.type !== "ImportDeclaration") {
           importParent = importParent.parent;
         }
         imports.set(path.value.name, importParent);

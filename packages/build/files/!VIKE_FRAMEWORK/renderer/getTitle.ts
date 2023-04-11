@@ -30,7 +30,5 @@ function getTitle(pageContext: {
       throw new Error(configDefinedAt + " should return a string");
     }
   }
-  throw new Error(
-    configDefinedAt + " should be a string or a function returning a string"
-  );
+  throw new Error(configDefinedAt + " should be a string or a function returning a string");
 }

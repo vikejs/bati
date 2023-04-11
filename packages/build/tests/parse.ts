@@ -27,10 +27,7 @@ Suite("===:react", () => {
     }
   );
 
-  assertEquivalentAst(
-    tree,
-    ast(expected(`content = { ...content, jsx: "react" };`))
-  );
+  assertEquivalentAst(tree, ast(expected(`content = { ...content, jsx: "react" };`)));
 });
 
 Suite("===:solid", () => {
@@ -96,10 +93,7 @@ Suite("if-elseif-else:react", () => {
     }
   );
 
-  assertEquivalentAst(
-    tree,
-    ast(expected(`content = { ...content, jsx: "react" };`))
-  );
+  assertEquivalentAst(tree, ast(expected(`content = { ...content, jsx: "react" };`)));
 });
 
 Suite("if-elseif-else:solid", () => {
@@ -116,14 +110,7 @@ Suite("if-elseif-else:solid", () => {
     }
   );
 
-  assertEquivalentAst(
-    tree,
-    ast(
-      expected(
-        `content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`
-      )
-    )
-  );
+  assertEquivalentAst(tree, ast(expected(`content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`)));
 });
 
 Suite("if-elseif-else:other", () => {

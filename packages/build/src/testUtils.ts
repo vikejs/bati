@@ -2,10 +2,7 @@ import { ok, equal } from "uvu/assert";
 import { prettyPrint, types } from "recast";
 import type { ast } from "./parse";
 
-export function assertEquivalentAst(
-  ast1: ReturnType<typeof ast>,
-  ast2: ReturnType<typeof ast>
-) {
+export function assertEquivalentAst(ast1: ReturnType<typeof ast>, ast2: ReturnType<typeof ast>) {
   if (types.astNodesAreEquivalent(ast1, ast2)) {
     return ok(true);
   } else {

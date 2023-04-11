@@ -12,7 +12,6 @@ const main = defineCommand({
     dist: {
       type: "positional",
       description: "Dist folder",
-      valueHint: "./dist",
       required: true,
     },
   },

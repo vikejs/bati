@@ -1,11 +1,4 @@
-import {
-  readFile,
-  opendir,
-  copyFile,
-  mkdir,
-  writeFile,
-  unlink,
-} from "node:fs/promises";
+import { readFile, opendir, copyFile, mkdir, writeFile, unlink } from "node:fs/promises";
 import path from "node:path";
 import { ast, transform } from "./parse";
 import { fileURLToPath } from "node:url";
@@ -29,10 +22,7 @@ function shouldWalkDir(dirname: string, meta: VikeMeta) {
 
 function toDist(filepath: string, dist: string) {
   const split = filepath.split(path.sep).filter((p) => !p.includes("VIKE_"));
-  split[split.length - 1] = split[split.length - 1].replace(
-    /^\$(.*)\.ts$/,
-    "$1"
-  );
+  split[split.length - 1] = split[split.length - 1].replace(/^\$(.*)\.ts$/, "$1");
   return split.join(path.sep).replace(__files, dist);
 }
 
@@ -63,10 +53,7 @@ async function* walk(dir: string, meta: VikeMeta): AsyncGenerator<string> {
   }
 }
 
-function transformFileAfterExec(
-  filepath: string,
-  fileContent: unknown
-): string {
+function transformFileAfterExec(filepath: string, fileContent: unknown): string {
   const parsed = path.parse(filepath);
   switch (parsed.ext) {
     case ".json":
@@ -96,9 +83,7 @@ export default async function main(options: { dist: string }, meta: VikeMeta) {
         // create a temp file, import it, and exec its default import
         const tmpfile = path.join(
           parsed.dir,
-          `${parsed.name}.${new Date().toISOString().replaceAll(":", "-")}${
-            parsed.ext
-          }`
+          `${parsed.name}.${new Date().toISOString().replaceAll(":", "-")}${parsed.ext}`
         );
 
         let fileContent: string | null = null;
