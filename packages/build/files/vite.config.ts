@@ -5,11 +5,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
-    import.meta.VIKE_FRAMEWORK === "react"
-      ? react()
-      : import.meta.VIKE_FRAMEWORK === "solid"
-      ? solid()
-      : import.meta.VIKE_REMOVE,
+    ...(import.meta.VIKE_FRAMEWORK === "react" ? [react()] : import.meta.VIKE_FRAMEWORK === "solid" ? [solid()] : []),
     ssr(),
   ],
 });
