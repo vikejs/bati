@@ -7,15 +7,14 @@ import {
   unlink,
 } from "node:fs/promises";
 import path from "node:path";
-import { ast, transform } from "./src/parse";
+import { ast, transform } from "./parse";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const __files = path.join(__dirname, "files");
-const __dist = path.join(__dirname, "dist");
+const __files = path.resolve(__dirname, "..", "files");
 
-export function evalDirCondition(obj: string, meta: VikeMeta) {
+function evalDirCondition(obj: string, meta: VikeMeta) {
   obj = obj.replaceAll("VIKE_", "VIKE_META.VIKE_");
   obj = `var VIKE_META = ${JSON.stringify(meta)};(${obj})`;
 
@@ -28,13 +27,13 @@ function shouldWalkDir(dirname: string, meta: VikeMeta) {
   return evalDirCondition(dirname, meta);
 }
 
-function toDist(filepath: string) {
+function toDist(filepath: string, dist: string) {
   const split = filepath.split(path.sep).filter((p) => !p.includes("VIKE_"));
   split[split.length - 1] = split[split.length - 1].replace(
     /^\$(.*)\.ts$/,
     "$1"
   );
-  return split.join(path.sep).replace(__files, __dist);
+  return split.join(path.sep).replace(__files, dist);
 }
 
 async function safeCopyFile(source: string, destination: string) {
@@ -64,8 +63,22 @@ async function* walk(dir: string, meta: VikeMeta): AsyncGenerator<string> {
   }
 }
 
-async function main(meta: VikeMeta) {
+function transformFileAfterExec(
+  filepath: string,
+  fileContent: unknown
+): string {
+  const parsed = path.parse(filepath);
+  switch (parsed.ext) {
+    case ".json":
+      return JSON.stringify(fileContent, null, 2);
+    default:
+      throw new Error(`Unsupported extension ${parsed.ext} (${filepath})`);
+  }
+}
+
+export default async function main(options: { dist: string }, meta: VikeMeta) {
   for await (const p of walk(__files, meta)) {
+    const target = toDist(p, options.dist);
     if (p.match(/\.[tj]sx?$/)) {
       // transform
       let code: string;
@@ -95,25 +108,20 @@ async function main(meta: VikeMeta) {
 
           const f = await import(tmpfile);
 
-          fileContent = await f.default();
-
-          // TODO: stringify based on extension?
-          fileContent = JSON.stringify(fileContent, null, 2);
+          fileContent = transformFileAfterExec(target, await f.default());
         } finally {
           await unlink(tmpfile);
         }
 
         if (fileContent !== null) {
-          await safeWriteFile(toDist(p), fileContent);
+          await safeWriteFile(target, fileContent);
         }
       } else {
-        await safeWriteFile(toDist(p), code);
+        await safeWriteFile(target, code);
       }
     } else {
       // simple copy
-      await safeCopyFile(p, toDist(p));
+      await safeCopyFile(p, target);
     }
   }
 }
-
-await main({});

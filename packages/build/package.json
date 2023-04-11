@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "test": "tsx node_modules/uvu/bin.js tests"
+    "test": "tsx node_modules/uvu/bin.js tests",
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
@@ -13,12 +14,28 @@
     "@types/node": "^16.0.0",
     "@vitejs/plugin-react": "^3.1.0",
     "solid-js": "^1.7.2",
+    "tsup": "^6.7.0",
     "tsx": "^3.12.6",
     "uvu": "^0.5.6",
     "vite": "^4.2.1",
     "vite-plugin-solid": "^2.7.0",
     "vite-plugin-ssr": "^0.4.111"
   },
+  "exports": {
+    ".": "./dist/exec.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/exec.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist/",
+    "files/",
+    "global.d.ts"
+  ],
   "dependencies": {
     "recast": "^0.22.0",
     "typescript": "^5.0.3"
