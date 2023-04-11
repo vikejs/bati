@@ -11,7 +11,7 @@ export interface SimplePackageJson {
 }
 
 export default function getPackageJson() {
-  let content: SimplePackageJson = {
+  const content: SimplePackageJson = {
     name: "PLACEHOLDER",
     version: "0.0.1",
     description: "",

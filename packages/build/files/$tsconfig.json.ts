@@ -1,5 +1,5 @@
 export default function getTsConfig() {
-  let content: Record<string, any> = {
+  let content: Record<string, unknown> = {
     compilerOptions: {
       strict: true,
       allowJs: true,
