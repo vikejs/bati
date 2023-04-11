@@ -1,12 +1,12 @@
-import { print, prettyPrint, types } from "recast";
-import { parse } from "@typescript-eslint/typescript-estree";
+import recast, { print, prettyPrint, types } from "recast";
 import { lazyfy } from "./utils";
 import { evalCondition } from "./eval";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 
 export function ast(code: string) {
-  return parse(code, {
-    loc: true,
-    range: true,
+  return recast.parse(code, {
+    parser: require("recast/parsers/typescript"),
   });
 }
 
