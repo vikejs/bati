@@ -21,6 +21,12 @@
     "vite-plugin-solid": "^2.7.0",
     "vite-plugin-ssr": "^0.4.111"
   },
+  "dependencies": {
+    "recast": "^0.22.0",
+    "typescript": "^5.0.3"
+  },
+  "main": "./dist/exec.js",
+  "module": "./dist/exec.js",
   "exports": {
     ".": "./dist/exec.js"
   },
@@ -35,9 +41,5 @@
     "dist/",
     "files/",
     "global.d.ts"
-  ],
-  "dependencies": {
-    "recast": "^0.22.0",
-    "typescript": "^5.0.3"
-  }
+  ]
 }
