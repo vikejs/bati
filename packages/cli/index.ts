@@ -14,13 +14,20 @@ const main = defineCommand({
       description: "Dist folder",
       required: true,
     },
+    framework: {
+      type: "string",
+      description: "UI framework",
+      required: false,
+    },
   },
   run({ args }) {
     exec(
       {
         dist: args.dist,
       },
-      {}
+      {
+        VIKE_FRAMEWORK: args.framework,
+      }
     );
   },
 });

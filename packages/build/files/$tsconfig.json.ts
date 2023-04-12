@@ -1,5 +1,6 @@
 export default function getTsConfig() {
-  let content: Record<string, unknown> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const content: Record<string, any> = {
     compilerOptions: {
       strict: true,
       allowJs: true,
@@ -18,9 +19,11 @@ export default function getTsConfig() {
   };
 
   if (import.meta.VIKE_FRAMEWORK === "react") {
-    content = { ...content, jsx: "react" };
+    content.compilerOptions.jsx = "react";
   } else if (import.meta.VIKE_FRAMEWORK === "solid") {
-    content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    content.compilerOptions.jsx = "preserve";
+    content.compilerOptions.jsxImportSource = "solid-js";
+    content.compilerOptions.types = ["solide/types"];
   }
 
   return content;

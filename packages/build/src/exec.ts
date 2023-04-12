@@ -66,6 +66,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
 
 export default async function main(options: { dist: string }, meta: VikeMeta) {
   for await (const p of walk(__files, meta)) {
+    // TODO: check for files that would end at the same place
     const target = toDist(p, options.dist);
     if (p.match(/\.[tj]sx?$/)) {
       // transform

@@ -6,7 +6,7 @@ const require = createRequire(import.meta.url);
 
 export function ast(code: string) {
   return recast.parse(code, {
-    parser: require("recast/parsers/typescript"),
+    parser: require("recast/parsers/babel-ts"),
   });
 }
 

@@ -27,6 +27,7 @@ importers:
       '@vitejs/plugin-react': ^3.1.0
       recast: ^0.22.0
       solid-js: ^1.7.2
+      solide: ^0.0.1
       tsup: ^6.7.0
       tsx: ^3.12.6
       typescript: ^5.0.3
@@ -42,6 +43,7 @@ importers:
       '@types/node': 16.18.23
       '@vitejs/plugin-react': 3.1.0_vite@4.2.1
       solid-js: 1.7.2
+      solide: 0.0.1_mxi3sqdxyklhnsvmwqe7jvnbve
       tsup: 6.7.0_typescript@5.0.3
       tsx: 3.12.6
       uvu: 0.5.6
@@ -64,7 +66,7 @@ importers:
       tsup: 6.7.0_typescript@5.0.3
       typescript: 5.0.3
 
-  packages/create-base-app:
+  packages/create-batijs-app:
     specifiers:
       '@batijs/cli': workspace:*
     dependencies:
@@ -433,6 +435,10 @@ packages:
     resolution: {integrity: sha512-JatRCkrFxss1iwRrFlnY3yPFyD2yGWIeFprMH++TmZ+wqnRlwfN0ECDJea0EyagSGXlb2CUxFIH3dBMBiV05sw==}
     dev: true
 
+  /@brillout/import/0.2.3:
+    resolution: {integrity: sha512-1T8WlD75eeFSMrptGy8jiLHmfHgMmSjWvLOIUvHmSVZt+6k0eQqYUoK4KbmE4T9pVLIfxvZSOm2D68VEqKRHRw==}
+    dev: true
+
   /@brillout/json-serializer/0.5.3:
     resolution: {integrity: sha512-IxlOMD5gOM0WfFGdeR98jHKiC82Ad1tUnSjvLS5jnRkfMEKBI+YzHA32Umw8W3Ccp5N4fNEX229BW6RaRpxRWQ==}
     dev: true
@@ -441,6 +447,12 @@ packages:
     resolution: {integrity: sha512-vHBj9ORBA022OZM+HQhDC21toUb0N6KgzeUw5BnLvWflXE39h8w4onrOpddVFz73XW4/pl5EBnqAloxq+OTk/A==}
     dependencies:
       '@brillout/import': 0.2.2
+    dev: true
+
+  /@brillout/vite-plugin-import-build/0.2.14:
+    resolution: {integrity: sha512-4iWC0nYBRh8PO95oU4/e8815eSAH2ZBgCggSfOqyeSnRIfnNwAZFhp2Dwui1xV6KVdXx/fcWp2UQUUl7q+I5pQ==}
+    dependencies:
+      '@brillout/import': 0.2.3
     dev: true
 
   /@esbuild-kit/cjs-loader/2.4.2:
@@ -2468,6 +2480,27 @@ packages:
       solid-js: 1.7.2
     dev: true
 
+  /solide/0.0.1_mxi3sqdxyklhnsvmwqe7jvnbve:
+    resolution: {integrity: sha512-LGNgaW1VuazIukfQ8A613GNrNLk5fPbErGDL8tz7W3NX0vOuvNU4LQitk2DU21DEPQJt2dlMXLRYIbemSjxcAA==}
+    hasBin: true
+    peerDependencies:
+      solid-js: ^1.7.1
+    dependencies:
+      solid-js: 1.7.2
+      vite: 4.2.1_@types+node@16.18.23
+      vite-plugin-solid: 2.7.0_solid-js@1.7.2+vite@4.2.1
+      vite-plugin-ssr: 0.4.112-draft.29885_vite@4.2.1
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - react-streaming
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -2772,6 +2805,30 @@ packages:
       '@brillout/import': 0.2.2
       '@brillout/json-serializer': 0.5.3
       '@brillout/vite-plugin-import-build': 0.2.13
+      acorn: 8.8.2
+      cac: 6.7.14
+      es-module-lexer: 0.10.5
+      esbuild: 0.17.15
+      fast-glob: 3.2.12
+      picocolors: 1.0.0
+      sirv: 2.0.2
+      vite: 4.2.1_@types+node@16.18.23
+    dev: true
+
+  /vite-plugin-ssr/0.4.112-draft.29885_vite@4.2.1:
+    resolution: {integrity: sha512-rpVGWq0Kd1XQ6kW+ctbqA3oZyrjL8C0d3Uj35s5B39ckBKzem+mqJu0CLtfiMdhP95YBs80nVt6ddqFoX9OxZw==}
+    engines: {node: '>=12.19.0'}
+    hasBin: true
+    peerDependencies:
+      react-streaming: '>=0.3.5'
+      vite: '>=3.0.0'
+    peerDependenciesMeta:
+      react-streaming:
+        optional: true
+    dependencies:
+      '@brillout/import': 0.2.3
+      '@brillout/json-serializer': 0.5.3
+      '@brillout/vite-plugin-import-build': 0.2.14
       acorn: 8.8.2
       cac: 6.7.14
       es-module-lexer: 0.10.5

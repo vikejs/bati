@@ -43,11 +43,19 @@ export default function getPackageJson() {
       "@types/react-dom": "^18.0.0",
     };
   } else if (import.meta.VIKE_FRAMEWORK === "solid") {
-    content.dependencies = {
-      "solid-js": "^1.0.0",
+    content.scripts = {
+      dev: "solide dev",
+      build: "solide build",
+      preview: "solide preview",
     };
     content.devDependencies = {
-      "vite-plugin-solid": "^2.0.0",
+      typescript: "^5.0.0",
+    };
+    content.dependencies = {
+      "cross-fetch": "^3.0.0",
+      "node-fetch": "^3.0.0",
+      "solid-js": "^1.7.0",
+      solide: "latest",
     };
   }
 
