@@ -1,11 +1,12 @@
 {
   "name": "base",
   "private": true,
-  "version": "0.0.0-draft.04971",
+  "version": "0.0.0",
   "description": "@base monorepo",
   "scripts": {
     "draft": "release-me draft",
-    "release": "release-me patch"
+    "release": "release-me patch",
+    "build": "pnpm run -r build"
   },
   "keywords": [],
   "author": "",
