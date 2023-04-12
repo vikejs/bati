@@ -1,24 +1,9 @@
-import ts from "typescript";
+import { transpileTs } from "./transpile-ts";
 
-export function evalCondition(obj: string, meta: VikeMeta = {}) {
-  obj = obj.replaceAll("import.meta", "VIKE_META");
-  obj = `var VIKE_META = ${JSON.stringify(meta)};(${obj})`;
+export function evalCondition(code: string, meta: VikeMeta = {}) {
+  code = code.replaceAll("import.meta", "VIKE_META");
+  code = `var VIKE_META = ${JSON.stringify(meta)};(${code})`;
+  code = transpileTs(code);
 
-  obj = ts.transpile(obj, {
-    strict: true,
-    allowJs: true,
-    checkJs: true,
-    esModuleInterop: true,
-    forceConsistentCasingInFileNames: true,
-    resolveJsonModule: true,
-    skipLibCheck: true,
-    sourceMap: false,
-    module: ts.ModuleKind.ESNext,
-    moduleResolution: ts.ModuleResolutionKind.Node10,
-    target: ts.ScriptTarget.ES2020,
-    lib: ["DOM", "DOM.Iterable", "ESNext"],
-    types: ["@types/node"],
-  });
-
-  return (0, eval)(obj);
+  return (0, eval)(code);
 }

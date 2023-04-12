@@ -1,3 +1,0 @@
-# @batijs/create-app
-
-WIP

@@ -2,6 +2,7 @@ import { readFile, opendir, copyFile, mkdir, writeFile, unlink } from "node:fs/p
 import path from "node:path";
 import { ast, transform } from "./parse";
 import { fileURLToPath } from "node:url";
+import { transpileTs } from "./transpile-ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,15 +82,12 @@ export default async function main(options: { dist: string }, meta: VikeMeta) {
 
       if (parsed.name.startsWith("$")) {
         // create a temp file, import it, and exec its default import
-        const tmpfile = path.join(
-          parsed.dir,
-          `${parsed.name}.${new Date().toISOString().replaceAll(":", "-")}${parsed.ext}`
-        );
+        const tmpfile = path.join(parsed.dir, `${parsed.name}.${new Date().toISOString().replaceAll(":", "-")}.js`);
 
         let fileContent: string | null = null;
 
         try {
-          await writeFile(tmpfile, code, { encoding: "utf-8" });
+          await writeFile(tmpfile, parsed.ext === ".ts" ? transpileTs(code) : code, { encoding: "utf-8" });
 
           const f = await import(tmpfile);
 
