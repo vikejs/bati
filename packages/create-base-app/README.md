@@ -1,3 +1,3 @@
-# @base/create-app
+# @batijs/create-app
 
 WIP

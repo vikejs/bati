@@ -1,5 +1,5 @@
 import { defineCommand, runMain, type CommandDef } from "citty";
-import exec from "@base/build";
+import exec from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
 
 const main = defineCommand({

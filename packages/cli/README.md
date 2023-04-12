@@ -1,3 +1,3 @@
-# @base/cli
+# @batijs/cli
 
 WIP

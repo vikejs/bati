@@ -1,1 +1,1 @@
-import "@base/cli";
+import "@batijs/cli";

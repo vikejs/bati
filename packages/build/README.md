@@ -1,3 +1,3 @@
-# @base/build
+# @batijs/build
 
 WIP
