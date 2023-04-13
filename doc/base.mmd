@@ -4,10 +4,16 @@
   }
 }%%
 
-flowchart LR
+flowchart TB
     Base_Solide -- low level doc --> Vike_doc
     Base_Restack -- low level doc --> Vike_doc
-    Base_bati_CLI .-> Bati
+    Base_bati_CLI -. CLI .-> Bati
+    Bati -.-> Starters_solid
+    Bati -.-> Starters_react
+    Bati -.-> Starters_vue
+    Vike_create -. uses? .-> Bati
+
+    Starters -- uses --> Concepts
 
     Bati("Bâti")
 
@@ -27,8 +33,29 @@ flowchart LR
 
     subgraph Vike
         Vike_lib("Vike")
-        Vike_boilerplates("Boilerplates")
+        Vike_boilerplates("
+            Boilerplates
+            <small style='opacity: 0.5'>What do we do with those?</small>
+        ")
         Vike_doc("Documentation")
         Vike_examples("Examples")
+        Vike_create("create-vps")
+    end
+
+    subgraph Starters
+        text("
+            How do we use Bâti here?
+        ")
+        style text fill:transparent,stroke-width:0px
+        Starters_solid("vike-solid")
+        Starters_react("vike-react")
+        Starters_vue("vike-vue")
+    end
+
+    subgraph Concepts
+        direction TB
+        Concepts_auth("Auth")
+        Concepts_db("DB")
+        Concepts_etc("etc...")
     end
 
