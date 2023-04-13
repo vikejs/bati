@@ -1,1 +1,28 @@
+flowchart LR
+    Base_Solide -- low level doc --> Vike_doc
+    Base_Restack -- low level doc --> Vike_doc
+    Base_bati_CLI .-> Bati
+
+    Bati("Bâti")
+
+    subgraph Base
+        Base_bati_CLI("
+            Bati CLI generator
+        ")
+        Base_Solide("
+            Solide
+            <small style='opacity: 0.5'>High level doc</small>
+        ")
+        Base_Restack("
+            Restack
+            <small style='opacity: 0.5'>High level doc</small>
+        ")
+    end
+
+    subgraph Vike
+        Vike_lib("Vike")
+        Vike_boilerplates("Boilerplates")
+        Vike_doc("Documentation")
+        Vike_examples("Examples")
+    end
 
