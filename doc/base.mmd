@@ -14,9 +14,12 @@ flowchart TB
     Vike_boilerplates == becomes ==> Boilerplates
     Vike_create -- uses --> Concepts
     Boilerplates -- uses --> Concepts
-    Integrations -- uses --> Concepts
+    Integrations --> Final
+    Boilerplates --> Final
 
-    Bati("Bâti")
+    Bati["Bâti"]
+
+    Final(("User app"))
 
     subgraph Base
         Base_bati_CLI("
