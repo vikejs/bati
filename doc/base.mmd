@@ -5,58 +5,60 @@
 }%%
 
 flowchart TB
-    Base_Solide -- low level doc --> Vike_doc
-    Base_Restack -- low level doc --> Vike_doc
-    Base_generic -- low level doc --> Vike_doc
-    Base_bati_CLI -. CLI .-> Bati
-    Bati -.-> Boilerplates
-    Bati -.-> Integrations
-    Vike_boilerplates == becomes ==> Boilerplates
-    Vike_create -- uses --> Concepts
-    Boilerplates -- uses --> Concepts
-    Integrations --> Final
-    Boilerplates --> Final
+    Base_doc_frontend -- more/complete frontend docs --> Vike_doc
+    Base_boilerplate -. generates CLI command .-> Bati_gen
+    Bati -- uses --> Concepts
 
-    Bati["Bâti"]
-
-    Final(("User app"))
-
-    subgraph Base
-        Base_bati_CLI("
-            Bati CLI generator
+    subgraph Base["Base (full-stack &quot;framework&quot;)"]
+        Base_boilerplate("
+            Boilerplate Assembler UI
+        ")
+        Base_doc_fullstack("
+            Backend docs
+        ")
+        Base_doc_frontend("
+            Frontend docs
+            <small style='opacity: 0.5'>Only basics and high-level</small>
         ")
         Base_Solide("
-            Solide
-            <small style='opacity: 0.5'>High level doc</small>
+            <s>Solide</s>
+            <small style='opacity: 0.5'>Becomes Base</small>
         ")
         Base_Restack("
-            Restack
-            <small style='opacity: 0.5'>High level doc</small>
-        ")
-        Base_generic("
-            Or generic doc?
-            <small style='opacity: 0.5'>High level doc</small>
+            <s>Restack</s>
+            <small style='opacity: 0.5'>Becomes Base</small>
         ")
     end
 
-    subgraph Vike
-        Vike_lib("Vike")
-        Vike_boilerplates("Boilerplates")
-        Vike_doc("Documentation")
-        Vike_create("create-vps")
-        Vike_examples("Examples")
+    subgraph Vike["Vike (frontend framework)"]
+        Vike_doc("Docs")
+        Vike_integrations("
+           vike-*
+           <small style='opacity: 0.5'>Integration for React/Vue/Solid/...</small>
+        ")
+        Vike_create("
+          create-vike
+          <small style='opacity: 0.5'>Minimal vanilla &quot;dumb&quot; boilerplate</small>
+        ")
+        Vike_boilerplates("
+          <s>Boilerplates</s>
+          <small style='opacity: 0.5'>=> Base &quot;smart&quot; boilerplate</small>
+        ")
     end
 
-    subgraph Integrations
-        Starters_solid("vike-solid")
-        Starters_react("vike-react")
-        Starters_vue("vike-vue")
-    end
-
-    subgraph Boilerplates["Bati boilerplates"]
-        Boilerplates_solid("Solid starter")
-        Boilerplates_react("React starter")
-        Boilerplates_vue("Vue starter")
+    subgraph Bati["Bâti"]
+        Bati_gen("
+          Generator
+          <small style='opacity: 0.5'>CLI command => boilerplate</small>
+        ")
+        Bati_frontend("
+          Frontend Files
+          <small style='opacity: 0.5'>w/ different variants \n for React/Solid/Vue</small>
+        ")
+        Bati_backend("
+          Backend Files
+          <small style='opacity: 0.5'>w/ different variants \n for EdgeDB/Prisma/...</small>
+        ")
     end
 
     subgraph Concepts
@@ -66,4 +68,3 @@ flowchart TB
         Concepts_web("Web server")
         Concepts_etc("etc...")
     end
-
