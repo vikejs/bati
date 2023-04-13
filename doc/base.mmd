@@ -7,13 +7,14 @@
 flowchart TB
     Base_Solide -- low level doc --> Vike_doc
     Base_Restack -- low level doc --> Vike_doc
+    Base_generic -- low level doc --> Vike_doc
     Base_bati_CLI -. CLI .-> Bati
-    Bati -.-> Starters_solid
-    Bati -.-> Starters_react
-    Bati -.-> Starters_vue
-    Vike_create -. uses? .-> Bati
-
-    Starters -- uses --> Concepts
+    Bati -.-> Boilerplates
+    Bati -.-> Integrations
+    Vike_boilerplates == becomes ==> Boilerplates
+    Vike_create -- uses --> Concepts
+    Boilerplates -- uses --> Concepts
+    Integrations -- uses --> Concepts
 
     Bati("Bâti")
 
@@ -29,33 +30,37 @@ flowchart TB
             Restack
             <small style='opacity: 0.5'>High level doc</small>
         ")
+        Base_generic("
+            Or generic doc?
+            <small style='opacity: 0.5'>High level doc</small>
+        ")
     end
 
     subgraph Vike
         Vike_lib("Vike")
-        Vike_boilerplates("
-            Boilerplates
-            <small style='opacity: 0.5'>What do we do with those?</small>
-        ")
+        Vike_boilerplates("Boilerplates")
         Vike_doc("Documentation")
-        Vike_examples("Examples")
         Vike_create("create-vps")
+        Vike_examples("Examples")
     end
 
-    subgraph Starters
-        text("
-            How do we use Bâti here?
-        ")
-        style text fill:transparent,stroke-width:0px
+    subgraph Integrations
         Starters_solid("vike-solid")
         Starters_react("vike-react")
         Starters_vue("vike-vue")
+    end
+
+    subgraph Boilerplates["Bati boilerplates"]
+        Boilerplates_solid("Solid starter")
+        Boilerplates_react("React starter")
+        Boilerplates_vue("Vue starter")
     end
 
     subgraph Concepts
         direction TB
         Concepts_auth("Auth")
         Concepts_db("DB")
+        Concepts_web("Web server")
         Concepts_etc("etc...")
     end
 
