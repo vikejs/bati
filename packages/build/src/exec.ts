@@ -1,9 +1,9 @@
-import { readFile, opendir, copyFile, mkdir, writeFile } from "node:fs/promises";
+import { opendir, copyFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { VikeMeta } from "./types";
 
 function toDist(filepath: string, source: string, dist: string) {
-  const split = filepath.split(path.sep).filter((p) => !p.includes("VIKE_"));
+  const split = filepath.split(path.sep);
   split[split.length - 1] = split[split.length - 1].replace(/^\$(.*)\.js$/, "$1");
   return split.join(path.sep).replace(source, dist);
 }
