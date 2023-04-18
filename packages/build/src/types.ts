@@ -1,4 +1,4 @@
-interface VikeMeta {
+export interface VikeMeta {
   VIKE_REMOVE?: undefined;
   VIKE_FRAMEWORK?: "react" | "solid" | "vue";
   VIKE_DATABASE?: "edgedb" | "prisma" | string;
@@ -9,5 +9,3 @@ interface VikeMeta {
   VIKE_RPC?: "telefunc" | "trpc";
   VIKE_PRERENDERING?: boolean;
 }
-
-interface ImportMeta extends VikeMeta {}

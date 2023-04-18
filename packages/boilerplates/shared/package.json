@@ -1,10 +1,9 @@
 {
-  "name": "@batijs/cli",
+  "name": "@batijs/shared",
   "version": "0.0.2",
   "description": "",
   "type": "module",
   "scripts": {
-    "prepublishOnly": "pnpm run build",
     "build": "tsup"
   },
   "keywords": [],
@@ -12,25 +11,26 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.0.0",
+    "esbuild": "^0.17.17",
+    "esbuild-plugin-copy": "^2.1.1",
+    "magicast": "^0.2.3",
     "tsup": "^6.7.0",
-    "typescript": "^5.0.3"
+    "vite": "^4.2.1",
+    "vite-plugin-ssr": "^0.4.114"
   },
-  "bin": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./files": "./dist/index.js"
   },
   "typesVersions": {
     "*": {
       ".": [
         "./dist/index.d.ts"
+      ],
+      "files": [
+        "./dist/index.d.ts"
       ]
     }
-  },
-  "dependencies": {
-    "@batijs/build": "workspace:*",
-    "@batijs/solid": "workspace:*",
-    "@batijs/shared": "workspace:*",
-    "citty": "^0.1.1"
   },
   "files": [
     "dist/"

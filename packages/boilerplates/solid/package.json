@@ -1,0 +1,45 @@
+{
+  "name": "@batijs/solid",
+  "version": "0.0.2",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "esbuild": "^0.17.17",
+    "esbuild-plugin-copy": "^2.1.1",
+    "solid-js": "^1.7.2",
+    "solide": "^0.0.2",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vite-plugin-solid": "^2.7.0",
+    "vite-plugin-ssr": "^0.4.114"
+  },
+  "dependencies": {
+    "magicast": "^0.2.3",
+    "@batijs/shared": "workspace:*"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./files": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
+      "files": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist/"
+  ]
+}

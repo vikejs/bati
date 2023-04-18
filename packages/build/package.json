@@ -4,7 +4,6 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "test": "tsx node_modules/uvu/bin.js tests",
     "prepublishOnly": "pnpm run build",
     "build": "tsup"
   },
@@ -13,21 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.0.0",
-    "@vitejs/plugin-react": "^3.1.0",
-    "solid-js": "^1.7.2",
-    "solide": "^0.0.1",
-    "tsup": "^6.7.0",
-    "tsx": "^3.12.6",
-    "uvu": "^0.5.6",
-    "vite": "^4.2.1",
-    "vite-plugin-solid": "^2.7.0",
-    "vite-plugin-ssr": "^0.4.111"
+    "tsup": "^6.7.0"
   },
-  "dependencies": {
-    "@babel/parser": "^7.21.4",
-    "recast": "^0.22.0",
-    "typescript": "^5.0.3"
-  },
+  "dependencies": {},
   "main": "./dist/exec.js",
   "module": "./dist/exec.js",
   "exports": {
@@ -41,8 +28,6 @@
     }
   },
   "files": [
-    "dist/",
-    "files/",
-    "global.d.ts"
+    "dist/"
   ]
 }
