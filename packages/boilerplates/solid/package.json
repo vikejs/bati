@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.0.0",
+    "cross-fetch": "^3.1.5",
     "esbuild": "^0.17.17",
     "esbuild-plugin-copy": "^2.1.1",
     "solid-js": "^1.7.2",
@@ -22,8 +23,8 @@
     "vite-plugin-ssr": "^0.4.114"
   },
   "dependencies": {
-    "magicast": "^0.2.3",
-    "@batijs/shared": "workspace:*"
+    "@batijs/shared": "workspace:*",
+    "magicast": "^0.2.3"
   },
   "exports": {
     ".": "./dist/index.js",

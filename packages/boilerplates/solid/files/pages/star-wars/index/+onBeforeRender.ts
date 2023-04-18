@@ -1,6 +1,6 @@
 export default onBeforeRender;
 
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 //import { filterMovieData } from '../filterMovieData'
 import type { Movie, MovieDetails } from "../types";
 
