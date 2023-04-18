@@ -46,24 +46,36 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
   }
 }
 
-export default async function main(options: { source: string; dist: string }, meta: VikeMeta) {
-  for await (const p of walk(options.source, meta)) {
-    // TODO: check for files that would end at the same place
-    const target = toDist(p, options.source, options.dist);
-    const parsed = path.parse(p);
-    if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
-      throw new Error(`Typescript file needs to be compiled before it can be imported: '${p}'`);
-    } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
-      const f = await import(p);
+export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
+  const sources = Array.isArray(options.source) ? options.source : [options.source];
+  const targets = new Set<string>();
 
-      const fileContent = transformFileAfterExec(target, await f.default());
-
-      if (fileContent !== null) {
-        await safeWriteFile(target, fileContent);
+  // reverse here so that if multiple files end-up in the same place, the last one prevails
+  for (const source of sources.reverse()) {
+    for await (const p of walk(source, meta)) {
+      const target = toDist(p, source, options.dist);
+      if (targets.has(target)) {
+        // TODO: how to handle this information message?
+        console.warn(`Ignoring ${p} because ${target} has already been written`);
+        continue;
+      } else {
+        targets.add(target);
       }
-    } else {
-      // simple copy
-      await safeCopyFile(p, target);
+      const parsed = path.parse(p);
+      if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
+        throw new Error(`Typescript file needs to be compiled before it can be imported: '${p}'`);
+      } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
+        const f = await import(p);
+
+        const fileContent = transformFileAfterExec(target, await f.default());
+
+        if (fileContent !== null) {
+          await safeWriteFile(target, fileContent);
+        }
+      } else {
+        // simple copy
+        await safeCopyFile(p, target);
+      }
     }
   }
 }

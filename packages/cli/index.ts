@@ -1,7 +1,6 @@
 import { defineCommand, runMain, type CommandDef } from "citty";
 import exec from "@batijs/build";
 import sharedFilesPath from "@batijs/shared";
-import solidFilesPath from "@batijs/solid";
 import packageJson from "./package.json" assert { type: "json" };
 
 const main = defineCommand({
@@ -23,23 +22,19 @@ const main = defineCommand({
     },
   },
   async run({ args }) {
+    const sources = [sharedFilesPath];
+    if (args.framework === "solid") {
+      const solidFilesPath = (await import("@batijs/solid")).default;
+      sources.push(solidFilesPath);
+    }
+
     await exec(
       {
-        source: sharedFilesPath,
+        source: sources,
         dist: args.dist,
       },
       {}
     );
-
-    if (args.framework === "solid") {
-      await exec(
-        {
-          source: solidFilesPath,
-          dist: args.dist,
-        },
-        {}
-      );
-    }
   },
 });
 
