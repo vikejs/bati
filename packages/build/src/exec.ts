@@ -1,4 +1,4 @@
-import { opendir, copyFile, mkdir, writeFile } from "node:fs/promises";
+import { opendir, copyFile, mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import type { VikeMeta } from "./types";
 
@@ -48,35 +48,30 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
-  const targets = new Set<string>();
+  const targets = new Map<string, () => string | Promise<string>>();
 
   // reverse here so that if multiple files end-up in the same place, the last one prevails
-  for (const source of sources.reverse()) {
+  for (const source of sources) {
     for await (const p of walk(source, meta)) {
       const target = toDist(p, source, options.dist);
-      if (targets.has(target)) {
-        // TODO: how to handle this information message?
-        console.warn(`Ignoring ${p} because ${target} has already been written`);
-        continue;
-      } else {
-        targets.add(target);
-      }
       const parsed = path.parse(p);
-      if (parsed.name.startsWith("chunk-")) {
+      if (parsed.name.startsWith("chunk-") || parsed.name.startsWith("#")) {
         continue;
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(`Typescript file needs to be compiled before it can be imported: '${p}'`);
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         const f = await import(p);
 
-        const fileContent = transformFileAfterExec(target, await f.default());
+        const fileContent = transformFileAfterExec(target, await f.default(targets.get(target), meta));
 
         if (fileContent !== null) {
           await safeWriteFile(target, fileContent);
         }
+        targets.set(target, () => fileContent);
       } else {
         // simple copy
         await safeCopyFile(p, target);
+        targets.set(target, () => readFile(p, { encoding: "utf-8" }));
       }
     }
   }

@@ -1,5 +1,5 @@
-export interface VikeMeta {
-  VIKE_SERVER?: "hattip" | "express";
+interface VikeMeta {
+  VIKE_REMOVE?: undefined;
   VIKE_FRAMEWORK?: "react" | "solid" | "vue";
   VIKE_DATABASE?: "edgedb" | "prisma" | string;
   VIKE_AUTH?: "authjs" | string;
@@ -9,3 +9,5 @@ export interface VikeMeta {
   VIKE_RPC?: "telefunc" | "trpc";
   VIKE_PRERENDERING?: boolean;
 }
+
+interface ImportMeta extends VikeMeta {}

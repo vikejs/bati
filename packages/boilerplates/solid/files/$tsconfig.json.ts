@@ -1,7 +1,7 @@
-import { importSharedJsonFile } from "../src/utils.js";
+import { loadJsonFile } from "../src/utils.js";
 
-export default async function getTsConfig() {
-  const tsConfig = await importSharedJsonFile(import.meta);
+export default async function getTsConfig(currentContent: (() => string | Promise<string>) | undefined) {
+  const tsConfig = await loadJsonFile(currentContent);
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "solid-js";

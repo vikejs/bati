@@ -20,12 +20,29 @@ const main = defineCommand({
       description: "UI framework",
       required: false,
     },
+    server: {
+      type: "string",
+      description: "Server",
+      required: false,
+    },
+    rpc: {
+      type: "string",
+      description: "RPC",
+      required: false,
+    },
   },
   async run({ args }) {
     const sources = [sharedFilesPath];
     if (args.framework === "solid") {
-      const solidFilesPath = (await import("@batijs/solid")).default;
-      sources.push(solidFilesPath);
+      sources.push((await import("@batijs/solid")).default);
+    }
+
+    if (args.server === "hattip") {
+      sources.push((await import("@batijs/vike-hattip")).default);
+    }
+
+    if (args.rpc === "telefunc") {
+      sources.push((await import("@batijs/vike-telefunc")).default);
     }
 
     await exec(
@@ -33,7 +50,11 @@ const main = defineCommand({
         source: sources,
         dist: args.dist,
       },
-      {}
+      {
+        VIKE_FRAMEWORK: args.framework as any,
+        VIKE_RPC: args.rpc as any,
+        VIKE_SERVER: args.server as any,
+      }
     );
   },
 });

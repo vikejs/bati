@@ -5,9 +5,7 @@ export default async function getPackageJson(currentContent: (() => string | Pro
 
   packageJson.dependencies = {
     ...packageJson.dependencies,
-    "cross-fetch": "^3.0.0",
-    "solid-js": "^1.7.0",
-    solide: "latest",
+    telefunc: "^0.1.52",
   };
 
   return packageJson;

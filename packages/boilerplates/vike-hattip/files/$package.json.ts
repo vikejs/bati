@@ -5,9 +5,10 @@ export default async function getPackageJson(currentContent: (() => string | Pro
 
   packageJson.dependencies = {
     ...packageJson.dependencies,
-    "cross-fetch": "^3.0.0",
-    "solid-js": "^1.7.0",
-    solide: "latest",
+    express: "^4.18.2",
+    "@hattip/adapter-node": "^0.0.33",
+    "@hattip/router": "^0.0.33",
+    hattip: "^0.0.33",
   };
 
   return packageJson;

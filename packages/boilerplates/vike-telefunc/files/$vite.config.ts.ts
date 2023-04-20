@@ -12,8 +12,9 @@ export default async function getViteConfig(currentContent: (() => string | Prom
   const mod = await parseModule(content);
 
   addVitePlugin(mod, {
-    from: "solide/vite",
-    constructor: "solid",
+    from: "telefunc/vite",
+    constructor: "telefunc",
+    imported: "telefunc",
   });
 
   return mod.generate().code;

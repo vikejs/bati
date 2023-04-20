@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/shared",
+  "name": "@batijs/vike-telefunc",
   "version": "0.0.2",
   "description": "",
   "type": "module",
@@ -10,12 +10,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@hattip/adapter-node": "^0.0.33",
-    "@hattip/router": "^0.0.33",
     "@types/node": "^16.0.0",
     "esbuild": "^0.17.17",
     "esbuild-plugin-copy": "^2.1.1",
-    "hattip": "^0.0.33",
     "telefunc": "^0.1.52",
     "tsup": "^6.7.0",
     "vite": "^4.2.1",
@@ -39,6 +36,7 @@
     "dist/"
   ],
   "dependencies": {
+    "@batijs/shared": "workspace:*",
     "ast-types": "^0.14.2",
     "magicast": "^0.2.3"
   }
