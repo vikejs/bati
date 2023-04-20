@@ -1,16 +1,10 @@
-import { loadFile, generateCode } from "magicast";
-import { transformAst } from "../src/parse";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { generateCode } from "magicast";
+import { transformAst, type MaybeContentGetter, type VikeMeta } from "@batijs/core";
+import { loadRelativeFileAsMagicast } from "@batijs/core";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-export default async function getHattipFile(
-  currentContent: (() => string | Promise<string>) | undefined,
-  config: VikeMeta
-) {
-  const mod = await loadFile(join(__dirname, "#node-server.ts"));
+// TODO: Move AST logic in build package?
+export default async function getHattipFile(_currentContent: MaybeContentGetter, config: VikeMeta) {
+  const mod = await loadRelativeFileAsMagicast("./#node-server.ts", import.meta);
 
   transformAst(mod.$ast, config);
 

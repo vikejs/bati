@@ -1,7 +1,8 @@
-import { loadJsonFile } from "../src/utils.js";
+import { loadAsJson } from "@batijs/core";
+import type { MaybeContentGetter } from "@batijs/core";
 
-export default async function getTsConfig(currentContent: (() => string | Promise<string>) | undefined) {
-  const tsConfig = await loadJsonFile(currentContent);
+export default async function getTsConfig(currentContent: MaybeContentGetter) {
+  const tsConfig = await loadAsJson(currentContent);
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "solid-js";

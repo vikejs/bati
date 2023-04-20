@@ -1,6 +1,6 @@
+import type { VikeMeta } from "@batijs/core";
 import { opendir, copyFile, mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
-import type { VikeMeta } from "./types";
 
 function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);

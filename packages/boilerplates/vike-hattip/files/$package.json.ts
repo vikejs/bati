@@ -1,7 +1,7 @@
-import { loadJsonFile } from "../src/utils.js";
+import { loadAsJson, type MaybeContentGetter } from "@batijs/core";
 
-export default async function getPackageJson(currentContent: (() => string | Promise<string>) | undefined) {
-  const packageJson = await loadJsonFile(currentContent);
+export default async function getPackageJson(currentContent: MaybeContentGetter) {
+  const packageJson = await loadAsJson(currentContent);
 
   packageJson.dependencies = {
     ...packageJson.dependencies,

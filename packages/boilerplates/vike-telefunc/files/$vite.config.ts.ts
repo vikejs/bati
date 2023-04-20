@@ -1,15 +1,9 @@
-import { parseModule } from "magicast";
+import { loadAsMagicast, type MaybeContentGetter } from "@batijs/core";
 // @ts-ignore node16 import syntax only for this package
 import { addVitePlugin } from "magicast/helpers";
 
-export default async function getViteConfig(currentContent: (() => string | Promise<string>) | undefined) {
-  const content = await currentContent?.();
-
-  if (typeof content !== "string") {
-    throw new Error("TODO");
-  }
-
-  const mod = await parseModule(content);
+export default async function getViteConfig(currentContent: MaybeContentGetter) {
+  const mod = await loadAsMagicast(currentContent);
 
   addVitePlugin(mod, {
     from: "telefunc/vite",

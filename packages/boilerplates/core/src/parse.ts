@@ -1,5 +1,6 @@
 import { namedTypes, visit, type ASTNode, type NodePath } from "ast-types";
 import { generateCode } from "magicast";
+import type { VikeMeta } from "./types";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "VIKE_META");
@@ -44,6 +45,7 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
     },
     visitConditionalExpression(path) {
       // typing definition is all wrong
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this as any).visitIfStatement(path);
     },
     visitIfStatement(path) {

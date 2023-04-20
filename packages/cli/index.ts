@@ -2,6 +2,7 @@ import { defineCommand, runMain, type CommandDef } from "citty";
 import exec from "@batijs/build";
 import sharedFilesPath from "@batijs/shared";
 import packageJson from "./package.json" assert { type: "json" };
+import type { VikeMeta } from "@batijs/core";
 
 const main = defineCommand({
   meta: {
@@ -15,34 +16,39 @@ const main = defineCommand({
       description: "Dist folder",
       required: true,
     },
-    framework: {
-      type: "string",
-      description: "UI framework",
+    solid: {
+      type: "boolean",
+      description: "SolidJS",
       required: false,
     },
-    server: {
-      type: "string",
-      description: "Server",
+    hattip: {
+      type: "boolean",
+      description: "Hattip",
       required: false,
     },
-    rpc: {
-      type: "string",
-      description: "RPC",
+    telefunc: {
+      type: "boolean",
+      description: "Telefunc",
       required: false,
     },
   },
   async run({ args }) {
-    const sources = [sharedFilesPath];
-    if (args.framework === "solid") {
-      sources.push((await import("@batijs/solid")).default);
+    const sources: string[] = [sharedFilesPath];
+    const features: VikeMeta["VIKE_MODULES"] = [];
+
+    if (args.solid) {
+      sources.push((await import("@batijs/solid/files")).default);
+      features.push("framework:solid");
     }
 
-    if (args.server === "hattip") {
-      sources.push((await import("@batijs/vike-hattip")).default);
+    if (args.hattip) {
+      sources.push((await import("@batijs/vike-hattip/files")).default);
+      features.push("server:hattip");
     }
 
-    if (args.rpc === "telefunc") {
-      sources.push((await import("@batijs/vike-telefunc")).default);
+    if (args.telefunc) {
+      sources.push((await import("@batijs/vike-telefunc/files")).default);
+      features.push("rpc:telefunc");
     }
 
     await exec(
@@ -51,9 +57,7 @@ const main = defineCommand({
         dist: args.dist,
       },
       {
-        VIKE_FRAMEWORK: args.framework as any,
-        VIKE_RPC: args.rpc as any,
-        VIKE_SERVER: args.server as any,
+        VIKE_MODULES: features,
       }
     );
   },

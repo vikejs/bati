@@ -8,7 +8,7 @@ import { createServer } from "vite";
 const app = express();
 const router = createRouter();
 
-if (import.meta.VIKE_RPC === "telefunc") {
+if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
   router.post("/_telefunc", async (context) => {
     const httpResponse = await telefunc({
       url: context.url.toString(),
