@@ -10,15 +10,9 @@ function ast(code: string) {
 }
 
 function testAst(code: string, meta: VikeMeta) {
-  const tree = ast(expected(code));
+  const tree = ast(code);
 
   return transformAst(tree, meta);
-}
-
-function expected(code: string) {
-  return `const a: number = 1;
-${code}
-const b = 2;`;
 }
 
 const Suite = suite("transformAst");
@@ -36,12 +30,12 @@ Suite("includes:react", () => {
   assertEquivalentAst(
     tree,
     ast(
-      expected(`
+      `
       content = {
         ...content,
         jsx: "react"
       };
-    `)
+    `
     )
   );
 });
@@ -56,7 +50,7 @@ Suite("includes:solid", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(``)));
+  assertEquivalentAst(tree, ast(""));
 });
 
 Suite("if-elseif-else:react", () => {
@@ -73,7 +67,7 @@ Suite("if-elseif-else:react", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`content = { ...content, jsx: "react" };`)));
+  assertEquivalentAst(tree, ast(`content = { ...content, jsx: "react" };`));
 });
 
 Suite("if-elseif-else:solid", () => {
@@ -90,7 +84,7 @@ Suite("if-elseif-else:solid", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`)));
+  assertEquivalentAst(tree, ast(`content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`));
 });
 
 Suite("if-elseif-else:other", () => {
@@ -107,7 +101,7 @@ Suite("if-elseif-else:other", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`console.log('NOTHING TO DO');`)));
+  assertEquivalentAst(tree, ast(`console.log('NOTHING TO DO');`));
 });
 
 Suite("external variable", () => {
@@ -137,7 +131,7 @@ Suite("ternary:react", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`1`)));
+  assertEquivalentAst(tree, ast(`1`));
 });
 
 Suite("ternary:solid", () => {
@@ -152,7 +146,7 @@ Suite("ternary:solid", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`2`)));
+  assertEquivalentAst(tree, ast(`2`));
 });
 
 Suite("ternary:other", () => {
@@ -167,7 +161,7 @@ Suite("ternary:other", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(expected(`null`)));
+  assertEquivalentAst(tree, ast(`null`));
 });
 
 Suite("import cleanup:react", () => {
