@@ -11,9 +11,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.0.0",
+    "@types/node": "^16.18.24",
     "tsup": "^6.7.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "bin": "./dist/index.js",
   "exports": {
@@ -29,13 +29,12 @@
   "dependencies": {
     "@batijs/build": "workspace:*",
     "@batijs/core": "workspace:*",
-    "@batijs/solid": "workspace:*",
-    "@batijs/shared": "workspace:*",
-    "@batijs/telefunc": "workspace:*",
     "@batijs/hattip": "workspace:*",
+    "@batijs/shared": "workspace:*",
+    "@batijs/solid": "workspace:*",
+    "@batijs/telefunc": "workspace:*",
     "citty": "^0.1.1"
   },
-  "optionalDependencies": {},
   "files": [
     "dist/"
   ]
