@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepublishOnly": "pnpm run build",
-    "build": "tsup"
+    "build": "rm -rf dist && tsup"
   },
   "keywords": [],
   "author": "",

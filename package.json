@@ -6,6 +6,7 @@
   "scripts": {
     "release": "bumpp -r --commit --push --tag && pnpm -r publish",
     "publish": "pnpm -r publish",
+    "watch": "pnpm -r --parallel build --watch",
     "build": "pnpm -r build"
   },
   "keywords": [],
