@@ -20,25 +20,6 @@ importers:
       prettier: 2.8.8
       typescript: 5.0.4
 
-  packages/boilerplates/core:
-    specifiers:
-      '@batijs/tsup': workspace:*
-      '@types/node': ^16.18.24
-      ast-types: ^0.14.2
-      magicast: ^0.2.4
-      tsx: ^3.12.6
-      typescript: ^5.0.4
-      uvu: ^0.5.6
-    dependencies:
-      ast-types: 0.14.2
-      magicast: 0.2.4
-    devDependencies:
-      '@batijs/tsup': link:../../tsup
-      '@types/node': 16.18.24
-      tsx: 3.12.6
-      typescript: 5.0.4
-      uvu: 0.5.6
-
   packages/boilerplates/hattip:
     specifiers:
       '@batijs/core': workspace:*
@@ -57,7 +38,7 @@ importers:
       vite: ^4.3.2
       vite-plugin-ssr: ^0.4.117
     dependencies:
-      '@batijs/core': link:../core
+      '@batijs/core': link:../../core
       ast-types: 0.14.2
       magicast: 0.2.4
     optionalDependencies:
@@ -90,7 +71,7 @@ importers:
       ast-types: 0.14.2
       magicast: 0.2.4
     devDependencies:
-      '@batijs/core': link:../core
+      '@batijs/core': link:../../core
       '@batijs/tsup': link:../../tsup
       '@types/node': 16.18.24
       esbuild: 0.17.18
@@ -114,7 +95,7 @@ importers:
       vite-plugin-solid: ^2.7.0
       vite-plugin-ssr: ^0.4.117
     dependencies:
-      '@batijs/core': link:../core
+      '@batijs/core': link:../../core
       magicast: 0.2.4
     devDependencies:
       '@batijs/tsup': link:../../tsup
@@ -142,7 +123,7 @@ importers:
       vite: ^4.3.2
       vite-plugin-ssr: ^0.4.117
     dependencies:
-      '@batijs/core': link:../core
+      '@batijs/core': link:../../core
       ast-types: 0.14.2
       magicast: 0.2.4
     devDependencies:
@@ -160,7 +141,7 @@ importers:
       '@batijs/tsup': workspace:*
       '@types/node': ^16.18.24
     dependencies:
-      '@batijs/core': link:../boilerplates/core
+      '@batijs/core': link:../core
     devDependencies:
       '@batijs/tsup': link:../tsup
       '@types/node': 16.18.24
@@ -179,7 +160,7 @@ importers:
       typescript: ^5.0.4
     dependencies:
       '@batijs/build': link:../build
-      '@batijs/core': link:../boilerplates/core
+      '@batijs/core': link:../core
       '@batijs/hattip': link:../boilerplates/hattip
       '@batijs/shared': link:../boilerplates/shared
       '@batijs/solid': link:../boilerplates/solid
@@ -189,6 +170,25 @@ importers:
       '@batijs/tsup': link:../tsup
       '@types/node': 16.18.24
       typescript: 5.0.4
+
+  packages/core:
+    specifiers:
+      '@batijs/tsup': workspace:*
+      '@types/node': ^16.18.24
+      ast-types: ^0.14.2
+      magicast: ^0.2.4
+      tsx: ^3.12.6
+      typescript: ^5.0.4
+      uvu: ^0.5.6
+    dependencies:
+      ast-types: 0.14.2
+      magicast: 0.2.4
+    devDependencies:
+      '@batijs/tsup': link:../tsup
+      '@types/node': 16.18.24
+      tsx: 3.12.6
+      typescript: 5.0.4
+      uvu: 0.5.6
 
   packages/create-batijs-app:
     specifiers:
