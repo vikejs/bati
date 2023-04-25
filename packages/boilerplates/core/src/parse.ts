@@ -1,5 +1,5 @@
-import { namedTypes, visit, type ASTNode, type NodePath } from "ast-types";
-import { generateCode } from "magicast";
+import { namedTypes, visit, type NodePath } from "ast-types";
+import { generateCode, type ASTNode } from "magicast";
 import type { VikeMeta } from "./types.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
