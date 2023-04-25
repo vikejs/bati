@@ -1,6 +1,4 @@
-import { loadAsMagicast, type MaybeContentGetter } from "@batijs/core";
-// @ts-ignore node16 import syntax only for this package
-import { addVitePlugin } from "magicast/helpers";
+import { addVitePlugin, loadAsMagicast, type MaybeContentGetter } from "@batijs/core";
 
 export default async function getViteConfig(currentContent: MaybeContentGetter) {
   const mod = await loadAsMagicast(currentContent);

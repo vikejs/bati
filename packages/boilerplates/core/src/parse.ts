@@ -1,6 +1,6 @@
 import { namedTypes, visit, type ASTNode, type NodePath } from "ast-types";
 import { generateCode } from "magicast";
-import type { VikeMeta } from "./types";
+import type { VikeMeta } from "./types.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "VIKE_META");

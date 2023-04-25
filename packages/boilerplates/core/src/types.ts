@@ -1,4 +1,4 @@
-import type { features } from "./features";
+import type { features } from "./features.js";
 
 export type MaybeContentGetter = (() => string | Promise<string>) | undefined;
 
