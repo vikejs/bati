@@ -33,6 +33,42 @@ importers:
       '@types/node': 16.18.23
       tsup: 6.7.0
 
+  packages/boilerplates/hattip:
+    specifiers:
+      '@batijs/core': workspace:*
+      '@hattip/adapter-node': ^0.0.33
+      '@hattip/router': ^0.0.33
+      '@types/express': ^4.17.17
+      '@types/node': ^16.0.0
+      ast-types: ^0.14.2
+      esbuild: ^0.17.17
+      esbuild-plugin-copy: ^2.1.1
+      express: ^4.18.2
+      hattip: ^0.0.33
+      magicast: ^0.2.3
+      telefunc: ^0.1.52
+      tsup: ^6.7.0
+      vite: ^4.2.1
+      vite-plugin-ssr: ^0.4.114
+    dependencies:
+      '@batijs/core': link:../core
+      ast-types: 0.14.2
+      magicast: 0.2.3
+    optionalDependencies:
+      telefunc: 0.1.52
+    devDependencies:
+      '@hattip/adapter-node': 0.0.33
+      '@hattip/router': 0.0.33
+      '@types/express': 4.17.17
+      '@types/node': 16.18.23
+      esbuild: 0.17.17
+      esbuild-plugin-copy: 2.1.1_esbuild@0.17.17
+      express: 4.18.2
+      hattip: 0.0.33
+      tsup: 6.7.0
+      vite: 4.2.1_@types+node@16.18.23
+      vite-plugin-ssr: 0.4.114_vite@4.2.1
+
   packages/boilerplates/shared:
     specifiers:
       '@batijs/core': workspace:*
@@ -87,43 +123,7 @@ importers:
       vite-plugin-solid: 2.7.0_solid-js@1.7.2+vite@4.2.1
       vite-plugin-ssr: 0.4.114_vite@4.2.1
 
-  packages/boilerplates/vike-hattip:
-    specifiers:
-      '@batijs/core': workspace:*
-      '@hattip/adapter-node': ^0.0.33
-      '@hattip/router': ^0.0.33
-      '@types/express': ^4.17.17
-      '@types/node': ^16.0.0
-      ast-types: ^0.14.2
-      esbuild: ^0.17.17
-      esbuild-plugin-copy: ^2.1.1
-      express: ^4.18.2
-      hattip: ^0.0.33
-      magicast: ^0.2.3
-      telefunc: ^0.1.52
-      tsup: ^6.7.0
-      vite: ^4.2.1
-      vite-plugin-ssr: ^0.4.114
-    dependencies:
-      '@batijs/core': link:../core
-      ast-types: 0.14.2
-      magicast: 0.2.3
-    optionalDependencies:
-      telefunc: 0.1.52
-    devDependencies:
-      '@hattip/adapter-node': 0.0.33
-      '@hattip/router': 0.0.33
-      '@types/express': 4.17.17
-      '@types/node': 16.18.23
-      esbuild: 0.17.17
-      esbuild-plugin-copy: 2.1.1_esbuild@0.17.17
-      express: 4.18.2
-      hattip: 0.0.33
-      tsup: 6.7.0
-      vite: 4.2.1_@types+node@16.18.23
-      vite-plugin-ssr: 0.4.114_vite@4.2.1
-
-  packages/boilerplates/vike-telefunc:
+  packages/boilerplates/telefunc:
     specifiers:
       '@batijs/core': workspace:*
       '@types/node': ^16.0.0
@@ -163,10 +163,10 @@ importers:
     specifiers:
       '@batijs/build': workspace:*
       '@batijs/core': workspace:*
+      '@batijs/hattip': workspace:*
       '@batijs/shared': workspace:*
       '@batijs/solid': workspace:*
-      '@batijs/vike-hattip': workspace:*
-      '@batijs/vike-telefunc': workspace:*
+      '@batijs/telefunc': workspace:*
       '@types/node': ^16.0.0
       citty: ^0.1.1
       tsup: ^6.7.0
@@ -174,10 +174,10 @@ importers:
     dependencies:
       '@batijs/build': link:../build
       '@batijs/core': link:../boilerplates/core
+      '@batijs/hattip': link:../boilerplates/hattip
       '@batijs/shared': link:../boilerplates/shared
       '@batijs/solid': link:../boilerplates/solid
-      '@batijs/vike-hattip': link:../boilerplates/vike-hattip
-      '@batijs/vike-telefunc': link:../boilerplates/vike-telefunc
+      '@batijs/telefunc': link:../boilerplates/telefunc
       citty: 0.1.1
     devDependencies:
       '@types/node': 16.18.23

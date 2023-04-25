@@ -42,12 +42,12 @@ const main = defineCommand({
     }
 
     if (args.hattip) {
-      sources.push((await import("@batijs/vike-hattip/files")).default);
+      sources.push((await import("@batijs/hattip/files")).default);
       features.push("server:hattip");
     }
 
     if (args.telefunc) {
-      sources.push((await import("@batijs/vike-telefunc/files")).default);
+      sources.push((await import("@batijs/telefunc/files")).default);
       features.push("rpc:telefunc");
     }
 

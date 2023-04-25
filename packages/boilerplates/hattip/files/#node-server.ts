@@ -26,6 +26,7 @@ if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
   });
 }
 
+// TODO: create issue
 const viteDevMiddleware = (
   await createServer({
     server: { middlewareMode: true },
