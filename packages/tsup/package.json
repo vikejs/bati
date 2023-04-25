@@ -1,21 +1,19 @@
 {
-  "name": "@batijs/cli",
+  "name": "@batijs/tsup",
   "version": "0.0.2",
   "description": "",
   "type": "module",
   "scripts": {
     "prepublishOnly": "pnpm run build",
-    "build": "rm -rf dist && tsup"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.18.24",
-    "@batijs/tsup": "workspace:*",
     "typescript": "^5.0.4"
   },
-  "bin": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
   },
@@ -27,15 +25,10 @@
     }
   },
   "dependencies": {
-    "@batijs/build": "workspace:*",
-    "@batijs/core": "workspace:*",
-    "@batijs/hattip": "workspace:*",
-    "@batijs/shared": "workspace:*",
-    "@batijs/solid": "workspace:*",
-    "@batijs/telefunc": "workspace:*",
-    "citty": "^0.1.1"
+    "tsup": "^6.7.0"
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "bin": "./node_modules/.bin/tsup"
 }

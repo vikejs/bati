@@ -55,7 +55,7 @@ export default async function main(options: { source: string | string[]; dist: s
     for await (const p of walk(source, meta)) {
       const target = toDist(p, source, options.dist);
       const parsed = path.parse(p);
-      if (parsed.name.startsWith("chunk-") || parsed.name.startsWith("#")) {
+      if (parsed.name.startsWith("chunk-") || parsed.name.startsWith("asset-") || parsed.name.startsWith("#")) {
         continue;
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(`Typescript file needs to be compiled before it can be imported: '${p}'`);

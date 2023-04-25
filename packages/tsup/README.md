@@ -1,0 +1,3 @@
+# @batijs/tsup
+
+WIP

@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' uvu",
-    "build": "rm -rf && vite build",
+    "build": "vite build",
     "prepare": "ts-patch install"
   },
   "keywords": [],

@@ -1,12 +1,12 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "@batijs/tsup";
 import { copy } from "esbuild-plugin-copy";
 
 export default defineConfig([
   {
     entry: ["./files/**/\\$*.ts"],
-    format: "esm",
-    clean: true,
+    ignoreWatch: ["./dist"],
     dts: false,
+    clean: true,
     outDir: "./dist/files",
     external: ["magicast"],
     esbuildPlugins: [
@@ -21,8 +21,8 @@ export default defineConfig([
   {
     entry: ["./index.ts"],
     format: "esm",
-    clean: true,
     dts: true,
+    clean: true,
     outDir: "./dist",
   },
 ]);

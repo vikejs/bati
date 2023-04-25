@@ -1,10 +1,9 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "@batijs/tsup";
 import { copy } from "esbuild-plugin-copy";
 
 export default defineConfig([
   {
     entry: ["./files/**/\\$*.ts"],
-    format: "esm",
     clean: true,
     dts: false,
     outDir: "./dist/files",
