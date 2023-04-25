@@ -2,12 +2,14 @@ import { loadFile, parseModule, type ProxifiedModule } from "magicast";
 import type { MaybeContentGetter } from "./types.js";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { isString } from "./assert.js";
+import { assert } from "./assert.js";
 
 export async function loadAsJson(getter: MaybeContentGetter) {
   const content = await getter?.();
 
-  return JSON.parse(isString(content));
+  assert(typeof content === "string", "Unable to load previous JSON module");
+
+  return JSON.parse(content);
 }
 
 export async function loadAsMagicast<Exports extends object>(
@@ -15,7 +17,9 @@ export async function loadAsMagicast<Exports extends object>(
 ): Promise<ProxifiedModule<Exports>> {
   const content = await getter?.();
 
-  return parseModule(isString(content));
+  assert(typeof content === "string", "Unable to load previous module");
+
+  return parseModule(content);
 }
 
 export async function loadRelativeFileAsMagicast<Exports extends object>(

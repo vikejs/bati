@@ -5,22 +5,18 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' uvu",
-    "build": "vite build",
-    "prepare": "ts-patch install"
+    "test": "NODE_OPTIONS='--loader tsx' uvu",
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.0",
+    "@batijs/tsup": "workspace:*",
     "@types/node": "^16.18.24",
-    "rollup-plugin-dts-bundle-generator": "^1.4.0",
-    "ts-node": "^10.9.1",
-    "ts-patch": "v3-beta",
+    "tsx": "^3.12.6",
     "typescript": "^5.0.4",
-    "uvu": "^0.5.6",
-    "vite": "^4.3.2"
+    "uvu": "^0.5.6"
   },
   "exports": {
     ".": "./dist/index.js"
@@ -40,7 +36,6 @@
   ],
   "dependencies": {
     "ast-types": "^0.14.2",
-    "magicast": "^0.2.4",
-    "typia": "^3.7.8"
+    "magicast": "^0.2.4"
   }
 }

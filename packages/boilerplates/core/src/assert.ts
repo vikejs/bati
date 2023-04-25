@@ -1,3 +1,6 @@
-import typia from "typia";
-
-export const isString = typia.createAssert<string>();
+export function assert(condition: unknown, message: string): asserts condition {
+  if (condition) {
+    return;
+  }
+  throw new Error(message);
+}
