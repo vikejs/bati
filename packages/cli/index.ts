@@ -31,6 +31,11 @@ const main = defineCommand({
       description: "Telefunc",
       required: false,
     },
+    authjs: {
+      type: "boolean",
+      description: "AuthJS",
+      required: false,
+    },
   },
   async run({ args }) {
     const sources: string[] = [sharedFilesPath];
@@ -49,6 +54,10 @@ const main = defineCommand({
     if (args.telefunc) {
       sources.push((await import("@batijs/telefunc/files")).default);
       features.push("rpc:telefunc");
+    }
+
+    if (args.telefunc) {
+      features.push("auth:authjs");
     }
 
     await exec(

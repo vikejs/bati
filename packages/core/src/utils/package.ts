@@ -16,6 +16,8 @@ function* deps(obj: PackageJsonDeps) {
   }
 }
 
+// TODO: handle `workspace:` versions
+// TODO: handle duplicates
 export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDeps>(
   packageJson: T,
   scopedPackageJson: U,

@@ -22,6 +22,7 @@ importers:
 
   packages/boilerplates/hattip:
     specifiers:
+      '@auth/core': ^0.7.0
       '@batijs/core': workspace:*
       '@batijs/tsup': workspace:*
       '@hattip/adapter-node': ^0.0.33
@@ -31,11 +32,13 @@ importers:
       express: ^4.18.2
       hattip: ^0.0.33
       telefunc: ^0.1.52
+      vike-authjs: ^0.0.1
       vite: ^4.3.2
       vite-plugin-ssr: ^0.4.117
     dependencies:
       '@batijs/core': link:../../core
     devDependencies:
+      '@auth/core': 0.7.0
       '@batijs/tsup': link:../../tsup
       '@hattip/adapter-node': 0.0.33
       '@hattip/router': 0.0.33
@@ -44,6 +47,7 @@ importers:
       express: 4.18.2
       hattip: 0.0.33
       telefunc: 0.1.52
+      vike-authjs: 0.0.1
       vite: 4.3.2_@types+node@16.18.24
       vite-plugin-ssr: 0.4.117_vite@4.3.2
 
@@ -189,6 +193,22 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
+    dev: true
+
+  /@auth/core/0.7.0:
+    resolution: {integrity: sha512-he6SZkU1WJ2TvFZxn7PnIwPSU6UXp4/HGUCSckahfzqhFZ3b7pGifRBffUKnubMiMZd9c7rCbWoZVNz4AxiiYA==}
+    peerDependencies:
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.0.4
+      cookie: 0.5.0
+      jose: 4.14.1
+      oauth4webapi: 2.2.4
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3_preact@10.11.3
     dev: true
 
   /@babel/code-frame/7.21.4:
@@ -878,6 +898,10 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@panva/hkdf/1.0.4:
+    resolution: {integrity: sha512-003xWiCuvePbLaPHT+CRuaV4GlyCAVm6XYSbBZDHoWZGn1mNkVKFaDbGJjjxmEFvizUwlCoM6O18FCBMMky2zQ==}
+    dev: true
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
@@ -2256,6 +2280,10 @@ packages:
     hasBin: true
     dev: true
 
+  /jose/4.14.1:
+    resolution: {integrity: sha512-SgjXLpP7jhQkUNKL6RpowoR/IF4QKE+WjLDMpNnh2vmhiFs67NftrNpvFtgbwpvRdtueFliahYYWz9E+XZZQlg==}
+    dev: true
+
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
@@ -2560,6 +2588,10 @@ packages:
       path-key: 3.1.1
     dev: false
 
+  /oauth4webapi/2.2.4:
+    resolution: {integrity: sha512-oKhiOHXX1iQCGtupvwTMKFAnLdX3tSAKCqtvr9faX9ycEz1lVgUU4ridYsh/cj/f7qeqmJFs/jVnA7c1fABRKw==}
+    dev: true
+
   /object-assign/4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -2722,6 +2754,19 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /preact-render-to-string/5.2.3_preact@10.11.3:
+    resolution: {integrity: sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      preact: 10.11.3
+      pretty-format: 3.8.0
+    dev: true
+
+  /preact/10.11.3:
+    resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==}
+    dev: true
+
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -2731,6 +2776,10 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    dev: true
+
+  /pretty-format/3.8.0:
+    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
     dev: true
 
   /prompts/2.4.2:
@@ -3314,6 +3363,14 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /vike-authjs/0.0.1:
+    resolution: {integrity: sha512-XB2+u2qWyJEiTswNDM6UvYa69FkDnpI+RpLI84hIGvE5BA1omfu5iA/FK3BHTP2rCG3i0onR3rIgnGwp/Zb15A==}
+    dependencies:
+      '@auth/core': 0.7.0
+    transitivePeerDependencies:
+      - nodemailer
     dev: true
 
   /vite-plugin-solid/2.7.0_solid-js@1.7.3+vite@4.3.2:
