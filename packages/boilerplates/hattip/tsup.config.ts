@@ -3,7 +3,7 @@ import { copy } from "esbuild-plugin-copy";
 
 export default defineConfig([
   {
-    entry: ["./files/**/\\$*.ts"],
+    entry: ["./files/**/\\$!($*).ts"],
     ignoreWatch: ["./dist"],
     dts: false,
     clean: true,
@@ -12,7 +12,7 @@ export default defineConfig([
     esbuildPlugins: [
       copy({
         assets: {
-          from: ["./files/**/!($*)"],
+          from: ["./files/**/!($*)", "./files/**/$$*"],
           to: ["."],
         },
       }),

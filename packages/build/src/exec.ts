@@ -1,10 +1,12 @@
-import type { VikeMeta } from "@batijs/core";
+import { generateCode, loadFile, transformAst, type VikeMeta } from "@batijs/core";
 import { opendir, copyFile, mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
+const reIgnoreFile = /^(chunk-|asset-|#)/gi;
+
 function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
-  split[split.length - 1] = split[split.length - 1].replace(/^\$(.*)\.js$/, "$1");
+  split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.[tj]sx?$/, "$1");
   return split.join(path.sep).replace(source, dist);
 }
 
@@ -55,10 +57,20 @@ export default async function main(options: { source: string | string[]; dist: s
     for await (const p of walk(source, meta)) {
       const target = toDist(p, source, options.dist);
       const parsed = path.parse(p);
-      if (parsed.name.startsWith("chunk-") || parsed.name.startsWith("asset-") || parsed.name.startsWith("#")) {
+      if (parsed.name.match(reIgnoreFile)) {
         continue;
+      } else if (parsed.name.startsWith("$$") && parsed.ext.match(/\.[tj]sx?$/)) {
+        const mod = await loadFile(p);
+        transformAst(mod.$ast, meta);
+
+        const fileContent = generateCode(mod).code;
+
+        if (fileContent) {
+          await safeWriteFile(target, fileContent);
+        }
+        targets.set(target, () => fileContent);
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
-        throw new Error(`Typescript file needs to be compiled before it can be imported: '${p}'`);
+        throw new Error(`Typescript file needs to be compiled before it can be executed: '${p}'`);
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         const f = await import(p);
 

@@ -5,5 +5,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
 interface ImportMeta {
-  VIKE_MODULES?: typeof import("./dist/features")["features"][number][];
+  VIKE_MODULES?: typeof import("./dist")["features"][number][];
 }

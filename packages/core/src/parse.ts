@@ -17,12 +17,12 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
     visitIdentifier(path) {
       if (path.value.name === "VIKE_REMOVE") {
         if (!path.parent) {
-          throw new Error("TODO");
+          throw new Error("VIKE_REMOVE cannot appear at top level");
         }
         // Currently supported:
         //   - Removing an element of a statically declared array
         if (!namedTypes.ArrayExpression.check(path.parent?.parent?.value)) {
-          throw new Error("TODO: Not supported");
+          throw new Error("VIKE_REMOVE can only be an array element for now");
         }
         path.parent.prune();
         this.traverse(path);
