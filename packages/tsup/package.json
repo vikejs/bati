@@ -14,6 +14,11 @@
     "@types/node": "^16.18.24",
     "typescript": "^5.0.4"
   },
+  "dependencies": {
+    "esbuild": "^0.17.18",
+    "esbuild-plugin-copy": "^2.1.1",
+    "tsup": "^6.7.0"
+  },
   "exports": {
     ".": "./dist/index.js"
   },
@@ -23,11 +28,6 @@
         "./dist/index.d.ts"
       ]
     }
-  },
-  "dependencies": {
-    "esbuild": "^0.17.18",
-    "esbuild-plugin-copy": "^2.1.1",
-    "tsup": "^6.7.0"
   },
   "files": [
     "dist/"

@@ -15,6 +15,15 @@
     "@batijs/tsup": "workspace:*",
     "typescript": "^5.0.4"
   },
+  "dependencies": {
+    "@batijs/build": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "@batijs/hattip": "workspace:*",
+    "@batijs/shared": "workspace:*",
+    "@batijs/solid": "workspace:*",
+    "@batijs/telefunc": "workspace:*",
+    "citty": "^0.1.1"
+  },
   "bin": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -25,15 +34,6 @@
         "./dist/index.d.ts"
       ]
     }
-  },
-  "dependencies": {
-    "@batijs/build": "workspace:*",
-    "@batijs/core": "workspace:*",
-    "@batijs/hattip": "workspace:*",
-    "@batijs/shared": "workspace:*",
-    "@batijs/solid": "workspace:*",
-    "@batijs/telefunc": "workspace:*",
-    "citty": "^0.1.1"
   },
   "files": [
     "dist/"
