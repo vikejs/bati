@@ -27,6 +27,7 @@ importers:
       '@batijs/tsup': workspace:*
       '@hattip/adapter-node': ^0.0.33
       '@hattip/router': ^0.0.33
+      '@hattip/vite': ^0.0.33
       '@types/express': ^4.17.17
       '@types/node': ^16.18.24
       express: ^4.18.2
@@ -42,6 +43,7 @@ importers:
       '@batijs/tsup': link:../../tsup
       '@hattip/adapter-node': 0.0.33
       '@hattip/router': 0.0.33
+      '@hattip/vite': 0.0.33_vite@4.3.2
       '@types/express': 4.17.17
       '@types/node': 16.18.24
       express: 4.18.2
@@ -823,6 +825,23 @@ packages:
       '@hattip/core': 0.0.33
     dev: true
 
+  /@hattip/vite/0.0.33_vite@4.3.2:
+    resolution: {integrity: sha512-ZOtZf0dKIKNMlrjqH+bBuk82BHt/+PBSvxUUBFfVP8S0HQyEIQwtxgOx3R0SgE5WQ0ZvljjdrbOOyISTx4+LHw==}
+    hasBin: true
+    peerDependencies:
+      vite: '>= 3'
+    dependencies:
+      '@hattip/adapter-node': 0.0.33
+      '@vavite/connect': 1.7.0_vite@4.3.2
+      '@vavite/multibuild': 1.7.0_vite@4.3.2
+      '@vavite/node-loader': 1.7.0_vite@4.3.2
+      cac: 6.7.14
+      import-meta-resolve: 2.2.2
+      picocolors: 1.0.0
+      resolve.exports: 2.0.2
+      vite: 4.3.2_@types+node@16.18.24
+    dev: true
+
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
     engines: {node: '>=10.10.0'}
@@ -987,6 +1006,10 @@ packages:
     resolution: {integrity: sha512-zvSN2Esek1aeLdKDYuntKAYjti9Z2oT4I8bfkLLhIxHlv3dwZ5vvATxOc31820iYm4hQRCwjUgDpwSMFjfTUnw==}
     dev: true
 
+  /@types/node/18.16.1:
+    resolution: {integrity: sha512-DZxSZWXxFfOlx7k7Rv4LAyiMroaxa3Ly/7OOzZO8cBNho0YzAi4qlbrx8W27JGqG57IgR/6J7r+nOJWw6kcvZA==}
+    dev: true
+
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
     dev: true
@@ -1134,6 +1157,35 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.59.1
       eslint-visitor-keys: 3.4.0
+    dev: true
+
+  /@vavite/connect/1.7.0_vite@4.3.2:
+    resolution: {integrity: sha512-tp/arat6COWVmOJz70HqosXr+5xreI5ayM6xyyC7FRjj3WKucmZdttCiQbV+oAgXb2+rrvHWJe2xPkcHc46r9A==}
+    peerDependencies:
+      vite: '>=2.8.1'
+    dependencies:
+      '@types/node': 18.16.1
+      vite: 4.3.2_@types+node@16.18.24
+    dev: true
+
+  /@vavite/multibuild/1.7.0_vite@4.3.2:
+    resolution: {integrity: sha512-81D5TPMVdjLWu0vf76FHwJ40s5J04iIes1DXxJieJ6zfFyTFrEkQ3h5fGb0mN5vJcaLy98Ucsd950l4ggMmibQ==}
+    peerDependencies:
+      vite: '>=2.8.1'
+    dependencies:
+      '@types/node': 18.16.1
+      cac: 6.7.14
+      picocolors: 1.0.0
+      vite: 4.3.2_@types+node@16.18.24
+    dev: true
+
+  /@vavite/node-loader/1.7.0_vite@4.3.2:
+    resolution: {integrity: sha512-JjCZPWCKy7ZUserHozYokw2pTxIKNvETAW9B15fcTNiVWIHnKz0euBZFHxPSZLUykMw/8Fp4AqtFvGTcZlWqQA==}
+    hasBin: true
+    peerDependencies:
+      vite: '>=2.8.1'
+    dependencies:
+      vite: 4.3.2_@types+node@16.18.24
     dev: true
 
   /accepts/1.3.8:
@@ -2179,6 +2231,10 @@ packages:
       resolve-from: 4.0.0
     dev: true
 
+  /import-meta-resolve/2.2.2:
+    resolution: {integrity: sha512-f8KcQ1D80V7RnqVm+/lirO9zkOxjGxhaTC1IPrBGd3MEfNgmNG67tSUO9gTi2F3Blr2Az6g1vocaxzkVnWl9MA==}
+    dev: true
+
   /imurmurhash/0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
@@ -2861,6 +2917,11 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
     dev: false
+
+  /resolve.exports/2.0.2:
+    resolution: {integrity: sha512-X2UW6Nw3n/aMgDVy+0rSqgHlv39WZAlZrXCdnbyEiKm17DSqHX4MmQMaST3FbeWR5FTuRcUwYAziZajji0Y7mg==}
+    engines: {node: '>=10'}
+    dev: true
 
   /reusify/1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}

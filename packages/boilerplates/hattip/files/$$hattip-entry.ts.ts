@@ -1,13 +1,9 @@
-import { createMiddleware } from "@hattip/adapter-node";
 import { createRouter } from "@hattip/router";
 import { renderPage } from "vite-plugin-ssr/server";
 import { telefunc } from "telefunc";
-import express from "express";
-import { createServer } from "vite";
 import { VikeAuth } from "vike-authjs";
 import CredentialsProvider from "@auth/core/providers/credentials";
 
-const app = express();
 const router = createRouter();
 
 if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
@@ -27,15 +23,6 @@ if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
     });
   });
 }
-
-// TODO: create issue
-const viteDevMiddleware = (
-  await createServer({
-    server: { middlewareMode: true },
-  })
-).middlewares;
-
-app.use(viteDevMiddleware);
 
 if (import.meta.VIKE_MODULES?.includes("auth:authjs")) {
   const Auth = VikeAuth({
@@ -94,10 +81,4 @@ router.use(async (context) => {
   });
 });
 
-const hattip = createMiddleware(router.buildHandler());
-
-app.use(hattip);
-
-app.listen(3000, "localhost", () => {
-  console.log("Server listening on http://localhost:3000");
-});
+export default router.buildHandler();

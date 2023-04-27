@@ -16,21 +16,34 @@ function* deps(obj: PackageJsonDeps) {
   }
 }
 
-// TODO: handle `workspace:` versions
-// TODO: handle duplicates
-export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDeps>(
-  packageJson: T,
-  scopedPackageJson: U,
-  keys: (keyof U["dependencies"] | keyof U["devDependencies"])[]
-) {
-  packageJson.dependencies ??= {};
-  const depsMap = new Map(deps(scopedPackageJson));
-
+function* findKey<T extends string | number | symbol>(depsMap: Map<string, string>, keys: T[]) {
   for (const key of keys) {
     const value = depsMap.get(key as string);
     if (!value) {
       throw new Error(`key '${value}' not found in package.json`);
     }
+    yield [key, value] as const;
+  }
+}
+
+// TODO: handle `workspace:` versions
+// TODO: handle duplicates
+export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDeps>(
+  packageJson: T,
+  scopedPackageJson: U,
+  keys: {
+    devDependencies?: (keyof U["dependencies"] | keyof U["devDependencies"])[];
+    dependencies?: (keyof U["dependencies"] | keyof U["devDependencies"])[];
+  }
+) {
+  packageJson.devDependencies ??= {};
+  packageJson.dependencies ??= {};
+  const depsMap = new Map(deps(scopedPackageJson));
+
+  for (const [key, value] of findKey(depsMap, keys.devDependencies ?? [])) {
+    packageJson.devDependencies[key as string] = value;
+  }
+  for (const [key, value] of findKey(depsMap, keys.dependencies ?? [])) {
     packageJson.dependencies[key as string] = value;
   }
 

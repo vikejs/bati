@@ -15,7 +15,9 @@ test("test_add_dependency_with_valid_keys", () => {
       lodash: "^4.17.21",
     },
   };
-  const result = addDependency(packageJson, scopedPackageJson, ["lodash"]);
+  const result = addDependency(packageJson, scopedPackageJson, {
+    dependencies: ["lodash"],
+  });
   assert.equal(result.dependencies?.lodash, "^4.17.21");
 });
 
@@ -31,7 +33,9 @@ test("test_add_dependency_with_existing_dependencies", () => {
       lodash: "^4.17.21",
     },
   };
-  const result = addDependency(packageJson, scopedPackageJson, ["lodash"]);
+  const result = addDependency(packageJson, scopedPackageJson, {
+    dependencies: ["lodash"],
+  });
   assert.equal(result.dependencies?.react, "^17.0.2");
   assert.equal(result.dependencies?.lodash, "^4.17.21");
 });
@@ -48,7 +52,11 @@ test("test_add_dependency_with_invalid_keys", () => {
       lodash: "^4.17.21",
     },
   };
-  assert.throws(() => addDependency(packageJson, scopedPackageJson, ["invalid_key"] as any));
+  assert.throws(() =>
+    addDependency(packageJson, scopedPackageJson, {
+      dependencies: ["invalid_key"] as any,
+    })
+  );
 });
 
 // Tests that new dependencies are added to packageJson when scopedPackageJson has dependencies and devDependencies.
@@ -66,7 +74,9 @@ test("test_add_dependency_with_dev_dependencies", () => {
       "@types/lodash": "^4.14.170",
     },
   };
-  const result = addDependency(packageJson, scopedPackageJson, ["lodash", "@types/lodash"]);
+  const result = addDependency(packageJson, scopedPackageJson, {
+    dependencies: ["lodash", "@types/lodash"],
+  });
   assert.equal(result.dependencies?.lodash, "^4.17.21");
   assert.equal(result.dependencies?.["@types/lodash"], "^4.14.170");
 });
