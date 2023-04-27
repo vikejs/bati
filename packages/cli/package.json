@@ -11,18 +11,21 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.18.24",
-    "@batijs/tsup": "workspace:*",
-    "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "@batijs/build": "workspace:*",
-    "@batijs/core": "workspace:*",
     "@batijs/hattip": "workspace:*",
     "@batijs/shared": "workspace:*",
     "@batijs/solid": "workspace:*",
     "@batijs/telefunc": "workspace:*",
-    "citty": "^0.1.1"
+    "@batijs/tsup": "workspace:*",
+    "@types/node": "^16.18.24",
+    "citty": "^0.1.1",
+    "colorette": "^2.0.20",
+    "consola": "^3.1.0",
+    "esbuild": "^0.17.18",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@batijs/build": "workspace:*",
+    "@batijs/core": "workspace:*"
   },
   "bin": "./dist/index.js",
   "exports": {

@@ -16,6 +16,9 @@
     "vite": "^4.3.2",
     "vite-plugin-ssr": "^0.4.117"
   },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./files": "./dist/index.js"
@@ -33,7 +36,11 @@
   "files": [
     "dist/"
   ],
-  "dependencies": {
-    "@batijs/core": "workspace:*"
+  "bati": {
+    "flag": "telefunc",
+    "boilerplate": "./dist/files",
+    "features": [
+      "rpc:telefunc"
+    ]
   }
 }

@@ -133,18 +133,24 @@ importers:
       '@batijs/tsup': workspace:*
       '@types/node': ^16.18.24
       citty: ^0.1.1
+      colorette: ^2.0.20
+      consola: ^3.1.0
+      esbuild: ^0.17.18
       typescript: ^5.0.4
     dependencies:
       '@batijs/build': link:../build
       '@batijs/core': link:../core
+    devDependencies:
       '@batijs/hattip': link:../boilerplates/hattip
       '@batijs/shared': link:../boilerplates/shared
       '@batijs/solid': link:../boilerplates/solid
       '@batijs/telefunc': link:../boilerplates/telefunc
-      citty: 0.1.1
-    devDependencies:
       '@batijs/tsup': link:../tsup
       '@types/node': 16.18.24
+      citty: 0.1.1
+      colorette: 2.0.20
+      consola: 3.1.0
+      esbuild: 0.17.18
       typescript: 5.0.4
 
   packages/core:
@@ -1487,7 +1493,7 @@ packages:
 
   /citty/0.1.1:
     resolution: {integrity: sha512-fL/EEp9TyXlNkgYFQYNqtMJhnAk2tAq8lCST7O5LPn1NrzWPsOKE5wafR7J+8W87oxqolpxNli+w7khq5WP7tg==}
-    dev: false
+    dev: true
 
   /code-block-writer/11.0.3:
     resolution: {integrity: sha512-NiujjUFB4SwScJq2bwbYUtXbZhBSlY6vYzm++3Q6oC+U+injTqfPYFK8wS9COOmb2lueqp0ZRB4nK1VYeHgNyw==}
@@ -1523,6 +1529,10 @@ packages:
 
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+
+  /consola/3.1.0:
+    resolution: {integrity: sha512-rrrJE6rP0qzl/Srg+C9x/AE5Kxfux7reVm1Wh0wCjuXvih6DqZgqDZe8auTD28fzJ9TF0mHlSDrPpWlujQRo1Q==}
+    dev: true
 
   /content-disposition/0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
