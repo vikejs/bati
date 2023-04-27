@@ -138,6 +138,8 @@ function readableFileSize(size: number) {
   return size.toFixed(2) + " " + units[i];
 }
 
+// TODO: make a proper plugin in another file
+// TODO: actually read boilerplates.json for the cli
 export default defineConfig({
   entry: ["index.ts"],
   dts: true,
@@ -153,7 +155,6 @@ export default defineConfig({
         });
 
         build.onEnd(async () => {
-          // TODO: Create a JSON file referencing all boilerplates
           await mkdir(join(__dirname, "dist", "boilerplates"), { recursive: true });
 
           for (const [name, dir] of boilerplates) {
