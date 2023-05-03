@@ -1,5 +1,5 @@
 import { generateCode, loadFile, transformAst, type VikeMeta } from "@batijs/core";
-import { opendir, copyFile, mkdir, writeFile, readFile } from "node:fs/promises";
+import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
