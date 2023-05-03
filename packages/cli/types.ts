@@ -1,7 +1,6 @@
 export interface BatiConfig {
-  flag?: string;
+  flags?: Record<string, string[]>;
   boilerplate?: string;
-  features?: string[];
 }
 
 export interface BoilerplateDef {

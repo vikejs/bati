@@ -1,4 +1,4 @@
-import { type ArgsDef, defineCommand, runMain } from "citty";
+import { type ArgsDef, type BooleanArgDef, defineCommand, runMain } from "citty";
 import exec from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
 import type { VikeMeta } from "@batijs/core";
@@ -25,14 +25,15 @@ async function parseBoilerplates(dir: string): Promise<BoilerplateDef[]> {
 }
 
 function toArg(def: BoilerplateDef): ArgsDef {
-  if (!def.config.flag) return {};
+  if (!def.config.flags) return {};
 
-  return {
-    [def.config.flag]: {
+  return Object.entries(def.config.flags).reduce((acc, [flag]) => {
+    acc[flag] = {
       type: "boolean",
       required: false,
-    },
-  };
+    };
+    return acc;
+  }, {} as Record<string, BooleanArgDef>);
 }
 
 async function run() {
@@ -63,14 +64,16 @@ async function run() {
         .map(([key]) => key);
 
       // push shared boilerplates first
-      for (const bl of boilerplates.filter((b) => !b.config.flag)) {
+      for (const bl of boilerplates.filter((b) => !b.config.flags)) {
         sources.push(join(dir, bl.folder));
       }
 
-      for (const bl of boilerplates) {
-        if (bl.config.flag && flags.includes(bl.config.flag)) {
-          sources.push(join(dir, bl.folder));
-          features.push(...(bl.config.features ?? []));
+      for (const bl of boilerplates.filter((b) => Boolean(b.config.flags))) {
+        for (const [flag, flagFeatures] of Object.entries(bl.config.flags!)) {
+          if (flags.includes(flag)) {
+            sources.push(join(dir, bl.folder));
+            features.push(...(flagFeatures ?? []));
+          }
         }
       }
 

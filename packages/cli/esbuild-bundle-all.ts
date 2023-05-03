@@ -5,7 +5,6 @@ import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import type { Plugin, PluginBuild } from "esbuild";
 import { bold, cyan, green, yellow } from "colorette";
-import { features } from "@batijs/core";
 import type { BatiConfig, BoilerplateDef } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -49,9 +48,8 @@ async function* getBatiPackageJson(build: PluginBuild) {
 
 async function boilerplateFilesToCopy(build: PluginBuild) {
   const arr: ToBeCopied = [];
-  const usedFlags = new Set<string>();
   for await (const [filepath, packageJson] of getBatiPackageJson(build)) {
-    assertBatiConfig(packageJson, filepath, usedFlags);
+    assertBatiConfig(packageJson, filepath);
     if (packageJson.bati?.boilerplate) {
       arr.push({
         folder: packageJson.name,
@@ -63,11 +61,7 @@ async function boilerplateFilesToCopy(build: PluginBuild) {
   return arr;
 }
 
-function assertBatiConfig(
-  packageJson: { bati?: BatiConfig | false; name: string },
-  filepath: string,
-  usedFlags: Set<string>
-) {
+function assertBatiConfig(packageJson: { bati?: BatiConfig | false; name: string }, filepath: string) {
   if (packageJson.bati === false) return;
   if (!packageJson.bati) {
     console.warn(`${yellow("WARN")}: Missing '${bold("bati")}' property in ${cyan(filepath)}`);
@@ -75,30 +69,29 @@ function assertBatiConfig(
   }
   const b = packageJson.bati;
 
-  if (typeof b.flag === "string") {
-    if (usedFlags.has(b.flag)) {
-      throw new Error(`[${packageJson.name}] flag '--${b.flag}' is used by another package`);
+  if (packageJson.name !== "@batijs/shared") {
+    if (!b.flags) {
+      throw new Error(`[${packageJson.name}] 'bati.flags' is missing`);
+    } else if (typeof b.flags !== "object" || Array.isArray(b.flags)) {
+      throw new Error(`[${packageJson.name}] 'bati.flags' must be an object`);
     }
-    usedFlags.add(b.flag);
-  } else if (b.flag) {
-    throw new Error(`[${packageJson.name}] 'bati.flag' must be a string`);
-  } else if (packageJson.name !== "@batijs/shared") {
-    throw new Error(`[${packageJson.name}] 'bati.flag' is missing`);
+  }
+
+  for (const [flag, features] of Object.entries(b.flags ?? {})) {
+    if (!Array.isArray(features)) {
+      throw new Error(`[${packageJson.name}] 'bati.flags.${flag}' must be an array of string`);
+    }
+
+    const unknownFeatures = features.filter((f) => !features.includes(f as any));
+    if (unknownFeatures.length > 0) {
+      throw new Error(
+        `[${packageJson.name}] 'bati.flags.${flag}' has invalid values: ${JSON.stringify(unknownFeatures)}`
+      );
+    }
   }
 
   if (b.boilerplate && typeof b.boilerplate !== "string") {
     throw new Error(`[${packageJson.name}] 'bati.boilerplate' must be a string`);
-  }
-
-  if (b.features) {
-    if (!Array.isArray(b.features)) {
-      throw new Error(`[${packageJson.name}] 'bati.features' must be an array of string`);
-    }
-
-    const unknownFeatures = b.features.filter((f) => !features.includes(f as any));
-    if (unknownFeatures.length > 0) {
-      throw new Error(`[${packageJson.name}] 'bati.features' has invalid values: ${JSON.stringify(unknownFeatures)}`);
-    }
   }
 }
 

@@ -45,10 +45,14 @@
     "dist/"
   ],
   "bati": {
-    "flag": "hattip",
-    "boilerplate": "./dist/files",
-    "features": [
-      "server:hattip"
-    ]
+    "flags": {
+      "hattip": [
+        "server:hattip"
+      ],
+      "authjs": [
+        "auth:authjs"
+      ]
+    },
+    "boilerplate": "./dist/files"
   }
 }
