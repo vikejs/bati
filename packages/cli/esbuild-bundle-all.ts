@@ -1,11 +1,10 @@
 import packageJson from "./package.json" assert { type: "json" };
 import { dirname, join, normalize } from "node:path";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, cp, writeFile, stat } from "node:fs/promises";
+import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import type { PluginBuild, Plugin } from "esbuild";
-import { consola } from "consola";
-import { bold, cyan, yellow, green } from "colorette";
+import type { Plugin, PluginBuild } from "esbuild";
+import { bold, cyan, green, yellow } from "colorette";
 import { features } from "@batijs/core";
 import type { BatiConfig, BoilerplateDef } from "./types";
 
@@ -71,7 +70,7 @@ function assertBatiConfig(
 ) {
   if (packageJson.bati === false) return;
   if (!packageJson.bati) {
-    consola.warn(`Missing '${bold("bati")}' property in ${cyan(filepath)}`);
+    console.warn(`${yellow("WARN")}: Missing '${bold("bati")}' property in ${cyan(filepath)}`);
     return;
   }
   const b = packageJson.bati;
@@ -142,10 +141,11 @@ const esbuildPlugin: Plugin = {
           force: true,
           recursive: true,
         });
+        console.log(`${yellow("BLP")} ${join("dist", "boilerplates")}/${cyan(bl.folder)}`);
       }
 
       const stats = await createBoilerplatesJson(boilerplates);
-      consola.log(
+      console.log(
         `${yellow("BLP")} ${join("dist", "boilerplates", "boilerplates.json")} ${green(readableFileSize(stats.size))}`
       );
     });
