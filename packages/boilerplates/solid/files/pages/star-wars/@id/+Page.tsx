@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import type { MovieDetails } from "../types";
 
 export default function Page(props: { movie: MovieDetails }) {

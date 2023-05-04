@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import { For } from "solid-js";
 import type { Movie } from "../types";
 

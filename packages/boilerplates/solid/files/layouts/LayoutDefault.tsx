@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import "./style.css";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link";

@@ -1,5 +1,3 @@
-/** @jsxImportSource solid-js */
-
 import { createMemo } from "solid-js";
 import { usePageContext } from "solide/usePageContext";
 
