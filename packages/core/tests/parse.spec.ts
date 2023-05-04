@@ -1,7 +1,7 @@
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
 import { parseModule } from "magicast";
-import { transformAst } from "../src/parse.js";
+import { transformAndGenerate, transformAst } from "../src/parse.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
 import type { VikeMeta } from "../src/types.js";
 
@@ -164,8 +164,8 @@ Suite("ternary:other", () => {
   assertEquivalentAst(tree, ast(`null`));
 });
 
-Suite("import cleanup:react", () => {
-  const tree = transformAst(
+Suite("import cleanup:react", async () => {
+  const code = await transformAndGenerate(
     ast(
       `import react from 'react';
     import { solid } from 'solid';
@@ -183,7 +183,7 @@ Suite("import cleanup:react", () => {
   );
 
   assertEquivalentAst(
-    tree,
+    ast(code),
     ast(
       `import react from 'react';
     const framework = react();`
@@ -191,8 +191,8 @@ Suite("import cleanup:react", () => {
   );
 });
 
-Suite("import cleanup:solid", () => {
-  const tree = transformAst(
+Suite("import cleanup:solid", async () => {
+  const code = await transformAndGenerate(
     ast(
       `import react from 'react';
     import { solid } from 'solid';
@@ -210,7 +210,7 @@ Suite("import cleanup:solid", () => {
   );
 
   assertEquivalentAst(
-    tree,
+    ast(code),
     ast(
       `import { solid } from 'solid';
     const framework = solid();`
@@ -218,8 +218,8 @@ Suite("import cleanup:solid", () => {
   );
 });
 
-Suite("import cleanup:other", () => {
-  const tree = transformAst(
+Suite("import cleanup:other", async () => {
+  const code = await transformAndGenerate(
     ast(
       `import react from 'react';
     import { solid } from 'solid';
@@ -236,7 +236,7 @@ Suite("import cleanup:other", () => {
     }
   );
 
-  assertEquivalentAst(tree, ast(`const framework = null;`));
+  assertEquivalentAst(ast(code), ast(`const framework = null;`));
 });
 
 Suite("remove VIKE_REMOVE", () => {
