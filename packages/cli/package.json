@@ -1,9 +1,10 @@
 {
   "name": "@batijs/cli",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
   "type": "module",
   "scripts": {
+    "prerelease": "rm -rf ./dist",
     "prepublishOnly": "pnpm run build",
     "build": "rm -rf dist && tsup"
   },
@@ -21,7 +22,11 @@
   },
   "dependencies": {
     "@batijs/build": "workspace:*",
-    "@batijs/core": "workspace:*"
+    "@batijs/core": "workspace:*",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.39.0",
+    "eslint-plugin-unused-imports": "^2.0.0"
   },
   "bin": "./dist/index.js",
   "exports": {
