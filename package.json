@@ -4,7 +4,7 @@
   "version": "0.0.3",
   "description": "@batijs monorepo",
   "scripts": {
-    "release": "pnpm -r prerelease && bumpp -r --commit --push --tag && pnpm -r publish",
+    "release": "pnpm -r prerelease && bumpp -r --commit --push --tag && pnpm run publish",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
     "build": "pnpm -r build"
