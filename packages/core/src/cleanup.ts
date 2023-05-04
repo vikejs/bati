@@ -1,4 +1,8 @@
 import { ESLint } from "eslint";
+// force bundle those dependencies
+import "@typescript-eslint/parser";
+import "@typescript-eslint/eslint-plugin";
+import "eslint-plugin-unused-imports";
 
 export const eslint = new ESLint({
   useEslintrc: false,
