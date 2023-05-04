@@ -14,6 +14,8 @@ export default defineConfig({
     js: `import { fileURLToPath as topFileURLToPath } from 'url';
 import { createRequire as topLevelCreateRequire } from 'module';
 const require = topLevelCreateRequire(import.meta.url);
+const __requireResolve = require.resolve;
+require.resolve = (x) => x === 'espree' ? undefined : __requireResolve(x);
 `,
   },
 });
