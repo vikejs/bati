@@ -1,17 +1,7 @@
-import { ESLint } from "eslint";
-// force bundle those dependencies
-import "@typescript-eslint/parser";
-import "@typescript-eslint/eslint-plugin";
-import "eslint-plugin-unused-imports";
+// @ts-ignore
+import importFixer from "@magne4000/import-fixer";
 
-export const eslint = new ESLint({
-  useEslintrc: false,
-  fix: true,
-  overrideConfig: {
-    parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "unused-imports"],
-    rules: {
-      "unused-imports/no-unused-imports": "error",
-    },
-  },
-});
+export function cleanImports(code: string): string {
+  const result = importFixer.fixImport("a.ts", code, [], true);
+  return result.output;
+}

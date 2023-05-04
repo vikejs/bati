@@ -1,7 +1,7 @@
 import { namedTypes, visit } from "ast-types";
 import { type ASTNode, generateCode } from "magicast";
 import type { VikeMeta } from "./types.js";
-import { eslint } from "./cleanup.js";
+import { cleanImports } from "./cleanup.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "VIKE_META");
@@ -77,12 +77,10 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export async function transformAndGenerate(tree: ASTNode, meta: VikeMeta) {
+export function transformAndGenerate(tree: ASTNode, meta: VikeMeta) {
   const ast = transformAst(tree, meta);
 
   const code = generateCode(ast).code;
 
-  const linted = await eslint.lintText(code);
-
-  return linted[0].output ?? code;
+  return cleanImports(code);
 }

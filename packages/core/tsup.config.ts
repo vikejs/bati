@@ -1,5 +1,4 @@
 import { defineConfig } from "@batijs/tsup";
-import esbuildFixEsqueryExportsPlugin from "./esbuild-fix-esquery-exports.js";
 
 export default defineConfig([
   {
@@ -9,7 +8,6 @@ export default defineConfig([
     bundle: true,
     outDir: "./dist",
     external: [],
-    esbuildPlugins: [esbuildFixEsqueryExportsPlugin],
     shims: true,
     platform: "node",
     banner: {

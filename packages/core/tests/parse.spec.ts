@@ -167,8 +167,9 @@ Suite("ternary:other", () => {
 Suite("import cleanup:react", async () => {
   const code = await transformAndGenerate(
     ast(
-      `import react from 'react';
+      `
     import { solid } from 'solid';
+    import react from 'react';
     
     const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
@@ -194,8 +195,9 @@ Suite("import cleanup:react", async () => {
 Suite("import cleanup:solid", async () => {
   const code = await transformAndGenerate(
     ast(
-      `import react from 'react';
+      `
     import { solid } from 'solid';
+    import react from 'react';
     
     const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
@@ -221,8 +223,9 @@ Suite("import cleanup:solid", async () => {
 Suite("import cleanup:other", async () => {
   const code = await transformAndGenerate(
     ast(
-      `import react from 'react';
+      `
     import { solid } from 'solid';
+    import react from 'react';
     
     const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
