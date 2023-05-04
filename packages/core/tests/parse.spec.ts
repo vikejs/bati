@@ -1,5 +1,4 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import { assert, test } from "vitest";
 import { parseModule } from "magicast";
 import { transformAndGenerate, transformAst } from "../src/parse.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
@@ -15,9 +14,7 @@ function testAst(code: string, meta: VikeMeta) {
   return transformAst(tree, meta);
 }
 
-const Suite = suite("transformAst");
-
-Suite("includes:react", () => {
+test("includes:react", () => {
   const tree = testAst(
     `if (import.meta.VIKE_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
@@ -40,7 +37,7 @@ Suite("includes:react", () => {
   );
 });
 
-Suite("includes:solid", () => {
+test("includes:solid", () => {
   const tree = testAst(
     `if (import.meta.VIKE_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
@@ -53,7 +50,7 @@ Suite("includes:solid", () => {
   assertEquivalentAst(tree, ast(""));
 });
 
-Suite("if-elseif-else:react", () => {
+test("if-elseif-else:react", () => {
   const tree = testAst(
     `if (import.meta.VIKE_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -70,7 +67,7 @@ Suite("if-elseif-else:react", () => {
   assertEquivalentAst(tree, ast(`content = { ...content, jsx: "react" };`));
 });
 
-Suite("if-elseif-else:solid", () => {
+test("if-elseif-else:solid", () => {
   const tree = testAst(
     `if (import.meta.VIKE_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -87,7 +84,7 @@ Suite("if-elseif-else:solid", () => {
   assertEquivalentAst(tree, ast(`content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`));
 });
 
-Suite("if-elseif-else:other", () => {
+test("if-elseif-else:other", () => {
   const tree = testAst(
     `if (import.meta.VIKE_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -104,7 +101,7 @@ Suite("if-elseif-else:other", () => {
   assertEquivalentAst(tree, ast(`console.log('NOTHING TO DO');`));
 });
 
-Suite("external variable", () => {
+test("external variable", () => {
   assert.throws(
     () =>
       testAst(
@@ -115,11 +112,11 @@ Suite("external variable", () => {
           VIKE_MODULES: ["framework:react"],
         }
       ),
-    (err: unknown) => err instanceof ReferenceError
+    ReferenceError
   );
 });
 
-Suite("ternary:react", () => {
+test("ternary:react", () => {
   const tree = testAst(
     `import.meta.VIKE_MODULES.includes("framework:react")
     ? 1
@@ -134,7 +131,7 @@ Suite("ternary:react", () => {
   assertEquivalentAst(tree, ast(`1`));
 });
 
-Suite("ternary:solid", () => {
+test("ternary:solid", () => {
   const tree = testAst(
     `import.meta.VIKE_MODULES.includes("framework:react")
     ? 1
@@ -149,7 +146,7 @@ Suite("ternary:solid", () => {
   assertEquivalentAst(tree, ast(`2`));
 });
 
-Suite("ternary:other", () => {
+test("ternary:other", () => {
   const tree = testAst(
     `import.meta.VIKE_MODULES.includes("framework:react")
     ? 1
@@ -164,7 +161,7 @@ Suite("ternary:other", () => {
   assertEquivalentAst(tree, ast(`null`));
 });
 
-Suite("import cleanup:react", async () => {
+test("import cleanup:react", async () => {
   const code = await transformAndGenerate(
     ast(
       `
@@ -192,7 +189,7 @@ Suite("import cleanup:react", async () => {
   );
 });
 
-Suite("import cleanup:solid", async () => {
+test("import cleanup:solid", async () => {
   const code = await transformAndGenerate(
     ast(
       `
@@ -220,7 +217,7 @@ Suite("import cleanup:solid", async () => {
   );
 });
 
-Suite("import cleanup:other", async () => {
+test("import cleanup:other", async () => {
   const code = await transformAndGenerate(
     ast(
       `
@@ -242,12 +239,10 @@ Suite("import cleanup:other", async () => {
   assertEquivalentAst(ast(code), ast(`const framework = null;`));
 });
 
-Suite("remove VIKE_REMOVE", () => {
+test("remove VIKE_REMOVE", () => {
   const tree = transformAst(ast(`const a = [import.meta.VIKE_REMOVE, 'a']`), {
     VIKE_MODULES: ["framework:vue"],
   });
 
   assertEquivalentAst(tree, ast(`const a = ['a']`));
 });
-
-Suite.run();

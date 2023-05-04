@@ -1,7 +1,6 @@
-import { test } from "uvu";
-import * as assert from "uvu/assert";
-import { addDependency } from "../../src/index.js";
+import { assert, test } from "vitest";
 import type { PackageJsonDeps } from "../../src/index.js";
+import { addDependency } from "../../src/index.js";
 
 // Tests that new dependencies are added to packageJson when keys parameter contains valid keys from scopedPackageJson dependencies/devDependencies.
 test("test_add_dependency_with_valid_keys", () => {
@@ -80,5 +79,3 @@ test("test_add_dependency_with_dev_dependencies", () => {
   assert.equal(result.dependencies?.lodash, "^4.17.21");
   assert.equal(result.dependencies?.["@types/lodash"], "^4.14.170");
 });
-
-test.run();

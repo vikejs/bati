@@ -5,7 +5,8 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "NODE_OPTIONS='--loader tsx' uvu",
+    "test": "vitest",
+    "test:ci": "vitest run",
     "build": "tsup"
   },
   "keywords": [],
@@ -19,9 +20,8 @@
     "ast-types": "^0.14.2",
     "esbuild": "^0.17.18",
     "magicast": "^0.2.4",
-    "tsx": "^3.12.7",
     "typescript": "^5.0.4",
-    "uvu": "^0.5.6"
+    "vitest": "^0.31.0"
   },
   "exports": {
     ".": "./dist/index.js"

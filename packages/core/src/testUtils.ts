@@ -1,12 +1,12 @@
-import { ok, equal } from "uvu/assert";
-import { generateCode, type ASTNode } from "magicast";
+import { assert } from "vitest";
+import { type ASTNode, generateCode } from "magicast";
 import types from "ast-types";
 
 export function assertEquivalentAst(ast1: ASTNode, ast2: ASTNode) {
   if (types.astNodesAreEquivalent(ast1, ast2)) {
-    return ok(true);
+    return assert.ok(true);
   } else {
-    return equal(
+    return assert.equal(
       generateCode(ast1, {
         tabWidth: 2,
         reuseWhitespace: false,
