@@ -1,10 +1,11 @@
 {
   "name": "@batijs/shared",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "prerelease": "rm -rf ./dist",
     "build": "tsup"
   },
   "keywords": [],
