@@ -6,6 +6,7 @@
   "scripts": {
     "prerelease": "rm -rf ./dist",
     "prepublishOnly": "pnpm run build",
+    "test": "vitest run --test-timeout=50000",
     "build": "rm -rf dist && tsup"
   },
   "keywords": [],
@@ -20,7 +21,10 @@
     "esbuild": "^0.17.18",
     "espree": "^9.5.1",
     "execa": "^7.1.1",
-    "typescript": "^5.0.4"
+    "node-fetch": "^3.3.1",
+    "typescript": "^5.0.4",
+    "vitest": "^0.31.0",
+    "wait-for-localhost": "^4.0.1"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
