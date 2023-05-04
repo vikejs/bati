@@ -7,4 +7,7 @@ export default defineConfig({
   outDir: "./dist",
   esbuildPlugins: [esbuildBundleAllPlugin],
   platform: "node",
+  banner: {
+    js: "#!/usr/bin/env node",
+  },
 });
