@@ -1,4 +1,4 @@
-import { generateCode, loadFile, transformAst, type VikeMeta } from "@batijs/core";
+import { loadFile, transformAndGenerate, type VikeMeta } from "@batijs/core";
 import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -61,9 +61,7 @@ export default async function main(options: { source: string | string[]; dist: s
         continue;
       } else if (parsed.name.startsWith("$$") && parsed.ext.match(/\.[tj]sx?$/)) {
         const mod = await loadFile(p);
-        transformAst(mod.$ast, meta);
-
-        const fileContent = generateCode(mod).code;
+        const fileContent = await transformAndGenerate(mod.$ast, meta);
 
         if (fileContent) {
           await safeWriteFile(target, fileContent);

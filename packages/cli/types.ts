@@ -1,5 +1,5 @@
 export interface BatiConfig {
-  flags?: Record<string, string[]>;
+  flag?: string;
   boilerplate?: string;
 }
 

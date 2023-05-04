@@ -1,6 +1,7 @@
-import { namedTypes, visit, type NodePath } from "ast-types";
-import { generateCode, type ASTNode } from "magicast";
+import { namedTypes, visit } from "ast-types";
+import { type ASTNode, generateCode } from "magicast";
 import type { VikeMeta } from "./types.js";
+import { eslint } from "./cleanup.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "VIKE_META");
@@ -10,9 +11,6 @@ function evalCondition(code: string, meta: VikeMeta = {}) {
 }
 
 export function transformAst(tree: ASTNode, meta: VikeMeta) {
-  const imports = new Map<string, InstanceType<typeof NodePath<namedTypes.ImportDeclaration>>>();
-  const identifiers = new Set<string>();
-
   visit(tree, {
     visitIdentifier(path) {
       if (path.value.name === "VIKE_REMOVE") {
@@ -27,19 +25,6 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
         path.parent.prune();
         this.traverse(path);
         return;
-      }
-
-      if (
-        namedTypes.ImportDefaultSpecifier.check(path.parent.value) ||
-        namedTypes.ImportSpecifier.check(path.parent.value)
-      ) {
-        let importParent = path.parent;
-        while (importParent.value && importParent.value.type !== "ImportDeclaration") {
-          importParent = importParent.parent;
-        }
-        imports.set(path.value.name, importParent);
-      } else {
-        identifiers.add(path.value.name);
       }
       this.traverse(path);
     },
@@ -62,10 +47,8 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
         },
       });
 
-      if (!found) {
-        this.traverse(path);
-        return;
-      }
+      this.traverse(path);
+      if (!found) return;
 
       if (!evalCondition(generateCode(path.value.test).code, meta)) {
         // else-block exists
@@ -88,20 +71,18 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
           path.replace(path.value.consequent);
         }
       }
-
-      // path was modified, so scan the parent again if possible
-      this.traverse(path.parent ? path.parent : path);
     },
   });
 
-  const importsToRemove = new Set(
-    Array.from(imports.entries())
-      .filter(([name]) => !identifiers.has(name))
-      .map(([, node]) => node)
-  );
-
-  // Remove unused imports
-  importsToRemove.forEach((node) => node.prune());
-
   return tree;
+}
+
+export async function transformAndGenerate(tree: ASTNode, meta: VikeMeta) {
+  const ast = transformAst(tree, meta);
+
+  const code = generateCode(ast).code;
+
+  const linted = await eslint.lintText(code);
+
+  return linted[0].output ?? code;
 }

@@ -15,12 +15,10 @@
     "@hattip/adapter-node": "^0.0.33",
     "@hattip/router": "^0.0.33",
     "@hattip/vite": "^0.0.33",
-    "@types/express": "^4.17.17",
     "@types/node": "^16.18.24",
-    "express": "^4.18.2",
     "hattip": "^0.0.33",
     "telefunc": "^0.1.52",
-    "vike-authjs": "^0.0.1",
+    "vike-authjs": "^0.0.2",
     "vite": "^4.3.2",
     "vite-plugin-ssr": "^0.4.117"
   },
@@ -45,14 +43,7 @@
     "dist/"
   ],
   "bati": {
-    "flags": {
-      "hattip": [
-        "server:hattip"
-      ],
-      "authjs": [
-        "auth:authjs"
-      ]
-    },
+    "flag": "hattip",
     "boilerplate": "./dist/files"
   }
 }

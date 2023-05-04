@@ -1,7 +1,7 @@
-import { type ArgsDef, type BooleanArgDef, defineCommand, runMain } from "citty";
+import { type ArgsDef, defineCommand, runMain } from "citty";
 import exec from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import type { VikeMeta } from "@batijs/core";
+import { flags as coreFlags, type VikeMeta } from "@batijs/core";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -24,16 +24,15 @@ async function parseBoilerplates(dir: string): Promise<BoilerplateDef[]> {
   return JSON.parse(await readFile(join(dir, "boilerplates.json"), "utf-8"));
 }
 
-function toArg(def: BoilerplateDef): ArgsDef {
-  if (!def.config.flags) return {};
+function toArg(flag: string | undefined): ArgsDef {
+  if (!flag) return {};
 
-  return Object.entries(def.config.flags).reduce((acc, [flag]) => {
-    acc[flag] = {
+  return {
+    [flag]: {
       type: "boolean",
       required: false,
-    };
-    return acc;
-  }, {} as Record<string, BooleanArgDef>);
+    },
+  };
 }
 
 async function run() {
@@ -54,7 +53,7 @@ async function run() {
           required: true,
         },
       },
-      ...boilerplates.map(toArg)
+      ...Array.from(coreFlags.keys()).map(toArg)
     ),
     async run({ args }) {
       const sources: string[] = [];
@@ -64,23 +63,19 @@ async function run() {
         .map(([key]) => key);
 
       // push shared boilerplates first
-      for (const bl of boilerplates.filter((b) => !b.config.flags)) {
+      for (const bl of boilerplates.filter((b) => !b.config.flag)) {
         sources.push(join(dir, bl.folder));
       }
 
-      for (const bl of boilerplates.filter((b) => Boolean(b.config.flags))) {
-        for (const [flag, flagFeatures] of Object.entries(bl.config.flags!)) {
-          if (flags.includes(flag)) {
-            sources.push(join(dir, bl.folder));
-            features.push(...(flagFeatures ?? []));
-          }
+      for (const bl of boilerplates.filter((b) => Boolean(b.config.flag))) {
+        if (flags.includes(bl.config.flag!)) {
+          sources.push(join(dir, bl.folder));
         }
       }
 
-      // TODO
-      // if (args.authjs) {
-      //   features.push("auth:authjs");
-      // }
+      for (const flag of flags) {
+        features.push(coreFlags.get(flag)!);
+      }
 
       await exec(
         {

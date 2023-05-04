@@ -1,10 +1,10 @@
-import packageJson from "./package.json" assert { type: "json" };
-import { dirname, join, normalize } from "node:path";
-import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import type { Plugin, PluginBuild } from "esbuild";
+import type { Plugin } from "esbuild";
 import { bold, cyan, green, yellow } from "colorette";
+import { $ } from "execa";
+import { flags } from "@batijs/core";
 import type { BatiConfig, BoilerplateDef } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,43 +12,39 @@ const __dirname = dirname(__filename);
 
 type ToBeCopied = BoilerplateDef[];
 
-async function* getBatiPackages(build: PluginBuild) {
-  const batiPackages = Object.keys(packageJson.devDependencies).filter((pkg) => pkg.match(/^@batijs\//));
+interface PnpmPackageInfo {
+  name: string;
+  version: string;
+  path: string;
+  private: boolean;
+}
 
-  for (const pkg of batiPackages) {
-    const result = await build.resolve(pkg, {
-      kind: "import-rule",
-      resolveDir: ".",
-    });
+async function getRecursivePackages() {
+  const { stdout } = await $`pnpm m ls --json --depth=-1`;
 
-    if (result.errors.length > 0) {
-      throw new Error(`Error occured while trying to load ${pkg}: ${JSON.stringify(result.errors)}`);
-    }
+  return JSON.parse(stdout) as PnpmPackageInfo[];
+}
 
-    yield result.path;
+async function getBatiPackages() {
+  const batiPackages = (await getRecursivePackages()).filter(
+    (pkg) => pkg.name.startsWith("@batijs/") && !pkg.private && pkg.path.includes("bati/packages/boilerplates/")
+  );
+
+  return batiPackages.map((pkg) => pkg.path);
+}
+
+async function* getBatiPackageJson() {
+  for (const path of await getBatiPackages()) {
+    const currentPath = join(path, "package.json");
+
+    const content = JSON.parse(await readFile(currentPath, "utf-8"));
+    yield [currentPath, content] as const;
   }
 }
 
-async function* getBatiPackageJson(build: PluginBuild) {
-  for await (const path of getBatiPackages(build)) {
-    let maxDepth = 10;
-    let currentPath = path;
-
-    while (--maxDepth > 0) {
-      currentPath = normalize(join(currentPath, "..", "..", "package.json"));
-
-      if (existsSync(currentPath)) {
-        const content = JSON.parse(await readFile(currentPath, "utf-8"));
-        yield [currentPath, content] as const;
-        break;
-      }
-    }
-  }
-}
-
-async function boilerplateFilesToCopy(build: PluginBuild) {
+async function boilerplateFilesToCopy() {
   const arr: ToBeCopied = [];
-  for await (const [filepath, packageJson] of getBatiPackageJson(build)) {
+  for await (const [filepath, packageJson] of getBatiPackageJson()) {
     assertBatiConfig(packageJson, filepath);
     if (packageJson.bati?.boilerplate) {
       arr.push({
@@ -70,24 +66,15 @@ function assertBatiConfig(packageJson: { bati?: BatiConfig | false; name: string
   const b = packageJson.bati;
 
   if (packageJson.name !== "@batijs/shared") {
-    if (!b.flags) {
-      throw new Error(`[${packageJson.name}] 'bati.flags' is missing`);
-    } else if (typeof b.flags !== "object" || Array.isArray(b.flags)) {
-      throw new Error(`[${packageJson.name}] 'bati.flags' must be an object`);
+    if (!b.flag) {
+      throw new Error(`[${packageJson.name}] 'bati.flag' is missing`);
+    } else if (typeof b.flag !== "string") {
+      throw new Error(`[${packageJson.name}] 'bati.flags' must be a string`);
     }
   }
 
-  for (const [flag, features] of Object.entries(b.flags ?? {})) {
-    if (!Array.isArray(features)) {
-      throw new Error(`[${packageJson.name}] 'bati.flags.${flag}' must be an array of string`);
-    }
-
-    const unknownFeatures = features.filter((f) => !features.includes(f as any));
-    if (unknownFeatures.length > 0) {
-      throw new Error(
-        `[${packageJson.name}] 'bati.flags.${flag}' has invalid values: ${JSON.stringify(unknownFeatures)}`
-      );
-    }
+  if (b.flag && !flags.has(b.flag)) {
+    throw new Error(`[${packageJson.name}] 'bati.flag' has invalid value: ${b.flag}`);
   }
 
   if (b.boilerplate && typeof b.boilerplate !== "string") {
@@ -118,13 +105,9 @@ function readableFileSize(size: number) {
 const esbuildPlugin: Plugin = {
   name: "BLP",
   setup(build) {
-    let boilerplates: ToBeCopied;
-
-    build.onStart(async () => {
-      boilerplates = await boilerplateFilesToCopy(build);
-    });
-
     build.onEnd(async () => {
+      const boilerplates = await boilerplateFilesToCopy();
+
       await mkdir(join(__dirname, "dist", "boilerplates"), { recursive: true });
 
       for (const bl of boilerplates) {
