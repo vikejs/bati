@@ -19,11 +19,12 @@
     "esbuild": "^0.17.18",
     "execa": "^7.1.1",
     "@batijs/build": "workspace:*",
-    "@batijs/core": "workspace:*",
     "espree": "^9.5.1",
     "typescript": "^5.0.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
   "bin": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
