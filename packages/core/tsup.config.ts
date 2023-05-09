@@ -7,7 +7,7 @@ export default defineConfig([
     dts: true,
     bundle: true,
     outDir: "./dist",
-    external: [],
+    external: ["acorn-stage3", "hermes-parser", "tenko"],
     shims: true,
     platform: "node",
     banner: {

@@ -79,7 +79,9 @@ export default async function main(options: { source: string | string[]; dist: s
         targets.set(target, () => fileContent);
       } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsVikeMeta(p))) {
         const mod = await loadFile(p);
-        const fileContent = await transformAndGenerate(mod.$ast, meta);
+        const fileContent = await transformAndGenerate(mod.$ast, meta, {
+          filepath: p,
+        });
 
         if (fileContent) {
           await safeWriteFile(target, fileContent);

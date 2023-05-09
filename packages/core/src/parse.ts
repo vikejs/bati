@@ -94,10 +94,10 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export function transformAndGenerate(tree: ASTNode, meta: VikeMeta) {
+export function transformAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
   const ast = transformAst(tree, meta);
 
   const code = generateCode(ast).code;
 
-  return cleanImports(code);
+  return cleanImports(code, options);
 }
