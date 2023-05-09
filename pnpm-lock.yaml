@@ -1,5 +1,8 @@
 lockfileVersion: 5.4
 
+overrides:
+  recast: npm:@putout/recast@1.12.1
+
 importers:
 
   .:
@@ -1002,6 +1005,17 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
+  /@putout/recast/1.12.1:
+    resolution: {integrity: sha512-JZxnW1lx9XuedebCEnBphnF6rsZVg9cGjQ2wdzYUT3l/zGDpc7Q1F9QqhdOypRziCjmpXyQFazydaQUqSD1kWA==}
+    engines: {node: '>=12'}
+    dependencies:
+      assert: 2.0.0
+      ast-types: 0.16.1
+      esprima: 4.0.1
+      source-map: 0.6.1
+      tslib: 2.5.0
+    dev: true
+
   /@ts-morph/common/0.13.0:
     resolution: {integrity: sha512-fEJ6j7Cu8yiWjA4UmybOBH9Efgb/64ZTWuvCF4KysGu4xz8ettfyaqFt8WZ1btCxXsGZJjZ2/3svOF6rL+UFdQ==}
     dependencies:
@@ -1450,8 +1464,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /ast-types/0.15.2:
-    resolution: {integrity: sha512-c27loCv9QkZinsa5ProX751khO9DJl/AcB5c2KNtA6NRvHKS0PgLfcftz72KVq504vB0Gku5s2kUZzDBvQWvHg==}
+  /ast-types/0.16.1:
+    resolution: {integrity: sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==}
     engines: {node: '>=4'}
     dependencies:
       tslib: 2.5.0
@@ -2785,7 +2799,7 @@ packages:
     dependencies:
       '@babel/parser': 7.21.8
       '@babel/types': 7.21.5
-      recast: 0.22.0
+      recast: /@putout/recast/1.12.1
     dev: true
 
   /md5-hex/3.0.1:
@@ -3376,17 +3390,6 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
-
-  /recast/0.22.0:
-    resolution: {integrity: sha512-5AAx+mujtXijsEavc5lWXBPQqrM4+Dl5qNH96N2aNeuJFUzpiiToKPsxQD/zAIJHspz7zz0maX0PCtCTFVlixQ==}
-    engines: {node: '>= 4'}
-    dependencies:
-      assert: 2.0.0
-      ast-types: 0.15.2
-      esprima: 4.0.1
-      source-map: 0.6.1
-      tslib: 2.5.0
-    dev: true
 
   /resolve-from/4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
