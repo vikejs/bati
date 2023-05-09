@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { prepare } from "./utils";
 
-describe.concurrent("basic + telefunc", () => {
-  const { fetch } = prepare(["solid", "express", "telefunc"]);
+describe.concurrent("solid + hattip", () => {
+  const { fetch } = prepare(["solid", "hattip"]);
 
   test("home", async () => {
     const res = await fetch("/");
@@ -12,7 +12,6 @@ describe.concurrent("basic + telefunc", () => {
 
   test("auth/signin", async () => {
     const res = await fetch("/api/auth/signin");
-    expect(res.status).toBe(200);
     expect(await res.text()).toContain('{"is404":true}');
   });
 
@@ -20,6 +19,6 @@ describe.concurrent("basic + telefunc", () => {
     const res = await fetch("/_telefunc", {
       method: "post",
     });
-    expect(await res.text()).not.toContain('{"is404":true}');
+    expect(await res.text()).toContain('{"is404":true}');
   });
 });

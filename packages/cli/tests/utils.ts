@@ -1,11 +1,11 @@
-import { execa } from "execa";
-import { beforeAll } from "vitest";
+import { execa, type ExecaChildProcess } from "execa";
+import { afterAll, beforeAll } from "vitest";
 import nodeFetch from "node-fetch";
 import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "fs/promises";
 import { join } from "node:path";
-import waitForLocalhost from "wait-for-localhost";
 import getPort from "get-port";
+import waitForLocalhost from "wait-for-localhost";
 
 interface GlobalContext {
   tmpdir: string;
@@ -27,20 +27,21 @@ function runPnpmInstall(context: GlobalContext) {
 
 async function runDevServer(context: GlobalContext) {
   const port = await getPort();
-  const server = execa("pnpm", ["run", "dev"], {
+  const server = execa("pnpm", ["run", "dev", "--port", String(port)], {
     cwd: context.tmpdir,
     env: {
       PORT: String(port),
     },
   });
 
-  await waitForLocalhost({ port });
+  await waitForLocalhost({ port, useGet: true });
 
   return { server, port };
 }
 
 export function prepare(flags: string[]) {
   let port: number;
+  let server: ExecaChildProcess<string> | undefined = undefined;
   const context: GlobalContext = {
     tmpdir: "",
   };
@@ -51,12 +52,13 @@ export function prepare(flags: string[]) {
     await runPnpmInstall(context);
     const devServer = await runDevServer(context);
     port = devServer.port;
+    server = devServer.server;
+  }, 30000);
 
-    return async () => {
-      devServer.server.kill();
-      await rm(context.tmpdir, { recursive: true, force: true });
-    };
-  }, 50000);
+  afterAll(async () => {
+    server?.kill();
+    await rm(context.tmpdir, { recursive: true, force: true });
+  }, 30000);
 
   return {
     fetch(path: string, init?: Parameters<typeof fetch>[1]) {

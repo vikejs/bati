@@ -12,7 +12,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
   }
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
-    devDependencies: ["@hattip/vite"],
+    devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
     dependencies: [
       "@hattip/router",
       "hattip",
