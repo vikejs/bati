@@ -9,6 +9,8 @@ import waitForLocalhost from "wait-for-localhost";
 
 interface GlobalContext {
   tmpdir: string;
+  port: number;
+  server: ExecaChildProcess<string> | undefined;
 }
 
 async function initTmpDir(context: GlobalContext) {
@@ -25,44 +27,45 @@ function runPnpmInstall(context: GlobalContext) {
   });
 }
 
+async function initPort(context: GlobalContext) {
+  context.port = await getPort();
+}
+
 async function runDevServer(context: GlobalContext) {
-  const port = await getPort();
-  const server = execa("pnpm", ["run", "dev", "--port", String(port)], {
+  context.server = execa("pnpm", ["run", "dev", "--port", String(context.port)], {
     cwd: context.tmpdir,
     env: {
-      PORT: String(port),
+      PORT: String(context.port),
     },
   });
 
-  await waitForLocalhost({ port, useGet: true });
+  await waitForLocalhost({ port: context.port, useGet: true });
 
-  return { server, port };
+  return { server: context.server, port: context.port };
 }
 
 export function prepare(flags: string[]) {
-  let port: number;
-  let server: ExecaChildProcess<string> | undefined = undefined;
   const context: GlobalContext = {
     tmpdir: "",
+    port: 0,
+    server: undefined,
   };
 
   beforeAll(async () => {
     await initTmpDir(context);
     await execCli(context, flags);
-    await runPnpmInstall(context);
-    const devServer = await runDevServer(context);
-    port = devServer.port;
-    server = devServer.server;
+    await Promise.all([runPnpmInstall(context), initPort(context)]);
+    await runDevServer(context);
   }, 30000);
 
   afterAll(async () => {
-    server?.kill();
+    context.server?.kill();
     await rm(context.tmpdir, { recursive: true, force: true });
   }, 30000);
 
   return {
     fetch(path: string, init?: Parameters<typeof fetch>[1]) {
-      return nodeFetch(`http://localhost:${port}${path}`, init);
+      return nodeFetch(`http://localhost:${context.port}${path}`, init);
     },
   };
 }
