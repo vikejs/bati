@@ -1,5 +1,6 @@
 {
   "name": "@batijs/express",
+  "private": true,
   "version": "0.0.12",
   "description": "",
   "type": "module",
@@ -24,20 +25,6 @@
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./files": "./dist/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ],
-      "files": [
-        "./dist/index.d.ts"
-      ]
-    }
   },
   "files": [
     "dist/"

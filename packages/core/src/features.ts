@@ -6,6 +6,7 @@ export const features = [
   // "error:logrocket", "error:sentry",
   "rpc:telefunc", // "rpc:trpc",
   "server:hattip", "server:express",
+  "uikit:tailwindcss",
   // "clientRouting", "prerendering",
 ] as const;
 

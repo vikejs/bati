@@ -1,5 +1,6 @@
 {
   "name": "@batijs/shared",
+  "private": true,
   "version": "0.0.12",
   "description": "",
   "type": "module",
@@ -18,20 +19,6 @@
     "esbuild": "^0.17.18",
     "esbuild-plugin-copy": "^2.1.1",
     "vite": "^4.3.5"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./files": "./dist/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ],
-      "files": [
-        "./dist/index.d.ts"
-      ]
-    }
   },
   "files": [
     "dist/"
