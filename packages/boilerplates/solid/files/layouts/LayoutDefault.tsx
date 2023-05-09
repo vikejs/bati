@@ -1,4 +1,6 @@
 import "./style.css";
+//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+import "./tailwind.css";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link";
 import type { JSX } from "solid-js";

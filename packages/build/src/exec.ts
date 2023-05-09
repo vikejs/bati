@@ -50,6 +50,11 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
   }
 }
 
+async function fileContainsVikeMeta(filepath: string) {
+  const code = await readFile(filepath, { encoding: "utf-8" });
+  return code.includes("import.meta.VIKE_");
+}
+
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
   const targets = new Map<string, () => string | Promise<string>>();
@@ -61,14 +66,6 @@ export default async function main(options: { source: string | string[]; dist: s
       const parsed = path.parse(p);
       if (parsed.name.match(reIgnoreFile)) {
         continue;
-      } else if (parsed.name.startsWith("$$") && parsed.ext.match(/\.[tj]sx?$/)) {
-        const mod = await loadFile(p);
-        const fileContent = await transformAndGenerate(mod.$ast, meta);
-
-        if (fileContent) {
-          await safeWriteFile(target, fileContent);
-        }
-        targets.set(target, () => fileContent);
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(`Typescript file needs to be compiled before it can be executed: '${p}'`);
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
@@ -77,6 +74,14 @@ export default async function main(options: { source: string | string[]; dist: s
         const fileContent = transformFileAfterExec(target, await f.default(targets.get(target), meta));
 
         if (fileContent !== null) {
+          await safeWriteFile(target, fileContent);
+        }
+        targets.set(target, () => fileContent);
+      } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsVikeMeta(p))) {
+        const mod = await loadFile(p);
+        const fileContent = await transformAndGenerate(mod.$ast, meta);
+
+        if (fileContent) {
           await safeWriteFile(target, fileContent);
         }
         targets.set(target, () => fileContent);

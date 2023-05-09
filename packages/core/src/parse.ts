@@ -12,6 +12,23 @@ function evalCondition(code: string, meta: VikeMeta = {}) {
 
 export function transformAst(tree: ASTNode, meta: VikeMeta) {
   visit(tree, {
+    visitImportDeclaration(path) {
+      if (
+        namedTypes.ImportDeclaration.check(path.value) &&
+        path.value.comments &&
+        path.value.comments.some((c) => c.value.startsWith("# import.meta.VIKE_"))
+      ) {
+        const comment = path.value.comments.find((c) => c.value.startsWith("# import.meta.VIKE_"))!.value;
+        if (!evalCondition(comment.replace("# ", ""), meta)) {
+          // remove import + comments
+          path.prune();
+        } else {
+          // remove comments
+          path.value.comments = [];
+        }
+      }
+      this.traverse(path);
+    },
     visitIdentifier(path) {
       if (path.value.name === "VIKE_REMOVE") {
         if (!path.parent) {
