@@ -34,6 +34,7 @@ export function defineBoilerplateConfig() {
   return defineConfig([
     {
       entry: ["./files/**/\\$!($*).ts"],
+
       ignoreWatch: ["./dist"],
       dts: false,
       clean: true,
@@ -64,13 +65,6 @@ export function defineBoilerplateConfig() {
           },
         }),
       ],
-    },
-    {
-      entry: ["./index.ts"],
-      format: "esm",
-      dts: true,
-      clean: true,
-      outDir: "./dist",
     },
   ]);
 }

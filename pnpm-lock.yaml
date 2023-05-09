@@ -124,6 +124,8 @@ importers:
       '@batijs/core': workspace:*
       '@batijs/tsup': workspace:*
       '@types/node': ^16.18.27
+      autoprefixer: ^10.4.14
+      postcss: ^8.4.23
       tailwindcss: ^3.3.2
       vite: ^4.3.5
       vite-plugin-ssr: ^0.4.123
@@ -132,6 +134,8 @@ importers:
     devDependencies:
       '@batijs/tsup': link:../../tsup
       '@types/node': 16.18.27
+      autoprefixer: 10.4.14_postcss@8.4.23
+      postcss: 8.4.23
       tailwindcss: 3.3.2
       vite: 4.3.5_@types+node@16.18.27
       vite-plugin-ssr: 0.4.123_vite@4.3.5
@@ -200,7 +204,7 @@ importers:
   packages/core:
     specifiers:
       '@batijs/tsup': workspace:*
-      '@magne4000/import-fixer': ^0.8.2
+      '@magne4000/import-fixer': ^0.8.3
       '@types/eslint': ^8.37.0
       '@types/node': ^16.18.27
       ast-types: ^0.14.2
@@ -210,7 +214,7 @@ importers:
       vitest: ^0.31.0
     devDependencies:
       '@batijs/tsup': link:../tsup
-      '@magne4000/import-fixer': 0.8.2
+      '@magne4000/import-fixer': 0.8.3
       '@types/eslint': 8.37.0
       '@types/node': 16.18.27
       ast-types: 0.14.2
@@ -967,8 +971,8 @@ packages:
       type-detect: 4.0.8
     dev: true
 
-  /@magne4000/import-fixer/0.8.2:
-    resolution: {integrity: sha512-38RbpxgftWaE+2ZsB6kgqyZysO3BbO+MhFXP8Nc2BVO1fioJtqC46qQMczH0mZb4PqAi+td1BXUy9VSVq8PXoQ==}
+  /@magne4000/import-fixer/0.8.3:
+    resolution: {integrity: sha512-Pzh1Q9w8ZQyuZQ5IP6J4bD8ak8GWsY0zThOIpUtSyG0c76mXhR2S+e1aPTfoqwcjvmz5XxhjYmA6F3qm0ypaLw==}
     hasBin: true
     dev: true
 
@@ -1451,6 +1455,22 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       tslib: 2.5.0
+    dev: true
+
+  /autoprefixer/10.4.14_postcss@8.4.23:
+    resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      browserslist: 4.21.5
+      caniuse-lite: 1.0.30001486
+      fraction.js: 4.2.0
+      normalize-range: 0.1.2
+      picocolors: 1.0.0
+      postcss: 8.4.23
+      postcss-value-parser: 4.2.0
     dev: true
 
   /available-typed-arrays/1.0.5:
@@ -2264,6 +2284,10 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /fraction.js/4.2.0:
+    resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
+    dev: true
+
   /fresh/0.5.2:
     resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
     engines: {node: '>= 0.6'}
@@ -2965,6 +2989,11 @@ packages:
   /normalize-path/3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  /normalize-range/0.1.2:
+    resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
+    engines: {node: '>=0.10.0'}
+    dev: true
 
   /npm-run-path/4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}

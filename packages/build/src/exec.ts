@@ -40,6 +40,8 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
   switch (parsed.ext) {
     case ".ts":
     case ".js":
+    case ".tsx":
+    case ".jsx":
       return fileContent as string;
     case ".json":
       return JSON.stringify(fileContent, null, 2);

@@ -27,7 +27,7 @@ async function getRecursivePackages() {
 
 async function getBatiPackages() {
   const batiPackages = (await getRecursivePackages()).filter(
-    (pkg) => pkg.name.startsWith("@batijs/") && !pkg.private && pkg.path.includes("bati/packages/boilerplates/")
+    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes("bati/packages/boilerplates/")
   );
 
   return batiPackages.map((pkg) => pkg.path);
