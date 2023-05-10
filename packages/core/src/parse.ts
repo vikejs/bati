@@ -12,13 +12,26 @@ function evalCondition(code: string, meta: VikeMeta = {}) {
 
 export function transformAst(tree: ASTNode, meta: VikeMeta) {
   visit(tree, {
+    visitJSXAttribute(path) {
+      const trailingComment = path.value.comments?.[0];
+      if (trailingComment && trailingComment.value.includes("import.meta.VIKE_")) {
+        if (!evalCondition(trailingComment.value.replace("# ", ""), meta)) {
+          // remove attribute + comments
+          path.prune();
+        } else {
+          // remove comments
+          path.get("comments").prune();
+        }
+      }
+      this.traverse(path);
+    },
     visitImportDeclaration(path) {
       if (
         namedTypes.ImportDeclaration.check(path.value) &&
         path.value.comments &&
-        path.value.comments.some((c) => c.value.startsWith("# import.meta.VIKE_"))
+        path.value.comments.some((c) => c.value.includes("import.meta.VIKE_"))
       ) {
-        const comment = path.value.comments.find((c) => c.value.startsWith("# import.meta.VIKE_"))!.value;
+        const comment = path.value.comments.find((c) => c.value.includes("import.meta.VIKE_"))!.value;
         if (!evalCondition(comment.replace("# ", ""), meta)) {
           // remove import + comments
           path.prune();

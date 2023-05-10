@@ -272,3 +272,82 @@ import "./tailwind.css";`),
 
   assertEquivalentAst(tree, ast(``));
 });
+
+test("remove comment preceding JSX attribute", () => {
+  const tree = transformAst(
+    ast(`
+<div
+  id="sidebar"
+  //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
+  //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  style={{
+    padding: "20px",
+    "flex-shrink": 0,
+    display: "flex",
+    "flex-direction": "column",
+    "line-height": "1.8em",
+    "border-right": "2px solid #eee"
+  }}
+>
+  {props.children}
+</div>`),
+    {
+      VIKE_MODULES: [],
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(`
+<div
+  id="sidebar"
+  style={{
+    padding: "20px",
+    "flex-shrink": 0,
+    display: "flex",
+    "flex-direction": "column",
+    "line-height": "1.8em",
+    "border-right": "2px solid #eee"
+  }}
+>
+  {props.children}
+</div>`)
+  );
+});
+
+test("remove comment preceding JSX attribute", () => {
+  const tree = transformAst(
+    ast(`
+<div
+  id="sidebar"
+  //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
+  //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  style={{
+    padding: "20px",
+    "flex-shrink": 0,
+    display: "flex",
+    "flex-direction": "column",
+    "line-height": "1.8em",
+    "border-right": "2px solid #eee"
+  }}
+>
+  {props.children}
+</div>`),
+    {
+      VIKE_MODULES: ["uikit:tailwindcss"],
+    }
+  );
+
+  assertEquivalentAst(
+    tree,
+    ast(`
+<div
+  id="sidebar"
+  class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
+>
+  {props.children}
+</div>`)
+  );
+});
