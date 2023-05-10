@@ -168,7 +168,7 @@ test("import cleanup:react", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
     : import.meta.VIKE_MODULES.includes("framework:solid")
     ? solid()
@@ -184,7 +184,7 @@ test("import cleanup:react", async () => {
     ast(code),
     ast(
       `import react from 'react';
-    const framework = react();`
+    export const framework = react();`
     )
   );
 });
@@ -196,7 +196,7 @@ test("import cleanup:solid", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
     : import.meta.VIKE_MODULES.includes("framework:solid")
     ? solid()
@@ -212,7 +212,7 @@ test("import cleanup:solid", async () => {
     ast(code),
     ast(
       `import { solid } from 'solid';
-    const framework = solid();`
+    export const framework = solid();`
     )
   );
 });
@@ -224,7 +224,7 @@ test("import cleanup:other", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
     ? react()
     : import.meta.VIKE_MODULES.includes("framework:solid")
     ? solid()
@@ -236,7 +236,7 @@ test("import cleanup:other", async () => {
     }
   );
 
-  assertEquivalentAst(ast(code), ast(`const framework = null;`));
+  assertEquivalentAst(ast(code), ast(`export const framework = null;`));
 });
 
 test("remove VIKE_REMOVE", () => {
@@ -245,4 +245,30 @@ test("remove VIKE_REMOVE", () => {
   });
 
   assertEquivalentAst(tree, ast(`const a = ['a']`));
+});
+
+test("remove comment preceding import", () => {
+  const tree = transformAst(
+    ast(`
+//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+import "./tailwind.css";`),
+    {
+      VIKE_MODULES: ["uikit:tailwindcss"],
+    }
+  );
+
+  assertEquivalentAst(tree, ast(`import "./tailwind.css";`));
+});
+
+test("remove comment preceding import and import itself", () => {
+  const tree = transformAst(
+    ast(`
+//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+import "./tailwind.css";`),
+    {
+      VIKE_MODULES: [],
+    }
+  );
+
+  assertEquivalentAst(tree, ast(``));
 });
