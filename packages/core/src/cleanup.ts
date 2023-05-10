@@ -3,25 +3,17 @@
 import putout from "putout";
 // @ts-ignore
 import removeUnusedVariables from "@putout/plugin-remove-unused-variables";
+import { format } from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
 
 export function cleanImports(code: string, options: { filepath?: string } = {}): string {
   const isJSX = Boolean(options.filepath?.match(/\.[jt]sx$/));
-  const printer = isJSX
-    ? [
-        "putout",
-        {
-          format: {
-            indent: "  ",
-          },
-        },
-      ]
-    : "recast";
   const result = putout(code, {
     isJSX,
     isTS: true,
-    printer,
+    printer: "recast",
     plugins: [["remove-unused-variables", removeUnusedVariables]],
   });
 
-  return result.code;
+  return format(result.code, { parser: "babel", plugins: [parserBabel] });
 }
