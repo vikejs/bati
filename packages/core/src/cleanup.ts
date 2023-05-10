@@ -2,14 +2,23 @@
 import putout from "putout";
 
 export function cleanImports(code: string, options: { filepath?: string } = {}): string {
-  const printer = options.filepath?.match(/\.[jt]sx$/) ? "putout" : "recast";
+  const isJSX = options.filepath?.match(/\.[jt]sx$/);
+  const printer = isJSX
+    ? [
+        "putout",
+        {
+          format: {
+            indent: "  ",
+          },
+        },
+      ]
+    : "recast";
   const result = putout(code, {
+    isJSX,
     isTS: true,
     printer,
     plugins: ["remove-unused-variables"],
   });
 
-  // replace 4 spaces indent with 2 spaces indent
-  // https://github.com/coderaiser/putout/issues/144
-  return printer === "putout" ? result.code.replace(/(?<=^( {4})*) {4}/gm, "  ") : result.code;
+  return result.code;
 }
