@@ -27,7 +27,6 @@ function* findKey<T extends string | number | symbol>(depsMap: Map<string, strin
 }
 
 // TODO: handle `workspace:` versions
-// TODO: handle duplicates
 export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDeps>(
   packageJson: T,
   scopedPackageJson: U,
@@ -41,9 +40,12 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
   const depsMap = new Map(deps(scopedPackageJson));
 
   for (const [key, value] of findKey(depsMap, keys.devDependencies ?? [])) {
+    if (key in packageJson.dependencies) continue;
     packageJson.devDependencies[key as string] = value;
   }
   for (const [key, value] of findKey(depsMap, keys.dependencies ?? [])) {
+    // dependency > devDependencies
+    if (key in packageJson.devDependencies) delete packageJson.devDependencies[key as string];
     packageJson.dependencies[key as string] = value;
   }
 
