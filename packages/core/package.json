@@ -7,19 +7,27 @@
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "build": "tsup"
+    "build": "rollup --config"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/tsup": "workspace:*",
+    "@putout/bundle": "^1.8.3",
+    "@putout/plugin-remove-unused-variables": "^5.1.0",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "@rollup/plugin-typescript": "^11.1.0",
     "@types/eslint": "^8.37.0",
     "@types/node": "^16.18.27",
     "ast-types": "^0.14.2",
     "esbuild": "^0.17.18",
     "magicast": "^0.2.6",
     "putout": "^29.5.1",
+    "rollup": "^3.21.6",
+    "rollup-plugin-dts": "^5.3.0",
     "typescript": "^5.0.4",
     "vitest": "^0.31.0"
   },

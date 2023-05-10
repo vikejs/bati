@@ -1,8 +1,11 @@
+// /!\ putout packaging is ... old-school, so be sure to directly import all that we need
 // @ts-ignore
 import putout from "putout";
+// @ts-ignore
+import removeUnusedVariables from "@putout/plugin-remove-unused-variables";
 
 export function cleanImports(code: string, options: { filepath?: string } = {}): string {
-  const isJSX = options.filepath?.match(/\.[jt]sx$/);
+  const isJSX = Boolean(options.filepath?.match(/\.[jt]sx$/));
   const printer = isJSX
     ? [
         "putout",
@@ -17,7 +20,7 @@ export function cleanImports(code: string, options: { filepath?: string } = {}):
     isJSX,
     isTS: true,
     printer,
-    plugins: ["remove-unused-variables"],
+    plugins: [["remove-unused-variables", removeUnusedVariables]],
   });
 
   return result.code;
