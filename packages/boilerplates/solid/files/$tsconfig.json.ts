@@ -6,7 +6,7 @@ export default async function getTsConfig(currentContent: MaybeContentGetter) {
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "solid-js";
-  tsConfig.compilerOptions.types = [...(tsConfig.compilerOptions.types ?? []), "solide/types"];
+  tsConfig.compilerOptions.types = [...(tsConfig.compilerOptions.types ?? []), "vike-solid/client"];
 
   return tsConfig;
 }

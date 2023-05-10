@@ -104,8 +104,8 @@ importers:
       '@types/node': ^16.18.27
       cross-fetch: ^3.1.5
       solid-js: ^1.7.5
-      solide: ^0.0.4
       typescript: ^5.0.4
+      vike-solid: ^0.0.5
       vite: ^4.3.5
       vite-plugin-solid: ^2.7.0
       vite-plugin-ssr: ^0.4.123
@@ -116,8 +116,8 @@ importers:
       '@types/node': 16.18.27
       cross-fetch: 3.1.5
       solid-js: 1.7.5
-      solide: 0.0.4_uzr3rghzczij5dnvq6zziptu6i
       typescript: 5.0.4
+      vike-solid: 0.0.5_uzr3rghzczij5dnvq6zziptu6i
       vite: 4.3.5_@types+node@16.18.27
       vite-plugin-solid: 2.7.0_solid-js@1.7.5+vite@4.3.5
       vite-plugin-ssr: 0.4.123_vite@4.3.5
@@ -6166,27 +6166,6 @@ packages:
       solid-js: 1.7.5
     dev: true
 
-  /solide/0.0.4_uzr3rghzczij5dnvq6zziptu6i:
-    resolution: {integrity: sha512-6wFHM7W7lr5W4YSeiNTm6xLVDa0VvBreTxPj7IKOsSsnlWv//p1phbm7E5KKs6EnDUHXJ8v8/cAjmE2LtAayqw==}
-    hasBin: true
-    peerDependencies:
-      solid-js: ^1.7.1
-    dependencies:
-      solid-js: 1.7.5
-      vite: 4.3.5_@types+node@16.18.27
-      vite-plugin-solid: 2.7.0_solid-js@1.7.5+vite@4.3.5
-      vite-plugin-ssr: 0.4.123_vite@4.3.5
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - react-streaming
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -6898,6 +6877,27 @@ packages:
       '@auth/core': 0.7.1
     transitivePeerDependencies:
       - nodemailer
+    dev: true
+
+  /vike-solid/0.0.5_uzr3rghzczij5dnvq6zziptu6i:
+    resolution: {integrity: sha512-ytoostk9KtEne/D5hvVKrqZsxwdF2B8ZCxd5LGMFfqAOa5WOSdF4eT5gmy834Latwc95jG7S+1zz0L6aZNKuvw==}
+    hasBin: true
+    peerDependencies:
+      solid-js: ^1.7.1
+    dependencies:
+      solid-js: 1.7.5
+      vite: 4.3.5_@types+node@16.18.27
+      vite-plugin-solid: 2.7.0_solid-js@1.7.5+vite@4.3.5
+      vite-plugin-ssr: 0.4.123_vite@4.3.5
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - react-streaming
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
     dev: true
 
   /vite-node/0.31.0_@types+node@16.18.27:
