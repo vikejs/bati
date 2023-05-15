@@ -15,5 +15,5 @@ export function cleanImports(code: string, options: { filepath?: string } = {}):
     plugins: [["remove-unused-variables", removeUnusedVariables]],
   });
 
-  return format(result.code, { parser: "babel", plugins: [parserBabel] });
+  return format(result.code, { parser: "babel-ts", plugins: [parserBabel] });
 }

@@ -37,16 +37,18 @@ async function* walk(dir: string, meta: VikeMeta): AsyncGenerator<string> {
 
 function transformFileAfterExec(filepath: string, fileContent: unknown): string {
   const parsed = path.parse(filepath);
-  switch (parsed.ext) {
+  const ext = parsed.ext || parsed.name;
+  switch (ext) {
     case ".ts":
     case ".js":
     case ".tsx":
     case ".jsx":
+    case ".env":
       return fileContent as string;
     case ".json":
       return JSON.stringify(fileContent, null, 2);
     default:
-      throw new Error(`Unsupported extension ${parsed.ext} (${filepath})`);
+      throw new Error(`Unsupported extension ${ext} (${filepath})`);
   }
 }
 

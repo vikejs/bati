@@ -1,0 +1,29 @@
+{
+  "name": "@batijs/telefunc",
+  "private": true,
+  "version": "0.0.15",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/tsup": "workspace:*",
+    "@prisma/client": "^4.14.0",
+    "@types/node": "^16.18.27",
+    "prisma": "^4.14.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "flag": "prisma",
+    "boilerplate": "./dist/files"
+  }
+}
