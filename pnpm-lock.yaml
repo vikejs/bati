@@ -208,7 +208,6 @@ importers:
 
   packages/core:
     specifiers:
-      '@putout/bundle': ^1.8.3
       '@putout/plugin-remove-unused-variables': ^5.1.0
       '@rollup/plugin-commonjs': ^24.1.0
       '@rollup/plugin-json': ^6.0.0
@@ -228,7 +227,6 @@ importers:
       typescript: ^5.0.4
       vitest: ^0.31.0
     devDependencies:
-      '@putout/bundle': 1.8.3_rollup@3.21.6
       '@putout/plugin-remove-unused-variables': 5.1.0_putout@29.5.1
       '@rollup/plugin-commonjs': 24.1.0_rollup@3.21.6
       '@rollup/plugin-json': 6.0.0_rollup@3.21.6
@@ -1061,15 +1059,6 @@ packages:
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
-    dev: true
-
-  /@putout/bundle/1.8.3_rollup@3.21.6:
-    resolution: {integrity: sha512-lICtvPDIfGZsVcQSLHxVxZPsrdfFaZd0zfoUmbLvAT4eyOJDxUNZ/1d8IoUQbDJHPiYqicZfGRZidnXj0mFxCg==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@rollup/plugin-terser': 0.4.1_rollup@3.21.6
-    transitivePeerDependencies:
-      - rollup
     dev: true
 
   /@putout/cli-cache/2.1.1:
