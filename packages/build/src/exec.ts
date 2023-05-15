@@ -52,7 +52,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
 
 async function fileContainsVikeMeta(filepath: string) {
   const code = await readFile(filepath, { encoding: "utf-8" });
-  return code.includes("import.meta.VIKE_");
+  return code.includes("import.meta.BATI_");
 }
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {

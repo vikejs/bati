@@ -1,5 +1,5 @@
 import "./style.css";
-//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+//# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
 import "./tailwind.css";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link";
@@ -8,9 +8,9 @@ import type { JSX } from "solid-js";
 export default function LayoutDefault(props: { children?: JSX.Element }) {
   return (
     <div
-      //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       class="flex max-w-5xl m-auto"
-      //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       style={{
         display: "flex",
         "max-width": "900px",
@@ -31,9 +31,9 @@ function Sidebar(props: { children: JSX.Element }) {
   return (
     <div
       id="sidebar"
-      //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-      //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -53,9 +53,9 @@ function Content(props: { children: JSX.Element }) {
     <div id="page-container">
       <div
         id="page-content"
-        //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+        //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
         class="p-5 pb-12 min-h-screen"
-        //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+        //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
         style={{
           padding: "20px",
           "padding-bottom": "50px",
@@ -71,9 +71,9 @@ function Content(props: { children: JSX.Element }) {
 function Logo() {
   return (
     <div
-      //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       class="p-5 mb-2"
-      //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+      //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
       style={{
         "margin-top": "20px",
         "margin-bottom": "10px",

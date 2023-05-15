@@ -4,8 +4,8 @@ import type { VikeMeta } from "./types.js";
 import { cleanImports } from "./cleanup.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
-  code = code.replaceAll("import.meta", "VIKE_META");
-  code = `var VIKE_META = ${JSON.stringify(meta)};(${code})`;
+  code = code.replaceAll("import.meta", "BATI_META");
+  code = `var BATI_META = ${JSON.stringify(meta)};(${code})`;
 
   return (0, eval)(code);
 }
@@ -14,7 +14,7 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   visit(tree, {
     visitJSXAttribute(path) {
       const trailingComment = path.value.comments?.[0];
-      if (trailingComment && trailingComment.value.includes("import.meta.VIKE_")) {
+      if (trailingComment && trailingComment.value.includes("import.meta.BATI_")) {
         if (!evalCondition(trailingComment.value.replace("# ", ""), meta)) {
           // remove attribute + comments
           path.prune();
@@ -29,9 +29,9 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
       if (
         namedTypes.ImportDeclaration.check(path.value) &&
         path.value.comments &&
-        path.value.comments.some((c) => c.value.includes("import.meta.VIKE_"))
+        path.value.comments.some((c) => c.value.includes("import.meta.BATI_"))
       ) {
-        const comment = path.value.comments.find((c) => c.value.includes("import.meta.VIKE_"))!.value;
+        const comment = path.value.comments.find((c) => c.value.includes("import.meta.BATI_"))!.value;
         if (!evalCondition(comment.replace("# ", ""), meta)) {
           // remove import + comments
           path.prune();
@@ -43,14 +43,14 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
       this.traverse(path);
     },
     visitIdentifier(path) {
-      if (path.value.name === "VIKE_REMOVE") {
+      if (path.value.name === "BATI_REMOVE") {
         if (!path.parent) {
-          throw new Error("VIKE_REMOVE cannot appear at top level");
+          throw new Error("BATI_REMOVE cannot appear at top level");
         }
         // Currently supported:
         //   - Removing an element of a statically declared array
         if (!namedTypes.ArrayExpression.check(path.parent?.parent?.value)) {
-          throw new Error("VIKE_REMOVE can only be an array element for now");
+          throw new Error("BATI_REMOVE can only be an array element for now");
         }
         path.parent.prune();
         this.traverse(path);
@@ -66,10 +66,10 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
     visitIfStatement(path) {
       let found = false;
 
-      // traverse condition content to check if `import.meta.VIKE_*` are used
+      // traverse condition content to check if `import.meta.BATI_*` are used
       this.traverse(path.get("test"), {
         visitMemberExpression(path2) {
-          if (generateCode(path2.value).code.startsWith("import.meta.VIKE_")) {
+          if (generateCode(path2.value).code.startsWith("import.meta.BATI_")) {
             found = true;
           }
 

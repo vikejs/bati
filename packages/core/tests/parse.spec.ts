@@ -16,11 +16,11 @@ function testAst(code: string, meta: VikeMeta) {
 
 test("includes:react", () => {
   const tree = testAst(
-    `if (import.meta.VIKE_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
-      VIKE_MODULES: ["framework:react"],
+      BATI_MODULES: ["framework:react"],
     }
   );
 
@@ -39,11 +39,11 @@ test("includes:react", () => {
 
 test("includes:solid", () => {
   const tree = testAst(
-    `if (import.meta.VIKE_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
-      VIKE_MODULES: ["framework:solid"],
+      BATI_MODULES: ["framework:solid"],
     }
   );
 
@@ -52,15 +52,15 @@ test("includes:solid", () => {
 
 test("if-elseif-else:react", () => {
   const tree = testAst(
-    `if (import.meta.VIKE_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.VIKE_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      VIKE_MODULES: ["framework:react"],
+      BATI_MODULES: ["framework:react"],
     }
   );
 
@@ -69,15 +69,15 @@ test("if-elseif-else:react", () => {
 
 test("if-elseif-else:solid", () => {
   const tree = testAst(
-    `if (import.meta.VIKE_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.VIKE_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      VIKE_MODULES: ["framework:solid"],
+      BATI_MODULES: ["framework:solid"],
     }
   );
 
@@ -86,15 +86,15 @@ test("if-elseif-else:solid", () => {
 
 test("if-elseif-else:other", () => {
   const tree = testAst(
-    `if (import.meta.VIKE_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.VIKE_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      VIKE_MODULES: ["framework:vue"],
+      BATI_MODULES: ["framework:vue"],
     }
   );
 
@@ -105,11 +105,11 @@ test("external variable", () => {
   assert.throws(
     () =>
       testAst(
-        `if (import.meta.VIKE_MODULES.includes(someVar)) {
+        `if (import.meta.BATI_MODULES.includes(someVar)) {
     content = { ...content, jsx: "react" };
   }`,
         {
-          VIKE_MODULES: ["framework:react"],
+          BATI_MODULES: ["framework:react"],
         }
       ),
     ReferenceError
@@ -118,13 +118,13 @@ test("external variable", () => {
 
 test("ternary:react", () => {
   const tree = testAst(
-    `import.meta.VIKE_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? 2
     : null`,
     {
-      VIKE_MODULES: ["framework:react"],
+      BATI_MODULES: ["framework:react"],
     }
   );
 
@@ -133,13 +133,13 @@ test("ternary:react", () => {
 
 test("ternary:solid", () => {
   const tree = testAst(
-    `import.meta.VIKE_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? 2
     : null`,
     {
-      VIKE_MODULES: ["framework:solid"],
+      BATI_MODULES: ["framework:solid"],
     }
   );
 
@@ -148,13 +148,13 @@ test("ternary:solid", () => {
 
 test("ternary:other", () => {
   const tree = testAst(
-    `import.meta.VIKE_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? 2
     : null`,
     {
-      VIKE_MODULES: ["framework:vue"],
+      BATI_MODULES: ["framework:vue"],
     }
   );
 
@@ -168,15 +168,15 @@ test("import cleanup:react", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("framework:react")
     ? react()
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
     `
     ),
     {
-      VIKE_MODULES: ["framework:react"],
+      BATI_MODULES: ["framework:react"],
     }
   );
 
@@ -196,15 +196,15 @@ test("import cleanup:solid", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("framework:react")
     ? react()
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
     `
     ),
     {
-      VIKE_MODULES: ["framework:solid"],
+      BATI_MODULES: ["framework:solid"],
     }
   );
 
@@ -224,24 +224,24 @@ test("import cleanup:other", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.VIKE_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("framework:react")
     ? react()
-    : import.meta.VIKE_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
     `
     ),
     {
-      VIKE_MODULES: ["framework:vue"],
+      BATI_MODULES: ["framework:vue"],
     }
   );
 
   assertEquivalentAst(ast(code), ast(`export const framework = null;`));
 });
 
-test("remove VIKE_REMOVE", () => {
-  const tree = transformAst(ast(`const a = [import.meta.VIKE_REMOVE, 'a']`), {
-    VIKE_MODULES: ["framework:vue"],
+test("remove BATI_REMOVE", () => {
+  const tree = transformAst(ast(`const a = [import.meta.BATI_REMOVE, 'a']`), {
+    BATI_MODULES: ["framework:vue"],
   });
 
   assertEquivalentAst(tree, ast(`const a = ['a']`));
@@ -250,10 +250,10 @@ test("remove VIKE_REMOVE", () => {
 test("remove comment preceding import", () => {
   const tree = transformAst(
     ast(`
-//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+//# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
 import "./tailwind.css";`),
     {
-      VIKE_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["uikit:tailwindcss"],
     }
   );
 
@@ -263,10 +263,10 @@ import "./tailwind.css";`),
 test("remove comment preceding import and import itself", () => {
   const tree = transformAst(
     ast(`
-//# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+//# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
 import "./tailwind.css";`),
     {
-      VIKE_MODULES: [],
+      BATI_MODULES: [],
     }
   );
 
@@ -278,9 +278,9 @@ test("remove comment preceding JSX attribute", () => {
     ast(`
 <div
   id="sidebar"
-  //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
   class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-  //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
   style={{
     padding: "20px",
     "flex-shrink": 0,
@@ -293,7 +293,7 @@ test("remove comment preceding JSX attribute", () => {
   {props.children}
 </div>`),
     {
-      VIKE_MODULES: [],
+      BATI_MODULES: [],
     }
   );
 
@@ -321,9 +321,9 @@ test("remove comment preceding JSX attribute", () => {
     ast(`
 <div
   id="sidebar"
-  //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
   class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-  //# !import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+  //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
   style={{
     padding: "20px",
     "flex-shrink": 0,
@@ -336,7 +336,7 @@ test("remove comment preceding JSX attribute", () => {
   {props.children}
 </div>`),
     {
-      VIKE_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["uikit:tailwindcss"],
     }
   );
 

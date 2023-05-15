@@ -83,7 +83,7 @@ async function run() {
           dist: args.dist,
         },
         {
-          VIKE_MODULES: features as VikeMeta["VIKE_MODULES"],
+          BATI_MODULES: features as VikeMeta["BATI_MODULES"],
         }
       );
     },

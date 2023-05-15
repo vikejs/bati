@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <>
       <h1
-        //# import.meta.VIKE_MODULES?.includes("uikit:tailwindcss")
+        //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
         class="font-bold text-3xl pb-4"
       >
         My Vike app

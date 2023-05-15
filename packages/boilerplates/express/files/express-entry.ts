@@ -33,7 +33,7 @@ async function startServer() {
     app.use(viteDevMiddleware);
   }
 
-  if (import.meta.VIKE_MODULES?.includes("auth:authjs")) {
+  if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
     /**
      * AuthJS
      *
@@ -72,7 +72,7 @@ async function startServer() {
     );
   }
 
-  if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
+  if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
     /**
      * Telefunc route
      *

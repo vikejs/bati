@@ -6,7 +6,7 @@ import CredentialsProvider from "@auth/core/providers/credentials";
 
 const router = createRouter();
 
-if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
+if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
   /**
    * Telefunc route
    *
@@ -29,7 +29,7 @@ if (import.meta.VIKE_MODULES?.includes("rpc:telefunc")) {
   });
 }
 
-if (import.meta.VIKE_MODULES?.includes("auth:authjs")) {
+if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
   /**
    * AuthJS
    *

@@ -18,7 +18,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       "hattip",
       "vite",
       "vite-plugin-ssr",
-      ...(meta.VIKE_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
     ],
   });
 }
