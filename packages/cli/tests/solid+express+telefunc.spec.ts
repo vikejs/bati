@@ -12,8 +12,7 @@ describe.concurrent("solid + express + telefunc", () => {
 
   test("auth/signin", async () => {
     const res = await fetch("/api/auth/signin");
-    expect(res.status).toBe(200);
-    expect(await res.text()).toContain('{"is404":true}');
+    expect(res.status).toBe(404);
   });
 
   test("telefunc", async () => {

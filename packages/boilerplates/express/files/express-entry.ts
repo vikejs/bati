@@ -113,12 +113,9 @@ async function startServer() {
     const pageContext = await renderPage(pageContextInit);
     if (pageContext.httpResponse === null) return next();
 
-    if ((pageContext as Record<string, unknown>)._isStream) {
-      pageContext.httpResponse.pipe(res);
-    } else {
-      const { body, statusCode, contentType } = pageContext.httpResponse;
-      res.status(statusCode).type(contentType).send(body);
-    }
+    const { statusCode, contentType } = pageContext.httpResponse;
+    res.status(statusCode).type(contentType);
+    pageContext.httpResponse.pipe(res);
   });
 
   app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000, "localhost", () => {
