@@ -68,7 +68,10 @@ export default async function main(options: { source: string | string[]; dist: s
       if (parsed.name.match(reIgnoreFile)) {
         continue;
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
-        throw new Error(`Typescript file needs to be compiled before it can be executed: '${p}'`);
+        throw new Error(
+          `Typescript file needs to be compiled before it can be executed: '${p}'.
+Please report this issue to https://github.com/magne4000/bati`
+        );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         const f = await import(p);
 
