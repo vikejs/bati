@@ -61,7 +61,6 @@ export default async function main(options: { source: string | string[]; dist: s
   const sources = Array.isArray(options.source) ? options.source : [options.source];
   const targets = new Map<string, () => string | Promise<string>>();
 
-  // reverse here so that if multiple files end-up in the same place, the last one prevails
   for (const source of sources) {
     for await (const p of walk(source, meta)) {
       const target = toDist(p, source, options.dist);
