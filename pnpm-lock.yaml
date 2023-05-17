@@ -23,6 +23,23 @@ importers:
       prettier: 2.8.8
       typescript: 5.0.4
 
+  packages/boilerplates/edgedb:
+    specifiers:
+      '@batijs/core': workspace:*
+      '@batijs/tsup': workspace:*
+      '@edgedb/generate': ^0.1.1
+      '@prisma/client': ^4.14.0
+      '@types/node': ^16.18.27
+      edgedb: ^1.2.2
+    dependencies:
+      '@batijs/core': link:../../core
+    devDependencies:
+      '@batijs/tsup': link:../../tsup
+      '@edgedb/generate': 0.1.1_edgedb@1.2.2
+      '@prisma/client': 4.14.0
+      '@types/node': 16.18.27
+      edgedb: 1.2.2
+
   packages/boilerplates/express:
     specifiers:
       '@auth/core': ^0.7.1
@@ -703,6 +720,17 @@ packages:
       postcss-selector-parser: 6.0.12
     dev: true
 
+  /@edgedb/generate/0.1.1_edgedb@1.2.2:
+    resolution: {integrity: sha512-0NVX6WzKIDEBH+XlQS7gO/I63TI2IKjQWq5k3EFLsxMUSGL1LvxwHZNr7vXSxH1XRr+Qoyil9dxM+Ff78t/xZw==}
+    engines: {node: '>= 12.0.0'}
+    hasBin: true
+    peerDependencies:
+      edgedb: ^1.1.0
+    dependencies:
+      chokidar: 3.5.3
+      edgedb: 1.2.2
+    dev: true
+
   /@esbuild-kit/cjs-loader/2.4.2:
     resolution: {integrity: sha512-BDXFbYOJzT/NBEtp71cvsrGPwGAMGRB/349rwKuoxNSiKjPraNNnlK6MIIabViCjqZugu6j+xeMDlEkWdHHJSg==}
     dependencies:
@@ -1074,6 +1102,19 @@ packages:
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+    dev: true
+
+  /@prisma/client/4.14.0:
+    resolution: {integrity: sha512-MK/XaA2sFdfaOa7I9MjNKz6dxeIEdeZlnpNRoF2w3JuRLlFJLkpp6cD3yaqw2nUUhbrn3Iqe3ZpVV+VuGGil7Q==}
+    engines: {node: '>=14.17'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.14.0-67.d9a4c5988f480fa576d43970d5a23641aa77bc9c
     dev: true
 
   /@prisma/client/4.14.0_prisma@4.14.0:
@@ -3556,6 +3597,12 @@ packages:
   /dotenv/16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
+    dev: true
+
+  /edgedb/1.2.2:
+    resolution: {integrity: sha512-NQfd7dLSluxrHFGxaB/PtCGagdiiWuAqf0HtPFsR2epahsQYZU6DJipy+Vn0wdxLSlVKCRG+iAajrcVAvWZdog==}
+    engines: {node: '>= 12.0.0'}
+    hasBin: true
     dev: true
 
   /ee-first/1.1.1:
