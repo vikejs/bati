@@ -24,13 +24,14 @@ async function parseBoilerplates(dir: string): Promise<BoilerplateDef[]> {
   return JSON.parse(await readFile(join(dir, "boilerplates.json"), "utf-8"));
 }
 
-function toArg(flag: string | undefined): ArgsDef {
+function toArg(flag: string | undefined, description: string | undefined): ArgsDef {
   if (!flag) return {};
 
   return {
     [flag]: {
       type: "boolean",
       required: false,
+      description,
     },
   };
 }
@@ -47,13 +48,13 @@ async function run() {
     },
     args: Object.assign(
       {
-        dist: {
+        project: {
           type: "positional",
-          description: "Dist folder",
+          description: "Project directory",
           required: true,
         },
       },
-      ...Array.from(coreFlags.keys()).map(toArg)
+      ...Array.from(coreFlags.keys()).map((k) => toArg(k, boilerplates.find((b) => b.config.flag === k)?.description))
     ),
     async run({ args }) {
       const sources: string[] = [];
@@ -80,7 +81,7 @@ async function run() {
       await exec(
         {
           source: sources,
-          dist: args.dist,
+          dist: args.project,
         },
         {
           BATI_MODULES: features as VikeMeta["BATI_MODULES"],

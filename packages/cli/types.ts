@@ -6,5 +6,6 @@ export interface BatiConfig {
 export interface BoilerplateDef {
   folder: string;
   config: BatiConfig;
-  source: string;
+  description?: string;
+  source?: string;
 }

@@ -19,6 +19,12 @@ interface PnpmPackageInfo {
   private: boolean;
 }
 
+interface SimplePackageJson {
+  bati?: BatiConfig | false;
+  name: string;
+  description?: string;
+}
+
 async function getRecursivePackages() {
   const { stdout } = await $`pnpm m ls --json --depth=-1`;
 
@@ -46,18 +52,17 @@ async function boilerplateFilesToCopy() {
   const arr: ToBeCopied = [];
   for await (const [filepath, packageJson] of getBatiPackageJson()) {
     assertBatiConfig(packageJson, filepath);
-    if (packageJson.bati?.boilerplate) {
-      arr.push({
-        folder: packageJson.name,
-        source: join(dirname(filepath), packageJson.bati?.boilerplate),
-        config: packageJson.bati,
-      });
-    }
+    arr.push({
+      folder: packageJson.name,
+      source: packageJson.bati?.boilerplate ? join(dirname(filepath), packageJson.bati?.boilerplate) : undefined,
+      config: packageJson.bati,
+      description: packageJson.description,
+    });
   }
   return arr;
 }
 
-function assertBatiConfig(packageJson: { bati?: BatiConfig | false; name: string }, filepath: string) {
+function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
   if (packageJson.bati === false) return;
   if (!packageJson.bati) {
     console.warn(`${yellow("WARN")}: Missing '${bold("bati")}' property in ${cyan(filepath)}`);
@@ -80,14 +85,22 @@ function assertBatiConfig(packageJson: { bati?: BatiConfig | false; name: string
   if (b.boilerplate && typeof b.boilerplate !== "string") {
     throw new Error(`[${packageJson.name}] 'bati.boilerplate' must be a string`);
   }
+
+  if (b.flag && !packageJson.description) {
+    console.warn(`${yellow("WARN")}: Missing '${bold("description")}' property in ${cyan(filepath)}`);
+  }
 }
 
 async function createBoilerplatesJson(boilerplates: ToBeCopied) {
   const f = join(__dirname, "dist", "boilerplates", "boilerplates.json");
 
-  await writeFile(f, JSON.stringify(boilerplates.map((bl) => ({ config: bl.config, folder: bl.folder }))), {
-    encoding: "utf-8",
-  });
+  await writeFile(
+    f,
+    JSON.stringify(boilerplates.map((bl) => ({ config: bl.config, folder: bl.folder, description: bl.description }))),
+    {
+      encoding: "utf-8",
+    }
+  );
 
   return stat(f);
 }
@@ -112,11 +125,17 @@ const esbuildPlugin: Plugin = {
 
       for (const bl of boilerplates) {
         const dest = join(__dirname, "dist", "boilerplates", bl.folder);
-        await cp(bl.source, dest, {
-          dereference: true,
-          force: true,
-          recursive: true,
-        });
+
+        if (!bl.source) {
+          await mkdir(dest, { recursive: true });
+        } else {
+          await cp(bl.source, dest, {
+            dereference: true,
+            force: true,
+            recursive: true,
+          });
+        }
+
         console.log(`${yellow("BLP")} ${join("dist", "boilerplates")}/${cyan(bl.folder)}`);
       }
 
