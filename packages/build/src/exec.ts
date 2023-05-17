@@ -59,7 +59,7 @@ async function fileContainsVikeMeta(filepath: string) {
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
-  const targets = new Map<string, () => string | Promise<string>>();
+  const targets = new Set<string>();
 
   for (const source of sources) {
     for await (const p of walk(source, meta)) {
@@ -72,12 +72,15 @@ export default async function main(options: { source: string | string[]; dist: s
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         const f = await import(p);
 
-        const fileContent = transformFileAfterExec(target, await f.default(targets.get(target), meta));
+        const fileContent = transformFileAfterExec(
+          target,
+          await f.default(targets.has(target) ? () => readFile(target, { encoding: "utf-8" }) : undefined, meta)
+        );
 
         if (fileContent !== null) {
           await safeWriteFile(target, fileContent);
         }
-        targets.set(target, () => fileContent);
+        targets.add(target);
       } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsVikeMeta(p))) {
         const mod = await loadFile(p);
         const fileContent = await transformAndGenerate(mod.$ast, meta, {
@@ -87,11 +90,11 @@ export default async function main(options: { source: string | string[]; dist: s
         if (fileContent) {
           await safeWriteFile(target, fileContent);
         }
-        targets.set(target, () => fileContent);
+        targets.add(target);
       } else {
         // simple copy
         await safeCopyFile(p, target);
-        targets.set(target, () => readFile(p, { encoding: "utf-8" }));
+        targets.add(target);
       }
     }
   }
