@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/prisma",
+  "name": "@batijs/edgedb",
   "private": true,
   "version": "0.0.16",
   "description": "",
@@ -12,9 +12,10 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/tsup": "workspace:*",
+    "@edgedb/generate": "^0.1.1",
     "@prisma/client": "^4.14.0",
     "@types/node": "^16.18.27",
-    "prisma": "^4.14.0"
+    "edgedb": "^1.2.2"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -23,7 +24,7 @@
     "dist/"
   ],
   "bati": {
-    "flag": "prisma",
+    "flag": "edgedb",
     "boilerplate": "./dist/files"
   }
 }
