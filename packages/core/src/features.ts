@@ -11,3 +11,7 @@ export const features = [
 ] as const;
 
 export const flags = new Map(features.map((f) => [f.split(":").at(-1), f] as const));
+
+type AfterColon<T extends string> = T extends `${string}:${infer B}` ? B : never;
+
+export type Flags = AfterColon<(typeof features)[number]>;

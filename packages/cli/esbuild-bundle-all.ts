@@ -86,8 +86,12 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
     throw new Error(`[${packageJson.name}] 'bati.boilerplate' must be a string`);
   }
 
-  if (b.flag && !packageJson.description) {
-    console.warn(`${yellow("WARN")}: Missing '${bold("description")}' property in ${cyan(filepath)}`);
+  if (b.flag && !b.name) {
+    console.warn(`${yellow("WARN")}: Missing '${bold("name")}' property in ${cyan(filepath)}`);
+  }
+
+  if (b.flag && !b.homepage) {
+    console.warn(`${yellow("WARN")}: Missing '${bold("homepage")}' property in ${cyan(filepath)}`);
   }
 }
 

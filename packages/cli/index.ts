@@ -1,11 +1,12 @@
-import { type ArgsDef, defineCommand, runMain } from "citty";
+import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import exec from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { flags as coreFlags, type VikeMeta } from "@batijs/core";
+import { flags as coreFlags, type Flags, type VikeMeta } from "@batijs/core";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { readFile } from "node:fs/promises";
+import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
+import { bold, cyan, green, yellow } from "colorette";
 import type { BoilerplateDef } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -49,6 +50,86 @@ function findDescription(key: string | undefined, boilerplates: BoilerplateDef[]
   }
 }
 
+function printOK(dist: string, flags: string[], boilerplates: BoilerplateDef[]): void {
+  console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
+  console.log(`\t- ${green("Typescript")}`);
+  for (const key of flags) {
+    const bl = boilerplates.find((b) => b.config.flag === key);
+    if (!bl || !bl.config.name) continue;
+
+    console.log(`\t- ${green(bl.config.name)}`);
+  }
+}
+
+const defaultDef = {
+  project: {
+    type: "positional",
+    description: "Project directory",
+    required: true,
+  },
+} as const;
+
+type Args = typeof defaultDef &
+  Record<
+    Flags,
+    {
+      type: "boolean";
+      required: boolean;
+      description: string | undefined;
+    }
+  >;
+
+export default function yn(value: unknown, default_?: boolean) {
+  if (value === undefined || value === null) {
+    return default_;
+  }
+
+  value = String(value).trim();
+
+  if (/^(?:y|yes|true|1|on)$/i.test(value as string)) {
+    return true;
+  }
+
+  if (/^(?:n|no|false|0|off)$/i.test(value as string)) {
+    return false;
+  }
+
+  return default_;
+}
+
+async function checkArguments(args: ParsedArgs<Args>) {
+  if (existsSync(args.project)) {
+    // is target a directory
+    const stat = await lstat(args.project);
+    if (!stat.isDirectory()) {
+      console.error(
+        `${yellow("⚠")} Target ${cyan(args.project)} already exists but is not a directory. ${yellow("Aborting")}.`
+      );
+      process.exit(2);
+    }
+
+    // is target a writable directory
+    try {
+      await access(args.project, constants.W_OK);
+    } catch (_) {
+      console.error(
+        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow("Aborting")}.`
+      );
+      process.exit(3);
+    }
+
+    // is target an empty directory
+    if ((await readdir(args.project)).length > 0) {
+      console.error(
+        `${yellow("⚠")} Target folder ${cyan(
+          args.project
+        )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`
+      );
+      process.exit(4);
+    }
+  }
+}
+
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await parseBoilerplates(dir);
@@ -60,19 +141,16 @@ async function run() {
       description: packageJson.description,
     },
     args: Object.assign(
-      {
-        project: {
-          type: "positional",
-          description: "Project directory",
-          required: true,
-        },
-      },
+      {},
+      defaultDef,
       ...Array.from(coreFlags.keys()).map((k) => toArg(k, findDescription(k, boilerplates)))
-    ),
+    ) as Args,
     async run({ args }) {
+      await checkArguments(args);
+
       const sources: string[] = [];
       const features: string[] = [];
-      const flags = Object.entries(args as Record<string, unknown>)
+      const flags = Object.entries(args)
         .filter(([, val]) => val === true)
         .map(([key]) => key);
 
@@ -100,10 +178,12 @@ async function run() {
           BATI_MODULES: features as VikeMeta["BATI_MODULES"],
         }
       );
+
+      printOK(args.project, flags, boilerplates);
     },
   });
 
-  await runMain(main);
+  await runMain(main as CommandDef);
 }
 
 run()
