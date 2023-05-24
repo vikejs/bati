@@ -6,7 +6,7 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
-import { bold, cyan, green, yellow } from "colorette";
+import { blue, bold, cyan, gray, green, yellow } from "colorette";
 import type { BoilerplateDef } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -59,6 +59,11 @@ function printOK(dist: string, flags: string[], boilerplates: BoilerplateDef[]):
 
     console.log(`\t- ${green(bl.config.name)}`);
   }
+
+  console.log("\n" + bold(`${blue("→")} Next steps:`));
+  console.log(`\t${gray("$")} cd ${dist}`);
+  console.log(`\t${gray("$")} pnpm install`);
+  console.log(`\t${gray("$")} pnpm run dev`);
 }
 
 const defaultDef = {
