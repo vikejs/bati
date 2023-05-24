@@ -1,5 +1,7 @@
 export interface BatiConfig {
   flag?: string;
+  name?: string;
+  homepage?: string;
   boilerplate?: string;
 }
 

@@ -52,7 +52,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
   }
 }
 
-async function fileContainsVikeMeta(filepath: string) {
+async function fileContainsBatiMeta(filepath: string) {
   const code = await readFile(filepath, { encoding: "utf-8" });
   return code.includes("import.meta.BATI_");
 }
@@ -84,7 +84,7 @@ Please report this issue to https://github.com/magne4000/bati`
           await safeWriteFile(target, fileContent);
         }
         targets.add(target);
-      } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsVikeMeta(p))) {
+      } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsBatiMeta(p))) {
         const mod = await loadFile(p);
         const fileContent = await transformAndGenerate(mod.$ast, meta, {
           filepath: p,

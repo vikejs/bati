@@ -36,6 +36,19 @@ function toArg(flag: string | undefined, description: string | undefined): ArgsD
   };
 }
 
+function findDescription(key: string | undefined, boilerplates: BoilerplateDef[]): string | undefined {
+  const bl = boilerplates.find((b) => b.config.flag === key);
+  if (!bl) return;
+
+  if (bl.description) {
+    return bl.description;
+  } else if (bl.config.name && bl.config.homepage) {
+    return `Include ${bl.config.name} - ${bl.config.homepage}`;
+  } else if (bl.config.name) {
+    return `Include ${bl.config.name}`;
+  }
+}
+
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await parseBoilerplates(dir);
@@ -54,7 +67,7 @@ async function run() {
           required: true,
         },
       },
-      ...Array.from(coreFlags.keys()).map((k) => toArg(k, boilerplates.find((b) => b.config.flag === k)?.description))
+      ...Array.from(coreFlags.keys()).map((k) => toArg(k, findDescription(k, boilerplates)))
     ),
     async run({ args }) {
       const sources: string[] = [];
