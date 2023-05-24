@@ -1,5 +1,6 @@
 import { loadFile, transformAndGenerate, type VikeMeta } from "@batijs/core";
 import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
@@ -27,6 +28,7 @@ async function safeWriteFile(destination: string, content: string) {
 }
 
 async function* walk(dir: string, meta: VikeMeta): AsyncGenerator<string> {
+  if (!existsSync(dir)) return;
   for await (const d of await opendir(dir)) {
     const entry = path.join(dir, d.name);
     if (d.isDirectory()) {

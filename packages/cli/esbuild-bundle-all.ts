@@ -130,9 +130,7 @@ const esbuildPlugin: Plugin = {
       for (const bl of boilerplates) {
         const dest = join(__dirname, "dist", "boilerplates", bl.folder);
 
-        if (!bl.source) {
-          await mkdir(dest, { recursive: true });
-        } else {
+        if (bl.source) {
           await cp(bl.source, dest, {
             dereference: true,
             force: true,
