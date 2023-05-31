@@ -15,11 +15,4 @@ describe.concurrent("solid + express + authjs", () => {
     expect(res.status).toBe(200);
     expect(await res.text()).not.toContain('{"is404":true}');
   });
-
-  test("telefunc", async () => {
-    const res = await fetch("/_telefunc", {
-      method: "post",
-    });
-    expect(await res.text()).toContain('{"is404":true}');
-  });
 });

@@ -1,12 +1,12 @@
 import { describe, expect, test } from "vitest";
 import { prepare } from "./utils";
 
-describe.concurrent("solid + tailwindcss", () => {
-  const { fetch } = prepare(["solid", "tailwindcss"]);
+describe.concurrent("solid + plausible", () => {
+  const { fetch } = prepare(["solid", "plausible.io"]);
 
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);
-    expect(await res.text()).not.toContain('{"is404":true}');
+    expect(await res.text()).toContain('src="https://plausible.io');
   });
 });

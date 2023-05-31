@@ -7,6 +7,7 @@ export const features = [
   "rpc:telefunc", // "rpc:trpc",
   "server:hattip", "server:express",
   "uikit:tailwindcss",
+  "analytics:plausible.io",
   // "clientRouting", "prerendering",
 ] as const;
 

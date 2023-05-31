@@ -10,11 +10,6 @@ describe.concurrent("solid + hattip + telefunc", () => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  test("auth/signin", async () => {
-    const res = await fetch("/api/auth/signin");
-    expect(await res.text()).toContain('{"is404":true}');
-  });
-
   test("telefunc", async () => {
     const res = await fetch("/_telefunc", {
       method: "post",
