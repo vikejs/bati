@@ -33,13 +33,15 @@ function isAllowedImport(args: OnResolveArgs) {
 export function defineBoilerplateConfig() {
   return defineConfig([
     {
-      entry: ["./files/**/\\$!($*).ts"],
-
+      entry: ["./files/**/\\$!($*).ts", "./hooks/**/*.ts"],
       ignoreWatch: ["./dist"],
       dts: false,
       clean: true,
-      outDir: "./dist/files",
+      outDir: "./dist",
       external: ["magicast"],
+      esbuildOptions(options) {
+        options.outbase = ".";
+      },
       esbuildPlugins: [
         {
           name: "forbid-imports",

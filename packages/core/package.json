@@ -23,6 +23,7 @@
     "@types/node": "^16.18.34",
     "@types/prettier": "^2.7.2",
     "ast-types": "^0.14.2",
+    "colorette": "^2.0.20",
     "esbuild": "^0.17.19",
     "magicast": "^0.2.8",
     "prettier": "^2.8.8",
@@ -47,5 +48,9 @@
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "dependencies": {
+    "@types/which": "^3.0.0",
+    "which": "^3.0.1"
+  }
 }

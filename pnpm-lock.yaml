@@ -33,6 +33,7 @@ importers:
       '@edgedb/generate': ^0.1.1
       '@prisma/client': ^4.15.0
       '@types/node': ^16.18.34
+      colorette: ^2.0.20
       edgedb: ^1.2.2
     dependencies:
       '@batijs/core': link:../../core
@@ -41,6 +42,7 @@ importers:
       '@edgedb/generate': 0.1.1_edgedb@1.2.2
       '@prisma/client': 4.15.0
       '@types/node': 16.18.34
+      colorette: 2.0.20
       edgedb: 1.2.2
 
   packages/boilerplates/express:
@@ -255,7 +257,9 @@ importers:
       '@types/eslint': ^8.40.0
       '@types/node': ^16.18.34
       '@types/prettier': ^2.7.2
+      '@types/which': ^3.0.0
       ast-types: ^0.14.2
+      colorette: ^2.0.20
       esbuild: ^0.17.19
       magicast: ^0.2.8
       prettier: ^2.8.8
@@ -264,6 +268,10 @@ importers:
       rollup-plugin-dts: ^5.3.0
       typescript: ^5.0.4
       vitest: ^0.31.2
+      which: ^3.0.1
+    dependencies:
+      '@types/which': 3.0.0
+      which: 3.0.1
     devDependencies:
       '@putout/plugin-remove-unused-variables': 5.4.0_putout@29.10.1
       '@rollup/plugin-commonjs': 24.1.0_rollup@3.23.0
@@ -275,6 +283,7 @@ importers:
       '@types/node': 16.18.34
       '@types/prettier': 2.7.2
       ast-types: 0.14.2
+      colorette: 2.0.20
       esbuild: 0.17.19
       magicast: 0.2.8
       prettier: 2.8.8
@@ -2690,6 +2699,10 @@ packages:
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: true
+
+  /@types/which/3.0.0:
+    resolution: {integrity: sha512-ASCxdbsrwNfSMXALlC3Decif9rwDMu+80KGp5zI2RLRotfMsTv7fHL8W8VDp24wymzDyIFudhUeSCugrgRFfHQ==}
+    dev: false
 
   /@typescript-eslint/eslint-plugin/5.59.8_hnhvdstanz2zc7wdbtnhvs2o7u:
     resolution: {integrity: sha512-JDMOmhXteJ4WVKOiHXGCoB96ADWg9q7efPWHRViT/f09bA8XOMLAVHHju3l0MkZnG1izaWXYmgvQcUjTRcpShQ==}
@@ -7484,6 +7497,14 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+
+  /which/3.0.1:
+    resolution: {integrity: sha512-XA1b62dzQzLfaEOSQFTCOd5KFf/1VSzZo7/7TUjnya6u0vGGKzU96UQBZTAThCb2j4/xjBAyii1OhRLJEivHvg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    hasBin: true
+    dependencies:
+      isexe: 2.0.0
+    dev: false
 
   /why-is-node-running/2.2.2:
     resolution: {integrity: sha512-6tSwToZxTOcotxHeA+qGCq1mVzKR3CwcJGmVcY+QE8SHy6TnpFnh8PAvPNHYr7EcuVeG0QSMxtYCuO1ta/G/oA==}
