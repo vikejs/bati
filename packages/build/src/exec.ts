@@ -27,12 +27,12 @@ async function safeWriteFile(destination: string, content: string) {
   await writeFile(destination, content, { encoding: "utf-8" });
 }
 
-async function* walk(dir: string, meta: VikeMeta): AsyncGenerator<string> {
+export async function* walk(dir: string): AsyncGenerator<string> {
   if (!existsSync(dir)) return;
   for await (const d of await opendir(dir)) {
     const entry = path.join(dir, d.name);
     if (d.isDirectory()) {
-      yield* walk(entry, meta);
+      yield* walk(entry);
     } else if (d.isFile()) yield entry;
   }
 }
@@ -64,7 +64,7 @@ export default async function main(options: { source: string | string[]; dist: s
   const targets = new Set<string>();
 
   for (const source of sources) {
-    for await (const p of walk(source, meta)) {
+    for await (const p of walk(source)) {
       const target = toDist(p, source, options.dist);
       const parsed = path.parse(p);
       if (parsed.name.match(reIgnoreFile)) {

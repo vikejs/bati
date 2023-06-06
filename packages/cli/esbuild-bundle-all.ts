@@ -5,12 +5,11 @@ import type { Plugin } from "esbuild";
 import { bold, cyan, green, yellow } from "colorette";
 import { $ } from "execa";
 import { flags } from "@batijs/core";
-import type { BatiConfig, BoilerplateDef } from "./types";
+import type { BatiConfig, BoilerplateDef, ToBeCopied } from "./types";
+import { existsSync } from "node:fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-type ToBeCopied = BoilerplateDef[];
 
 interface PnpmPackageInfo {
   name: string;
@@ -49,14 +48,29 @@ async function* getBatiPackageJson() {
 }
 
 async function boilerplateFilesToCopy() {
-  const arr: ToBeCopied = [];
+  const arr: ToBeCopied[] = [];
   for await (const [filepath, packageJson] of getBatiPackageJson()) {
     assertBatiConfig(packageJson, filepath);
+
+    const subfolders: string[] = [];
+    const distFolder = existsSync(join(dirname(filepath), "dist"));
+    const hooksFolder = existsSync(join(dirname(filepath), "dist/hooks"));
+    const filesFolder = existsSync(join(dirname(filepath), "dist/files"));
+
+    if (filesFolder) {
+      subfolders.push("files");
+    }
+
+    if (hooksFolder) {
+      subfolders.push("hooks");
+    }
+
     arr.push({
       folder: packageJson.name,
-      source: packageJson.bati?.boilerplate ? join(dirname(filepath), packageJson.bati?.boilerplate) : undefined,
+      source: distFolder ? join(dirname(filepath), "dist") : undefined,
       config: packageJson.bati,
       description: packageJson.description,
+      subfolders,
     });
   }
   return arr;
@@ -95,16 +109,21 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
   }
 }
 
-async function createBoilerplatesJson(boilerplates: ToBeCopied) {
+function formatCopiedToDef(boilerplates: ToBeCopied[]): BoilerplateDef[] {
+  return boilerplates.map((bl) => ({
+    config: bl.config,
+    folder: bl.folder,
+    description: bl.description,
+    subfolders: bl.subfolders,
+  }));
+}
+
+async function createBoilerplatesJson(boilerplates: ToBeCopied[]) {
   const f = join(__dirname, "dist", "boilerplates", "boilerplates.json");
 
-  await writeFile(
-    f,
-    JSON.stringify(boilerplates.map((bl) => ({ config: bl.config, folder: bl.folder, description: bl.description }))),
-    {
-      encoding: "utf-8",
-    }
-  );
+  await writeFile(f, JSON.stringify(formatCopiedToDef(boilerplates), undefined, 2), {
+    encoding: "utf-8",
+  });
 
   return stat(f);
 }
@@ -124,11 +143,15 @@ const esbuildPlugin: Plugin = {
   setup(build) {
     build.onEnd(async () => {
       const boilerplates = await boilerplateFilesToCopy();
-
-      await mkdir(join(__dirname, "dist", "boilerplates"), { recursive: true });
+      const folderCreated = new Set<string>();
 
       for (const bl of boilerplates) {
         const dest = join(__dirname, "dist", "boilerplates", bl.folder);
+
+        if (!folderCreated.has(dest)) {
+          folderCreated.add(dest);
+          await mkdir(dest, { recursive: true });
+        }
 
         if (bl.source) {
           await cp(bl.source, dest, {

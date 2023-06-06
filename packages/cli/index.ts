@@ -1,13 +1,13 @@
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
-import exec from "@batijs/build";
+import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { flags as coreFlags, type Flags, type VikeMeta } from "@batijs/core";
+import { flags as coreFlags, type Flags, type VikeMeta, withIcon } from "@batijs/core";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
-import { blue, bold, cyan, gray, green, yellow } from "colorette";
-import type { BoilerplateDef } from "./types";
+import { blueBright, bold, cyan, gray, green, yellow } from "colorette";
+import type { BoilerplateDef, Hook } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,19 +51,22 @@ function findDescription(key: string | undefined, boilerplates: BoilerplateDef[]
 }
 
 function printOK(dist: string, flags: string[], boilerplates: BoilerplateDef[]): void {
+  const arrow0 = withIcon("→", blueBright);
+  const list3 = withIcon("-", undefined, 3);
+  const cmd3 = withIcon("$", gray, 3);
   console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
-  console.log(`\t- ${green("Typescript")}`);
+  console.log(list3(green("Typescript")));
   for (const key of flags) {
     const bl = boilerplates.find((b) => b.config.flag === key);
     if (!bl || !bl.config.name) continue;
 
-    console.log(`\t- ${green(bl.config.name)}`);
+    console.log(list3(green(bl.config.name)));
   }
 
-  console.log("\n" + bold(`${blue("→")} Next steps:`));
-  console.log(`\t${gray("$")} cd ${dist}`);
-  console.log(`\t${gray("$")} pnpm install`);
-  console.log(`\t${gray("$")} pnpm run dev`);
+  console.log("\n" + bold(arrow0("Next steps:")));
+  console.log(cmd3(`cd ${dist}`));
+  console.log(cmd3("pnpm install"));
+  console.log(cmd3("pnpm run dev"));
 }
 
 const defaultDef = {
@@ -135,6 +138,27 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
+async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
+  const map = new Map<string, Hook[]>();
+  for (const hook of hooks) {
+    for await (const file of walk(hook)) {
+      const parsed = parse(file);
+
+      switch (parsed.name) {
+        case "cli":
+          if (!map.has("cli")) {
+            map.set("cli", []);
+          }
+          map.get("cli")!.push((await import(file)).default);
+          break;
+        default:
+          throw new Error(`Unsupported hook ${parsed.name}`);
+      }
+    }
+  }
+  return map;
+}
+
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await parseBoilerplates(dir);
@@ -154,6 +178,7 @@ async function run() {
       await checkArguments(args);
 
       const sources: string[] = [];
+      const hooks: string[] = [];
       const features: string[] = [];
       const flags = Object.entries(args)
         .filter(([, val]) => val === true)
@@ -161,12 +186,20 @@ async function run() {
 
       // push shared boilerplates first
       for (const bl of boilerplates.filter((b) => !b.config.flag)) {
-        sources.push(join(dir, bl.folder));
+        if (bl.subfolders.includes("files")) {
+          sources.push(join(dir, bl.folder, "files"));
+        }
+        if (bl.subfolders.includes("hooks")) {
+          hooks.push(join(dir, bl.folder, "hooks"));
+        }
       }
 
       for (const bl of boilerplates.filter((b) => Boolean(b.config.flag))) {
-        if (flags.includes(bl.config.flag!)) {
-          sources.push(join(dir, bl.folder));
+        if (flags.includes(bl.config.flag!) && bl.subfolders.includes("files")) {
+          sources.push(join(dir, bl.folder, "files"));
+        }
+        if (bl.subfolders.includes("hooks")) {
+          hooks.push(join(dir, bl.folder, "hooks"));
         }
       }
 
@@ -174,17 +207,24 @@ async function run() {
         features.push(coreFlags.get(flag)!);
       }
 
+      const hooksMap = await retrieveHooks(hooks);
+      const meta = {
+        BATI_MODULES: features as VikeMeta["BATI_MODULES"],
+      };
+
       await exec(
         {
           source: sources,
           dist: args.project,
         },
-        {
-          BATI_MODULES: features as VikeMeta["BATI_MODULES"],
-        }
+        meta
       );
 
       printOK(args.project, flags, boilerplates);
+
+      for (const oncli of hooksMap.get("cli") ?? []) {
+        await oncli(meta);
+      }
     },
   });
 

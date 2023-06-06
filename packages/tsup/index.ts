@@ -63,7 +63,7 @@ export function defineBoilerplateConfig() {
         copy({
           assets: {
             from: ["./files/**/!($*)", "./files/**/$$*"],
-            to: ["."],
+            to: ["./files"],
           },
         }),
       ],

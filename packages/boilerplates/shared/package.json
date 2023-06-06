@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prerelease": "rm -rf ./dist",
-    "build": "tsup"
+    "build": "mkdir -p ./dist && cp -r ./files ./dist/"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,5 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "boilerplate": "./files"
-  }
+  "bati": {}
 }
