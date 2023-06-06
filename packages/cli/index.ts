@@ -195,11 +195,13 @@ async function run() {
       }
 
       for (const bl of boilerplates.filter((b) => Boolean(b.config.flag))) {
-        if (flags.includes(bl.config.flag!) && bl.subfolders.includes("files")) {
-          sources.push(join(dir, bl.folder, "files"));
-        }
-        if (bl.subfolders.includes("hooks")) {
-          hooks.push(join(dir, bl.folder, "hooks"));
+        if (flags.includes(bl.config.flag!)) {
+          if (bl.subfolders.includes("files")) {
+            sources.push(join(dir, bl.folder, "files"));
+          }
+          if (bl.subfolders.includes("hooks")) {
+            hooks.push(join(dir, bl.folder, "hooks"));
+          }
         }
       }
 
