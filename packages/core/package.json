@@ -22,6 +22,7 @@
     "@types/eslint": "^8.40.0",
     "@types/node": "^16.18.34",
     "@types/prettier": "^2.7.2",
+    "@types/which": "^3.0.0",
     "ast-types": "^0.14.2",
     "colorette": "^2.0.20",
     "esbuild": "^0.17.19",
@@ -31,7 +32,8 @@
     "rollup": "^3.23.0",
     "rollup-plugin-dts": "^5.3.0",
     "typescript": "^5.0.4",
-    "vitest": "^0.31.2"
+    "vitest": "^0.31.2",
+    "which": "^3.0.1"
   },
   "exports": {
     ".": "./dist/index.js"
@@ -48,9 +50,5 @@
   },
   "files": [
     "dist/"
-  ],
-  "dependencies": {
-    "@types/which": "^3.0.0",
-    "which": "^3.0.1"
-  }
+  ]
 }

@@ -271,9 +271,6 @@ importers:
       typescript: ^5.0.4
       vitest: ^0.31.2
       which: ^3.0.1
-    dependencies:
-      '@types/which': 3.0.0
-      which: 3.0.1
     devDependencies:
       '@putout/plugin-remove-unused-variables': 5.4.0_putout@29.10.1
       '@rollup/plugin-commonjs': 24.1.0_rollup@3.23.0
@@ -284,6 +281,7 @@ importers:
       '@types/eslint': 8.40.0
       '@types/node': 16.18.34
       '@types/prettier': 2.7.2
+      '@types/which': 3.0.0
       ast-types: 0.14.2
       colorette: 2.0.20
       esbuild: 0.17.19
@@ -294,6 +292,7 @@ importers:
       rollup-plugin-dts: 5.3.0_tnqflclqvwjfwgmj565zf7tvwe
       typescript: 5.0.4
       vitest: 0.31.2
+      which: 3.0.1
 
   packages/create-batijs-app:
     specifiers:
@@ -2704,7 +2703,7 @@ packages:
 
   /@types/which/3.0.0:
     resolution: {integrity: sha512-ASCxdbsrwNfSMXALlC3Decif9rwDMu+80KGp5zI2RLRotfMsTv7fHL8W8VDp24wymzDyIFudhUeSCugrgRFfHQ==}
-    dev: false
+    dev: true
 
   /@typescript-eslint/eslint-plugin/5.59.8_hnhvdstanz2zc7wdbtnhvs2o7u:
     resolution: {integrity: sha512-JDMOmhXteJ4WVKOiHXGCoB96ADWg9q7efPWHRViT/f09bA8XOMLAVHHju3l0MkZnG1izaWXYmgvQcUjTRcpShQ==}
@@ -7506,7 +7505,7 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-    dev: false
+    dev: true
 
   /why-is-node-running/2.2.2:
     resolution: {integrity: sha512-6tSwToZxTOcotxHeA+qGCq1mVzKR3CwcJGmVcY+QE8SHy6TnpFnh8PAvPNHYr7EcuVeG0QSMxtYCuO1ta/G/oA==}
