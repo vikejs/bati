@@ -3,7 +3,12 @@
   "extends": [
     "config:base"
   ],
-  "groupName": "all",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "all (non-major)"
+    }
+  ],
   "rangeStrategy": "bump",
   "assignees": ["@magne4000"],
   "prCreation": "not-pending"
