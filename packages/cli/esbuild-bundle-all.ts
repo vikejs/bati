@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import type { Plugin } from "esbuild";
 import { bold, cyan, green, yellow } from "colorette";
 import { $ } from "execa";
-import { flags } from "@batijs/core";
+import { flags, which } from "@batijs/core";
 import type { BatiConfig, BoilerplateDef, ToBeCopied } from "./types";
 import { existsSync } from "node:fs";
 
@@ -25,7 +25,8 @@ interface SimplePackageJson {
 }
 
 async function getRecursivePackages() {
-  const { stdout } = await $`pnpm m ls --json --depth=-1`;
+  const pnpmPath = await which("pnpm");
+  const { stdout } = await $`${pnpmPath} m ls --json --depth=-1`;
 
   return JSON.parse(stdout) as PnpmPackageInfo[];
 }
