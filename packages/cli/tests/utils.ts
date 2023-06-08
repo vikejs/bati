@@ -6,6 +6,7 @@ import { mkdtemp, rm } from "fs/promises";
 import { join } from "node:path";
 import getPort from "get-port";
 import waitForLocalhost from "wait-for-localhost";
+import * as process from "process";
 
 interface GlobalContext {
   tmpdir: string;
@@ -65,7 +66,10 @@ export function prepare(flags: string[]) {
 
   afterAll(async () => {
     context.server?.kill();
-    await rm(context.tmpdir, { recursive: true, force: true });
+    if (!process.env.CI) {
+      // Gives errors on GIthub CI: Error: ENOTEMPTY: directory not empty, rmdir '/tmp/bati-6CzWY1'
+      await rm(context.tmpdir, { recursive: true, force: true });
+    }
   }, 30000);
 
   return {
