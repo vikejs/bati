@@ -6,10 +6,12 @@
 Bâti
 </h1>
 <p align="center">
-Create a new web app with the stack YOU choose
+Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want.
 <p>
 
 <h3 align="center"><a href="https://batijs.github.io">Try the CLI generator</a></h3>
+
+![Demo](doc/demo.gif)
 
 ## Features
 - Choose the features you need, with the libraries you want
