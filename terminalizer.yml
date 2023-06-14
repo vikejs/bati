@@ -18,12 +18,12 @@ config:
   # Explicitly set the number of columns
   # or use `auto` to take the current
   # number of columns of your shell
-  cols: 106
+  cols: 79
   
   # Explicitly set the number of rows
   # or use `auto` to take the current
   # number of rows of your shell
-  rows: 82
+  rows: 16
   
   # Amount of times to repeat GIF
   # If value is -1, play once
@@ -114,10 +114,8 @@ records:
   - delay: 350
     content: "[magne@desktop workspace]$ "
   - delay: 1500
-    content: "\e[7mpnpm create @batijs/app --solid --authjs --telefunc --hattip --tail\e[27m\e[7mw\e[27m\e[7mindcss my-app \e[27m"
-  - delay: 800
-    content: "\e[A\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[Cpnpm create @batijs/app --solid --authjs --telefunc --hattip --tailwindcss my-app \r\n\e[?2004l\r"
-  - delay: 622
+    content: "pnpm create @batijs/app --solid --authjs --telefunc --hattip --tailwindcss my-app\r\n\e[?2004l\r"
+  - delay: 1500
     content: ".../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
   - delay: 899
     content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m1\e[39m, added \e[96m0\e[39m\r\n"
@@ -209,12 +207,8 @@ records:
     content: "\e[1AProgress: resolved \e[96m238\e[39m, reused \e[96m213\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
   - delay: 580
     content: "\e[1AProgress: resolved \e[96m238\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n"
-  - delay: 209
-    content: "\e[1AProgress: resolved \e[96m239\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n\e[1APackages: \e[32m+217\e[39m\e[0K\r\n\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\r\nProgress: resolved \e[96m239\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n"
   - delay: 180
     content: "\e[1AProgress: resolved \e[96m239\e[39m, reused \e[96m214\e[39m, downloaded \e[96m3\e[39m, added \e[96m217\e[39m, done\r\n"
-  - delay: 220
-    content: "\r\n\e[96mdependencies:\e[39m\r\n\e[32m+\e[39m @auth/core \e[90m0.7.1\e[39m \e[90m(0.8.2 is available)\e[39m\r\n\e[32m+\e[39m @hattip/router \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m cross-fetch \e[90m3.1.6\e[39m\r\n\e[32m+\e[39m hattip \e[90m0.0.33\e[39m\r\n\e[32m+\e[39m solid-js \e[90m1.7.5\e[39m \e[90m(1.7.6 is available)\e[39m\r\n\e[32m+\e[39m telefunc \e[90m0.1.53\e[39m \e[90m(0.1.54 is available)\e[39m\r\n\e[32m+\e[39m vike-authjs \e[90m0.0.2\e[39m\r\n\e[32m+\e[39m vike-solid \e[90m0.0.7\e[39m\r\n\e[32m+\e[39m vite \e[90m4.3.9\e[39m\r\n\e[32m+\e[39m vite-plugin-ssr \e[90m0.4.131\e[39m\r\n\r\n\e[96mdevDependencies:\e[39m\r\n\e[32m+\e[39m @hattip/adapter-node \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m @hattip/vite \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m autoprefixer \e[90m10.4.14\e[39m\r\n\e[32m+\e[39m postcss \e[90m8.4.24\e[39m\r\n\e[32m+\e[39m tailwindcss \e[90m3.3.2\e[39m\r\n\e[32m+\e[39m typescript \e[90m5.0.4\e[39m \e[90m(5.1.3 is available)\e[39m\r\n\r\nDone in 3.7s\r\n"
   - delay: 6
     content: "[magne@desktop workspace/my-app]$ "
   - delay: 1500
@@ -246,6 +240,6 @@ records:
   - delay: 276
     content: "\r\n> my-app@0.0.23 dev /home/magne/workspace/my-app\r\n> hattip serve ./hattip-entry.ts --client\r\n\r\n"
   - delay: 789
-    content: "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\e[1;1H\e[0J\e[32m\r\n\U0001F3A9 HatTip 0.0.33\e[39m\e[36m (vite 4.3.9)\e[39m\e[37m: Development server is running\e[39m \e[2m(ready in \e[37m\e[1m755\e[22m\e[2m\e[39m ms)\e[22m\r\n\r\n  \e[32m➜\e[39m  \e[1mLocal\e[22m:   \e[36mhttp://127.0.0.1:\e[1m3000\e[22m/\e[39m\r\n\e[2m  \e[32m➜\e[39m  \e[1mNetwork\e[22m\e[2m: use \e[22m\e[1m--host\e[22m\e[2m to expose\e[22m\r\n"
+    content: "\e[1;1H\e[0J\e[32m\r\n\U0001F3A9 HatTip 0.0.33\e[39m\e[36m (vite 4.3.9)\e[39m\e[37m: Development server is running\e[39m \e[2m(ready in \e[37m\e[1m755\e[22m\e[2m\e[39m ms)\e[22m\r\n\r\n  \e[32m➜\e[39m  \e[1mLocal\e[22m:   \e[36mhttp://127.0.0.1:\e[1m3000\e[22m/\e[39m\r\n\e[2m  \e[32m➜\e[39m  \e[1mNetwork\e[22m\e[2m: use \e[22m\e[1m--host\e[22m\e[2m to expose\e[22m\r\n"
   - delay: 2000
     content: "^\b"
