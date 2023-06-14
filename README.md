@@ -9,7 +9,7 @@ Bâti
 Create a new web app with the stack YOU choose
 <p>
 
-<h2 align="center"><a href="https://batijs.github.io">Try the CLI generator</a></h2>
+<h3 align="center"><a href="https://batijs.github.io">Try the CLI generator</a></h3>
 
 ## Features
 - Choose the features you need, with the libraries you want
