@@ -1,0 +1,251 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/magne/workspace
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 106
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 82
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 350
+    content: "[magne@desktop workspace]$ "
+  - delay: 1500
+    content: "\e[7mpnpm create @batijs/app --solid --authjs --telefunc --hattip --tail\e[27m\e[7mw\e[27m\e[7mindcss my-app \e[27m"
+  - delay: 800
+    content: "\e[A\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[Cpnpm create @batijs/app --solid --authjs --telefunc --hattip --tailwindcss my-app \r\n\e[?2004l\r"
+  - delay: 622
+    content: ".../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 899
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m1\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 738
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m2\e[39m, reused \e[96m0\e[39m, downloaded \e[96m1\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 344
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m2\e[39m, reused \e[96m0\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 465
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 9
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    |   \e[32m+3\e[39m \e[32m+\e[39m\e[0K\r\n.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n\e[1APackages are cloned from the content-addressable store to the virtual store.\e[0K\r\n  Content-addressable store is at: /home/magne/.local/share/pnpm/store/v3\r\n  Virtual store is at:             ../.local/share/pnpm/store/v3/tmp/dlx-12681/node_modules/.pnpm\r\n.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 187
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m2\e[39m, added \e[96m2\e[39m\r\n"
+  - delay: 812
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m3\e[39m, added \e[96m2\e[39m\r\n"
+  - delay: 200
+    content: "\e[1A.../share/pnpm/store/v3/tmp/dlx-12681    | Progress: resolved \e[96m3\e[39m, reused \e[96m0\e[39m, downloaded \e[96m3\e[39m, added \e[96m3\e[39m, done\r\n"
+  - delay: 273
+    content: "\e[1m\e[32m✓\e[39m Project created at \e[36mmy-app\e[39m with:\e[22m\r\n      - \e[32mTypescript\e[39m\r\n      - \e[32mSolidJS\e[39m\r\n      - \e[32mAuth.js\e[39m\r\n      - \e[32mTelefunc\e[39m\r\n      - \e[32mHattip\e[39m\r\n      - \e[32mTailwindCSS\e[39m\r\n\r\n\e[1m\e[94m→\e[39m Next steps:\e[22m\r\n      \e[90m$\e[39m cd my-app\r\n      \e[90m$\e[39m pnpm install\r\n      \e[90m$\e[39m pnpm run dev\r\n"
+  - delay: 16
+    content: "[magne@desktop workspace]$ "
+  - delay: 800
+    content: c
+  - delay: 98
+    content: d
+  - delay: 98
+    content: ' '
+  - delay: 126
+    content: m
+  - delay: 184
+    content: 'y'
+  - delay: 233
+    content: '-'
+  - delay: 159
+    content: app/
+  - delay: 140
+    content: "\r\n\e[?2004l\r"
+  - delay: 800
+    content: "[magne@desktop workspace/my-app]$ "
+  - delay: 800
+    content: p
+  - delay: 117
+    content: 'n'
+  - delay: 90
+    content: p
+  - delay: 95
+    content: m
+  - delay: 219
+    content: ' '
+  - delay: 187
+    content: i
+  - delay: 42
+    content: 'n'
+  - delay: 129
+    content: s
+  - delay: 87
+    content: t
+  - delay: 92
+    content: a
+  - delay: 87
+    content: l
+  - delay: 132
+    content: l
+  - delay: 800
+    content: "\r\n\e[?2004l\r"
+  - delay: 314
+    content: "Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m18\e[39m, reused \e[96m18\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 212
+    content: "\e[1AProgress: resolved \e[96m61\e[39m, reused \e[96m56\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m68\e[39m, reused \e[96m66\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m80\e[39m, reused \e[96m78\e[39m, downloaded \e[96m1\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m123\e[39m, reused \e[96m96\e[39m, downloaded \e[96m1\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m159\e[39m, reused \e[96m135\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m166\e[39m, reused \e[96m142\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m167\e[39m, reused \e[96m143\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m168\e[39m, reused \e[96m144\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m214\e[39m, reused \e[96m189\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m238\e[39m, reused \e[96m213\e[39m, downloaded \e[96m2\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 580
+    content: "\e[1AProgress: resolved \e[96m238\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 209
+    content: "\e[1AProgress: resolved \e[96m239\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n\e[1APackages: \e[32m+217\e[39m\e[0K\r\n\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\r\nProgress: resolved \e[96m239\e[39m, reused \e[96m213\e[39m, downloaded \e[96m3\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 180
+    content: "\e[1AProgress: resolved \e[96m239\e[39m, reused \e[96m214\e[39m, downloaded \e[96m3\e[39m, added \e[96m217\e[39m, done\r\n"
+  - delay: 220
+    content: "\r\n\e[96mdependencies:\e[39m\r\n\e[32m+\e[39m @auth/core \e[90m0.7.1\e[39m \e[90m(0.8.2 is available)\e[39m\r\n\e[32m+\e[39m @hattip/router \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m cross-fetch \e[90m3.1.6\e[39m\r\n\e[32m+\e[39m hattip \e[90m0.0.33\e[39m\r\n\e[32m+\e[39m solid-js \e[90m1.7.5\e[39m \e[90m(1.7.6 is available)\e[39m\r\n\e[32m+\e[39m telefunc \e[90m0.1.53\e[39m \e[90m(0.1.54 is available)\e[39m\r\n\e[32m+\e[39m vike-authjs \e[90m0.0.2\e[39m\r\n\e[32m+\e[39m vike-solid \e[90m0.0.7\e[39m\r\n\e[32m+\e[39m vite \e[90m4.3.9\e[39m\r\n\e[32m+\e[39m vite-plugin-ssr \e[90m0.4.131\e[39m\r\n\r\n\e[96mdevDependencies:\e[39m\r\n\e[32m+\e[39m @hattip/adapter-node \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m @hattip/vite \e[90m0.0.33\e[39m \e[90m(0.0.34 is available)\e[39m\r\n\e[32m+\e[39m autoprefixer \e[90m10.4.14\e[39m\r\n\e[32m+\e[39m postcss \e[90m8.4.24\e[39m\r\n\e[32m+\e[39m tailwindcss \e[90m3.3.2\e[39m\r\n\e[32m+\e[39m typescript \e[90m5.0.4\e[39m \e[90m(5.1.3 is available)\e[39m\r\n\r\nDone in 3.7s\r\n"
+  - delay: 6
+    content: "[magne@desktop workspace/my-app]$ "
+  - delay: 1500
+    content: p
+  - delay: 114
+    content: 'n'
+  - delay: 65
+    content: p
+  - delay: 87
+    content: m
+  - delay: 168
+    content: ' '
+  - delay: 140
+    content: r
+  - delay: 128
+    content: u
+  - delay: 28
+    content: 'n'
+  - delay: 166
+    content: ' '
+  - delay: 103
+    content: d
+  - delay: 48
+    content: e
+  - delay: 179
+    content: v
+  - delay: 188
+    content: "\r\n\e[?2004l\r"
+  - delay: 276
+    content: "\r\n> my-app@0.0.23 dev /home/magne/workspace/my-app\r\n> hattip serve ./hattip-entry.ts --client\r\n\r\n"
+  - delay: 789
+    content: "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\e[1;1H\e[0J\e[32m\r\n\U0001F3A9 HatTip 0.0.33\e[39m\e[36m (vite 4.3.9)\e[39m\e[37m: Development server is running\e[39m \e[2m(ready in \e[37m\e[1m755\e[22m\e[2m\e[39m ms)\e[22m\r\n\r\n  \e[32m➜\e[39m  \e[1mLocal\e[22m:   \e[36mhttp://127.0.0.1:\e[1m3000\e[22m/\e[39m\r\n\e[2m  \e[32m➜\e[39m  \e[1mNetwork\e[22m\e[2m: use \e[22m\e[1m--host\e[22m\e[2m to expose\e[22m\r\n"
+  - delay: 2000
+    content: "^\b"
