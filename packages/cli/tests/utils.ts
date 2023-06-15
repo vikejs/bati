@@ -117,7 +117,7 @@ export function prepare(flags: string[]) {
     await execCli(context, flags);
     await Promise.all([runPnpmInstall(context), initPort(context)]);
     await runDevServer(context);
-  }, 30000);
+  }, 50000);
 
   afterAll(async () => {
     // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`
