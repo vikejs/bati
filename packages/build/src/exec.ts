@@ -37,7 +37,8 @@ export async function* walk(dir: string): AsyncGenerator<string> {
   }
 }
 
-function transformFileAfterExec(filepath: string, fileContent: unknown): string {
+function transformFileAfterExec(filepath: string, fileContent: unknown): string | null {
+  if (fileContent === undefined || fileContent === null) return null;
   const parsed = path.parse(filepath);
   const ext = parsed.ext || parsed.name;
   switch (ext) {
@@ -46,6 +47,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
     case ".tsx":
     case ".jsx":
     case ".env":
+    case ".html":
       return fileContent as string;
     case ".json":
       return JSON.stringify(fileContent, null, 2);

@@ -6,8 +6,7 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "prerelease": "rm -rf ./dist",
-    "build": "mkdir -p ./dist && cp -r ./files ./dist/"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
