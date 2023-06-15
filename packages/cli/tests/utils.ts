@@ -6,6 +6,7 @@ import { mkdtemp, rm } from "fs/promises";
 import { join } from "node:path";
 import http from "node:http";
 import getPort from "get-port";
+import treeKill from "tree-kill";
 import * as process from "process";
 
 interface GlobalContext {
@@ -119,11 +120,19 @@ export function prepare(flags: string[]) {
   }, 30000);
 
   afterAll(async () => {
-    context.server?.kill();
-    if (!process.env.CI) {
-      // Gives errors on GIthub CI: Error: ENOTEMPTY: directory not empty, rmdir '/tmp/bati-6CzWY1'
-      await rm(context.tmpdir, { recursive: true, force: true });
+    // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`
+    // process but not its children, so the dev server will keep running,
+    // leading to the recursive rm later to fail. See also
+    // https://github.com/sindresorhus/execa/pull/170#issuecomment-504143618
+    // This is also happening when running `pnpm run dev` manually in a shell:
+    // stopping it with Ctrl+C will kill the child dev server, but sending a
+    // SIGINT/SIGTERM manually won't. To work around this, we kill all the
+    // children by using node-tree-kill.
+    const pid = context.server?.pid;
+    if (pid) {
+      await new Promise((resolve) => treeKill(pid, resolve));
     }
+    await rm(context.tmpdir, { recursive: true, force: true });
   }, 30000);
 
   return {
