@@ -96,7 +96,7 @@ async function runDevServer(context: GlobalContext) {
 
   await Promise.race([
     // wait for port
-    waitForLocalhost({ port: context.port, useGet: true, timeout: 27000 }),
+    waitForLocalhost({ port: context.port, useGet: true, timeout: 50000 }),
     // or for server to crash
     context.server,
   ]);
@@ -116,7 +116,7 @@ export function prepare(flags: string[]) {
     await execCli(context, flags);
     await Promise.all([runPnpmInstall(context), initPort(context)]);
     await runDevServer(context);
-  }, 50000);
+  }, 90000);
 
   afterAll(async () => {
     // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`
