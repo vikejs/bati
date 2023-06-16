@@ -82,7 +82,7 @@ function execCli(context: GlobalContext, flags: string[]) {
 function runPnpmInstall(context: GlobalContext) {
   return execa("pnpm", ["install", "--prefer-offline"], {
     cwd: context.tmpdir,
-    timeout: 10000,
+    timeout: 20000,
   });
 }
 
@@ -120,7 +120,7 @@ export function prepare(flags: string[]) {
     await execCli(context, flags);
     await Promise.all([runPnpmInstall(context), initPort(context)]);
     await runDevServer(context);
-  }, 36000);
+  }, 46000);
 
   afterAll(async () => {
     // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`

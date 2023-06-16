@@ -10,6 +10,6 @@ export default defineConfig({
     include: isWin && isCI ? ["**/empty.{test,spec}.?(c|m)[jt]s?(x)"] : configDefaults.include,
     minThreads: 1,
     maxThreads: 2,
-    testTimeout: 42000,
+    testTimeout: 52000,
   },
 });
