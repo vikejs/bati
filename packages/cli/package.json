@@ -4,10 +4,10 @@
   "description": "Scaffold typescript projects with ease and modularity",
   "type": "module",
   "scripts": {
-    "prerelease": "rm -rf ./dist",
+    "prerelease": "rimraf ./dist",
     "prepublishOnly": "pnpm run build",
     "test": "pnpm run build && vitest run --test-timeout=50000",
-    "build": "rm -rf dist && tsup"
+    "build": "rimraf ./dist && tsup"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +23,11 @@
     "execa": "^7.1.1",
     "get-port": "^7.0.0",
     "node-fetch": "^3.3.1",
+    "rimraf": "^5.0.1",
+    "tree-kill": "^1.2.2",
     "tsup": "^6.7.0",
     "typescript": "^5.1.3",
+    "vite": "^4.3.9",
     "vitest": "^0.32.0"
   },
   "dependencies": {

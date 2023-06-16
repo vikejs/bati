@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
+const isWin = process.platform === "win32";
 
 function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
@@ -77,7 +78,8 @@ export default async function main(options: { source: string | string[]; dist: s
 Please report this issue to https://github.com/magne4000/bati`
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
-        const f = await import(p);
+        const importFile = isWin ? "file://" + p : p;
+        const f = await import(importFile);
 
         const fileContent = transformFileAfterExec(
           target,
