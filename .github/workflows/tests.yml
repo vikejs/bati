@@ -3,7 +3,11 @@ on:
 
 jobs:
   cache-and-install:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ["16", "18"]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
       - name: Checkout
@@ -12,7 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ matrix.node }}
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -37,9 +41,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Build packages
         run: pnpm run build
-        
+
       - name: Run tests
         run: pnpm run -r test
