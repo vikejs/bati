@@ -6,7 +6,7 @@
   "scripts": {
     "prerelease": "rimraf ./dist",
     "prepublishOnly": "pnpm run build",
-    "test": "pnpm run build && vitest run --test-timeout=50000",
+    "test": "pnpm run build && vitest run",
     "build": "rimraf ./dist && tsup"
   },
   "keywords": [],

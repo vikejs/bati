@@ -45,6 +45,7 @@ export default function waitForLocalhost({
             Accept:
               "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
           },
+          timeout: 1000,
         },
         (response) => {
           if (response.statusCode === 200) {
@@ -73,12 +74,15 @@ async function initTmpDir(context: GlobalContext) {
 }
 
 function execCli(context: GlobalContext, flags: string[]) {
-  return execa("node", [join(".", "dist", "index.js"), ...flags.map((f) => `--${f}`), context.tmpdir]);
+  return execa("node", [join(".", "dist", "index.js"), ...flags.map((f) => `--${f}`), context.tmpdir], {
+    timeout: 5000,
+  });
 }
 
 function runPnpmInstall(context: GlobalContext) {
-  return execa("pnpm", ["install"], {
+  return execa("pnpm", ["install", "--prefer-offline"], {
     cwd: context.tmpdir,
+    timeout: 20000,
   });
 }
 
@@ -96,7 +100,7 @@ async function runDevServer(context: GlobalContext) {
 
   await Promise.race([
     // wait for port
-    waitForLocalhost({ port: context.port, useGet: true, timeout: 27000 }),
+    waitForLocalhost({ port: context.port, useGet: true, timeout: 20000 }),
     // or for server to crash
     context.server,
   ]);
@@ -116,7 +120,7 @@ export function prepare(flags: string[]) {
     await execCli(context, flags);
     await Promise.all([runPnpmInstall(context), initPort(context)]);
     await runDevServer(context);
-  }, 50000);
+  }, 46000);
 
   afterAll(async () => {
     // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`
@@ -132,7 +136,7 @@ export function prepare(flags: string[]) {
       await new Promise((resolve) => treeKill(pid, resolve));
     }
     await rm(context.tmpdir, { recursive: true, force: true });
-  }, 30000);
+  }, 5000);
 
   return {
     fetch(path: string, init?: Parameters<typeof fetch>[1]) {
