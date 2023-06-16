@@ -11,6 +11,7 @@ import type { BoilerplateDef, Hook } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const isWin = process.platform === "win32";
 
 function boilerplatesDir() {
   if (existsSync(join(__dirname, "boilerplates", "boilerplates.json"))) {
@@ -143,13 +144,14 @@ async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
   for (const hook of hooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
+      const importFile = isWin ? "file://" + file : file;
 
       switch (parsed.name) {
         case "cli":
           if (!map.has("cli")) {
             map.set("cli", []);
           }
-          map.get("cli")!.push((await import(file)).default);
+          map.get("cli")!.push((await import(importFile)).default);
           break;
         default:
           throw new Error(`Unsupported hook ${parsed.name}`);

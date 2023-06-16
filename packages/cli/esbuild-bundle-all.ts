@@ -32,8 +32,9 @@ async function getRecursivePackages() {
 }
 
 async function getBatiPackages() {
+  const dir = join("bati", "packages", "boilerplates");
   const batiPackages = (await getRecursivePackages()).filter(
-    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes("bati/packages/boilerplates/")
+    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes(dir)
   );
 
   return batiPackages.map((pkg) => pkg.path);
@@ -55,8 +56,8 @@ async function boilerplateFilesToCopy() {
 
     const subfolders: string[] = [];
     const distFolder = existsSync(join(dirname(filepath), "dist"));
-    const hooksFolder = existsSync(join(dirname(filepath), "dist/hooks"));
-    const filesFolder = existsSync(join(dirname(filepath), "dist/files"));
+    const hooksFolder = existsSync(join(dirname(filepath), "dist", "hooks"));
+    const filesFolder = existsSync(join(dirname(filepath), "dist", "files"));
 
     if (filesFolder) {
       subfolders.push("files");

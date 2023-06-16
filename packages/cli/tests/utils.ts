@@ -7,7 +7,6 @@ import { join } from "node:path";
 import http from "node:http";
 import getPort from "get-port";
 import treeKill from "tree-kill";
-import * as process from "process";
 
 interface GlobalContext {
   tmpdir: string;
@@ -74,7 +73,7 @@ async function initTmpDir(context: GlobalContext) {
 }
 
 function execCli(context: GlobalContext, flags: string[]) {
-  return execa("node", ["./dist/index.js", ...flags.map((f) => `--${f}`), context.tmpdir]);
+  return execa("node", [join(".", "dist", "index.js"), ...flags.map((f) => `--${f}`), context.tmpdir]);
 }
 
 function runPnpmInstall(context: GlobalContext) {
