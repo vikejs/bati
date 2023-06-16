@@ -7,28 +7,7 @@ jobs:
     strategy:
       matrix:
         node: ["16", "18"]
-        os:
-          - ubuntu-latest
-          - macOS-latest
-
-          # Building packages/cli fails on Windows with
-          #
-          # packages/cli build$ rimraf dist && tsup
-          # packages/cli build: CLI Building entry: index.ts
-          # packages/cli build: CLI Using tsconfig: tsconfig.json
-          # packages/cli build: CLI tsup v6.7.0
-          # packages/cli build: CLI Using tsup config: D:\a\bati\bati\packages\cli\tsup.config.ts
-          # packages/cli build: CLI Target: es2020
-          # packages/cli build: ESM Build start
-          # packages/cli build: DTS Build start
-          # packages/cli build: ESM Build failed
-          # packages/cli build: Error: Build failed with 1 error:
-          # packages/cli build: error: ENOENT: no such file or directory, open 'D:\a\bati\bati\packages\cli\dist\boilerplates\boilerplates.json'
-          # packages/cli build:     at failureErrorWithLog (D:\a\bati\bati\node_modules\.pnpm\esbuild@0.17.19\node_modules\esbuild\lib\main.js:1636:15)
-          # packages/cli build:     at D:\a\bati\bati\node_modules\.pnpm\esbuild@0.17.19\node_modules\esbuild\lib\main.js:1048:25
-          # packages/cli build:     at D:\a\bati\bati\node_modules\.pnpm\esbuild@0.17.19\node_modules\esbuild\lib\main.js:1512:9
-          #
-          # - windows-latest
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
       - name: Checkout
