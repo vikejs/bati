@@ -1,5 +1,5 @@
 import { execa, type ExecaChildProcess } from "execa";
-import { afterAll, beforeAll } from "vitest";
+import { afterAll, beforeAll, describe } from "vitest";
 import nodeFetch from "node-fetch";
 import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "fs/promises";
@@ -13,6 +13,8 @@ interface GlobalContext {
   port: number;
   server: ExecaChildProcess<string> | undefined;
 }
+
+type FetchParam1 = Parameters<typeof fetch>[1];
 
 // https://github.com/sindresorhus/wait-for-localhost
 export default function waitForLocalhost({
@@ -139,8 +141,27 @@ export function prepare(flags: string[]) {
   }, 5000);
 
   return {
-    fetch(path: string, init?: Parameters<typeof fetch>[1]) {
+    fetch(path: string, init?: FetchParam1) {
       return nodeFetch(`http://localhost:${context.port}${path}`, init);
     },
   };
+}
+
+/**
+ * Combine each `oneOf` value with all `flags` values.
+ * @example
+ * describeAll(['a', 'b', 'c'], ['1', '2'], ...);
+ * // will prepare tests with the following flags:
+ * // ['a', '1', '2']
+ * // ['b', '1', '2']
+ * // ['c', '1', '2']
+ */
+export function describeMany(oneOf: string[], flags: string[], fn: (context: ReturnType<typeof prepare>) => void) {
+  oneOf.forEach((f) => {
+    const currentFlags = [f, ...flags];
+
+    describe.concurrent(currentFlags.join(" + "), () => {
+      fn(prepare(currentFlags));
+    });
+  });
 }

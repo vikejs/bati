@@ -1,9 +1,7 @@
-import { describe, expect, test } from "vitest";
-import { prepare } from "./utils";
+import { expect, test } from "vitest";
+import { describeMany } from "./utils";
 
-describe.concurrent("solid + express", () => {
-  const { fetch } = prepare(["solid", "express"]);
-
+describeMany(["solid", "react"], ["express"], ({ fetch }) => {
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);
