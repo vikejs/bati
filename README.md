@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-Bâti
+Bati
 </h1>
 <p align="center">
 Create a new web app with the stack YOU choose
