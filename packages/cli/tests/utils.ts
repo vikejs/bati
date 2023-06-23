@@ -1,12 +1,12 @@
-import { execa, type ExecaChildProcess } from "execa";
 import { afterAll, beforeAll, describe } from "vitest";
 import nodeFetch from "node-fetch";
 import { tmpdir } from "node:os";
-import { mkdtemp, rm } from "fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import http from "node:http";
 import getPort from "get-port";
-import treeKill from "tree-kill";
+
+import { execa, type ExecaChildProcess } from "./processUtils";
 
 interface GlobalContext {
   tmpdir: string;
@@ -100,12 +100,18 @@ async function runDevServer(context: GlobalContext) {
     },
   });
 
-  await Promise.race([
-    // wait for port
-    waitForLocalhost({ port: context.port, useGet: true, timeout: 20000 }),
-    // or for server to crash
-    context.server,
-  ]);
+  try {
+    await Promise.race([
+      // wait for port
+      waitForLocalhost({ port: context.port, useGet: true, timeout: 20000 }),
+      // or for server to crash
+      context.server,
+    ]);
+  } catch (e) {
+    console.log("Server didn't come up in time. Current output:");
+    console.log(context.server.log);
+    throw e;
+  }
 
   return { server: context.server, port: context.port };
 }
@@ -125,18 +131,7 @@ export function prepare(flags: string[]) {
   }, 46000);
 
   afterAll(async () => {
-    // Unfortunately on Linux `context.server?.kill()` will kill the `pnpm`
-    // process but not its children, so the dev server will keep running,
-    // leading to the recursive rm later to fail. See also
-    // https://github.com/sindresorhus/execa/pull/170#issuecomment-504143618
-    // This is also happening when running `pnpm run dev` manually in a shell:
-    // stopping it with Ctrl+C will kill the child dev server, but sending a
-    // SIGINT/SIGTERM manually won't. To work around this, we kill all the
-    // children by using node-tree-kill.
-    const pid = context.server?.pid;
-    if (pid) {
-      await new Promise((resolve) => treeKill(pid, resolve));
-    }
+    await context.server?.treekill();
     await rm(context.tmpdir, { recursive: true, force: true });
   }, 5000);
 
