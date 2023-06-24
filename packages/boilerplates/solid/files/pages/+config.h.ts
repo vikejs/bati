@@ -1,4 +1,4 @@
-import type { Config } from "vike-solid";
+import vikeSolid, { type UserConfig } from "vike-solid";
 import Layout from "../layouts/LayoutDefault";
 import Head from "../layouts/HeadDefault";
 
@@ -10,4 +10,5 @@ export default {
   title: "My Vike App",
   // <meta name="description">
   description: "Demo showcasing Vike",
-} satisfies Config;
+  extends: vikeSolid,
+} satisfies UserConfig;

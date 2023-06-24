@@ -45,8 +45,8 @@ importers:
         specifier: workspace:*
         version: link:../../tsup
       '@edgedb/generate':
-        specifier: ^0.2.1
-        version: 0.2.1(edgedb@1.3.2)
+        specifier: ^0.3.0
+        version: 0.3.0(edgedb@1.3.2)
       '@prisma/client':
         specifier: ^4.16.1
         version: 4.16.1(prisma@4.16.1)
@@ -277,8 +277,8 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3
       vike-solid:
-        specifier: ^0.0.7
-        version: 0.0.7(@types/node@16.18.36)(solid-js@1.7.6)
+        specifier: ^0.0.8
+        version: 0.0.8(@types/node@16.18.36)(solid-js@1.7.6)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@16.18.36)
@@ -964,12 +964,12 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /@edgedb/generate@0.2.1(edgedb@1.3.2):
-    resolution: {integrity: sha512-+srDKqD0iLAUyEWUcfZn+MwZjTjjrUXLC1m8xeHMFpOY/K4JBFk801BEYjlp5wWjBvmIE+1SF2b9HJlqIKQQJA==}
+  /@edgedb/generate@0.3.0(edgedb@1.3.2):
+    resolution: {integrity: sha512-+o5rVT/wpnz8eZ93wiu9Jjv967Ho0fmXwtQgHURjl56OsSsgggzeTFJTFJbGhyP3k/f5h/LhxJECmOYsCHBF8g==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
     peerDependencies:
-      edgedb: ^1.3.1
+      edgedb: ^1.3.2
     dependencies:
       chokidar: 3.5.3
       edgedb: 1.3.2
@@ -7727,8 +7727,8 @@ packages:
       vite-plugin-ssr: 0.4.132(vite@4.3.9)
     dev: true
 
-  /vike-solid@0.0.7(@types/node@16.18.36)(solid-js@1.7.6):
-    resolution: {integrity: sha512-karhoiiHb+AXhCrrAyZQMbbzBS8E9eP/bbtim/ERsK5/bOoCAVDqIWsG2FDC+7ZOf3aXSvlUsMUGBQBhCT3pcA==}
+  /vike-solid@0.0.8(@types/node@16.18.36)(solid-js@1.7.6):
+    resolution: {integrity: sha512-I3et+sivou6PgtlXrJjfGSQY/H0o82knAwkXaciYsAFI6usIfWG/52G0uqByKiPmIjzuZonEvgsw9Ck4mgGySA==}
     hasBin: true
     peerDependencies:
       solid-js: ^1.7.1
