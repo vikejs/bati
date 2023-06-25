@@ -13,6 +13,10 @@ export type ExecaChildProcess<T extends string> = ExecaChildProcessOrig<T> & {
 
   // Kill the process and all its children.
   treekill(): Promise<void>;
+
+  // True if the process was killed by `treekill()`. Useful because on Windows the `killed` and `signal` properties
+  // aren't reliably set when killing the process. Probably related to https://github.com/sindresorhus/execa/issues/52
+  treekilled: boolean;
 };
 
 // Pipe any process output to this stream in order to log it with timestamps.
@@ -55,6 +59,7 @@ export function execa(file: string, args?: string[], options: Options = {}): Exe
   childProcess.log = "";
   childProcess.all?.pipe(new LogStream(childProcess));
   childProcess.treekill = treekill;
+  childProcess.treekilled = false;
   childProcess.catch(printLogOnFailure);
   return childProcess;
 
@@ -62,6 +67,7 @@ export function execa(file: string, args?: string[], options: Options = {}): Exe
     // Unfortunately on Linux `childProcess.kill()` won't kill all the children of the process. See also
     // https://github.com/sindresorhus/execa/pull/170#issuecomment-504143618 . To work around this, we kill all the
     // children by using node-tree-kill.
+    childProcess.treekilled = true;
     const pid = childProcess.pid;
     if (pid) {
       await new Promise((resolve) => treeKill(pid, resolve));
@@ -75,7 +81,7 @@ export function execa(file: string, args?: string[], options: Options = {}): Exe
     if (e.timedOut) {
       console.log(`'${e.command}' timed out. Output:`);
       console.log(childProcess.log);
-    } else if (e.exitCode && !e.killed && !e.signal) {
+    } else if (e.exitCode && !e.killed && !e.signal && !childProcess.treekilled) {
       console.log(`'${e.command}' failed with ${e.exitCode}. Output:`);
       console.log(childProcess.log);
     }
