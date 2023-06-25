@@ -84,7 +84,10 @@ function execCli(context: GlobalContext, flags: string[]) {
 function runPnpmInstall(context: GlobalContext) {
   return execa("pnpm", ["install", "--prefer-offline"], {
     cwd: context.tmpdir,
-    timeout: 20000,
+
+    // Note: experience has shown that 20s may not be enough on GitHub Actions
+    // on macOS.
+    timeout: 30000,
   });
 }
 
@@ -128,7 +131,7 @@ export function prepare(flags: string[]) {
     await execCli(context, flags);
     await Promise.all([runPnpmInstall(context), initPort(context)]);
     await runDevServer(context);
-  }, 46000);
+  }, 56000);
 
   afterAll(async () => {
     await context.server?.treekill();
