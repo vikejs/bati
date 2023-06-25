@@ -134,9 +134,23 @@ export function prepare(flags: string[]) {
   }, 56000);
 
   afterAll(async () => {
-    await context.server?.treekill();
-    await rm(context.tmpdir, { recursive: true, force: true });
-  }, 5000);
+    await Promise.race([
+      context.server?.treekill(),
+      new Promise((_resolve, reject) => setTimeout(reject, 5000)),
+    ]).catch((e) => {
+      console.log("Failed to kill server in time. Output:");
+      console.log(context.server?.log);
+      throw e;
+    });
+
+    await Promise.race([
+      rm(context.tmpdir, { recursive: true, force: true }),
+      new Promise((_resolve, reject) => setTimeout(reject, 5000)),
+    ]).catch((e) => {
+      console.log("Failed to delete tmpdir in time.");
+      throw e;
+    });
+  }, 11000);
 
   return {
     fetch(path: string, init?: FetchParam1) {
