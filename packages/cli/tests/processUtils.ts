@@ -75,7 +75,7 @@ export function execa(file: string, args?: string[], options: Options = {}): Exe
     if (e.timedOut) {
       console.log(`'${e.command}' timed out. Output:`);
       console.log(childProcess.log);
-    } else if (e.exitCode) {
+    } else if (e.exitCode && !e.killed && !e.signal) {
       console.log(`'${e.command}' failed with ${e.exitCode}. Output:`);
       console.log(childProcess.log);
     }
