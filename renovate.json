@@ -8,9 +8,8 @@
   "prCreation": "not-pending",
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node", "node"],
-      "rangeStrategy": "in-range-only",
-      "groupName": "node"
+      "matchPackageNames": ["@types/node", "node", "pnpm"],
+      "enabled": false
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
