@@ -82,7 +82,8 @@ function execCli(context: GlobalContext, flags: string[]) {
 }
 
 function runPnpmInstall(context: GlobalContext) {
-  return execa("pnpm", ["install", "--prefer-offline"], {
+  return execa("bun", ["install"], {
+    // return execa("pnpm", ["install", "--prefer-offline"], {
     cwd: context.tmpdir,
 
     // Note: experience has shown that 20s may not be enough on GitHub Actions
@@ -96,7 +97,8 @@ async function initPort(context: GlobalContext) {
 }
 
 async function runDevServer(context: GlobalContext) {
-  context.server = execa("pnpm", ["run", "dev", "--port", String(context.port)], {
+  context.server = execa("bun", ["run", "dev", "--port", String(context.port)], {
+    // context.server = execa("pnpm", ["run", "dev", "--port", String(context.port)], {
     cwd: context.tmpdir,
     env: {
       PORT: String(context.port),
@@ -162,7 +164,8 @@ export function prepare(flags: string[]) {
   // Common tests
 
   test("no TS error", async () => {
-    const { exitCode } = await execa("pnpm", ["exec", "tsc", "--noEmit"], {
+    const { exitCode } = await execa("bun", ["x", "tsc", "--noEmit"], {
+      // const { exitCode } = await execa("pnpm", ["exec", "tsc", "--noEmit"], {
       cwd: context.tmpdir,
     });
 
