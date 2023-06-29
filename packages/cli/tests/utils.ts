@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe } from "vitest";
+import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import nodeFetch from "node-fetch";
 import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -126,6 +126,11 @@ export function prepare(flags: string[]) {
     server: undefined,
   };
 
+  // Prepare tests:
+  // - Create a temp dir
+  // - Execute bati CLI in temp dir
+  // - Install dependencies
+  // - Run a dev server
   beforeAll(async () => {
     await initTmpDir(context);
     await execCli(context, flags);
@@ -133,15 +138,17 @@ export function prepare(flags: string[]) {
     await runDevServer(context);
   }, 56000);
 
+  // Cleanup tests:
+  // - Close the dev server
+  // - Remove temp dir
   afterAll(async () => {
-    await Promise.race([
-      context.server?.treekill(),
-      new Promise((_resolve, reject) => setTimeout(reject, 5000)),
-    ]).catch((e) => {
-      console.log("Failed to kill server in time. Output:");
-      console.log(context.server?.log);
-      throw e;
-    });
+    await Promise.race([context.server?.treekill(), new Promise((_resolve, reject) => setTimeout(reject, 5000))]).catch(
+      (e) => {
+        console.log("Failed to kill server in time. Output:");
+        console.log(context.server?.log);
+        throw e;
+      }
+    );
 
     await Promise.race([
       rm(context.tmpdir, { recursive: true, force: true }),
@@ -151,6 +158,16 @@ export function prepare(flags: string[]) {
       throw e;
     });
   }, 11000);
+
+  // Common tests
+
+  test("no TS error", async () => {
+    const { exitCode } = await execa("pnpm", ["exec", "tsc", "--noEmit"], {
+      cwd: context.tmpdir,
+    });
+
+    expect(exitCode).toBe(0);
+  });
 
   return {
     fetch(path: string, init?: FetchParam1) {
