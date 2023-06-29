@@ -5,7 +5,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import http from "node:http";
 import getPort from "get-port";
-
+import which from "which";
 import { execa, type ExecaChildProcess } from "./processUtils";
 
 interface GlobalContext {
@@ -15,6 +15,10 @@ interface GlobalContext {
 }
 
 type FetchParam1 = Parameters<typeof fetch>[1];
+
+// side-effect
+const bunExists = which.sync("bun", { nothrow: true }) !== null;
+const npmCli = bunExists ? "bun" : "pnpm";
 
 // https://github.com/sindresorhus/wait-for-localhost
 export default function waitForLocalhost({
@@ -82,7 +86,7 @@ function execCli(context: GlobalContext, flags: string[]) {
 }
 
 function runPnpmInstall(context: GlobalContext) {
-  return execa("pnpm", ["install", "--prefer-offline"], {
+  return execa(npmCli, ["install"], {
     cwd: context.tmpdir,
 
     // Note: experience has shown that 20s may not be enough on GitHub Actions
@@ -96,7 +100,7 @@ async function initPort(context: GlobalContext) {
 }
 
 async function runDevServer(context: GlobalContext) {
-  context.server = execa("pnpm", ["run", "dev", "--port", String(context.port)], {
+  context.server = execa(npmCli, ["run", "dev", "--port", String(context.port)], {
     cwd: context.tmpdir,
     env: {
       PORT: String(context.port),
@@ -162,7 +166,7 @@ export function prepare(flags: string[]) {
   // Common tests
 
   test("no TS error", async () => {
-    const { exitCode } = await execa("pnpm", ["exec", "tsc", "--noEmit"], {
+    const { exitCode } = await execa(npmCli, [bunExists ? "x" : "exec", "tsc", "--noEmit"], {
       cwd: context.tmpdir,
     });
 
