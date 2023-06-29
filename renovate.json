@@ -5,7 +5,6 @@
   ],
   "rangeStrategy": "bump",
   "assignees": ["@magne4000"],
-  "prCreation": "not-pending",
   "packageRules": [
     {
       "matchPackageNames": ["@types/node", "node", "pnpm"],
@@ -13,7 +12,10 @@
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "groupName": "all (non-major)"
+      "groupName": "all (non-major)",
+      "automerge": true,
+      "automergeSchedule": ["on monday"],
+      "automergeType": "pr"
     }
   ]
 }
