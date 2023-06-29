@@ -30,7 +30,7 @@ jobs:
         if: matrix.os != 'windows-latest'
         name: Install bun
         with:
-          bun-version: latest
+          bun-version: "0.6.11"
 
       - name: Get pnpm store directory
         id: pnpm-cache
