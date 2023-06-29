@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         node: ["16", "18"]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout
@@ -25,9 +25,11 @@ jobs:
           version: 8
           run_install: false
 
-      # Bun does not support Windows at the moment this was added
       - uses: oven-sh/setup-bun@v1
-        if: matrix.os != 'windows-latest'
+        # At the moment of writing:
+        # - bun does not support Windows
+        # - bun fails to install some dependencies on macos with node@18
+        if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
         name: Install bun
         with:
           bun-version: "0.6.11"
