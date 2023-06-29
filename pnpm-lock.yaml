@@ -60,8 +60,8 @@ importers:
         specifier: ^1.3.2
         version: 1.3.2
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
 
   packages/boilerplates/express:
     dependencies:
@@ -91,8 +91,8 @@ importers:
         specifier: ^0.1.57
         version: 0.1.57
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       tsx:
         specifier: ^3.12.7
         version: 3.12.7
@@ -137,8 +137,8 @@ importers:
         specifier: ^0.1.57
         version: 0.1.57
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       vike-authjs:
         specifier: ^0.0.2
         version: 0.0.2
@@ -173,8 +173,8 @@ importers:
         specifier: ^4.16.1
         version: 4.16.1
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
 
   packages/boilerplates/react:
     dependencies:
@@ -210,8 +210,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -243,8 +243,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(esbuild@0.18.10)
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@16.18.37)
@@ -271,8 +271,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -311,8 +311,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@16.18.37)
@@ -336,8 +336,8 @@ importers:
         specifier: ^0.1.57
         version: 0.1.57
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@16.18.37)
@@ -358,8 +358,8 @@ importers:
         specifier: ^16.18.37
         version: 16.18.37
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
 
   packages/cli:
     dependencies:
@@ -404,8 +404,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -497,8 +497,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(esbuild@0.18.10)
       tsup:
-        specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.24)(typescript@5.1.6)
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.6)
     devDependencies:
       '@types/node':
         specifier: ^16.18.37
@@ -1007,6 +1007,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm64@0.18.10:
@@ -1023,6 +1024,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm@0.18.10:
@@ -1039,6 +1041,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-x64@0.18.10:
@@ -1055,6 +1058,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-arm64@0.18.10:
@@ -1071,6 +1075,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-x64@0.18.10:
@@ -1087,6 +1092,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64@0.18.10:
@@ -1103,6 +1109,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-x64@0.18.10:
@@ -1119,6 +1126,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm64@0.18.10:
@@ -1135,6 +1143,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm@0.18.10:
@@ -1151,6 +1160,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ia32@0.18.10:
@@ -1167,6 +1177,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64@0.18.10:
@@ -1183,6 +1194,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-mips64el@0.18.10:
@@ -1199,6 +1211,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ppc64@0.18.10:
@@ -1215,6 +1228,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-riscv64@0.18.10:
@@ -1231,6 +1245,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-s390x@0.18.10:
@@ -1247,6 +1262,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-x64@0.18.10:
@@ -1263,6 +1279,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-x64@0.18.10:
@@ -1279,6 +1296,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-x64@0.18.10:
@@ -1295,6 +1313,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/sunos-x64@0.18.10:
@@ -1311,6 +1330,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-arm64@0.18.10:
@@ -1327,6 +1347,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-ia32@0.18.10:
@@ -1343,6 +1364,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-x64@0.18.10:
@@ -3634,13 +3656,13 @@ packages:
       - supports-color
     dev: true
 
-  /bundle-require@4.0.1(esbuild@0.17.19):
+  /bundle-require@4.0.1(esbuild@0.18.10):
     resolution: {integrity: sha512-9NQkRHlNdNpDBGmLpngF3EFDcwodhMUuLz9PaWYciVcQF9SE4LFjM2DB/xV1Li5JiuDMv7ZUWuC3rGbqR0MAXQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     peerDependencies:
       esbuild: '>=0.17'
     dependencies:
-      esbuild: 0.17.19
+      esbuild: 0.18.10
       load-tsconfig: 0.2.5
 
   /bytes@3.1.2:
@@ -4155,6 +4177,7 @@ packages:
       '@esbuild/win32-arm64': 0.17.19
       '@esbuild/win32-ia32': 0.17.19
       '@esbuild/win32-x64': 0.17.19
+    dev: true
 
   /esbuild@0.18.10:
     resolution: {integrity: sha512-33WKo67auOXzZHBY/9DTJRo7kIvfU12S+D4sp2wIz39N88MDIaCGyCwbW01RR70pK6Iya0I74lHEpyLfFqOHPA==}
@@ -6139,22 +6162,6 @@ packages:
       postcss: 8.4.24
     dev: true
 
-  /postcss-load-config@3.1.4(postcss@8.4.24):
-    resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
-    engines: {node: '>= 10'}
-    peerDependencies:
-      postcss: '>=8.0.9'
-      ts-node: '>=9.0.0'
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-      ts-node:
-        optional: true
-    dependencies:
-      lilconfig: 2.1.0
-      postcss: 8.4.24
-      yaml: 1.10.2
-
   /postcss-load-config@4.0.1(postcss@8.4.24):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
     engines: {node: '>= 14'}
@@ -6170,7 +6177,6 @@ packages:
       lilconfig: 2.1.0
       postcss: 8.4.24
       yaml: 2.3.1
-    dev: true
 
   /postcss-media-query-parser@0.2.3:
     resolution: {integrity: sha512-3sOlxmbKcSHMjlUXQZKQ06jOswE7oVkXPxmZdoB1r5l0q6gTFTQSHxNxOrCccElbW7dxNytifNEo8qidX2Vsig==}
@@ -7420,9 +7426,9 @@ packages:
     resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
     dev: true
 
-  /tsup@6.7.0(postcss@8.4.24)(typescript@5.1.6):
-    resolution: {integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==}
-    engines: {node: '>=14.18'}
+  /tsup@7.1.0(postcss@8.4.24)(typescript@5.1.6):
+    resolution: {integrity: sha512-mazl/GRAk70j8S43/AbSYXGgvRP54oQeX8Un4iZxzATHt0roW0t6HYDVZIXMw0ZQIpvr1nFMniIVnN5186lW7w==}
+    engines: {node: '>=16.14'}
     hasBin: true
     peerDependencies:
       '@swc/core': ^1
@@ -7436,16 +7442,16 @@ packages:
       typescript:
         optional: true
     dependencies:
-      bundle-require: 4.0.1(esbuild@0.17.19)
+      bundle-require: 4.0.1(esbuild@0.18.10)
       cac: 6.7.14
       chokidar: 3.5.3
       debug: 4.3.4
-      esbuild: 0.17.19
+      esbuild: 0.18.10
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
       postcss: 8.4.24
-      postcss-load-config: 3.1.4(postcss@8.4.24)
+      postcss-load-config: 4.0.1(postcss@8.4.24)
       resolve-from: 5.0.0
       rollup: 3.25.3
       source-map: 0.8.0-beta.0
@@ -8042,14 +8048,9 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: true
 
-  /yaml@1.10.2:
-    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
-    engines: {node: '>= 6'}
-
   /yaml@2.3.1:
     resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
     engines: {node: '>= 14'}
-    dev: true
 
   /yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
