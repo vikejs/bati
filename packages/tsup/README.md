@@ -1,3 +1,3 @@
 # @batijs/tsup
 
-WIP
+[bati](https://vitejs.dev) internal utils.
