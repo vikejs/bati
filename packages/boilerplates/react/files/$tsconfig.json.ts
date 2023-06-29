@@ -6,7 +6,7 @@ export default async function getTsConfig(currentContent: MaybeContentGetter) {
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "react";
-  tsConfig.compilerOptions.types = [...(tsConfig.compilerOptions.types ?? []), "vike-react/client"];
+  tsConfig.compilerOptions.types = [...(tsConfig.compilerOptions.types ?? []), "vike-react"];
 
   return tsConfig;
 }
