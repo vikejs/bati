@@ -1,11 +1,11 @@
 {
   "name": "bati",
   "private": true,
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "@batijs monorepo",
   "scripts": {
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
-    "release:ci": "pnpm -r prerelease && bumpp && pnpm run publish",
+    "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
     "build": "pnpm -r build"
