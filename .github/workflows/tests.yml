@@ -25,6 +25,13 @@ jobs:
           version: 8
           run_install: false
 
+      # Bun does not support Windows at the moment this was added
+      - uses: oven-sh/setup-bun@v1
+        if: matrix.os != 'windows-latest'
+        name: Install bun
+        with:
+          bun-version: latest
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
