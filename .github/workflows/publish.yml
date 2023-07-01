@@ -58,7 +58,7 @@ jobs:
 
       - name: Configure git before publish
         run: |
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.name "Joël Charles"
           git config --global user.email "joel.charles91@gmail.com"
 
       - run: pnpm run release:ci
