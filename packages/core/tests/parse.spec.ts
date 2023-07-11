@@ -162,7 +162,7 @@ test("ternary:other", () => {
 });
 
 test("import cleanup:react", async () => {
-  const code = transformAndGenerate(
+  const code = await transformAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -190,7 +190,7 @@ test("import cleanup:react", async () => {
 });
 
 test("import cleanup:solid", async () => {
-  const code = transformAndGenerate(
+  const code = await transformAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -218,7 +218,7 @@ test("import cleanup:solid", async () => {
 });
 
 test("import cleanup:other", async () => {
-  const code = transformAndGenerate(
+  const code = await transformAndGenerate(
     ast(
       `
     import { solid } from 'solid';

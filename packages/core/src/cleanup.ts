@@ -4,9 +4,11 @@ import putout from "putout";
 // @ts-ignore
 import removeUnusedVariables from "@putout/plugin-remove-unused-variables";
 import { format } from "prettier/standalone";
-import parserBabel from "prettier/parser-babel";
+import * as prettierPluginBabel from "prettier/plugins/babel";
+// @ts-ignore
+import * as prettierPluginEstree from "prettier/plugins/estree";
 
-export function cleanImports(code: string, options: { filepath?: string } = {}): string {
+export function cleanImports(code: string, options: { filepath?: string } = {}): Promise<string> {
   const isJSX = Boolean(options.filepath?.match(/\.[jt]sx$/));
   const result = putout(code, {
     isJSX,
@@ -15,5 +17,5 @@ export function cleanImports(code: string, options: { filepath?: string } = {}):
     plugins: [["remove-unused-variables", removeUnusedVariables]],
   });
 
-  return format(result.code, { parser: "babel-ts", plugins: [parserBabel] });
+  return format(result.code, { parser: "babel-ts", plugins: [prettierPluginBabel, prettierPluginEstree] });
 }
