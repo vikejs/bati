@@ -90,7 +90,7 @@ importers:
         version: 4.18.2
       telefunc:
         specifier: ^0.1.58
-        version: 0.1.58
+        version: 0.1.58(react@18.2.0)
       tsup:
         specifier: ^7.1.0
         version: 7.1.0(postcss@8.4.27)(typescript@5.1.6)
@@ -136,7 +136,7 @@ importers:
         version: 0.0.33
       telefunc:
         specifier: ^0.1.58
-        version: 0.1.58
+        version: 0.1.58(react@18.2.0)
       tsup:
         specifier: ^7.1.0
         version: 7.1.0(postcss@8.4.27)(typescript@5.1.6)
@@ -226,6 +226,40 @@ importers:
         specifier: ^0.4.133
         version: 0.4.133(vite@4.4.7)
 
+  packages/boilerplates/react-telefunc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../core
+    devDependencies:
+      '@types/node':
+        specifier: ^16.18.37
+        version: 16.18.37
+      '@types/react':
+        specifier: ^18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.7
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      telefunc:
+        specifier: ^0.1.58
+        version: 0.1.58(react@18.2.0)
+      vite:
+        specifier: ^4.4.7
+        version: 4.4.7(@types/node@16.18.37)
+      vite-plugin-ssr:
+        specifier: ^0.4.133
+        version: 0.4.133(vite@4.4.7)
+
   packages/boilerplates/shared:
     devDependencies:
       '@batijs/core':
@@ -307,7 +341,7 @@ importers:
         version: 1.7.8
       telefunc:
         specifier: ^0.1.58
-        version: 0.1.58
+        version: 0.1.58(react@18.2.0)
       vite:
         specifier: ^4.4.7
         version: 4.4.7(@types/node@16.18.37)
@@ -360,7 +394,7 @@ importers:
         version: 16.18.37
       telefunc:
         specifier: ^0.1.58
-        version: 0.1.58
+        version: 0.1.58(react@18.2.0)
       tsup:
         specifier: ^7.1.0
         version: 7.1.0(postcss@8.4.27)(typescript@5.1.6)
@@ -7138,7 +7172,7 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /telefunc@0.1.58:
+  /telefunc@0.1.58(react@18.2.0):
     resolution: {integrity: sha512-zyE9t5PBOYvhCPNzg1SySqeWEGNTO/XMVCEq3839wNbeZ2JeSF86uHPWxw4gKm4V5Pqw2O3DbVJqOCdAp92MhA==}
     engines: {node: '>=12.19.0'}
     peerDependencies:
@@ -7164,6 +7198,7 @@ packages:
       '@brillout/vite-plugin-import-build': 0.2.18
       es-module-lexer: 0.7.1
       picocolors: 1.0.0
+      react: 18.2.0
       ts-morph: 14.0.0
     dev: true
 
