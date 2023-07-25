@@ -1,0 +1,33 @@
+{
+  "name": "@batijs/solid-telefunc",
+  "private": true,
+  "version": "0.0.53",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "esno copy.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.18.37",
+    "esno": "^0.17.0",
+    "solid-js": "^1.7.8",
+    "telefunc": "^0.1.58",
+    "vite": "^4.4.7",
+    "vite-plugin-ssr": "^0.4.133"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "includeIf": [
+      "solid",
+      "telefunc"
+    ]
+  }
+}

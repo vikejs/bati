@@ -34,7 +34,7 @@ async function getRecursivePackages() {
 async function getBatiPackages() {
   const dir = join("bati", "packages", "boilerplates");
   const batiPackages = (await getRecursivePackages()).filter(
-    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes(dir)
+    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes(dir),
   );
 
   return batiPackages.map((pkg) => pkg.path);
@@ -87,15 +87,23 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
   const b = packageJson.bati;
 
   if (packageJson.name !== "@batijs/shared") {
-    if (!b.flag) {
+    if (!b.flag && !b.includeIf) {
       throw new Error(`[${packageJson.name}] 'bati.flag' is missing`);
-    } else if (typeof b.flag !== "string") {
+    } else if (b.flag && typeof b.flag !== "string") {
       throw new Error(`[${packageJson.name}] 'bati.flags' must be a string`);
     }
   }
 
   if (b.flag && !flags.has(b.flag)) {
     throw new Error(`[${packageJson.name}] 'bati.flag' has invalid value: ${b.flag}`);
+  }
+
+  if (b.includeIf && !Array.isArray(b.includeIf)) {
+    throw new Error(`[${packageJson.name}] 'bati.includeIf' must be an array`);
+  }
+
+  if (b.includeIf && !b.includeIf.every((f) => flags.has(f))) {
+    throw new Error(`[${packageJson.name}] 'bati.includeIf' contains invalid flags`);
   }
 
   if (b.boilerplate && typeof b.boilerplate !== "string") {
@@ -168,7 +176,7 @@ const esbuildPlugin: Plugin = {
 
       const stats = await createBoilerplatesJson(boilerplates);
       console.log(
-        `${yellow("BLP")} ${join("dist", "boilerplates", "boilerplates.json")} ${green(readableFileSize(stats.size))}`
+        `${yellow("BLP")} ${join("dist", "boilerplates", "boilerplates.json")} ${green(readableFileSize(stats.size))}`,
       );
     });
   },

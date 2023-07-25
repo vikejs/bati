@@ -112,7 +112,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
     const stat = await lstat(args.project);
     if (!stat.isDirectory()) {
       console.error(
-        `${yellow("⚠")} Target ${cyan(args.project)} already exists but is not a directory. ${yellow("Aborting")}.`
+        `${yellow("⚠")} Target ${cyan(args.project)} already exists but is not a directory. ${yellow("Aborting")}.`,
       );
       process.exit(2);
     }
@@ -122,7 +122,9 @@ async function checkArguments(args: ParsedArgs<Args>) {
       await access(args.project, constants.W_OK);
     } catch (_) {
       console.error(
-        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow("Aborting")}.`
+        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow(
+          "Aborting",
+        )}.`,
       );
       process.exit(3);
     }
@@ -131,8 +133,8 @@ async function checkArguments(args: ParsedArgs<Args>) {
     if ((await readdir(args.project)).length > 0) {
       console.error(
         `${yellow("⚠")} Target folder ${cyan(
-          args.project
-        )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`
+          args.project,
+        )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`,
       );
       process.exit(4);
     }
@@ -161,6 +163,18 @@ async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
   return map;
 }
 
+function testFlags(flags: string[], bl: BoilerplateDef) {
+  if (flags.includes(bl.config.flag!)) {
+    return true;
+  }
+
+  if (Array.isArray(bl.config.includeIf)) {
+    return bl.config.includeIf.every((f) => flags.includes(f));
+  }
+
+  return false;
+}
+
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await parseBoilerplates(dir);
@@ -174,7 +188,7 @@ async function run() {
     args: Object.assign(
       {},
       defaultDef,
-      ...Array.from(coreFlags.keys()).map((k) => toArg(k, findDescription(k, boilerplates)))
+      ...Array.from(coreFlags.keys()).map((k) => toArg(k, findDescription(k, boilerplates))),
     ) as Args,
     async run({ args }) {
       await checkArguments(args);
@@ -187,7 +201,7 @@ async function run() {
         .map(([key]) => key);
 
       // push shared boilerplates first
-      for (const bl of boilerplates.filter((b) => !b.config.flag)) {
+      for (const bl of boilerplates.filter((b) => !b.config.flag && !b.config.includeIf)) {
         if (bl.subfolders.includes("files")) {
           sources.push(join(dir, bl.folder, "files"));
         }
@@ -196,8 +210,8 @@ async function run() {
         }
       }
 
-      for (const bl of boilerplates.filter((b) => Boolean(b.config.flag))) {
-        if (flags.includes(bl.config.flag!)) {
+      for (const bl of boilerplates.filter((b) => Boolean(b.config.flag) || Array.isArray(b.config.includeIf))) {
+        if (testFlags(flags, bl)) {
           if (bl.subfolders.includes("files")) {
             sources.push(join(dir, bl.folder, "files"));
           }
@@ -221,7 +235,7 @@ async function run() {
           source: sources,
           dist: args.project,
         },
-        meta
+        meta,
       );
 
       printOK(args.project, flags, boilerplates);

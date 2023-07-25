@@ -94,11 +94,24 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
           path.prune();
         }
       } else {
+        let root = path;
+        // If the expression is as such:
+        //   {import.meta.BATI_MODULES?.includes("rpc:telefunc") ? <Link href="/todo">Todo</Link> : undefined}
+        // ensures that it writes:
+        //   <Link href="/todo">Todo</Link>
+        // instead of:
+        //   {<Link href="/todo">Todo</Link>}
+        if (
+          namedTypes.ConditionalExpression.check(path.value) &&
+          namedTypes.JSXExpressionContainer.check(path.parent.value)
+        ) {
+          root = path.parent;
+        }
         // Replace if-block by its content
         if (namedTypes.BlockStatement.check(path.value.consequent)) {
-          path.replace(...path.value.consequent.body);
+          root.replace(...path.value.consequent.body);
         } else {
-          path.replace(path.value.consequent);
+          root.replace(path.value.consequent);
         }
       }
     },

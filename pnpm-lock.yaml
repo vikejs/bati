@@ -290,6 +290,31 @@ importers:
         specifier: ^0.4.133
         version: 0.4.133(vite@4.4.7)
 
+  packages/boilerplates/solid-telefunc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../core
+    devDependencies:
+      '@types/node':
+        specifier: ^16.18.37
+        version: 16.18.37
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
+      solid-js:
+        specifier: ^1.7.8
+        version: 1.7.8
+      telefunc:
+        specifier: ^0.1.58
+        version: 0.1.58
+      vite:
+        specifier: ^4.4.7
+        version: 4.4.7(@types/node@16.18.37)
+      vite-plugin-ssr:
+        specifier: ^0.4.133
+        version: 0.4.133(vite@4.4.7)
+
   packages/boilerplates/tailwindcss:
     dependencies:
       '@batijs/core':
@@ -4099,6 +4124,13 @@ packages:
       - supports-color
     dev: true
 
+  /esno@0.17.0:
+    resolution: {integrity: sha512-w78cQGlptQfsBYfootUCitsKS+MD74uR5L6kNsvwVkJsfzEepIafbvWsx2xK4rcFP4IUftt4F6J8EhagUxX+Bg==}
+    hasBin: true
+    dependencies:
+      tsx: 3.12.7
+    dev: true
+
   /espree@9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -6632,20 +6664,12 @@ packages:
       '@babel/code-frame': 7.22.5
     dev: true
 
-  /rollup@3.25.3:
-    resolution: {integrity: sha512-ZT279hx8gszBj9uy5FfhoG4bZx8c+0A1sbqtr7Q3KNWIizpTdDEPZbV2xcbvHsnFp4MavCQYZyzApJ+virB8Yw==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.2
-
   /rollup@3.26.3:
     resolution: {integrity: sha512-7Tin0C8l86TkpcMtXvQu6saWH93nhG3dGQ1/+l5V2TDMceTxO7kDiK6GzbfLWNNxqJXm591PcEZUozZm51ogwQ==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -7286,7 +7310,7 @@ packages:
       postcss: 8.4.25
       postcss-load-config: 4.0.1(postcss@8.4.25)
       resolve-from: 5.0.0
-      rollup: 3.25.3
+      rollup: 3.26.3
       source-map: 0.8.0-beta.0
       sucrase: 3.32.0
       tree-kill: 1.2.2
@@ -7323,7 +7347,7 @@ packages:
       postcss: 8.4.27
       postcss-load-config: 4.0.1(postcss@8.4.27)
       resolve-from: 5.0.0
-      rollup: 3.25.3
+      rollup: 3.26.3
       source-map: 0.8.0-beta.0
       sucrase: 3.32.0
       tree-kill: 1.2.2

@@ -20,6 +20,7 @@ export default function LayoutDefault(props: { children?: JSX.Element }) {
       <Sidebar>
         <Logo />
         <Link href="/">Welcome</Link>
+        {import.meta.BATI_MODULES?.includes("rpc:telefunc") ? <Link href="/todo">Todo</Link> : undefined}
         <Link href="/star-wars">Data Fetching</Link>
       </Sidebar>
       <Content>{props.children}</Content>
