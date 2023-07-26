@@ -20,3 +20,7 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 - [Vite](https://vitejs.dev) + Typescript ecosystem
 - Based on [vite-plugin-ssr](https://vite-plugin-ssr.com) for portability and customazibility
 - Sane and future-proof recommendations that follows [WinterCG](https://wintercg.org) as much as possible
+
+<hr>
+
+**Not seeing your favorite tool? [Manually integrate it](https://vike.dev/integration) and/or upvote it [here](https://github.com/batijs/bati/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Aheavy_plus_sign%3A+tool%22).**
