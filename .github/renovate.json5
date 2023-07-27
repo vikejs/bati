@@ -1,0 +1,14 @@
+{
+  // Inspired by https://github.com/vitejs/vite/blob/main/.github/renovate.json5
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", "schedule:weekly", "group:allNonMajor"],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "assignees": ["@magne4000"],
+  "ignoreDeps": [
+    // manually bumping
+    "node",
+    "@types/node",
+    "pnpm"
+  ]
+}
