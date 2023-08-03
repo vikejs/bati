@@ -23,4 +23,4 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 
 <hr>
 
-**Not seeing your favorite tool? [Manually integrate it](https://vike.dev/integration) and/or upvote it [here](https://github.com/batijs/bati/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Aheavy_plus_sign%3A+tool%22).**
+**Not seeing your favorite tool? [Manually integrate it](https://vite-plugin-ssr.com/integration) and/or upvote it [here](https://github.com/batijs/bati/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Aheavy_plus_sign%3A+tool%22).**
