@@ -485,8 +485,8 @@ importers:
   packages/core:
     devDependencies:
       '@putout/plugin-remove-unused-variables':
-        specifier: ^5.4.0
-        version: 5.4.0(putout@30.7.0)
+        specifier: ^6.0.2
+        version: 6.0.2(putout@30.7.0)
       '@rollup/plugin-commonjs':
         specifier: ^25.0.3
         version: 25.0.3(rollup@3.27.0)
@@ -2352,6 +2352,15 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       putout: '>=29'
+    dependencies:
+      putout: 30.7.0
+    dev: true
+
+  /@putout/plugin-remove-unused-variables@6.0.2(putout@30.7.0):
+    resolution: {integrity: sha512-5Lp0pDe9mPWiXW3jMgjfk0dih8DniaJOXcgF4q9s/4Cqhctjst8frkoz4VQdFueFtz4Pf3ipRFswWLiPolEZ0w==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      putout: '>=31'
     dependencies:
       putout: 30.7.0
     dev: true
