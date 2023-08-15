@@ -104,8 +104,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/hattip:
     dependencies:
@@ -147,8 +147,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/plausible.io: {}
 
@@ -218,13 +218,13 @@ importers:
         version: 5.1.6
       vike-react:
         specifier: ^0.1.6
-        version: 0.1.6(react-dom@18.2.0)(react@18.2.0)(vite-plugin-ssr@0.4.135)(vite@4.4.9)
+        version: 0.1.6(react-dom@18.2.0)(react@18.2.0)(vite-plugin-ssr@0.4.136)(vite@4.4.9)
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/react-telefunc:
     dependencies:
@@ -257,8 +257,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/shared:
     devDependencies:
@@ -312,8 +312,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vike-solid:
-        specifier: ^0.1.0
-        version: 0.1.0(@types/node@16.18.40)(solid-js@1.7.11)
+        specifier: ^0.1.1
+        version: 0.1.1(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.136)
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
@@ -321,8 +321,8 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0(solid-js@1.7.11)(vite@4.4.9)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/solid-telefunc:
     dependencies:
@@ -346,8 +346,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/tailwindcss:
     dependencies:
@@ -377,8 +377,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/boilerplates/telefunc:
     dependencies:
@@ -402,8 +402,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
       vite-plugin-ssr:
-        specifier: ^0.4.135
-        version: 0.4.135(vite@4.4.9)
+        specifier: ^0.4.136
+        version: 0.4.136(vite@4.4.9)
 
   packages/build:
     dependencies:
@@ -977,6 +977,10 @@ packages:
 
   /@brillout/picocolors@1.0.6:
     resolution: {integrity: sha512-Ln5rMxhWyGaQxZu6LTbA7izEI7xytbvK9QFwuH3Rj61rAPArLeKYMUmNa3f8COHl3++iBs98gTu9Slmyvnst2Q==}
+    dev: true
+
+  /@brillout/require-shim@0.1.2:
+    resolution: {integrity: sha512-3I4LRHnVZXoSAsEoni5mosq9l6eiJED58d9V954W4CIZ88AUfYBanWGBGbJG3NztaRTpFHEA6wB3Hn93BmmJdg==}
     dev: true
 
   /@brillout/vite-plugin-import-build@0.2.18:
@@ -7471,7 +7475,7 @@ packages:
       - nodemailer
     dev: true
 
-  /vike-react@0.1.6(react-dom@18.2.0)(react@18.2.0)(vite-plugin-ssr@0.4.135)(vite@4.4.9):
+  /vike-react@0.1.6(react-dom@18.2.0)(react@18.2.0)(vite-plugin-ssr@0.4.136)(vite@4.4.9):
     resolution: {integrity: sha512-nGh9/RTKTNx1yVCgBcYszDo8wdRuXcdMuEunu56IIKQc/mAmvNHjStQ7a+eFcN1UTCvxtJVeb2aUVb6wpih2iA==}
     peerDependencies:
       react: 18.x.x
@@ -7482,24 +7486,24 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       vite: 4.4.9(@types/node@16.18.40)
-      vite-plugin-ssr: 0.4.135(vite@4.4.9)
+      vite-plugin-ssr: 0.4.136(vite@4.4.9)
     dev: true
 
-  /vike-solid@0.1.0(@types/node@16.18.40)(solid-js@1.7.11):
-    resolution: {integrity: sha512-kdzc+BYpPGt5zetdNXOozwQh7AJRZZhm+P431sxOoEhinVyYcRB5JAbhZOKBHNHCivkn+UMPzutSVVN3Yl8UyQ==}
+  /vike-solid@0.1.1(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.136):
+    resolution: {integrity: sha512-YuGKC3/XPewE+1HmAlrglpg+AphphANg058wto0D1iqU0Sg5brVuScnUUrbVzi34BSnaLM1NCz50gDe69GIMPg==}
     hasBin: true
     peerDependencies:
-      solid-js: ^1.7.1
+      solid-js: ^1.7.11
+      vite-plugin-ssr: ^0.4.136
     dependencies:
       solid-js: 1.7.11
       vite: 4.4.9(@types/node@16.18.40)
       vite-plugin-solid: 2.7.0(solid-js@1.7.11)(vite@4.4.9)
-      vite-plugin-ssr: 0.4.135(vite@4.4.9)
+      vite-plugin-ssr: 0.4.136(vite@4.4.9)
     transitivePeerDependencies:
       - '@types/node'
       - less
       - lightningcss
-      - react-streaming
       - sass
       - stylus
       - sugarss
@@ -7548,8 +7552,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-ssr@0.4.135(vite@4.4.9):
-    resolution: {integrity: sha512-JQG0WX25EnAPDW/dtVjRntubP32FNV1V3Z18cNCW/PNKPlTffqYlFoQ/AMlbeU/zrgNCJehG0pO32bq3R1Xvmg==}
+  /vite-plugin-ssr@0.4.136(vite@4.4.9):
+    resolution: {integrity: sha512-2a9huIue8AkoE2SUccVpo+9uQoEYFGdnObtRgGMyOZWaBw8mQ7jxn0k4lE66ScsfasF4B4F3UWC37sLfEneP8w==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -7562,6 +7566,7 @@ packages:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.4
       '@brillout/picocolors': 1.0.6
+      '@brillout/require-shim': 0.1.2
       '@brillout/vite-plugin-import-build': 0.2.18
       acorn: 8.10.0
       cac: 6.7.14
