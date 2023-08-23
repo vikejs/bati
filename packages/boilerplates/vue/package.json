@@ -1,0 +1,40 @@
+{
+  "name": "@batijs/vue",
+  "private": true,
+  "version": "0.0.68",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/tsup": "workspace:*",
+    "@types/node": "^16.18.40",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/server-renderer": "^3.2.47",
+    "cross-fetch": "^4.0.0",
+    "tailwindcss": "^3.3.3",
+    "tsup": "^7.2.0",
+    "typescript": "^5.1.6",
+    "unplugin-vue-markdown": "^0.24.3",
+    "vike-vue": "^0.2.3",
+    "vite": "^4.4.9",
+    "vite-plugin-ssr": "^0.4.140",
+    "vue": "^3.3.4"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "flag": "vue",
+    "name": "VueJS",
+    "homepage": "https://vuejs.org"
+  }
+}
