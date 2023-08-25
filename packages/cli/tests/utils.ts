@@ -60,7 +60,7 @@ export default function waitForLocalhost({
           }
 
           next();
-        }
+        },
       );
 
       request.on("error", next);
@@ -151,7 +151,7 @@ export function prepare(flags: string[]) {
         console.log("Failed to kill server in time. Output:");
         console.log(context.server?.log);
         throw e;
-      }
+      },
     );
 
     await Promise.race([
@@ -190,11 +190,9 @@ export function prepare(flags: string[]) {
  * // ['c', '1', '2']
  */
 export function describeMany(oneOf: string[], flags: string[], fn: (context: ReturnType<typeof prepare>) => void) {
-  oneOf.forEach((f) => {
-    const currentFlags = [f, ...flags];
+  const testMatrix = oneOf.map((f) => [f, ...flags]);
 
-    describe.concurrent(currentFlags.join(" + "), () => {
-      fn(prepare(currentFlags));
-    });
+  describe.concurrent.each(testMatrix)(testMatrix[0].map(() => "%s").join(" + "), (...currentFlags: string[]) => {
+    fn(prepare(currentFlags));
   });
 }
