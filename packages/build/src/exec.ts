@@ -1,4 +1,4 @@
-import { loadFile, transformAndGenerate, type VikeMeta } from "@batijs/core";
+import { loadFile, renderSquirrelly, transformAstAndGenerate, type VikeMeta } from "@batijs/core";
 import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
@@ -90,12 +90,22 @@ Please report this issue to https://github.com/magne4000/bati`
           await safeWriteFile(target, fileContent);
         }
         targets.add(target);
-      } else if (parsed.ext.match(/\.[tj]sx?$/) && (await fileContainsBatiMeta(p))) {
-        const mod = await loadFile(p);
-        const fileContent = await transformAndGenerate(mod.$ast, meta, {
-          filepath: p,
-        });
+      } else if (await fileContainsBatiMeta(p)) {
+        let fileContent = "";
+        if (parsed.ext.match(/\.[tj]sx?$/)) {
+          // We use magicast/recast to transform the file. Only supports javascript and typescript. Vue SFC files are
+          // not supported yet, see https://github.com/benjamn/recast/issues/842
+          const mod = await loadFile(p);
+          fileContent = await transformAstAndGenerate(mod.$ast, meta, {
+            filepath: p,
+          });
+        } else {
+          // We use SquirrellyJS to transform the file.
+          fileContent = await renderSquirrelly(p, meta);
+        }
 
+        // NOTE(aurelien): if the resulting fileContent is empty, we won't write the file to disk, yet add it to
+        // targets. Is this really what we want?
         if (fileContent) {
           await safeWriteFile(target, fileContent);
         }

@@ -1,6 +1,6 @@
 import { assert, test } from "vitest";
 import { parseModule } from "magicast";
-import { transformAndGenerate, transformAst } from "../src/parse.js";
+import { transformAstAndGenerate, transformAst } from "../src/parse.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
 import type { VikeMeta } from "../src/types.js";
 
@@ -162,7 +162,7 @@ test("ternary:other", () => {
 });
 
 test("import cleanup:react", async () => {
-  const code = await transformAndGenerate(
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -190,7 +190,7 @@ test("import cleanup:react", async () => {
 });
 
 test("import cleanup:solid", async () => {
-  const code = await transformAndGenerate(
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -218,7 +218,7 @@ test("import cleanup:solid", async () => {
 });
 
 test("import cleanup:other", async () => {
-  const code = await transformAndGenerate(
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
