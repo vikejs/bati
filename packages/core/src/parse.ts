@@ -1,5 +1,6 @@
 import { namedTypes, visit } from "ast-types";
 import { type ASTNode, generateCode } from "magicast";
+import nunjucks from "nunjucks";
 import type { VikeMeta } from "./types.js";
 import { cleanImports } from "./cleanup.js";
 
@@ -120,10 +121,22 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export function transformAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
+export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
   const ast = transformAst(tree, meta);
 
   const code = generateCode(ast).code;
 
   return cleanImports(code, options);
+}
+
+export function renderNunjucks(templatePath: string, meta: VikeMeta) {
+  const nunjucksEnv = nunjucks.configure({
+    autoescape: true,
+  });
+  const output = nunjucksEnv.render(templatePath, {
+    import: {
+      meta,
+    },
+  });
+  return output;
 }

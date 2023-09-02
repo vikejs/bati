@@ -12,7 +12,7 @@ export default [
   {
     input: "./src/index.ts",
     output: [{ dir: "dist", format: "es" }],
-    external: ["acorn-stage3", "hermes-parser", "tenko"],
+    external: ["acorn-stage3", "hermes-parser", "nunjucks", "tenko"],
     plugins: [
       nodeResolve({
         preferBuiltins: true,
