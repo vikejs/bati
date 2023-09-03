@@ -520,6 +520,9 @@ importers:
       esbuild:
         specifier: latest
         version: 0.19.2
+      estree-toolkit:
+        specifier: ^1.7.2
+        version: 1.7.2
       magicast:
         specifier: ^0.2.10
         version: 0.2.10
@@ -4181,6 +4184,13 @@ packages:
       '@babel/types': 7.22.10
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /estree-toolkit@1.7.2:
+    resolution: {integrity: sha512-6gHLJjMQdURIL8ajkZAvTVpKP2btsY7mfYR0630RYhoOPbST9DRSuKWJneGSd8Idw7vkPnoXMVbSg1Ny+g0dFw==}
+    dependencies:
+      '@types/estree': 1.0.1
+      '@types/estree-jsx': 1.0.0
     dev: true
 
   /estree-walker@2.0.2:
