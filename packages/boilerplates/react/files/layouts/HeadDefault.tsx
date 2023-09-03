@@ -1,6 +1,6 @@
 import React from "react";
 
-// Default <head> (can be overriden by pages)
+// Default <head> (can be overridden by pages)
 
 export default function HeadDefault() {
   if (import.meta.BATI_MODULES?.includes("analytics:plausible.io")) {

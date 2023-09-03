@@ -1,4 +1,4 @@
-// Default <head> (can be overriden by pages)
+// Default <head> (can be overridden by pages)
 
 import logoUrl from "../assets/logo.svg";
 
