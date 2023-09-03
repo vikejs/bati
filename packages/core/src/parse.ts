@@ -2,6 +2,7 @@ import { namedTypes, visit } from "ast-types";
 import { type ASTNode, generateCode } from "magicast";
 import type { VikeMeta } from "./types.js";
 import { cleanImports } from "./cleanup.js";
+import { formatCode } from "./format";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "BATI_META");
@@ -120,10 +121,13 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export function transformAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
+export async function transformAndGenerate(
+  tree: ASTNode,
+  meta: VikeMeta,
+  options: { filepath?: string } = {},
+): Promise<string> {
   const ast = transformAst(tree, meta);
-
-  const code = generateCode(ast).code;
-
-  return cleanImports(code, options);
+  let code = generateCode(ast).code;
+  code = await cleanImports(code, options);
+  return formatCode(code);
 }
