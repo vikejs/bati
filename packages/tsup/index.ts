@@ -38,7 +38,7 @@ export function defineBoilerplateConfig() {
       dts: false,
       clean: true,
       outDir: "./dist",
-      external: ["magicast", "acorn-stage3", "hermes-parser", "tenko"],
+      external: ["magicast", "acorn-stage3", "hermes-parser", "tenko", "@batijs/core"],
       esbuildOptions(options) {
         options.outbase = ".";
       },
