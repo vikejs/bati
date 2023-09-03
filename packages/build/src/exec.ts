@@ -75,7 +75,7 @@ export default async function main(options: { source: string | string[]; dist: s
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
-Please report this issue to https://github.com/magne4000/bati`
+Please report this issue to https://github.com/magne4000/bati`,
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         const importFile = isWin ? "file://" + p : p;
@@ -83,7 +83,7 @@ Please report this issue to https://github.com/magne4000/bati`
 
         const fileContent = transformFileAfterExec(
           target,
-          await f.default(targets.has(target) ? () => readFile(target, { encoding: "utf-8" }) : undefined, meta)
+          await f.default(targets.has(target) ? () => readFile(target, { encoding: "utf-8" }) : undefined, meta),
         );
 
         if (fileContent !== null) {
