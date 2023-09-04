@@ -28,6 +28,11 @@ export default defineConfig({
   minify: true,
   clean: true,
   external: ["acorn-stage3", "hermes-parser", "tenko"],
+  esbuildOptions(options) {
+    // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
+    // https://esbuild.github.io/api/#platform
+    options.mainFields = ["module", "main"];
+  },
   esbuildPlugins: [putoutFixPlugin],
   banner: {
     js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
