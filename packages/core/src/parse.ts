@@ -1,5 +1,6 @@
 import { namedTypes, visit } from "ast-types";
 import { type ASTNode, generateCode } from "magicast";
+import { render } from "squirrelly";
 import type { VikeMeta } from "./types.js";
 import { cleanImports } from "./cleanup.js";
 
@@ -120,10 +121,26 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export function transformAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
+export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
   const ast = transformAst(tree, meta);
 
   const code = generateCode(ast).code;
 
   return cleanImports(code, options);
+}
+
+export function renderSquirrelly(template: string, meta: VikeMeta): string {
+  let output = "";
+  try {
+    output = render(template, {
+      import: {
+        meta,
+      },
+    });
+  } catch (e) {
+    console.error("SquirrellyJS rendering error:", (e as Error).message);
+    throw e;
+  }
+
+  return output;
 }

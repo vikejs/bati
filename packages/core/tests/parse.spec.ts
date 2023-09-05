@@ -1,6 +1,6 @@
 import { assert, test } from "vitest";
 import { parseModule } from "magicast";
-import { transformAndGenerate, transformAst } from "../src/parse.js";
+import { renderSquirrelly, transformAstAndGenerate, transformAst } from "../src/parse.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
 import type { VikeMeta } from "../src/types.js";
 
@@ -14,14 +14,14 @@ function testAst(code: string, meta: VikeMeta) {
   return transformAst(tree, meta);
 }
 
-test("includes:react", () => {
+test("ast includes:react", () => {
   const tree = testAst(
     `if (import.meta.BATI_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
       BATI_MODULES: ["framework:react"],
-    }
+    },
   );
 
   assertEquivalentAst(
@@ -32,25 +32,25 @@ test("includes:react", () => {
         ...content,
         jsx: "react"
       };
-    `
-    )
+    `,
+    ),
   );
 });
 
-test("includes:solid", () => {
+test("ast includes:solid", () => {
   const tree = testAst(
     `if (import.meta.BATI_MODULES.includes("framework:react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
       BATI_MODULES: ["framework:solid"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(""));
 });
 
-test("if-elseif-else:react", () => {
+test("ast if-elseif-else:react", () => {
   const tree = testAst(
     `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -61,13 +61,13 @@ test("if-elseif-else:react", () => {
     }`,
     {
       BATI_MODULES: ["framework:react"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`content = { ...content, jsx: "react" };`));
 });
 
-test("if-elseif-else:solid", () => {
+test("ast if-elseif-else:solid", () => {
   const tree = testAst(
     `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -78,13 +78,13 @@ test("if-elseif-else:solid", () => {
     }`,
     {
       BATI_MODULES: ["framework:solid"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`));
 });
 
-test("if-elseif-else:other", () => {
+test("ast if-elseif-else:other", () => {
   const tree = testAst(
     `if (import.meta.BATI_MODULES.includes("framework:react")) {
       content = { ...content, jsx: "react" };
@@ -95,13 +95,13 @@ test("if-elseif-else:other", () => {
     }`,
     {
       BATI_MODULES: ["framework:vue"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`console.log('NOTHING TO DO');`));
 });
 
-test("external variable", () => {
+test("ast external variable", () => {
   assert.throws(
     () =>
       testAst(
@@ -110,13 +110,13 @@ test("external variable", () => {
   }`,
         {
           BATI_MODULES: ["framework:react"],
-        }
+        },
       ),
-    ReferenceError
+    ReferenceError,
   );
 });
 
-test("ternary:react", () => {
+test("ast ternary:react", () => {
   const tree = testAst(
     `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
@@ -125,13 +125,13 @@ test("ternary:react", () => {
     : null`,
     {
       BATI_MODULES: ["framework:react"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`1`));
 });
 
-test("ternary:solid", () => {
+test("ast ternary:solid", () => {
   const tree = testAst(
     `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
@@ -140,13 +140,13 @@ test("ternary:solid", () => {
     : null`,
     {
       BATI_MODULES: ["framework:solid"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`2`));
 });
 
-test("ternary:other", () => {
+test("ast ternary:other", () => {
   const tree = testAst(
     `import.meta.BATI_MODULES.includes("framework:react")
     ? 1
@@ -155,14 +155,14 @@ test("ternary:other", () => {
     : null`,
     {
       BATI_MODULES: ["framework:vue"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`null`));
 });
 
-test("import cleanup:react", async () => {
-  const code = await transformAndGenerate(
+test("ast import cleanup:react", async () => {
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -173,24 +173,24 @@ test("import cleanup:react", async () => {
     : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
-    `
+    `,
     ),
     {
       BATI_MODULES: ["framework:react"],
-    }
+    },
   );
 
   assertEquivalentAst(
     ast(code),
     ast(
       `import react from 'react';
-    export const framework = react();`
-    )
+    export const framework = react();`,
+    ),
   );
 });
 
-test("import cleanup:solid", async () => {
-  const code = await transformAndGenerate(
+test("ast import cleanup:solid", async () => {
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -201,24 +201,24 @@ test("import cleanup:solid", async () => {
     : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
-    `
+    `,
     ),
     {
       BATI_MODULES: ["framework:solid"],
-    }
+    },
   );
 
   assertEquivalentAst(
     ast(code),
     ast(
       `import { solid } from 'solid';
-    export const framework = solid();`
-    )
+    export const framework = solid();`,
+    ),
   );
 });
 
-test("import cleanup:other", async () => {
-  const code = await transformAndGenerate(
+test("ast import cleanup:other", async () => {
+  const code = await transformAstAndGenerate(
     ast(
       `
     import { solid } from 'solid';
@@ -229,17 +229,17 @@ test("import cleanup:other", async () => {
     : import.meta.BATI_MODULES.includes("framework:solid")
     ? solid()
     : null;
-    `
+    `,
     ),
     {
       BATI_MODULES: ["framework:vue"],
-    }
+    },
   );
 
   assertEquivalentAst(ast(code), ast(`export const framework = null;`));
 });
 
-test("remove BATI_REMOVE", () => {
+test("ast remove BATI_REMOVE", () => {
   const tree = transformAst(ast(`const a = [import.meta.BATI_REMOVE, 'a']`), {
     BATI_MODULES: ["framework:vue"],
   });
@@ -247,33 +247,33 @@ test("remove BATI_REMOVE", () => {
   assertEquivalentAst(tree, ast(`const a = ['a']`));
 });
 
-test("remove comment preceding import", () => {
+test("ast remove comment preceding import", () => {
   const tree = transformAst(
     ast(`
 //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
 import "./tailwind.css";`),
     {
       BATI_MODULES: ["uikit:tailwindcss"],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(`import "./tailwind.css";`));
 });
 
-test("remove comment preceding import and import itself", () => {
+test("ast remove comment preceding import and import itself", () => {
   const tree = transformAst(
     ast(`
 //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
 import "./tailwind.css";`),
     {
       BATI_MODULES: [],
-    }
+    },
   );
 
   assertEquivalentAst(tree, ast(``));
 });
 
-test("remove comment preceding JSX attribute", () => {
+test("ast remove comment preceding JSX attribute", () => {
   const tree = transformAst(
     ast(`
 <div
@@ -294,7 +294,7 @@ test("remove comment preceding JSX attribute", () => {
 </div>`),
     {
       BATI_MODULES: [],
-    }
+    },
   );
 
   assertEquivalentAst(
@@ -312,11 +312,11 @@ test("remove comment preceding JSX attribute", () => {
   }}
 >
   {props.children}
-</div>`)
+</div>`),
   );
 });
 
-test("remove comment preceding JSX attribute", () => {
+test("ast remove comment preceding JSX attribute", () => {
   const tree = transformAst(
     ast(`
 <div
@@ -337,7 +337,7 @@ test("remove comment preceding JSX attribute", () => {
 </div>`),
     {
       BATI_MODULES: ["uikit:tailwindcss"],
-    }
+    },
   );
 
   assertEquivalentAst(
@@ -348,6 +348,243 @@ test("remove comment preceding JSX attribute", () => {
   class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
 >
   {props.children}
-</div>`)
+</div>`),
+  );
+});
+
+test("squirrelly if telefunc", async () => {
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <div class="layout">
+    <Sidebar>
+      <Logo />
+      <Link href="/">Welcome</Link>
+{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}
+      <Link href="/todo">Todo</Link>
+{{ /if }}
+      <Link href="/star-wars">Data Fetching</Link>
+    </Sidebar>
+    <Content><slot /></Content>
+  </div>
+</template>`,
+    {
+      BATI_MODULES: ["uikit:tailwindcss", "rpc:telefunc"],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <div class="layout">
+    <Sidebar>
+      <Logo />
+      <Link href="/">Welcome</Link>
+      <Link href="/todo">Todo</Link>
+      <Link href="/star-wars">Data Fetching</Link>
+    </Sidebar>
+    <Content><slot /></Content>
+  </div>
+</template>`,
+  );
+});
+
+test("squirrelly if not telefunc", async () => {
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <div class="layout">
+    <Sidebar>
+      <Logo />
+      <Link href="/">Welcome</Link>
+{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}
+      <Link href="/todo">Todo</Link>
+{{ /if }}
+      <Link href="/star-wars">Data Fetching</Link>
+    </Sidebar>
+    <Content><slot /></Content>
+  </div>
+</template>`,
+    {
+      BATI_MODULES: ["uikit:tailwindcss"],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <div class="layout">
+    <Sidebar>
+      <Logo />
+      <Link href="/">Welcome</Link>
+      <Link href="/star-wars">Data Fetching</Link>
+    </Sidebar>
+    <Content><slot /></Content>
+  </div>
+</template>`,
+  );
+});
+
+test("squirrelly if-else tailwind", async () => {
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <div id="page-container">
+    <div
+      id="page-content"
+{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}
+      class="p-5 pb-12 min-h-screen"
+{{ #else }}
+      style="
+        padding: 20px;
+        padding-bottom: 50px;
+        min-height: 100vh;
+      "
+{{ /if }}
+    >
+      <slot />
+    </div>
+  </div>
+</template>`,
+    {
+      BATI_MODULES: ["uikit:tailwindcss"],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <div id="page-container">
+    <div
+      id="page-content"
+      class="p-5 pb-12 min-h-screen"
+    >
+      <slot />
+    </div>
+  </div>
+</template>`,
+  );
+});
+
+test("squirrelly if-else not tailwind", async () => {
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <div id="page-container">
+    <div
+      id="page-content"
+{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}
+      class="p-5 pb-12 min-h-screen"
+{{ #else }}
+      style="
+        padding: 20px;
+        padding-bottom: 50px;
+        min-height: 100vh;
+      "
+{{ /if }}
+    >
+      <slot />
+    </div>
+  </div>
+</template>`,
+    {},
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <div id="page-container">
+    <div
+      id="page-content"
+      style="
+        padding: 20px;
+        padding-bottom: 50px;
+        min-height: 100vh;
+      "
+    >
+      <slot />
+    </div>
+  </div>
+</template>`,
+  );
+});
+
+test("squirrelly comments", async () => {
+  const renderedOutput = renderSquirrelly(
+    `
+{{! /* We are using the SquirrellyJS template syntax */ _}}
+
+<!-- Default <head> (can be overridden by pages) -->
+
+<template>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</template>`,
+    {},
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<!-- Default <head> (can be overridden by pages) -->
+
+<template>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</template>`,
+  );
+});
+
+test("squirrelly escaping", async () => {
+  // `{{ state.count }}` is Vue SFC template syntax, so it should be escaped,
+  // otherwise SquirrellyJS will try to evaluate it and throw a ReferenceError
+  // because it doesn't know `state`.
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    {{! /* This is the way to escape '{{' and have Squirrelly pass it on to Vue.
+           See https://squirrelly.js.org/docs/syntax/overview/ */ _}}
+    Counter {{ "{{" }} state.count }}
+  </button>
+</template>`,
+    {},
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    Counter {{ state.count }}
+  </button>
+</template>`,
+  );
+});
+
+test("squirrelly forgot escaping", async () => {
+  assert.throws(
+    () =>
+      renderSquirrelly(
+        `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    Counter {{ state.count }}
+  </button>
+</template>`,
+        {},
+      ),
+    ReferenceError,
   );
 });
