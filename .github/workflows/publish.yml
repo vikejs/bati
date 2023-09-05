@@ -65,6 +65,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Wait a few seconds for NPM repo to catch-up
+        run: sleep 10s
+        shell: bash
+
       - name: Call check-features workflow
         run: |
           curl -L \
