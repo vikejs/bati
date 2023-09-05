@@ -130,9 +130,17 @@ export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: 
 }
 
 export function renderSquirrelly(template: string, meta: VikeMeta): string {
-  return render(template, {
-    import: {
-      meta,
-    },
-  });
+  let output = "";
+  try {
+    output = render(template, {
+      import: {
+        meta,
+      },
+    });
+  } catch (e) {
+    console.error("SquirrellyJS rendering error:", (e as Error).message);
+    throw e;
+  }
+
+  return output;
 }

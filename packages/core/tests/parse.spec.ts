@@ -536,3 +536,55 @@ test("squirrelly comments", async () => {
 </template>`,
   );
 });
+
+test("squirrelly escaping", async () => {
+  // `{{ state.count }}` is Vue SFC template syntax, so it should be escaped,
+  // otherwise SquirrellyJS will try to evaluate it and throw a ReferenceError
+  // because it doesn't know `state`.
+  const renderedOutput = renderSquirrelly(
+    `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    {{! /* This is the way to escape '{{' and have Squirrelly pass them on to Vue.
+           See https://squirrelly.js.org/docs/syntax/overview/ */ _}}
+    Counter {{ "{{" }} state.count }}
+  </button>
+</template>`,
+    {},
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    Counter {{ state.count }}
+  </button>
+</template>`,
+  );
+});
+
+test("squirrelly forgot escaping", async () => {
+  assert.throws(
+    () =>
+      renderSquirrelly(
+        `
+<template>
+  <button
+    type="button"
+    @click="state.count++"
+  >
+    Counter {{ state.count }}
+  </button>
+</template>`,
+        {},
+      ),
+    ReferenceError,
+  );
+});
