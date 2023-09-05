@@ -548,7 +548,7 @@ test("squirrelly escaping", async () => {
     type="button"
     @click="state.count++"
   >
-    {{! /* This is the way to escape '{{' and have Squirrelly pass them on to Vue.
+    {{! /* This is the way to escape '{{' and have Squirrelly pass it on to Vue.
            See https://squirrelly.js.org/docs/syntax/overview/ */ _}}
     Counter {{ "{{" }} state.count }}
   </button>
