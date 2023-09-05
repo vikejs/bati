@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { namedTypes, visit } from "ast-types";
 import { type ASTNode, generateCode } from "magicast";
 import { render } from "squirrelly";
@@ -130,8 +129,7 @@ export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: 
   return cleanImports(code, options);
 }
 
-export async function renderSquirrelly(templatePath: string, meta: VikeMeta): Promise<string> {
-  const template = await readFile(templatePath, { encoding: "utf-8" });
+export function renderSquirrelly(template: string, meta: VikeMeta): string {
   return render(template, {
     import: {
       meta,

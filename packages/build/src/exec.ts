@@ -101,7 +101,8 @@ Please report this issue to https://github.com/magne4000/bati`,
           });
         } else {
           // We use SquirrellyJS to transform the file.
-          fileContent = await renderSquirrelly(p, meta);
+          const template = await readFile(p, { encoding: "utf-8" });
+          fileContent = renderSquirrelly(template, meta);
         }
 
         // NOTE(aurelien): if the resulting fileContent is empty, we won't write the file to disk, yet add it to
