@@ -132,11 +132,19 @@ export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: 
 export function renderSquirrelly(template: string, meta: VikeMeta): string {
   let output = "";
   try {
-    output = render(template, {
-      import: {
-        meta,
+    output = render(
+      template,
+      {
+        import: {
+          meta,
+        },
       },
-    });
+      {
+        // We use {{{ and }}} as Squirrelly delimiters so that {{ and }} remain untouched in Vue SFC files, in which
+        // they are used in Vue <template>s.
+        tags: ["{{{", "}}}"],
+      },
+    );
   } catch (e) {
     console.error("SquirrellyJS rendering error:", (e as Error).message);
     throw e;

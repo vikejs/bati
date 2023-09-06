@@ -360,9 +360,9 @@ test("squirrelly if telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
       <Link href="/todo">Todo</Link>
-{{ /if }}
+{{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
     <Content><slot /></Content>
@@ -398,9 +398,9 @@ test("squirrelly if not telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
       <Link href="/todo">Todo</Link>
-{{ /if }}
+{{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
     <Content><slot /></Content>
@@ -434,15 +434,15 @@ test("squirrelly if-else tailwind", async () => {
   <div id="page-container">
     <div
       id="page-content"
-{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
-{{ #else }}
+{{{ #else }}}
       style="
         padding: 20px;
         padding-bottom: 50px;
         min-height: 100vh;
       "
-{{ /if }}
+{{{ /if }}}
     >
       <slot />
     </div>
@@ -476,15 +476,15 @@ test("squirrelly if-else not tailwind", async () => {
   <div id="page-container">
     <div
       id="page-content"
-{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
-{{ #else }}
+{{{ #else }}}
       style="
         padding: 20px;
         padding-bottom: 50px;
         min-height: 100vh;
       "
-{{ /if }}
+{{{ /if }}}
     >
       <slot />
     </div>
@@ -516,7 +516,7 @@ test("squirrelly if-else not tailwind", async () => {
 test("squirrelly comments", async () => {
   const renderedOutput = renderSquirrelly(
     `
-{{! /* We are using the SquirrellyJS template syntax */ _}}
+{{{! /* We are using the SquirrellyJS template syntax */ _}}}
 
 <!-- Default <head> (can be overridden by pages) -->
 
@@ -537,10 +537,9 @@ test("squirrelly comments", async () => {
   );
 });
 
-test("squirrelly escaping", async () => {
-  // `{{ state.count }}` is Vue SFC template syntax, so it should be escaped,
-  // otherwise SquirrellyJS will try to evaluate it and throw a ReferenceError
-  // because it doesn't know `state`.
+test("squirrelly double brackets", async () => {
+  // `{{ state.count }}` is Vue SFC template syntax and we have configured SquirrellyJS to use three
+  // curly brackets as delimiter, so it should leave double brackets untouched.
   const renderedOutput = renderSquirrelly(
     `
 <template>
@@ -548,9 +547,8 @@ test("squirrelly escaping", async () => {
     type="button"
     @click="state.count++"
   >
-    {{! /* This is the way to escape '{{' and have Squirrelly pass it on to Vue.
-           See https://squirrelly.js.org/docs/syntax/overview/ */ _}}
-    Counter {{ "{{" }} state.count }}
+    {{{! /* Double curly brackets are left untouched: */ _}}}
+    Counter {{ state.count }}
   </button>
 </template>`,
     {},
@@ -570,21 +568,10 @@ test("squirrelly escaping", async () => {
   );
 });
 
-test("squirrelly forgot escaping", async () => {
-  assert.throws(
-    () =>
-      renderSquirrelly(
-        `
-<template>
-  <button
-    type="button"
-    @click="state.count++"
-  >
-    Counter {{ state.count }}
-  </button>
-</template>`,
-        {},
-      ),
-    ReferenceError,
-  );
+test("squirrelly unknown reference", async () => {
+  assert.throws(() => renderSquirrelly("{{{ unknown }}}", {}), ReferenceError);
+});
+
+test("squirrelly syntax error", async () => {
+  assert.throws(() => renderSquirrelly("hello {{{", {}), Error);
 });
