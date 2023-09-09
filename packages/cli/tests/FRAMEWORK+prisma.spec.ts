@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { describeMany } from "./utils";
 
-describeMany(["solid", "react"], ["prisma"], ({ fetch }) => {
+describeMany(["solid", "react", "vue"], ["prisma"], ({ fetch }) => {
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);

@@ -1,0 +1,33 @@
+{
+  "name": "@batijs/vue-telefunc",
+  "private": true,
+  "version": "0.0.68",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "esno copy.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.18.40",
+    "esno": "^0.17.0",
+    "telefunc": "^0.1.58",
+    "vite": "^4.4.9",
+    "vite-plugin-ssr": "^0.4.140",
+    "vue": "^3.3.4"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "includeIf": [
+      "vue",
+      "telefunc"
+    ]
+  }
+}

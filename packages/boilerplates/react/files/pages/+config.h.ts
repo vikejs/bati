@@ -4,7 +4,7 @@ import Head from "../layouts/HeadDefault";
 import logoUrl from "../assets/logo.svg";
 import vikeReact from "vike-react";
 
-// Default config (can be overriden by pages)
+// Default config (can be overridden by pages)
 export default {
   Layout,
   Head,
