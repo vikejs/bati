@@ -1,10 +1,20 @@
-import { addDependency, loadAsJson, type MaybeContentGetter, type VikeMeta } from "@batijs/core";
+import { addDependency, loadAsJson, type MaybeContentGetter, setScripts, type VikeMeta } from "@batijs/core";
 
 export default async function getPackageJson(currentContent: MaybeContentGetter, meta: VikeMeta) {
   const packageJson = await loadAsJson(currentContent);
 
-  packageJson.scripts.dev = "hattip serve ./hattip-entry.ts --client";
-  packageJson.scripts.build = "hattip build ./hattip-entry.ts --client";
+  setScripts(packageJson, {
+    dev: {
+      value: "hattip serve ./hattip-entry.ts --client",
+      precedence: 20,
+      warnIfReplaced: true,
+    },
+    build: {
+      value: "hattip build ./hattip-entry.ts --client",
+      precedence: 20,
+      warnIfReplaced: true,
+    },
+  });
 
   // Not supported yet
   if (packageJson.scripts.preview) {

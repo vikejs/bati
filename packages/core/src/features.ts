@@ -5,9 +5,10 @@ export const features = [
   "auth:authjs",
   // "error:logrocket", "error:sentry",
   "rpc:telefunc", // "rpc:trpc",
-  "server:hattip", "server:express",
+  "server:hattip", "server:express", // "server:nitro"
   "uikit:tailwindcss",
-  "analytics:plausible.io",
+  "analytics:plausible.io", // "analytics:google-analytics"
+  "hosting:vercel", // "hosting:netlify"
   // "clientRouting", "prerendering",
 ] as const;
 

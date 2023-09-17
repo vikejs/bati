@@ -14,6 +14,10 @@ interface GlobalContext {
   server: ExecaChildProcess<string> | undefined;
 }
 
+interface PrepareOptions {
+  mode: "dev" | "build";
+}
+
 type FetchParam1 = Parameters<typeof fetch>[1];
 
 // side-effect
@@ -123,7 +127,34 @@ async function runDevServer(context: GlobalContext) {
   return { server: context.server, port: context.port };
 }
 
-export function prepare(flags: string[]) {
+async function runBuild(context: GlobalContext) {
+  context.server = execa(npmCli, ["run", "build"], {
+    cwd: context.tmpdir,
+    timeout: 20000,
+    env: {
+      NODE_ENV: "production",
+    },
+  });
+
+  try {
+    await Promise.race([
+      // wait for process to finish
+      context.server,
+      // or timeout
+      new Promise((_, reject) => {
+        setTimeout(reject, 20000);
+      }),
+    ]);
+  } catch (e) {
+    console.log("Build didn't finish in time or exited with error code. Current output:");
+    console.log(context.server.log);
+    throw e;
+  }
+
+  return { process: context.server };
+}
+
+export function prepare(flags: string[], { mode }: PrepareOptions) {
   const context: GlobalContext = {
     tmpdir: "",
     port: 0,
@@ -134,12 +165,17 @@ export function prepare(flags: string[]) {
   // - Create a temp dir
   // - Execute bati CLI in temp dir
   // - Install dependencies
-  // - Run a dev server
+  // - Run a dev server/build command
   beforeAll(async () => {
     await initTmpDir(context);
     await execCli(context, flags);
-    await Promise.all([runPnpmInstall(context), initPort(context)]);
-    await runDevServer(context);
+    if (mode === "dev") {
+      await Promise.all([runPnpmInstall(context), initPort(context)]);
+      await runDevServer(context);
+    } else if (mode === "build") {
+      await runPnpmInstall(context);
+      await runBuild(context);
+    }
   }, 56000);
 
   // Cleanup tests:
@@ -177,6 +213,7 @@ export function prepare(flags: string[]) {
     fetch(path: string, init?: FetchParam1) {
       return nodeFetch(`http://localhost:${context.port}${path}`, init);
     },
+    context,
   };
 }
 
@@ -189,10 +226,15 @@ export function prepare(flags: string[]) {
  * // ['b', '1', '2']
  * // ['c', '1', '2']
  */
-export function describeMany(oneOf: string[], flags: string[], fn: (context: ReturnType<typeof prepare>) => void) {
+export function describeMany(
+  oneOf: string[],
+  flags: string[],
+  fn: (context: ReturnType<typeof prepare>) => void,
+  options: PrepareOptions = { mode: "dev" },
+) {
   const testMatrix = oneOf.map((f) => [f, ...flags]);
 
   describe.concurrent.each(testMatrix)(testMatrix[0].map(() => "%s").join(" + "), (...currentFlags: string[]) => {
-    fn(prepare(currentFlags));
+    fn(prepare(currentFlags, options));
   });
 }
