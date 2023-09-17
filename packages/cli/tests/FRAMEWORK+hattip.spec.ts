@@ -20,3 +20,6 @@ describeMany(["solid", "react", "vue"], ["hattip"], ({ fetch }) => {
     expect(await res.text()).toContain('{"is404":true}');
   });
 });
+
+// TODO: test build script
+// `node dist/server/index.mjs` to run built server

@@ -1,6 +1,27 @@
+import { withIcon } from "../print";
+import { dim, yellow } from "colorette";
+
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+}
+
+export interface PackageJsonScripts {
+  scripts: {
+    dev?: string;
+    build?: string;
+  };
+}
+
+export interface PackageJsonScriptOption {
+  value?: string;
+  precedence: number;
+  warnIfReplaced?: boolean;
+}
+
+export interface PackageJsonScriptOptions {
+  dev?: PackageJsonScriptOption;
+  build?: PackageJsonScriptOption;
 }
 
 function* deps(obj: PackageJsonDeps) {
@@ -33,7 +54,7 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
   keys: {
     devDependencies?: (keyof U["dependencies"] | keyof U["devDependencies"])[];
     dependencies?: (keyof U["dependencies"] | keyof U["devDependencies"])[];
-  }
+  },
 ) {
   packageJson.devDependencies ??= {};
   packageJson.dependencies ??= {};
@@ -47,6 +68,50 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
     // dependency > devDependencies
     if (key in packageJson.devDependencies) delete packageJson.devDependencies[key as string];
     packageJson.dependencies[key as string] = value;
+  }
+
+  return packageJson;
+}
+
+const previousScripts: PackageJsonScriptOptions = {
+  dev: { precedence: -Infinity },
+  build: { precedence: -Infinity },
+};
+
+function warnScript(key: string, old: string, nnew: string) {
+  console.warn(
+    withIcon(
+      "⚠",
+      yellow,
+    )(`Possible conflict between flags for "package.json":
+    Old \`scripts.${key}\`: ${dim(old)}
+    New \`scripts.${key}\`: ${dim(nnew)}
+  You can check https://batijs.github.io for more details.
+`),
+  );
+}
+
+export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts: PackageJsonScriptOptions) {
+  const keys = ["dev", "build"] as const;
+
+  for (const key of keys) {
+    const prev = previousScripts[key]!;
+    const sub = scripts[key];
+
+    if (sub) {
+      if (sub.precedence > prev.precedence) {
+        if (prev.warnIfReplaced) {
+          warnScript(key, prev.value!, sub.value!);
+        }
+
+        packageJson.scripts[key] = sub.value;
+        previousScripts[key] = sub;
+      } else {
+        if (sub.warnIfReplaced) {
+          warnScript(key, sub.value!, prev.value!);
+        }
+      }
+    }
   }
 
   return packageJson;
