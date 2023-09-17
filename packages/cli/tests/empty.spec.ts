@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { prepare } from "./utils";
 
 describe.concurrent("empty", () => {
-  const { fetch } = prepare([""]);
+  const { fetch } = prepare([""], { mode: "dev" });
 
   test("home", async () => {
     const res = await fetch("/");

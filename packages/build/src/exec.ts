@@ -1,6 +1,6 @@
 import { loadFile, renderSquirrelly, transformAstAndGenerate, type VikeMeta } from "@batijs/core";
-import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;

@@ -1,8 +1,15 @@
-import type { MaybeContentGetter } from "@batijs/core";
+import type { MaybeContentGetter, VikeMeta } from "@batijs/core";
 import { addVitePlugin, loadAsMagicast } from "@batijs/core";
 
-export default async function getViteConfig(currentContent: MaybeContentGetter) {
+export default async function getViteConfig(currentContent: MaybeContentGetter, meta: VikeMeta) {
   const mod = await loadAsMagicast(currentContent);
+
+  const options = meta.BATI_MODULES?.includes("hosting:vercel")
+    ? {
+        prerender: true,
+        disableAutoFullBuild: true,
+      }
+    : {};
 
   addVitePlugin(mod, {
     from: "@vitejs/plugin-react",
@@ -11,6 +18,7 @@ export default async function getViteConfig(currentContent: MaybeContentGetter) 
   addVitePlugin(mod, {
     from: "vite-plugin-ssr/plugin",
     constructor: "ssr",
+    options,
   });
 
   return mod.generate().code;
