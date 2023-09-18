@@ -587,8 +587,8 @@ importers:
   packages/core:
     devDependencies:
       '@putout/plugin-remove-unused-variables':
-        specifier: ^6.0.2
-        version: 6.0.2(putout@31.8.5)
+        specifier: ^7.0.0
+        version: 7.0.0(putout@31.8.5)
       '@types/eslint':
         specifier: ^8.44.2
         version: 8.44.2
@@ -2485,6 +2485,15 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       putout: '>=31'
+    dependencies:
+      putout: 31.8.5
+    dev: true
+
+  /@putout/plugin-remove-unused-variables@7.0.0(putout@31.8.5):
+    resolution: {integrity: sha512-OQGZ+TsnZbdwaKbnaujviVDgdlF8t0mbum7UPZnayujqGJCyDe67QeSa9u7gC6i7WQbaNhwjH2nk5MPDRv9rgg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      putout: '>=32'
     dependencies:
       putout: 31.8.5
     dev: true
