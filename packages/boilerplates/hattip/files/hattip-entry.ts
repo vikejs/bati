@@ -77,11 +77,7 @@ router.use(async (context) => {
 
   return new Response(await response?.getBody(), {
     status: response?.statusCode,
-    headers: response
-      ? {
-          "content-type": response.contentType,
-        }
-      : {},
+    headers: response?.headers,
   });
 });
 
