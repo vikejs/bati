@@ -98,8 +98,8 @@ importers:
         specifier: ^3.12.10
         version: 3.12.10
       vike-authjs:
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.1.1
+        version: 0.1.1
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
@@ -141,8 +141,8 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
       vike-authjs:
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.1.1
+        version: 0.1.1
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
@@ -312,8 +312,8 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vike-solid:
-        specifier: ^0.1.1
-        version: 0.1.1(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.141)
+        specifier: ^0.1.2
+        version: 0.1.2(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.141)
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.18.40)
@@ -679,22 +679,6 @@ packages:
 
   /@auth/core@0.15.0:
     resolution: {integrity: sha512-pWchDMUT0TXUn5kencusX4IL9IfIuVKzRF/cy6RSKr6PgdwMvSPyqyxxhHU+nh3+C/3vYqV0k8SKzfgNo0A1jQ==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      cookie: 0.5.0
-      jose: 4.14.4
-      oauth4webapi: 2.3.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-    dev: true
-
-  /@auth/core@0.7.1:
-    resolution: {integrity: sha512-aAgzC/VlfnvxsFYp5Wau1pfIltRUBvfVxECR0imDPUznwXIkD9alvrai60tfImtPfXp1fnJpcKfiONpF5Rg8VQ==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -7764,10 +7748,10 @@ packages:
       vfile-message: 3.1.4
     dev: true
 
-  /vike-authjs@0.0.2:
-    resolution: {integrity: sha512-3OZUYvxJFVOgolWtgTGdfdh7pdjeNFO7J0KYKg+Vf4mh6+VeRk+Ozp8q63bkRFjMXGhOxku9vyepmEMoa7qbOA==}
+  /vike-authjs@0.1.1:
+    resolution: {integrity: sha512-bzEb0WQ+M2A6bSfnWragShxAfyWTfEYdjYPrELOtTG+qSsCy20n/z8UMmt/buFAdKJM82fz6fJdfU+dVodKodA==}
     dependencies:
-      '@auth/core': 0.7.1
+      '@auth/core': 0.15.0
     transitivePeerDependencies:
       - nodemailer
     dev: true
@@ -7786,12 +7770,12 @@ packages:
       vite-plugin-ssr: 0.4.141(vite@4.4.9)
     dev: true
 
-  /vike-solid@0.1.1(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.141):
-    resolution: {integrity: sha512-YuGKC3/XPewE+1HmAlrglpg+AphphANg058wto0D1iqU0Sg5brVuScnUUrbVzi34BSnaLM1NCz50gDe69GIMPg==}
+  /vike-solid@0.1.2(@types/node@16.18.40)(solid-js@1.7.11)(vite-plugin-ssr@0.4.141):
+    resolution: {integrity: sha512-7dspxCgd3fIbNyib834qVfOZun4fcteEf1Fg6bzIVsAVXHa5qNsBiSZO3kMp62Jda5n6QplPOLO4w/HFijzYiA==}
     hasBin: true
     peerDependencies:
       solid-js: ^1.7.11
-      vite-plugin-ssr: ^0.4.136
+      vite-plugin-ssr: ^0.4.141
     dependencies:
       solid-js: 1.7.11
       vite: 4.4.9(@types/node@16.18.40)
