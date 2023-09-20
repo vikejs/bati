@@ -7,7 +7,6 @@ export default async function getViteConfig(currentContent: MaybeContentGetter, 
   const options = meta.BATI_MODULES?.includes("hosting:vercel")
     ? {
         prerender: true,
-        disableAutoFullBuild: true,
       }
     : {};
 
