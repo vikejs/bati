@@ -238,3 +238,47 @@ export function describeMany(
     fn(prepare(currentFlags, options));
   });
 }
+
+export function testCliFailure(oneOf: string[], flags: string[], expectedError?: string) {
+  const testMatrix = oneOf.map((f) => [f, ...flags]);
+
+  function prepareAndExecute(flags: string[]) {
+    const context: GlobalContext = {
+      tmpdir: "",
+      port: 0,
+      server: undefined,
+    };
+
+    // Prepare tests:
+    // - Create a temp dir
+    beforeAll(async () => {
+      await initTmpDir(context);
+    }, 5000);
+
+    // Cleanup tests:
+    // - Remove temp dir
+    afterAll(async () => {
+      await Promise.race([
+        rm(context.tmpdir, { recursive: true, force: true }),
+        new Promise((_resolve, reject) => setTimeout(reject, 5000)),
+      ]).catch((e) => {
+        console.log("Failed to delete tmpdir in time.");
+        throw e;
+      });
+    }, 5500);
+
+    // Common tests
+
+    test("CLI fails", () => {
+      expect(execCli(context, flags)).rejects.toThrow(expectedError);
+    });
+
+    return {
+      context,
+    };
+  }
+
+  describe.concurrent.each(testMatrix)(testMatrix[0].map(() => "%s").join(" + "), (...currentFlags: string[]) => {
+    prepareAndExecute(currentFlags);
+  });
+}

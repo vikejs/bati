@@ -1,12 +1,12 @@
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { flags as coreFlags, type Flags, type VikeMeta, withIcon } from "@batijs/core";
+import { conflicts, type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
-import { blueBright, bold, cyan, gray, green, yellow } from "colorette";
+import { blueBright, bold, cyan, gray, green, inverse, red, yellow } from "colorette";
 import type { BoilerplateDef, Hook } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -141,6 +141,18 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
+function checkConflicts(flags: string[]) {
+  const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
+
+  const potentialConflicts = conflicts(flagsWithNs, (s) => inverse(bold(s)));
+
+  if (potentialConflicts.length > 0) {
+    potentialConflicts.forEach((m) => console.error(red(`⚠ ${m}.`)));
+
+    process.exit(5);
+  }
+}
+
 async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
   const map = new Map<string, Hook[]>();
   for (const hook of hooks) {
@@ -199,6 +211,8 @@ async function run() {
       const flags = Object.entries(args)
         .filter(([, val]) => val === true)
         .map(([key]) => key);
+
+      checkConflicts(flags);
 
       // push shared boilerplates first
       for (const bl of boilerplates.filter((b) => !b.config.flag && !b.config.includeIf)) {
