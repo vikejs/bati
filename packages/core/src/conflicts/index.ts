@@ -5,9 +5,9 @@ import { RulesMessage } from "./enum";
 
 export { rules, RulesMessage };
 
-export function conflicts(fts: FeaturesOrNamespaces[], errors: Record<RulesMessage, string>) {
+export function conflicts<T = string>(fts: FeaturesOrNamespaces[], errors: Record<RulesMessage, T | string>) {
   const sfts = prepare(fts);
-  const messages: string[] = [];
+  const messages: (string | T)[] = [];
 
   for (const rule of rules) {
     const result = rule(sfts);
