@@ -1,16 +1,15 @@
 // The role of this file is to describe rules for packages which may conflict with one another
 import type { features, Namespaces } from "../features";
+import type { RulesMessage } from "./enum";
 
 type Features = (typeof features)[number];
 export type FeaturesOrNamespaces = Features | Namespaces;
-export type Rule = (fts: Set<FeaturesOrNamespaces>) => null | undefined | false | string | ErrorWrapper;
-export type ErrorFormatter = (str: string, index: number) => string;
-export type ErrorWrapper = (wrapper?: ErrorFormatter) => string;
+export type Rule = (fts: Set<FeaturesOrNamespaces>) => null | undefined | false | string | RulesMessage;
 
 /**
  * Returns a message if all given rules are not exclusive
  */
-export function exclusive(message: string | ErrorWrapper, rules: FeaturesOrNamespaces[]): Rule {
+export function exclusive(message: string | RulesMessage, rules: FeaturesOrNamespaces[]): Rule {
   return (fts: Set<FeaturesOrNamespaces>) => rules.every((r) => fts.has(r)) && message;
 }
 
@@ -18,7 +17,7 @@ export function exclusive(message: string | ErrorWrapper, rules: FeaturesOrNames
  * Returns a message if subject is present but rules are not
  */
 export function requires(
-  message: string | ErrorWrapper,
+  message: string | RulesMessage,
   ifPresent: FeaturesOrNamespaces,
   mustAlsoInclude: FeaturesOrNamespaces[],
 ): Rule {
@@ -39,17 +38,4 @@ export function prepare(fts: FeaturesOrNamespaces[]): Set<FeaturesOrNamespaces> 
     s.add(f);
   }
   return s;
-}
-
-/**
- * Tagged template to help formatting for both console and WebUI
- */
-export function err(strings: TemplateStringsArray, ...args: string[]) {
-  return (wrapper?: ErrorFormatter) => {
-    let str = "";
-    strings.forEach((string, i) => {
-      str += string + (wrapper?.(args[i], i) ?? "");
-    });
-    return str;
-  };
 }

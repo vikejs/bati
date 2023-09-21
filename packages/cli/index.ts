@@ -1,13 +1,15 @@
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { conflicts, type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
+import { type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
+import { conflicts } from "@batijs/core/conflicts";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
-import { blueBright, bold, cyan, gray, green, inverse, red, yellow } from "colorette";
+import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import type { BoilerplateDef, Hook } from "./types";
+import { conflictMessages } from "./rules";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -144,7 +146,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
 function checkConflicts(flags: string[]) {
   const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
 
-  const potentialConflicts = conflicts(flagsWithNs, (s) => inverse(bold(s)));
+  const potentialConflicts = conflicts(flagsWithNs, conflictMessages);
 
   if (potentialConflicts.length > 0) {
     potentialConflicts.forEach((m) => console.error(red(`⚠ ${m}.`)));

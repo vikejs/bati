@@ -1,8 +1,11 @@
-import type { ErrorFormatter, FeaturesOrNamespaces } from "./utils";
+import type { FeaturesOrNamespaces } from "./utils";
 import { prepare } from "./utils";
 import rules from "./rules";
+import { RulesMessage } from "./enum";
 
-export function conflicts(fts: FeaturesOrNamespaces[], formatter: ErrorFormatter) {
+export { rules, RulesMessage };
+
+export function conflicts(fts: FeaturesOrNamespaces[], errors: Record<RulesMessage, string>) {
   const sfts = prepare(fts);
   const messages: string[] = [];
 
@@ -10,8 +13,8 @@ export function conflicts(fts: FeaturesOrNamespaces[], formatter: ErrorFormatter
     const result = rule(sfts);
     if (typeof result === "string") {
       messages.push(result);
-    } else if (typeof result === "function") {
-      messages.push(result(formatter));
+    } else if (typeof result === "number") {
+      messages.push(errors[result]);
     }
   }
 

@@ -17,28 +17,43 @@ const putoutFixPlugin: Plugin = {
   },
 };
 
-export default defineConfig({
-  entry: ["./src/index.ts"],
-  platform: "node",
-  format: "esm",
-  target: "es2020",
-  outDir: "./dist",
-  dts: true,
-  bundle: true,
-  minify: true,
-  clean: true,
+export default defineConfig([
+  {
+    entry: ["./src/index.ts"],
+    platform: "node",
+    format: "esm",
+    target: "es2020",
+    outDir: "./dist",
+    dts: true,
+    bundle: true,
+    minify: true,
+    clean: true,
 
-  // Note: this is for putout because esbuild can't properly treeshake the code, and is not aware
-  // that we do not use those dependencies.
-  external: ["acorn-stage3", "hermes-parser", "tenko"],
+    // Note: this is for putout because esbuild can't properly treeshake the code, and is not aware
+    // that we do not use those dependencies.
+    external: ["acorn-stage3", "hermes-parser", "tenko"],
 
-  esbuildOptions(options) {
-    // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
-    // https://esbuild.github.io/api/#platform
-    options.mainFields = ["module", "main"];
+    esbuildOptions(options) {
+      // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
+      // https://esbuild.github.io/api/#platform
+      options.mainFields = ["module", "main"];
+    },
+    esbuildPlugins: [putoutFixPlugin],
+    banner: {
+      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+    },
   },
-  esbuildPlugins: [putoutFixPlugin],
-  banner: {
-    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+  {
+    entry: { conflicts: "./src/conflicts/index.ts" },
+    platform: "neutral",
+    format: "esm",
+    target: "es2020",
+    outDir: "./dist",
+    dts: true,
+    bundle: true,
+    minify: true,
+    esbuildOptions(options) {
+      options.mainFields = ["module", "main"];
+    },
   },
-});
+]);

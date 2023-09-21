@@ -148,6 +148,7 @@ function readableFileSize(size: number) {
   return size.toFixed(2) + " " + units[i];
 }
 
+// TODO: assert all rules messages are implemented
 const esbuildPlugin: Plugin = {
   name: "BLP",
   setup(build) {
