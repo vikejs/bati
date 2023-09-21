@@ -6,7 +6,7 @@
   "scripts": {
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
-    "release:beta": "pnpm -r prerelease && bumpp -y && pnpm run publish --no-git-checks --tag beta",
+    "release:beta": "pnpm -r prerelease && bumpp --no-tag --no-commit --no-push --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
     "build": "pnpm -r build"
