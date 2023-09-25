@@ -1,6 +1,6 @@
 {
   "name": "@batijs/core",
-  "version": "0.0.79-beta.5",
+  "version": "0.0.79-beta.6",
   "description": "",
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -32,16 +32,10 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./conflicts": "./dist/conflicts.js"
+    "./rules": "./dist/rules.js"
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ],
-      "conflicts": [
-        "./dist/conflicts.d.ts"
-      ],
       "types": [
         "./global.d.ts"
       ]
