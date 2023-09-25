@@ -1,8 +1,8 @@
-import { expect, test } from "vitest";
-import { describeMany } from "./utils";
 import { existsSync } from "node:fs";
-import path from "node:path";
 import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { expect, test } from "vitest";
+import { describeMany } from "./utils.js";
 
 describeMany(
   ["solid", "react", "vue"],

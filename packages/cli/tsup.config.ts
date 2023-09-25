@@ -1,5 +1,5 @@
 import { defineConfig } from "@batijs/tsup";
-import esbuildBundleAllPlugin from "./esbuild-bundle-all";
+import esbuildBundleAllPlugin from "./esbuild-bundle-all.js";
 
 export default defineConfig({
   entry: ["index.ts"],

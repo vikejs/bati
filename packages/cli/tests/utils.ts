@@ -1,12 +1,12 @@
-import { afterAll, beforeAll, describe, expect, test } from "vitest";
-import nodeFetch from "node-fetch";
-import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "node:fs/promises";
-import { join } from "node:path";
 import http from "node:http";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import getPort from "get-port";
+import nodeFetch from "node-fetch";
+import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import which from "which";
-import { execa, type ExecaChildProcess } from "./processUtils";
+import { execa, type ExecaChildProcess } from "./processUtils.js";
 
 interface GlobalContext {
   tmpdir: string;
