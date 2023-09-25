@@ -1,4 +1,4 @@
-import type { Config } from "vike-vue/types";
+import type { Config } from "vike/types";
 import Layout from "../layouts/LayoutDefault.vue";
 import Head from "../layouts/HeadDefault.vue";
 import logoUrl from "../assets/logo.svg";

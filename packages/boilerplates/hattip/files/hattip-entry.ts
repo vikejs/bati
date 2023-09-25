@@ -1,5 +1,5 @@
 import { createRouter } from "@hattip/router";
-import { renderPage } from "vite-plugin-ssr/server";
+import { renderPage } from "vike/server";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import CredentialsProvider from "@auth/core/providers/credentials";
@@ -68,7 +68,7 @@ if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
 /**
  * Vike route
  *
- * @link {@see https://vite-plugin-ssr.com}
+ * @link {@see https://vike.dev}
  **/
 router.use(async (context) => {
   const pageContextInit = { urlOriginal: context.request.url };

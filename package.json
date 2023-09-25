@@ -8,6 +8,7 @@
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
+    "test": "pnpm -r test",
     "build": "pnpm -r build"
   },
   "keywords": [],

@@ -27,7 +27,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       "@hattip/router",
       "hattip",
       "vite",
-      "vite-plugin-ssr",
+      "vike",
       ...(meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
     ],
   });

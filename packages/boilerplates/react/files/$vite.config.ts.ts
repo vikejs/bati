@@ -15,7 +15,7 @@ export default async function getViteConfig(currentContent: MaybeContentGetter, 
     constructor: "react",
   });
   addVitePlugin(mod, {
-    from: "vite-plugin-ssr/plugin",
+    from: "vike/plugin",
     constructor: "ssr",
     options,
   });

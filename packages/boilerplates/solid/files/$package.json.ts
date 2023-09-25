@@ -5,6 +5,6 @@ export default async function getPackageJson(currentContent: MaybeContentGetter)
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: ["vite"],
-    dependencies: ["cross-fetch", "solid-js", "vike-solid", "vite-plugin-ssr"],
+    dependencies: ["cross-fetch", "solid-js", "vike-solid", "vike"],
   });
 }

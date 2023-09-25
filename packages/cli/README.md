@@ -18,5 +18,5 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 - Configuration files are tailored for the stack you chose
 - Ready to start
 - [Vite](https://vitejs.dev) + Typescript ecosystem
-- Based on [vite-plugin-ssr](https://vite-plugin-ssr.com) for portability and customazibility
+- Based on [vike](https://vike.dev) for portability and customazibility
 - Sane and future-proof recommendations that follows [WinterCG](https://wintercg.org) as much as possible

@@ -5,7 +5,7 @@ export default async function getViteConfig(currentContent: MaybeContentGetter) 
   const mod = await loadAsMagicast(currentContent);
 
   addVitePlugin(mod, {
-    from: "vite-plugin-ssr/plugin",
+    from: "vike/plugin",
     constructor: "ssr",
   });
   addVitePlugin(mod, {

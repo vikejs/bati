@@ -12,7 +12,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter)
       "cross-fetch",
       "unplugin-vue-markdown",
       "vike-vue",
-      "vite-plugin-ssr",
+      "vike",
       "vue",
     ],
   });
