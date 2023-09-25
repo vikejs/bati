@@ -4,12 +4,12 @@ import type { RulesMessage } from "./enum";
 
 type Features = (typeof features)[number];
 export type FeaturesOrNamespaces = Features | Namespaces;
-export type Rule = (fts: Set<FeaturesOrNamespaces>) => null | undefined | false | string | RulesMessage;
+export type Rule = (fts: Set<FeaturesOrNamespaces>) => null | undefined | false | RulesMessage;
 
 /**
  * Returns a message if all given rules are not exclusive
  */
-export function exclusive(message: string | RulesMessage, rules: FeaturesOrNamespaces[]): Rule {
+export function exclusive(message: RulesMessage, rules: FeaturesOrNamespaces[]): Rule {
   return (fts: Set<FeaturesOrNamespaces>) => rules.every((r) => fts.has(r)) && message;
 }
 
@@ -17,7 +17,7 @@ export function exclusive(message: string | RulesMessage, rules: FeaturesOrNames
  * Returns a message if subject is present but rules are not
  */
 export function requires(
-  message: string | RulesMessage,
+  message: RulesMessage,
   ifPresent: FeaturesOrNamespaces,
   mustAlsoInclude: FeaturesOrNamespaces[],
 ): Rule {

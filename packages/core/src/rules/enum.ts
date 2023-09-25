@@ -1,3 +1,3 @@
 export enum RulesMessage {
-  AUTH_R_SERVER,
+  ERROR_AUTH_R_SERVER,
 }

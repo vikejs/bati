@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { exclusive, prepare, requires } from "../src/conflicts/utils";
+import { exclusive, prepare, requires } from "../src/rules/utils";
 
 test("prepare", () => {
   expect(prepare(["server:hattip"])).toEqual(new Set(["server:hattip", "server"]));

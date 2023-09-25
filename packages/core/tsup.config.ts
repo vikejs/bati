@@ -1,6 +1,6 @@
-import { defineConfig } from "tsup";
-import type { Plugin } from "esbuild";
 import { readFile } from "node:fs/promises";
+import type { Plugin } from "esbuild";
+import { defineConfig } from "tsup";
 
 // Note: there is no equivalent to require.resolve in esm, so we simplify this so that esbuild can
 // do its magic.
@@ -44,7 +44,7 @@ export default defineConfig([
     },
   },
   {
-    entry: { conflicts: "./src/conflicts/index.ts" },
+    entry: { rules: "./src/rules/index.ts" },
     platform: "neutral",
     format: "esm",
     target: "es2020",

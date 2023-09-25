@@ -2,14 +2,14 @@ import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain 
 import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
 import { type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
-import { conflicts } from "@batijs/core/conflicts";
+import { execRules } from "@batijs/core/rules";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
-import type { BoilerplateDef, Hook } from "./types";
-import { conflictMessages } from "./rules";
+import type { BoilerplateDef, Hook } from "./types.js";
+import { conflictMessages } from "./rules.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -143,13 +143,25 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
-function checkConflicts(flags: string[]) {
+function checkRules(flags: string[]) {
   const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
 
-  const potentialConflicts = conflicts(flagsWithNs, conflictMessages);
+  const potentialRulesMessages = execRules(flagsWithNs, conflictMessages);
 
-  if (potentialConflicts.length > 0) {
-    potentialConflicts.forEach((m) => console.error(red(`⚠ ${m}.`)));
+  if (potentialRulesMessages.length > 0) {
+    potentialRulesMessages.forEach((m) => {
+      switch (m.type) {
+        case 'info':
+          console.error(blueBright(`• ${m.value}.`))
+          break;
+        case 'warning':
+          console.error(yellow(`⚠ ${m.value}.`))
+          break;
+        case 'error':
+          console.error(red(`⚠ ${m.value}.`))
+          break;
+      }
+    });
 
     process.exit(5);
   }
@@ -214,7 +226,7 @@ async function run() {
         .filter(([, val]) => val === true)
         .map(([key]) => key);
 
-      checkConflicts(flags);
+      checkRules(flags);
 
       // push shared boilerplates first
       for (const bl of boilerplates.filter((b) => !b.config.flag && !b.config.includeIf)) {
