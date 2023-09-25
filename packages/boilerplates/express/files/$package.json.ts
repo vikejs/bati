@@ -23,7 +23,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       "express",
       "tsx",
       "vite",
-      "vite-plugin-ssr",
+      "vike",
       ...(meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
     ],
   });

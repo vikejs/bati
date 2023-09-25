@@ -1,4 +1,4 @@
-import { renderPage } from "vite-plugin-ssr/server";
+import { renderPage } from "vike/server";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import CredentialsProvider from "@auth/core/providers/credentials";
@@ -106,7 +106,7 @@ async function startServer() {
   /**
    * Vike route
    *
-   * @link {@see https://vite-plugin-ssr.com}
+   * @link {@see https://vike.dev}
    **/
   app.all("*", async (req, res, next) => {
     const pageContextInit = { urlOriginal: req.originalUrl };
