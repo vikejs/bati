@@ -26,6 +26,13 @@ export function requires(
 }
 
 /**
+ * Returns a message if subject is present
+ */
+export function includes(message: RulesMessage, ifPresent: FeaturesOrNamespaces): Rule {
+  return (fts: Set<FeaturesOrNamespaces>) => fts.has(ifPresent) && message;
+}
+
+/**
  * Create a Set from an array of features, and be sure to add
  * all used namespaces to the Set.
  */

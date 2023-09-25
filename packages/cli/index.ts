@@ -9,7 +9,7 @@ import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import type { BoilerplateDef, Hook } from "./types.js";
-import { conflictMessages } from "./rules.js";
+import { rulesMessages } from "./rules.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -145,24 +145,34 @@ async function checkArguments(args: ParsedArgs<Args>) {
 
 function checkRules(flags: string[]) {
   const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
+  const potentialRulesMessages = execRules(flagsWithNs, rulesMessages);
 
-  const potentialRulesMessages = execRules(flagsWithNs, conflictMessages);
+  const infos = potentialRulesMessages.filter(m => m.type === 'info');
+  const warnings = potentialRulesMessages.filter(m => m.type === 'warning');
+  const errors = potentialRulesMessages.filter(m => m.type === 'error');
 
-  if (potentialRulesMessages.length > 0) {
-    potentialRulesMessages.forEach((m) => {
-      switch (m.type) {
-        case 'info':
-          console.error(blueBright(`• ${m.value}.`))
-          break;
-        case 'warning':
-          console.error(yellow(`⚠ ${m.value}.`))
-          break;
-        case 'error':
-          console.error(red(`⚠ ${m.value}.`))
-          break;
-      }
+  if (infos.length > 0) {
+    infos.forEach(m => {
+      console.info(blueBright(`ℹ ${m.value}.`))
     });
 
+    console.log('');
+  }
+
+  if (warnings.length > 0) {
+    warnings.forEach(m => {
+      console.warn(yellow(`⚠ ${m.value}.`))
+    });
+
+    console.log('');
+  }
+
+  if (errors.length > 0) {
+    errors.forEach(m => {
+      console.error(red(`⚠ ${m.value}.`))
+    });
+
+    console.log('');
     process.exit(5);
   }
 }
