@@ -1,13 +1,15 @@
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { flags as coreFlags, type Flags, type VikeMeta, withIcon } from "@batijs/core";
+import { type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
+import { execRules } from "@batijs/core/rules";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
-import { blueBright, bold, cyan, gray, green, yellow } from "colorette";
-import type { BoilerplateDef, Hook } from "./types";
+import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
+import type { BoilerplateDef, Hook } from "./types.js";
+import { rulesMessages } from "./rules.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -141,6 +143,40 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
+function checkRules(flags: string[]) {
+  const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
+  const potentialRulesMessages = execRules(flagsWithNs, rulesMessages);
+
+  const infos = potentialRulesMessages.filter(m => m.type === 'info');
+  const warnings = potentialRulesMessages.filter(m => m.type === 'warning');
+  const errors = potentialRulesMessages.filter(m => m.type === 'error');
+
+  if (infos.length > 0) {
+    infos.forEach(m => {
+      console.info(blueBright(`ℹ ${m.value}.`))
+    });
+
+    console.log('');
+  }
+
+  if (warnings.length > 0) {
+    warnings.forEach(m => {
+      console.warn(yellow(`⚠ ${m.value}.`))
+    });
+
+    console.log('');
+  }
+
+  if (errors.length > 0) {
+    errors.forEach(m => {
+      console.error(red(`⚠ ${m.value}.`))
+    });
+
+    console.log('');
+    process.exit(5);
+  }
+}
+
 async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
   const map = new Map<string, Hook[]>();
   for (const hook of hooks) {
@@ -199,6 +235,8 @@ async function run() {
       const flags = Object.entries(args)
         .filter(([, val]) => val === true)
         .map(([key]) => key);
+
+      checkRules(flags);
 
       // push shared boilerplates first
       for (const bl of boilerplates.filter((b) => !b.config.flag && !b.config.includeIf)) {

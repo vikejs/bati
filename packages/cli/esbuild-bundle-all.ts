@@ -1,12 +1,12 @@
-import { dirname, join } from "node:path";
-import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import type { Plugin } from "esbuild";
-import { bold, cyan, green, yellow } from "colorette";
-import { $ } from "execa";
-import { flags, which } from "@batijs/core";
-import type { BatiConfig, BoilerplateDef, ToBeCopied } from "./types";
 import { existsSync } from "node:fs";
+import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { flags, which } from "@batijs/core";
+import { bold, cyan, green, yellow } from "colorette";
+import type { Plugin } from "esbuild";
+import { $ } from "execa";
+import type { BatiConfig, BoilerplateDef, ToBeCopied } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -102,7 +102,8 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
     throw new Error(`[${packageJson.name}] 'bati.includeIf' must be an array`);
   }
 
-  if (b.includeIf && !b.includeIf.every((f) => flags.has(f))) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (b.includeIf && !b.includeIf.every((f: any) => flags.has(f))) {
     throw new Error(`[${packageJson.name}] 'bati.includeIf' contains invalid flags`);
   }
 
@@ -148,6 +149,7 @@ function readableFileSize(size: number) {
   return size.toFixed(2) + " " + units[i];
 }
 
+// TODO: assert all rules messages are implemented
 const esbuildPlugin: Plugin = {
   name: "BLP",
   setup(build) {

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { describeMany } from "./utils";
+import { describeMany } from "./utils.js";
 
 describeMany(["solid", "react", "vue"], ["express"], ({ fetch }) => {
   test("home", async () => {

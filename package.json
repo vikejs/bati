@@ -1,11 +1,12 @@
 {
   "name": "bati",
   "private": true,
-  "version": "0.0.79",
+  "version": "0.0.79-beta.9",
   "description": "@batijs monorepo",
   "scripts": {
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
+    "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
     "test": "pnpm -r test",
@@ -15,6 +16,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "bumpp": "^9.2.0",
