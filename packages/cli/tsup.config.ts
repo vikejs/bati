@@ -3,7 +3,6 @@ import esbuildBundleAllPlugin from "./esbuild-bundle-all.js";
 
 export default defineConfig({
   entry: ["index.ts"],
-  dts: true,
   outDir: "./dist",
   esbuildPlugins: [esbuildBundleAllPlugin],
   platform: "node",
