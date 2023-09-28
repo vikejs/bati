@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "pnpm i && vite build",
     "release": "bumpp && pnpm run build:widget && pnpm publish",
     "check-types": "tsc --noEmit",
     "build:pages": "vite build --mode pages",
