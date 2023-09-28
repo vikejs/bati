@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "module": "ESNext",
+    "noEmit": true,
+    "moduleResolution": "node",
+    "verbatimModuleSyntax": true,
+    "target": "ES2020",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "types": [
+      "vite/client",
+      "vike-solid/client"
+    ],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "paths": {
+      "#components/*": ["./components/*"],
+      "#assets/*": ["./assets/*"],
+      "#layouts/*": ["./layouts/*"]
+    }
+  },
+  "exclude": ["./dist"]
+}

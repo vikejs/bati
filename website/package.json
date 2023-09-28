@@ -1,0 +1,47 @@
+{
+  "name": "@batijs/elements",
+  "version": "0.0.8",
+  "description": "BatiJS website as Web Components",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "release": "bumpp && pnpm run build:widget && pnpm publish",
+    "check-types": "tsc --noEmit",
+    "build:pages": "vite build --mode pages",
+    "build:widget": "vite build --mode widget",
+    "dev:widget": "vite --mode widget",
+    "script:check-features": "jiti scripts/check-features.ts",
+    "test": "pnpm run check-types && pnpm run script:check-features"
+  },
+  "keywords": [
+    "bati",
+    "batijs"
+  ],
+  "author": "Joël Charles",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@batijs/core": "workspace:*",
+    "autoprefixer": "^10.4.15",
+    "babel-preset-solid": "^1.7.7",
+    "bumpp": "^9.2.0",
+    "clsx": "^2.0.0",
+    "cross-fetch": "^4.0.0",
+    "daisyui": "^3.7.5",
+    "esbuild": "^0.19.3",
+    "jiti": "^1.20.0",
+    "postcss": "^8.4.28",
+    "solid-element": "^1.7.1",
+    "solid-js": "^1.7.12",
+    "tailwindcss": "^3.3.3",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "vike": "^0.4.142",
+    "vike-solid": "^0.2.1",
+    "vite": "^4.4.9",
+    "vite-plugin-solid": "^2.7.0"
+  },
+  "files": [
+    "dist/elements"
+  ]
+}
