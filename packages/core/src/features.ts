@@ -1,3 +1,5 @@
+// TODO: move into a new @batijs/features package
+
 // prettier-ignore
 export const features = [
   "framework:solid", "framework:react", "framework:vue",
@@ -5,7 +7,7 @@ export const features = [
   "auth:authjs",
   // "error:logrocket", "error:sentry",
   "rpc:telefunc", // "rpc:trpc",
-  "server:hattip", "server:express", // "server:nitro"
+  "server:hattip", "server:express", "server:h3",
   "uikit:tailwindcss",
   "analytics:plausible.io", // "analytics:google-analytics"
   "hosting:vercel", // "hosting:netlify"

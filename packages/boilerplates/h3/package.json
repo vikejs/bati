@@ -1,0 +1,39 @@
+{
+  "name": "@batijs/h3",
+  "private": true,
+  "version": "0.0.81",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@auth/core": "^0.15.2",
+    "@batijs/tsup": "workspace:*",
+    "@hattip/polyfills": "^0.0.35",
+    "@types/node": "^16.18.40",
+    "@types/serve-static": "^1.15.3",
+    "h3": "^1.8.2",
+    "serve-static": "^1.15.0",
+    "telefunc": "^0.1.61",
+    "tsup": "^7.2.0",
+    "tsx": "^3.13.0",
+    "vike": "^0.4.142",
+    "vike-authjs": "^0.1.1",
+    "vite": "^4.4.9"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "flag": "h3",
+    "name": "H3",
+    "homepage": "https://github.com/unjs/h3"
+  }
+}
