@@ -55,7 +55,7 @@ export default function Features() {
                             }}
                           />
                         </div>
-                        <div class="inline-flex gap-2 items-center">
+                        <div class="inline-flex gap-2 items-center w-full">
                           {feature.image && (
                             <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.value} logo`} />
                           )}

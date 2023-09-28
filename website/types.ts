@@ -12,4 +12,5 @@ export interface Feature {
   selected?: boolean;
   disabled?: boolean;
   image?: string;
+  url?: string;
 }

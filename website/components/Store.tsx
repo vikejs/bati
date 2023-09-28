@@ -2,7 +2,7 @@ import { execRules } from "@batijs/core/rules";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
 import features from "../assets/features.json";
-import type { Definition } from "../types.js";
+import type { Definition, Feature } from "../types.js";
 import { rulesMessages } from "./RulesMessages.js";
 
 export type FeaturesType = keyof typeof features;
@@ -44,11 +44,11 @@ function initStore() {
     ),
   );
 
-  const featuresLabels = createMemo<string[]>(
+  const selectedFeatures = createMemo<Feature[]>(
     () =>
       Object.values(inViewFeatures())
-        .map((fs) => fs.features.find((f) => f.selected)?.label)
-        .filter(Boolean) as string[],
+        .map((fs) => fs.features.find((f) => f.selected))
+        .filter(Boolean) as Feature[],
   );
 
   function selectPreset(ks: (FeaturesType | FeaturesAll)[]) {
@@ -94,7 +94,7 @@ function initStore() {
     moveFeature,
     selectFeature,
     featuresValues,
-    featuresLabels,
+    selectedFeatures,
     currentFeatures,
     selectPreset,
     inViewFlagsWithNs,
