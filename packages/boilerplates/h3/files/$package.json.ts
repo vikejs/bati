@@ -5,7 +5,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
 
   setScripts(packageJson, {
     dev: {
-      value: "tsx ./h3-entry.ts",
+      value: "esno ./h3-entry.ts",
       precedence: 20,
       warnIfReplaced: true,
     },
@@ -22,7 +22,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       "@hattip/polyfills",
       "h3",
       "serve-static",
-      "tsx",
+      "esno",
       "vike",
       "vite",
       ...(meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),

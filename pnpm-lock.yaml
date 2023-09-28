@@ -88,6 +88,9 @@ importers:
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.40
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -97,9 +100,6 @@ importers:
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.30)(typescript@5.2.2)
-      tsx:
-        specifier: ^3.13.0
-        version: 3.13.0
       vike:
         specifier: ^0.4.142
         version: 0.4.142(vite@4.4.9)
@@ -131,6 +131,9 @@ importers:
       '@types/serve-static':
         specifier: ^1.15.3
         version: 1.15.3
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
       h3:
         specifier: ^1.8.2
         version: 1.8.2
@@ -143,9 +146,6 @@ importers:
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.30)(typescript@5.2.2)
-      tsx:
-        specifier: ^3.13.0
-        version: 3.13.0
       vike:
         specifier: ^0.4.142
         version: 0.4.142(vite@4.4.9)
@@ -4594,6 +4594,7 @@ packages:
 
   /esno@0.17.0:
     resolution: {integrity: sha512-w78cQGlptQfsBYfootUCitsKS+MD74uR5L6kNsvwVkJsfzEepIafbvWsx2xK4rcFP4IUftt4F6J8EhagUxX+Bg==}
+    hasBin: true
     dependencies:
       tsx: 3.13.0
     dev: true
