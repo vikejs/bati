@@ -35,7 +35,7 @@ export const rulesMessages = {
         </a>
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / HatTip / ...) or unselect <span class="font-bold">{selectedAuth()}</span>
+            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">{selectedAuth()}</span>
           </li>
         </ul>
       </span>
@@ -44,7 +44,7 @@ export const rulesMessages = {
   [RulesMessage.INFO_HATTIP]: info(() => {
     return (
       <span class="inline-block">
-        A <span class="font-bold">HatTip</span> is an experimental project. Prefer Express for production use
+        A <span class="font-bold">HatTip</span> is an experimental project. Prefer H3 or Express for production use
       </span>
     );
   }),

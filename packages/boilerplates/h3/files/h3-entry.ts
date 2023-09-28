@@ -2,6 +2,8 @@ import { createServer } from "node:http";
 import { dirname } from "node:path/posix";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import installCrypto from "@hattip/polyfills/crypto";
+import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import {
   createApp,
@@ -19,6 +21,8 @@ import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
 installWhatwgNodeFetch();
+installGetSetCookie();
+installCrypto();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -132,7 +136,7 @@ async function startServer() {
       setResponseStatus(event, response?.statusCode);
       setResponseHeaders(event, Object.fromEntries(response?.headers ?? []));
 
-      response?.pipe(event.node.res);
+      return response?.getBody();
     }),
   );
 

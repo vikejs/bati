@@ -89,7 +89,7 @@ function execCli(context: GlobalContext, flags: string[]) {
   });
 }
 
-function runPnpmInstall(context: GlobalContext) {
+function runInstallPackages(context: GlobalContext) {
   return execa(npmCli, ["install"], {
     cwd: context.tmpdir,
 
@@ -170,10 +170,10 @@ export function prepare(flags: string[], { mode }: PrepareOptions) {
     await initTmpDir(context);
     await execCli(context, flags);
     if (mode === "dev") {
-      await Promise.all([runPnpmInstall(context), initPort(context)]);
+      await Promise.all([runInstallPackages(context), initPort(context)]);
       await runDevServer(context);
     } else if (mode === "build") {
-      await runPnpmInstall(context);
+      await runInstallPackages(context);
       await runBuild(context);
     }
   }, 56000);
