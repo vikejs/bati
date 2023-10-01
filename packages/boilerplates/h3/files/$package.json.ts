@@ -14,6 +14,10 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       precedence: 1,
       warnIfReplaced: true,
     },
+    preview: {
+      value: "NODE_ENV=production esno ./h3-entry.ts",
+      precedence: 20,
+    },
   });
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {

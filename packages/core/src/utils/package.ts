@@ -1,5 +1,5 @@
-import { withIcon } from "../print";
 import { dim, yellow } from "colorette";
+import { withIcon } from "../print";
 
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;
@@ -10,6 +10,7 @@ export interface PackageJsonScripts {
   scripts: {
     dev?: string;
     build?: string;
+    preview?: string;
   };
 }
 
@@ -22,6 +23,7 @@ export interface PackageJsonScriptOption {
 export interface PackageJsonScriptOptions {
   dev?: PackageJsonScriptOption;
   build?: PackageJsonScriptOption;
+  preview?: PackageJsonScriptOption;
 }
 
 function* deps(obj: PackageJsonDeps) {
@@ -76,6 +78,7 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
 const previousScripts: PackageJsonScriptOptions = {
   dev: { precedence: -Infinity },
   build: { precedence: -Infinity },
+  preview: { precedence: -Infinity },
 };
 
 function warnScript(key: string, old: string, nnew: string) {
@@ -92,7 +95,7 @@ function warnScript(key: string, old: string, nnew: string) {
 }
 
 export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts: PackageJsonScriptOptions) {
-  const keys = ["dev", "build"] as const;
+  const keys = ["dev", "build", "preview"] as const;
 
   for (const key of keys) {
     const prev = previousScripts[key]!;
