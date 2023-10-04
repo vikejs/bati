@@ -49,6 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
+
       - uses: actions/download-artifact@v3
         continue-on-error: true
         with:
