@@ -69,4 +69,5 @@ jobs:
         run: pnpm run -r test
 
       - name: Run e2e tests
-        run: pnpm run --filter=tests test:e2e
+        working-directory: packages/tests
+        run: pnpm run test:e2e
