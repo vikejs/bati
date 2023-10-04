@@ -140,7 +140,16 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 
 function execTurborepo(context: GlobalContext) {
-  const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
+  const args = [
+    bunExists ? "x" : "exec",
+    "turbo",
+    "run",
+    "test",
+    "lint",
+    "build",
+    "--team=bati",
+    "--framework-inference=false",
+  ];
 
   if (process.env.CI) {
     args.push("--remote-only");
