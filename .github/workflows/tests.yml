@@ -56,12 +56,7 @@ jobs:
         run: pnpm run build
 
       - name: TurboRepo Remote Cache Server
-        uses: trappar/turborepo-remote-cache-gh-action@main
-        with:
-          storage-provider: local
-          storage-path: /tmp
-          team-id: bati
-          port: 9999
+        uses: dtinth/setup-github-actions-caching-for-turbo@v1
 
       - name: Run tests
         run: pnpm run -r test

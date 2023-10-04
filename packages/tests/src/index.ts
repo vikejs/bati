@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import { cpus } from "node:os";
 import { basename, join } from "node:path";
 import { dirname } from "node:path/posix";
@@ -14,9 +14,6 @@ import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-const API = process.env.TURBO_API || "http://localhost:9999";
-const TOKEN = process.env.TURBO_TOKEN || "BATI";
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
@@ -101,16 +98,16 @@ async function createTurboConfig(context: GlobalContext) {
     "utf-8",
   );
 
-  await mkdir(join(context.tmpdir, ".turbo"));
-
-  await writeFile(
-    join(context.tmpdir, ".turbo", "config.json"),
-    JSON.stringify({
-      teamid: "team_bati",
-      apiurl: API,
-    }),
-    "utf-8",
-  );
+  // await mkdir(join(context.tmpdir, ".turbo"));
+  //
+  // await writeFile(
+  //   join(context.tmpdir, ".turbo", "config.json"),
+  //   JSON.stringify({
+  //     teamid: "team_bati",
+  //     apiurl: API,
+  //   }),
+  //   "utf-8",
+  // );
 }
 
 function linkTestUtils() {
@@ -142,28 +139,19 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 
 function execTurborepo(context: GlobalContext) {
-  return execa(
-    npmCli,
-    [
-      bunExists ? "x" : "exec",
-      "turbo",
-      "run",
-      "test",
-      "lint",
-      "build",
-      `--api="${API}"`,
-      `--token="${TOKEN}"`,
-      "--framework-inference=false",
-      "--remote-only",
-    ],
-    {
-      timeout: 60 * 10 * 1000,
-      cwd: context.tmpdir,
-      shell: true,
-      stdout: process.stdout,
-      stderr: process.stderr,
-    },
-  );
+  const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
+
+  if (process.env.CI) {
+    args.push("--remote-only");
+  }
+
+  return execa(npmCli, args, {
+    timeout: 60 * 10 * 1000,
+    cwd: context.tmpdir,
+    shell: true,
+    stdout: process.stdout,
+    stderr: process.stderr,
+  });
 }
 
 async function main(context: GlobalContext) {
