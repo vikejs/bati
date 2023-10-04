@@ -1,6 +1,6 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import { cpus } from "node:os";
-import { basename, join } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { dirname } from "node:path/posix";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
@@ -114,7 +114,7 @@ function linkTestUtils() {
   return execa(npmCli, bunExists ? ["link"] : ["link", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
-    cwd: join(__dirname, "..", "..", "tests-utils"),
+    cwd: resolve(join(__dirname, "..", "..", "tests-utils")),
   });
 }
 
