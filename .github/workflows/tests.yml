@@ -64,7 +64,7 @@ jobs:
       - name: TurboRepo Remote Cache Server
         uses: trappar/turborepo-remote-cache-gh-action@main
         env:
-          TURBO_CACHE_USE_TMP_FOLDER: false
+          STORAGE_PATH_USE_TMP_FOLDER: false
         with:
           storage-provider: local
           storage-path: ${{ runner.temp }}/bati-cache
