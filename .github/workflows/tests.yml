@@ -41,6 +41,9 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
+
       - uses: actions/cache@v3
         name: Setup pnpm cache
         with:
@@ -49,14 +52,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: mkdir temp folder
-        run: mkdir -p ${{ runner.temp }}/bati-cache
-
-      - uses: actions/download-artifact@v3
-        continue-on-error: true
+      - uses: actions/cache@v3
+        name: Setup Turborepo cache
         with:
-          name: bati-cache-${{ matrix.os }}-${{ matrix.node }}
           path: ${{ runner.temp }}/bati-cache
+          key: ${{ runner.os }}-bati-cache
 
       - name: Install dependencies
         run: pnpm install
@@ -80,8 +80,3 @@ jobs:
       - name: Run e2e tests
         working-directory: packages/tests
         run: pnpm run test:e2e
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: bati-cache-${{ matrix.os }}-${{ matrix.node }}
-          path: ${{ runner.temp }}/bati-cache

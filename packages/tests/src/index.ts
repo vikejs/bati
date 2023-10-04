@@ -154,7 +154,6 @@ function execTurborepo(context: GlobalContext) {
   if (process.env.CI) {
     args.push("--remote-only");
     args.push("--concurrency=2");
-    args.push("--verbosity=3");
   }
 
   return execa(npmCli, args, {
