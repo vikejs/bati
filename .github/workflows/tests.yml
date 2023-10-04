@@ -25,15 +25,15 @@ jobs:
           version: 8
           run_install: false
 
-# NOT STABLE ENOUGH YET
-#      - uses: oven-sh/setup-bun@v1
-#        # At the moment of writing:
-#        # - bun does not support Windows
-#        # - bun fails to install some dependencies on macos with node@18
-#        if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
-#        name: Install bun
-#        with:
-#          bun-version: "0.6.11"
+      - uses: oven-sh/setup-bun@v1
+        # At the moment of writing:
+        # - bun does not support Windows
+        # - bun fails to install some dependencies on macos with node@18
+        # if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
+        if: matrix.os != 'windows-latest'
+        name: Install bun
+        with:
+          bun-version: "1.0.4"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -55,5 +55,16 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
+      - name: TurboRepo Remote Cache Server
+        uses: trappar/turborepo-remote-cache-gh-action@main
+        with:
+          storage-provider: local
+          storage-path: /tmp
+          team-id: bati
+          port: 9999
+
       - name: Run tests
         run: pnpm run -r test
+
+      - name: Run e2e tests
+        run: pnpm run --filter=tests test:e2e
