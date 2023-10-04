@@ -1,0 +1,10 @@
+{
+  "extends": ["../../tsconfig.json"],
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "preserveSymlinks": true,
+    "types": ["@types/node", "vitest/importMeta"]
+  },
+  "include": ["tests/**", "index.ts"]
+}

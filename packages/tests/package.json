@@ -1,12 +1,10 @@
 {
-  "name": "@batijs/cli",
+  "name": "@batijs/tests",
+  "private": true,
   "version": "0.0.85",
   "type": "module",
   "scripts": {
-    "prerelease": "rimraf ./dist",
-    "prepublishOnly": "pnpm run build",
-    "test": "vitest run",
-    "build": "rimraf ./dist && tsup"
+    "start": "esno index.ts"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -14,33 +12,21 @@
   "repository": "https://github.com/batijs/bati",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/build": "workspace:*",
-    "@batijs/tsup": "workspace:*",
     "@types/node": "^16.18.40",
     "@types/which": "^3.0.0",
-    "citty": "^0.1.4",
-    "colorette": "^2.0.20",
-    "esbuild": "^0.19.4",
-    "espree": "^9.6.1",
     "execa": "^8.0.1",
     "get-port": "^7.0.0",
     "node-fetch": "^3.3.2",
-    "rimraf": "^5.0.5",
+    "p-limit": "^4.0.0",
     "tree-kill": "^1.2.2",
-    "tsup": "^7.2.0",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9",
     "vitest": "^0.34.6",
     "which": "^4.0.0"
   },
   "dependencies": {
-    "@batijs/core": "workspace:*"
-  },
-  "bin": "./dist/index.js",
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "files": [
-    "dist/"
-  ]
+    "@batijs/cli": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "esno": "^0.17.0",
+    "fast-glob": "^3.3.1"
+  }
 }

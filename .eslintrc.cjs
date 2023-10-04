@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/ban-types": 0,
-    "@typescript-eslint/consistent-type-imports": [1, { prefer: "type-imports" }],
+    "@typescript-eslint/consistent-type-imports": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-unused-vars": [
