@@ -4,7 +4,7 @@ import type { GlobalContext } from "./types.js";
 
 export async function runBuild(context: GlobalContext) {
   context.server = execa(npmCli, ["run", "build"], {
-    timeout: 20000,
+    timeout: 60000,
     env: {
       NODE_ENV: "production",
     },
@@ -16,7 +16,7 @@ export async function runBuild(context: GlobalContext) {
       context.server,
       // or timeout
       new Promise((_, reject) => {
-        setTimeout(reject, 20000);
+        setTimeout(reject, 60000);
       }),
     ]);
   } catch (e) {
