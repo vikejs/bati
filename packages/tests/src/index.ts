@@ -114,20 +114,31 @@ async function createTurboConfig(context: GlobalContext) {
 }
 
 function linkTestUtils() {
-  return execa(npmCli, ["link"], {
-    timeout: 5 * 1000,
+  return execa(npmCli, bunExists ? ["link"] : ["link", "--global"], {
+    // pnpm link --global takes some time
+    timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
   });
 }
 
-function packageManagerInstall(context: GlobalContext) {
+async function packageManagerInstall(context: GlobalContext) {
   // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
-  return execa(npmCli, ["install", "--prefer-offline"], {
+  await execa(npmCli, ["install", "--prefer-offline"], {
     timeout: 60000,
     cwd: context.tmpdir,
     stdout: process.stdout,
     stderr: process.stderr,
   });
+
+  if (!bunExists) {
+    // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
+    await execa(npmCli, ["link", "--global", "@batijs/tests-utils"], {
+      timeout: 60000,
+      cwd: context.tmpdir,
+      stdout: process.stdout,
+      stderr: process.stderr,
+    });
+  }
 }
 
 function execTurborepo(context: GlobalContext) {
