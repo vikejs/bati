@@ -22,7 +22,7 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
     } else if (mode === "build") {
       await runBuild(context);
     }
-  }, 56000);
+  }, 120000);
 
   // Cleanup tests:
   // - Close the dev server
@@ -35,7 +35,7 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
         throw e;
       },
     );
-  }, 11000);
+  }, 20000);
 
   return {
     fetch(path: string, init?: RequestInit) {
