@@ -55,6 +55,7 @@ jobs:
           path: ${{ runner.temp }}/bati-cache
 
       - name: Install dependencies
+        if: always()
         run: pnpm install
 
       - name: Build packages
