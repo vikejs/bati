@@ -93,7 +93,7 @@ async function createTurboConfig(context: GlobalContext) {
         lint: {},
       },
       remoteCache: {
-        signature: true,
+        signature: false,
       },
     }),
     "utf-8",
