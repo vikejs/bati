@@ -15,8 +15,8 @@ import type { GlobalContext } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const API = "http://localhost:9999";
-const TOKEN = "BATI";
+const API = process.env.TURBO_API || "http://localhost:9999";
+const TOKEN = process.env.TURBO_TOKEN || "BATI";
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
