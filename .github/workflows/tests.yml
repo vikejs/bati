@@ -49,6 +49,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - uses: actions/download-artifact@v3
+        with:
+          name: bati-cache-${{ matrix.os }}-${{ matrix.node }}
+          path: ${{ runner.temp }}/bati-cache
+
       - name: Install dependencies
         run: pnpm install
 
@@ -57,11 +62,9 @@ jobs:
 
       - name: TurboRepo Remote Cache Server
         uses: trappar/turborepo-remote-cache-gh-action@main
-        env:
-          TURBO_CACHE_USE_TMP_FOLDER: true
         with:
           storage-provider: local
-          storage-path: bati-cache
+          storage-path: ${{ runner.temp }}/bati-cache
           team-id: bati
           port: 9999
 
@@ -71,3 +74,8 @@ jobs:
       - name: Run e2e tests
         working-directory: packages/tests
         run: pnpm run test:e2e
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: bati-cache-${{ matrix.os }}-${{ matrix.node }}
+          path: ${{ runner.temp }}/bati-cache
