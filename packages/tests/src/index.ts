@@ -14,6 +14,7 @@ import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const isWin = process.platform === "win32";
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
@@ -114,7 +115,7 @@ function linkTestUtils() {
   return execa(npmCli, bunExists ? ["link"] : ["link", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
-    cwd: resolve(join(__dirname, "..", "..", "tests-utils")),
+    cwd: isWin ? resolve(join(__dirname, "..", "tests-utils")) : join(__dirname, "..", "..", "tests-utils"),
   });
 }
 
