@@ -151,6 +151,7 @@ function execTurborepo(context: GlobalContext) {
     shell: true,
     stdout: process.stdout,
     stderr: process.stderr,
+    env: process.env,
   });
 }
 
