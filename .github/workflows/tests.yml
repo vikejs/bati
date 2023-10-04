@@ -50,12 +50,12 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - uses: actions/download-artifact@v3
+        continue-on-error: true
         with:
           name: bati-cache-${{ matrix.os }}-${{ matrix.node }}
           path: ${{ runner.temp }}/bati-cache
 
       - name: Install dependencies
-        if: always()
         run: pnpm install
 
       - name: Build packages
