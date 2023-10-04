@@ -13,7 +13,7 @@ export async function runDevServer(context: GlobalContext) {
   try {
     await Promise.race([
       // wait for port
-      waitForLocalhost({ port: context.port, useGet: true, timeout: 20000 }),
+      waitForLocalhost({ port: context.port, useGet: true, timeout: 60000 }),
       // or for server to crash
       context.server,
     ]);
