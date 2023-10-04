@@ -1,10 +1,10 @@
 {
-  "name": "@batijs/tests",
+  "name": "@batijs/tests-utils",
   "private": true,
   "version": "0.0.85",
   "type": "module",
   "scripts": {
-    "start": "esno src/index.ts"
+    "build": "tsup"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -12,13 +12,24 @@
   "repository": "https://github.com/batijs/bati",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/tests-utils": "workspace:*",
     "@types/node": "^16.18.40",
     "@types/which": "^3.0.0",
     "esno": "^0.17.0",
-    "fast-glob": "^3.3.1",
-    "p-limit": "^4.0.0",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "execa": "^8.0.1",
+    "get-port": "^7.0.0",
+    "node-fetch": "^3.3.2",
+    "tree-kill": "^1.2.2",
+    "vitest": "^0.34.6",
+    "which": "^4.0.0"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
   }
 }

@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import * as process from "process";
-import { describeBati } from "./utils";
+import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [["solid", "react", "vue"], "vercel", "hattip"];
 

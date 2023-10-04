@@ -1,4 +1,4 @@
-import { describeBati } from "./utils";
+import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [["solid", "react", "vue"], "tailwindcss"];
 
