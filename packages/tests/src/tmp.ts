@@ -9,7 +9,7 @@ export async function initTmpDir(context: GlobalContext) {
   context.tmpdir = join(tmpdir(), "bati");
 
   // remove previous tests if any
-  await rm(context.tmpdir, { recursive: true, force: true });
+  await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
 
   // create directories
   await mkdir(context.tmpdir);

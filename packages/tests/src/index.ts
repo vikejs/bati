@@ -1,7 +1,6 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import { cpus } from "node:os";
-import { basename, join, resolve } from "node:path";
-import { dirname } from "node:path/posix";
+import { basename, join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
 import { bunExists, execa, npmCli } from "@batijs/tests-utils";
@@ -14,13 +13,12 @@ import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const isWin = process.platform === "win32";
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
   const pkgjson = JSON.parse(await readFile(join(projectDir, "package.json"), "utf-8"));
-  pkgjson.scripts ??= {};
   pkgjson.name = basename(projectDir);
+  pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
   pkgjson.scripts.lint = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
@@ -98,24 +96,13 @@ async function createTurboConfig(context: GlobalContext) {
     }),
     "utf-8",
   );
-
-  // await mkdir(join(context.tmpdir, ".turbo"));
-  //
-  // await writeFile(
-  //   join(context.tmpdir, ".turbo", "config.json"),
-  //   JSON.stringify({
-  //     teamid: "team_bati",
-  //     apiurl: API,
-  //   }),
-  //   "utf-8",
-  // );
 }
 
 function linkTestUtils() {
   return execa(npmCli, bunExists ? ["link"] : ["link", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
-    cwd: isWin ? resolve(join(__dirname, "..", "tests-utils")) : join(__dirname, "..", "..", "tests-utils"),
+    cwd: join(__dirname, "..", "..", "tests-utils"),
   });
 }
 
@@ -223,6 +210,6 @@ try {
 } finally {
   if (context.tmpdir) {
     // delete all tmp dirs
-    await rm(context.tmpdir, { recursive: true, force: true });
+    await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
   }
 }
