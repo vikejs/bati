@@ -25,21 +25,24 @@ jobs:
           version: 8
           run_install: false
 
-# NOT STABLE ENOUGH YET
-#      - uses: oven-sh/setup-bun@v1
-#        # At the moment of writing:
-#        # - bun does not support Windows
-#        # - bun fails to install some dependencies on macos with node@18
-#        if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
-#        name: Install bun
-#        with:
-#          bun-version: "0.6.11"
+      - uses: oven-sh/setup-bun@v1
+        # At the moment of writing:
+        # - bun does not support Windows
+        # - bun fails to install some dependencies on macos with node@18
+        # if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
+        if: matrix.os != 'windows-latest'
+        name: Install bun
+        with:
+          bun-version: "1.0.4"
 
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
 
       - uses: actions/cache@v3
         name: Setup pnpm cache
@@ -49,6 +52,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - uses: actions/cache@v3
+        name: Setup Turborepo cache
+        with:
+          path: ${{ runner.temp }}/bati-cache
+          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.event.repository.updated_at }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-bati-cache-
+
       - name: Install dependencies
         run: pnpm install
 
@@ -57,3 +68,7 @@ jobs:
 
       - name: Run tests
         run: pnpm run -r test
+
+      - name: Run e2e tests
+        working-directory: packages/tests
+        run: pnpm run test:e2e

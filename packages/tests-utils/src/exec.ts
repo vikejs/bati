@@ -1,23 +1,7 @@
-import {
-  execa as execaOrig,
-  type ExecaChildProcess as ExecaChildProcessOrig,
-  type ExecaError,
-  type Options,
-} from "execa";
 import stream from "node:stream";
+import { execa as execaOrig, type ExecaError, type Options } from "execa";
 import treeKill from "tree-kill";
-
-export type ExecaChildProcess<T extends string> = ExecaChildProcessOrig<T> & {
-  // Will be fed in real time with stdout and stderr, with timestamps.
-  log: string;
-
-  // Kill the process and all its children.
-  treekill(): Promise<void>;
-
-  // True if the process was killed by `treekill()`. Useful because on Windows the `killed` and `signal` properties
-  // aren't reliably set when killing the process. Probably related to https://github.com/sindresorhus/execa/issues/52
-  treekilled: boolean;
-};
+import type { ExecaChildProcess } from "./types.js";
 
 // Pipe any process output to this stream in order to log it with timestamps.
 // See:

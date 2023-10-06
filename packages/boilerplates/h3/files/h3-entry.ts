@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { dirname } from "node:path/posix";
+import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import installCrypto from "@hattip/polyfills/crypto";

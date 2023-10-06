@@ -5,7 +5,7 @@ import CredentialsProvider from "@auth/core/providers/credentials";
 import express from "express";
 import { createMiddleware } from "@hattip/adapter-node";
 import { fileURLToPath } from "node:url";
-import { dirname } from "node:path/posix";
+import { dirname } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
