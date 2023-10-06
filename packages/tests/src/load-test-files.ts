@@ -9,9 +9,8 @@ const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
 
 export function listTestFiles() {
-  // If tests on Windows are slow too often, uncomment this
-  // const testFilesGlob = process.env.CI ? "empty.spec.ts" : "*.spec.ts"
-  const testFilesGlob = "*.spec.ts";
+  // Windows test on CI are slow and turborepo cache doesn't seem to work properly
+  const testFilesGlob = process.env.CI && isWin ? "empty.spec.ts" : "*.spec.ts";
   const pattern = join(__dirname, "..", "tests", testFilesGlob);
   return fg(isWin ? fg.convertPathToPattern(pattern) : pattern);
 }
