@@ -9,11 +9,11 @@ const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
 
 export function listTestFiles() {
-  // FIXME: cache on CI not working properly, so we limit the scope
-  const pattern = isWin
-    ? fg.convertPathToPattern(join(__dirname, "..", "tests", process.env.CI ? "empty.spec.ts" : "*.spec.ts"))
-    : join(__dirname, "..", "tests", "*.spec.ts");
-  return fg(pattern);
+  // If tests on Windows are slow too often, uncomment this
+  // const testFilesGlob = process.env.CI ? "empty.spec.ts" : "*.spec.ts"
+  const testFilesGlob = "*.spec.ts";
+  const pattern = join(__dirname, "..", "tests", testFilesGlob);
+  return fg(isWin ? fg.convertPathToPattern(pattern) : pattern);
 }
 
 export function assert(condition: unknown, message: string): asserts condition {
