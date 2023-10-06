@@ -131,8 +131,11 @@ function execTurborepo(context: GlobalContext) {
   const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
 
   if (process.env.CI) {
+    const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
     args.push("--concurrency=2");
-    args.push(`--cache-dir="${join(process.env.RUNNER_TEMP ?? tmpdir(), "bati-cache")}"`);
+    args.push("--env-mode=loose");
+    args.push(`--cache-dir="${cacheDir}"`);
+    console.log("[turborepo] Using cache dir", cacheDir);
   } else {
     args.push(`--cache-dir="${join(tmpdir(), "bati-cache")}"`);
   }
