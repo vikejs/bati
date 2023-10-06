@@ -1,6 +1,6 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import { cpus } from "node:os";
-import { basename, join, resolve, dirname } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
 import { bunExists, execa, npmCli } from "@batijs/tests-utils";
@@ -109,7 +109,8 @@ function linkTestUtils() {
 async function packageManagerInstall(context: GlobalContext) {
   // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
   await execa(npmCli, ["install", "--prefer-offline"], {
-    timeout: 60000,
+    // really slow on Windows CI
+    timeout: 3 * 60 * 1000,
     cwd: context.tmpdir,
     stdout: process.stdout,
     stderr: process.stderr,
