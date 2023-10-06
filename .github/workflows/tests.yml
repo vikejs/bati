@@ -56,7 +56,7 @@ jobs:
         name: Setup Turborepo cache
         with:
           path: ${{ runner.temp }}/bati-cache
-          key: ${{ runner.os }}-bati-cache-${{ hashFiles('${{ runner.temp }}/bati-cache/*.json') }}
+          key: ${{ runner.os }}-bati-cache-${{ github.event.repository.updated_at }}
           restore-keys: |
             ${{ runner.os }}-bati-cache-
 
