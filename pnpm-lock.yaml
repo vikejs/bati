@@ -674,6 +674,9 @@ importers:
 
   packages/tests:
     devDependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../core
       '@batijs/tests-utils':
         specifier: workspace:*
         version: link:../tests-utils
