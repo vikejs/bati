@@ -1,5 +1,5 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
-import { cpus } from "node:os";
+import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
@@ -128,20 +128,13 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 
 function execTurborepo(context: GlobalContext) {
-  const args = [
-    bunExists ? "x" : "exec",
-    "turbo",
-    "run",
-    "test",
-    "lint",
-    "build",
-    "--team=bati",
-    "--framework-inference=false",
-  ];
+  const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
 
   if (process.env.CI) {
-    args.push("--remote-only");
     args.push("--concurrency=2");
+    args.push(`--cache-dir="${join(process.env.RUNNER_TEMP ?? tmpdir(), "bati-cache")}"`);
+  } else {
+    args.push(`--cache-dir="${join(tmpdir(), "bati-cache")}"`);
   }
 
   return execa(npmCli, args, {

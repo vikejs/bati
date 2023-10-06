@@ -64,16 +64,6 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
-      - name: TurboRepo Remote Cache Server
-        uses: trappar/turborepo-remote-cache-gh-action@main
-        env:
-          STORAGE_PATH_USE_TMP_FOLDER: false
-        with:
-          storage-provider: local
-          storage-path: ${{ runner.temp }}/bati-cache
-          team-id: bati
-          port: 9999
-
       - name: Run tests
         run: pnpm run -r test
 
