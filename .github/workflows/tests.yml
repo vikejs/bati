@@ -56,9 +56,9 @@ jobs:
         name: Setup Turborepo cache
         with:
           path: ${{ runner.temp }}/bati-cache
-          key: ${{ runner.os }}-bati-cache-${{ github.event.repository.updated_at }}
+          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.event.repository.updated_at }}
           restore-keys: |
-            ${{ runner.os }}-bati-cache-
+            ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
       - name: Install dependencies
         run: pnpm install
