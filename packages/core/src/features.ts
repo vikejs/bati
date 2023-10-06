@@ -14,7 +14,7 @@ export const features = [
   // "clientRouting", "prerendering",
 ] as const;
 
-export const flags = new Map(features.map((f) => [f.split(":").at(-1), f] as const));
+export const flags = new Map(features.map((f) => [f.split(":").at(-1) as Flags, f]));
 
 type BeforeColon<T extends string> = T extends `${infer A}:${string}` ? A : never;
 type AfterColon<T extends string> = T extends `${string}:${infer B}` ? B : never;

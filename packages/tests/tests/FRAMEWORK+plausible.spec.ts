@@ -1,7 +1,8 @@
-import { expect, test } from "vitest";
-import { describeMany } from "./utils.js";
+import { describeBati } from "@batijs/tests-utils";
 
-describeMany(["solid", "react", "vue"], ["plausible.io"], ({ fetch }) => {
+export const matrix = [["solid", "react", "vue"], "plausible.io"];
+
+await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);

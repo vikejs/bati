@@ -27,7 +27,6 @@ export default defineConfig([
     dts: true,
     bundle: true,
     minify: true,
-    clean: true,
 
     // Note: this is for putout because esbuild can't properly treeshake the code, and is not aware
     // that we do not use those dependencies.

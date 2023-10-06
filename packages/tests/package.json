@@ -1,0 +1,27 @@
+{
+  "name": "@batijs/tests",
+  "private": true,
+  "version": "0.0.85",
+  "type": "module",
+  "scripts": {
+    "start": "esno src/index.ts",
+    "test": "vitest run",
+    "test:e2e": "esno src/index.ts"
+  },
+  "keywords": [],
+  "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
+  "author": "Joël Charles",
+  "repository": "https://github.com/batijs/bati",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/core": "workspace:*",
+    "@batijs/tests-utils": "workspace:*",
+    "@types/node": "^16.18.40",
+    "@types/which": "^3.0.0",
+    "esno": "^0.17.0",
+    "fast-glob": "^3.3.1",
+    "p-limit": "^4.0.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}
