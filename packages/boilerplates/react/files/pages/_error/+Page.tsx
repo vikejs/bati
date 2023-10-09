@@ -1,8 +1,6 @@
-export default Page;
-
 import React from "react";
 
-function Page({ is404, errorInfo }: { is404: boolean; errorInfo?: string }) {
+export default function Page({ is404, errorInfo }: { is404: boolean; errorInfo?: string }) {
   if (is404) {
     return (
       <>

@@ -1,7 +1,7 @@
-import { addDependency, loadAsJson, type MaybeContentGetter } from "@batijs/core";
+import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
 
-export default async function getPackageJson(currentContent: MaybeContentGetter) {
-  const packageJson = await loadAsJson(currentContent);
+export default async function getPackageJson(props: TransformerProps) {
+  const packageJson = await loadAsJson(props);
 
   packageJson.scripts["edgedb:generate-queries"] = "@edgedb/generate queries";
   packageJson.scripts["edgedb:generate-edgeql-js"] = "@edgedb/generate edgeql-js";

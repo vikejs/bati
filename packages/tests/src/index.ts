@@ -20,7 +20,7 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
-  pkgjson.scripts.lint = "tsc --noEmit";
+  pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
@@ -40,7 +40,7 @@ function updateVitestConfig(projectDir: string) {
   return writeFile(
     join(projectDir, "vitest.config.ts"),
     `/// <reference types="vitest" />
-import { configDefaults, defineConfig } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
@@ -89,6 +89,7 @@ async function createTurboConfig(context: GlobalContext) {
         },
         test: {},
         lint: {},
+        typecheck: {},
       },
       remoteCache: {
         signature: false,
@@ -128,7 +129,16 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 
 function execTurborepo(context: GlobalContext) {
-  const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
+  const args = [
+    bunExists ? "x" : "exec",
+    "turbo",
+    "run",
+    "test",
+    "lint",
+    "typecheck",
+    "build",
+    "--framework-inference=false",
+  ];
 
   if (process.env.CI) {
     const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");

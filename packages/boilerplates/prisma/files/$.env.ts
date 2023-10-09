@@ -1,7 +1,7 @@
-import { type MaybeContentGetter } from "@batijs/core";
+import { type TransformerProps } from "@batijs/core";
 
-export default async function getEnv(currentContent: MaybeContentGetter) {
-  let envContent = (await currentContent?.()) ?? "";
+export default async function getEnv(props: TransformerProps) {
+  let envContent = (await props.readfile?.()) ?? "";
   if (envContent.endsWith("\n\n")) {
     // do nothing
   } else if (envContent.endsWith("\n")) {

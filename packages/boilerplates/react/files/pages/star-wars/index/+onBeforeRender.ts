@@ -1,12 +1,8 @@
-export default onBeforeRender;
-
 import fetch from "cross-fetch";
 //import { filterMovieData } from '../filterMovieData'
 import type { Movie, MovieDetails } from "../types";
 
-// export { prerender }
-
-async function onBeforeRender() {
+export default async function onBeforeRender() {
   const movies = await getStarWarsMovies();
   return {
     pageContext: {
@@ -23,6 +19,7 @@ async function onBeforeRender() {
 
 async function getStarWarsMovies(): Promise<MovieDetails[]> {
   const response = await fetch("https://star-wars.brillout.com/api/films.json");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let movies: MovieDetails[] = ((await response.json()) as any).results;
   movies = movies.map((movie: MovieDetails, i: number) => ({
     ...movie,

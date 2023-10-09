@@ -11,6 +11,7 @@ export interface PackageJsonScripts {
     dev?: string;
     build?: string;
     preview?: string;
+    lint?: string;
   };
 }
 
@@ -24,6 +25,7 @@ export interface PackageJsonScriptOptions {
   dev?: PackageJsonScriptOption;
   build?: PackageJsonScriptOption;
   preview?: PackageJsonScriptOption;
+  lint?: PackageJsonScriptOption;
 }
 
 function* deps(obj: PackageJsonDeps) {
@@ -75,10 +77,11 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
   return packageJson;
 }
 
-const previousScripts: PackageJsonScriptOptions = {
+const previousScripts: Required<PackageJsonScriptOptions> = {
   dev: { precedence: -Infinity },
   build: { precedence: -Infinity },
   preview: { precedence: -Infinity },
+  lint: { precedence: -Infinity },
 };
 
 function warnScript(key: string, old: string, nnew: string) {
@@ -95,7 +98,7 @@ function warnScript(key: string, old: string, nnew: string) {
 }
 
 export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts: PackageJsonScriptOptions) {
-  const keys = ["dev", "build", "preview"] as const;
+  const keys = ["dev", "build", "preview", "lint"] as const;
 
   for (const key of keys) {
     const prev = previousScripts[key]!;

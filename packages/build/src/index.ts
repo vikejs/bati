@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { loadFile, renderSquirrelly, transformAstAndGenerate, type VikeMeta } from "@batijs/core";
+import { loadFile, renderSquirrelly, transformAstAndGenerate, type Transformer, type VikeMeta } from "@batijs/core";
 import { queue } from "./queue";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
@@ -63,6 +63,13 @@ async function fileContainsBatiMeta(filepath: string) {
   return code.includes("import.meta.BATI_");
 }
 
+async function importTransformer(p: string) {
+  const importFile = isWin ? "file://" + p : p;
+  const f = await import(importFile);
+
+  return f.default as Transformer;
+}
+
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
   const targets = new Set<string>();
@@ -83,12 +90,20 @@ Please report this issue to https://github.com/magne4000/bati`,
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         transformAndWriteQ.add(async () => {
-          const importFile = isWin ? "file://" + p : p;
-          const f = await import(importFile);
+          const transformer = await importTransformer(p);
+
+          const rf = () => {
+            return readFile(target, { encoding: "utf-8" });
+          };
 
           const fileContent = transformFileAfterExec(
             target,
-            await f.default(targets.has(target) ? () => readFile(target, { encoding: "utf-8" }) : undefined, meta),
+            await transformer({
+              readfile: targets.has(target) ? rf : undefined,
+              meta,
+              source,
+              target,
+            }),
           );
 
           if (fileContent !== null) {

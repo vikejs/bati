@@ -1,8 +1,7 @@
-import type { MaybeContentGetter } from "@batijs/core";
-import { loadAsJson } from "@batijs/core";
+import { loadAsJson, type TransformerProps } from "@batijs/core";
 
-export default async function getTsConfig(currentContent: MaybeContentGetter) {
-  const tsConfig = await loadAsJson(currentContent);
+export default async function getTsConfig(props: TransformerProps) {
+  const tsConfig = await loadAsJson(props);
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "vue";

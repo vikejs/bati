@@ -1,10 +1,10 @@
-import { addVitePlugin, loadAsMagicast, type MaybeContentGetter, type VikeMeta } from "@batijs/core";
+import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/core";
 
-export default async function getViteConfig(currentContent: MaybeContentGetter, meta: VikeMeta) {
-  const mod = await loadAsMagicast(currentContent);
+export default async function getViteConfig(props: TransformerProps) {
+  const mod = await loadAsMagicast(props);
   let options: Record<string, unknown> | undefined = undefined;
 
-  if (meta.BATI_MODULES?.some((m) => m === "hosting:vercel")) {
+  if (props.meta.BATI_MODULES?.some((m) => m === "hosting:vercel")) {
     options = {
       vps: {
         prerender: true,

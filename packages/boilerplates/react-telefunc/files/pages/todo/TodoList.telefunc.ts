@@ -1,8 +1,6 @@
-export { onNewTodo };
+import { todoItems, type TodoItem } from "../../database/todoItems";
 
-import { type TodoItem, todoItems } from "../../database/todoItems";
-
-async function onNewTodo({ text }: TodoItem) {
+export async function onNewTodo({ text }: TodoItem) {
   todoItems.push({ text });
   return { todoItems };
 }

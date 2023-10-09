@@ -9,7 +9,7 @@ export function queue() {
     },
     async run() {
       let task: Task | undefined;
-      while ((task = tasks.pop())) {
+      while ((task = tasks.shift())) {
         await task();
       }
     },
