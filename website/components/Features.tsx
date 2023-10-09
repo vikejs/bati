@@ -1,5 +1,5 @@
 import { FormControl } from "#components/FormControl.js";
-import { StoreContext, type FeaturesType } from "#components/Store.js";
+import { type FeaturesType, StoreContext } from "#components/Store.js";
 import { createMemo, For, useContext } from "solid-js";
 
 function FeaturesGroup(props: { keys: FeaturesType[] }) {
@@ -75,7 +75,8 @@ export default function Features() {
   const keys = createMemo(() => Object.keys(currentFeatures) as FeaturesType[]);
   // TODO proper split + categorization
   const keysFront = createMemo(() => keys().filter((ns) => ns === "framework" || ns === "uikit"));
-  const keysBack = createMemo(() => keys().filter((ns) => ns !== "framework" && ns !== "uikit"));
+  const keysTools = createMemo(() => keys().filter((ns) => ns === "tool"));
+  const keysBack = createMemo(() => keys().filter((ns) => ns !== "framework" && ns !== "uikit" && ns !== "tool"));
 
   return (
     <>
@@ -87,6 +88,10 @@ export default function Features() {
         <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">Backend</h3>
       </div>
       <FeaturesGroup keys={keysBack()} />
+      <div class="divider-l">
+        <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">Tools</h3>
+      </div>
+      <FeaturesGroup keys={keysTools()} />
     </>
   );
 }
