@@ -62,7 +62,7 @@ function createWorkspacePackageJson(context: GlobalContext) {
       name: "bati-tests",
       private: true,
       devDependencies: {
-        turbo: "latest",
+        turbo: packageJson.devDependencies.turbo,
       },
       ...(bunExists ? { workspaces: ["packages/*"] } : {}),
     }),
@@ -142,6 +142,8 @@ function execTurborepo(context: GlobalContext) {
     "lint",
     "typecheck",
     "build",
+    "--output-logs=errors-only",
+    "--no-update-notifier",
     "--framework-inference=false",
   ];
 
