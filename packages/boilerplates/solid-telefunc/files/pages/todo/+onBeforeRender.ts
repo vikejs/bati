@@ -4,11 +4,11 @@ export default onBeforeRender;
 import { todoItems } from "../../database/todoItems";
 
 function onBeforeRender() {
-  const todoItemsInitial = todoItems;
+  const initialTodoItems = todoItems;
   return {
     pageContext: {
       pageProps: {
-        todoItemsInitial,
+        initialTodoItems,
       },
     },
   };
