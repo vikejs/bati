@@ -18,8 +18,10 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 - Configuration files are tailored for the stack you chose
 - Ready to start
 - [Vite](https://vitejs.dev) + Typescript ecosystem
+- Strict types + ESLint recommendations
 - Based on [vike](https://vike.dev) for portability and customazibility
-- Sane and future-proof recommendations that follows [WinterCG](https://wintercg.org) as much as possible
+- Sane and future-proof recommendations based on [WinterCG](https://wintercg.org)
+- Always up-to-date, with automated testing
 
 <hr>
 
