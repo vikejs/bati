@@ -1,12 +1,17 @@
 <template>
   <h1>{{ movie.title }}</h1>
   Release Date: {{ movie.release_date }}
-  <br />
+  <br>
   Director: {{ movie.director }}
-  <br />
+  <br>
   Producer: {{ movie.producer }}
 </template>
 
 <script lang="ts" setup>
-defineProps(['movie'])
+defineProps({
+  movies: {
+    type: Array,
+    required: true,
+  },
+})
 </script>

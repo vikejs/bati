@@ -12,7 +12,11 @@
 {{{ /if }}}
   >
     <a href="/">
-      <img src="../assets/logo.svg" height="64" width="64" />
+      <img
+        src="../assets/logo.svg"
+        height="64"
+        width="64"
+      >
     </a>
   </div>
 </template>

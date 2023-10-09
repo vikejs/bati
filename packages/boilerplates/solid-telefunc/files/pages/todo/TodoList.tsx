@@ -1,10 +1,9 @@
 import { createSignal, For, untrack } from "solid-js";
-
-import { onNewTodo } from "./TodoList.telefunc.js";
 import type { TodoItem } from "../../database/todoItems.js";
+import { onNewTodo } from "./TodoList.telefunc.js";
 
-export function TodoList({ todoItemsInitial }: { todoItemsInitial: TodoItem[] }) {
-  const [todoItems, setTodoItems] = createSignal(todoItemsInitial);
+export function TodoList(props: { initialTodoItems: TodoItem[] }) {
+  const [todoItems, setTodoItems] = createSignal(props.initialTodoItems);
   const [draft, setDraft] = createSignal("");
   return (
     <>

@@ -1,13 +1,14 @@
 <template>
   <div>
     <h1>To-do List</h1>
-    <TodoList :todoItemsInitial="todoItemsInitial" />
+    <TodoList :todo-items-initial="todoItemsInitial" />
     <Counter />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useAttrs } from 'vue';
+import { useAttrs } from "vue";
+
 const { todoItemsInitial } = useAttrs();
 </script>
 

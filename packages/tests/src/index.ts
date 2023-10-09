@@ -20,7 +20,10 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
-  pkgjson.scripts.lint = "tsc --noEmit";
+  if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
+    pkgjson.scripts.lint = pkgjson.scripts.lint.replace('eslint ', 'eslint --max-warnings=0 ');
+  }
+  pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
@@ -40,7 +43,7 @@ function updateVitestConfig(projectDir: string) {
   return writeFile(
     join(projectDir, "vitest.config.ts"),
     `/// <reference types="vitest" />
-import { configDefaults, defineConfig } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
@@ -59,7 +62,7 @@ function createWorkspacePackageJson(context: GlobalContext) {
       name: "bati-tests",
       private: true,
       devDependencies: {
-        turbo: "latest",
+        turbo: packageJson.devDependencies.turbo,
       },
       ...(bunExists ? { workspaces: ["packages/*"] } : {}),
     }),
@@ -87,8 +90,11 @@ async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["^build"],
           outputs: ["dist/**"],
         },
-        test: {},
+        test: {
+          dependsOn: ["build"],
+        },
         lint: {},
+        typecheck: {},
       },
       remoteCache: {
         signature: false,
@@ -128,7 +134,18 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 
 function execTurborepo(context: GlobalContext) {
-  const args = [bunExists ? "x" : "exec", "turbo", "run", "test", "lint", "build", "--framework-inference=false"];
+  const args = [
+    bunExists ? "x" : "exec",
+    "turbo",
+    "run",
+    "test",
+    "lint",
+    "typecheck",
+    "build",
+    "--output-logs=errors-only",
+    "--no-update-notifier",
+    "--framework-inference=false",
+  ];
 
   if (process.env.CI) {
     const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");

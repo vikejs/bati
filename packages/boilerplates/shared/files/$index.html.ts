@@ -1,7 +1,7 @@
-import { type MaybeContentGetter, type VikeMeta } from "@batijs/core";
+import { type TransformerProps } from "@batijs/core";
 
-export default function createDefaultIndexHtml(_currentContent: MaybeContentGetter, meta: VikeMeta) {
-  if (meta.BATI_MODULES?.some((m) => m.startsWith("framework:"))) return null;
+export default function createDefaultIndexHtml(props: TransformerProps) {
+  if (props.meta.BATI_MODULES?.some((m) => m.startsWith("framework:"))) return null;
 
   return `<html>
 <head>

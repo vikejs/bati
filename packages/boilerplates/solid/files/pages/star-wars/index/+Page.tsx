@@ -7,7 +7,7 @@ export default function Page(props: { movies: Movie[] }) {
       <h1>Star Wars Movies</h1>
       <ol>
         <For each={props.movies}>
-          {(movie, i) => (
+          {(movie) => (
             <li>
               <a href={`/star-wars/${movie.id}`}>{movie.title}</a> ({movie.release_date})
             </li>

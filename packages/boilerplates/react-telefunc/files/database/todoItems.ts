@@ -1,8 +1,5 @@
-export { todoItems };
-export type { TodoItem };
-
-type TodoItem = { text: string };
-const todoItems: TodoItem[] = [];
+export type TodoItem = { text: string };
+export const todoItems: TodoItem[] = [];
 init();
 
 // Initial data

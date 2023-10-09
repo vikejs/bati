@@ -14,12 +14,15 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 ![Demo](doc/demo.gif)
 
 ## Features
-- Choose the features you need, with the libraries you want
-- Configuration files are tailored for the stack you chose
-- Ready to start
-- [Vite](https://vitejs.dev) + Typescript ecosystem
-- Based on [vike](https://vike.dev) for portability and customazibility
-- Sane and future-proof recommendations that follows [WinterCG](https://wintercg.org) as much as possible
+- :electric_plug: Choose the features you need, with the libraries you want
+- :cocktail: Configuration files are tailored for the stack you choose
+- :house_with_garden: Ready to start
+- <img src="https://api.iconify.design/logos:vitejs.svg?color=%23888888" width=16 height=16></img> [Vite](https://vitejs.dev) ecosystem
+- <img src="https://api.iconify.design/logos:typescript-icon.svg?color=%23888888" width=16 height=16></img> Typescript with strict types
+- <img src="https://api.iconify.design/logos:eslint.svg?color=%23888888" width=16 height=16></img> Follows ESLint recommendations
+- <img src="https://raw.githubusercontent.com/vikejs/vike/main/docs/images/icons/vike-oblique.svg" width=16 height=16></img> Based on [Vike](https://vike.dev) for portability and customazibility
+- <img src="https://wintercg.org/static/logo.svg" width=16 height=16></img> Sane and future-proof recommendations based on [WinterCG](https://wintercg.org)
+- :dart: Always up-to-date, with automated testing
 
 <hr>
 

@@ -1,7 +1,7 @@
-import { addDependency, loadAsJson, type MaybeContentGetter, setScripts, type VikeMeta } from "@batijs/core";
+import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
 
-export default async function getPackageJson(currentContent: MaybeContentGetter, meta: VikeMeta) {
-  const packageJson = await loadAsJson(currentContent);
+export default async function getPackageJson(props: TransformerProps) {
+  const packageJson = await loadAsJson(props);
 
   setScripts(packageJson, {
     dev: {
@@ -28,7 +28,7 @@ export default async function getPackageJson(currentContent: MaybeContentGetter,
       "esno",
       "vite",
       "vike",
-      ...(meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(props.meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
     ],
   });
 }

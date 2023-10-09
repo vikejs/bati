@@ -1,9 +1,7 @@
-export default Page;
-
 import React from "react";
 import type { MovieDetails } from "../types";
 
-function Page({ movie }: { movie: MovieDetails }) {
+export default function Page({ movie }: { movie: MovieDetails }) {
   return (
     <>
       <h1>{movie.title}</h1>

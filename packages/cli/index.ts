@@ -144,7 +144,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
 }
 
 function checkRules(flags: string[]) {
-  const flagsWithNs = flags.map((f) => coreFlags.get(f)!);
+  const flagsWithNs = flags.map((f) => coreFlags.get(f as Flags)!);
   const potentialRulesMessages = execRules(flagsWithNs, rulesMessages);
 
   const infos = potentialRulesMessages.filter(m => m.type === 'info');
@@ -200,15 +200,16 @@ async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
 }
 
 function testFlags(flags: string[], bl: BoilerplateDef) {
-  if (flags.includes(bl.config.flag!)) {
-    return true;
+  if (bl.config.flag) {
+    return flags.includes(bl.config.flag);
   }
 
   if (Array.isArray(bl.config.includeIf)) {
     return bl.config.includeIf.every((f) => flags.includes(f));
   }
 
-  return false;
+  // No flag or no includeIf -> no condition, so always add
+  return true;
 }
 
 async function run() {
@@ -238,17 +239,16 @@ async function run() {
 
       checkRules(flags);
 
-      // push shared boilerplates first
-      for (const bl of boilerplates.filter((b) => !b.config.flag && !b.config.includeIf)) {
-        if (bl.subfolders.includes("files")) {
-          sources.push(join(dir, bl.folder, "files"));
-        }
-        if (bl.subfolders.includes("hooks")) {
-          hooks.push(join(dir, bl.folder, "hooks"));
-        }
-      }
+      // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`
+      boilerplates.sort((b1, b2) => {
+        if (b1.config.enforce === 'pre') return -1;
+        if (b1.config.enforce === 'post') return 1;
+        if (b2.config.enforce === 'pre') return 1;
+        if (b2.config.enforce === 'post') return -1;
+        return 0;
+      });
 
-      for (const bl of boilerplates.filter((b) => Boolean(b.config.flag) || Array.isArray(b.config.includeIf))) {
+      for (const bl of boilerplates) {
         if (testFlags(flags, bl)) {
           if (bl.subfolders.includes("files")) {
             sources.push(join(dir, bl.folder, "files"));
@@ -260,7 +260,7 @@ async function run() {
       }
 
       for (const flag of flags) {
-        features.push(coreFlags.get(flag)!);
+        features.push(coreFlags.get(flag as Flags)!);
       }
 
       const hooksMap = await retrieveHooks(hooks);
