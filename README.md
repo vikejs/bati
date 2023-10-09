@@ -20,7 +20,7 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 - <img src="https://api.iconify.design/logos:vitejs.svg?color=%23888888" width=16 height=16></img> [Vite](https://vitejs.dev) ecosystem
 - <img src="https://api.iconify.design/logos:typescript-icon.svg?color=%23888888" width=16 height=16></img> Typescript with strict types
 - <img src="https://api.iconify.design/logos:eslint.svg?color=%23888888" width=16 height=16></img> Follows ESLint recommendations
-- <img src="https://raw.githubusercontent.com/vikejs/vike/main/docs/images/icons/vike-oblique.svg" width=16 height=16></img> Based on [Vike](https://vike.dev) for portability and customazibility
+- <img src="https://vike.dev/icons/vike-square-gradient.svg" width=16 height=16></img> Based on [Vike](https://vike.dev) for portability and customazibility
 - <img src="https://wintercg.org/static/logo.svg" width=16 height=16></img> Sane and future-proof recommendations based on [WinterCG](https://wintercg.org)
 - :dart: Always up-to-date, with automated testing
 
