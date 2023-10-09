@@ -3,6 +3,7 @@ import type { VikeMeta } from "@batijs/core";
 export interface BatiConfig {
   flag?: string;
   includeIf?: string[];
+  enforce?: "pre" | "post";
   name?: string;
   homepage?: string;
   boilerplate?: string;
