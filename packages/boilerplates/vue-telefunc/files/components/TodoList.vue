@@ -1,18 +1,26 @@
 <template>
   <ul>
-    <li v-for="item in todoItems">{{ item.text }}</li>
+    <li v-for="item in todoItems" :key="item.text">
+      {{ item.text }}
+    </li>
     <li>
       <form @submit.prevent="submitDraft()">
-        <input type="text" v-model="draft" />{{ " " }}
-        <button type="submit">Add to-do</button>
+        <input
+          v-model="draft"
+          type="text"
+        >{{ " " }}
+        <button type="submit">
+          Add to-do
+        </button>
       </form>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
+import { ref, useAttrs } from "vue";
 import { onNewTodo } from "./TodoList.telefunc.js";
-import { ref, useAttrs } from 'vue';
+
 const { todoItemsInitial } = useAttrs();
 
 const todoItems = ref(todoItemsInitial);

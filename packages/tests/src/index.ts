@@ -20,6 +20,9 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
+  if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
+    pkgjson.scripts.lint = pkgjson.scripts.lint.replace('eslint ', 'eslint --max-warnings=0 ');
+  }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";

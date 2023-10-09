@@ -1,7 +1,20 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
+
+  if (props.meta.BATI_MODULES?.includes("tool:eslint")) {
+    setScripts(packageJson, {
+      lint: {
+        value: "eslint --ext .js,.jsx,.ts,.tsx,.vue .",
+        precedence: 20
+      }
+    });
+
+    addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+      devDependencies: ["eslint-plugin-vue"],
+    });
+  }
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: ["vite"],

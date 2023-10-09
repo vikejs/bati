@@ -15,7 +15,7 @@
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
-  setup(props) {
+  setup() {
     const state = reactive({ count: 0 })
     return {
       state

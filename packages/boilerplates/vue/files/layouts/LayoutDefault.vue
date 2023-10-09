@@ -5,11 +5,17 @@
   <div class="layout">
     <Sidebar>
       <Logo />
-      <Link href="/">Welcome</Link>
+      <Link href="/">
+        Welcome
+      </Link>
 {{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
-      <Link href="/todo">Todo</Link>
+      <Link href="/todo">
+        Todo
+      </Link>
 {{{ /if }}}
-      <Link href="/star-wars">Data Fetching</Link>
+      <Link href="/star-wars">
+        Data Fetching
+      </Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>
