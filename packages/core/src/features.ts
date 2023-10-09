@@ -11,6 +11,7 @@ export const features = [
   "uikit:tailwindcss",
   "analytics:plausible.io", // "analytics:google-analytics"
   "hosting:vercel", // "hosting:netlify"
+  "tool:eslint",
   // "clientRouting", "prerendering",
 ] as const;
 

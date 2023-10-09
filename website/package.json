@@ -10,7 +10,7 @@
     "build:pages": "vite build --mode pages",
     "build:widget": "vite build --mode widget",
     "dev:widget": "vite --mode widget",
-    "script:check-features": "jiti scripts/check-features.ts",
+    "script:check-features": "esno scripts/check-features.ts",
     "test": "pnpm run check-types && pnpm run script:check-features"
   },
   "keywords": [
@@ -28,7 +28,7 @@
     "cross-fetch": "^4.0.0",
     "daisyui": "^3.9.2",
     "esbuild": "^0.19.4",
-    "jiti": "^1.20.0",
+    "esno": "^0.17.0",
     "postcss": "^8.4.31",
     "solid-element": "^1.7.1",
     "solid-js": "^1.7.12",
