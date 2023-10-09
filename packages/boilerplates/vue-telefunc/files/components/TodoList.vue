@@ -1,6 +1,9 @@
 <template>
   <ul>
-    <li v-for="item in todoItems" :key="item.text">
+    <li
+      v-for="item in todoItems"
+      :key="item.text"
+    >
       {{ item.text }}
     </li>
     <li>

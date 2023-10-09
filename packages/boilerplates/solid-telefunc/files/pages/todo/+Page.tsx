@@ -2,11 +2,11 @@ import { createSignal } from "solid-js";
 import type { TodoItem } from "../../database/todoItems";
 import { TodoList } from "./TodoList";
 
-export default function Page(props: { todoItemsInitial: TodoItem[] }) {
+export default function Page(props: { initialTodoItems: TodoItem[] }) {
   return (
     <>
       <h1>To-do List</h1>
-      <TodoList todoItemsInitial={props.todoItemsInitial} />
+      <TodoList initialTodoItems={props.initialTodoItems} />
       <Counter />
     </>
   );

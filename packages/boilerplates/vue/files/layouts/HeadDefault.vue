@@ -14,6 +14,6 @@
     defer
     data-domain="yourdomain.com"
     src="https://plausible.io/js/script.js"
-  >
+  />
 {{{ /if }}}
 </template>

@@ -90,7 +90,9 @@ async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["^build"],
           outputs: ["dist/**"],
         },
-        test: {},
+        test: {
+          dependsOn: ["build"],
+        },
         lint: {},
         typecheck: {},
       },
