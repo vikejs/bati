@@ -1,0 +1,235 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: sh
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 79
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 16
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 250
+    content: "\e[?2004h$ \b\b"
+  - delay: 1500
+    content: "$ pnpm create @batijs/app --solid --tailwindcss --telefunc --eslint\r\n\e[?2004l\r"
+  - delay: 1808
+    content: "\e[1m\e[32m✓\e[39m Project created at \e[36mmy-app\e[39m with:\e[22m\r\n      - \e[32mVike\e[39m\r\n      - \e[32mSolidJS\e[39m\r\n      - \e[32mTailwindCSS\e[39m\r\n      - \e[32mTelefunc\e[39m\r\n      - \e[32mESLint\e[39m\r\n\r\n\e[1m\e[94m→\e[39m Next steps:\e[22m\r\n      \e[90m$\e[39m cd my-app\r\n      \e[90m$\e[39m pnpm install\r\n      \e[90m$\e[39m pnpm run dev\r\n"
+  - delay: 35
+    content: "\e[?2004h$ "
+  - delay: 800
+    content: c
+  - delay: 81
+    content: d
+  - delay: 367
+    content: ' '
+  - delay: 445
+    content: m
+  - delay: 232
+    content: 'y'
+  - delay: 76
+    content: '-app'
+  - delay: 490
+    content: "\r\n\e[?2004l\r\e[?2004h$ "
+  - delay: 1297
+    content: p
+  - delay: 77
+    content: 'n'
+  - delay: 95
+    content: p
+  - delay: 43
+    content: m
+  - delay: 157
+    content: ' '
+  - delay: 275
+    content: i
+  - delay: 63
+    content: 'n'
+  - delay: 62
+    content: s
+  - delay: 48
+    content: t
+  - delay: 87
+    content: a
+  - delay: 104
+    content: l
+  - delay: 85
+    content: l
+  - delay: 399
+    content: "\r\n\e[?2004l\r"
+  - delay: 452
+    content: "Progress: resolved \e[96m1\e[39m, reused \e[96m0\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 227
+    content: "\e[1AProgress: resolved \e[96m9\e[39m, reused \e[96m7\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m11\e[39m, reused \e[96m11\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m12\e[39m, reused \e[96m12\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 203
+    content: "\e[1AProgress: resolved \e[96m32\e[39m, reused \e[96m30\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m74\e[39m, reused \e[96m73\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m94\e[39m, reused \e[96m93\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m123\e[39m, reused \e[96m101\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m136\e[39m, reused \e[96m113\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m159\e[39m, reused \e[96m136\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m179\e[39m, reused \e[96m156\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 199
+    content: "\e[1AProgress: resolved \e[96m206\e[39m, reused \e[96m184\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m232\e[39m, reused \e[96m209\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 199
+    content: "\e[1AProgress: resolved \e[96m273\e[39m, reused \e[96m251\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m348\e[39m, reused \e[96m305\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 201
+    content: "\e[1AProgress: resolved \e[96m376\e[39m, reused \e[96m333\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 209
+    content: "\e[1AProgress: resolved \e[96m377\e[39m, reused \e[96m333\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 200
+    content: "\e[1AProgress: resolved \e[96m391\e[39m, reused \e[96m348\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 158
+    content: "\e[1APackages: \e[32m+358\e[39m\e[0K\r\n\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\e[32m+\e[39m\r\nProgress: resolved \e[96m391\e[39m, reused \e[96m348\e[39m, downloaded \e[96m0\e[39m, added \e[96m0\e[39m\r\n"
+  - delay: 45
+    content: "\e[1AProgress: resolved \e[96m401\e[39m, reused \e[96m358\e[39m, downloaded \e[96m0\e[39m, added \e[96m139\e[39m\r\n"
+  - delay: 58
+    content: "\e[1AProgress: resolved \e[96m401\e[39m, reused \e[96m358\e[39m, downloaded \e[96m0\e[39m, added \e[96m358\e[39m, done\r\n"
+  - delay: 542
+    content: "\r\n\e[96mdependencies:\e[39m\r\n\e[32m+\e[39m cross-fetch \e[90m4.0.0\e[39m\r\n\e[32m+\e[39m solid-js \e[90m1.8.1\e[39m\r\n\e[32m+\e[39m telefunc \e[90m0.1.62\e[39m\r\n\e[32m+\e[39m vike \e[90m0.4.143\e[39m\r\n\e[32m+\e[39m vike-solid \e[90m0.2.1\e[39m\r\n\r\n\e[96mdevDependencies:\e[39m\r\n\e[32m+\e[39m @typescript-eslint/eslint-plugin \e[90m6.7.5\e[39m\r\n\e[32m+\e[39m @typescript-eslint/parser \e[90m6.7.5\e[39m\r\n\e[32m+\e[39m autoprefixer \e[90m10.4.16\e[39m\r\n\e[32m+\e[39m eslint \e[90m8.51.0\e[39m\r\n\e[32m+\e[39m eslint-plugin-solid \e[90m0.13.0\e[39m\r\n\e[32m+\e[39m postcss \e[90m8.4.31\e[39m\r\n\e[32m+\e[39m tailwindcss \e[90m3.3.3\e[39m\r\n\e[32m+\e[39m typescript \e[90m5.2.2\e[39m\r\n\e[32m+\e[39m vite \e[90m4.4.11\e[39m\r\n\r\nDone in 4.6s\r\n"
+  - delay: 49
+    content: "\e[?2004h$ "
+  - delay: 691
+    content: p
+  - delay: 69
+    content: 'n'
+  - delay: 85
+    content: p
+  - delay: 55
+    content: m
+  - delay: 151
+    content: ' '
+  - delay: 160
+    content: r
+  - delay: 120
+    content: u
+  - delay: 53
+    content: 'n'
+  - delay: 172
+    content: ' '
+  - delay: 131
+    content: d
+  - delay: 47
+    content: e
+  - delay: 137
+    content: v
+  - delay: 1200
+    content: "\r\n\e[?2004l\r"
+  - delay: 200
+    content: "\r\n> my-app@0.0.1 dev /tmp/tmp.uMFfS00Jkb/my-app\r\n> vite\r\n\r\n"
+  - delay: 650
+    content: "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\e[1;1H\e[0J  \e[32m\e[1mVITE\e[22m v4.4.11\e[39m  \e[2mready in \e[0m\e[1m804\e[22m\e[2m\e[0m ms\e[22m\r\n  \e[32m➜\e[39m  \e[1mLocal\e[22m:   \e[36mhttp://127.0.0.1:\e[1m3000\e[22m/\e[39m\r\n\e[2m  \e[32m➜\e[39m  \e[1mNetwork\e[22m\e[2m: use \e[22m\e[1m--host\e[22m\e[2m to expose\e[22m\r\n\e[2m\e[32m  ➜\e[39m\e[22m\e[2m  press \e[22m\e[1mh\e[22m\e[2m to show help\e[22m\r\n"
+  - delay: 2000
+    content: "^\b"
