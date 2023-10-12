@@ -28,9 +28,10 @@
     "dist/"
   ],
   "bati": {
-    "includeIf": [
-      "react",
-      "telefunc"
-    ]
+    "if": {
+      "flag": {
+        "$all": ["react", "telefunc"]
+      }
+    }
   }
 }

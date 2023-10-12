@@ -7,7 +7,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1"
   >
-{{{ @if (it.import.meta.BATI_MODULES?.includes("analytics:plausible.io")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("plausible.io")) }}}
   <!-- See https://plausible.io/docs/plausible-script -->
   <!-- TODO: update data-domain -->
   <script

@@ -1,10 +1,10 @@
-import { RulesMessage } from "./enum";
-import rules from "./rules";
-import { prepare, type FeaturesOrNamespaces } from "./utils";
+import { RulesMessage } from "./enum.js";
+import rules from "./rules.js";
+import { prepare, type FeatureOrCategory } from "./utils.js";
 
 export { rules, RulesMessage };
 
-export function execRules<T>(fts: FeaturesOrNamespaces[], rulesMessages: Record<RulesMessage, T>) {
+export function execRules<T>(fts: FeatureOrCategory[], rulesMessages: Record<RulesMessage, T>) {
   const sfts = prepare(fts);
   const messages: T[] = [];
 

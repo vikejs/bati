@@ -1,4 +1,4 @@
-import { RulesMessage } from "@batijs/core/rules";
+import { RulesMessage } from "@batijs/features/rules";
 import { bold, inverse } from "colorette";
 
 export interface RuleMessage {

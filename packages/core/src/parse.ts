@@ -1,8 +1,8 @@
 import { namedTypes, visit } from "ast-types";
-import { type ASTNode, generateCode } from "magicast";
+import { generateCode, type ASTNode } from "magicast";
 import { render } from "squirrelly";
-import type { VikeMeta } from "./types.js";
 import { cleanImports } from "./cleanup.js";
+import type { VikeMeta } from "./types.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
   code = code.replaceAll("import.meta", "BATI_META");
@@ -97,7 +97,7 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
       } else {
         let root = path;
         // If the expression is as such:
-        //   {import.meta.BATI_MODULES?.includes("rpc:telefunc") ? <Link href="/todo">Todo</Link> : undefined}
+        //   {import.meta.BATI_MODULES?.includes("telefunc") ? <Link href="/todo">Todo</Link> : undefined}
         // ensures that it writes:
         //   <Link href="/todo">Todo</Link>
         // instead of:

@@ -4,7 +4,7 @@
   <div id="page-container">
     <div
       id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
 {{{ #else }}}
       style="

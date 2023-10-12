@@ -40,8 +40,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/boilerplates/authjs: {}
-
   packages/boilerplates/edgedb:
     dependencies:
       '@batijs/core':
@@ -224,8 +222,6 @@ importers:
         specifier: ^4.4.11
         version: 4.4.11(@types/node@16.18.55)
 
-  packages/boilerplates/plausible.io: {}
-
   packages/boilerplates/prisma:
     dependencies:
       '@batijs/core':
@@ -351,6 +347,9 @@ importers:
       '@batijs/core':
         specifier: workspace:*
         version: link:../../core
+      '@batijs/features':
+        specifier: workspace:*
+        version: link:../../features
       '@batijs/tsup':
         specifier: workspace:*
         version: link:../../tsup
@@ -620,6 +619,9 @@ importers:
       '@batijs/core':
         specifier: workspace:*
         version: link:../core
+      '@batijs/features':
+        specifier: workspace:*
+        version: link:../features
     devDependencies:
       '@batijs/build':
         specifier: workspace:*
@@ -648,6 +650,9 @@ importers:
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
+      sift:
+        specifier: ^17.0.1
+        version: 17.0.1
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -660,6 +665,9 @@ importers:
 
   packages/core:
     devDependencies:
+      '@batijs/features':
+        specifier: workspace:*
+        version: link:../features
       '@putout/plugin-remove-unused-variables':
         specifier: ^7.0.0
         version: 7.0.0(putout@32.2.0)
@@ -712,11 +720,26 @@ importers:
         specifier: workspace:*
         version: link:../cli
 
+  packages/features:
+    devDependencies:
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.55
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
+
   packages/tests:
     devDependencies:
       '@batijs/core':
         specifier: workspace:*
         version: link:../core
+      '@batijs/features':
+        specifier: workspace:^
+        version: link:../features
       '@batijs/tests-utils':
         specifier: workspace:*
         version: link:../tests-utils
@@ -806,9 +829,9 @@ importers:
       '@babel/core':
         specifier: ^7.23.0
         version: 7.23.0
-      '@batijs/core':
+      '@batijs/features':
         specifier: workspace:*
-        version: link:../packages/core
+        version: link:../packages/features
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.31)
@@ -830,9 +853,6 @@ importers:
       esbuild:
         specifier: ^0.19.3
         version: 0.19.4
-      esno:
-        specifier: ^0.17.0
-        version: 0.17.0
       postcss:
         specifier: ^8.4.31
         version: 8.4.31
@@ -9621,6 +9641,10 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
       object-inspect: 1.12.3
+    dev: true
+
+  /sift@17.0.1:
+    resolution: {integrity: sha512-10rmPF5nuz5UdKuhhxgfS7Vz1aIRGmb+kn5Zy6bntCgNwkbZc0a7Z2dUw2Y9wSoRrBzf7Oim81SUsYdOkVnI8Q==}
     dev: true
 
   /siginfo@2.0.0:

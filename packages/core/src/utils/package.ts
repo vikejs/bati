@@ -1,5 +1,5 @@
 import { dim, yellow } from "colorette";
-import { withIcon } from "../print";
+import { withIcon } from "../print.js";
 
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;

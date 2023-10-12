@@ -3,7 +3,7 @@
 import logoUrl from "../assets/logo.svg";
 
 export default function HeadDefault() {
-  if (import.meta.BATI_MODULES?.includes("analytics:plausible.io")) {
+  if (import.meta.BATI_MODULES?.includes("plausible.io")) {
     return (
       <>
         <link rel="icon" href={logoUrl} />

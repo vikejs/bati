@@ -3,7 +3,7 @@
 <template>
   <button
     type="button"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
     class="inline-block border border-black rounded bg-gray-200 px-2 py-1 text-xs font-medium uppercase leading-normal"
 {{{ /if }}}
     @click="state.count++"

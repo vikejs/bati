@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { flags, which } from "@batijs/core";
+import { which } from "@batijs/core";
 import { bold, cyan, green, yellow } from "colorette";
 import type { Plugin } from "esbuild";
 import { $ } from "execa";
@@ -21,7 +21,6 @@ interface PnpmPackageInfo {
 interface SimplePackageJson {
   bati?: BatiConfig | false;
   name: string;
-  description?: string;
 }
 
 async function getRecursivePackages() {
@@ -71,7 +70,6 @@ async function boilerplateFilesToCopy() {
       folder: packageJson.name,
       source: distFolder ? join(dirname(filepath), "dist") : undefined,
       config: packageJson.bati,
-      description: packageJson.description,
       subfolders,
     });
   }
@@ -84,47 +82,12 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
     console.warn(`${yellow("WARN")}: Missing '${bold("bati")}' property in ${cyan(filepath)}`);
     return;
   }
-  const b = packageJson.bati;
-
-  if (packageJson.name !== "@batijs/shared") {
-    if (!b.flag && !b.includeIf) {
-      throw new Error(`[${packageJson.name}] 'bati.flag' is missing`);
-    } else if (b.flag && typeof b.flag !== "string") {
-      throw new Error(`[${packageJson.name}] 'bati.flags' must be a string`);
-    }
-  }
-
-  if (b.flag && !flags.has(b.flag)) {
-    throw new Error(`[${packageJson.name}] 'bati.flag' has invalid value: ${b.flag}`);
-  }
-
-  if (b.includeIf && !Array.isArray(b.includeIf)) {
-    throw new Error(`[${packageJson.name}] 'bati.includeIf' must be an array`);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (b.includeIf && !b.includeIf.every((f: any) => flags.has(f))) {
-    throw new Error(`[${packageJson.name}] 'bati.includeIf' contains invalid flags`);
-  }
-
-  if (b.boilerplate && typeof b.boilerplate !== "string") {
-    throw new Error(`[${packageJson.name}] 'bati.boilerplate' must be a string`);
-  }
-
-  if (b.flag && !b.name) {
-    console.warn(`${yellow("WARN")}: Missing '${bold("name")}' property in ${cyan(filepath)}`);
-  }
-
-  if (b.flag && !b.homepage) {
-    console.warn(`${yellow("WARN")}: Missing '${bold("homepage")}' property in ${cyan(filepath)}`);
-  }
 }
 
 function formatCopiedToDef(boilerplates: ToBeCopied[]): BoilerplateDef[] {
   return boilerplates.map((bl) => ({
     config: bl.config,
     folder: bl.folder,
-    description: bl.description,
     subfolders: bl.subfolders,
   }));
 }

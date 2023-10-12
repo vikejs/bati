@@ -25,9 +25,10 @@
     "dist/"
   ],
   "bati": {
-    "includeIf": [
-      "solid",
-      "telefunc"
-    ]
+    "if": {
+      "flag": {
+        "$all": ["solid", "telefunc"]
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@ import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/co
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
 
-  const options = props.meta.BATI_MODULES?.includes("hosting:vercel")
+  const options = props.meta.BATI_MODULES?.includes("vercel")
     ? {
         prerender: true,
       }

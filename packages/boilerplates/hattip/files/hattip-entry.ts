@@ -1,12 +1,12 @@
+import CredentialsProvider from "@auth/core/providers/credentials";
 import { createRouter } from "@hattip/router";
-import { renderPage } from "vike/server";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
-import CredentialsProvider from "@auth/core/providers/credentials";
+import { renderPage } from "vike/server";
 
 const router = createRouter();
 
-if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
+if (import.meta.BATI_MODULES?.includes("telefunc")) {
   /**
    * Telefunc route
    *
@@ -29,7 +29,7 @@ if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
   });
 }
 
-if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
+if (import.meta.BATI_MODULES?.includes("authjs")) {
   /**
    * AuthJS
    *

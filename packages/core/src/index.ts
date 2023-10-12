@@ -1,4 +1,3 @@
-export * from "./features.js";
 export { renderSquirrelly, transformAstAndGenerate } from "./parse.js";
 export * from "./loaders.js";
 export * from "./magicast.js";

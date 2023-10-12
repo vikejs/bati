@@ -1,9 +1,9 @@
-import type { features } from "./features.js";
+import type { Flags } from "@batijs/features";
 
 export type ContentGetter = () => string | Promise<string>;
 
 export interface VikeMeta {
-  BATI_MODULES?: (typeof features)[number][];
+  BATI_MODULES?: Flags[];
 }
 
 export type TransformerProps = {

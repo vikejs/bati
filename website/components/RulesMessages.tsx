@@ -1,4 +1,4 @@
-import { RulesMessage } from "@batijs/core/rules";
+import { RulesMessage } from "@batijs/features/rules";
 import { createMemo, useContext, type ValidComponent } from "solid-js";
 import { StoreContext } from "./Store.js";
 
@@ -25,7 +25,7 @@ export const rulesMessages = {
   [RulesMessage.ERROR_AUTH_R_SERVER]: error(() => {
     const { inViewFeatures } = useContext(StoreContext);
 
-    const selectedAuth = createMemo(() => inViewFeatures().auth?.features.find((f) => f.selected)?.label);
+    const selectedAuth = createMemo(() => inViewFeatures().Auth?.features.find((f) => f.selected)?.label);
 
     return (
       <span class="inline-block">

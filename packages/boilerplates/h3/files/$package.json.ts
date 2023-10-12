@@ -29,7 +29,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "esno",
       "vike",
       "vite",
-      ...(props.meta.BATI_MODULES?.includes("auth:authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(props.meta.BATI_MODULES?.includes("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
     ],
   });
 }

@@ -1,7 +1,7 @@
 {{{! /* We are using the SquirrellyJS template syntax */ _}}}
 
 <template>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
   <h1 class="font-bold text-3xl pb-4">
 {{{ #else }}}
   <h1>

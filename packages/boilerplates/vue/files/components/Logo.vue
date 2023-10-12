@@ -2,7 +2,7 @@
 
 <template>
   <div
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
     class="p-5 mb-2"
 {{{ #else }}}
     style="

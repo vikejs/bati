@@ -1,7 +1,10 @@
 import { type TransformerProps } from "@batijs/core";
+import { features } from "@batijs/features";
+
+const frameworkFeatures = features.filter((f) => f.category === "Framework").map((f) => f.flag);
 
 export default function createDefaultIndexHtml(props: TransformerProps) {
-  if (props.meta.BATI_MODULES?.some((m) => m.startsWith("framework:"))) return null;
+  if (props.meta.BATI_MODULES?.some((m) => frameworkFeatures.includes(m))) return null;
 
   return `<html>
 <head>
