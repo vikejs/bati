@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/batijs/batijs.github.io/main/assets/logo.svg" height="150">
+<img src="https://raw.githubusercontent.com/batijs/bati/main/website/assets/logo.svg" height="150">
 </p>
 
 <h1 align="center">
