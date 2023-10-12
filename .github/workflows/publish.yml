@@ -18,9 +18,8 @@ jobs:
 #          GITHUB_CONTEXT: ${{ toJSON(github) }}
 #        run: echo "$GITHUB_CONTEXT"
 
-  # If merged it means that tests have passed
   build:
-    if: github.event.pull_request.merged == true && github.event.pull_request.user.login == 'renovate[bot]'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
