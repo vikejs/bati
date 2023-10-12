@@ -10,8 +10,7 @@
     "build:pages": "vite build --mode pages",
     "build:widget": "vite build --mode widget",
     "dev:widget": "vite --mode widget",
-    "script:check-features": "esno scripts/check-features.ts",
-    "test": "pnpm run check-types && pnpm run script:check-features"
+    "test": "tsc --noEmit"
   },
   "keywords": [
     "bati",
@@ -20,7 +19,7 @@
   "author": "Joël Charles",
   "devDependencies": {
     "@babel/core": "^7.23.0",
-    "@batijs/core": "workspace:*",
+    "@batijs/features": "workspace:*",
     "autoprefixer": "^10.4.16",
     "babel-preset-solid": "^1.7.12",
     "bumpp": "^9.2.0",
@@ -28,7 +27,6 @@
     "cross-fetch": "^4.0.0",
     "daisyui": "^3.9.2",
     "esbuild": "^0.19.4",
-    "esno": "^0.17.0",
     "postcss": "^8.4.31",
     "solid-element": "^1.7.1",
     "solid-js": "^1.7.12",

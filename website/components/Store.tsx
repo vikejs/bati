@@ -1,12 +1,9 @@
-import { execRules } from "@batijs/core/rules";
+import { features, type CategoryLabels, type Flags } from "@batijs/features";
+import { execRules } from "@batijs/features/rules";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
-import features from "../assets/features.json";
 import type { Definition, Feature } from "../types.js";
 import { rulesMessages } from "./RulesMessages.js";
-
-export type FeaturesType = keyof typeof features;
-export type FeaturesAll = `${FeaturesType}:${string}`;
 
 function filteredObject<T extends object>(obj: T, filter: (obj: T, k: keyof T) => boolean) {
   return Object.keys(obj).reduce(function (r, e) {
@@ -16,21 +13,44 @@ function filteredObject<T extends object>(obj: T, filter: (obj: T, k: keyof T) =
 }
 
 function initStore() {
-  const [currentFeatures, setCurrentFeatures] = createStore<Record<FeaturesType, Definition>>(features);
+  const definitions = features.reduce(
+    (acc, curr: Feature) => {
+      let selected = false;
+      if (!(curr.category in acc)) {
+        acc[curr.category as CategoryLabels] = {
+          disabled: Boolean(curr.disabled),
+          inview: false,
+          label: curr.category as CategoryLabels,
+          features: [],
+        };
+        selected = true;
+      }
+
+      acc[curr.category as CategoryLabels].features.push({
+        ...curr,
+        value: curr.flag,
+        alt: curr.disabled ? "Coming soon" : undefined,
+        selected,
+      });
+
+      return acc;
+    },
+    {} as Record<CategoryLabels, Definition>,
+  );
+
+  const [currentFeatures, setCurrentFeatures] = createStore<Record<CategoryLabels, Definition>>(definitions);
 
   const inViewFeatures = createMemo(() => filteredObject(currentFeatures, (o, k) => Boolean(o[k].inview)));
 
-  function moveFeature(k: FeaturesType) {
+  function moveFeature(k: CategoryLabels) {
     setCurrentFeatures(k, "inview", (val) => !val);
   }
 
-  function selectFeature(k: FeaturesType, value: unknown) {
+  function selectFeature(k: CategoryLabels, value: unknown) {
     setCurrentFeatures(k, "features", (fs) => {
       return fs.map((f) => ({
         ...f,
-        selected: value
-          ? value === f.value
-          : (features as Record<string, Definition>)[k].features.find((f2) => f2.value === f.value)?.selected,
+        selected: value ? value === f.value : definitions[k].features.find((f2) => f2.value === f.value)?.selected,
       }));
     });
   }
@@ -51,35 +71,42 @@ function initStore() {
         .filter(Boolean) as Feature[],
   );
 
-  function selectPreset(ks: (FeaturesType | FeaturesAll)[]) {
-    const nms: FeaturesType[] = ks.map((k) =>
-      k.includes(":") ? (k.split(":")[0] as FeaturesType) : (k as FeaturesType),
-    );
-
-    const fts: FeaturesAll[] = ks.filter((k): k is FeaturesAll => k.includes(":"));
+  function selectPreset(ks: (Flags | CategoryLabels)[]) {
+    const activeCategories = new Set<string>();
+    const activeFeatures: Feature[] = [];
+    for (const [category, defs] of Object.entries(definitions)) {
+      if (ks.includes(category as CategoryLabels)) {
+        activeCategories.add(category);
+      } else {
+        for (const feat of defs.features) {
+          if (ks.includes(feat.flag as Flags)) {
+            activeCategories.add(category);
+            activeFeatures.push(feat);
+          }
+        }
+      }
+    }
 
     batch(() => {
-      (Object.keys(currentFeatures) as FeaturesType[]).forEach((k) => {
-        setCurrentFeatures(k, "inview", nms.includes(k));
+      (Object.keys(currentFeatures) as CategoryLabels[]).forEach((k) => {
+        setCurrentFeatures(k, "inview", activeCategories.has(k));
       });
-      fts.forEach((ft) => {
-        const [namespace, f] = ft.split(":");
-        selectFeature(namespace as FeaturesType, f);
+      activeFeatures.forEach((ft) => {
+        selectFeature(ft.category as CategoryLabels, ft.flag);
       });
     });
   }
 
-  const inViewFlagsWithNs = createMemo<string[]>(
+  const inViewFlags = createMemo<Flags[]>(
     () =>
-      Object.entries(inViewFeatures())
-        .map(([ns, fs]) => fs.features.filter((f) => f.selected).map((f) => `${ns}:${f.value}`))
+      Object.values(inViewFeatures())
+        .map((fs) => fs.features.filter((f) => f.selected).map((f) => f.flag))
         .flat(1)
-        .filter(Boolean) as string[],
+        .filter(Boolean) as Flags[],
   );
 
   const rules = createMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const r = execRules(inViewFlagsWithNs() as any[], rulesMessages);
+    const r = execRules(inViewFlags(), rulesMessages);
 
     return {
       size: r.length,
@@ -97,7 +124,7 @@ function initStore() {
     selectedFeatures,
     currentFeatures,
     selectPreset,
-    inViewFlagsWithNs,
+    inViewFlags,
     rules,
   };
 }

@@ -1,3 +1,4 @@
+import { categories } from "@batijs/features";
 import { copy } from "#components/Copy.js";
 import Description from "#components/Description.js";
 import Features from "#components/Features.js";
@@ -6,7 +7,6 @@ import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
 import { StoreContext } from "#components/Store.js";
 import { createMemo, Show, useContext } from "solid-js";
-import features from "../assets/features.json";
 
 // avoid removing import when trying to optimize them
 // https://github.com/solidjs/solid/discussions/845
@@ -15,7 +15,7 @@ const _flip = flip;
 
 export function Widget(props: { theme?: string; widget: boolean }) {
   const { featuresValues, rules } = useContext(StoreContext);
-  const keys = Object.keys(features);
+  const keys = categories.map((c) => c.label);
 
   function getFlags() {
     return keys.filter((ns) => featuresValues()[ns]).map((ns) => `--${featuresValues()[ns]}`);

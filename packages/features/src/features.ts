@@ -172,9 +172,9 @@ export const features = [
     disabled: true,
   },
 
-  // Tools
+  // Linter
   {
-    category: "Tools",
+    category: "Linter",
     label: "ESLint",
     flag: "eslint",
     image:
@@ -182,7 +182,7 @@ export const features = [
     url: "https://eslint.org",
   },
   {
-    category: "Tools",
+    category: "Linter",
     label: "Prettier",
     flag: "prettier",
     image:

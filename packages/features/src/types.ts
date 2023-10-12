@@ -1,3 +1,5 @@
+import { categoriesGroups } from "./groups.js";
+
 export interface Feature<C = string> {
   label: string;
   flag: string;
@@ -11,6 +13,7 @@ export interface Feature<C = string> {
 
 export interface Category {
   label: string;
+  group: categoriesGroups;
   // like <select multiple/>
   multiple?: boolean;
 }

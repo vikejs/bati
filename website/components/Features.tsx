@@ -1,8 +1,9 @@
+import { categories, categoriesGroups, type CategoryLabels } from "@batijs/features";
 import { FormControl } from "#components/FormControl.js";
-import { type FeaturesType, StoreContext } from "#components/Store.js";
-import { createMemo, For, useContext } from "solid-js";
+import { StoreContext } from "#components/Store.js";
+import { For, useContext } from "solid-js";
 
-function FeaturesGroup(props: { keys: FeaturesType[] }) {
+function FeaturesGroup(props: { keys: CategoryLabels[] }) {
   const { currentFeatures, selectFeature, moveFeature } = useContext(StoreContext);
 
   return (
@@ -70,28 +71,18 @@ function FeaturesGroup(props: { keys: FeaturesType[] }) {
 }
 
 export default function Features() {
-  const { currentFeatures } = useContext(StoreContext);
-
-  const keys = createMemo(() => Object.keys(currentFeatures) as FeaturesType[]);
-  // TODO proper split + categorization
-  const keysFront = createMemo(() => keys().filter((ns) => ns === "framework" || ns === "uikit"));
-  const keysTools = createMemo(() => keys().filter((ns) => ns === "tool"));
-  const keysBack = createMemo(() => keys().filter((ns) => ns !== "framework" && ns !== "uikit" && ns !== "tool"));
-
   return (
     <>
-      <div class="divider-l">
-        <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">Frontend</h3>
-      </div>
-      <FeaturesGroup keys={keysFront()} />
-      <div class="divider-l">
-        <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">Backend</h3>
-      </div>
-      <FeaturesGroup keys={keysBack()} />
-      <div class="divider-l">
-        <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">Tools</h3>
-      </div>
-      <FeaturesGroup keys={keysTools()} />
+      <For each={Object.values(categoriesGroups)}>
+        {(group) => (
+          <>
+            <div class="divider-l">
+              <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">{group}</h3>
+            </div>
+            <FeaturesGroup keys={categories.filter((c) => c.group === group).map((c) => c.label)} />
+          </>
+        )}
+      </For>
     </>
   );
 }
