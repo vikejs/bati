@@ -3,7 +3,7 @@ import React from "react";
 // Default <head> (can be overridden by pages)
 
 export default function HeadDefault() {
-  if (import.meta.BATI_MODULES?.includes("analytics:plausible.io")) {
+  if (import.meta.BATI_MODULES?.includes("plausible.io")) {
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,6 +1,6 @@
-import { assert, test } from "vitest";
 import { parseModule } from "magicast";
-import { renderSquirrelly, transformAstAndGenerate, transformAst } from "../src/parse.js";
+import { assert, test } from "vitest";
+import { renderSquirrelly, transformAst, transformAstAndGenerate } from "../src/parse.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
 import type { VikeMeta } from "../src/types.js";
 
@@ -16,11 +16,11 @@ function testAst(code: string, meta: VikeMeta) {
 
 test("ast includes:react", () => {
   const tree = testAst(
-    `if (import.meta.BATI_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
-      BATI_MODULES: ["framework:react"],
+      BATI_MODULES: ["react"],
     },
   );
 
@@ -39,11 +39,11 @@ test("ast includes:react", () => {
 
 test("ast includes:solid", () => {
   const tree = testAst(
-    `if (import.meta.BATI_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("react")) {
     content = { ...content, jsx: "react" };
   }`,
     {
-      BATI_MODULES: ["framework:solid"],
+      BATI_MODULES: ["solid"],
     },
   );
 
@@ -52,15 +52,15 @@ test("ast includes:solid", () => {
 
 test("ast if-elseif-else:react", () => {
   const tree = testAst(
-    `if (import.meta.BATI_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      BATI_MODULES: ["framework:react"],
+      BATI_MODULES: ["react"],
     },
   );
 
@@ -69,15 +69,15 @@ test("ast if-elseif-else:react", () => {
 
 test("ast if-elseif-else:solid", () => {
   const tree = testAst(
-    `if (import.meta.BATI_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      BATI_MODULES: ["framework:solid"],
+      BATI_MODULES: ["solid"],
     },
   );
 
@@ -86,15 +86,15 @@ test("ast if-elseif-else:solid", () => {
 
 test("ast if-elseif-else:other", () => {
   const tree = testAst(
-    `if (import.meta.BATI_MODULES.includes("framework:react")) {
+    `if (import.meta.BATI_MODULES.includes("react")) {
       content = { ...content, jsx: "react" };
-    } else if (import.meta.BATI_MODULES.includes("framework:solid")) {
+    } else if (import.meta.BATI_MODULES.includes("solid")) {
       content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
     } else {
       console.log('NOTHING TO DO');
     }`,
     {
-      BATI_MODULES: ["framework:vue"],
+      BATI_MODULES: ["vue"],
     },
   );
 
@@ -109,7 +109,7 @@ test("ast external variable", () => {
     content = { ...content, jsx: "react" };
   }`,
         {
-          BATI_MODULES: ["framework:react"],
+          BATI_MODULES: ["react"],
         },
       ),
     ReferenceError,
@@ -118,13 +118,13 @@ test("ast external variable", () => {
 
 test("ast ternary:react", () => {
   const tree = testAst(
-    `import.meta.BATI_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("react")
     ? 1
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? 2
     : null`,
     {
-      BATI_MODULES: ["framework:react"],
+      BATI_MODULES: ["react"],
     },
   );
 
@@ -133,13 +133,13 @@ test("ast ternary:react", () => {
 
 test("ast ternary:solid", () => {
   const tree = testAst(
-    `import.meta.BATI_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("react")
     ? 1
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? 2
     : null`,
     {
-      BATI_MODULES: ["framework:solid"],
+      BATI_MODULES: ["solid"],
     },
   );
 
@@ -148,13 +148,13 @@ test("ast ternary:solid", () => {
 
 test("ast ternary:other", () => {
   const tree = testAst(
-    `import.meta.BATI_MODULES.includes("framework:react")
+    `import.meta.BATI_MODULES.includes("react")
     ? 1
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? 2
     : null`,
     {
-      BATI_MODULES: ["framework:vue"],
+      BATI_MODULES: ["vue"],
     },
   );
 
@@ -168,15 +168,15 @@ test("ast import cleanup:react", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.BATI_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("react")
     ? react()
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? solid()
     : null;
     `,
     ),
     {
-      BATI_MODULES: ["framework:react"],
+      BATI_MODULES: ["react"],
     },
   );
 
@@ -196,15 +196,15 @@ test("ast import cleanup:solid", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.BATI_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("react")
     ? react()
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? solid()
     : null;
     `,
     ),
     {
-      BATI_MODULES: ["framework:solid"],
+      BATI_MODULES: ["solid"],
     },
   );
 
@@ -224,15 +224,15 @@ test("ast import cleanup:other", async () => {
     import { solid } from 'solid';
     import react from 'react';
     
-    export const framework = import.meta.BATI_MODULES.includes("framework:react")
+    export const framework = import.meta.BATI_MODULES.includes("react")
     ? react()
-    : import.meta.BATI_MODULES.includes("framework:solid")
+    : import.meta.BATI_MODULES.includes("solid")
     ? solid()
     : null;
     `,
     ),
     {
-      BATI_MODULES: ["framework:vue"],
+      BATI_MODULES: ["vue"],
     },
   );
 
@@ -241,7 +241,7 @@ test("ast import cleanup:other", async () => {
 
 test("ast remove BATI_REMOVE", () => {
   const tree = transformAst(ast(`const a = [import.meta.BATI_REMOVE, 'a']`), {
-    BATI_MODULES: ["framework:vue"],
+    BATI_MODULES: ["vue"],
   });
 
   assertEquivalentAst(tree, ast(`const a = ['a']`));
@@ -250,10 +250,10 @@ test("ast remove BATI_REMOVE", () => {
 test("ast remove comment preceding import", () => {
   const tree = transformAst(
     ast(`
-//# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+//# import.meta.BATI_MODULES?.includes("tailwindcss")
 import "./tailwind.css";`),
     {
-      BATI_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["tailwindcss"],
     },
   );
 
@@ -263,7 +263,7 @@ import "./tailwind.css";`),
 test("ast remove comment preceding import and import itself", () => {
   const tree = transformAst(
     ast(`
-//# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+//# import.meta.BATI_MODULES?.includes("tailwindcss")
 import "./tailwind.css";`),
     {
       BATI_MODULES: [],
@@ -278,9 +278,9 @@ test("ast remove comment preceding JSX attribute", () => {
     ast(`
 <div
   id="sidebar"
-  //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+  //# import.meta.BATI_MODULES?.includes("tailwindcss")
   class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-  //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+  //# !import.meta.BATI_MODULES?.includes("tailwindcss")
   style={{
     padding: "20px",
     "flex-shrink": 0,
@@ -321,9 +321,9 @@ test("ast remove comment preceding JSX attribute", () => {
     ast(`
 <div
   id="sidebar"
-  //# import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+  //# import.meta.BATI_MODULES?.includes("tailwindcss")
   class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-  //# !import.meta.BATI_MODULES?.includes("uikit:tailwindcss")
+  //# !import.meta.BATI_MODULES?.includes("tailwindcss")
   style={{
     padding: "20px",
     "flex-shrink": 0,
@@ -336,7 +336,7 @@ test("ast remove comment preceding JSX attribute", () => {
   {props.children}
 </div>`),
     {
-      BATI_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["tailwindcss"],
     },
   );
 
@@ -360,7 +360,7 @@ test("squirrelly if telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
       <Link href="/todo">Todo</Link>
 {{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
@@ -369,7 +369,7 @@ test("squirrelly if telefunc", async () => {
   </div>
 </template>`,
     {
-      BATI_MODULES: ["uikit:tailwindcss", "rpc:telefunc"],
+      BATI_MODULES: ["tailwindcss", "telefunc"],
     },
   );
 
@@ -398,7 +398,7 @@ test("squirrelly if not telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
       <Link href="/todo">Todo</Link>
 {{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
@@ -407,7 +407,7 @@ test("squirrelly if not telefunc", async () => {
   </div>
 </template>`,
     {
-      BATI_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["tailwindcss"],
     },
   );
 
@@ -434,7 +434,7 @@ test("squirrelly if-else tailwind", async () => {
   <div id="page-container">
     <div
       id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
 {{{ #else }}}
       style="
@@ -449,7 +449,7 @@ test("squirrelly if-else tailwind", async () => {
   </div>
 </template>`,
     {
-      BATI_MODULES: ["uikit:tailwindcss"],
+      BATI_MODULES: ["tailwindcss"],
     },
   );
 
@@ -476,7 +476,7 @@ test("squirrelly if-else not tailwind", async () => {
   <div id="page-container">
     <div
       id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
 {{{ #else }}}
       style="

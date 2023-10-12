@@ -25,9 +25,10 @@
     "dist/"
   ],
   "bati": {
-    "includeIf": [
-      "vue",
-      "telefunc"
-    ]
+    "if": {
+      "flag": {
+        "$all": ["vue", "telefunc"]
+      }
+    }
   }
 }

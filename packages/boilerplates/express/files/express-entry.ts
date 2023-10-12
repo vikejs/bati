@@ -1,11 +1,11 @@
-import { renderPage } from "vike/server";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import CredentialsProvider from "@auth/core/providers/credentials";
+import { createMiddleware } from "@hattip/adapter-node";
+import express from "express";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
-import CredentialsProvider from "@auth/core/providers/credentials";
-import express from "express";
-import { createMiddleware } from "@hattip/adapter-node";
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
+import { renderPage } from "vike/server";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,7 +33,7 @@ async function startServer() {
     app.use(viteDevMiddleware);
   }
 
-  if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
+  if (import.meta.BATI_MODULES?.includes("authjs")) {
     /**
      * AuthJS
      *
@@ -68,11 +68,11 @@ async function startServer() {
       "/api/auth/*",
       createMiddleware(Auth, {
         alwaysCallNext: false,
-      })
+      }),
     );
   }
 
-  if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
+  if (import.meta.BATI_MODULES?.includes("telefunc")) {
     /**
      * Telefunc route
      *
@@ -98,8 +98,8 @@ async function startServer() {
         },
         {
           alwaysCallNext: false,
-        }
-      )
+        },
+      ),
     );
   }
 

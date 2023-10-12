@@ -52,7 +52,7 @@ async function startServer() {
 
   const router = createRouter();
 
-  if (import.meta.BATI_MODULES?.includes("auth:authjs")) {
+  if (import.meta.BATI_MODULES?.includes("authjs")) {
     /**
      * AuthJS
      *
@@ -93,7 +93,7 @@ async function startServer() {
     );
   }
 
-  if (import.meta.BATI_MODULES?.includes("rpc:telefunc")) {
+  if (import.meta.BATI_MODULES?.includes("telefunc")) {
     /**
      * Telefunc route
      *

@@ -1,8 +1,9 @@
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import exec, { walk } from "@batijs/build";
 import packageJson from "./package.json" assert { type: "json" };
-import { type Flags, flags as coreFlags, type VikeMeta, withIcon } from "@batijs/core";
-import { execRules } from "@batijs/core/rules";
+import { type VikeMeta, withIcon } from "@batijs/core";
+import { type CategoryLabels, type Feature, features, type Flags, flags as coreFlags } from "@batijs/features";
+import { execRules } from "@batijs/features/rules";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, parse } from "node:path";
@@ -10,10 +11,13 @@ import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import type { BoilerplateDef, Hook } from "./types.js";
 import { rulesMessages } from "./rules.js";
+import sift from "sift";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
+
+type FeatureOrCategory = Flags | CategoryLabels;
 
 function boilerplatesDir() {
   if (existsSync(join(__dirname, "boilerplates", "boilerplates.json"))) {
@@ -40,30 +44,30 @@ function toArg(flag: string | undefined, description: string | undefined): ArgsD
   };
 }
 
-function findDescription(key: string | undefined, boilerplates: BoilerplateDef[]): string | undefined {
-  const bl = boilerplates.find((b) => b.config.flag === key);
-  if (!bl) return;
+function findDescription(key: string | undefined): string | undefined {
+  const feat: Feature | undefined = features.find(f => f.flag === key);
+  if (!feat) return;
 
-  if (bl.description) {
-    return bl.description;
-  } else if (bl.config.name && bl.config.homepage) {
-    return `Include ${bl.config.name} - ${bl.config.homepage}`;
-  } else if (bl.config.name) {
-    return `Include ${bl.config.name}`;
+  if (feat.description) {
+    return feat.description;
+  } else if (feat.label && feat.url) {
+    return `Include ${feat.label} - ${feat.url}`;
+  } else if (feat.label) {
+    return `Include ${feat.label}`;
   }
 }
 
-function printOK(dist: string, flags: string[], boilerplates: BoilerplateDef[]): void {
+function printOK(dist: string, flags: string[]): void {
   const arrow0 = withIcon("→", blueBright);
   const list3 = withIcon("-", undefined, 3);
   const cmd3 = withIcon("$", gray, 3);
   console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
   console.log(list3(green("Typescript")));
   for (const key of flags) {
-    const bl = boilerplates.find((b) => b.config.flag === key);
-    if (!bl || !bl.config.name) continue;
+    const feature = features.find((f) => f.flag === key);
+    if (!feature || !feature.label) continue;
 
-    console.log(list3(green(bl.config.name)));
+    console.log(list3(green(feature.label)));
   }
 
   console.log("\n" + bold(arrow0("Next steps:")));
@@ -144,8 +148,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
 }
 
 function checkRules(flags: string[]) {
-  const flagsWithNs = flags.map((f) => coreFlags.get(f as Flags)!);
-  const potentialRulesMessages = execRules(flagsWithNs, rulesMessages);
+  const potentialRulesMessages = execRules(flags as FeatureOrCategory[], rulesMessages);
 
   const infos = potentialRulesMessages.filter(m => m.type === 'info');
   const warnings = potentialRulesMessages.filter(m => m.type === 'warning');
@@ -200,15 +203,11 @@ async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
 }
 
 function testFlags(flags: string[], bl: BoilerplateDef) {
-  if (bl.config.flag) {
-    return flags.includes(bl.config.flag);
+  if (bl.config.if) {
+    return (sift as unknown as typeof sift.default)(bl.config.if)(flags.map(f => ({ flag: f })));
   }
 
-  if (Array.isArray(bl.config.includeIf)) {
-    return bl.config.includeIf.every((f) => flags.includes(f));
-  }
-
-  // No flag or no includeIf -> no condition, so always add
+  // No condition means always
   return true;
 }
 
@@ -225,14 +224,13 @@ async function run() {
     args: Object.assign(
       {},
       defaultDef,
-      ...Array.from(coreFlags.keys()).map((k) => toArg(k, findDescription(k, boilerplates))),
+      ...coreFlags.map((k) => toArg(k, findDescription(k))),
     ) as Args,
     async run({ args }) {
       await checkArguments(args);
 
       const sources: string[] = [];
       const hooks: string[] = [];
-      const features: string[] = [];
       const flags = Object.entries(args)
         .filter(([, val]) => val === true)
         .map(([key]) => key);
@@ -259,13 +257,9 @@ async function run() {
         }
       }
 
-      for (const flag of flags) {
-        features.push(coreFlags.get(flag as Flags)!);
-      }
-
       const hooksMap = await retrieveHooks(hooks);
       const meta = {
-        BATI_MODULES: features as VikeMeta["BATI_MODULES"],
+        BATI_MODULES: flags as VikeMeta["BATI_MODULES"],
       };
 
       await exec(
@@ -276,7 +270,7 @@ async function run() {
         meta,
       );
 
-      printOK(args.project, flags, boilerplates);
+      printOK(args.project, flags);
 
       for (const oncli of hooksMap.get("cli") ?? []) {
         await oncli(meta);

@@ -1,0 +1,40 @@
+{
+  "name": "@batijs/features",
+  "version": "0.0.88",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:ci": "vitest run",
+    "prepublishOnly": "pnpm run build",
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "Joël Charles",
+  "repository": "https://github.com/batijs/bati",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.18.40",
+    "tsup": "^7.2.0",
+    "vitest": "^0.34.6"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./rules": "./dist/rules.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
+      "rules": [
+        "./dist/rules.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist/"
+  ]
+}

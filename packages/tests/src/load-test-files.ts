@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { flags } from "@batijs/core";
+import { flags } from "@batijs/features";
 import { combinate } from "@batijs/tests-utils";
 import fg from "fast-glob";
 
@@ -32,7 +32,7 @@ export async function loadTestFileMatrix(filepath: string) {
   assert(matrix, `Missing \`matrix\` export in "${filepath}"`);
   assert(Array.isArray(matrix), defaultErrorMessage);
 
-  const validKeys = new Set<unknown>(flags.keys());
+  const validKeys = new Set<unknown>(flags);
 
   for (const m of matrix as unknown[]) {
     if (Array.isArray(m)) {

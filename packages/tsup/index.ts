@@ -1,6 +1,6 @@
-import { defineConfig as _defineConfig, type Options } from "tsup";
-import { copy } from "esbuild-plugin-copy";
 import type { OnResolveArgs } from "esbuild";
+import { copy } from "esbuild-plugin-copy";
+import { defineConfig as _defineConfig, type Options } from "tsup";
 
 function overrideOptions(o: Options): Options {
   return {
@@ -24,7 +24,11 @@ export const defineConfig: typeof _defineConfig = (args) => {
 };
 
 function isAllowedImport(args: OnResolveArgs) {
-  if (args.path === "@batijs/core" || !args.importer.match(/.*\$([^/]+)\.[tj]sx?$/)) {
+  if (
+    args.path === "@batijs/core" ||
+    args.path === "@batijs/features" ||
+    !args.importer.match(/.*\$([^/]+)\.[tj]sx?$/)
+  ) {
     return true;
   }
   return Boolean(args.path.match(/^\.?\.\//));
@@ -51,7 +55,7 @@ export function defineBoilerplateConfig() {
                 return {
                   errors: [
                     {
-                      text: `Trying to import '${args.path}': only '@batijs/core' and relative files can be imported in $[...].ts files`,
+                      text: `Trying to import '${args.path}': only '@batijs/core', '@batijs/features' and relative files can be imported in $[...].ts files`,
                     },
                   ],
                 };

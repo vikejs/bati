@@ -8,7 +8,7 @@
       <Link href="/">
         Welcome
       </Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("rpc:telefunc")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
       <Link href="/todo">
         Todo
       </Link>
@@ -29,7 +29,7 @@ import Content from "../components/Content.vue";
 </script>
 
 <style>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("uikit:tailwindcss")) }}}
+{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
 @import "./tailwind.css"; /* see https://stackoverflow.com/questions/55206901/how-to-import-css-files-in-vue-3-child-components */
 
 {{{ /if }}}
