@@ -62,7 +62,7 @@ function printOK(dist: string, flags: string[]): void {
   const list3 = withIcon("-", undefined, 3);
   const cmd3 = withIcon("$", gray, 3);
   console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
-  console.log(list3(green("Typescript")));
+  console.log(list3(green("Vike")));
   for (const key of flags) {
     const feature = features.find((f) => f.flag === key);
     if (!feature || !feature.label) continue;
@@ -80,7 +80,8 @@ const defaultDef = {
   project: {
     type: "positional",
     description: "Project directory",
-    required: true,
+    required: false,
+    default: 'my-app'
   },
 } as const;
 

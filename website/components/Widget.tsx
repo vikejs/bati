@@ -21,7 +21,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     return keys.filter((ns) => featuresValues()[ns]).map((ns) => `--${featuresValues()[ns]}`);
   }
 
-  const words = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags(), "my-app"]);
+  const words = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags()]);
 
   return (
     <div
