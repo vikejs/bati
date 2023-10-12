@@ -80,7 +80,8 @@ const defaultDef = {
   project: {
     type: "positional",
     description: "Project directory",
-    required: true,
+    required: false,
+    default: 'my-app'
   },
 } as const;
 
