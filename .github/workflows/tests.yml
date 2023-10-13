@@ -68,8 +68,11 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
+      - name: Run check types
+        run: pnpm run check-types
+
       - name: Run tests
-        run: pnpm run -r test
+        run: pnpm run test
 
       - name: Run e2e tests
         working-directory: packages/tests

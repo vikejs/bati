@@ -9,6 +9,7 @@
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
+    "check-types": "pnpm -r check-types",
     "test": "pnpm -r test",
     "build": "pnpm -r build"
   },
