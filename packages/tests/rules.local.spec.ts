@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { combinate } from "@batijs/tests-utils";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
-import { execLocalBati } from "./src/exec-bati";
+import { execLocalBati } from "./src/exec-bati.js";
 
 const matrix = combinate([["solid", "react", "vue"], "authjs"]);
 
