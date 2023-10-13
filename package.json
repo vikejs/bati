@@ -11,6 +11,7 @@
     "watch": "pnpm -r --parallel build --watch",
     "check-types": "pnpm -r check-types",
     "test": "pnpm -r test",
+    "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
     "build": "pnpm -r build"
   },
   "keywords": [],
