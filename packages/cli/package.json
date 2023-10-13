@@ -3,6 +3,7 @@
   "version": "0.0.92",
   "type": "module",
   "scripts": {
+    "check-types": "tsc --noEmit",
     "prerelease": "rimraf ./dist",
     "prepublishOnly": "pnpm run build",
     "build": "rimraf ./dist && tsup"

@@ -4,6 +4,7 @@
   "version": "0.0.92",
   "type": "module",
   "scripts": {
+    "check-types": "tsc --noEmit",
     "start": "esno src/index.ts",
     "test": "vitest run",
     "test:e2e": "esno src/index.ts"

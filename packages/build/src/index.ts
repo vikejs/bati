@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { loadFile, renderSquirrelly, transformAstAndGenerate, type Transformer, type VikeMeta } from "@batijs/core";
-import { queue } from "./queue";
+import { queue } from "./queue.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
 const isWin = process.platform === "win32";

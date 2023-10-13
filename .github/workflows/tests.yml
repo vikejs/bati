@@ -1,7 +1,10 @@
 name: Tests
 
 on:
-  - pull_request
+  pull_request:
+  push:
+    # Ensures cache is computed on main branch so that it can be reused on all PRs
+    branches: [ "main" ]
 
 jobs:
   cache-and-install:
@@ -68,9 +71,11 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
+      - name: Run check types
+        run: pnpm run check-types
+
       - name: Run tests
-        run: pnpm run -r test
+        run: pnpm run test
 
       - name: Run e2e tests
-        working-directory: packages/tests
         run: pnpm run test:e2e

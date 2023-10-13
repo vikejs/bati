@@ -5,6 +5,7 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:ci": "vitest run",
     "build": "tsup"
@@ -32,7 +33,10 @@
     "which": "^4.0.0"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./types": {
+      "types": "./global.d.ts"
+    }
   },
   "typesVersions": {
     "*": {
