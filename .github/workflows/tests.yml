@@ -1,7 +1,10 @@
 name: Tests
 
 on:
-  - pull_request
+  pull_request:
+  push:
+    # Ensures cache is computed on main branch so that it can be reused on all PRs
+    branches: [ "main" ]
 
 jobs:
   cache-and-install:
