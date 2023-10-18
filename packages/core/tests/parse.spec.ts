@@ -1,6 +1,7 @@
 import { parseModule } from "magicast";
 import { assert, test } from "vitest";
-import { renderSquirrelly, transformAst, transformAstAndGenerate } from "../src/parse.js";
+import { transformAst, transformAstAndGenerate } from "../src/parse.js";
+import { transform } from "../src/parse/linters/index.js";
 import { assertEquivalentAst } from "../src/testUtils.js";
 import type { VikeMeta } from "../src/types.js";
 
@@ -352,22 +353,22 @@ test("ast remove comment preceding JSX attribute", () => {
   );
 });
 
-test("squirrelly if telefunc", async () => {
-  const renderedOutput = renderSquirrelly(
+test("vue/template: if telefunc", async () => {
+  const renderedOutput = transform(
     `
 <template>
   <div class="layout">
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
+      <!-- import.meta.BATI_MODULES?.includes("telefunc") -->
       <Link href="/todo">Todo</Link>
-{{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>
 </template>`,
+    "test.vue",
     {
       BATI_MODULES: ["tailwindcss", "telefunc"],
     },
@@ -381,6 +382,7 @@ test("squirrelly if telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
+      
       <Link href="/todo">Todo</Link>
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
@@ -390,22 +392,22 @@ test("squirrelly if telefunc", async () => {
   );
 });
 
-test("squirrelly if not telefunc", async () => {
-  const renderedOutput = renderSquirrelly(
+test("vue/template: if not telefunc", async () => {
+  const renderedOutput = transform(
     `
 <template>
   <div class="layout">
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
+      <!-- import.meta.BATI_MODULES?.includes("telefunc") -->
       <Link href="/todo">Todo</Link>
-{{{ /if }}}
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>
 </template>`,
+    "test.vue",
     {
       BATI_MODULES: ["tailwindcss"],
     },
@@ -419,6 +421,8 @@ test("squirrelly if not telefunc", async () => {
     <Sidebar>
       <Logo />
       <Link href="/">Welcome</Link>
+      
+      
       <Link href="/star-wars">Data Fetching</Link>
     </Sidebar>
     <Content><slot /></Content>
@@ -427,27 +431,40 @@ test("squirrelly if not telefunc", async () => {
   );
 });
 
-test("squirrelly if-else tailwind", async () => {
-  const renderedOutput = renderSquirrelly(
+test("vue/template-conditional: if telefunc", async () => {
+  const renderedOutput = transform(
     `
 <template>
-  <div id="page-container">
-    <div
-      id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
-      class="p-5 pb-12 min-h-screen"
-{{{ #else }}}
-      style="
-        padding: 20px;
-        padding-bottom: 50px;
-        min-height: 100vh;
-      "
-{{{ /if }}}
-    >
-      <slot />
-    </div>
+  <div class="layout">
+    {{ import.meta.BATI_MODULES?.includes("telefunc") ? 'a' : 'b' }}
   </div>
 </template>`,
+    "test.vue",
+    {
+      BATI_MODULES: ["tailwindcss", "telefunc"],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<template>
+  <div class="layout">
+    {{ 'a' }}
+  </div>
+</template>`,
+  );
+});
+
+test("vue/template-conditional: if not telefunc", async () => {
+  const renderedOutput = transform(
+    `
+<template>
+  <div class="layout">
+    {{ import.meta.BATI_MODULES?.includes("telefunc") ? 'a' : 'b' }}
+  </div>
+</template>`,
+    "test.vue",
     {
       BATI_MODULES: ["tailwindcss"],
     },
@@ -457,121 +474,143 @@ test("squirrelly if-else tailwind", async () => {
     renderedOutput,
     `
 <template>
-  <div id="page-container">
-    <div
-      id="page-content"
-      class="p-5 pb-12 min-h-screen"
-    >
-      <slot />
-    </div>
+  <div class="layout">
+    {{ 'b' }}
   </div>
 </template>`,
   );
 });
 
-test("squirrelly if-else not tailwind", async () => {
-  const renderedOutput = renderSquirrelly(
+test("vue/script: if telefunc", async () => {
+  const renderedOutput = transform(
     `
-<template>
-  <div id="page-container">
-    <div
-      id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
-      class="p-5 pb-12 min-h-screen"
-{{{ #else }}}
-      style="
-        padding: 20px;
-        padding-bottom: 50px;
-        min-height: 100vh;
-      "
-{{{ /if }}}
-    >
-      <slot />
-    </div>
-  </div>
-</template>`,
-    {},
+<script>
+  if (import.meta.BATI_MODULES.includes("telefunc")) {
+    console.log("telefunc");
+  }
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: ["telefunc"],
+    },
   );
 
   assert.equal(
     renderedOutput,
     `
-<template>
-  <div id="page-container">
-    <div
-      id="page-content"
-      style="
-        padding: 20px;
-        padding-bottom: 50px;
-        min-height: 100vh;
-      "
-    >
-      <slot />
-    </div>
-  </div>
-</template>`,
+<script>
+  console.log("telefunc");
+</script>`,
   );
 });
 
-test("squirrelly comments", async () => {
-  const renderedOutput = renderSquirrelly(
+test("vue/script: if not telefunc", async () => {
+  const renderedOutput = transform(
     `
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
-<!-- Default <head> (can be overridden by pages) -->
-
-<template>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-</template>`,
-    {},
+<script>
+  if (import.meta.BATI_MODULES.includes("telefunc")) {
+    console.log("telefunc");
+  }
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: [],
+    },
   );
 
   assert.equal(
     renderedOutput,
     `
-<!-- Default <head> (can be overridden by pages) -->
-
-<template>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-</template>`,
+<script>
+  
+</script>`,
   );
 });
 
-test("squirrelly double brackets", async () => {
-  // `{{ state.count }}` is Vue SFC template syntax and we have configured SquirrellyJS to use three
-  // curly brackets as delimiter, so it should leave double brackets untouched.
-  const renderedOutput = renderSquirrelly(
+test("vue/script-comment: if telefunc", async () => {
+  const renderedOutput = transform(
     `
-<template>
-  <button
-    type="button"
-    @click="state.count++"
-  >
-    {{{! /* Double curly brackets are left untouched: */ _}}}
-    Counter {{ state.count }}
-  </button>
-</template>`,
-    {},
+<script>
+  //# import.meta.BATI_MODULES.includes("telefunc")
+  console.log("telefunc");
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: ["telefunc"],
+    },
   );
 
   assert.equal(
     renderedOutput,
     `
-<template>
-  <button
-    type="button"
-    @click="state.count++"
-  >
-    Counter {{ state.count }}
-  </button>
-</template>`,
+<script>
+  
+  console.log("telefunc");
+</script>`,
   );
 });
 
-test("squirrelly unknown reference", async () => {
-  assert.throws(() => renderSquirrelly("{{{ unknown }}}", {}), ReferenceError);
+test("vue/script-comment: if not telefunc", async () => {
+  const renderedOutput = transform(
+    `
+<script>
+  //# import.meta.BATI_MODULES.includes("telefunc")
+  console.log("telefunc");
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: [],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<script>
+  
+  
+</script>`,
+  );
 });
 
-test("squirrelly syntax error", async () => {
-  assert.throws(() => renderSquirrelly("hello {{{", {}), Error);
+test("vue/script-conditional: if telefunc", async () => {
+  const renderedOutput = transform(
+    `
+<script>
+  const x = import.meta.BATI_MODULES.includes("telefunc") ? 'a' : 'b';
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: ["telefunc"],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<script>
+  const x = 'a';
+</script>`,
+  );
+});
+
+test("vue/script-conditional: if not telefunc", async () => {
+  const renderedOutput = transform(
+    `
+<script>
+  const x = import.meta.BATI_MODULES.includes("telefunc") ? 'a' : 'b';
+</script>`,
+    "test.vue",
+    {
+      BATI_MODULES: [],
+    },
+  );
+
+  assert.equal(
+    renderedOutput,
+    `
+<script>
+  const x = 'b';
+</script>`,
+  );
 });

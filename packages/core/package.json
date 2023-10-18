@@ -6,6 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "check-types": "tsc --noEmit",
+    "vue": "esno src/parse/linters/vue.ts",
     "test": "vitest run",
     "test:ci": "vitest run",
     "build": "tsup"
@@ -16,13 +17,27 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/features": "workspace:*",
+    "@eslint/eslintrc": "^2.1.2",
+    "@eslint/js": "^8.51.0",
     "@putout/plugin-remove-unused-variables": "^7.0.0",
     "@types/eslint": "^8.44.4",
+    "@types/eslint__js": "^8.42.2",
+    "@types/estree": "^1.0.3",
     "@types/node": "^16.18.40",
     "@types/which": "^3.0.0",
+    "@typescript-eslint/parser": "^6.7.5",
+    "@typescript-eslint/utils": "^6.8.0",
     "ast-types": "^0.14.2",
     "colorette": "^2.0.20",
     "esbuild": "^0.19.4",
+    "eslint": "^8.51.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-solid": "^0.13.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "esno": "^0.17.0",
+    "from": "^0.1.7",
+    "import": "^0.0.6",
+    "js": "^0.1.0",
     "magicast": "^0.3.0",
     "prettier": "^3.0.3",
     "putout": "^32.2.2",
@@ -30,6 +45,7 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6",
+    "vue-eslint-parser": "^9.3.2",
     "which": "^4.0.0"
   },
   "exports": {

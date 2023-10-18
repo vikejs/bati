@@ -15,7 +15,7 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   visit(tree, {
     visitJSXAttribute(path) {
       const trailingComment = path.value.comments?.[0];
-      if (trailingComment && trailingComment.value.includes("import.meta.BATI_")) {
+      if (trailingComment && trailingComment.value.includes("# import.meta.BATI_")) {
         if (!evalCondition(trailingComment.value.replace("# ", ""), meta)) {
           // remove attribute + comments
           path.prune();
@@ -30,7 +30,7 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
       if (
         namedTypes.ImportDeclaration.check(path.value) &&
         path.value.comments &&
-        path.value.comments.some((c) => c.value.includes("import.meta.BATI_"))
+        path.value.comments.some((c) => c.value.includes("# import.meta.BATI_"))
       ) {
         const comment = path.value.comments.find((c) => c.value.includes("import.meta.BATI_"))!.value;
         if (!evalCondition(comment.replace("# ", ""), meta)) {
