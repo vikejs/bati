@@ -1,14 +1,15 @@
 // /!\ putout packaging is ... old-school, so be sure to directly import all that we need
 
-import * as prettierPluginBabel from "prettier/plugins/babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
+import * as prettierPluginHtml from "prettier/plugins/html";
+import * as prettierPluginTs from "prettier/plugins/typescript";
 import { format } from "prettier/standalone";
 
 export function formatCode(code: string, options: { filepath: string }): Promise<string> {
   return format(code, {
-    parser: "babel-ts",
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    plugins: [prettierPluginBabel, prettierPluginEstree as any],
+    plugins: [prettierPluginTs, prettierPluginEstree as any, prettierPluginHtml],
     filepath: options.filepath,
+    vueIndentScriptAndStyle: true,
   });
 }

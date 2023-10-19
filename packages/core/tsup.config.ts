@@ -29,15 +29,25 @@ export default defineConfig({
 
   // Note: this is for putout because esbuild can't properly treeshake the code, and is not aware
   // that we do not use those dependencies.
-  external: ["acorn-stage3", "hermes-parser", "tenko"],
+  // external: ["acorn-stage3", "hermes-parser", "tenko"],
+  external: ["import-fresh", "espree"],
 
   esbuildOptions(options) {
     // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
     // https://esbuild.github.io/api/#platform
     options.mainFields = ["module", "main"];
   },
-  esbuildPlugins: [putoutFixPlugin],
+  // esbuildPlugins: [putoutFixPlugin],
   banner: {
-    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+    js: `import { createRequire } from 'module';
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
+const require = createRequire(import.meta.url);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);`,
+    // js: `import { createRequire } from 'module';
+    // const require = createRequire(import.meta.url);
+    // `,
   },
 });
