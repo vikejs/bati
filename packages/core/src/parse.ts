@@ -1,7 +1,8 @@
 import { namedTypes, visit } from "ast-types";
 import { generateCode, type ASTNode } from "magicast";
-import { render } from "squirrelly";
-import { cleanImports } from "./cleanup.js";
+// import { render } from "squirrelly";
+import { formatCode } from "./format.js";
+import { transform } from "./parse/linters/index.js";
 import type { VikeMeta } from "./types.js";
 
 function evalCondition(code: string, meta: VikeMeta = {}) {
@@ -121,34 +122,30 @@ export function transformAst(tree: ASTNode, meta: VikeMeta) {
   return tree;
 }
 
-export function transformAstAndGenerate(tree: ASTNode, meta: VikeMeta, options: { filepath?: string } = {}) {
-  const ast = transformAst(tree, meta);
-
-  const code = generateCode(ast).code;
-
-  return cleanImports(code, options);
+export function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
+  return formatCode(transform(code, options.filepath, meta), options);
 }
 
-export function renderSquirrelly(template: string, meta: VikeMeta): string {
-  let output = "";
-  try {
-    output = render(
-      template,
-      {
-        import: {
-          meta,
-        },
-      },
-      {
-        // We use {{{ and }}} as Squirrelly delimiters so that {{ and }} remain untouched in Vue SFC files, in which
-        // they are used in Vue <template>s.
-        tags: ["{{{", "}}}"],
-      },
-    );
-  } catch (e) {
-    console.error("SquirrellyJS rendering error:", (e as Error).message);
-    throw e;
-  }
-
-  return output;
-}
+// export function renderSquirrelly(template: string, meta: VikeMeta): string {
+//   let output = "";
+//   try {
+//     output = render(
+//       template,
+//       {
+//         import: {
+//           meta,
+//         },
+//       },
+//       {
+//         // We use {{{ and }}} as Squirrelly delimiters so that {{ and }} remain untouched in Vue SFC files, in which
+//         // they are used in Vue <template>s.
+//         tags: ["{{{", "}}}"],
+//       },
+//     );
+//   } catch (e) {
+//     console.error("SquirrellyJS rendering error:", (e as Error).message);
+//     throw e;
+//   }
+//
+//   return output;
+// }
