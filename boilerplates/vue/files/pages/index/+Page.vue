@@ -1,11 +1,10 @@
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
+  <!--  import.meta.BATI_MODULES?.includes("tailwindcss"))-->
   <h1 class="font-bold text-3xl pb-4">
-{{{ #else }}}
+    My Vike app
+  </h1>
+  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss"))-->
   <h1>
-{{{ /if }}}
     My Vike app
   </h1>
   This page is:
@@ -18,7 +17,8 @@
 </template>
 
 <script lang="ts">
-  import Counter from '../../components/Counter.vue'
-  const components = { Counter }
-  export default { components }
+import Counter from "../../components/Counter.vue";
+
+const components = { Counter }
+export default { components }
 </script>

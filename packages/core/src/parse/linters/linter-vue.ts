@@ -8,6 +8,22 @@ import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
 
+function getAllCommentsBefore(
+  nodeOrToken: vueParseForESLint.AST.VElement | vueParseForESLint.AST.Token,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tokenStore: any,
+): vueParseForESLint.AST.Token[] {
+  const elementBefore = tokenStore.getTokenBefore("startTag" in nodeOrToken ? nodeOrToken.startTag : nodeOrToken, {
+    includeComments: true,
+    filter: (token: { type: string }) => token.type !== "HTMLWhitespace",
+  });
+
+  if (elementBefore && elementBefore.type === "HTMLComment") {
+    return [...getAllCommentsBefore(elementBefore, tokenStore), elementBefore];
+  }
+  return [];
+}
+
 export default function vueLinterConfig(meta: VikeMeta) {
   const plugin: ESLint.Plugin = {
     rules: {
@@ -26,25 +42,27 @@ export default function vueLinterConfig(meta: VikeMeta) {
                 visitorIfStatement(context, sourceCode, node, meta);
               },
               VElement(node) {
-                const elementBefore = tokenStore.getTokenBefore(node.startTag, {
-                  includeComments: true,
-                  filter: (token: { type: string }) => token.type !== "HTMLWhitespace",
-                });
+                const commentsBefore = getAllCommentsBefore(node, tokenStore);
 
-                if (elementBefore && elementBefore.type === "HTMLComment") {
-                  const condition = extractBatiConditionComment(elementBefore);
+                if (commentsBefore.length > 0) {
+                  const condition = extractBatiConditionComment(commentsBefore[0]);
+
                   if (condition === null) return;
 
                   const testVal = evalCondition(condition, meta);
 
                   context.report({
-                    node: elementBefore,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    node: node as any,
                     message: "bati/vue-velement",
                     *fix(fixer) {
                       if (!testVal) {
                         yield fixer.remove(node as unknown as ESTree.Node);
                       }
-                      yield fixer.remove(elementBefore);
+                      yield fixer.removeRange([
+                        commentsBefore[0].range[0],
+                        commentsBefore[commentsBefore.length - 1].range[1],
+                      ]);
                     },
                   });
                 }

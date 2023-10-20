@@ -1,24 +1,33 @@
 import { assert, describe, test } from "vitest";
 import { formatCode } from "../src/format.js";
+import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
 
 function testIfElse(code: string, expectedIf: string, expectedElse: string) {
   const filename = "test.vue";
 
   test("if", async () => {
-    const renderedOutput = transform(code, filename, {
-      BATI_MODULES: ["vue"],
-    });
+    const renderedOutput = await transformAndFormat(
+      code,
+      {
+        BATI_MODULES: ["vue"],
+      },
+      { filepath: filename },
+    );
 
-    assert.equal((await formatCode(renderedOutput, { filepath: filename })).trim(), expectedIf);
+    assert.equal(renderedOutput.trim(), expectedIf);
   });
 
   test("else", async () => {
-    const renderedOutput = transform(code, filename, {
-      BATI_MODULES: [],
-    });
+    const renderedOutput = await transformAndFormat(
+      code,
+      {
+        BATI_MODULES: [],
+      },
+      { filepath: filename },
+    );
 
-    assert.equal((await formatCode(renderedOutput, { filepath: filename })).trim(), expectedElse);
+    assert.equal(renderedOutput.trim(), expectedElse);
   });
 }
 
@@ -26,6 +35,7 @@ describe("vue/template: comment", () => {
   testIfElse(
     `<template>
   <!-- import.meta.BATI_MODULES?.includes("vue") -->
+  <!-- This comment and the following component should be removed -->
   <Link href="/todo">Todo</Link>
 </template>`,
     `<template>
@@ -129,6 +139,24 @@ describe("vue/script: comment", () => {
   console.log("vue");
 </script>`,
     `<script></script>`,
+  );
+});
+
+describe("vue/style: squirelly", () => {
+  testIfElse(
+    `<style>
+/*{ @if (it.import.meta.BATI_MODULES?.includes("vue")) }*/
+  @import "./vue.css";
+/*{ #else }*/
+  @import "./base.css";
+/*{ /if }*/
+</style>`,
+    `<style>
+  @import "./vue.css";
+</style>`,
+    `<style>
+  @import "./base.css";
+</style>`,
   );
 });
 

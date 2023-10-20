@@ -1,11 +1,14 @@
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
+  <!--  import.meta.BATI_MODULES?.includes("tailwindcss"))-->
   <div
     id="sidebar"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
     class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-{{{ #else }}}
+  >
+    <slot />
+  </div>
+  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss"))-->
+  <div
+    id="sidebar"
     style="
       padding: 20px;
       flex-shrink: 0;
@@ -14,8 +17,9 @@
       line-height: 1.8em;
       border-right: 2px solid #eee;
     "
-{{{ /if }}}
   >
     <slot />
   </div>
 </template>
+<script setup lang="ts">
+</script>

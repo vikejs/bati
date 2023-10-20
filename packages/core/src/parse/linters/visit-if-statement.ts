@@ -11,6 +11,38 @@ function getBlockStatementRange(
   return [node.body[0].range![0], node.body[node.body.length - 1].range![1]];
 }
 
+// If the expression is as such:
+//   {import.meta.BATI_MODULES?.includes("telefunc") ? <Link href="/todo">Todo</Link> : undefined}
+// ensures that it writes:
+//   <Link href="/todo">Todo</Link>
+// instead of:
+//   {<Link href="/todo">Todo</Link>}
+function getJSXRangeToReplace(
+  node:
+    | AST.ESLintConditionalExpression
+    | AST.ESLintIfStatement
+    | ESTree.ConditionalExpression
+    | ESTree.IfStatement
+    | TSESTree.IfStatement
+    | TSESTree.ConditionalExpression,
+  subnode: AST.Node | ESTree.Node | TSESTree.Node,
+  body: string,
+) {
+  return node.type === "ConditionalExpression" &&
+    "parent" in node &&
+    node.parent &&
+    node.parent.type === "JSXExpressionContainer" &&
+    (subnode.type === "JSXElement" || body === "null" || body === "undefined")
+    ? {
+        range: node.parent.range!,
+        body: body === "null" || body === "undefined" ? "" : body,
+      }
+    : {
+        range: node.range!,
+        body,
+      };
+}
+
 export function visitorIfStatement(
   context: Rule.RuleContext,
   sourceCode: SourceCode,
@@ -39,7 +71,8 @@ export function visitorIfStatement(
           yield fixer.replaceTextRange(node.range!, body);
         } else {
           const body = sourceCode.text.slice(...node.consequent.range!);
-          yield fixer.replaceTextRange(node.range!, body);
+          const data = getJSXRangeToReplace(node, node.consequent, body);
+          yield fixer.replaceTextRange(data.range, data.body);
         }
       } else if (node.alternate) {
         if (node.alternate.type === "BlockStatement") {
@@ -47,7 +80,8 @@ export function visitorIfStatement(
           yield fixer.replaceTextRange(node.range!, body);
         } else {
           const body = sourceCode.text.slice(...node.alternate.range!);
-          yield fixer.replaceTextRange(node.range!, body);
+          const data = getJSXRangeToReplace(node, node.alternate, body);
+          yield fixer.replaceTextRange(data.range, data.body);
         }
       } else {
         yield fixer.remove(node as ESTree.Node);

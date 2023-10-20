@@ -1,5 +1,5 @@
 import { afterEach, assert, beforeEach, describe, test } from "vitest";
-import { formatCode } from "../src/format.js";
+import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
 
 const ctx = { jsx: false };
@@ -18,31 +18,43 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
 
   test("if", async () => {
     const filename = ctx.jsx ? "test.tsx" : "test.ts";
-    const renderedOutput = transform(code, filename, {
-      BATI_MODULES: ["react"],
-    });
+    const renderedOutput = await transformAndFormat(
+      code,
+      {
+        BATI_MODULES: ["react"],
+      },
+      { filepath: filename },
+    );
 
-    assert.equal((await formatCode(renderedOutput, { filepath: filename })).trim(), expectedIf);
+    assert.equal(renderedOutput.trim(), expectedIf);
   });
 
   if (expectedElseIf) {
     test("else-if", async () => {
       const filename = ctx.jsx ? "test.tsx" : "test.ts";
-      const renderedOutput = transform(code, filename, {
-        BATI_MODULES: ["solid"],
-      });
+      const renderedOutput = await transformAndFormat(
+        code,
+        {
+          BATI_MODULES: ["solid"],
+        },
+        { filepath: filename },
+      );
 
-      assert.equal((await formatCode(renderedOutput, { filepath: filename })).trim(), expectedElseIf);
+      assert.equal(renderedOutput.trim(), expectedElseIf);
     });
   }
 
   test("else", async () => {
     const filename = ctx.jsx ? "test.tsx" : "test.ts";
-    const renderedOutput = transform(code, filename, {
-      BATI_MODULES: [],
-    });
+    const renderedOutput = await transformAndFormat(
+      code,
+      {
+        BATI_MODULES: [],
+      },
+      { filepath: filename },
+    );
 
-    assert.equal((await formatCode(renderedOutput, { filepath: filename })).trim(), expectedElse);
+    assert.equal(renderedOutput.trim(), expectedElse);
   });
 }
 
@@ -171,6 +183,54 @@ describe("ts: jsx comments", () => {
       {props.children}
     </div>
   );
+};`,
+  );
+});
+
+describe("ts: jsx conditional", () => {
+  beforeEach(() => {
+    ctx.jsx = true;
+  });
+
+  testIfElse(
+    `const x = () => {
+  return (
+    <div>
+      {import.meta.BATI_MODULES?.includes("react") ? "a" : "b"}
+    </div>
+  );
+};`,
+    `const x = () => {
+  return <div>{"a"}</div>;
+};`,
+    `const x = () => {
+  return <div>{"b"}</div>;
+};`,
+  );
+});
+
+describe("ts: jsx conditional with component", () => {
+  beforeEach(() => {
+    ctx.jsx = true;
+  });
+
+  testIfElse(
+    `const x = () => {
+  return (
+    <div>
+      {import.meta.BATI_MODULES?.includes("react") ? <MyComponentA /> : undefined}
+    </div>
+  );
+};`,
+    `const x = () => {
+  return (
+    <div>
+      <MyComponentA />
+    </div>
+  );
+};`,
+    `const x = () => {
+  return <div></div>;
 };`,
   );
 });

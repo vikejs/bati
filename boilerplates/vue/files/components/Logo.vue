@@ -1,15 +1,22 @@
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
+  <!--  import.meta.BATI_MODULES?.includes("tailwindcss"))-->
   <div
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
     class="p-5 mb-2"
-{{{ #else }}}
+  >
+    <a href="/">
+      <img
+        src="../assets/logo.svg"
+        height="64"
+        width="64"
+      >
+    </a>
+  </div>
+  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss"))-->
+  <div
     style="
       margin-top: 20px;
       margin-bottom: 10px;
     "
-{{{ /if }}}
   >
     <a href="/">
       <img
@@ -20,3 +27,5 @@
     </a>
   </div>
 </template>
+<script setup lang="ts">
+</script>

@@ -14,6 +14,7 @@ export function visitorStatementWithComments(
   const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
 
   if (comments.length > 0) {
+    console.log(comments);
     const comment = comments[0];
 
     const condition = extractBatiConditionComment(comment);

@@ -112,6 +112,7 @@ Please report this issue to https://github.com/magne4000/bati`,
           }
         });
       } else if (await fileContainsBatiMeta(p)) {
+        // FIXME do not read file twice
         transformAndWriteQ.add(async () => {
           // We use magicast/recast to transform the file. Only supports javascript and typescript. Vue SFC files are
           // not supported yet, see https://github.com/benjamn/recast/issues/842

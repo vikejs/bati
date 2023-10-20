@@ -1,11 +1,15 @@
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
+  <!--  import.meta.BATI_MODULES?.includes("tailwindcss"))-->
   <button
     type="button"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
     class="inline-block border border-black rounded bg-gray-200 px-2 py-1 text-xs font-medium uppercase leading-normal"
-{{{ /if }}}
+    @click="state.count++"
+  >
+    Counter {{ state.count }}
+  </button>
+  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss"))-->
+  <button
+    type="button"
     @click="state.count++"
   >
     Counter {{ state.count }}
@@ -13,7 +17,8 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { reactive } from "vue";
+
 export default {
   setup() {
     const state = reactive({ count: 0 })
