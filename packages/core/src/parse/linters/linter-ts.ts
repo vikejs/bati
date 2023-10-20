@@ -34,9 +34,9 @@ export default function vueLinterConfig(meta: VikeMeta) {
                   message: "bati/statement-comments",
                   *fix(fixer) {
                     if (!testVal) {
-                      yield fixer.remove(node as ESTree.Node);
+                      yield fixer.removeRange(node.range!);
                     }
-                    yield fixer.remove(comment as unknown as ESTree.Node);
+                    yield fixer.removeRange(comment.range!);
                   },
                 });
               }

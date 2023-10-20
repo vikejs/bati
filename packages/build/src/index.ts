@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { copyFile, mkdir, opendir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { transformAndFormat, type Transformer, type VikeMeta } from "@batijs/core";
 import { queue } from "./queue.js";
@@ -11,14 +11,6 @@ function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
   split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.[tj]sx?$/, "$1");
   return split.join(path.sep).replace(source, dist);
-}
-
-async function safeCopyFile(source: string, destination: string) {
-  const destinationDir = path.dirname(destination);
-  await mkdir(destinationDir, {
-    recursive: true,
-  });
-  await copyFile(source, destination);
 }
 
 async function safeWriteFile(destination: string, content: string) {
@@ -111,11 +103,8 @@ Please report this issue to https://github.com/magne4000/bati`,
             targets.add(target);
           }
         });
-      } else if (await fileContainsBatiMeta(p)) {
-        // FIXME do not read file twice
+      } else {
         transformAndWriteQ.add(async () => {
-          // We use magicast/recast to transform the file. Only supports javascript and typescript. Vue SFC files are
-          // not supported yet, see https://github.com/benjamn/recast/issues/842
           const code = await readFile(p, { encoding: "utf-8" });
           const fileContent = await transformAndFormat(code, meta, {
             filepath: p,
@@ -125,12 +114,6 @@ Please report this issue to https://github.com/magne4000/bati`,
             await safeWriteFile(target, fileContent);
             targets.add(target);
           }
-        });
-      } else {
-        simpleCopyQ.add(async () => {
-          // simple copy
-          await safeCopyFile(p, target);
-          targets.add(target);
         });
       }
     }

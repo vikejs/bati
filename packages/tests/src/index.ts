@@ -21,7 +21,7 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
   if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
-    pkgjson.scripts.lint = pkgjson.scripts.lint.replace('eslint ', 'eslint --max-warnings=0 ');
+    pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
@@ -206,7 +206,7 @@ async function main(context: GlobalContext) {
   // create turbo config
   await createTurboConfig(context);
 
-  // pnpm/bun link in @batijs/tests-utils so that it can be used inside /bati/tmp/*
+  // pnpm/bun link in @batijs/tests-utils so that it can be used inside /tmt/bati/*
   await linkTestUtils();
 
   // pnpm/bun install

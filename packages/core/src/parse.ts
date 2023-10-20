@@ -13,11 +13,14 @@ function guessCodeFormatters(code: string) {
 export function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
   const { eslint, squirelly } = guessCodeFormatters(code);
   let c = code;
+  let format = false;
   if (squirelly) {
     c = renderSquirrelly(c, meta);
+    format = true;
   }
   if (eslint) {
     c = transform(c, options.filepath, meta);
+    format = true;
   }
-  return formatCode(c, options);
+  return format ? formatCode(c, options) : c;
 }

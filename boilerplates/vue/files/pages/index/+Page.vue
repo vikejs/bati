@@ -1,9 +1,9 @@
 <template>
-  <!--  import.meta.BATI_MODULES?.includes("tailwindcss"))-->
+  <!--  import.meta.BATI_MODULES?.includes("tailwindcss") -->
   <h1 class="font-bold text-3xl pb-4">
     My Vike app
   </h1>
-  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss"))-->
+  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss") -->
   <h1>
     My Vike app
   </h1>
