@@ -49,17 +49,17 @@ describe("vue/template: conditional", () => {
   testIfElse(
     `<template>
   <div class="layout">
-    {{ import.meta.BATI_MODULES?.includes("vue") ? 'a' : 'b' }}
+    {{ import.meta.BATI_MODULES?.includes("vue") ? "a" : "b" }}
   </div>
 </template>`,
     `<template>
   <div class="layout">
-    {{ 'a' }}
+    {{ "a" }}
   </div>
 </template>`,
     `<template>
   <div class="layout">
-    {{ 'b' }}
+    {{ "b" }}
   </div>
 </template>`,
   );
@@ -117,13 +117,13 @@ describe("vue/script: if-else statement", () => {
 describe("vue/script: conditional", () => {
   testIfElse(
     `<script>
-  const x = import.meta.BATI_MODULES.includes("vue") ? 'a' : 'b';
+  const x = import.meta.BATI_MODULES.includes("vue") ? "a" : "b";
 </script>`,
     `<script>
-  const x = 'a';
+  const x = "a";
 </script>`,
     `<script>
-  const x = 'b';
+  const x = "b";
 </script>`,
   );
 });
@@ -135,7 +135,6 @@ describe("vue/script: comment", () => {
   console.log("vue");
 </script>`,
     `<script>
-
   console.log("vue");
 </script>`,
     `<script></script>`,
@@ -169,10 +168,10 @@ test("vue formatter", async () => {
   export default {
     data() {
       return {
-        msg: 'Hello world!'
-      }
-    }
-  }
+        msg: "Hello world!",
+      };
+    },
+  };
 </script>
 
 <style>
