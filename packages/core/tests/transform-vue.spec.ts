@@ -35,10 +35,13 @@ describe("vue/template: comment", () => {
   testIfElse(
     `<template>
   <!-- import.meta.BATI_MODULES?.includes("vue") -->
-  <!-- This comment and the following component should be removed -->
+  <!-- This is a comment about the below component -->
+  <!-- This is another comment about the below component -->
   <Link href="/todo">Todo</Link>
 </template>`,
     `<template>
+  <!-- This is a comment about the below component -->
+  <!-- This is another comment about the below component -->
   <Link href="/todo">Todo</Link>
 </template>`,
     `<template></template>`,

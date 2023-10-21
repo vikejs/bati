@@ -58,11 +58,13 @@ export default function vueLinterConfig(meta: VikeMeta) {
                     *fix(fixer) {
                       if (!testVal) {
                         yield fixer.remove(node as unknown as ESTree.Node);
+                        yield fixer.removeRange([
+                          commentsBefore[0].range[0],
+                          commentsBefore[commentsBefore.length - 1].range[1],
+                        ]);
+                      } else {
+                        yield fixer.removeRange([commentsBefore[0].range[0], commentsBefore[0].range[1]]);
                       }
-                      yield fixer.removeRange([
-                        commentsBefore[0].range[0],
-                        commentsBefore[commentsBefore.length - 1].range[1],
-                      ]);
                     },
                   });
                 }
