@@ -45,6 +45,7 @@ export default defineConfig({
   bundle: true,
   esbuildPlugins: [eslintFixPlugin],
   minify: true,
+  // metafile: true,
 
   noExternal: ["espree"],
 
