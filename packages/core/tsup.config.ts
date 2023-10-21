@@ -47,7 +47,7 @@ export default defineConfig({
   minify: true,
   // metafile: true,
 
-  noExternal: ["espree"],
+  external: ["acorn"],
 
   esbuildOptions(options) {
     // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
