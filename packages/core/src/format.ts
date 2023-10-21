@@ -1,5 +1,3 @@
-// /!\ putout packaging is ... old-school, so be sure to directly import all that we need
-
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettierPluginHtml from "prettier/plugins/html";
 import * as prettierPluginTs from "prettier/plugins/typescript";
