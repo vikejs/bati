@@ -1,5 +1,8 @@
 ### Syntax
 
+Bati uses specific syntaxes to generate its boilerplates.
+The global idea is to have templating as code, so that it is easy to write and maintain templates.
+
 <table>
 <tr>
 <th>Snippet</th>
@@ -43,6 +46,7 @@ console.log("B");
 
 </td>
 </tr>
+<tr></tr>
 <tr>
 <td>
 
@@ -67,6 +71,7 @@ const myvar = "B";
 
 </td>
 </tr>
+<tr></tr>
 <tr>
 <td>
 
@@ -209,7 +214,7 @@ any extension
 /*{ /if }*/
 ```
 
-Check [SquirellyJS](https://squirrelly.js.org/docs/syntax/overview) doc for details
+We use [SquirellyJS](https://squirrelly.js.org/docs/syntax/overview) with a custom `/*{ ... }*/` tag
 
 </td>
 <td>
@@ -227,3 +232,8 @@ nothing
 </tr>
 </table>
 
+#### Details
+
+- `BATI` is a global var available at compile time. It is also defined in typings so that it is considered valid in your IDE
+- After compilation, any unused imports are removed
+- After compilation, code is formatted with prettier
