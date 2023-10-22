@@ -10,7 +10,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI_MODULES: ["vue"],
+        BATI: new Set(["vue"]),
       },
       { filepath: filename },
     );
@@ -22,7 +22,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI_MODULES: [],
+        BATI: new Set(),
       },
       { filepath: filename },
     );
@@ -34,7 +34,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
 describe("vue/template: comment", () => {
   testIfElse(
     `<template>
-  <!-- import.meta.BATI_MODULES?.includes("vue") -->
+  <!-- BATI.has("vue") -->
   <!-- This is a comment about the below component -->
   <!-- This is another comment about the below component -->
   <Link href="/todo">Todo</Link>
@@ -52,7 +52,7 @@ describe("vue/template: conditional", () => {
   testIfElse(
     `<template>
   <div class="layout">
-    {{ import.meta.BATI_MODULES?.includes("vue") ? "a" : "b" }}
+    {{ BATI.has("vue") ? "a" : "b" }}
   </div>
 </template>`,
     `<template>
@@ -71,7 +71,7 @@ describe("vue/template: conditional", () => {
 describe("vue/script: if block", () => {
   testIfElse(
     `<script>
-  if (import.meta.BATI_MODULES.includes("vue")) {
+  if (BATI.has("vue")) {
     console.log("vue");
   }
 </script>`,
@@ -85,7 +85,7 @@ describe("vue/script: if block", () => {
 describe("vue/script: if-else block", () => {
   testIfElse(
     `<script>
-  if (import.meta.BATI_MODULES.includes("vue")) {
+  if (BATI.has("vue")) {
     console.log("vue");
   } else {
     console.log("solid");
@@ -103,7 +103,7 @@ describe("vue/script: if-else block", () => {
 describe("vue/script: if-else statement", () => {
   testIfElse(
     `<script>
-  if (import.meta.BATI_MODULES.includes("vue"))
+  if (BATI.has("vue"))
     console.log("vue");
   else
     console.log("solid");
@@ -120,7 +120,7 @@ describe("vue/script: if-else statement", () => {
 describe("vue/script: conditional", () => {
   testIfElse(
     `<script>
-  const x = import.meta.BATI_MODULES.includes("vue") ? "a" : "b";
+  const x = BATI.has("vue") ? "a" : "b";
 </script>`,
     `<script>
   const x = "a";
@@ -134,7 +134,7 @@ describe("vue/script: conditional", () => {
 describe("vue/script: comment", () => {
   testIfElse(
     `<script>
-  //# import.meta.BATI_MODULES.includes("vue")
+  //# BATI.has("vue")
   console.log("vue");
 </script>`,
     `<script>
@@ -147,7 +147,7 @@ describe("vue/script: comment", () => {
 describe("vue/style: squirelly", () => {
   testIfElse(
     `<style>
-/*{ @if (it.import.meta.BATI_MODULES?.includes("vue")) }*/
+/*{ @if (it.BATI.has("vue")) }*/
   @import "./vue.css";
 /*{ #else }*/
   @import "./base.css";
@@ -189,7 +189,7 @@ test("vue formatter", async () => {
 `;
 
   const renderedOutput = transform(code, "test.vue", {
-    BATI_MODULES: ["vue"],
+    BATI: new Set(["vue"]),
   });
 
   assert.equal(await formatCode(renderedOutput, { filepath: "test.vue" }), code);

@@ -50,11 +50,6 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
   }
 }
 
-async function fileContainsBatiMeta(filepath: string) {
-  const code = await readFile(filepath, { encoding: "utf-8" });
-  return code.includes("import.meta.BATI_");
-}
-
 async function importTransformer(p: string) {
   const importFile = isWin ? "file://" + p : p;
   const f = await import(importFile);

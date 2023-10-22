@@ -1,12 +1,12 @@
 <template>
-  <!--  import.meta.BATI_MODULES?.includes("tailwindcss") -->
+  <!-- BATI.has("tailwindcss") -->
   <div
     id="sidebar"
     class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
   >
     <slot />
   </div>
-  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss") -->
+  <!-- !BATI.has("tailwindcss") -->
   <div
     id="sidebar"
     style="

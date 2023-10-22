@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <h1
-        //# import.meta.BATI_MODULES?.includes("tailwindcss")
+        //# BATI.has("tailwindcss")
         className="font-bold text-3xl pb-4"
       >
         My Vike app

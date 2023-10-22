@@ -3,7 +3,7 @@ import type { Flags } from "@batijs/features";
 export type ContentGetter = () => string | Promise<string>;
 
 export interface VikeMeta {
-  BATI_MODULES?: Flags[];
+  BATI: Set<Flags>;
 }
 
 export type TransformerProps = {

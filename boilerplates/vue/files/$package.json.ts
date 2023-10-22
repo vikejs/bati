@@ -3,7 +3,7 @@ import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@b
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
-  if (props.meta.BATI_MODULES?.includes("eslint")) {
+  if (props.meta.BATI.has("eslint")) {
     setScripts(packageJson, {
       lint: {
         value: "eslint --ext .js,.jsx,.ts,.tsx,.vue .",

@@ -8,7 +8,7 @@ function Counter() {
   return (
     <button
       type="button"
-      //# import.meta.BATI_MODULES?.includes("tailwindcss")
+      //# BATI.has("tailwindcss")
       class="inline-block border border-black rounded bg-gray-200 px-2 py-1 text-xs font-medium uppercase leading-normal"
       onClick={() => setCount((count) => count + 1)}
     >

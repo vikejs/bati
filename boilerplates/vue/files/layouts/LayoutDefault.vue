@@ -5,7 +5,7 @@
       <Link href="/">
         Welcome
       </Link>
-      <!-- import.meta.BATI_MODULES?.includes("telefunc") -->
+      <!-- BATI.has("telefunc") -->
       <Link href="/todo">
         Todo
       </Link>
@@ -25,7 +25,7 @@ import Content from "../components/Content.vue";
 </script>
 
 <style>
-/*{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }*/
+/*{ @if (it.BATI.has("tailwindcss")) }*/
 /* see https://stackoverflow.com/questions/55206901/how-to-import-css-files-in-vue-3-child-components */
 @import "./tailwind.css";
 /*{ /if }*/

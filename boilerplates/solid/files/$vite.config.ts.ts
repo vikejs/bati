@@ -4,7 +4,7 @@ export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
   let options: Record<string, unknown> | undefined = undefined;
 
-  if (props.meta.BATI_MODULES?.some((m) => m === "vercel")) {
+  if (props.meta.BATI.has("vercel")) {
     options = {
       vps: {
         prerender: true,

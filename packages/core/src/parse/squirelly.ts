@@ -7,15 +7,7 @@ import type { VikeMeta } from "../types.js";
 export const tags: [string, string] = ["/*{", "}*/"];
 
 export function renderSquirrelly(template: string, meta: VikeMeta): string {
-  return render(
-    template,
-    {
-      import: {
-        meta,
-      },
-    },
-    {
-      tags,
-    },
-  );
+  return render(template, meta, {
+    tags,
+  });
 }
