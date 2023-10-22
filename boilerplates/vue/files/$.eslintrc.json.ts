@@ -9,5 +9,8 @@ export default async function getEslintConfig(props: TransformerProps) {
   eslintConfig.parserOptions.parser = "@typescript-eslint/parser";
   eslintConfig.rules ??= {};
   eslintConfig.rules["vue/multi-word-component-names"] = "off";
+  eslintConfig.rules["vue/singleline-html-element-content-newline"] = "off";
+  eslintConfig.rules["vue/max-attributes-per-line"] = "off";
+  eslintConfig.rules["vue/html-self-closing"] = "off";
   return eslintConfig;
 }

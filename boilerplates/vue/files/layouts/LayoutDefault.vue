@@ -1,6 +1,3 @@
-
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
   <div class="layout">
     <Sidebar>
@@ -8,11 +5,10 @@
       <Link href="/">
         Welcome
       </Link>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("telefunc")) }}}
+      <!-- import.meta.BATI_MODULES?.includes("telefunc") -->
       <Link href="/todo">
         Todo
       </Link>
-{{{ /if }}}
       <Link href="/star-wars">
         Data Fetching
       </Link>
@@ -29,10 +25,11 @@ import Content from "../components/Content.vue";
 </script>
 
 <style>
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
-@import "./tailwind.css"; /* see https://stackoverflow.com/questions/55206901/how-to-import-css-files-in-vue-3-child-components */
+/*{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }*/
+/* see https://stackoverflow.com/questions/55206901/how-to-import-css-files-in-vue-3-child-components */
+@import "./tailwind.css";
+/*{ /if }*/
 
-{{{ /if }}}
 body {
   margin: 0;
   font-family: sans-serif;

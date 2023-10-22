@@ -1,4 +1,4 @@
-export { renderSquirrelly, transformAstAndGenerate } from "./parse.js";
+export { transformAndFormat } from "./parse.js";
 export * from "./loaders.js";
 export * from "./magicast.js";
 export * from "./utils/package.js";

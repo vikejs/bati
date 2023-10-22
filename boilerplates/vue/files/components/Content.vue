@@ -1,23 +1,28 @@
-{{{! /* We are using the SquirrellyJS template syntax */ _}}}
-
 <template>
   <div id="page-container">
+    <!--  import.meta.BATI_MODULES?.includes("tailwindcss") -->
     <div
       id="page-content"
-{{{ @if (it.import.meta.BATI_MODULES?.includes("tailwindcss")) }}}
       class="p-5 pb-12 min-h-screen"
-{{{ #else }}}
+    >
+      <slot />
+    </div>
+    <!--  !import.meta.BATI_MODULES?.includes("tailwindcss") -->
+    <div
+      id="page-content"
       style="
         padding: 20px;
         padding-bottom: 50px;
         min-height: 100vh;
       "
-{{{ /if }}}
     >
       <slot />
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+</script>
 
 <style>
 /* Page Transition Animation */
@@ -33,3 +38,4 @@ body.page-is-transitioning #page-content {
   transition: opacity 0.3s ease-in-out;
 }
 </style>
+
