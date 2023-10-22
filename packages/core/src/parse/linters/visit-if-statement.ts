@@ -12,7 +12,7 @@ function getBlockStatementRange(
 }
 
 // If the expression is as such:
-//   {import.meta.BATI_MODULES?.includes("telefunc") ? <Link href="/todo">Todo</Link> : undefined}
+//   {BATI.has("telefunc") ? <Link href="/todo">Todo</Link> : undefined}
 // ensures that it writes:
 //   <Link href="/todo">Todo</Link>
 // instead of:

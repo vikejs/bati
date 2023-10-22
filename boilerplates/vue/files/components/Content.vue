@@ -1,13 +1,13 @@
 <template>
   <div id="page-container">
-    <!--  import.meta.BATI_MODULES?.includes("tailwindcss") -->
+    <!-- BATI.has("tailwindcss") -->
     <div
       id="page-content"
       class="p-5 pb-12 min-h-screen"
     >
       <slot />
     </div>
-    <!--  !import.meta.BATI_MODULES?.includes("tailwindcss") -->
+    <!-- !BATI.has("tailwindcss") -->
     <div
       id="page-content"
       style="

@@ -4,7 +4,7 @@ import { features } from "@batijs/features";
 const frameworkFeatures = features.filter((f) => f.category === "Framework").map((f) => f.flag);
 
 export default function createDefaultIndexHtml(props: TransformerProps) {
-  if (props.meta.BATI_MODULES?.some((m) => frameworkFeatures.includes(m))) return null;
+  if (Array.from(props.meta.BATI).some((m) => frameworkFeatures.includes(m))) return null;
 
   return `<html>
 <head>

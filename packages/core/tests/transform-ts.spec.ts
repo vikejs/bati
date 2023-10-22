@@ -21,7 +21,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI_MODULES: ["react"],
+        BATI: new Set(["react"]),
       },
       { filepath: filename },
     );
@@ -35,7 +35,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       const renderedOutput = await transformAndFormat(
         code,
         {
-          BATI_MODULES: ["solid"],
+          BATI: new Set(["solid"]),
         },
         { filepath: filename },
       );
@@ -49,7 +49,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI_MODULES: [],
+        BATI: new Set(),
       },
       { filepath: filename },
     );
@@ -60,7 +60,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
 
 describe("ts: if block", () => {
   testIfElse(
-    `if (import.meta.BATI_MODULES.includes("react")) {
+    `if (BATI.has("react")) {
     content = { ...content, jsx: "react" };
   }`,
     `content = { ...content, jsx: "react" };`,
@@ -70,7 +70,7 @@ describe("ts: if block", () => {
 
 describe("ts: if-else block", () => {
   testIfElse(
-    `if (import.meta.BATI_MODULES.includes("react")) {
+    `if (BATI.has("react")) {
     content = { ...content, jsx: "react" };
   } else {
     console.log("NOTHING TO DO");
@@ -82,9 +82,9 @@ describe("ts: if-else block", () => {
 
 describe("ts: if-elseif-else block", () => {
   testIfElse(
-    `if (import.meta.BATI_MODULES.includes("react")) {
+    `if (BATI.has("react")) {
     content = { ...content, jsx: "react" };
-  } else if (import.meta.BATI_MODULES.includes("solid")) {
+  } else if (BATI.has("solid")) {
     content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
   } else {
     console.log("NOTHING TO DO");
@@ -97,9 +97,9 @@ describe("ts: if-elseif-else block", () => {
 
 describe("ts: if-elseif-else statement", () => {
   testIfElse(
-    `if (import.meta.BATI_MODULES.includes("react"))
+    `if (BATI.has("react"))
     content = { ...content, jsx: "react" };
-  else if (import.meta.BATI_MODULES.includes("solid"))
+  else if (BATI.has("solid"))
     content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
   else
     console.log("NOTHING TO DO");`,
@@ -111,9 +111,9 @@ describe("ts: if-elseif-else statement", () => {
 
 describe("ts: conditional", () => {
   testIfElse(
-    `import.meta.BATI_MODULES.includes("react")
+    `BATI.has("react")
     ? 1
-    : import.meta.BATI_MODULES.includes("solid")
+    : BATI.has("solid")
     ? 2
     : null;`,
     `1;`,
@@ -124,7 +124,7 @@ describe("ts: conditional", () => {
 
 describe("ts: comments", () => {
   testIfElse(
-    `//# import.meta.BATI_MODULES?.includes("react")
+    `//# BATI.has("react")
 import "react";`,
     `import "react";`,
     ``,
@@ -141,9 +141,9 @@ describe("ts: jsx comments", () => {
   return (
     <div
       id="sidebar"
-      //# import.meta.BATI_MODULES?.includes("react")
+      //# BATI.has("react")
       class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-      //# !import.meta.BATI_MODULES?.includes("react")
+      //# !BATI.has("react")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -196,7 +196,7 @@ describe("ts: jsx conditional", () => {
     `const x = () => {
   return (
     <div>
-      {import.meta.BATI_MODULES?.includes("react") ? "a" : "b"}
+      {BATI.has("react") ? "a" : "b"}
     </div>
   );
 };`,
@@ -218,7 +218,7 @@ describe("ts: jsx conditional with component", () => {
     `const x = () => {
   return (
     <div>
-      {import.meta.BATI_MODULES?.includes("react") ? <MyComponentA /> : undefined}
+      {BATI.has("react") ? <MyComponentA /> : undefined}
     </div>
   );
 };`,
@@ -239,12 +239,12 @@ test("ts: if throws", () => {
   assert.throws(
     () =>
       transform(
-        `if (import.meta.BATI_MODULES.includes(someVar)) {
+        `if (BATI.has(someVar)) {
     content = { ...content, jsx: "react" };
   }`,
         "test.ts",
         {
-          BATI_MODULES: ["react"],
+          BATI: new Set(["react"]),
         },
       ),
     ReferenceError,
@@ -256,9 +256,9 @@ describe("remove unused imports", async () => {
     `import { solid } from "solid";
 import react from "react";
 
-export const framework = import.meta.BATI_MODULES.includes("react")
+export const framework = BATI.has("react")
 ? react()
-: import.meta.BATI_MODULES.includes("solid")
+: BATI.has("solid")
 ? solid()
 : null;`,
     `import react from "react";

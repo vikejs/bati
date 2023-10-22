@@ -6,7 +6,7 @@ import { renderPage } from "vike/server";
 
 const router = createRouter();
 
-if (import.meta.BATI_MODULES?.includes("telefunc")) {
+if (BATI.has("telefunc")) {
   /**
    * Telefunc route
    *
@@ -29,7 +29,7 @@ if (import.meta.BATI_MODULES?.includes("telefunc")) {
   });
 }
 
-if (import.meta.BATI_MODULES?.includes("authjs")) {
+if (BATI.has("authjs")) {
   /**
    * AuthJS
    *

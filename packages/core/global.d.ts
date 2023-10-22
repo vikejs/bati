@@ -1,9 +1,17 @@
-// This file is an augmentation to the built-in ImportMeta interface
-// Thus cannot contain any top-level imports
-// <https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation>
+import type { Flags } from "@batijs/features";
 
-/* eslint-disable @typescript-eslint/consistent-type-imports */
+declare global {
+  const BATI: Set<Flags>;
 
-interface ImportMeta {
-  BATI_MODULES?: (typeof import("@batijs/features"))["Flags"][];
+  namespace NodeJS {
+    interface Global {
+      // Reference our above type,
+      // this allows global.debug to be used anywhere in our code.
+      BATI: Set<Flags>;
+    }
+  }
 }
+
+// By using export {}, we mark the file as an external module.
+// When augmenting the global scope, you are required to make the file as a module
+export {};

@@ -259,8 +259,8 @@ async function run() {
       }
 
       const hooksMap = await retrieveHooks(hooks);
-      const meta = {
-        BATI_MODULES: flags as VikeMeta["BATI_MODULES"],
+      const meta: VikeMeta = {
+        BATI: new Set(flags as Flags[]),
       };
 
       await exec(

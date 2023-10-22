@@ -6,7 +6,7 @@
     content="width=device-width, initial-scale=1"
   >
 
-  <!-- import.meta.BATI_MODULES?.includes("plausible.io") -->
+  <!-- BATI.has("plausible.io") -->
   <!-- See https://plausible.io/docs/plausible-script -->
   <!-- TODO: update data-domain -->
   <component :is="'script'" defer

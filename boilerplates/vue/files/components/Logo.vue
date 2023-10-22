@@ -1,5 +1,5 @@
 <template>
-  <!--  import.meta.BATI_MODULES?.includes("tailwindcss") -->
+  <!-- BATI.has("tailwindcss") -->
   <div
     class="p-5 mb-2"
   >
@@ -11,7 +11,7 @@
       >
     </a>
   </div>
-  <!--  !import.meta.BATI_MODULES?.includes("tailwindcss") -->
+  <!-- !BATI.has("tailwindcss") -->
   <div
     style="
       margin-top: 20px;
