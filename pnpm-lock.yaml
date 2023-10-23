@@ -506,7 +506,7 @@ importers:
         version: 16.18.59
       '@vite-plugin-vercel/vike':
         specifier: ^2.0.0
-        version: 2.0.0(vike@0.4.143)(vite-plugin-vercel@0.3.7)(vite@4.5.0)
+        version: 2.0.0(vike@0.4.143)(vite-plugin-vercel@2.0.0)(vite@4.5.0)
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -517,8 +517,8 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
       vite-plugin-vercel:
-        specifier: ^0.3.7
-        version: 0.3.7(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0)
+        specifier: ^2.0.0
+        version: 2.0.0(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0)
 
   boilerplates/vue:
     dependencies:
@@ -3395,6 +3395,10 @@ packages:
       vite: 4.5.0(@types/node@16.18.59)
     dev: true
 
+  /@vercel/build-utils@7.2.2:
+    resolution: {integrity: sha512-CUMgVKTJCba5tGe+KZaVvwGUCsuSeuNEmPIzMggIMDtzdqllRu8+QjjIhEI+unHoYvUgGfen6Z5lMeMo9Ne0qQ==}
+    dev: true
+
   /@vercel/routing-utils@3.0.0:
     resolution: {integrity: sha512-u+SoHnL+RzRQIRP+YxvigzzKXQcbgYQF9qCTIuWuoLw5h9thIYWcDJvz3KxrUzxjGZ3dWboXA29KAlT6eeaeFw==}
     dependencies:
@@ -3403,7 +3407,7 @@ packages:
       ajv: 6.12.6
     dev: true
 
-  /@vite-plugin-vercel/vike@2.0.0(vike@0.4.143)(vite-plugin-vercel@0.3.7)(vite@4.5.0):
+  /@vite-plugin-vercel/vike@2.0.0(vike@0.4.143)(vite-plugin-vercel@2.0.0)(vite@4.5.0):
     resolution: {integrity: sha512-iJ/GD5zmFZJqchzAZj9dsJQ0wCyZLByqF/+hXJ2jqqPsWtg+U6dWTZXfDzOcQ38tfzrjgodx8Ke2mUArX+3nAg==}
     peerDependencies:
       vike: '*'
@@ -3414,7 +3418,7 @@ packages:
       nanoid: 4.0.2
       vike: 0.4.143(vite@4.5.0)
       vite: 4.5.0(@types/node@16.18.59)
-      vite-plugin-vercel: 0.3.7(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0)
+      vite-plugin-vercel: 2.0.0(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0)
     dev: true
 
   /@vitejs/plugin-react@4.1.0(vite@4.5.0):
@@ -4159,7 +4163,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
   /confusing-browser-globals@1.0.11:
     resolution: {integrity: sha512-JsPKdmh8ZkmnHxDk55FZ1TqVLvEQTvoByJZRN9jzI0UjxK/QgAmsphz7PGtqgPieQZ/CQcHWXCR7ATDNhGe+YA==}
@@ -4987,6 +4991,14 @@ packages:
   /etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+    dev: true
+
+  /eval@0.1.8:
+    resolution: {integrity: sha512-EzV94NYKoO09GLXGjXj9JIlXijVck4ONSr5wiCWDvhsvj5jxSrzTmRU/9C1DyB6uToszLs8aifA6NQ7lEQdvFw==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      '@types/node': 16.18.59
+      require-like: 0.1.2
     dev: true
 
   /execa@5.1.1:
@@ -6787,6 +6799,10 @@ packages:
       jsesc: 0.5.0
     dev: true
 
+  /require-like@0.1.2:
+    resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
+    dev: true
+
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -7892,10 +7908,10 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-vercel@0.3.7(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0):
-    resolution: {integrity: sha512-pN/t/Gcq/mU1DFoFwoyIGlcyA70nLXiRzpGRiObGLqy82FkhDeUYkK7KKdlBafFmZj9N/YzIw9NCqcPig/HEFA==}
+  /vite-plugin-vercel@2.0.0(@vite-plugin-vercel/vike@2.0.0)(vike@0.4.143)(vite@4.5.0):
+    resolution: {integrity: sha512-Zyyz+RnZpfM6RZUlHXrf3/sGWUSPAWmME87tIONZ5Lezt4LgmYrX3l/9gYxWE7yFMqMIR5VCSGX0fy7ITPWD0Q==}
     peerDependencies:
-      '@vite-plugin-vercel/vike': 0.4.2
+      '@vite-plugin-vercel/vike': 2.0.0
       vike: '*'
       vite: ^4.2.0
     peerDependenciesMeta:
@@ -7905,10 +7921,13 @@ packages:
         optional: true
     dependencies:
       '@brillout/libassert': 0.5.8
+      '@vercel/build-utils': 7.2.2
       '@vercel/routing-utils': 3.0.0
-      '@vite-plugin-vercel/vike': 2.0.0(vike@0.4.143)(vite-plugin-vercel@0.3.7)(vite@4.5.0)
+      '@vite-plugin-vercel/vike': 2.0.0(vike@0.4.143)(vite-plugin-vercel@2.0.0)(vite@4.5.0)
       esbuild: 0.19.5
+      eval: 0.1.8
       fast-glob: 3.3.1
+      magicast: 0.3.0
       vike: 0.4.143(vite@4.5.0)
       vite: 4.5.0(@types/node@16.18.59)
       zod: 3.22.4
