@@ -66,7 +66,14 @@ jobs:
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
       - name: Install verdaccio
-        run: pnpm install --global verdaccio
+        run: pnpm install --global verdaccio npm-login-cli
+
+      - name: Login to verdaccio
+        run: npm-login-cli
+        env:
+          NPM_USERNAME: bati
+          NPM_PASSWORD: bati
+          NPM_EMAIL: bati@example.com
 
       - name: Run verdaccio (windows)
         run: |
