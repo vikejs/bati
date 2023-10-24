@@ -41,8 +41,6 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         # At the moment of writing:
         # - bun does not support Windows
-        # - bun fails to install some dependencies on macos with node@18
-        # if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
         if: matrix.os != 'windows-latest'
         name: Install bun
         with:
@@ -74,6 +72,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
       - name: Install global dependencies
+        if: matrix.os == 'ubuntu-latest'
         run: pnpm install --global npm-cli-login
 
       - name: Login to verdaccio

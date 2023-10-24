@@ -10,6 +10,9 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
   const digest = flags.join("--") || "empty";
 
   if (context.localRepository) {
+    // local verdaccio server is running.
+    // This is better than using the local dist build directly
+    // as we are also testing that the generated package dependencies are properly bundled.
     await execa(
       "npm",
       [
