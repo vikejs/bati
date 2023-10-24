@@ -1,4 +1,5 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -167,6 +168,18 @@ function execTurborepo(context: GlobalContext) {
   });
 }
 
+function isVerdaccioRunning() {
+  return new Promise<boolean>((resolve) => {
+    const req = http.get("http://localhost:4873/registry", {
+      timeout: 4000,
+    });
+    req.on("error", () => resolve(false));
+    req.on("close", () => resolve(true));
+
+    req.end();
+  });
+}
+
 async function main(context: GlobalContext) {
   await initTmpDir(context);
 
@@ -217,9 +230,10 @@ async function main(context: GlobalContext) {
 }
 
 // init context
-const context: GlobalContext = { tmpdir: "" };
+const context: GlobalContext = { tmpdir: "", localRepository: false };
 
 try {
+  context.localRepository = await isVerdaccioRunning();
   await main(context);
 } finally {
   if (context.tmpdir) {
