@@ -9,6 +9,14 @@ on:
 jobs:
   cache-and-install:
     runs-on: ${{ matrix.os }}
+
+    services:
+      verdaccio:
+        # See https://github.com/actions/runner/issues/822#issuecomment-1524826092
+        image: ${{ (matrix.os == 'ubuntu-latest') && 'verdaccio/verdaccio' || '' }}
+        ports:
+          - 4873:4873
+
     strategy:
       matrix:
         node: ["16", "18"]
@@ -65,22 +73,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
-      - name: Install verdaccio
-        run: pnpm install --global verdaccio npm-cli-login
-
-      - name: Run verdaccio (windows)
-        run: |
-          $env:RUNNER_TRACKING_ID=""
-          start /b verdaccio
-        if: matrix.os == 'windows-latest'
-        shell: powershell
-
-      - name: Run verdaccio (linux/macos)
-        run: RUNNER_TRACKING_ID="" && (nohup verdaccio&)
-        if: matrix.os != 'windows-latest'
-        shell: bash
+      - name: Install global dependencies
+        run: pnpm install --global npm-cli-login
 
       - name: Login to verdaccio
+        if: matrix.os == 'ubuntu-latest'
         run: npm-cli-login
         env:
           NPM_USER: bati
@@ -94,7 +91,8 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
-      - name: Realease in local repo
+      - name: Release in local repo
+        if: matrix.os == 'ubuntu-latest'
         run: pnpm run release:local
 
       - name: Run check types
