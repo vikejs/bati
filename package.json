@@ -1,13 +1,13 @@
 {
   "name": "bati",
   "private": true,
-  "version": "0.0.102-local.2",
+  "version": "0.0.102-local.4",
   "description": "@batijs monorepo",
   "scripts": {
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
-    "release:local": "pnpm -r prerelease && bumpp --preid local prerelease && pnpm run publish --no-git-checks --tag local --registry http://localhost:4873",
+    "release:local": "pnpm -r prerelease && bumpp -y --no-push --no-tag --no-commit --preid local prerelease && pnpm run publish --no-git-checks --tag local --registry http://localhost:4873",
     "publish": "pnpm -r build && pnpm -r publish",
     "watch": "pnpm -r --parallel build --watch",
     "check-types": "pnpm -r check-types",

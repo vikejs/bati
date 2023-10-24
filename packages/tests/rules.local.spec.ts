@@ -1,4 +1,5 @@
 import { mkdtemp, rm } from "node:fs/promises";
+import * as http from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { combinate } from "@batijs/tests-utils";
@@ -10,12 +11,25 @@ const matrix = combinate([["solid", "react", "vue"], "authjs"]);
 function prepareAndExecute(flags: string[]) {
   const context = {
     tmpdir: "",
+    localRepository: false,
   };
 
   // Prepare tests:
   // - Create a temp dir
   beforeAll(async () => {
     context.tmpdir = await mkdtemp(join(tmpdir(), "bati-"));
+
+    const isVerdaccioRunning = new Promise<boolean>((resolve) => {
+      const req = http.get("http://localhost:4873/registry", {
+        timeout: 4000,
+      });
+      req.on("error", () => resolve(false));
+      req.on("close", () => resolve(true));
+
+      req.end();
+    });
+
+    context.localRepository = await isVerdaccioRunning;
   }, 5000);
 
   // Cleanup tests:

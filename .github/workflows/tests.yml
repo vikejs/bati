@@ -9,6 +9,14 @@ on:
 jobs:
   cache-and-install:
     runs-on: ${{ matrix.os }}
+
+    services:
+      verdaccio:
+        # See https://github.com/actions/runner/issues/822#issuecomment-1524826092
+        image: ${{ (matrix.os == 'ubuntu-latest') && 'verdaccio/verdaccio' || '' }}
+        ports:
+          - 4873:4873
+
     strategy:
       matrix:
         node: ["16", "18"]
@@ -33,12 +41,10 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         # At the moment of writing:
         # - bun does not support Windows
-        # - bun fails to install some dependencies on macos with node@18
-        # if: matrix.os != 'windows-latest' && !(matrix.os == 'macos-latest' && matrix.node == '18')
         if: matrix.os != 'windows-latest'
         name: Install bun
         with:
-          bun-version: "1.0.4"
+          bun-version: "1.0.6"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -65,11 +71,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
+      - name: Install global dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: pnpm install --global npm-cli-login
+
+      - name: Login to verdaccio
+        if: matrix.os == 'ubuntu-latest'
+        run: npm-cli-login
+        env:
+          NPM_USER: bati
+          NPM_PASS: bati
+          NPM_EMAIL: bati@example.com
+          NPM_REGISTRY: http://localhost:4873
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build packages
         run: pnpm run build
+
+      - name: Release in local repo
+        if: matrix.os == 'ubuntu-latest'
+        run: pnpm run release:local
 
       - name: Run check types
         run: pnpm run check-types
