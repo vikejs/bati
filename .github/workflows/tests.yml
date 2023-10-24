@@ -68,14 +68,6 @@ jobs:
       - name: Install verdaccio
         run: pnpm install --global verdaccio npm-cli-login
 
-      - name: Login to verdaccio
-        run: npm-cli-login
-        env:
-          NPM_USER: bati
-          NPM_PASS: bati
-          NPM_EMAIL: bati@example.com
-          NPM_REGISTRY: http://localhost:4873
-
       - name: Run verdaccio (windows)
         run: |
           $env:RUNNER_TRACKING_ID=""
@@ -87,6 +79,14 @@ jobs:
         run: RUNNER_TRACKING_ID="" && (nohup verdaccio&)
         if: matrix.os != 'windows-latest'
         shell: bash
+
+      - name: Login to verdaccio
+        run: npm-cli-login
+        env:
+          NPM_USER: bati
+          NPM_PASS: bati
+          NPM_EMAIL: bati@example.com
+          NPM_REGISTRY: http://localhost:4873
 
       - name: Install dependencies
         run: pnpm install
