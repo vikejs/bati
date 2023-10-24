@@ -76,7 +76,7 @@ jobs:
         shell: powershell
 
       - name: Run verdaccio (linux/macos)
-        run: RUNNER_TRACKING_ID="" && verdaccio
+        run: RUNNER_TRACKING_ID="" && (nohup verdaccio&)
         if: matrix.os != 'windows-latest'
         shell: bash
 
