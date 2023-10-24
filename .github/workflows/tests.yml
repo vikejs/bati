@@ -9,6 +9,13 @@ on:
 jobs:
   cache-and-install:
     runs-on: ${{ matrix.os }}
+
+    services:
+      verdaccio:
+        image: verdaccio/verdaccio
+        ports:
+          - 4873:4873
+
     strategy:
       matrix:
         node: ["16", "18"]
@@ -65,20 +72,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
-      - name: Install verdaccio
-        run: pnpm install --global verdaccio npm-cli-login
-
-      - name: Run verdaccio (windows)
-        run: |
-          $env:RUNNER_TRACKING_ID=""
-          start verdaccio
-        if: matrix.os == 'windows-latest'
-        shell: powershell
-
-      - name: Run verdaccio (linux/macos)
-        run: RUNNER_TRACKING_ID="" && (nohup verdaccio&)
-        if: matrix.os != 'windows-latest'
-        shell: bash
+      - name: Install global dependencies
+        run: pnpm install --global npm-cli-login
 
       - name: Login to verdaccio
         run: npm-cli-login
