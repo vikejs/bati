@@ -22,7 +22,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
         digest,
       ],
       {
-        timeout: 5000,
+        timeout: 15000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
       },
     );
