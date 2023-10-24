@@ -32,6 +32,23 @@ const eslintFixPlugin: Plugin = {
 
       return { contents, loader: "default" };
     });
+
+    // unsupported require.resolve
+    build.onLoad({ filter: /eslint\/lib\/rule-tester\/rule-tester\.js$/ }, async (args) => {
+      let contents = await readFile(args.path, "utf8");
+
+      if (!contents.includes(`require.resolve("espree")`)) {
+        throw new Error(
+          '[eslintFixPlugin] __require.resolve("espree") usage updated, eslint-fix-plugin probably needs to be updated',
+        );
+      }
+
+      contents = contents
+        .replace(`const espreePath = require.resolve("espree");`, ``)
+        .replace(`config.parser = espreePath;`, `config.parser = "espree";`);
+
+      return { contents, loader: "default" };
+    });
   },
 };
 
@@ -56,12 +73,12 @@ export default defineConfig({
   },
   banner: {
     js: `import { createRequire } from 'module';
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
+import { fileURLToPath as BATI_fileURLToPath } from "node:url";
+import { dirname as BATI_dirname } from "node:path";
 const require = createRequire(import.meta.url);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = BATI_fileURLToPath(import.meta.url);
+const __dirname = BATI_dirname(__filename);
 `,
   },
 });
