@@ -1,3 +1,4 @@
+import { basename } from "node:path";
 import { Linter } from "eslint";
 
 export function getLinter() {
@@ -9,7 +10,7 @@ export function getLinter() {
 export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename: string) {
   const linter = getLinter();
 
-  const report = linter.verifyAndFix(code, config, filename);
+  const report = linter.verifyAndFix(code, config, basename(filename));
 
   if (report.messages.length > 0) {
     throw new Error(

@@ -15,24 +15,6 @@ const eslintFixPlugin: Plugin = {
       return { contents, loader: "default" };
     });
 
-    // eslint doesn't allow to override `basePath` with flat config
-    build.onLoad({ filter: /eslint\/lib\/linter\/linter\.js$/ }, async (args) => {
-      let contents = await readFile(args.path, "utf8");
-
-      if (!contents.includes(`configArray = new FlatConfigArray(config);`)) {
-        throw new Error(
-          "[eslintFixPlugin] FlatConfigArray usage updated, eslint-fix-plugin probably needs to be updated",
-        );
-      }
-
-      contents = contents.replace(
-        `configArray = new FlatConfigArray(config);`,
-        `configArray = new FlatConfigArray(config, { shouldIgnore: false, basePath: path.dirname(options.filename) });`,
-      );
-
-      return { contents, loader: "default" };
-    });
-
     // unsupported require.resolve
     build.onLoad({ filter: /eslint\/lib\/rule-tester\/rule-tester\.js$/ }, async (args) => {
       let contents = await readFile(args.path, "utf8");
