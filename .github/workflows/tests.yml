@@ -71,7 +71,7 @@ jobs:
       - name: Run verdaccio (windows)
         run: |
           $env:RUNNER_TRACKING_ID=""
-          verdaccio
+          start verdaccio
         if: matrix.os == 'windows-latest'
         shell: powershell
 
@@ -85,6 +85,9 @@ jobs:
 
       - name: Build packages
         run: pnpm run build
+
+      - name: Realease in local repo
+        run: pnpm run release:local
 
       - name: Run check types
         run: pnpm run check-types
