@@ -47,6 +47,8 @@ export default defineConfig({
   minify: true,
   // metafile: true,
 
+  noExternal: ["espree"],
+
   esbuildOptions(options) {
     // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
     // https://esbuild.github.io/api/#platform
