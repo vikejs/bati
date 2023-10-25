@@ -48,6 +48,25 @@ describe("vue/template: comment", () => {
   );
 });
 
+describe("vue/template: identifier", () => {
+  testIfElse(
+    `<template>
+  <div
+    BATI.has(vue)?class="vue"
+    !BATI.has(vue)?class="default"
+  >
+    Todo
+  </div>
+</template>`,
+    `<template>
+  <div class="vue">Todo</div>
+</template>`,
+    `<template>
+  <div class="default">Todo</div>
+</template>`,
+  );
+});
+
 describe("vue/template: conditional", () => {
   testIfElse(
     `<template>

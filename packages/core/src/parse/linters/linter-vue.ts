@@ -3,7 +3,7 @@ import { ESLint, Linter } from "eslint";
 import type * as ESTree from "estree";
 import * as vueParseForESLint from "vue-eslint-parser";
 import type { VikeMeta } from "../../types.js";
-import { evalCondition, extractBatiConditionComment } from "../eval.js";
+import { evalCondition, extractBatiConditionComment, extractBatiConditionHTMLAttribute } from "../eval.js";
 import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
@@ -40,6 +40,26 @@ export default function vueLinterConfig(meta: VikeMeta) {
               },
               IfStatement(node) {
                 visitorIfStatement(context, sourceCode, node, meta);
+              },
+              VIdentifier(node) {
+                const condition = extractBatiConditionHTMLAttribute(node.name);
+
+                if (condition === null) return;
+
+                const testVal = evalCondition(condition, meta);
+
+                context.report({
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  node: node as any,
+                  message: "bati/vue-videntifier",
+                  *fix(fixer) {
+                    if (!testVal) {
+                      yield fixer.remove(node.parent as unknown as ESTree.Node);
+                    } else {
+                      yield fixer.removeRange([node.range[0], node.range[0] + node.name.indexOf("?") + 1]);
+                    }
+                  },
+                });
               },
               VElement(node) {
                 const commentsBefore = getAllCommentsBefore(node, tokenStore);
