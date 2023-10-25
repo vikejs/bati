@@ -23,9 +23,9 @@ function info(value: ValidComponent): RuleMessage {
 
 export const rulesMessages = {
   [RulesMessage.ERROR_AUTH_R_SERVER]: error(() => {
-    const { inViewFeatures } = useContext(StoreContext);
+    const { selectedFeatures } = useContext(StoreContext);
 
-    const selectedAuth = createMemo(() => inViewFeatures().Auth?.features.find((f) => f.selected)?.label);
+    const selectedAuth = createMemo(() => selectedFeatures().filter((f) => f.category === "Auth")?.[0].label);
 
     return (
       <span class="inline-block">
@@ -44,7 +44,8 @@ export const rulesMessages = {
   [RulesMessage.INFO_HATTIP]: info(() => {
     return (
       <span class="inline-block">
-        A <span class="font-bold">HatTip</span> is an experimental project. Prefer H3 or Express for production use
+        <span class="font-bold">HatTip</span> is an experimental project. Prefer <span class="font-bold">H3</span> or{" "}
+        <span class="font-bold">Express</span> for production use
       </span>
     );
   }),

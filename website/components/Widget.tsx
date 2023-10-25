@@ -1,4 +1,3 @@
-import { categories } from "@batijs/features";
 import { copy } from "#components/Copy.js";
 import Description from "#components/Description.js";
 import Features from "#components/Features.js";
@@ -14,11 +13,10 @@ const _copy = copy;
 const _flip = flip;
 
 export function Widget(props: { theme?: string; widget: boolean }) {
-  const { featuresValues, rules } = useContext(StoreContext);
-  const keys = categories.map((c) => c.label);
+  const { selectedFeaturesFlags, rules } = useContext(StoreContext);
 
   function getFlags() {
-    return keys.filter((ns) => featuresValues()[ns]).map((ns) => `--${featuresValues()[ns]}`);
+    return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
   const words = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags()]);
