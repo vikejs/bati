@@ -18,7 +18,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
             <FormControl
               label={label}
               flipLabel={label}
-              class="w-full sm:w-autorounded-md rounded-md bg-base-100"
+              class="w-full sm:w-auto rounded-md rounded-md bg-base-100"
               classList={{
                 "border-success/60": inview(),
                 "border-base-200 opacity-70": disabled(),
