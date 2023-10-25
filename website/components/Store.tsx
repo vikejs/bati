@@ -1,112 +1,59 @@
-import { features, type CategoryLabels, type Flags } from "@batijs/features";
+import { categories, features, type CategoryLabels, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
+import type { Category } from "@batijs/features/src/index";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
-import type { Definition, Feature } from "../types.js";
+import type { Feature } from "../types.js";
 import { rulesMessages } from "./RulesMessages.js";
 
-function filteredObject<T extends object>(obj: T, filter: (obj: T, k: keyof T) => boolean) {
-  return Object.keys(obj).reduce(function (r, e) {
-    if (filter(obj, e as keyof T)) r[e as keyof T] = obj[e as keyof T];
-    return r;
-  }, {} as Partial<T>);
-}
-
 function initStore() {
-  const definitions = features.reduce(
-    (acc, curr: Feature) => {
-      let selected = false;
-      if (!(curr.category in acc)) {
-        acc[curr.category as CategoryLabels] = {
-          disabled: Boolean(curr.disabled),
-          inview: false,
-          label: curr.category as CategoryLabels,
-          features: [],
-        };
-        selected = true;
-      }
+  const featuresInitialState: Feature[] = features.map((f: Feature) => ({
+    ...f,
+    alt: f.disabled ? "Coming soon" : undefined,
+    selected: false,
+  }));
 
-      acc[curr.category as CategoryLabels].features.push({
-        ...curr,
-        value: curr.flag,
-        alt: curr.disabled ? "Coming soon" : undefined,
-        selected,
-      });
+  const [currentFeatures, setCurrentFeatures] = createStore<Feature[]>(featuresInitialState);
 
-      return acc;
-    },
-    {} as Record<CategoryLabels, Definition>,
-  );
+  function selectFeature(k: CategoryLabels, flag: string, selected: boolean) {
+    const multiple = (categories as ReadonlyArray<Category>).find((c) => c.label === k)?.multiple;
 
-  const [currentFeatures, setCurrentFeatures] = createStore<Record<CategoryLabels, Definition>>(definitions);
-
-  const inViewFeatures = createMemo(() => filteredObject(currentFeatures, (o, k) => Boolean(o[k].inview)));
-
-  function moveFeature(k: CategoryLabels) {
-    setCurrentFeatures(k, "inview", (val) => !val);
-  }
-
-  function selectFeature(k: CategoryLabels, value: unknown) {
-    setCurrentFeatures(k, "features", (fs) => {
-      return fs.map((f) => ({
-        ...f,
-        selected: value ? value === f.value : definitions[k].features.find((f2) => f2.value === f.value)?.selected,
-      }));
-    });
-  }
-
-  const featuresValues = createMemo<Record<string, string | undefined>>(() =>
-    Object.assign(
-      {},
-      ...Object.entries(inViewFeatures()).map(([ns, fs]) => ({
-        [ns]: fs.features.find((f) => f.selected)?.value,
-      })),
-    ),
-  );
-
-  const selectedFeatures = createMemo<Feature[]>(
-    () =>
-      Object.values(inViewFeatures())
-        .map((fs) => fs.features.find((f) => f.selected))
-        .filter(Boolean) as Feature[],
-  );
-
-  function selectPreset(ks: (Flags | CategoryLabels)[]) {
-    const activeCategories = new Set<string>();
-    const activeFeatures: Feature[] = [];
-    for (const [category, defs] of Object.entries(definitions)) {
-      if (ks.includes(category as CategoryLabels)) {
-        activeCategories.add(category);
-      } else {
-        for (const feat of defs.features) {
-          if (ks.includes(feat.flag as Flags)) {
-            activeCategories.add(category);
-            activeFeatures.push(feat);
-          }
-        }
-      }
+    if (!multiple) {
+      batch(() => setCurrentFeatures((f) => f.category === k, "selected", false));
     }
 
+    setCurrentFeatures((f) => f.flag === flag, "selected", selected);
+  }
+
+  const selectedFeatures = createMemo<Feature[]>(() => currentFeatures.filter((f) => f.selected));
+
+  const selectedFeaturesFlags = createMemo(() => selectedFeatures().map((f) => f.flag));
+
+  function selectPreset(ks: (Flags | CategoryLabels)[]) {
     batch(() => {
-      (Object.keys(currentFeatures) as CategoryLabels[]).forEach((k) => {
-        setCurrentFeatures(k, "inview", activeCategories.has(k));
-      });
-      activeFeatures.forEach((ft) => {
-        selectFeature(ft.category as CategoryLabels, ft.flag);
-      });
+      for (const initialFeature of featuresInitialState) {
+        if (ks.includes(initialFeature.category as CategoryLabels)) {
+          const firstIndexOfCategory = featuresInitialState.findIndex((f) => f.category === initialFeature.category);
+          setCurrentFeatures(
+            (f) => f.category === initialFeature.category,
+            "selected",
+            (_, [__, i]) => {
+              return i === firstIndexOfCategory;
+            },
+          );
+        } else if (ks.includes(initialFeature.flag as Flags)) {
+          setCurrentFeatures((f) => f.flag === initialFeature.flag, "selected", true);
+        } else {
+          setCurrentFeatures((f) => f.flag === initialFeature.flag, "selected", false);
+        }
+      }
     });
   }
 
-  const inViewFlags = createMemo<Flags[]>(
-    () =>
-      Object.values(inViewFeatures())
-        .map((fs) => fs.features.filter((f) => f.selected).map((f) => f.flag))
-        .flat(1)
-        .filter(Boolean) as Flags[],
-  );
+  const selectedFlags = createMemo<Flags[]>(() => selectedFeatures().map((f) => f.flag as Flags));
 
   const rules = createMemo(() => {
-    const r = execRules(inViewFlags(), rulesMessages);
+    const r = execRules(selectedFlags(), rulesMessages);
 
     return {
       size: r.length,
@@ -117,14 +64,12 @@ function initStore() {
   });
 
   return {
-    inViewFeatures,
-    moveFeature,
+    selectedFeaturesFlags,
     selectFeature,
-    featuresValues,
     selectedFeatures,
     currentFeatures,
     selectPreset,
-    inViewFlags,
+    selectedFlags,
     rules,
   };
 }

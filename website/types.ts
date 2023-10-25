@@ -1,14 +1,6 @@
-import type { CategoryLabels, Feature as FeatureBase } from "@batijs/features";
-
-export interface Definition {
-  disabled?: boolean;
-  inview?: boolean;
-  label: CategoryLabels;
-  features: Feature[];
-}
+import type { Feature as FeatureBase } from "@batijs/features";
 
 export interface Feature extends FeatureBase {
   alt?: string;
-  value?: string;
   selected?: boolean;
 }
