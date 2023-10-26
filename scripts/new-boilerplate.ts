@@ -11,8 +11,12 @@ const __boilerplates = resolve(__dirname, "..", "boilerplates");
 const validNameRe = /[a-z0-9-.]/;
 
 async function createFolders(name: string) {
+  const root = join(__boilerplates, name);
+
   await mkdir(join(__boilerplates, name));
-  await mkdir(join(__boilerplates, name, "files"));
+  await mkdir(join(root, "files"));
+
+  return root;
 }
 
 async function createPackageJson(name: string) {
@@ -72,11 +76,13 @@ async function createTsconfig(name: string) {
 }
 
 async function exec(name: string) {
-  await createFolders(name);
+  const root = await createFolders(name);
 
   await createPackageJson(name);
   await createTsupConfig(name);
   await createTsconfig(name);
+
+  return root;
 }
 
 const main = defineCommand({
@@ -91,12 +97,13 @@ const main = defineCommand({
       required: true,
     },
   },
-  run({ args }) {
+  async run({ args }) {
     if (!validNameRe.test(args.name)) {
       throw new Error("Invalid boilerplates name");
     }
 
-    return exec(args.name);
+    const root = await exec(args.name);
+    console.log("Boilerplate created at", root);
   },
 });
 
