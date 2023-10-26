@@ -23,12 +23,18 @@ importers:
       bumpp:
         specifier: ^9.2.0
         version: 9.2.0
+      citty:
+        specifier: ^0.1.4
+        version: 0.1.4
       eslint:
         specifier: ^8.52.0
         version: 8.52.0
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.52.0)
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -220,6 +226,28 @@ importers:
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
+
+  boilerplates/prettier:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/tsup':
+        specifier: workspace:*
+        version: link:../../packages/tsup
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.52.0)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/prisma:
     dependencies:
