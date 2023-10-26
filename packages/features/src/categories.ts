@@ -27,16 +27,16 @@ export const categories = [
     group: categoriesGroups.Backend,
   },
   {
-    label: "Analytics",
-    group: categoriesGroups.Backend,
-  },
-  {
     label: "Hosting",
     group: categoriesGroups.Backend,
   },
   {
     label: "Linter",
     multiple: true,
+    group: categoriesGroups.Tools,
+  },
+  {
+    label: "Analytics",
     group: categoriesGroups.Tools,
   },
   {
