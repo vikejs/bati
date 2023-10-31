@@ -467,6 +467,34 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
 
+  boilerplates/solid-trpc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@trpc/client':
+        specifier: ^10.43.0
+        version: 10.43.0(@trpc/server@10.43.0)
+      '@trpc/server':
+        specifier: ^10.43.0
+        version: 10.43.0
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      esno:
+        specifier: ^0.17.0
+        version: 0.17.0
+      solid-js:
+        specifier: ^1.8.4
+        version: 1.8.4
+      vike:
+        specifier: ^0.4.144
+        version: 0.4.144(vite@4.5.0)
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/node@16.18.59)
+
   boilerplates/tailwindcss:
     dependencies:
       '@batijs/core':

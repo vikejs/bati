@@ -1,4 +1,5 @@
 import { initTRPC } from "@trpc/server";
+import { todoItems } from "../database/todoItems";
 
 /**
  * Initialization of tRPC backend
@@ -17,6 +18,17 @@ export const appRouter = router({
   demo: publicProcedure.query(async () => {
     return { demo: true };
   }),
+  onNewTodo: publicProcedure
+    .input((value): string => {
+      if (typeof value === "string") {
+        return value;
+      }
+      throw new Error("Input is not a string");
+    })
+    .mutation(async (opts) => {
+      todoItems.push({ text: opts.input });
+      return { todoItems };
+    }),
 });
 
 // Export type router type signature,
