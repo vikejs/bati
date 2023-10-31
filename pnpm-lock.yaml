@@ -110,6 +110,9 @@ importers:
       '@hattip/adapter-node':
         specifier: ^0.0.35
         version: 0.0.35
+      '@trpc/server':
+        specifier: ^10.43.0
+        version: 10.43.0
       '@types/express':
         specifier: ^4.17.20
         version: 4.17.20
@@ -519,6 +522,28 @@ importers:
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
+
+  boilerplates/trpc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/tsup':
+        specifier: workspace:*
+        version: link:../../packages/tsup
+      '@trpc/client':
+        specifier: ^10.43.0
+        version: 10.43.0(@trpc/server@10.43.0)
+      '@trpc/server':
+        specifier: ^10.43.0
+        version: 10.43.0
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/vercel:
     dependencies:
@@ -2926,6 +2951,18 @@ packages:
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+
+  /@trpc/client@10.43.0(@trpc/server@10.43.0):
+    resolution: {integrity: sha512-8LbSpPHmIseb/Ke+GzL45y0itkKunGQWfxqHf2uy69RSRvER0vj+Gu67L8YD86FBgc/nsX/6GBuJiUet5lIDIw==}
+    peerDependencies:
+      '@trpc/server': 10.43.0
+    dependencies:
+      '@trpc/server': 10.43.0
+    dev: true
+
+  /@trpc/server@10.43.0:
+    resolution: {integrity: sha512-1/h9KCPkTNNmpN5VKfKO4kPcl/W4Y9VQla4YGg4pydSh/+4b//0IPfvk3Oz4tz/tvWyAUlBKkBVhD3GfDLcAQA==}
+    dev: true
 
   /@ts-morph/common@0.20.0:
     resolution: {integrity: sha512-7uKjByfbPpwuzkstL3L5MQyuXPSKdoNG93Fmi2JoDcTf3pEP731JdRFAduRVkOs8oqxPsXKA+ScrWkdQ8t/I+Q==}

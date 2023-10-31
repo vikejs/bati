@@ -17,6 +17,17 @@ export default function vueLinterConfig(meta: VikeMeta) {
         create(context) {
           const sourceCode = context.getSourceCode();
           return {
+            ImportDeclaration(node) {
+              if (node.source.value.startsWith("bati:")) {
+                context.report({
+                  node: node as ESTree.Node,
+                  message: "bati/module-imports",
+                  *fix(fixer) {
+                    yield fixer.removeRange([node.source.range[0] + 1, node.source.range[0] + "bati:".length + 1]);
+                  },
+                });
+              }
+            },
             ":statement"(node) {
               const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
 

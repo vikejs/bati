@@ -12,6 +12,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    "no-unused-labels": 0,
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/ban-types": 0,
     "@typescript-eslint/consistent-type-imports": 0,
