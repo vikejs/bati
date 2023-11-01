@@ -27,5 +27,17 @@
   ],
   "bati": {
     "enforce": "pre"
+  },
+  "exports": {
+    "./vite.config": {
+      "types": "./dist/types/vite.config.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "vite.config": [
+        "./dist/types/vite.config.d.ts"
+      ]
+    }
   }
 }

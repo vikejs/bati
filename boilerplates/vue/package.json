@@ -38,5 +38,41 @@
     "if": {
       "flag": "vue"
     }
+  },
+  "exports": {
+    "./+config.h": {
+      "types": "./dist/types/+config.h.d.ts"
+    },
+    "./star-wars/types": {
+      "types": "./dist/types/star-wars/types.d.ts"
+    },
+    "./star-wars/filterMovieData": {
+      "types": "./dist/types/star-wars/filterMovieData.d.ts"
+    },
+    "./star-wars/@id/+onBeforeRender": {
+      "types": "./dist/types/star-wars/@id/+onBeforeRender.d.ts"
+    },
+    "./star-wars/index/+onBeforeRender": {
+      "types": "./dist/types/star-wars/index/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "+config.h": [
+        "./dist/types/+config.h.d.ts"
+      ],
+      "star-wars/types": [
+        "./dist/types/star-wars/types.d.ts"
+      ],
+      "star-wars/filterMovieData": [
+        "./dist/types/star-wars/filterMovieData.d.ts"
+      ],
+      "star-wars/@id/+onBeforeRender": [
+        "./dist/types/star-wars/@id/+onBeforeRender.d.ts"
+      ],
+      "star-wars/index/+onBeforeRender": [
+        "./dist/types/star-wars/index/+onBeforeRender.d.ts"
+      ]
+    }
   }
 }

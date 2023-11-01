@@ -104,6 +104,9 @@ importers:
       '@auth/core':
         specifier: ^0.18.0
         version: 0.18.0
+      '@batijs/trpc':
+        specifier: workspace:*
+        version: link:../trpc
       '@batijs/tsup':
         specifier: workspace:*
         version: link:../../packages/tsup
@@ -200,6 +203,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tsup
       '@hattip/adapter-node':
+        specifier: ^0.0.35
+        version: 0.0.35
+      '@hattip/core':
         specifier: ^0.0.35
         version: 0.0.35
       '@hattip/router':
@@ -473,6 +479,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/trpc':
+        specifier: workspace:*
+        version: link:../trpc
       '@trpc/client':
         specifier: ^10.43.0
         version: 10.43.0(@trpc/server@10.43.0)
@@ -908,6 +917,9 @@ importers:
       esbuild-plugin-copy:
         specifier: ^2.1.1
         version: 2.1.1(esbuild@0.19.5)
+      tsc-prog:
+        specifier: ^2.3.0
+        version: 2.3.0(typescript@5.2.2)
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -7569,6 +7581,15 @@ packages:
       '@ts-morph/common': 0.20.0
       code-block-writer: 12.0.0
     dev: true
+
+  /tsc-prog@2.3.0(typescript@5.2.2):
+    resolution: {integrity: sha512-ycET2d75EgcX7y8EmG4KiZkLAwUzbY4xRhA6NU0uVbHkY4ZjrAAuzTMxXI85kOwATqPnBI5C/7y7rlpY0xdqHA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      typescript: '>=4'
+    dependencies:
+      typescript: 5.2.2
+    dev: false
 
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}

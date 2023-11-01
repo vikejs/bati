@@ -1,10 +1,9 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { appRouter } from "bati:./trpc/server";
-// import { appRouter } from "@batijs/trpc/./trpc/server";
 import express from "express";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";

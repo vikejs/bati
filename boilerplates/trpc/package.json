@@ -28,5 +28,29 @@
     "if": {
       "flag": "trpc"
     }
+  },
+  "typesVersions": {
+    "*": {
+      "database/todoItems": [
+        "./dist/types/database/todoItems.d.ts"
+      ],
+      "trpc/server": [
+        "./dist/types/trpc/server.d.ts"
+      ],
+      "trpc/client": [
+        "./dist/types/trpc/client.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "./database/todoItems": {
+      "types": "./dist/types/database/todoItems.d.ts"
+    },
+    "./trpc/server": {
+      "types": "./dist/types/trpc/server.d.ts"
+    },
+    "./trpc/client": {
+      "types": "./dist/types/trpc/client.d.ts"
+    }
   }
 }

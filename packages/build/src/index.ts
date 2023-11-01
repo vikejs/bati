@@ -102,7 +102,7 @@ Please report this issue to https://github.com/magne4000/bati`,
         transformAndWriteQ.add(async () => {
           const code = await readFile(p, { encoding: "utf-8" });
           const fileContent = await transformAndFormat(code, meta, {
-            filepath: p,
+            filepath: path.relative(source, p),
           });
 
           if (fileContent) {

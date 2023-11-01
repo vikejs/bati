@@ -1,4 +1,4 @@
-import { todoItems } from "bati:../../database/todoItems";
+import { todoItems } from "@batijs/trpc/database/todoItems";
 
 // https://vike.dev/onBeforeRender
 export default onBeforeRender;

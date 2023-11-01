@@ -15,15 +15,16 @@
     "@auth/core": "^0.18.0",
     "@batijs/tsup": "workspace:*",
     "@hattip/adapter-node": "^0.0.35",
+    "@hattip/core": "^0.0.35",
     "@hattip/router": "^0.0.35",
     "@hattip/vite": "^0.0.35",
     "@types/node": "^16.18.40",
     "hattip": "^0.0.33",
     "telefunc": "^0.1.62",
     "tsup": "^7.2.0",
+    "vike": "^0.4.144",
     "vike-authjs": "^0.1.1",
-    "vite": "^4.5.0",
-    "vike": "^0.4.144"
+    "vite": "^4.5.0"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -34,6 +35,18 @@
   "bati": {
     "if": {
       "flag": "hattip"
+    }
+  },
+  "exports": {
+    "./hattip-entry": {
+      "types": "./dist/types/hattip-entry.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "hattip-entry": [
+        "./dist/types/hattip-entry.d.ts"
+      ]
     }
   }
 }

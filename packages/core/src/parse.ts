@@ -5,7 +5,7 @@ import type { VikeMeta } from "./types.js";
 
 function guessCodeFormatters(code: string) {
   return {
-    eslint: code.includes("BATI.has") || code.includes("bati:"),
+    eslint: code.includes("BATI.has") || code.includes("bati:") || code.includes("@batijs/"),
     squirelly: code.includes(tags[0]),
   };
 }

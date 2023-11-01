@@ -2,6 +2,7 @@ import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { ESLint, Linter } from "eslint";
 import type * as ESTree from "estree";
+import { relative } from "../../relative.js";
 import type { VikeMeta } from "../../types.js";
 import { evalCondition, extractBatiConditionComment } from "../eval.js";
 import type { Visitors } from "./types.js";
@@ -18,10 +19,23 @@ export default function vueLinterConfig(meta: VikeMeta) {
           const sourceCode = context.getSourceCode();
           return {
             ImportDeclaration(node) {
-              if (node.source.value.startsWith("bati:")) {
+              const matches = node.source.value.match(/^@batijs\/[^/]+\/(.+)$/);
+
+              if (matches) {
                 context.report({
                   node: node as ESTree.Node,
                   message: "bati/module-imports",
+                  *fix(fixer) {
+                    yield fixer.replaceTextRange(
+                      [node.source.range[0] + 1, node.source.range[1] - 1],
+                      relative(context.filename, matches[1]),
+                    );
+                  },
+                });
+              } else if (node.source.value.startsWith("bati:")) {
+                context.report({
+                  node: node as ESTree.Node,
+                  message: "bati/module-imports-generic",
                   *fix(fixer) {
                     yield fixer.removeRange([node.source.range[0] + 1, node.source.range[0] + "bati:".length + 1]);
                   },

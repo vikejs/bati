@@ -31,5 +31,23 @@
     "if": {
       "flag": "tailwindcss"
     }
+  },
+  "exports": {
+    "./postcss.config": {
+      "types": "./dist/types/postcss.config.d.ts"
+    },
+    "./tailwind.config": {
+      "types": "./dist/types/tailwind.config.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "postcss.config": [
+        "./dist/types/postcss.config.d.ts"
+      ],
+      "tailwind.config": [
+        "./dist/types/tailwind.config.d.ts"
+      ]
+    }
   }
 }

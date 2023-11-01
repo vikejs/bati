@@ -1,4 +1,5 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import type { HattipHandler } from "@hattip/core";
 import { createRouter } from "@hattip/router";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
@@ -81,4 +82,4 @@ router.use(async (context) => {
   });
 });
 
-export default router.buildHandler();
+export default router.buildHandler() as HattipHandler;

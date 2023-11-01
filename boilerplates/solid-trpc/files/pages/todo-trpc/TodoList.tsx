@@ -1,5 +1,5 @@
-import type { TodoItem } from "bati:../../database/todoItems";
-import { trpc } from "bati:../../trpc/client";
+import type { TodoItem } from "@batijs/trpc/database/todoItems";
+import { trpc } from "@batijs/trpc/trpc/client";
 import { createSignal, For, untrack } from "solid-js";
 
 export function TodoList(props: { initialTodoItems: TodoItem[] }) {
