@@ -24,6 +24,7 @@ export default async function getPackageJson(props: TransformerProps) {
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
     dependencies: [
+      "@hattip/core",
       "@hattip/router",
       "hattip",
       "vite",
