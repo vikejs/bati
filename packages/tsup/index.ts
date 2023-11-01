@@ -80,7 +80,7 @@ export function defineBoilerplateConfig() {
 
 // Custom DTS build, as tsup doesn't allow passing any option to rollup
 process.on("beforeExit", async (code) => {
-  if (code === 0) {
+  if (code === 0 && path.basename(path.dirname(process.cwd())) === "boilerplates") {
     const program = tsc.createProgramFromConfig({
       basePath: process.cwd(),
       configFilePath: "tsconfig.json",
@@ -129,7 +129,6 @@ process.on("beforeExit", async (code) => {
 
       await writeFile("package.json", JSON.stringify(packageJson, undefined, 2), "utf-8");
     }
-
-    process.exit(0);
   }
+  process.exit(0);
 });
