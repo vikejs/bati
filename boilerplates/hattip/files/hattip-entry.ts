@@ -38,7 +38,7 @@ if (BATI.has("trpc")) {
    *
    * @link {@see https://trpc.io/docs/server/adapters/fetch}
    **/
-  router.use("/api/trpc/*", async (context) => {
+  router.use("/api/trpc/*", (context) => {
     return fetchRequestHandler({
       router: appRouter,
       req: context.request,

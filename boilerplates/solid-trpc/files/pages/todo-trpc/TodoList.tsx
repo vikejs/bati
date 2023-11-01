@@ -1,4 +1,4 @@
-import type { TodoItem } from "@batijs/trpc/database/todoItems";
+import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { createSignal, For, untrack } from "solid-js";
 

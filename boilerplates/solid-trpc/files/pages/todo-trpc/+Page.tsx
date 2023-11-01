@@ -1,4 +1,4 @@
-import type { TodoItem } from "@batijs/trpc/database/todoItems";
+import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import { createSignal } from "solid-js";
 import { TodoList } from "./TodoList";
 
