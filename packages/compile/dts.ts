@@ -60,6 +60,7 @@ export async function buildTypes() {
   const errors = flush()
     .split("\n")
     .filter((l) => !l.match(/\s*/))
+    // TS18003 means no files to compile, but we do not consider that an error in our case
     .filter((l) => !l.includes("TS18003"));
 
   if (errors.length) {

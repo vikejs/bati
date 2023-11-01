@@ -1,17 +1,13 @@
 import type { Flags } from "@batijs/features";
 
 declare global {
-  type Bati = Set<Flags> & {
-    insert(flag: Flags): void;
-  };
-
-  const BATI: Bati;
+  const BATI: Set<Flags>;
 
   namespace NodeJS {
     interface Global {
       // Reference our above type,
       // this allows global.debug to be used anywhere in our code.
-      BATI: Bati;
+      BATI: Set<Flags>;
     }
   }
 }
