@@ -362,6 +362,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
+      '@batijs/tsup':
+        specifier: workspace:^
+        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -371,9 +377,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
-      esno:
-        specifier: ^0.17.0
-        version: 0.17.0
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -383,6 +386,9 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -416,6 +422,22 @@ importers:
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
+
+  boilerplates/shared-db:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/tsup':
+        specifier: workspace:*
+        version: link:../../packages/tsup
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/solid:
     dependencies:
@@ -466,18 +488,24 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
+      '@batijs/tsup':
+        specifier: workspace:^
+        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
-      esno:
-        specifier: ^0.17.0
-        version: 0.17.0
       solid-js:
         specifier: ^1.8.4
         version: 1.8.4
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -494,6 +522,9 @@ importers:
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
+      '@batijs/tsup':
+        specifier: workspace:^
+        version: link:../../packages/tsup
       '@trpc/client':
         specifier: ^10.43.0
         version: 10.43.0(@trpc/server@10.43.0)
@@ -503,12 +534,12 @@ importers:
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
-      esno:
-        specifier: ^0.17.0
-        version: 0.17.0
       solid-js:
         specifier: ^1.8.4
         version: 1.8.4
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -578,6 +609,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/shared-db':
+        specifier: workspace:*
+        version: link:../shared-db
       '@batijs/tsup':
         specifier: workspace:*
         version: link:../../packages/tsup
@@ -680,15 +714,21 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
+      '@batijs/tsup':
+        specifier: workspace:^
+        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
-      esno:
-        specifier: ^0.17.0
-        version: 0.17.0
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -929,6 +969,9 @@ importers:
       esbuild-plugin-copy:
         specifier: ^2.1.1
         version: 2.1.1(esbuild@0.19.5)
+      globby:
+        specifier: ^13.2.2
+        version: 13.2.2
       tsc-prog:
         specifier: ^2.3.0
         version: 2.3.0(typescript@5.2.2)
@@ -5597,6 +5640,17 @@ packages:
       merge2: 1.4.1
       slash: 3.0.0
 
+  /globby@13.2.2:
+    resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      dir-glob: 3.0.1
+      fast-glob: 3.3.1
+      ignore: 5.2.4
+      merge2: 1.4.1
+      slash: 4.0.0
+    dev: false
+
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
@@ -7222,6 +7276,11 @@ packages:
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+
+  /slash@4.0.0:
+    resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
+    engines: {node: '>=12'}
+    dev: false
 
   /solid-element@1.8.0(solid-js@1.8.4):
     resolution: {integrity: sha512-DG8HBCej5kNExUiFbVG8OFZojMGcLF8keXdGLEcHXBYtJ7zhm+a8HJnl5lfmBlTYGRk4ApgoBvlwH1ibg7quaQ==}

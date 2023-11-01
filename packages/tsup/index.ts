@@ -1,7 +1,8 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import * as path from "path";
 import type { OnResolveArgs } from "esbuild";
 import { copy } from "esbuild-plugin-copy";
+import { globby } from "globby";
 import tsc from "tsc-prog";
 import { defineConfig as _defineConfig, type Options } from "tsup";
 
@@ -78,56 +79,127 @@ export function defineBoilerplateConfig() {
   ]);
 }
 
-// Custom DTS build, as tsup doesn't allow passing any option to rollup
-process.on("beforeExit", async (code) => {
-  if (code === 0 && path.basename(path.dirname(process.cwd())) === "boilerplates") {
-    const program = tsc.createProgramFromConfig({
-      basePath: process.cwd(),
-      configFilePath: "tsconfig.json",
-      compilerOptions: {
-        noEmit: false,
-        outDir: "./dist/types",
-        declaration: true,
-        emitDeclarationOnly: true,
-        sourceMap: false,
-        listEmittedFiles: true,
+async function copyFilesToDist() {
+  const files = await globby(["./files/**/!($*)", "./files/**/$$*"], {
+    cwd: process.cwd(),
+  });
+
+  for (const file of files) {
+    const dist = path.join("dist", file);
+    const distDirname = path.dirname(dist);
+
+    await mkdir(distDirname, { recursive: true });
+    await copyFile(file, dist);
+  }
+
+  console.log("Files copied to", path.join(process.cwd(), "dist"));
+}
+
+async function buildTypes() {
+  const program = tsc.createProgramFromConfig({
+    basePath: process.cwd(),
+    configFilePath: "tsconfig.json",
+    compilerOptions: {
+      rootDir: "./files",
+      noEmit: false,
+      outDir: "./dist/types",
+      declaration: true,
+      emitDeclarationOnly: true,
+      sourceMap: false,
+      listEmittedFiles: true,
+    },
+    include: ["files/**/*"],
+    exclude: ["files/**/$*"],
+  });
+
+  const { diagnostics, emitSkipped, emittedFiles } = program.emit();
+
+  if (diagnostics.length) {
+    diagnostics.forEach((d) => console.error(`${d.file}:${d.start} ${d.messageText}`));
+    return process.exit(1);
+  }
+
+  if (emitSkipped) process.exit(1);
+
+  if (emittedFiles && emittedFiles.length) {
+    const distTypes = path.join(process.cwd(), "dist", "types");
+    const relFiles = emittedFiles.map((f) => path.relative(distTypes, f));
+
+    const packageJsonTypes = relFiles.reduce(
+      (acc, cur) => {
+        acc.exports[`./${cur.slice(0, -".d.ts".length)}`] = {
+          types: `./dist/types/${cur}`,
+        };
+        acc.typesVersions["*"][`${cur.slice(0, -".d.ts".length)}`] = [`./dist/types/${cur}`];
+        return acc;
       },
-      include: ["files/**/*"],
-      exclude: ["files/**/$*"],
-    });
+      {
+        exports: {} as Record<string, { types: string }>,
+        typesVersions: { "*": {} } as Record<"*", Record<string, string[]>>,
+      },
+    );
 
-    const { diagnostics, emitSkipped, emittedFiles } = program.emit();
+    const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
 
-    if (diagnostics.length) {
-      diagnostics.forEach((d) => console.error(`${d.file}:${d.start} ${d.messageText}`));
-      return process.exit(1);
+    packageJson.exports = packageJsonTypes.exports;
+    packageJson.typesVersions = packageJsonTypes.typesVersions;
+
+    await writeFile("package.json", JSON.stringify(packageJson, undefined, 2), "utf-8");
+    console.log("Types generated into", distTypes);
+  }
+}
+
+// Inspired by https://github.com/nodejs/node/issues/8033#issuecomment-388323687
+function overrideStderr() {
+  const originalStdoutWrite = process.stderr.write.bind(process.stderr);
+
+  let activeIntercept = false;
+  let taskOutput: string = "";
+  const retained: Function[] = [];
+
+  // @ts-ignore
+  process.stderr.write = (chunk, encoding, callback) => {
+    if (activeIntercept && typeof chunk === "string") {
+      taskOutput += chunk;
     }
 
-    if (emitSkipped) process.exit(1);
+    retained.push(() => originalStdoutWrite(chunk, encoding, callback));
 
-    if (emittedFiles && emittedFiles.length) {
-      const relFiles = emittedFiles.map((f) => path.relative(path.join(process.cwd(), "dist", "types"), f));
+    return true;
+  };
 
-      const packageJsonTypes = relFiles.reduce(
-        (acc, cur) => {
-          acc.exports[`./${cur.slice(0, -".d.ts".length)}`] = {
-            types: `./dist/types/${cur}`,
-          };
-          acc.typesVersions["*"][`${cur.slice(0, -".d.ts".length)}`] = [`./dist/types/${cur}`];
-          return acc;
-        },
-        {
-          exports: {} as Record<string, { types: string }>,
-          typesVersions: { "*": {} } as Record<"*", Record<string, string[]>>,
-        },
-      );
+  activeIntercept = true;
 
-      const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
+  return {
+    flush() {
+      const result = taskOutput;
 
-      packageJson.exports = packageJsonTypes.exports;
-      packageJson.typesVersions = packageJsonTypes.typesVersions;
+      activeIntercept = false;
+      taskOutput = "";
 
-      await writeFile("package.json", JSON.stringify(packageJson, undefined, 2), "utf-8");
+      return result;
+    },
+    printBack() {
+      retained.forEach((f) => f());
+    },
+  };
+}
+
+const { flush, printBack } = overrideStderr();
+
+// Custom DTS build, as tsup doesn't allow passing any option to rollup
+process.on("beforeExit", async () => {
+  if (path.basename(path.dirname(process.cwd())) === "boilerplates") {
+    try {
+      if (flush().includes("Cannot find")) {
+        await copyFilesToDist();
+      } else {
+        printBack();
+      }
+      await buildTypes();
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
     }
   }
   process.exit(0);

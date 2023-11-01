@@ -1,5 +1,5 @@
 // https://vike.dev/onBeforeRender
-import { todoItems } from "../../database/todoItems";
+import { todoItems } from "@batijs/shared-db/database/todoItems";
 
 export default function onBeforeRender() {
   const todoItemsInitial = todoItems;

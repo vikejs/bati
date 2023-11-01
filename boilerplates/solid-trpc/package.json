@@ -6,18 +6,19 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "esno copy.ts"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@batijs/trpc": "workspace:*",
+    "@batijs/tsup": "workspace:^",
     "@trpc/client": "^10.43.0",
     "@trpc/server": "^10.43.0",
     "@types/node": "^16.18.40",
-    "esno": "^0.17.0",
     "solid-js": "^1.8.4",
+    "tsup": "^7.2.0",
     "vike": "^0.4.144",
     "vite": "^4.5.0"
   },
@@ -35,6 +36,36 @@
           "trpc"
         ]
       }
+    }
+  },
+  "exports": {
+    "./pages/todo-trpc/TodoList": {
+      "types": "./dist/types/pages/todo-trpc/TodoList.d.ts"
+    },
+    "./pages/todo-trpc/+Page": {
+      "types": "./dist/types/pages/todo-trpc/+Page.d.ts"
+    },
+    "./pages/todo-trpc/+config.h": {
+      "types": "./dist/types/pages/todo-trpc/+config.h.d.ts"
+    },
+    "./pages/todo-trpc/+onBeforeRender": {
+      "types": "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo-trpc/TodoList": [
+        "./dist/types/pages/todo-trpc/TodoList.d.ts"
+      ],
+      "pages/todo-trpc/+Page": [
+        "./dist/types/pages/todo-trpc/+Page.d.ts"
+      ],
+      "pages/todo-trpc/+config.h": [
+        "./dist/types/pages/todo-trpc/+config.h.d.ts"
+      ],
+      "pages/todo-trpc/+onBeforeRender": [
+        "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+      ]
     }
   }
 }

@@ -6,17 +6,19 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "esno copy.ts"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@batijs/shared-db": "workspace:^",
+    "@batijs/tsup": "workspace:^",
     "@types/node": "^16.18.40",
-    "esno": "^0.17.0",
     "telefunc": "^0.1.62",
-    "vite": "^4.5.0",
+    "tsup": "^7.2.0",
     "vike": "^0.4.144",
+    "vite": "^4.5.0",
     "vue": "^3.3.7"
   },
   "dependencies": {
@@ -33,6 +35,30 @@
           "telefunc"
         ]
       }
+    }
+  },
+  "exports": {
+    "./components/TodoList.telefunc": {
+      "types": "./dist/types/components/TodoList.telefunc.d.ts"
+    },
+    "./pages/todo/+config.h": {
+      "types": "./dist/types/pages/todo/+config.h.d.ts"
+    },
+    "./pages/todo/+onBeforeRender": {
+      "types": "./dist/types/pages/todo/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "components/TodoList.telefunc": [
+        "./dist/types/components/TodoList.telefunc.d.ts"
+      ],
+      "pages/todo/+config.h": [
+        "./dist/types/pages/todo/+config.h.d.ts"
+      ],
+      "pages/todo/+onBeforeRender": [
+        "./dist/types/pages/todo/+onBeforeRender.d.ts"
+      ]
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/trpc",
+  "name": "@batijs/shared-db",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -12,10 +12,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/shared-db": "workspace:*",
     "@batijs/tsup": "workspace:*",
-    "@trpc/client": "^10.43.0",
-    "@trpc/server": "^10.43.0",
     "@types/node": "^16.18.40",
     "tsup": "^7.2.0"
   },
@@ -27,25 +24,24 @@
   ],
   "bati": {
     "if": {
-      "flag": "trpc"
+      "flag": {
+        "$in": [
+          "trpc",
+          "telefunc"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./database/todoItems": {
+      "types": "./dist/types/database/todoItems.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "trpc/server": [
-        "./dist/types/trpc/server.d.ts"
-      ],
-      "trpc/client": [
-        "./dist/types/trpc/client.d.ts"
+      "database/todoItems": [
+        "./dist/types/database/todoItems.d.ts"
       ]
-    }
-  },
-  "exports": {
-    "./trpc/server": {
-      "types": "./dist/types/trpc/server.d.ts"
-    },
-    "./trpc/client": {
-      "types": "./dist/types/trpc/client.d.ts"
     }
   }
 }

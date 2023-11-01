@@ -1,5 +1,5 @@
+import { todoItems } from "@batijs/shared-db/database/todoItems";
 import { initTRPC } from "@trpc/server";
-import { todoItems } from "../database/todoItems";
 
 /**
  * Initialization of tRPC backend

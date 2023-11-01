@@ -1,7 +1,6 @@
+import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import React, { useState } from "react";
-
 import { TodoList } from "./TodoList";
-import type { TodoItem } from "../../database/todoItems";
 
 export default function Page({ todoItemsInitial }: { todoItemsInitial: TodoItem[] }) {
   return (
