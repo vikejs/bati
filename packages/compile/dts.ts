@@ -79,7 +79,7 @@ export async function buildTypes() {
 
   if (emittedFiles && emittedFiles.length) {
     const distTypes = path.join(process.cwd(), "dist", "types");
-    const relFiles = emittedFiles.map((f) => path.relative(distTypes, f));
+    const relFiles = emittedFiles.map((f) => path.relative(distTypes, f).replace(/\\/g, '/'));
 
     const packageJsonTypes = relFiles.reduce(
       (acc, cur) => {
@@ -100,7 +100,7 @@ export async function buildTypes() {
     packageJson.exports = packageJsonTypes.exports;
     packageJson.typesVersions = packageJsonTypes.typesVersions;
 
-    await writeFile("package.json", JSON.stringify(packageJson, undefined, 2), "utf-8");
+    await writeFile("package.json", JSON.stringify(packageJson, undefined, 2).replace(/\r\n/g, "\n"), "utf-8");
     console.log("Types generated into", distTypes);
   }
 }
