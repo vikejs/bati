@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@auth/core": "^0.18.0",
     "@batijs/trpc": "workspace:^",
-    "@batijs/tsup": "workspace:*",
+    "@batijs/compile": "workspace:*",
     "@hattip/polyfills": "^0.0.35",
     "@trpc/server": "^10.43.0",
     "@types/node": "^16.18.40",
@@ -23,7 +23,6 @@
     "h3": "^1.8.2",
     "serve-static": "^1.15.0",
     "telefunc": "^0.1.62",
-    "tsup": "^7.2.0",
     "vike": "^0.4.144",
     "vike-authjs": "^0.1.1",
     "vite": "^4.5.0"

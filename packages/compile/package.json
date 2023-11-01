@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/tsup",
+  "name": "@batijs/compile",
   "version": "0.0.108",
   "description": "",
   "type": "module",
@@ -23,15 +23,8 @@
     "tsc-prog": "^2.3.0",
     "tsup": "^7.2.0"
   },
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ]
-    }
+  "bin": {
+    "bati-compile-boilerplate": "./dist/index.js"
   },
   "files": [
     "dist/"

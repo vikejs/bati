@@ -30,15 +30,14 @@ async function createPackageJson(name: string) {
     type: "module",
     scripts: {
       "check-types": "tsc --noEmit",
-      build: "tsup",
+      build: "bati-compile-boilerplate",
     },
     keywords: [],
     author: "",
     license: "MIT",
     devDependencies: {
-      "@batijs/tsup": "workspace:*",
+      "@batijs/compile": "workspace:*",
       "@types/node": sharedPackageJson.devDependencies["@types/node"],
-      tsup: sharedPackageJson.devDependencies.tsup,
     },
     dependencies: {
       "@batijs/core": "workspace:*",
@@ -52,17 +51,6 @@ async function createPackageJson(name: string) {
   };
 
   await writeFile(dest, JSON.stringify(json, undefined, 2), "utf-8");
-}
-
-async function createTsupConfig(name: string) {
-  const dest = join(__boilerplates, name, "tsup.config.ts");
-
-  const code = `import { defineBoilerplateConfig } from "@batijs/tsup";
-
-export default defineBoilerplateConfig();
-`;
-
-  await writeFile(dest, code, "utf-8");
 }
 
 async function createTsconfig(name: string) {
@@ -79,7 +67,6 @@ async function exec(name: string) {
   const root = await createFolders(name);
 
   await createPackageJson(name);
-  await createTsupConfig(name);
   await createTsconfig(name);
 
   return root;

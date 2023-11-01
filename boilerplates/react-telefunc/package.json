@@ -6,21 +6,20 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@batijs/shared-db": "workspace:^",
-    "@batijs/tsup": "workspace:^",
+    "@batijs/compile": "workspace:^",
     "@types/node": "^16.18.40",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "telefunc": "^0.1.62",
-    "tsup": "^7.2.0",
     "vike": "^0.4.144",
     "vite": "^4.5.0"
   },

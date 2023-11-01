@@ -51,9 +51,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@edgedb/generate':
         specifier: ^0.3.4
         version: 0.3.4(edgedb@1.3.7)
@@ -69,9 +69,6 @@ importers:
       edgedb:
         specifier: ^1.3.7
         version: 1.3.7
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/eslint:
     dependencies:
@@ -79,9 +76,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:^
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.9.0
         version: 6.9.0(@typescript-eslint/parser@6.9.0)(eslint@8.52.0)(typescript@5.2.2)
@@ -91,9 +88,6 @@ importers:
       eslint:
         specifier: ^8.52.0
         version: 8.52.0
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/express:
     dependencies:
@@ -104,12 +98,12 @@ importers:
       '@auth/core':
         specifier: ^0.18.0
         version: 0.18.0
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
-      '@batijs/tsup':
-        specifier: workspace:*
-        version: link:../../packages/tsup
       '@hattip/adapter-node':
         specifier: ^0.0.35
         version: 0.0.35
@@ -131,9 +125,6 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -153,12 +144,12 @@ importers:
       '@auth/core':
         specifier: ^0.18.0
         version: 0.18.0
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
-      '@batijs/tsup':
-        specifier: workspace:*
-        version: link:../../packages/tsup
       '@hattip/polyfills':
         specifier: ^0.0.35
         version: 0.0.35
@@ -183,9 +174,6 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -205,12 +193,12 @@ importers:
       '@auth/core':
         specifier: ^0.18.0
         version: 0.18.0
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
-      '@batijs/tsup':
-        specifier: workspace:*
-        version: link:../../packages/tsup
       '@hattip/adapter-node':
         specifier: ^0.0.35
         version: 0.0.35
@@ -235,9 +223,6 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -254,9 +239,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -266,9 +251,6 @@ importers:
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/prisma:
     dependencies:
@@ -276,9 +258,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@prisma/client':
         specifier: ^5.5.2
         version: 5.5.2(prisma@5.5.2)
@@ -291,9 +273,6 @@ importers:
       prisma:
         specifier: ^5.5.2
         version: 5.5.2
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/react:
     dependencies:
@@ -310,9 +289,9 @@ importers:
       '@babel/plugin-transform-react-jsx':
         specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.23.2)
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -340,9 +319,6 @@ importers:
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -362,12 +338,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
       '@batijs/shared-db':
         specifier: workspace:^
         version: link:../shared-db
-      '@batijs/tsup':
-        specifier: workspace:^
-        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -386,9 +362,6 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -398,15 +371,15 @@ importers:
 
   boilerplates/shared:
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
       '@batijs/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@batijs/features':
         specifier: workspace:*
         version: link:../../packages/features
-      '@batijs/tsup':
-        specifier: workspace:*
-        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -416,9 +389,6 @@ importers:
       esbuild-plugin-copy:
         specifier: ^2.1.1
         version: 2.1.1(esbuild@0.19.5)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
@@ -429,15 +399,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/solid:
     dependencies:
@@ -445,9 +412,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -463,9 +430,6 @@ importers:
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -488,12 +452,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
       '@batijs/shared-db':
         specifier: workspace:^
         version: link:../shared-db
-      '@batijs/tsup':
-        specifier: workspace:^
-        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -503,9 +467,6 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -519,12 +480,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
-      '@batijs/tsup':
-        specifier: workspace:^
-        version: link:../../packages/tsup
       '@trpc/client':
         specifier: ^10.43.0
         version: 10.43.0(@trpc/server@10.43.0)
@@ -537,9 +498,6 @@ importers:
       solid-js:
         specifier: ^1.8.4
         version: 1.8.4
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -553,9 +511,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -568,9 +526,6 @@ importers:
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -584,18 +539,15 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -609,12 +561,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
       '@batijs/shared-db':
         specifier: workspace:*
         version: link:../shared-db
-      '@batijs/tsup':
-        specifier: workspace:*
-        version: link:../../packages/tsup
       '@trpc/client':
         specifier: ^10.43.0
         version: 10.43.0(@trpc/server@10.43.0)
@@ -624,9 +576,6 @@ importers:
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   boilerplates/vercel:
     dependencies:
@@ -634,18 +583,15 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
       '@vite-plugin-vercel/vike':
         specifier: ^2.0.0
         version: 2.0.0(vike@0.4.144)(vite-plugin-vercel@2.0.0)(vite@4.5.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -662,9 +608,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../../packages/tsup
+        version: link:../../packages/compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -686,9 +632,6 @@ importers:
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -714,21 +657,18 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
       '@batijs/shared-db':
         specifier: workspace:^
         version: link:../shared-db
-      '@batijs/tsup':
-        specifier: workspace:^
-        version: link:../../packages/tsup
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)
@@ -745,15 +685,15 @@ importers:
         specifier: workspace:*
         version: link:../core
     devDependencies:
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../tsup
+        version: link:../compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+        version: 7.2.0(typescript@5.2.2)
 
   packages/cli:
     dependencies:
@@ -767,9 +707,9 @@ importers:
       '@batijs/build':
         specifier: workspace:*
         version: link:../build
-      '@batijs/tsup':
+      '@batijs/compile':
         specifier: workspace:*
-        version: link:../tsup
+        version: link:../compile
       '@types/node':
         specifier: ^16.18.40
         version: 16.18.59
@@ -796,13 +736,38 @@ importers:
         version: 17.0.1
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+        version: 7.2.0(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
+
+  packages/compile:
+    dependencies:
+      esbuild:
+        specifier: ^0.19.4
+        version: 0.19.5
+      esbuild-plugin-copy:
+        specifier: ^2.1.1
+        version: 2.1.1(esbuild@0.19.5)
+      globby:
+        specifier: ^13.2.2
+        version: 13.2.2
+      tsc-prog:
+        specifier: ^2.3.0
+        version: 2.3.0(typescript@5.2.2)
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(typescript@5.2.2)
+    devDependencies:
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   packages/core:
     devDependencies:
@@ -856,7 +821,7 @@ importers:
         version: 9.0.0
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+        version: 7.2.0(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -883,7 +848,7 @@ importers:
         version: 16.18.59
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+        version: 7.2.0(typescript@5.2.2)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -956,32 +921,7 @@ importers:
         version: 0.17.0
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
-  packages/tsup:
-    dependencies:
-      esbuild:
-        specifier: ^0.19.4
-        version: 0.19.5
-      esbuild-plugin-copy:
-        specifier: ^2.1.1
-        version: 2.1.1(esbuild@0.19.5)
-      globby:
-        specifier: ^13.2.2
-        version: 13.2.2
-      tsc-prog:
-        specifier: ^2.3.0
-        version: 2.3.0(typescript@5.2.2)
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-    devDependencies:
-      '@types/node':
-        specifier: ^16.18.40
-        version: 16.18.59
+        version: 7.2.0(typescript@5.2.2)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -7679,7 +7619,7 @@ packages:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: true
 
-  /tsup@7.2.0(postcss@8.4.31)(typescript@5.2.2):
+  /tsup@7.2.0(typescript@5.2.2):
     resolution: {integrity: sha512-vDHlczXbgUvY3rWvqFEbSqmC1L7woozbzngMqTtL2PGBODTtWlRwGDDawhvWzr5c1QjKe4OAKqJGfE1xeXUvtQ==}
     engines: {node: '>=16.14'}
     hasBin: true
@@ -7703,7 +7643,6 @@ packages:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss: 8.4.31
       postcss-load-config: 4.0.1(postcss@8.4.31)
       resolve-from: 5.0.0
       rollup: 3.29.4

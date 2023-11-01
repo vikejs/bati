@@ -6,18 +6,17 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@batijs/shared-db": "workspace:*",
-    "@batijs/tsup": "workspace:*",
+    "@batijs/compile": "workspace:*",
     "@trpc/client": "^10.43.0",
     "@trpc/server": "^10.43.0",
-    "@types/node": "^16.18.40",
-    "tsup": "^7.2.0"
+    "@types/node": "^16.18.40"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"

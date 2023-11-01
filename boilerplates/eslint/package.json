@@ -9,14 +9,13 @@
   "license": "MIT",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "devDependencies": {
-    "@batijs/tsup": "workspace:^",
+    "@batijs/compile": "workspace:^",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
-    "eslint": "^8.52.0",
-    "tsup": "^7.2.0"
+    "eslint": "^8.52.0"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"

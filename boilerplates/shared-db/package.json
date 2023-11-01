@@ -6,15 +6,14 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/tsup": "workspace:*",
-    "@types/node": "^16.18.40",
-    "tsup": "^7.2.0"
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^16.18.40"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"

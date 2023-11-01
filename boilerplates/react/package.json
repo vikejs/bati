@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,7 @@
     "@babel/core": "^7.23.2",
     "@babel/plugin-syntax-flow": "^7.22.5",
     "@babel/plugin-transform-react-jsx": "^7.22.15",
-    "@batijs/tsup": "workspace:*",
+    "@batijs/compile": "workspace:*",
     "@types/node": "^16.18.40",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
@@ -25,7 +25,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.5",
-    "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vike": "^0.4.144",
     "vike-react": "^0.3.0",
