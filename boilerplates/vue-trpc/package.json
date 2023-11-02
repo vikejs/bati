@@ -1,0 +1,57 @@
+{
+  "name": "@batijs/vue-trpc",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:^",
+    "@batijs/shared-db": "workspace:^",
+    "@batijs/trpc": "workspace:^",
+    "@types/node": "^16.18.40",
+    "vike": "^0.4.144",
+    "vite": "^4.5.0",
+    "vue": "^3.3.7"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "vue",
+          "trpc"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./pages/todo-trpc/+config.h": {
+      "types": "./dist/types/pages/todo-trpc/+config.h.d.ts"
+    },
+    "./pages/todo-trpc/+onBeforeRender": {
+      "types": "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo-trpc/+config.h": [
+        "./dist/types/pages/todo-trpc/+config.h.d.ts"
+      ],
+      "pages/todo-trpc/+onBeforeRender": [
+        "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+      ]
+    }
+  }
+}

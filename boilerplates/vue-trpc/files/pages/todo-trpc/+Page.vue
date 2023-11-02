@@ -12,7 +12,7 @@ const { todoItemsInitial } = useAttrs();
 </script>
 
 <script lang="ts">
-import TodoList from "../../components/TodoList.vue";
+import TodoList from "../../components/TodoListTrpc.vue";
 const components = { TodoList };
 export default { components };
 </script>

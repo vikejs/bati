@@ -369,6 +369,40 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@16.18.59)
 
+  boilerplates/react-trpc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
+      '@types/react':
+        specifier: ^18.2.33
+        version: 18.2.33
+      '@types/react-dom':
+        specifier: ^18.2.14
+        version: 18.2.14
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      vike:
+        specifier: ^0.4.144
+        version: 0.4.144(vite@4.5.0)
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/node@16.18.59)
+
   boilerplates/shared:
     devDependencies:
       '@batijs/compile':
@@ -672,6 +706,34 @@ importers:
       telefunc:
         specifier: ^0.1.62
         version: 0.1.62(react@18.2.0)
+      vike:
+        specifier: ^0.4.144
+        version: 0.4.144(vite@4.5.0)
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/node@16.18.59)
+      vue:
+        specifier: ^3.3.7
+        version: 3.3.7(typescript@5.2.2)
+
+  boilerplates/vue-trpc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
+      '@batijs/trpc':
+        specifier: workspace:^
+        version: link:../trpc
+      '@types/node':
+        specifier: ^16.18.40
+        version: 16.18.59
       vike:
         specifier: ^0.4.144
         version: 0.4.144(vite@4.5.0)

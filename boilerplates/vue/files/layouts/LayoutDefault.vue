@@ -7,7 +7,11 @@
       </Link>
       <!-- BATI.has("telefunc") -->
       <Link href="/todo">
-        Todo
+        Todo (telefunc)
+      </Link>
+      <!-- BATI.has("trpc") -->
+      <Link href="/todo-trpc">
+        Todo (tRPC)
       </Link>
       <Link href="/star-wars">
         Data Fetching
