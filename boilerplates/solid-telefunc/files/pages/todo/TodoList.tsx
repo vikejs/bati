@@ -1,5 +1,5 @@
+import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import { createSignal, For, untrack } from "solid-js";
-import type { TodoItem } from "../../database/todoItems.js";
 import { onNewTodo } from "./TodoList.telefunc.js";
 
 export function TodoList(props: { initialTodoItems: TodoItem[] }) {

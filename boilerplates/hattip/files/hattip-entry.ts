@@ -1,5 +1,8 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { appRouter } from "@batijs/trpc/trpc/server";
+import type { HattipHandler } from "@hattip/core";
 import { createRouter } from "@hattip/router";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
@@ -24,6 +27,24 @@ if (BATI.has("telefunc")) {
       status: statusCode,
       headers: {
         "content-type": contentType,
+      },
+    });
+  });
+}
+
+if (BATI.has("trpc")) {
+  /**
+   * tRPC route
+   *
+   * @link {@see https://trpc.io/docs/server/adapters/fetch}
+   **/
+  router.use("/api/trpc/*", (context) => {
+    return fetchRequestHandler({
+      router: appRouter,
+      req: context.request,
+      endpoint: "/api/trpc",
+      createContext({ req }) {
+        return { req };
       },
     });
   });
@@ -81,4 +102,4 @@ router.use(async (context) => {
   });
 });
 
-export default router.buildHandler();
+export default router.buildHandler() as HattipHandler;

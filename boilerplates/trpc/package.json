@@ -1,0 +1,57 @@
+{
+  "name": "@batijs/trpc",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/shared-db": "workspace:*",
+    "@trpc/client": "^10.43.0",
+    "@trpc/server": "^10.43.0",
+    "@types/node": "^16.18.40",
+    "vite": "^4.5.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "trpc"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "trpc/server": [
+        "./dist/types/trpc/server.d.ts"
+      ],
+      "trpc/client": [
+        "./dist/types/trpc/client.d.ts"
+      ],
+      "trpc/vite-plugin": [
+        "./dist/types/trpc/vite-plugin.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "./trpc/server": {
+      "types": "./dist/types/trpc/server.d.ts"
+    },
+    "./trpc/client": {
+      "types": "./dist/types/trpc/client.d.ts"
+    },
+    "./trpc/vite-plugin": {
+      "types": "./dist/types/trpc/vite-plugin.d.ts"
+    }
+  }
+}

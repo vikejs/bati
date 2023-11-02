@@ -20,7 +20,8 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       <Sidebar>
         <Logo />
         <Link href="/">Welcome</Link>
-        {BATI.has("telefunc") ? <Link href="/todo">Todo</Link> : undefined}
+        {BATI.has("telefunc") ? <Link href="/todo">Todo (telefunc)</Link> : undefined}
+        {BATI.has("trpc") ? <Link href="/todo-trpc">Todo (tRPC)</Link> : undefined}
         <Link href="/star-wars">Data Fetching</Link>
       </Sidebar>
       <Content>{children}</Content>

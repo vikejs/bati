@@ -1,0 +1,34 @@
+{
+  "name": "@batijs/compile",
+  "version": "0.0.108",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "tsup",
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "Joël Charles",
+  "repository": "https://github.com/batijs/bati",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.18.40",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "esbuild": "^0.19.5",
+    "esbuild-plugin-copy": "^2.1.1",
+    "globby": "^13.2.2",
+    "tsc-prog": "^2.3.0",
+    "tsup": "^7.2.0"
+  },
+  "bin": {
+    "bati-compile-boilerplate": "./cli.js"
+  },
+  "files": [
+    "dist/",
+    "cli.js"
+  ],
+  "bati": false
+}

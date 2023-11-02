@@ -1,4 +1,4 @@
-export function combinate<O extends (string | string[])[]>(obj: O) {
+export function combinate<O extends (string | (string | null | undefined)[])[]>(obj: O) {
   let combos: string[][] = [];
   if (obj.length === 0) return [[]];
 
@@ -6,6 +6,7 @@ export function combinate<O extends (string | string[])[]>(obj: O) {
     const values = Array.isArray(val) ? val : [val];
     const all: string[][] = [];
     for (const x of values) {
+      if (!x) continue;
       if (combos.length === 0) {
         all.push([x]);
       } else {

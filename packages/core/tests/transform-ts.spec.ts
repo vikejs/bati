@@ -270,3 +270,47 @@ export const framework = solid();`,
     `export const framework = null;`,
   );
 });
+
+describe('rewrite "bati:" imports', async () => {
+  test("test", async () => {
+    const filename = ctx.jsx ? "test.tsx" : "test.ts";
+    const renderedOutput = await transformAndFormat(
+      `import { router } from "bati:./router";
+
+export const appRouter = router();`,
+      {
+        BATI: new Set(),
+      },
+      { filepath: filename },
+    );
+
+    assert.equal(
+      renderedOutput.trim(),
+      `import { router } from "./router";
+
+export const appRouter = router();`,
+    );
+  });
+});
+
+describe('rewrite "@batijs/" imports', async () => {
+  test("test", async () => {
+    const filename = ctx.jsx ? "test.tsx" : "test.ts";
+    const renderedOutput = await transformAndFormat(
+      `import { trpc } from "@batijs/trpc/trpc/client";
+
+export const test = trpc;`,
+      {
+        BATI: new Set(),
+      },
+      { filepath: filename },
+    );
+
+    assert.equal(
+      renderedOutput.trim(),
+      `import { trpc } from "./trpc/client";
+
+export const test = trpc;`,
+    );
+  });
+});

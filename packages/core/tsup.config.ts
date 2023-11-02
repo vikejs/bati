@@ -6,7 +6,7 @@ const eslintFixPlugin: Plugin = {
   name: "eslint-fix-plugin",
   setup(build) {
     // eslint ESM is not properly built
-    build.onLoad({ filter: /eslint\/lib\/linter\/node-event-generator\.js$/ }, async (args) => {
+    build.onLoad({ filter: /eslint[/\\]lib[/\\]linter[/\\]node-event-generator\.js$/ }, async (args) => {
       const source = await readFile(args.path, "utf8");
 
       const contents = source
@@ -16,7 +16,7 @@ const eslintFixPlugin: Plugin = {
     });
 
     // unsupported require.resolve
-    build.onLoad({ filter: /eslint\/lib\/rule-tester\/rule-tester\.js$/ }, async (args) => {
+    build.onLoad({ filter: /eslint[/\\]lib[/\\]rule-tester[/\\]rule-tester\.js$/ }, async (args) => {
       let contents = await readFile(args.path, "utf8");
 
       if (!contents.includes(`require.resolve("espree")`)) {

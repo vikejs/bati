@@ -6,18 +6,19 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "esno copy.ts"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@batijs/shared-db": "workspace:^",
+    "@batijs/compile": "workspace:^",
     "@types/node": "^16.18.40",
-    "esno": "^0.17.0",
     "solid-js": "^1.8.4",
     "telefunc": "^0.1.62",
-    "vite": "^4.5.0",
-    "vike": "^0.4.144"
+    "vike": "^0.4.144",
+    "vite": "^4.5.0"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -33,6 +34,42 @@
           "telefunc"
         ]
       }
+    }
+  },
+  "exports": {
+    "./pages/todo/TodoList.telefunc": {
+      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+    },
+    "./pages/todo/TodoList": {
+      "types": "./dist/types/pages/todo/TodoList.d.ts"
+    },
+    "./pages/todo/+Page": {
+      "types": "./dist/types/pages/todo/+Page.d.ts"
+    },
+    "./pages/todo/+config.h": {
+      "types": "./dist/types/pages/todo/+config.h.d.ts"
+    },
+    "./pages/todo/+onBeforeRender": {
+      "types": "./dist/types/pages/todo/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo/TodoList.telefunc": [
+        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+      ],
+      "pages/todo/TodoList": [
+        "./dist/types/pages/todo/TodoList.d.ts"
+      ],
+      "pages/todo/+Page": [
+        "./dist/types/pages/todo/+Page.d.ts"
+      ],
+      "pages/todo/+config.h": [
+        "./dist/types/pages/todo/+config.h.d.ts"
+      ],
+      "pages/todo/+onBeforeRender": [
+        "./dist/types/pages/todo/+onBeforeRender.d.ts"
+      ]
     }
   }
 }

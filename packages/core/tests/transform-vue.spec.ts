@@ -144,6 +144,52 @@ describe("vue/script: comment", () => {
   );
 });
 
+describe('vue/script: rewrite "bati:" imports', async () => {
+  test("test", async () => {
+    const renderedOutput = await transformAndFormat(
+      `<script>
+  import { router } from "bati:./router";
+  export const appRouter = router();
+</script>`,
+      {
+        BATI: new Set(["vue"]),
+      },
+      { filepath: "test.vue" },
+    );
+
+    assert.equal(
+      renderedOutput.trim(),
+      `<script>
+  import { router } from "./router";
+  export const appRouter = router();
+</script>`,
+    );
+  });
+});
+
+describe('vue/script: rewrite "@batijs/" imports', async () => {
+  test("test", async () => {
+    const renderedOutput = await transformAndFormat(
+      `<script>
+  import { router } from "@batijs/trpc/router";
+  export const appRouter = router();
+</script>`,
+      {
+        BATI: new Set(["vue"]),
+      },
+      { filepath: "test.vue" },
+    );
+
+    assert.equal(
+      renderedOutput.trim(),
+      `<script>
+  import { router } from "./router";
+  export const appRouter = router();
+</script>`,
+    );
+  });
+});
+
 describe("vue/style: squirelly", () => {
   testIfElse(
     `<style>

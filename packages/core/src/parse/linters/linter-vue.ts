@@ -6,6 +6,7 @@ import type { VikeMeta } from "../../types.js";
 import { evalCondition, extractBatiConditionComment } from "../eval.js";
 import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
+import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
 
 function getAllCommentsBefore(
@@ -72,6 +73,9 @@ export default function vueLinterConfig(meta: VikeMeta) {
             } satisfies Visitors,
             // script
             {
+              ImportDeclaration(node) {
+                visitorImportStatement(context, node);
+              },
               ":statement"(node) {
                 visitorStatementWithComments(context, sourceCode, node, meta);
               },

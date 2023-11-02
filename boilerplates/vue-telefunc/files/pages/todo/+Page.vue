@@ -2,7 +2,6 @@
   <div>
     <h1>To-do List</h1>
     <TodoList :todo-items-initial="todoItemsInitial" />
-    <Counter />
   </div>
 </template>
 
@@ -13,8 +12,8 @@ const { todoItemsInitial } = useAttrs();
 </script>
 
 <script lang="ts">
-import Counter from "../../components/Counter.vue";
 import TodoList from "../../components/TodoList.vue";
-const components = { Counter, TodoList };
+
+const components = { TodoList };
 export default { components };
 </script>

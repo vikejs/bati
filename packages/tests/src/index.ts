@@ -94,8 +94,12 @@ async function createTurboConfig(context: GlobalContext) {
         test: {
           dependsOn: ["build"],
         },
-        lint: {},
-        typecheck: {},
+        lint: {
+          dependsOn: ["build"],
+        },
+        typecheck: {
+          dependsOn: ["build"],
+        },
       },
       remoteCache: {
         signature: false,

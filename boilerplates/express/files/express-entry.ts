@@ -1,7 +1,9 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
+import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
@@ -68,6 +70,23 @@ async function startServer() {
       "/api/auth/*",
       createMiddleware(Auth, {
         alwaysCallNext: false,
+      }),
+    );
+  }
+
+  if (BATI.has("trpc")) {
+    /**
+     * tRPC route
+     *
+     * @link {@see https://trpc.io/docs/server/adapters/express#3-use-the-express-adapter}
+     **/
+    app.use(
+      "/api/trpc",
+      trpcExpress.createExpressMiddleware({
+        router: appRouter,
+        createContext({ req, res }: trpcExpress.CreateExpressContextOptions) {
+          return { req, res };
+        },
       }),
     );
   }

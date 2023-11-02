@@ -1,10 +1,12 @@
-import { createServer } from "node:http";
+import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { appRouter } from "@batijs/trpc/trpc/server";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
+import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
 import {
   createApp,
   createRouter,
@@ -88,6 +90,28 @@ async function startServer() {
       eventHandler((event) =>
         Auth({
           request: toWebRequest(event),
+        }),
+      ),
+    );
+  }
+
+  if (BATI.has("trpc")) {
+    /**
+     * tRPC route
+     *
+     * @link {@see https://trpc.io/docs/server/adapters}
+     **/
+    router.use(
+      "/api/trpc/**:path",
+      eventHandler((event) =>
+        nodeHTTPRequestHandler({
+          req: event.node.req,
+          res: event.node.res,
+          path: event.context.params!.path,
+          router: appRouter,
+          createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
+            return { req, res };
+          },
         }),
       ),
     );

@@ -6,19 +6,18 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "build": "tsup"
+    "build": "bati-compile-boilerplate"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/tsup": "workspace:*",
+    "@batijs/compile": "workspace:*",
     "@types/node": "^16.18.40",
     "cross-fetch": "^4.0.0",
     "eslint-plugin-solid": "^0.13.0",
     "solid-js": "^1.8.4",
     "tailwindcss": "^3.3.5",
-    "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vike": "^0.4.144",
     "vike-solid": "^0.2.3",
@@ -34,6 +33,102 @@
   "bati": {
     "if": {
       "flag": "solid"
+    }
+  },
+  "exports": {
+    "./components/Link": {
+      "types": "./dist/types/components/Link.d.ts"
+    },
+    "./layouts/HeadDefault": {
+      "types": "./dist/types/layouts/HeadDefault.d.ts"
+    },
+    "./layouts/LayoutDefault": {
+      "types": "./dist/types/layouts/LayoutDefault.d.ts"
+    },
+    "./pages/+config.h": {
+      "types": "./dist/types/pages/+config.h.d.ts"
+    },
+    "./pages/_error/+Page": {
+      "types": "./dist/types/pages/_error/+Page.d.ts"
+    },
+    "./pages/index/Counter": {
+      "types": "./dist/types/pages/index/Counter.d.ts"
+    },
+    "./pages/index/+Page": {
+      "types": "./dist/types/pages/index/+Page.d.ts"
+    },
+    "./pages/star-wars/types": {
+      "types": "./dist/types/pages/star-wars/types.d.ts"
+    },
+    "./pages/star-wars/filterMovieData": {
+      "types": "./dist/types/pages/star-wars/filterMovieData.d.ts"
+    },
+    "./pages/star-wars/@id/+Page": {
+      "types": "./dist/types/pages/star-wars/@id/+Page.d.ts"
+    },
+    "./pages/star-wars/@id/+onBeforeRender": {
+      "types": "./dist/types/pages/star-wars/@id/+onBeforeRender.d.ts"
+    },
+    "./pages/star-wars/index/+Page": {
+      "types": "./dist/types/pages/star-wars/index/+Page.d.ts"
+    },
+    "./pages/star-wars/index/getStarWarsMovies": {
+      "types": "./dist/types/pages/star-wars/index/getStarWarsMovies.d.ts"
+    },
+    "./pages/star-wars/index/+onBeforePrerenderStart": {
+      "types": "./dist/types/pages/star-wars/index/+onBeforePrerenderStart.d.ts"
+    },
+    "./pages/star-wars/index/+onBeforeRender": {
+      "types": "./dist/types/pages/star-wars/index/+onBeforeRender.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "components/Link": [
+        "./dist/types/components/Link.d.ts"
+      ],
+      "layouts/HeadDefault": [
+        "./dist/types/layouts/HeadDefault.d.ts"
+      ],
+      "layouts/LayoutDefault": [
+        "./dist/types/layouts/LayoutDefault.d.ts"
+      ],
+      "pages/+config.h": [
+        "./dist/types/pages/+config.h.d.ts"
+      ],
+      "pages/_error/+Page": [
+        "./dist/types/pages/_error/+Page.d.ts"
+      ],
+      "pages/index/Counter": [
+        "./dist/types/pages/index/Counter.d.ts"
+      ],
+      "pages/index/+Page": [
+        "./dist/types/pages/index/+Page.d.ts"
+      ],
+      "pages/star-wars/types": [
+        "./dist/types/pages/star-wars/types.d.ts"
+      ],
+      "pages/star-wars/filterMovieData": [
+        "./dist/types/pages/star-wars/filterMovieData.d.ts"
+      ],
+      "pages/star-wars/@id/+Page": [
+        "./dist/types/pages/star-wars/@id/+Page.d.ts"
+      ],
+      "pages/star-wars/@id/+onBeforeRender": [
+        "./dist/types/pages/star-wars/@id/+onBeforeRender.d.ts"
+      ],
+      "pages/star-wars/index/+Page": [
+        "./dist/types/pages/star-wars/index/+Page.d.ts"
+      ],
+      "pages/star-wars/index/getStarWarsMovies": [
+        "./dist/types/pages/star-wars/index/getStarWarsMovies.d.ts"
+      ],
+      "pages/star-wars/index/+onBeforePrerenderStart": [
+        "./dist/types/pages/star-wars/index/+onBeforePrerenderStart.d.ts"
+      ],
+      "pages/star-wars/index/+onBeforeRender": [
+        "./dist/types/pages/star-wars/index/+onBeforeRender.d.ts"
+      ]
     }
   }
 }

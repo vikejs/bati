@@ -1,7 +1,6 @@
+import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import React, { useState } from "react";
-
 import { onNewTodo } from "./TodoList.telefunc.js";
-import type { TodoItem } from "../../database/todoItems.js";
 
 export function TodoList({ todoItemsInitial }: { todoItemsInitial: TodoItem[] }) {
   const [todoItems, setTodoItems] = useState(todoItemsInitial);
