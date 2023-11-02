@@ -12,11 +12,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/shared-db": "workspace:*",
     "@batijs/compile": "workspace:*",
+    "@batijs/shared-db": "workspace:*",
     "@trpc/client": "^10.43.0",
     "@trpc/server": "^10.43.0",
-    "@types/node": "^16.18.40"
+    "@types/node": "^16.18.40",
+    "vite": "^4.5.0"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -36,6 +37,9 @@
       ],
       "trpc/client": [
         "./dist/types/trpc/client.d.ts"
+      ],
+      "trpc/vite-plugin": [
+        "./dist/types/trpc/vite-plugin.d.ts"
       ]
     }
   },
@@ -45,6 +49,9 @@
     },
     "./trpc/client": {
       "types": "./dist/types/trpc/client.d.ts"
+    },
+    "./trpc/vite-plugin": {
+      "types": "./dist/types/trpc/vite-plugin.d.ts"
     }
   }
 }

@@ -37,6 +37,7 @@ export async function loadTestFileMatrix(filepath: string) {
   for (const m of matrix as unknown[]) {
     if (Array.isArray(m)) {
       for (const n of m as unknown[]) {
+        if (n === undefined || n === null) continue;
         assert(typeof n === "string", defaultErrorMessage);
         assert(validKeys.has(n), `\`matrix\` export in "${filepath}" has unknown feature "${n}"`);
       }
