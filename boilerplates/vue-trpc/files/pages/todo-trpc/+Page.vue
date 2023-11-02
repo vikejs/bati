@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>To-do List</h1>
-    <TodoList :todoItemsInitial="todoItemsInitial" />
+    <TodoList :todo-items-initial="todoItemsInitial" />
   </div>
 </template>
 
