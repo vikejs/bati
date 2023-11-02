@@ -34,7 +34,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       "node",
       [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...flags.map((f) => `--${f}`), digest],
       {
-        timeout: 5000,
+        timeout: 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
       },
     );

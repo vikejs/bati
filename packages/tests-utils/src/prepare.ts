@@ -1,5 +1,4 @@
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
@@ -10,9 +9,9 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
   const { beforeAll, afterAll } = await import("vitest");
 
   const context: GlobalContext = {
-    tmpdir: join(tmpdir(), "bati"),
     port: 0,
     server: undefined,
+    flags: basename(process.cwd()).split("--"),
   };
 
   beforeAll(async () => {

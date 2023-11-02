@@ -234,7 +234,16 @@ async function run() {
       const hooks: string[] = [];
       const flags = Object.entries(args)
         .filter(([, val]) => val === true)
-        .map(([key]) => key);
+        .map(([key]) => {
+          const flag: string[] = [key];
+          const dependsOn = (features as ReadonlyArray<Feature>).find(f => f.flag === key)?.dependsOn;
+
+          if (dependsOn) {
+            flag.push(...dependsOn);
+          }
+          return flag;
+        })
+        .flat(1);
 
       checkRules(flags);
 

@@ -7,6 +7,7 @@ export interface Feature<C = string> {
   image?: string;
   url?: string;
   description?: string;
+  dependsOn?: ReadonlyArray<string>;
   // if true, it means that the feature is not yet implemented, but could be displayed in the UI
   disabled?: boolean;
 }

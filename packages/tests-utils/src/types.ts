@@ -2,9 +2,9 @@ import type { ExecaChildProcess as ExecaChildProcessOrig } from "execa";
 import type { RequestInit, Response } from "node-fetch";
 
 export interface GlobalContext {
-  tmpdir: string;
   port: number;
   server: ExecaChildProcess<string> | undefined;
+  flags: string[];
 }
 
 export interface PrepareOptions {

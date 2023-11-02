@@ -4,6 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
-    devDependencies: ["tailwindcss", "postcss", "autoprefixer"],
+    devDependencies: ["tailwindcss", "postcss", "autoprefixer", ...(props.meta.BATI.has('daisyui') ? ['daisyui'] as const : [])],
   });
 }
