@@ -80,7 +80,7 @@ export default function Features() {
       <For each={Object.values(categoriesGroups)}>
         {(group) => (
           <>
-            <div class="divider-l">
+            <div class="divider divider-start mb-0 mt-5">
               <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">{group}</h3>
             </div>
             <FeaturesGroup categories={categories.filter((c) => c.group === group)} />
