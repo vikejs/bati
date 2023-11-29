@@ -13,7 +13,7 @@ export default async function getViteConfig(props: TransformerProps) {
     from: "@vitejs/plugin-react",
     constructor: "react",
     // see https://github.com/vitejs/vite/discussions/5803#discussioncomment-5562200
-    options: { jsxRuntime: "classic" },
+    options: {},
   });
   addVitePlugin(mod, {
     from: "vike/plugin",
