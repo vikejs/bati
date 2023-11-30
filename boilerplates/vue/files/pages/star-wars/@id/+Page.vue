@@ -9,8 +9,8 @@
 
 <script lang="ts" setup>
 defineProps({
-  movies: {
-    type: Array,
+  movie: {
+    type: Object,
     required: true,
   },
 })
