@@ -2,30 +2,22 @@
   <div class="layout">
     <Sidebar>
       <Logo />
-      <Link href="/">
-        Welcome
-      </Link>
+      <Link href="/"> Welcome </Link>
       <!-- BATI.has("telefunc") -->
-      <Link href="/todo">
-        Todo (telefunc)
-      </Link>
+      <Link href="/todo"> Todo (telefunc) </Link>
       <!-- BATI.has("trpc") -->
-      <Link href="/todo-trpc">
-        Todo (tRPC)
-      </Link>
-      <Link href="/star-wars">
-        Data Fetching
-      </Link>
+      <Link href="/todo-trpc"> Todo (tRPC) </Link>
+      <Link href="/star-wars"> Data Fetching </Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Sidebar from "../components/Sidebar.vue";
-import Logo from "../components/Logo.vue";
-import Link from "../components/Link.vue";
 import Content from "../components/Content.vue";
+import Link from "../components/Link.vue";
+import Logo from "../components/Logo.vue";
+import Sidebar from "../components/Sidebar.vue";
 </script>
 
 <style>
@@ -58,10 +50,12 @@ a {
   min-height: 100vh;
   flex-grow: 1;
 }
-.content {
-  transition: opacity 0.1s ease-in;
+/* Page Transition Animation */
+#page-content {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
-.content.page-transition {
+body.page-is-transitioning #page-content {
   opacity: 0;
 }
 </style>
