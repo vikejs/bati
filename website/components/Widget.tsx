@@ -5,7 +5,7 @@ import { flip } from "#components/Flip.js";
 import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
 import { StoreContext } from "#components/Store.js";
-import { createMemo, Show, useContext } from "solid-js";
+import { createMemo, createSignal, Show, useContext } from "solid-js";
 
 // avoid removing import when trying to optimize them
 // https://github.com/solidjs/solid/discussions/845
@@ -14,12 +14,21 @@ const _flip = flip;
 
 export function Widget(props: { theme?: string; widget: boolean }) {
   const { selectedFeaturesFlags, rules } = useContext(StoreContext);
+  const [tooltipText, setTooltipText] = createSignal("Copy to Clipboard");
 
   function getFlags() {
     return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
   const words = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags()]);
+
+  const handleMouseEnter = () => {
+    setTooltipText("Copy to Clipboard");
+  };
+
+  const handleCopy = () => {
+    setTooltipText("Copied to Clipboard!");
+  };
 
   return (
     <div
@@ -34,9 +43,11 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       </div>
       <div class="flex px-4">
         <kbd
-          class="group relative flex-1 justify-start pl-9 tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap rounded-md leading-9 gap-2.5"
+          class="group relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap rounded-md leading-9 gap-2.5"
           use:copy
-          data-tip="Copied to clipboard!"
+          onMouseEnter={handleMouseEnter}
+          onClick={handleCopy}
+          data-tip={tooltipText()}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
