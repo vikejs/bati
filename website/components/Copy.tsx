@@ -17,15 +17,22 @@ export function copy(el: HTMLElement) {
     if (selObj) {
       const toCopy = selObj.toString().replaceAll("\n", " ");
       await navigator.clipboard.writeText(toCopy);
-      el.classList.add("tooltip", "tooltip-open");
+      el.classList.remove("tooltip-primary");
+      el.classList.add("tooltip", "tooltip-open", "tooltip-success");
 
       clear = setTimeout(() => {
-        el.classList.remove("tooltip", "tooltip-open");
+        el.classList.remove("tooltip", "tooltip-open", "tooltip-success");
       }, 3000);
     }
   }
 
+  async function handleHover() {
+    el.classList.remove("tooltip-success");
+    el.classList.add("tooltip", "tooltip-open", "tooltip-primary");
+  }
+
   el.addEventListener("click", writeSelectionClipboard);
+  el.addEventListener("mouseenter", handleHover);
 
   onCleanup(() => el.removeEventListener("click", writeSelectionClipboard));
 }
