@@ -1,4 +1,4 @@
-import { onCleanup } from "solid-js";
+import { createSignal, onCleanup } from "solid-js";
 
 declare module "solid-js" {
   namespace JSX {
@@ -10,9 +10,11 @@ declare module "solid-js" {
 
 export function copy(el: HTMLElement) {
   let clear: ReturnType<typeof setTimeout>;
+  const [clicked, setClicked] = createSignal(false);
 
   async function writeSelectionClipboard() {
     clearTimeout(clear);
+    setClicked(true);
     const selObj = window.getSelection();
     if (selObj) {
       const toCopy = selObj.toString().replaceAll("\n", " ");
@@ -22,17 +24,27 @@ export function copy(el: HTMLElement) {
 
       clear = setTimeout(() => {
         el.classList.remove("tooltip", "tooltip-open", "tooltip-success");
+        setClicked(false);
       }, 3000);
     }
   }
 
-  async function handleHover() {
+  function handleMouseHover() {
     el.classList.remove("tooltip-success");
     el.classList.add("tooltip", "tooltip-open", "tooltip-primary");
+    setClicked(false);
   }
 
+  function handleMouseLeave() {
+    if (!clicked()) {
+      el.classList.remove("tooltip", "tooltip-open", "tooltip-primary");
+    }
+  }
+
+
   el.addEventListener("click", writeSelectionClipboard);
-  el.addEventListener("mouseenter", handleHover);
+  el.addEventListener("mouseenter", handleMouseHover);
+  el.addEventListener("mouseleave", handleMouseLeave);
 
   onCleanup(() => el.removeEventListener("click", writeSelectionClipboard));
 }
