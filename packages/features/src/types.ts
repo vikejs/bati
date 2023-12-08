@@ -8,6 +8,7 @@ export interface Feature<C = string> {
   url?: string;
   description?: string;
   dependsOn?: ReadonlyArray<string>;
+  spectrum?: "beaten_path" | "bleeding_edge";
   // if true, it means that the feature is not yet implemented, but could be displayed in the UI
   disabled?: boolean;
 }
