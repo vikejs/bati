@@ -25,8 +25,8 @@ export default function Presets() {
   return (
     <div class="w-full flex box-border gap-2">
       <Preset title="Plain Vike" features={[]} />
-      <Preset title="Frontend" features={["solid", "CSS", "Linter"]} />
-      <Preset title="Full-stack" features={["solid", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]} />
+      <Preset title="Frontend" features={["Framework", "CSS", "Linter"]} />
+      <Preset title="Full-stack" features={["Framework", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]} />
       <Preset title="Next.js" features={["react", "Auth", "RPC", "Server", "vercel", "Linter"]} />
       <Preset title="E-commerce" features={["Framework"]} disabled={true} />
     </div>
