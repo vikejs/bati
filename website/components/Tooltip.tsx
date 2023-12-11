@@ -1,5 +1,7 @@
+import { autoUpdate, flip, offset, shift, type Placement } from "@floating-ui/dom";
 import clsx from "clsx";
-import { type JSX } from "solid-js";
+import { createSignal, onMount, type JSX } from "solid-js";
+import { useFloating } from "../lib/floating-solid";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {
   return (
@@ -9,23 +11,40 @@ export function Tooltip(props: { children?: JSX.Element; class?: string; tip: st
   );
 }
 
-export function EnrichedTooltip(props: { children: JSX.Element; class?: string; tip: JSX.Element; position: "right" }) {
+export function EnrichedTooltip(props: {
+  children: JSX.Element;
+  class?: string;
+  tip: JSX.Element;
+  placement: Placement;
+}) {
+  const [reference, setReference] = createSignal<HTMLElement>();
+  const [floating, setFloating] = createSignal<HTMLElement>();
+  const position = useFloating(reference, floating, {
+    placement: props.placement,
+    whileElementsMounted: autoUpdate,
+    middleware: [offset(16), flip(), shift()],
+  });
+
+  onMount(() => {
+    position.update();
+  });
+
   return (
     <div class={clsx("dropdown dropdown-hover", props.class)}>
-      <div tabindex="0">{props.children}</div>
+      <div tabindex="0" ref={setReference}>
+        {props.children}
+      </div>
       <div
         tabindex="0"
         role="tooltip"
-        class="card compact dropdown-content z-10 shadow-md bg-base-200 rounded-lg w-96 flex-row items-center"
-        classList={{ "left-full ml-4 top-1/2 -translate-y-1/2": props.position === "right" }}
+        ref={setFloating}
+        class="card compact dropdown-content z-10 shadow-md bg-base-200 rounded-lg flex-row items-center absolute top-o left-0 w-96"
+        style={{
+          position: position.strategy,
+          top: position.y ? position.y + "px" : 0,
+          left: position.x ? position.x + "px" : 0,
+        }}
       >
-        <div
-          class="w-0 h-0"
-          classList={{
-            "border-t-4 border-b-4 border-t-transparent border-b-transparent border-r-4 border-r-base-200 -translate-x-full":
-              props.position === "right",
-          }}
-        ></div>
         <div tabindex="0" class="p-2 text-sm">
           {props.tip}
         </div>

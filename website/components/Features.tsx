@@ -23,7 +23,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
             <FormControl
               label={label}
               flipLabel={label}
-              class="w-full sm:w-auto rounded-md rounded-md bg-base-100"
+              class="w-full sm:w-auto rounded-md bg-base-100"
               classList={{
                 "border-success/60": inview(),
                 "border-base-200 opacity-70": disabled(),
@@ -74,12 +74,12 @@ function FeaturesGroup(props: { categories: Category[] }) {
                         </Tooltip>
                         <div class="flex-1"></div>
                         {feature.spectrum === "beaten_path" && (
-                          <EnrichedTooltip tip={<BeatenPathTooltip />} position="right" class="w-4 tooltip-right">
+                          <EnrichedTooltip tip={<BeatenPathTooltip />} placement="right" class="w-4 tooltip-right">
                             <IconTrainTrack class="opacity-80"></IconTrainTrack>
                           </EnrichedTooltip>
                         )}
                         {feature.spectrum === "bleeding_edge" && (
-                          <EnrichedTooltip tip={<BleedingEdgeTooltip />} position="right" class="w-4 tooltip-right">
+                          <EnrichedTooltip tip={<BleedingEdgeTooltip />} placement="right" class="w-4 tooltip-right">
                             <IconAlembic class="opacity-80"></IconAlembic>
                           </EnrichedTooltip>
                         )}
