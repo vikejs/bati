@@ -1,13 +1,13 @@
 {
   "name": "@batijs/tests",
   "private": true,
-  "version": "0.0.125",
+  "version": "0.0.127",
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "start": "esno src/index.ts",
+    "start": "tsx src/index.ts",
     "test": "vitest run",
-    "test:e2e": "esno src/index.ts"
+    "test:e2e": "tsx src/index.ts"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -18,13 +18,13 @@
     "@batijs/core": "workspace:*",
     "@batijs/features": "workspace:^",
     "@batijs/tests-utils": "workspace:*",
-    "@types/node": "^18.18.9",
-    "@types/which": "^3.0.0",
-    "esno": "^0.17.0",
-    "fast-glob": "^3.3.1",
-    "p-limit": "^4.0.0",
-    "turbo": "1.10.15",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "@types/node": "^18.19.3",
+    "@types/which": "^3.0.3",
+    "fast-glob": "^3.3.2",
+    "p-limit": "^5.0.0",
+    "tsx": "^4.6.2",
+    "turbo": "1.11.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
   }
 }

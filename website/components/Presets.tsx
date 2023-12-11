@@ -26,10 +26,10 @@ function Preset(props: { title: string; features: (Flags | CategoryLabels)[]; cl
 export default function Presets() {
   return (
     <div class="w-full flex box-border gap-2">
-      <Preset title="Plain Vike" features={[]} description="Scaffold a simple app with Vike"/>
-      <Preset title="Frontend" features={["solid", "CSS", "Linter"]} description="Scaffold a frontend app with Solid and Tailwind CSS"/>
-      <Preset title="Full-stack" features={["solid", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]} description="Scaffold a full-stack app with RPC (like server actions), Auth, Database and Server"/>
-      <Preset title="Next.js" features={["react", "Auth", "RPC", "Server", "vercel", "Linter"]} description="Scaffold a Next.js like app with RPC (like server actions) and Vercel"/>
+      <Preset title="Plain Vike" features={[]} description="Scaffold a simple app with Vike" />
+      <Preset title="Frontend" features={["Framework", "CSS", "Linter"]} description="Scaffold a frontend app with Solid and Tailwind CSS" />
+      <Preset title="Full-stack" features={["Framework", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]} description="Scaffold a full-stack app with RPC (like server actions), Auth, Database and Server" />
+      <Preset title="Next.js" features={["react", "Auth", "RPC", "Server", "vercel", "Linter"]} description="Scaffold a Next.js like app with RPC (like server actions) and Vercel" />
       <Preset title="E-commerce" features={["Framework"]} disabled={true} />
     </div>
   );
