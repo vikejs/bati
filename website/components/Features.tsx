@@ -1,8 +1,8 @@
 import { categories, categoriesGroups, type Category, type CategoryLabels } from "@batijs/features";
 import { FormControl } from "#components/FormControl.js";
-import { IconAlembic, IconInfo, IconTrainTrack } from "#components/Icons";
+import { IconAlembic, IconTrainTrack } from "#components/Icons";
 import { StoreContext } from "#components/Store.js";
-import { EnrichedTooltip, Tooltip } from "#components/Tooltip";
+import { EnrichedTooltip } from "#components/Tooltip";
 import { createMemo, For, useContext } from "solid-js";
 
 function FeaturesGroup(props: { categories: Category[] }) {
@@ -66,12 +66,14 @@ function FeaturesGroup(props: { categories: Category[] }) {
                           <span>{feature.label}</span>
                           {feature.alt && <span class="text-xs">{feature.alt}</span>}
                         </div>
-                        <Tooltip
-                          tip="Hello"
-                          class="flex-shrink opacity-0 group-hover:opacity-100 transition-opacity -mr-3"
-                        >
-                          <IconInfo class="opacity-70"></IconInfo>
-                        </Tooltip>
+                        {/*{!feature.disabled && (*/}
+                        {/*  <Tooltip*/}
+                        {/*    tip="Hello"*/}
+                        {/*    class="flex-shrink opacity-0 group-hover:opacity-100 transition-opacity -mr-3"*/}
+                        {/*  >*/}
+                        {/*    <IconInfo class="opacity-70"></IconInfo>*/}
+                        {/*  </Tooltip>*/}
+                        {/*)}*/}
                         <div class="flex-1"></div>
                         {feature.spectrum === "beaten_path" && (
                           <EnrichedTooltip tip={<BeatenPathTooltip />} placement="right" class="w-4 tooltip-right">
@@ -117,8 +119,7 @@ function BeatenPathTooltip() {
   return (
     <p>
       <IconTrainTrack class="max-w-4 max-h-4 opacity-80 inline align-baseline mr-1"></IconTrainTrack> Battle-Tested
-      Solution: time-proven library, an industry favorite known for its reliability and widespread adoption. The safe
-      path to seamless development.
+      Solution: time-proven library, an industry favorite known for its reliability and widespread adoption.
     </p>
   );
 }
@@ -127,7 +128,7 @@ function BleedingEdgeTooltip() {
   return (
     <p>
       <IconAlembic class="max-w-4 max-h-4 opacity-80 inline align-baseline mr-1"></IconAlembic> Stay Ahead of the Game:
-      bleeding-edge library for unparalleled features and performance. Stay ahead of the curve!
+      bleeding-edge library for unparalleled features and performance.
     </p>
   );
 }

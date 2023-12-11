@@ -38,7 +38,7 @@ export function EnrichedTooltip(props: {
         tabindex="0"
         role="tooltip"
         ref={setFloating}
-        class="card compact dropdown-content z-10 shadow-md bg-base-200 rounded-lg flex-row items-center absolute top-o left-0 w-96"
+        class="card compact dropdown-content z-10 shadow-md bg-neutral text-neutral-content rounded-lg flex-row items-center absolute top-o left-0 w-72 lg:w-96"
         style={{
           position: position.strategy,
           top: position.y ? position.y + "px" : 0,
