@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   setScripts(packageJson, {
     dev: {
-      value: "esno ./express-entry.ts",
+      value: "tsx ./express-entry.ts",
       precedence: 20,
       warnIfReplaced: true,
     },
@@ -15,7 +15,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     preview: {
-      value: "NODE_ENV=production esno ./express-entry.ts",
+      value: "NODE_ENV=production tsx ./express-entry.ts",
       precedence: 20,
     },
   });
@@ -25,7 +25,7 @@ export default async function getPackageJson(props: TransformerProps) {
     dependencies: [
       "@hattip/adapter-node",
       "express",
-      "esno",
+      "tsx",
       "vite",
       "vike",
       ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
