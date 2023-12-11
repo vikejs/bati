@@ -4,7 +4,7 @@
   "version": "0.0.125",
   "description": "@batijs monorepo",
   "scripts": {
-    "new-boilerplate": "esno ./scripts/new-boilerplate.ts",
+    "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
@@ -30,8 +30,8 @@
     "citty": "^0.1.5",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
-    "esno": "^4.0.0",
     "prettier": "^3.1.1",
+    "tsx": "^4.6.2",
     "turbo": "^1.11.1",
     "typescript": "^5.3.3"
   },
