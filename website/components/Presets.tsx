@@ -2,7 +2,7 @@ import type { CategoryLabels, Flags } from "@batijs/features";
 import { StoreContext } from "#components/Store.js";
 import clsx from "clsx";
 import { useContext } from "solid-js";
-import { Tooltip } from "./Tooltip";
+import { EnrichedTooltip } from "./Tooltip";
 
 function Preset(props: {
   title: string;
@@ -14,7 +14,7 @@ function Preset(props: {
   const { selectPreset } = useContext(StoreContext);
 
   return (
-    <Tooltip tip={props.description} class="tooltip-bottom">
+    <EnrichedTooltip tip={props.description} placement="bottom" arrow={true} tooltipClass="text-center w-64">
       <button
         type="button"
         disabled={props.disabled}
@@ -26,7 +26,7 @@ function Preset(props: {
       >
         {props.title}
       </button>
-    </Tooltip>
+    </EnrichedTooltip>
   );
 }
 
@@ -37,7 +37,7 @@ export default function Presets() {
       <Preset
         title="Frontend"
         features={["Framework", "CSS", "Linter"]}
-        description="Frontend app with Solid and Tailwind CSS"
+        description="Frontend app with a Framework and Tailwind CSS"
       />
       <Preset
         title="Full-stack"
