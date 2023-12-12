@@ -4,10 +4,12 @@ import { createSignal, onMount, type JSX } from "solid-js";
 import { useFloating } from "../lib/floating-solid";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {
-  return (
+  return props.tip ? (
     <div class={clsx("tooltip", props.class)} data-tip={props.tip}>
       {props.children}
     </div>
+  ) : (
+    props.children
   );
 }
 
