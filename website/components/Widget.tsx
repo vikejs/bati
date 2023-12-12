@@ -75,7 +75,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
 
       <div class="divider my-2"></div>
       <div class="w-full flex flex-col relative">
-        <div class="flex items-center py-2 px-3 overflow-auto bg-base-100 rounded-md">
+      <div class="flex items-center py-2 px-3 overflow-auto md:overflow-visible bg-base-100 rounded-md">
           <span class="text-lg font-bold">Presets</span>
           <div class="divider divider-horizontal mx-1"></div>
           <Presets />
