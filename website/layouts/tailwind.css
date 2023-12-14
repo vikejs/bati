@@ -44,6 +44,10 @@
         --lm: '⮿';
     }
 
+    li.list-check::marker, .list-custom.list-check > li::marker {
+        --lm: '🗸';
+    }
+
     /*https://github.com/saadeghi/daisyui/blob/master/src/components/unstyled/select.css*/
     .listbox {
         @apply inline-flex items-center cursor-pointer relative;

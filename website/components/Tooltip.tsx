@@ -1,4 +1,4 @@
-import { arrow, autoUpdate, flip, offset, shift, type Placement } from "@floating-ui/dom";
+import { arrow, autoUpdate, flip, type Placement } from "@floating-ui/dom";
 import clsx from "clsx";
 import { createSignal, onMount, type JSX } from "solid-js";
 import { useFloating } from "../lib/floating-solid";
@@ -19,12 +19,18 @@ export function EnrichedTooltip(props: {
   tooltipClass?: string;
   tip: JSX.Element;
   placement: Placement;
+  offset?: number;
+  offsetArrow?: number;
   arrow?: boolean;
 }) {
   const [reference, setReference] = createSignal<HTMLElement>();
   const [floating, setFloating] = createSignal<HTMLElement>();
   const [arrowEl, setArrow] = createSignal<HTMLElement>();
-  const middlewares = [offset(16), flip(), shift()];
+  const middlewares = [
+    flip({
+      fallbackAxisSideDirection: "end",
+    }),
+  ];
   if (props.arrow) {
     middlewares.push(arrow(() => ({ element: arrowEl()! })));
   }
@@ -32,6 +38,8 @@ export function EnrichedTooltip(props: {
     placement: props.placement,
     whileElementsMounted: autoUpdate,
     middleware: middlewares,
+    offset: props.offset,
+    offsetArrow: props.offsetArrow,
   });
 
   onMount(() => {
@@ -43,6 +51,7 @@ export function EnrichedTooltip(props: {
       <div
         tabindex="-1"
         ref={setReference}
+        class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
       >
         {props.children}
@@ -51,20 +60,17 @@ export function EnrichedTooltip(props: {
         tabindex="-1"
         role="tooltip"
         ref={setFloating}
-        class={clsx(
-          "card compact dropdown-content z-10 shadow-md bg-neutral text-neutral-content rounded-lg flex-row items-center absolute",
-          props.tooltipClass,
-        )}
-        style={{
-          position: position.strategy,
-          top: position.y ? position.y + "px" : 0,
-          left: position.x ? position.x + "px" : 0,
-        }}
+        class={clsx("dropdown-content z-10 absolute p-4 bg-transparent", props.tooltipClass)}
+        style={position.modal}
       >
-        <div tabindex="-1" class="p-2 text-sm w-full">
-          {props.tip}
+        <div class="shadow-md bg-neutral text-neutral-content rounded-lg flex-row items-center">
+          <div tabindex="-1" class="text-sm w-full">
+            {props.tip}
+          </div>
+          {props.arrow && (
+            <div ref={setArrow} class="absolute bg-neutral w-2 h-2 rotate-45" style={position.arrow}></div>
+          )}
         </div>
-        {props.arrow && <div ref={setArrow} class="absolute bg-neutral w-2 h-2 rotate-45" style={position.arrow}></div>}
       </div>
     </div>
   );

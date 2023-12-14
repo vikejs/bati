@@ -3,6 +3,7 @@ import {
   type ComputePositionConfig,
   type ComputePositionReturn,
   type ReferenceElement,
+  type Strategy,
 } from "@floating-ui/dom";
 import { createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 
@@ -14,6 +15,8 @@ function ignore<T>(_value: T): void {
 export interface UseFloatingOptions<R extends ReferenceElement, F extends HTMLElement>
   extends Partial<ComputePositionConfig> {
   whileElementsMounted?: (reference: R, floating: F, update: () => void) => void | (() => void);
+  offset?: number;
+  offsetArrow?: number;
 }
 
 interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
@@ -23,6 +26,11 @@ interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
 
 export interface UseFloatingResult extends UseFloatingState {
   update(): void;
+  modal: {
+    position: Strategy;
+    top: string | 0;
+    left: string | 0;
+  };
   arrow: {
     left: string;
     top: string;
@@ -38,6 +46,8 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
 ): UseFloatingResult {
   const placement = () => options?.placement ?? "bottom";
   const strategy = () => options?.strategy ?? "absolute";
+  const offset = options?.offset ?? 0;
+  const offsetArrow = options?.offsetArrow ?? 0;
 
   const [data, setData] = createSignal<UseFloatingState>({
     x: null,
@@ -47,7 +57,7 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     middlewareData: {},
   });
 
-  const [error, setError] = createSignal<{ value: any } | undefined>();
+  const [error, setError] = createSignal<{ value: unknown } | undefined>();
 
   createEffect(() => {
     const currentError = error();
@@ -124,6 +134,20 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     get middlewareData() {
       return data().middlewareData;
     },
+    get modal() {
+      const d = data();
+
+      const placement = d.placement.split("-")[0];
+
+      const x_offset = placement === "bottom" || placement === "top";
+      const y_offset = placement === "right" || placement == "left";
+
+      return {
+        position: d.strategy,
+        top: d.y ? d.y + (x_offset ? offset * Math.sign(d.y) : 0) + "px" : (0 as const),
+        left: d.x ? d.x + (y_offset ? offset * Math.sign(d.x) : 0) + "px" : (0 as const),
+      };
+    },
     get arrow() {
       const d = data();
       const arrow = d.middlewareData.arrow;
@@ -140,7 +164,7 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
         top: arrow?.y != null ? `${arrow.y}px` : "",
         right: "",
         bottom: "",
-        [staticSide]: "-4px",
+        [staticSide]: offsetArrow + "px",
       };
     },
     update,

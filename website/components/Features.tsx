@@ -1,9 +1,12 @@
 import { categories, categoriesGroups, type Category, type CategoryLabels } from "@batijs/features";
+import type { FeatureLink } from "@batijs/features/src/index";
 import { FormControl } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
+import { ShieldBadge } from "#components/ShieldBadge";
 import { StoreContext } from "#components/Store.js";
 import { EnrichedTooltip } from "#components/Tooltip";
-import { createMemo, For, useContext } from "solid-js";
+import { createMemo, For, Match, Show, Switch, useContext } from "solid-js";
+import type { Feature } from "../types";
 
 function FeaturesGroup(props: { categories: Category[] }) {
   const { currentFeatures, selectFeature } = useContext(StoreContext);
@@ -34,71 +37,56 @@ function FeaturesGroup(props: { categories: Category[] }) {
               <div class="grid grid-rows-3 w-full gap-2 py-2 h-32 -mt-3">
                 <For each={fs()}>
                   {(feature) => (
-                    <label
-                      class="flex px-2.5"
-                      classList={{
-                        "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
-                        "border-success/60": inview() && feature.selected,
-                        "border-primary/60": !inview() || !feature.selected,
-                        "border-solid border-l-2": multiple,
-                      }}
+                    <EnrichedTooltip
+                      tip={<CombinedTooltip feature={feature} />}
+                      class="w-full px-1.5"
+                      placement="right"
+                      arrow={true}
+                      offset={16}
+                      offsetArrow={-4}
+                      tooltipClass="w-72 lg:w-96 p-0"
                     >
-                      <div class="flex justify-center items-center pr-2.5">
-                        <input
-                          type="checkbox"
-                          checked={inview() && feature.selected}
-                          classList={{
-                            "checkbox-success": Boolean(inview() && feature.selected),
-                            "border-solid": !(disabled() || feature.disabled),
-                          }}
-                          class="checkbox rounded"
-                          disabled={disabled() || feature.disabled}
-                          onChange={() => {
-                            selectFeature(label as CategoryLabels, feature.flag, !feature.selected);
-                          }}
-                        />
-                      </div>
-                      <div class="inline-flex gap-2 items-center w-full group">
-                        {feature.image && (
-                          <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.label} logo`} />
-                        )}
-                        <div class="inline-flex flex-col gap-0 leading-5">
-                          <span>{feature.label}</span>
-                          {feature.alt && <span class="text-xs">{feature.alt}</span>}
+                      <label
+                        class="flex"
+                        classList={{
+                          "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
+                          "border-success/60": inview() && feature.selected,
+                          "border-primary/60": !inview() || !feature.selected,
+                          "border-solid border-l-2": multiple,
+                        }}
+                      >
+                        <div class="flex justify-center items-center pr-2.5">
+                          <input
+                            type="checkbox"
+                            checked={inview() && feature.selected}
+                            classList={{
+                              "checkbox-success": Boolean(inview() && feature.selected),
+                              "border-solid": !(disabled() || feature.disabled),
+                            }}
+                            class="checkbox rounded"
+                            disabled={disabled() || feature.disabled}
+                            onChange={() => {
+                              selectFeature(label as CategoryLabels, feature.flag, !feature.selected);
+                            }}
+                          />
                         </div>
-                        {/*{!feature.disabled && (*/}
-                        {/*  <Tooltip*/}
-                        {/*    tip="Hello"*/}
-                        {/*    class="flex-shrink opacity-0 group-hover:opacity-100 transition-opacity -mr-3"*/}
-                        {/*  >*/}
-                        {/*    <IconInfo class="opacity-70"></IconInfo>*/}
-                        {/*  </Tooltip>*/}
-                        {/*)}*/}
-                        <div class="flex-1"></div>
-                        {feature.spectrum === "beaten_path" && (
-                          <EnrichedTooltip
-                            tip={<BeatenPathTooltip />}
-                            placement="right"
-                            class="w-4"
-                            tooltipClass="w-72 lg:w-96 h-20 lg:h-16"
-                            arrow={true}
-                          >
-                            <IconTrainTrack class="opacity-80"></IconTrainTrack>
-                          </EnrichedTooltip>
-                        )}
-                        {feature.spectrum === "bleeding_edge" && (
-                          <EnrichedTooltip
-                            tip={<BleedingEdgeTooltip />}
-                            placement="right"
-                            class="w-4"
-                            tooltipClass="w-72 lg:w-96 h-20 lg:h-16"
-                            arrow={true}
-                          >
-                            <IconAlembic class="opacity-80"></IconAlembic>
-                          </EnrichedTooltip>
-                        )}
-                      </div>
-                    </label>
+
+                        <div class="inline-flex gap-2 items-center w-full group">
+                          {feature.image && (
+                            <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.label} logo`} />
+                          )}
+                          <div class="inline-flex flex-col gap-0 leading-5">
+                            <span>{feature.label}</span>
+                            {feature.alt && <span class="text-xs">{feature.alt}</span>}
+                          </div>
+                          <div class="flex-1"></div>
+                          {feature.spectrum === "beaten_path" && (
+                            <IconTrainTrack class="w-4 opacity-80"></IconTrainTrack>
+                          )}
+                          {feature.spectrum === "bleeding_edge" && <IconAlembic class="w-4 opacity-80"></IconAlembic>}
+                        </div>
+                      </label>
+                    </EnrichedTooltip>
                   )}
                 </For>
               </div>
@@ -142,5 +130,101 @@ function BleedingEdgeTooltip() {
       <IconAlembic class="max-w-4 max-h-4 opacity-80 inline align-baseline mr-1"></IconAlembic> Stay Ahead of the Game:
       bleeding-edge library for unparalleled features and performance.
     </p>
+  );
+}
+
+function VueTooltip() {
+  return (
+    <span>
+      <a class="link link-primary" href="">
+        Vue.js
+      </a>{" "}
+      is a progressive JavaScript framework, praised for its simplicity and ease of integration, supported by a growing
+      community, offering a flexible and approachable solution for building interactive and performant web applications.
+    </span>
+  );
+}
+
+function VueTooltip2() {
+  return (
+    <span>
+      <ul class="list-custom list-check">
+        <li>Progressive framework with simple integration</li>
+        <li>Flexible and approachable for developers</li>
+        <li>Growing community and excellent documentation</li>
+      </ul>
+    </span>
+  );
+}
+
+function VueTooltip3() {
+  return (
+    <div class="card card-compact">
+      <div class="card-body">
+        <h2 class="card-title line-clamp-1">
+          <span class="text-primary">Vue.js</span>{" "}
+          <span class="text-sm opacity-60 ml-1">The Progressive JavaScript Framework</span>
+        </h2>
+        <ul class="list-custom list-check">
+          <li>Simple integration</li>
+          <li>Flexible and approachable</li>
+          <li>Growing community and excellent documentation</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function CombinedTooltip(props: { feature: Feature }) {
+  const links: FeatureLink[] = [];
+  if (props.feature.url) {
+    links.push({
+      label: "Homepage",
+      href: props.feature.url,
+    });
+  }
+  if (props.feature.links) {
+    links.push(...props.feature.links);
+  }
+
+  return (
+    <div class="rounded-md relative">
+      <div class="px-3 pb-2 pt-1">
+        <div class="flex items-baseline">
+          <h2 class="text-primary text-lg font-bold">{props.feature.label}</h2>
+          <span class="flex-1"></span>
+          <ShieldBadge repo={props.feature.repo} />
+        </div>
+
+        <Show when={props.feature.tagline}>
+          <div class="opacity-60">{props.feature.tagline}</div>
+        </Show>
+        <Show when={links.length > 0}>
+          <ul class="list-custom list-check inline-flex gap-2 my-2 flex-wrap">
+            <For each={links}>
+              {(link) => (
+                <ul>
+                  <a href={link.href} class="link" target="_blank">
+                    {link.label}
+                  </a>
+                </ul>
+              )}
+            </For>
+          </ul>
+        </Show>
+      </div>
+      <Show when={props.feature.spectrum}>
+        <div class="px-3 py-2 border-dashed border-t-2 border-t-base-100 italic">
+          <Switch>
+            <Match when={props.feature.spectrum === "beaten_path"}>
+              <BeatenPathTooltip />
+            </Match>
+            <Match when={props.feature.spectrum === "bleeding_edge"}>
+              <BleedingEdgeTooltip />
+            </Match>
+          </Switch>
+        </div>
+      </Show>
+    </div>
   );
 }

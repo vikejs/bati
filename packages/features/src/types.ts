@@ -9,8 +9,16 @@ export interface Feature<C = string> {
   description?: string;
   dependsOn?: ReadonlyArray<string>;
   spectrum?: "beaten_path" | "bleeding_edge";
+  tagline?: string;
+  links?: FeatureLink[];
+  repo?: string;
   // if true, it means that the feature is not yet implemented, but could be displayed in the UI
   disabled?: boolean;
+}
+
+export interface FeatureLink {
+  label: string;
+  href: string;
 }
 
 export interface Category {
