@@ -41,7 +41,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       <div class="mb-2 w-full">
         <Description />
       </div>
-      <div class="flex px-4">
+      <div class="flex px-4 hover:cursor-pointer">
         <kbd
           class="group relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap rounded-md leading-9 gap-2.5"
           use:copy

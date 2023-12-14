@@ -58,7 +58,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
                           }}
                         />
                       </div>
-                      <div class="inline-flex gap-2 items-center w-full group">
+                      <div class="inline-flex gap-2 items-center w-full group hover:cursor-pointer">
                         {feature.image && (
                           <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.label} logo`} />
                         )}
