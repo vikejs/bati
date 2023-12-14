@@ -22,6 +22,7 @@ export function EnrichedTooltip(props: {
   placement: Placement;
   offset?: number;
   arrow?: boolean;
+  disabled?: boolean;
 }) {
   const [reference, setReference] = createSignal<HTMLElement>();
   const [floating, setFloating] = createSignal<HTMLElement>();
@@ -58,7 +59,12 @@ export function EnrichedTooltip(props: {
   const placement = createMemo(() => position.placement.split("-")[0] as Side);
 
   return (
-    <div class={clsx("dropdown dropdown-hover", props.class)}>
+    <div
+      class={clsx("dropdown", props.class)}
+      classList={{
+        "dropdown-hover": !props.disabled,
+      }}
+    >
       <div
         ref={setReference}
         class={clsx(props.class)}

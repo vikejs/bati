@@ -44,6 +44,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
                       arrow={true}
                       offset={12}
                       tooltipClass="w-72 lg:w-96 text-sm p-0"
+                      disabled={feature.disabled}
                     >
                       <label
                         class="flex"
@@ -51,7 +52,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
                           "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
                           "border-success/60": inview() && feature.selected,
                           "border-primary/60": !inview() || !feature.selected,
-                          "border-solid border-l-2": multiple,
+                          "border-solid border-l-2 -ml-3 pl-3": multiple,
                         }}
                       >
                         <div class="flex justify-center items-center pr-2.5">
