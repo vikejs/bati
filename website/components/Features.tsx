@@ -76,12 +76,24 @@ function FeaturesGroup(props: { categories: Category[] }) {
                         {/*)}*/}
                         <div class="flex-1"></div>
                         {feature.spectrum === "beaten_path" && (
-                          <EnrichedTooltip tip={<BeatenPathTooltip />} placement="right" class="w-4 tooltip-right">
+                          <EnrichedTooltip
+                            tip={<BeatenPathTooltip />}
+                            placement="right"
+                            class="w-4"
+                            tooltipClass="w-72 lg:w-96 h-20 lg:h-16"
+                            arrow={true}
+                          >
                             <IconTrainTrack class="opacity-80"></IconTrainTrack>
                           </EnrichedTooltip>
                         )}
                         {feature.spectrum === "bleeding_edge" && (
-                          <EnrichedTooltip tip={<BleedingEdgeTooltip />} placement="right" class="w-4 tooltip-right">
+                          <EnrichedTooltip
+                            tip={<BleedingEdgeTooltip />}
+                            placement="right"
+                            class="w-4"
+                            tooltipClass="w-72 lg:w-96 h-20 lg:h-16"
+                            arrow={true}
+                          >
                             <IconAlembic class="opacity-80"></IconAlembic>
                           </EnrichedTooltip>
                         )}

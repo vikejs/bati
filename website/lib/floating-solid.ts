@@ -23,6 +23,12 @@ interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
 
 export interface UseFloatingResult extends UseFloatingState {
   update(): void;
+  arrow: {
+    left: string;
+    top: string;
+    right: string;
+    bottom: string;
+  };
 }
 
 export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
@@ -117,6 +123,25 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     },
     get middlewareData() {
       return data().middlewareData;
+    },
+    get arrow() {
+      const d = data();
+      const arrow = d.middlewareData.arrow;
+
+      const staticSide = {
+        top: "bottom",
+        right: "left",
+        bottom: "top",
+        left: "right",
+      }[d.placement.split("-")[0]]!;
+
+      return {
+        left: arrow?.x != null ? `${arrow.x}px` : "",
+        top: arrow?.y != null ? `${arrow.y}px` : "",
+        right: "",
+        bottom: "",
+        [staticSide]: "-4px",
+      };
     },
     update,
   };
