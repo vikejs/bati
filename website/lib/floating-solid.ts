@@ -3,7 +3,9 @@ import {
   type ComputePositionConfig,
   type ComputePositionReturn,
   type ReferenceElement,
+  type Strategy,
 } from "@floating-ui/dom";
+import type { Side } from "@floating-ui/utils";
 import { createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,6 +16,7 @@ function ignore<T>(_value: T): void {
 export interface UseFloatingOptions<R extends ReferenceElement, F extends HTMLElement>
   extends Partial<ComputePositionConfig> {
   whileElementsMounted?: (reference: R, floating: F, update: () => void) => void | (() => void);
+  offset?: number;
 }
 
 interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
@@ -23,11 +26,10 @@ interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
 
 export interface UseFloatingResult extends UseFloatingState {
   update(): void;
-  arrow: {
-    left: string;
-    top: string;
-    right: string;
-    bottom: string;
+  modal: {
+    position: Strategy;
+    top: string | 0;
+    left: string | 0;
   };
 }
 
@@ -38,6 +40,7 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
 ): UseFloatingResult {
   const placement = () => options?.placement ?? "bottom";
   const strategy = () => options?.strategy ?? "absolute";
+  const offset = options?.offset;
 
   const [data, setData] = createSignal<UseFloatingState>({
     x: null,
@@ -47,7 +50,7 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     middlewareData: {},
   });
 
-  const [error, setError] = createSignal<{ value: any } | undefined>();
+  const [error, setError] = createSignal<{ value: unknown } | undefined>();
 
   createEffect(() => {
     const currentError = error();
@@ -124,23 +127,23 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     get middlewareData() {
       return data().middlewareData;
     },
-    get arrow() {
+    get modal() {
       const d = data();
-      const arrow = d.middlewareData.arrow;
 
-      const staticSide = {
-        top: "bottom",
-        right: "left",
-        bottom: "top",
-        left: "right",
-      }[d.placement.split("-")[0]]!;
+      const offsetMap = {
+        right: "padding-left",
+        left: "padding-right",
+        bottom: "padding-top",
+        top: "padding-bottom",
+      };
+
+      const placement = d.placement.split("-")[0] as Side;
 
       return {
-        left: arrow?.x != null ? `${arrow.x}px` : "",
-        top: arrow?.y != null ? `${arrow.y}px` : "",
-        right: "",
-        bottom: "",
-        [staticSide]: "-4px",
+        position: d.strategy,
+        top: d.y ? d.y + "px" : (0 as const),
+        left: d.x ? d.x + "px" : (0 as const),
+        [offsetMap[placement]]: offset ? offset + "px" : 0,
       };
     },
     update,

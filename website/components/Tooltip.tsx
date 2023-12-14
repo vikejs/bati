@@ -1,6 +1,7 @@
-import { arrow, autoUpdate, flip, offset, shift, type Placement } from "@floating-ui/dom";
+import { autoUpdate, flip, type Placement } from "@floating-ui/dom";
+import type { Side } from "@floating-ui/utils";
 import clsx from "clsx";
-import { createSignal, onMount, type JSX } from "solid-js";
+import { createMemo, createSignal, onMount, Show, type JSX } from "solid-js";
 import { useFloating } from "../lib/floating-solid";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {
@@ -19,52 +20,79 @@ export function EnrichedTooltip(props: {
   tooltipClass?: string;
   tip: JSX.Element;
   placement: Placement;
+  offset?: number;
   arrow?: boolean;
+  disabled?: boolean;
 }) {
   const [reference, setReference] = createSignal<HTMLElement>();
   const [floating, setFloating] = createSignal<HTMLElement>();
-  const [arrowEl, setArrow] = createSignal<HTMLElement>();
-  const middlewares = [offset(16), flip(), shift()];
-  if (props.arrow) {
-    middlewares.push(arrow(() => ({ element: arrowEl()! })));
-  }
+  const middlewares = [
+    flip({
+      fallbackAxisSideDirection: "end",
+    }),
+  ];
   const position = useFloating(reference, floating, {
     placement: props.placement,
     whileElementsMounted: autoUpdate,
     middleware: middlewares,
+    offset: props.offset,
   });
+
+  const arrowPosition = {
+    right: "",
+    left: "flex-row-reverse",
+    bottom: "flex-col",
+    top: "flex-col-reverse",
+  };
+
+  const arrowOffset = {
+    right: "-mr-1",
+    left: "-ml-1",
+    bottom: "-mb-1",
+    top: "-mt-1",
+  };
 
   onMount(() => {
     position.update();
   });
 
+  const placement = createMemo(() => position.placement.split("-")[0] as Side);
+
   return (
-    <div class={clsx("dropdown dropdown-hover", props.class)}>
+    <div
+      class={clsx("dropdown", props.class)}
+      classList={{
+        "dropdown-hover": !props.disabled,
+      }}
+    >
       <div
-        tabindex="-1"
         ref={setReference}
+        class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
       >
         {props.children}
       </div>
       <div
-        tabindex="-1"
         role="tooltip"
         ref={setFloating}
-        class={clsx(
-          "card compact dropdown-content z-10 shadow-md bg-neutral text-neutral-content rounded-lg flex-row items-center absolute",
-          props.tooltipClass,
-        )}
-        style={{
-          position: position.strategy,
-          top: position.y ? position.y + "px" : 0,
-          left: position.x ? position.x + "px" : 0,
-        }}
+        class={clsx("dropdown-content z-10 absolute bg-transparent flex", arrowPosition[placement()])}
+        style={position.modal}
       >
-        <div tabindex="-1" class="p-2 text-sm w-full">
+        <Show when={props.arrow}>
+          <div class="flex items-center justify-center">
+            <div
+              class={clsx("shadow-md bg-base-200 dark:bg-neutral w-2 h-2 rotate-45", arrowOffset[placement()])}
+            ></div>
+          </div>
+        </Show>
+        <div
+          class={clsx(
+            "shadow-md bg-base-200 text-neutral dark:bg-neutral dark:text-neutral-content rounded-lg flex-row items-center",
+            props.tooltipClass,
+          )}
+        >
           {props.tip}
         </div>
-        {props.arrow && <div ref={setArrow} class="absolute bg-neutral w-2 h-2 rotate-45" style={position.arrow}></div>}
       </div>
     </div>
   );

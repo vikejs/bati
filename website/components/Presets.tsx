@@ -14,7 +14,14 @@ function Preset(props: {
   const { selectPreset } = useContext(StoreContext);
 
   return (
-    <EnrichedTooltip tip={props.description} placement="bottom" arrow={true} tooltipClass="text-center w-64">
+    <EnrichedTooltip
+      tip={props.description}
+      placement="bottom"
+      arrow={true}
+      offset={12}
+      tooltipClass="text-center w-64 p-2 text-sm"
+      disabled={props.disabled}
+    >
       <button
         type="button"
         disabled={props.disabled}
