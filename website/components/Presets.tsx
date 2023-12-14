@@ -20,6 +20,7 @@ function Preset(props: {
       arrow={true}
       offset={12}
       tooltipClass="text-center w-64 p-2 text-sm"
+      disabled={props.disabled}
     >
       <button
         type="button"

@@ -41,7 +41,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       <div class="mb-2 w-full">
         <Description />
       </div>
-      <div class="flex px-4">
+      <div class="flex px-4 cursor-pointer">
         <kbd
           class="group relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap rounded-md leading-9 gap-2.5"
           use:copy
@@ -75,7 +75,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
 
       <div class="divider my-2"></div>
       <div class="w-full flex flex-col relative">
-      <div class="flex items-center py-2 px-3 overflow-auto md:overflow-visible bg-base-100 rounded-md">
+        <div class="flex items-center py-2 px-3 overflow-auto md:overflow-visible bg-base-100 rounded-md">
           <span class="text-lg font-bold">Presets</span>
           <div class="divider divider-horizontal mx-1"></div>
           <Presets />
