@@ -74,11 +74,16 @@ export function EnrichedTooltip(props: {
       >
         <Show when={props.arrow}>
           <div class="flex items-center justify-center">
-            <div class={clsx("bg-neutral w-2 h-2 rotate-45", arrowOffset[placement()])}></div>
+            <div
+              class={clsx("shadow-md bg-base-200 dark:bg-neutral w-2 h-2 rotate-45", arrowOffset[placement()])}
+            ></div>
           </div>
         </Show>
         <div
-          class={clsx("shadow-md bg-neutral text-neutral-content rounded-lg flex-row items-center", props.tooltipClass)}
+          class={clsx(
+            "shadow-md bg-base-200 text-neutral dark:bg-neutral dark:text-neutral-content rounded-lg flex-row items-center",
+            props.tooltipClass,
+          )}
         >
           {props.tip}
         </div>
