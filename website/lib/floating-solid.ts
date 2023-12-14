@@ -5,6 +5,7 @@ import {
   type ReferenceElement,
   type Strategy,
 } from "@floating-ui/dom";
+import type { Side } from "@floating-ui/utils";
 import { createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +17,6 @@ export interface UseFloatingOptions<R extends ReferenceElement, F extends HTMLEl
   extends Partial<ComputePositionConfig> {
   whileElementsMounted?: (reference: R, floating: F, update: () => void) => void | (() => void);
   offset?: number;
-  offsetArrow?: number;
 }
 
 interface UseFloatingState extends Omit<ComputePositionReturn, "x" | "y"> {
@@ -31,12 +31,6 @@ export interface UseFloatingResult extends UseFloatingState {
     top: string | 0;
     left: string | 0;
   };
-  arrow: {
-    left: string;
-    top: string;
-    right: string;
-    bottom: string;
-  };
 }
 
 export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
@@ -46,8 +40,7 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
 ): UseFloatingResult {
   const placement = () => options?.placement ?? "bottom";
   const strategy = () => options?.strategy ?? "absolute";
-  const offset = options?.offset ?? 0;
-  const offsetArrow = options?.offsetArrow ?? 0;
+  const offset = options?.offset;
 
   const [data, setData] = createSignal<UseFloatingState>({
     x: null,
@@ -137,34 +130,20 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
     get modal() {
       const d = data();
 
-      const placement = d.placement.split("-")[0];
+      const offsetMap = {
+        right: "padding-left",
+        left: "padding-right",
+        bottom: "padding-top",
+        top: "padding-bottom",
+      };
 
-      const x_offset = placement === "bottom" || placement === "top";
-      const y_offset = placement === "right" || placement == "left";
+      const placement = d.placement.split("-")[0] as Side;
 
       return {
         position: d.strategy,
-        top: d.y ? d.y + (x_offset ? offset * Math.sign(d.y) : 0) + "px" : (0 as const),
-        left: d.x ? d.x + (y_offset ? offset * Math.sign(d.x) : 0) + "px" : (0 as const),
-      };
-    },
-    get arrow() {
-      const d = data();
-      const arrow = d.middlewareData.arrow;
-
-      const staticSide = {
-        top: "bottom",
-        right: "left",
-        bottom: "top",
-        left: "right",
-      }[d.placement.split("-")[0]]!;
-
-      return {
-        left: arrow?.x != null ? `${arrow.x}px` : "",
-        top: arrow?.y != null ? `${arrow.y}px` : "",
-        right: "",
-        bottom: "",
-        [staticSide]: offsetArrow + "px",
+        top: d.y ? d.y + "px" : (0 as const),
+        left: d.x ? d.x + "px" : (0 as const),
+        [offsetMap[placement]]: offset ? offset + "px" : 0,
       };
     },
     update,

@@ -18,9 +18,8 @@ function Preset(props: {
       tip={props.description}
       placement="bottom"
       arrow={true}
-      offset={0}
-      offsetArrow={12}
-      tooltipClass="text-center w-64"
+      offset={12}
+      tooltipClass="text-center w-64 p-2 text-sm"
     >
       <button
         type="button"

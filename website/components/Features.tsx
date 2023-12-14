@@ -39,12 +39,11 @@ function FeaturesGroup(props: { categories: Category[] }) {
                   {(feature) => (
                     <EnrichedTooltip
                       tip={<CombinedTooltip feature={feature} />}
-                      class="w-full px-1.5"
+                      class={"w-full px-1.5"}
                       placement="right"
                       arrow={true}
-                      offset={16}
-                      offsetArrow={-4}
-                      tooltipClass="w-72 lg:w-96 p-0"
+                      offset={12}
+                      tooltipClass="w-72 lg:w-96 text-sm p-0"
                     >
                       <label
                         class="flex"
@@ -133,48 +132,6 @@ function BleedingEdgeTooltip() {
   );
 }
 
-function VueTooltip() {
-  return (
-    <span>
-      <a class="link link-primary" href="">
-        Vue.js
-      </a>{" "}
-      is a progressive JavaScript framework, praised for its simplicity and ease of integration, supported by a growing
-      community, offering a flexible and approachable solution for building interactive and performant web applications.
-    </span>
-  );
-}
-
-function VueTooltip2() {
-  return (
-    <span>
-      <ul class="list-custom list-check">
-        <li>Progressive framework with simple integration</li>
-        <li>Flexible and approachable for developers</li>
-        <li>Growing community and excellent documentation</li>
-      </ul>
-    </span>
-  );
-}
-
-function VueTooltip3() {
-  return (
-    <div class="card card-compact">
-      <div class="card-body">
-        <h2 class="card-title line-clamp-1">
-          <span class="text-primary">Vue.js</span>{" "}
-          <span class="text-sm opacity-60 ml-1">The Progressive JavaScript Framework</span>
-        </h2>
-        <ul class="list-custom list-check">
-          <li>Simple integration</li>
-          <li>Flexible and approachable</li>
-          <li>Growing community and excellent documentation</li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-
 function CombinedTooltip(props: { feature: Feature }) {
   const links: FeatureLink[] = [];
   if (props.feature.url) {
@@ -214,7 +171,7 @@ function CombinedTooltip(props: { feature: Feature }) {
         </Show>
       </div>
       <Show when={props.feature.spectrum}>
-        <div class="px-3 py-2 border-dashed border-t-2 border-t-base-100 italic">
+        <div class="mx-1 p-2 border-dashed border-t-2 border-t-base-100 italic">
           <Switch>
             <Match when={props.feature.spectrum === "beaten_path"}>
               <BeatenPathTooltip />
