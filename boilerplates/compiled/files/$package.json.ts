@@ -5,5 +5,6 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: ["vite-plugin-compiled-react"],
+    dependencies: ["@compiled/react"]
   });
 }
