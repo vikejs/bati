@@ -1,0 +1,31 @@
+{
+  "name": "@batijs/compiled",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.3",
+    "vite": "^5.0.8",
+    "vite-plugin-compiled-react": "^1.0.8"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "compiled-css"
+    }
+  }
+}
