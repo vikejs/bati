@@ -45,11 +45,14 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  boilerplates/compiled-css:
+  boilerplates/compiled:
     dependencies:
       '@batijs/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@compiled/react':
+        specifier: ^0.16.6
+        version: 0.16.6
     devDependencies:
       '@batijs/compile':
         specifier: workspace:*
@@ -59,10 +62,10 @@ importers:
         version: 18.19.3
       vite:
         specifier: ^5.0.8
-        version: 5.0.8(@types/node@18.19.3)
+        version: 5.0.10(@types/node@18.19.3)
       vite-plugin-compiled-react:
         specifier: ^1.0.8
-        version: 1.0.8(vite@5.0.8)
+        version: 1.0.8(@compiled/react@0.16.6)(vite@5.0.10)
 
   boilerplates/edgedb:
     dependencies:
@@ -2664,6 +2667,13 @@ packages:
       postcss-values-parser: 6.0.2(postcss@8.4.32)
     dev: true
 
+  /@compiled/react@0.16.6:
+    resolution: {integrity: sha512-4rYKRDH/om1mjjyEQ5+WRTWZmeLHn905NGMqc4Pj4UdaFbFMVv9q1RDACEO4dFngYK8t/D36Dt5uF+snDhnKmw==}
+    peerDependencies:
+      react: '>= 16.12.0'
+    dependencies:
+      csstype: 3.1.3
+
   /@compiled/utils@0.9.1:
     resolution: {integrity: sha512-yrcT8GiqeQgjHN2+5GpBruxzFPN+nvZYVYmXiNy/YBguXNmTCAZ+eHK2igr+xPyjH+Q035ZL5ReDRlMdTlOlcA==}
     dependencies:
@@ -4789,7 +4799,6 @@ packages:
 
   /csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
-    dev: true
 
   /culori@3.3.0:
     resolution: {integrity: sha512-pHJg+jbuFsCjz9iclQBqyL3B2HLCBF71BwVNujUYEvCeQMvV97R59MNK3R2+jgJ3a1fcZgI9B3vYgz8lzr/BFQ==}
@@ -8988,7 +8997,7 @@ packages:
       - supports-color
       - terser
 
-  /vite-plugin-compiled-react@1.0.8(vite@5.0.8):
+  /vite-plugin-compiled-react@1.0.8(@compiled/react@0.16.6)(vite@5.0.10):
     resolution: {integrity: sha512-jb08fkZnIaPCxzilQ5Seiljx51kVD9gEUL6l5KBCTUH7yc9A+LBh4lpPs7nY4tKadMzu8/VpM6CiRYQ5jdo59A==}
     peerDependencies:
       '@compiled/react': '*'
@@ -8998,13 +9007,14 @@ packages:
       '@babel/types': 7.23.6
       '@compiled/babel-plugin': 0.26.3
       '@compiled/babel-plugin-strip-runtime': 0.25.0
+      '@compiled/react': 0.16.6
       babel-plugin-module-resolver: 5.0.0
-      vite: 5.0.8(@types/node@18.19.3)
+      vite: 5.0.10(@types/node@18.19.3)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite-plugin-solid@2.8.0(solid-js@1.8.7)(vite@5.0.8):
+  /vite-plugin-solid@2.8.0(solid-js@1.8.7)(vite@5.0.10):
     resolution: {integrity: sha512-n5FAm7ZmTl94VWUoiJCgG7bouF2NlC9CA1wY/qbVnkFbYDWk++bFWyNoU48aLJ+lMtzNeYzJypJXOHzFKxL9xA==}
     peerDependencies:
       solid-js: ^1.7.2
