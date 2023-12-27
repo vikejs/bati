@@ -41,6 +41,18 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_COMPILED_R_REACT]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">React</span> is required when using <span class="font-bold">Compiled</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick React or unselect <span class="font-bold">Compiled</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.INFO_HATTIP]: info(() => {
     return (
       <span class="inline-block">
