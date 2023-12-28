@@ -2,6 +2,8 @@ export enum RulesMessage {
   // --- ERROR
   // A Server is required when using Auth
   ERROR_AUTH_R_SERVER,
+  // React is required when using Compiled CSS
+  ERROR_COMPILED_R_REACT,
 
   // --- WARNING
 
