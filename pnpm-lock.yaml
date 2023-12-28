@@ -151,8 +151,8 @@ importers:
         specifier: ^0.4.152
         version: 0.4.152(vite@5.0.10)
       vike-authjs:
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.3
+        version: 0.1.3(@auth/core@0.19.0)
       vite:
         specifier: ^5.0.10
         version: 5.0.10(@types/node@18.19.3)
@@ -200,8 +200,8 @@ importers:
         specifier: ^0.4.152
         version: 0.4.152(vite@5.0.10)
       vike-authjs:
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.3
+        version: 0.1.3(@auth/core@0.19.0)
       vite:
         specifier: ^5.0.10
         version: 5.0.10(@types/node@18.19.3)
@@ -249,8 +249,8 @@ importers:
         specifier: ^0.4.152
         version: 0.4.152(vite@5.0.10)
       vike-authjs:
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.3
+        version: 0.1.3(@auth/core@0.19.0)
       vite:
         specifier: ^5.0.10
         version: 5.0.10(@types/node@18.19.3)
@@ -1106,22 +1106,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
-    dev: true
-
-  /@auth/core@0.15.2:
-    resolution: {integrity: sha512-z79WfH+7Hub/DP3bd5/oiymi6zqSkpeltG2u/vvZrLUXTz3LHWXEVtSxYIusHXpzLpEGfDwnACkiFB4izP1wEg==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      cookie: 0.5.0
-      jose: 4.15.4
-      oauth4webapi: 2.4.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: true
 
   /@auth/core@0.19.0:
@@ -6420,10 +6404,6 @@ packages:
     hasBin: true
     dev: true
 
-  /jose@4.15.4:
-    resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
-    dev: true
-
   /jose@5.1.3:
     resolution: {integrity: sha512-GPExOkcMsCLBTi1YetY2LmkoY559fss0+0KVa6kOfb2YFe84nAM7Nm/XzuZozah4iHgmBGrCOHL5/cy670SBRw==}
     dev: true
@@ -8894,12 +8874,12 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vike-authjs@0.1.1:
-    resolution: {integrity: sha512-bzEb0WQ+M2A6bSfnWragShxAfyWTfEYdjYPrELOtTG+qSsCy20n/z8UMmt/buFAdKJM82fz6fJdfU+dVodKodA==}
+  /vike-authjs@0.1.3(@auth/core@0.19.0):
+    resolution: {integrity: sha512-jFIkZN+Ky6jBp8fe88mhhL8Q7RMpeqdMOO0qtyVj6bfKojXVVfSn7iqvPr4W6iupWcMVHp8e4dou22pIM2rfTQ==}
+    peerDependencies:
+      '@auth/core': '*'
     dependencies:
-      '@auth/core': 0.15.2
-    transitivePeerDependencies:
-      - nodemailer
+      '@auth/core': 0.19.0
     dev: true
 
   /vike-react@0.3.8(react-dom@18.2.0)(react@18.2.0)(vike@0.4.152)(vite@5.0.10):
