@@ -7,6 +7,7 @@ export default async function getViteConfig(props: TransformerProps) {
     from: "vite-plugin-compiled-react",
     constructor: "compiled",
     imported: "compiled",
+    options: { extract: true },
   });
 
   return mod.generate().code;
