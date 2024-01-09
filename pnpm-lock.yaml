@@ -775,6 +775,12 @@ importers:
         specifier: ^3.4.5
         version: 3.4.5(typescript@5.3.3)
 
+  packages/batijs:
+    dependencies:
+      '@batijs/cli':
+        specifier: workspace:*
+        version: link:../cli
+
   packages/build:
     dependencies:
       '@batijs/core':
