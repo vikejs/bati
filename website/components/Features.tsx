@@ -47,7 +47,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
                       disabled={feature.disabled}
                     >
                       <label
-                        class="flex cursor-pointer"
+                        class="flex cursor-pointer h-6"
                         classList={{
                           "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
                           "border-success/60": inview() && feature.selected,
