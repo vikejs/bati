@@ -1,6 +1,6 @@
 // Environment: server
 
-import { dangerouslySkipEscape, escapeInject } from "vike";
+import { dangerouslySkipEscape, escapeInject } from "vike/server";
 import type { OnRenderHtmlAsync } from "vike/types";
 
 export { onRenderHtml };
