@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [["solid", "react", "vue"], "eslint"];
@@ -23,5 +25,9 @@ await describeBati(({ test, expect, fetch }) => {
     const text = await res.text();
     expect(text).toContain('{"is404":true}');
     expect(text).not.toContain('src="https://plausible.io');
+  });
+
+  test("Bati render files are NOT present", async () => {
+    expect(existsSync(path.join(process.cwd(), "renderer", "+onRenderHtml.ts"))).toBe(false);
   });
 });
