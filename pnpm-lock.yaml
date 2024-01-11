@@ -465,6 +465,25 @@ importers:
         specifier: ^18.19.3
         version: 18.19.3
 
+  boilerplates/shared-plain:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.3
+        version: 18.19.3
+      vike:
+        specifier: ^0.4.156
+        version: 0.4.156(vite@5.0.11)
+      vite:
+        specifier: ^5.0.11
+        version: 5.0.11(@types/node@18.19.3)
+
   boilerplates/solid:
     dependencies:
       '@batijs/core':

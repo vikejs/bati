@@ -34,7 +34,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
                 "border-solid border-l-2": !multiple,
               }}
             >
-              <div class="grid grid-rows-3 w-full gap-2 py-2 h-32 -mt-3">
+              <div class="grid grid-rows-3 w-full gap-2 py-2 h-32 -mt-2">
                 <For each={fs()}>
                   {(feature) => (
                     <EnrichedTooltip
