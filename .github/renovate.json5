@@ -11,5 +11,13 @@
     "@types/node",
     "pnpm"
   ],
-  "postUpdateOptions": ["pnpmDedupe"]
+  "postUpdateOptions": ["pnpmDedupe"],
+  // Exceptions
+  "packageRules": [
+    // h3 1.10.0 has some typing issues
+    {
+      "matchPackageNames": ["h3"],
+      "allowedVersions": "!/1\.10\.0/"
+    }
+  ]
 }
