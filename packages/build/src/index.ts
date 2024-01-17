@@ -34,20 +34,29 @@ export async function* walk(dir: string): AsyncGenerator<string> {
 function transformFileAfterExec(filepath: string, fileContent: unknown): string | null {
   if (fileContent === undefined || fileContent === null) return null;
   const parsed = path.parse(filepath);
-  const ext = parsed.ext || parsed.name;
-  switch (ext) {
-    case ".ts":
-    case ".js":
-    case ".tsx":
-    case ".jsx":
-    case ".env":
-    case ".html":
-      return fileContent as string;
-    case ".json":
-      return JSON.stringify(fileContent, null, 2);
-    default:
-      throw new Error(`Unsupported extension ${ext} (${filepath})`);
+  const toTest = [parsed.base, parsed.ext, parsed.name].filter(Boolean);
+
+  for (const ext of toTest) {
+    switch (ext) {
+      case ".ts":
+      case ".js":
+      case ".tsx":
+      case ".jsx":
+      case ".env":
+      case ".env.local":
+      case ".env.development":
+      case ".env.development.local":
+      case ".env.test":
+      case ".env.test.local":
+      case ".env.production":
+      case ".env.production.local":
+      case ".html":
+        return fileContent as string;
+      case ".json":
+        return JSON.stringify(fileContent, null, 2);
+    }
   }
+  throw new Error(`Unsupported file extension ${parsed.base} (${filepath})`);
 }
 
 async function importTransformer(p: string) {

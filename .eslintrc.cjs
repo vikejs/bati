@@ -27,9 +27,35 @@ module.exports = {
   },
   overrides: [
     {
+      // Tests
       files: ["*.spec.ts"],
       rules: {
         "@typescript-eslint/no-explicit-any": 0,
+      },
+    },
+    {
+      // SolidJS
+      extends: ["plugin:solid/typescript"],
+      plugins: ["solid"],
+      files: ["boilerplates/solid/**/*", "boilerplates/solid-*/**/*"],
+      rules: {
+        "solid/components-return-once": 0,
+      },
+    },
+    {
+      // VueJS
+      extends: ["plugin:vue/vue3-recommended"],
+      files: ["boilerplates/vue/**/*", "boilerplates/vue-*/**/*"],
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+        sourceType: "module",
+        ecmaVersion: 2020,
+      },
+      rules: {
+        "vue/multi-word-component-names": 0,
+        "vue/singleline-html-element-content-newline": 0,
+        "vue/max-attributes-per-line": 0,
+        "vue/html-self-closing": 0,
       },
     },
   ],

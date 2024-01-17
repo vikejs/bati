@@ -31,7 +31,7 @@ export default function vueLinterConfig(meta: VikeMeta) {
       vue: {
         meta: { fixable: "code" },
         create(context) {
-          const sourceCode = context.getSourceCode();
+          const sourceCode = context.sourceCode;
           const tokenStore = context.parserServices.getTemplateBodyTokenStore();
           return context.parserServices.defineTemplateBodyVisitor(
             // template

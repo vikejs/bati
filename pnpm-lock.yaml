@@ -154,6 +154,19 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@18.19.3)
 
+  boilerplates/google-analytics:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.3
+        version: 18.19.3
+
   boilerplates/h3:
     dependencies:
       '@batijs/core':
@@ -726,14 +739,17 @@ importers:
         specifier: ^0.4.156
         version: 0.4.156(vite@5.0.11)
       vike-vue:
-        specifier: ^0.5.3
-        version: 0.5.3(@vitejs/plugin-vue@5.0.3)(vike@0.4.156)(vite@5.0.11)(vue@3.4.13)
+        specifier: ^0.5.4
+        version: 0.5.4(vike@0.4.156)(vue@3.4.13)
       vite:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@18.19.3)
       vue:
         specifier: ^3.4.13
         version: 3.4.13(typescript@5.3.3)
+      vue-gtag:
+        specifier: ^2.0.1
+        version: 2.0.1(vue@3.4.13)
 
   boilerplates/vue-telefunc:
     dependencies:
@@ -919,6 +935,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      eslint-plugin-solid:
+        specifier: ^0.13.1
+        version: 0.13.1(eslint@8.56.0)(typescript@5.3.3)
       eslint-rule-composer:
         specifier: ^0.3.0
         version: 0.3.0
@@ -8867,17 +8886,13 @@ packages:
       - supports-color
     dev: true
 
-  /vike-vue@0.5.3(@vitejs/plugin-vue@5.0.3)(vike@0.4.156)(vite@5.0.11)(vue@3.4.13):
-    resolution: {integrity: sha512-AdLqKtJsYG6WXjFhkFOclvvGsnvNpvFEmq3OLjWZ88Ma9eJebmnzgBCbV0A+Jnjz7r9NMjP+7M/qTZ679zXlMA==}
+  /vike-vue@0.5.4(vike@0.4.156)(vue@3.4.13):
+    resolution: {integrity: sha512-GL9LwbtPGyXJGs6t4QPmpaxA+tsc8Xc0+imf1ZlgFL7AVC4UYveVmWHzmedXcVT3ro9Q9y5P/UUM4nalX+jbIA==}
     peerDependencies:
-      '@vitejs/plugin-vue': ^4.5.2
       vike: ^0.4.152
-      vite: ^4.5.1 || ^5.0.7
-      vue: ^3.3.12
+      vue: ^3.0.0
     dependencies:
-      '@vitejs/plugin-vue': 5.0.3(vite@5.0.11)(vue@3.4.13)
       vike: 0.4.156(vite@5.0.11)
-      vite: 5.0.11(@types/node@18.19.3)
       vue: 3.4.13(typescript@5.3.3)
     dev: true
 
@@ -9105,6 +9120,14 @@ packages:
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vue-gtag@2.0.1(vue@3.4.13):
+    resolution: {integrity: sha512-aM4A58FVL0wV2ptYi+xzAjeg+pQVRyUcfBc5UkXAwQrR4t3WBhor50Izp2I+3Oo7+l+vWJ7u78DGcNzReb8S/A==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.4.13(typescript@5.3.3)
     dev: true
 
   /vue@3.4.13(typescript@5.3.3):
