@@ -154,6 +154,19 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@18.19.3)
 
+  boilerplates/google-analytics:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.3
+        version: 18.19.3
+
   boilerplates/h3:
     dependencies:
       '@batijs/core':
