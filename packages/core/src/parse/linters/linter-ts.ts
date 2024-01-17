@@ -1,6 +1,8 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { ESLint, Linter } from "eslint";
+// @ts-ignore
+import solid from "eslint-plugin-solid/configs/recommended";
 import type * as ESTree from "estree";
 import type { VikeMeta } from "../../types.js";
 import { evalCondition, extractBatiConditionComment } from "../eval.js";
@@ -16,7 +18,7 @@ export default function vueLinterConfig(meta: VikeMeta) {
         meta: { fixable: "code" },
         // @ts-ignore
         create(context) {
-          const sourceCode = context.getSourceCode();
+          const sourceCode = context.sourceCode;
           return {
             ImportDeclaration(node) {
               visitorImportStatement(context, node);
@@ -74,6 +76,16 @@ export default function vueLinterConfig(meta: VikeMeta) {
       files: ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx"],
     },
   ];
+
+  if (meta.BATI.has("solid")) {
+    config.push({
+      files: ["**/*.{ts,tsx}"],
+      ...solid,
+      languageOptions: {
+        parser: tsParseForESLint as Linter.ParserModule,
+      },
+    });
+  }
 
   return { plugin, config };
 }

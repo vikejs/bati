@@ -1,3 +1,5 @@
+/* eslint-disable solid/no-innerhtml */
+
 // Default <head> (can be overridden by pages)
 
 import logoUrl from "../assets/logo.svg";
@@ -19,14 +21,14 @@ export default function HeadDefault() {
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
-        ></script>
+        />
         <script
           innerHTML={`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', '${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}');`}
-        ></script>
+        />
       </>
     );
   } else {

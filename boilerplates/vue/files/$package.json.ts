@@ -16,6 +16,12 @@ export default async function getPackageJson(props: TransformerProps) {
     });
   }
 
+  if (props.meta.BATI.has("google-analytics")) {
+    addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+      dependencies: ["vue-gtag"],
+    });
+  }
+
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: ["vite"],
     dependencies: [
