@@ -12,6 +12,23 @@ export default function HeadDefault() {
         <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js" />
       </>
     );
+  } else if (BATI.has("google-analytics")) {
+    return (
+      <>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
+        ></script>
+        <script
+          innerHTML={`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}');`}
+        ></script>
+      </>
+    );
   } else {
     return (
       <>
