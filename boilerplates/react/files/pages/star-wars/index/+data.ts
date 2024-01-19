@@ -1,21 +1,23 @@
+// https://vike.dev/data
+
 import fetch from "cross-fetch";
 //import { filterMovieData } from '../filterMovieData'
 import type { Movie, MovieDetails } from "../types";
 
-export default async function onBeforeRender() {
+// export { onBeforePrerenderStart };
+
+export type Data = Awaited<ReturnType<typeof data>>;
+
+export const data = async () => {
   const movies = await getStarWarsMovies();
   return {
-    pageContext: {
-      pageProps: {
-        // We remove data we don't need because we pass `pageContext.movies` to
-        // the client; we want to minimize what is sent over the network.
-        movies: filterMoviesData(movies),
-      },
-      // The page's <title>
-      title: getTitle(movies),
-    },
+    // We remove data we don't need because the data is passed to
+    // the client; we should minimize what is sent over the network.
+    movies: filterMoviesData(movies),
+    // vike-react's renderer will use this data as page's <title>
+    title: getTitle(movies),
   };
-}
+};
 
 async function getStarWarsMovies(): Promise<MovieDetails[]> {
   const response = await fetch("https://star-wars.brillout.com/api/films.json");
@@ -36,19 +38,19 @@ function filterMoviesData(movies: MovieDetails[]): Movie[] {
 }
 
 /*
-async function prerender() {
-  const movies = await getStarWarsMovies()
+export async function onBeforePrerenderStart() {
+  const movies = await getStarWarsMovies();
   return [
     {
       url: '/star-wars',
       // We already provide `pageContext` here so that Vike
-      // will *not* have to call the `onBeforeRender()` hook defined
+      // will *not* have to call the `data()` hook defined
       // above in this file.
       pageContext: {
-        pageProps: {
-          movies: filterMoviesData(movies)
-        },
-        documentProps: { title: getTitle(movies) }
+        data: {
+          movies: filterMoviesData(movies),
+          title: getTitle(movies)
+        }
       }
     },
     ...movies.map((movie) => {
@@ -57,17 +59,17 @@ async function prerender() {
         url,
         // Note that we can also provide the `pageContext` of other pages.
         // This means that Vike will not call any
-        // `onBeforeRender()` hook and the Star Wars API will be called
-        // only once (in this `prerender()` hook).
+        // `data()` hook and the Star Wars API will be called
+        // only once (in this `onBeforePrerenderStart()` hook).
         pageContext: {
-          pageProps: {
-            movie: filterMovieData(movie)
-          },
-          documentProps: { title: movie.title }
+          data: {
+            movie: filterMovieData(movie),
+            title: movie.title
+          }
         }
       }
     })
-  ]
+  ];
 }
 */
 
