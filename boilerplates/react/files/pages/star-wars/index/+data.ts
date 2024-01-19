@@ -4,8 +4,6 @@ import fetch from "cross-fetch";
 //import { filterMovieData } from '../filterMovieData'
 import type { Movie, MovieDetails } from "../types";
 
-// export { onBeforePrerenderStart };
-
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export const data = async () => {
