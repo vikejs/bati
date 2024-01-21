@@ -1,8 +1,10 @@
-import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import React, { useState } from "react";
+import { useData } from "vike-react/useData";
+import type { Data } from "./+data";
 import { TodoList } from "./TodoList";
 
-export default function Page({ todoItemsInitial }: { todoItemsInitial: TodoItem[] }) {
+export default function Page() {
+  const todoItemsInitial = useData<Data>();
   return (
     <>
       <h1>To-do List</h1>

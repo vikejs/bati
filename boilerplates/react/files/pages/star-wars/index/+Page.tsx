@@ -3,7 +3,7 @@ import { useData } from "vike-react/useData";
 import type { Data } from "./+data";
 
 export default function Page() {
-  const { movies } = useData<Data>();
+  const movies = useData<Data>();
   return (
     <>
       <h1>Star Wars Movies</h1>
@@ -15,7 +15,7 @@ export default function Page() {
         ))}
       </ol>
       <p>
-        Source: <a href="https://star-wars.brillout.com">star-wars.brillout.com</a>.
+        Source: <a href="https://brillout.github.io/star-wars">brillout.github.io/star-wars</a>.
       </p>
     </>
   );
