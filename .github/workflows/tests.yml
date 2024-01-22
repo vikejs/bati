@@ -19,11 +19,8 @@ jobs:
 
     strategy:
       matrix:
-        node: ["18"]
-        # FIXME
-        # [vite:build-html] The "fileName" or "name" properties of emitted chunks and assets must be strings that are neither absolute nor relative paths, received "../../../../../../../runneradmin/AppData/Local/Temp/bati/packages/empty/index.html"
-        #  os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest, macos-latest]
+        node: ["18", "20"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout
