@@ -6,9 +6,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useAttrs } from "vue";
+import { useData } from "vike-vue/useData";
+import type { Data } from "./+data";
 
-const { todoItemsInitial } = useAttrs();
+const todoItemsInitial = useData<Data>();
 </script>
 
 <script lang="ts">

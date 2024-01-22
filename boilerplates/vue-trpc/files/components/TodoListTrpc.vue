@@ -14,11 +14,13 @@
 
 <script lang="ts" setup>
 import { trpc } from "@batijs/trpc/trpc/client";
-import { ref, useAttrs } from "vue";
+import { ref, useAttrs, type Ref } from "vue";
+
+type TodoItem = { text: string };
 
 const attrs = useAttrs();
 
-const todoItems = ref(attrs["todo-items-initial"]);
+const todoItems = ref(attrs["todo-items-initial"]) as Ref<TodoItem[]>;
 const draft = ref("");
 
 const submitDraft = async () => {

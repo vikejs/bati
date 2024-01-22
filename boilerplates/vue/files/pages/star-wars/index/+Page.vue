@@ -1,21 +1,16 @@
 <template>
   <h1>Star Wars Movies</h1>
   <ol>
-    <li
-      v-for="item in movies"
-      :key="item.id"
-    >
+    <li v-for="item in movies" :key="item.id">
       <a :href="'/star-wars/' + item.id">{{ item.title }}</a> ({{ item.release_date }})
     </li>
   </ol>
-  <p>Source: <a href="https://star-wars.brillout.com">star-wars.brillout.com</a>.</p>
+  <p>Source: <a href="https://brillout.github.io/star-wars">brillout.github.io/star-wars</a>.</p>
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  movies: {
-    type: Array,
-    required: true,
-  },
-})
+import { useData } from "vike-vue/useData";
+import type { Data } from "./+data";
+
+const movies = useData<Data>();
 </script>
