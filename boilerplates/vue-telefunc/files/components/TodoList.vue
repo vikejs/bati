@@ -13,12 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useAttrs } from "vue";
+import { ref, useAttrs, type Ref } from "vue";
 import { onNewTodo } from "./TodoList.telefunc.js";
+
+type TodoItem = { text: string };
 
 const attrs = useAttrs();
 
-const todoItems = ref(attrs["todo-items-initial"]);
+const todoItems = ref(attrs["todo-items-initial"]) as Ref<TodoItem[]>;
 const draft = ref("");
 
 const submitDraft = async () => {

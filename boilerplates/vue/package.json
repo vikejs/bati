@@ -23,7 +23,7 @@
     "typescript": "^5.3.3",
     "unplugin-vue-markdown": "^0.25.2",
     "vike": "^0.4.159",
-    "vike-vue": "^0.5.4",
+    "vike-vue": "^0.6.0",
     "vite": "^5.0.11",
     "vue": "^3.4.15",
     "vue-gtag": "^2.0.1"
@@ -55,14 +55,17 @@
     "./pages/star-wars/types": {
       "types": "./dist/types/pages/star-wars/types.d.ts"
     },
-    "./pages/star-wars/filterMovieData": {
-      "types": "./dist/types/pages/star-wars/filterMovieData.d.ts"
+    "./pages/star-wars/@id/+data": {
+      "types": "./dist/types/pages/star-wars/@id/+data.d.ts"
     },
-    "./pages/star-wars/@id/+onBeforeRender": {
-      "types": "./dist/types/pages/star-wars/@id/+onBeforeRender.d.ts"
+    "./pages/star-wars/@id/+title": {
+      "types": "./dist/types/pages/star-wars/@id/+title.d.ts"
     },
-    "./pages/star-wars/index/+onBeforeRender": {
-      "types": "./dist/types/pages/star-wars/index/+onBeforeRender.d.ts"
+    "./pages/star-wars/index/+data": {
+      "types": "./dist/types/pages/star-wars/index/+data.d.ts"
+    },
+    "./pages/star-wars/index/+title": {
+      "types": "./dist/types/pages/star-wars/index/+title.d.ts"
     }
   },
   "typesVersions": {
@@ -82,14 +85,17 @@
       "pages/star-wars/types": [
         "./dist/types/pages/star-wars/types.d.ts"
       ],
-      "pages/star-wars/filterMovieData": [
-        "./dist/types/pages/star-wars/filterMovieData.d.ts"
+      "pages/star-wars/@id/+data": [
+        "./dist/types/pages/star-wars/@id/+data.d.ts"
       ],
-      "pages/star-wars/@id/+onBeforeRender": [
-        "./dist/types/pages/star-wars/@id/+onBeforeRender.d.ts"
+      "pages/star-wars/@id/+title": [
+        "./dist/types/pages/star-wars/@id/+title.d.ts"
       ],
-      "pages/star-wars/index/+onBeforeRender": [
-        "./dist/types/pages/star-wars/index/+onBeforeRender.d.ts"
+      "pages/star-wars/index/+data": [
+        "./dist/types/pages/star-wars/index/+data.d.ts"
+      ],
+      "pages/star-wars/index/+title": [
+        "./dist/types/pages/star-wars/index/+title.d.ts"
       ]
     }
   }

@@ -1,17 +1,15 @@
 <template>
   <h1>{{ movie.title }}</h1>
   Release Date: {{ movie.release_date }}
-  <br>
+  <br />
   Director: {{ movie.director }}
-  <br>
+  <br />
   Producer: {{ movie.producer }}
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  movie: {
-    type: Object,
-    required: true,
-  },
-})
+import { useData } from "vike-vue/useData";
+import type { Data } from "./+data";
+
+const movie = useData<Data>();
 </script>

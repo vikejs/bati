@@ -17,6 +17,7 @@
     "@types/node": "^18.19.3",
     "telefunc": "^0.1.70",
     "vike": "^0.4.159",
+    "vike-vue": "^0.6.0",
     "vite": "^5.0.11",
     "vue": "^3.4.15"
   },
@@ -43,8 +44,8 @@
     "./pages/todo/+config.h": {
       "types": "./dist/types/pages/todo/+config.h.d.ts"
     },
-    "./pages/todo/+onBeforeRender": {
-      "types": "./dist/types/pages/todo/+onBeforeRender.d.ts"
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
     }
   },
   "typesVersions": {
@@ -55,8 +56,8 @@
       "pages/todo/+config.h": [
         "./dist/types/pages/todo/+config.h.d.ts"
       ],
-      "pages/todo/+onBeforeRender": [
-        "./dist/types/pages/todo/+onBeforeRender.d.ts"
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
       ]
     }
   }
