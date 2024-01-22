@@ -83,7 +83,12 @@ const defaultDef = {
     required: false,
     default: 'my-app'
   },
-} as const;
+  force: {
+    type: "boolean",
+    description: "If true, does no check if target directory already exists",
+    required: false,
+  }
+} as const satisfies ArgsDef;
 
 type Args = typeof defaultDef &
   Record<
@@ -137,7 +142,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
     }
 
     // is target an empty directory
-    if ((await readdir(args.project)).length > 0) {
+    if (!args.force && (await readdir(args.project)).length > 0) {
       console.error(
         `${yellow("⚠")} Target folder ${cyan(
           args.project,
