@@ -4,6 +4,7 @@ import Features from "#components/Features.js";
 import { flip } from "#components/Flip.js";
 import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
+import Stackblitz from "#components/Stackblitz";
 import { StoreContext } from "#components/Store.js";
 import { createMemo, createSignal, Show, useContext } from "solid-js";
 
@@ -40,6 +41,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     >
       <div class="mb-2 w-full">
         <Description />
+        <Stackblitz flags={getFlags()} />
       </div>
       <div class="flex px-4 cursor-pointer">
         <kbd
