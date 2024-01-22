@@ -58,7 +58,7 @@ jobs:
       - name: mkdir temp folder
         run: mkdir -p ${{ runner.temp }}/bati-cache
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -66,7 +66,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup Turborepo cache
         with:
           path: ${{ runner.temp }}/bati-cache
