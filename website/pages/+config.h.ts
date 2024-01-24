@@ -9,10 +9,6 @@ export default {
   prerender: true,
   Layout: Layout,
   Head: Head,
-  // <title>
-  title: "Bati",
   favicon: faviconUrl,
-  // <meta name="description">
-  description: "Bati",
   extends: vikeSolid,
 } satisfies Config;
