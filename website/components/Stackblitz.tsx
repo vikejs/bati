@@ -1,15 +1,13 @@
 import sdk, { type Project } from "@stackblitz/sdk";
 import clsx from "clsx";
 
-const STACKBLITZ_RC = (args: string[]) => `
-{
+const STACKBLITZ_RC = (args: string[]) => `{
   "installDependencies": false,
   "startCommand": "pnpm create @batijs/app ${args.join(" ")} --force . && pnpm i && pnpm run dev",
   "env": {
     "NODE_ENV": "development"
   }
-}
-`;
+}`;
 
 function openProject(project: Project) {
   sdk.openProject(project, {});
@@ -26,10 +24,7 @@ function StackblitzLogo(props: { class?: string }) {
 export default function Stackblitz(props: { class?: string; flags: string[] }) {
   return (
     <button
-      class={clsx(
-        "btn btn-sm btn-ghost group h-auto gap-0 hover:gap-2 transition-all duration-500 delay-500 hover:delay-0",
-        props.class,
-      )}
+      class={clsx("btn btn-sm hover:btn-ghost group h-auto", props.class)}
       onclick={() =>
         openProject({
           title: "Bati project",
@@ -37,14 +32,13 @@ export default function Stackblitz(props: { class?: string; flags: string[] }) {
           template: "node",
           files: {
             ".stackblitzrc": STACKBLITZ_RC(props.flags),
+            "package.json": `{ "loading": "Waiting for Bati CLI to finish" }`,
           },
         })
       }
     >
       <StackblitzLogo class="h-6" />
-      <span class="max-w-0 text-nowrap overflow-hidden inline-block transition-all duration-500 group-hover:max-w-32">
-        Try me in Stackblitz
-      </span>
+      <span class="text-nowrap overflow-hidden inline-block">Try me in Stackblitz</span>
     </button>
   );
 }

@@ -42,7 +42,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       <div class="mb-2 w-full">
         <Description />
       </div>
-      <div class="flex px-4 join">
+      <div class="flex px-4 sm:join">
         <kbd
           class="cursor-pointer group join-item relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap rounded-md leading-9 gap-2.5"
           use:copy
@@ -67,7 +67,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
           </svg>
           {words().join(" ")}
         </kbd>
-        <Stackblitz flags={getFlags()} class="join-item" />
+        <Stackblitz flags={getFlags()} class="join-item hidden sm:flex" />
       </div>
       <Show when={rules().size > 0}>
         <div class="flex flex-col gap-2 leading-6 rounded-md mt-4">
