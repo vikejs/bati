@@ -10,14 +10,10 @@
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
     "release:local": "pnpm -r prerelease && bumpp -y --no-push --no-tag --no-commit --preid local prerelease && pnpm run publish --no-git-checks --tag local --registry http://localhost:4873",
     "publish": "pnpm run build && pnpm -r publish",
-    "watch": "pnpm -r --parallel build --watch",
-    "check-types": "pnpm -r check-types",
-    "test": "pnpm -r test",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test",
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
-    "build:step-1": "pnpm -r --filter=\"./packages/**\" --filter=!./packages/cli --filter=!./packages/create-batijs-app build",
-    "build:step-2": "pnpm -r --filter=\"./boilerplates/**\" build",
-    "build:step-3": "pnpm -r --filter=./packages/cli --filter=./packages/create-batijs-app build",
-    "build": "pnpm run build:step-1 && pnpm run build:step-2 && pnpm run build:step-3"
+    "build": "turbo run build"
   },
   "keywords": [],
   "author": "",
