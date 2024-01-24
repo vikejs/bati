@@ -1,14 +1,16 @@
-import type { MovieDetails } from "../types";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 
-export default function Page(props: { movie: MovieDetails }) {
+export default function Page() {
+  const movie = useData<Data>();
   return (
     <>
-      <h1>{props.movie.title}</h1>
-      Release Date: {props.movie.release_date}
+      <h1>{movie.title}</h1>
+      Release Date: {movie.release_date}
       <br />
-      Director: {props.movie.director}
+      Director: {movie.director}
       <br />
-      Producer: {props.movie.producer}
+      Producer: {movie.producer}
     </>
   );
 }
