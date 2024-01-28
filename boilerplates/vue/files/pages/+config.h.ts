@@ -1,4 +1,4 @@
-import vikeVue from "vike-vue";
+import vikeVue from "vike-vue/config";
 import type { Config } from "vike/types";
 import Head from "../layouts/HeadDefault.vue";
 import Layout from "../layouts/LayoutDefault.vue";
