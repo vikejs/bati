@@ -13,6 +13,7 @@
     "check-types": "turbo run check-types",
     "test": "turbo run test",
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
+    "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build"
   },
   "keywords": [],
@@ -27,6 +28,7 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.4",
+    "rimraf": "^5.0.5",
     "tsx": "^4.7.0",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
