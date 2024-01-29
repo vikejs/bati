@@ -1,4 +1,4 @@
-import type { OnCreateAppSync } from "vike-vue";
+import type { OnCreateAppSync } from "vike-vue/types";
 import VueGtag from "vue-gtag";
 
 // BATI.has("google-analytics")

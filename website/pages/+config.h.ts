@@ -1,5 +1,5 @@
 import faviconUrl from "#assets/logo.svg";
-import vikeSolid from "vike-solid";
+import vikeSolid from "vike-solid/config";
 import type { Config } from "vike/types";
 import Head from "../layouts/Head";
 import Layout from "../layouts/LayoutDefault";

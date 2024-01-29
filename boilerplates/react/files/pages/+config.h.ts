@@ -1,4 +1,4 @@
-import vikeReact from "vike-react";
+import vikeReact from "vike-react/config";
 import type { Config } from "vike/types";
 import Head from "../layouts/HeadDefault";
 import Layout from "../layouts/LayoutDefault";
