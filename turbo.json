@@ -5,6 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "build-cli": {
+      "dependsOn": ["^build"]
+    },
     "test": {
       "dependsOn": ["build"]
     },

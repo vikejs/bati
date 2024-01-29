@@ -14,7 +14,7 @@
     "test": "turbo run test",
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
-    "build": "turbo run build"
+    "build": "turbo run build && turbo run build-cli"
   },
   "keywords": [],
   "author": "",
