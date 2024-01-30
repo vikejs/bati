@@ -59,6 +59,7 @@ function findDescription(key: string | undefined): string | undefined {
 
 function printOK(dist: string, flags: string[]): void {
   const arrow0 = withIcon("→", blueBright);
+  const book0 = withIcon("📚", blueBright);
   const list3 = withIcon("-", undefined, 3);
   const cmd3 = withIcon("$", gray, 3);
   console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
@@ -70,10 +71,12 @@ function printOK(dist: string, flags: string[]): void {
     console.log(list3(green(feature.label)));
   }
 
-  console.log("\n" + bold(arrow0("Next steps:")));
+  console.log("\n" + bold(arrow0("Ready to start you app:")));
   console.log(cmd3(`cd ${dist}`));
   console.log(cmd3("pnpm install"));
   console.log(cmd3("pnpm run dev"));
+
+  console.log("\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."));
 }
 
 const defaultDef = {
