@@ -186,19 +186,19 @@ function checkRules(flags: string[]) {
   }
 }
 
-async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
-  const map = new Map<string, Hook[]>();
+async function retrieveHooks(hooks: string[]): Promise<Map<'after', Hook[]>> {
+  const map = new Map<'after', Hook[]>();
   for (const hook of hooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
       const importFile = isWin ? "file://" + file : file;
 
       switch (parsed.name) {
-        case "cli":
-          if (!map.has("cli")) {
-            map.set("cli", []);
+        case "after":
+          if (!map.has("after")) {
+            map.set("after", []);
           }
-          map.get("cli")!.push((await import(importFile)).default);
+          map.get("after")!.push((await import(importFile)).default);
           break;
         default:
           throw new Error(`Unsupported hook ${parsed.name}`);
@@ -287,8 +287,8 @@ async function run() {
 
       printOK(args.project, flags);
 
-      for (const oncli of hooksMap.get("cli") ?? []) {
-        await oncli(meta);
+      for (const onafter of hooksMap.get("after") ?? []) {
+        await onafter(meta);
       }
     },
   });

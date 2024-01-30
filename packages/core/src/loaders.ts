@@ -2,7 +2,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadFile, parseModule, type ProxifiedModule } from "magicast";
 import { assert } from "./assert.js";
+import { parseReadme } from "./markdown.js";
 import type { TransformerProps } from "./types.js";
+
+export async function loadReadme({ readfile }: TransformerProps) {
+  const content = await readfile?.();
+
+  return parseReadme(content);
+}
 
 export async function loadAsJson({ readfile, source, target }: TransformerProps) {
   const content = await readfile?.();

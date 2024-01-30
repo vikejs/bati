@@ -5,4 +5,5 @@ export * from "./utils/package.js";
 export * from "./utils/env.js";
 export * from "./which.js";
 export * from "./print.js";
+export * from "./markdown.js";
 export type * from "./types.js";

@@ -51,6 +51,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
       case ".env.production":
       case ".env.production.local":
       case ".html":
+      case ".md":
         return fileContent as string;
       case ".json":
         return JSON.stringify(fileContent, null, 2);
