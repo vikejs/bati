@@ -5,33 +5,31 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const about = `
-This app is ready to start thanks to [Vike](https://vike.dev) and [React](https://react.dev/learn).
-In order to get familiar with [Vike](https://vike.dev), here are some of the features that are already in place:
+This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
 
-### [/pages/+config.h.ts](https://vike.dev/config)
-This is the interface between Vike and your code. It imports/uses:
-- A [Layout](https://vike.dev/Layout) component that wraps your [Pages](https://vike.dev/Page)
-- A customizable [Head](https://vike.dev/head) component
-- A default [title](https://vike.dev/head)
+### \`/pages/+config.h.ts\`
+Such `+` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
+- A default [\`<Layout>\` component](https://vike.dev/Layout) (that wraps your [\`<Page>\` components](https://vike.dev/Page)).
+- A default [\`title\`](https://vike.dev/head).
+- Default [\`<head>\` tags](https://vike.dev/head).
 
-### [Routing](https://vike.dev/routing)
-By default, Vike does [Filesystem Routing](https://vike.dev/filesystem-routing): the URL of a page is determined based on where its +Page.tsx (or +config.h.ts) file is located on the filesystem.
+### Routing
+[Vike's built-in router](https://vike.dev/routing) lets you choose between:
+ - [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its \`+Page.jsx\` file is located on the filesystem)
+ - [Route Strings](https://vike.dev/route-string)
+ - [Route Functions](https://vike.dev/route-function)
 
-If you want to deep dive into routing, Vike lets you choose between:
-- [Server Routing and Client Routing](https://vike.dev/server-routing-vs-client-routing)
-- [Filesystem Routing](https://vike.dev/filesystem-routing), [Route Strings](https://vike.dev/route-string) and [Route Functions](https://vike.dev/route-function)
+### \`/pages/_error/+Page.jsx\`
+The [error page](https://vike.dev/error-page) which is rendered when errors occur.
 
-### [/pages/_error/+Page.tsx](https://vike.dev/error-page)
-An error page which is rendered when errors occurs.
+### \`/pages/+onPageTransitionStart.ts\` and \`/pages/+onPageTransitionEnd.ts\`
+The [\`onPageTransitionStart()\` hook](https://vike.dev/onPageTransitionStart), together with [\`onPageTransitionEnd()\`](https://vike.dev/onPageTransitionEnd), enables you to implement page transition animations.
 
-### [/pages/+onPageTransitionStart.ts](https://vike.dev/onPageTransitionStart) and [/pages/+onPageTransitionEnd.ts](https://vike.dev/onPageTransitionEnd)
-The \`onPageTransitionStart()\` hook, together with \`onPageTransitionEnd()\`, enables you to implement page transition animations.
+### SSR
+SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all your pages or only for some pages.
 
-### [ssr](https://vike.dev/ssr) by default
-You can disable SSR for all your pages, or only for some pages while still using SSR for your other pages.
-
-### [HTML Streaming](https://vike.dev/streaming) support
-Can be enabled/disabled for all your pages, or only for some pages while still using it for others.
+### HTML Streaming
+You can enable/disable [HTML streaming](https://vike.dev/streaming) for all your pages, or only for some pages while still using it for others.
 `;
 
   content.addAbout(about);
