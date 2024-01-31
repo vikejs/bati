@@ -36,7 +36,7 @@ enum Cursor {
   About,
 }
 
-const headers = ["", "# Next Steps", "# About this app"];
+const headers = ["", "# Next steps", "# About this app"];
 
 function parseReadme(text: string | undefined) {
   const nbHeaders = headers.length;
