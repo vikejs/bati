@@ -50,7 +50,7 @@ function parseReadme(text: string | undefined) {
       continue;
     }
 
-    contents[cursor] += line;
+    contents[cursor] += line + "\n";
   }
 
   return new Readme(contents);
