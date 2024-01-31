@@ -87,7 +87,7 @@ class Readme {
       }
 
       if (content) {
-        ret += content + "\n";
+        ret += content + "\n\n";
       }
     }
 
