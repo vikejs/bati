@@ -59,6 +59,7 @@ function findDescription(key: string | undefined): string | undefined {
 
 function printOK(dist: string, flags: string[]): void {
   const arrow0 = withIcon("→", blueBright);
+  const book0 = withIcon("📚", blueBright);
   const list3 = withIcon("-", undefined, 3);
   const cmd3 = withIcon("$", gray, 3);
   console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
@@ -70,10 +71,12 @@ function printOK(dist: string, flags: string[]): void {
     console.log(list3(green(feature.label)));
   }
 
-  console.log("\n" + bold(arrow0("Next steps:")));
+  console.log("\n" + bold(arrow0("Ready to start you app:")));
   console.log(cmd3(`cd ${dist}`));
   console.log(cmd3("pnpm install"));
   console.log(cmd3("pnpm run dev"));
+
+  console.log("\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."));
 }
 
 const defaultDef = {
@@ -186,19 +189,19 @@ function checkRules(flags: string[]) {
   }
 }
 
-async function retrieveHooks(hooks: string[]): Promise<Map<string, Hook[]>> {
-  const map = new Map<string, Hook[]>();
+async function retrieveHooks(hooks: string[]): Promise<Map<'after', Hook[]>> {
+  const map = new Map<'after', Hook[]>();
   for (const hook of hooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
       const importFile = isWin ? "file://" + file : file;
 
       switch (parsed.name) {
-        case "cli":
-          if (!map.has("cli")) {
-            map.set("cli", []);
+        case "after":
+          if (!map.has("after")) {
+            map.set("after", []);
           }
-          map.get("cli")!.push((await import(importFile)).default);
+          map.get("after")!.push((await import(importFile)).default);
           break;
         default:
           throw new Error(`Unsupported hook ${parsed.name}`);
@@ -287,8 +290,8 @@ async function run() {
 
       printOK(args.project, flags);
 
-      for (const oncli of hooksMap.get("cli") ?? []) {
-        await oncli(meta);
+      for (const onafter of hooksMap.get("after") ?? []) {
+        await onafter(meta);
       }
     },
   });
