@@ -32,7 +32,7 @@ export default function Stackblitz(props: { class?: string; flags: string[] }) {
           template: "node",
           files: {
             ".stackblitzrc": STACKBLITZ_RC(props.flags),
-            "package.json": `{ "loading": "Waiting for Bati CLI to finish" }`,
+            "README.md": `Waiting for Bati CLI to finish. This file will automatically refresh when the project is ready`,
           },
         })
       }
