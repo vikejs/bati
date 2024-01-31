@@ -21,6 +21,7 @@ jobs:
       matrix:
         node: ["18", "20"]
         os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
 
     steps:
       - name: Checkout
