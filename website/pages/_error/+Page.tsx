@@ -1,10 +1,12 @@
-export default function Page(props: { is404: boolean; errorInfo?: string }) {
-  if (props.is404) {
+import { usePageContext } from 'vike-react/usePageContext';
+
+export default function Page() {
+  const { is404 } = usePageContext();
+  if (is404) {
     return (
       <>
         <h1>404 Page Not Found</h1>
         <p>This page could not be found.</p>
-        <p>{props.errorInfo}</p>
       </>
     );
   } else {
