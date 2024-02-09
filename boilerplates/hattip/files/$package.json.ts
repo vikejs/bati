@@ -10,7 +10,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     build: {
-      value: "hattip build ./hattip-entry.ts --client",
+      value: "NODE_ENV=production hattip build ./hattip-entry.ts --client",
       precedence: 20,
       warnIfReplaced: true,
     },

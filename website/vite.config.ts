@@ -1,12 +1,13 @@
-import solid from "vike-solid/vite";
-import { build, defineConfig, type Plugin } from "vite";
+import { resolve } from "node:path";
 import autoprefixer from "autoprefixer";
+import daisyui from "daisyui";
 import tailwindcss from "tailwindcss";
 // @ts-ignore
 import tailwindcssNesting from "tailwindcss/nesting";
-import daisyui from "daisyui";
+import vikeSolid from "vike-solid/vite";
+import vike from "vike/plugin";
+import { build, defineConfig, type Plugin } from "vite";
 import solidPlugin from "vite-plugin-solid";
-import { resolve } from "node:path";
 
 const writeToDisk: () => Plugin = () => {
   let building = false;
@@ -74,9 +75,7 @@ export default defineConfig(({ mode, command }) => {
               corePlugins: {
                 preflight: false,
               },
-              content: [
-                "./{pages,layouts,components,src}/**/*.{html,js,jsx,ts,tsx}",
-              ],
+              content: ["./{pages,layouts,components,src}/**/*.{html,js,jsx,ts,tsx}"],
               theme: {
                 extend: {},
               },
@@ -88,10 +87,7 @@ export default defineConfig(({ mode, command }) => {
             {
               postcssPlugin: "fix-css-wc-scope",
               Rule(rule) {
-                rule.selector = rule.selector.replaceAll(
-                  ":root",
-                  ".bati-widget",
-                );
+                rule.selector = rule.selector.replaceAll(":root", ".bati-widget");
               },
             },
           ],
@@ -106,11 +102,10 @@ export default defineConfig(({ mode, command }) => {
       alias,
     },
     plugins: [
-      solid({
-        vps: {
-          prerender: true,
-        },
+      vike({
+        prerender: true,
       }),
+      vikeSolid(),
     ],
   };
 });

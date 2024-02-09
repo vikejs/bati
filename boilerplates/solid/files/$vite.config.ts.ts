@@ -2,20 +2,22 @@ import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/co
 
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
-  let options: Record<string, unknown> | undefined = undefined;
 
-  if (props.meta.BATI.has("vercel")) {
-    options = {
-      vps: {
+  // eslint-disable-next-line solid/reactivity
+  const vikeOptions = props.meta.BATI.has("vercel")
+    ? {
         prerender: true,
-      },
-    };
-  }
+      }
+    : {};
 
   addVitePlugin(mod, {
+    from: "vike/plugin",
+    constructor: "vike",
+    options: vikeOptions,
+  });
+  addVitePlugin(mod, {
     from: "vike-solid/vite",
-    constructor: "solid",
-    options,
+    constructor: "vikeSolid",
   });
 
   return mod.generate().code;
