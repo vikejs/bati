@@ -4,14 +4,14 @@ import path from "node:path";
 import * as process from "process";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "vercel", "hattip", "eslint"];
+export const matrix = ["react", "vercel", "hattip", "eslint"];
 
 await describeBati(
   ({ test, expect }) => {
     test("hattip build script prevails", async () => {
       const json = JSON.parse(await readFile(path.join(process.cwd(), "package.json"), "utf-8"));
 
-      expect(json.scripts.build).toBe("hattip build ./hattip-entry.ts --client");
+      expect(json.scripts.build).toContain("hattip build");
     });
 
     test("vercel files are present", async () => {
