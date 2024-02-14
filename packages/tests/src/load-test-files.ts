@@ -7,10 +7,12 @@ import fg from "fast-glob";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
+const isMacOS = process.platform === "darwin";
 
 export function listTestFiles() {
-  // Windows test on CI are slow and turborepo cache doesn't seem to work properly
-  const testFilesGlob = process.env.CI && isWin ? "empty.spec.ts" : "*.spec.ts";
+  // Windows and macOS tests on CI are slow.
+  // And on Windows, turborepo cache doesn't seem to work properly.
+  const testFilesGlob = process.env.CI && (isWin || isMacOS) ? "empty.spec.ts" : "*.spec.ts";
   const pattern = join(__dirname, "..", "tests", testFilesGlob);
   return fg(isWin ? fg.convertPathToPattern(pattern) : pattern);
 }
