@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   if (props.meta.BATI.has("eslint")) {
     addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
-      devDependencies: ["eslint-config-react-app"],
+      devDependencies: ["eslint-plugin-react"],
     });
   }
 

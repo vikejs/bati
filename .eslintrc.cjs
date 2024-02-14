@@ -6,10 +6,10 @@ module.exports = {
   ignorePatterns: ["*.cjs"],
   parserOptions: {
     sourceType: "module",
-    ecmaVersion: 2020,
+    ecmaVersion: 2020
   },
   env: {
-    node: true,
+    node: true
   },
   rules: {
     "no-unused-labels": 0,
@@ -21,17 +21,33 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": [
       1,
       {
-        argsIgnorePattern: "^_",
-      },
-    ],
+        argsIgnorePattern: "^_"
+      }
+    ]
   },
   overrides: [
     {
       // Tests
       files: ["*.spec.ts"],
       rules: {
-        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-explicit-any": 0
+      }
+    },
+    {
+      // React
+      extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended"],
+      plugins: ["react"],
+      files: ["boilerplates/react/**/*", "boilerplates/react-*/**/*"],
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
       },
+      settings: {
+        react: {
+          version: "detect"
+        }
+      }
     },
     {
       // SolidJS
@@ -39,8 +55,8 @@ module.exports = {
       plugins: ["solid"],
       files: ["boilerplates/solid/**/*", "boilerplates/solid-*/**/*"],
       rules: {
-        "solid/components-return-once": 0,
-      },
+        "solid/components-return-once": 0
+      }
     },
     {
       // VueJS
@@ -49,14 +65,14 @@ module.exports = {
       parserOptions: {
         parser: "@typescript-eslint/parser",
         sourceType: "module",
-        ecmaVersion: 2020,
+        ecmaVersion: 2020
       },
       rules: {
         "vue/multi-word-component-names": 0,
         "vue/singleline-html-element-content-newline": 0,
         "vue/max-attributes-per-line": 0,
-        "vue/html-self-closing": 0,
-      },
-    },
-  ],
+        "vue/html-self-closing": 0
+      }
+    }
+  ]
 };
