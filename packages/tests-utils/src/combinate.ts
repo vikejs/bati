@@ -1,4 +1,6 @@
-export function combinate<O extends (string | (string | null | undefined)[])[]>(obj: O) {
+import type { FlagMatrix } from "./types.js";
+
+export function combinate<O extends FlagMatrix>(obj: O) {
   let combos: string[][] = [];
   if (obj.length === 0) return [[]];
 
