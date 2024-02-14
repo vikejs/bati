@@ -8,12 +8,11 @@ export function combinate<O extends FlagMatrix>(obj: O) {
     const values = Array.isArray(val) ? val : [val];
     const all: string[][] = [];
     for (const x of values) {
-      if (!x) continue;
       if (combos.length === 0) {
-        all.push([x]);
+        all.push([x].filter(Boolean));
       } else {
         for (let j = 0; j < combos.length; j++) {
-          all.push([...combos[j], x]);
+          all.push([...combos[j], x].filter(Boolean));
         }
       }
     }

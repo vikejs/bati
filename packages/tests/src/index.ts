@@ -200,7 +200,7 @@ async function main(context: GlobalContext) {
         limit(async () => {
           const projectDir = await execLocalBati(context, flags);
           await Promise.all([
-            copyFile(testFile.filepath, join(projectDir, "test.spec.ts")),
+            copyFile(testFile.filepath, join(projectDir, basename(testFile.filepath))),
             updatePackageJson(projectDir),
             updateTsconfig(projectDir),
             updateVitestConfig(projectDir),
