@@ -8,7 +8,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import express, { type Request } from "express";
 import { applicationDefault, deleteApp, getApp, getApps, initializeApp, type App } from "firebase-admin/app";
-import { getAuth, type UserRecord } from "firebase-admin/auth";
+import { getAuth } from "firebase-admin/auth";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
@@ -18,29 +18,23 @@ const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 
-if (BATI.has("firebase-auth")) {
-  declare module "express" {
-    interface Request {
-      user?: UserRecord | null;
-    }
-  }
+/*{ @if (it.BATI.has("firebase-auth")) }*/
+let admin: App | undefined;
 
-  let admin: App | undefined;
-
-  function initializeAdminApp() {
-    return initializeApp({
-      credential: applicationDefault(),
-    });
-  }
-
-  if (!getApps().length) {
-    admin = initializeAdminApp();
-  } else {
-    admin = getApp();
-    deleteApp(admin);
-    admin = initializeAdminApp();
-  }
+function initializeAdminApp() {
+  return initializeApp({
+    credential: applicationDefault(),
+  });
 }
+
+if (!getApps().length) {
+  admin = initializeAdminApp();
+} else {
+  admin = getApp();
+  deleteApp(admin);
+  admin = initializeAdminApp();
+}
+/*{ /if }*/
 
 startServer();
 
@@ -202,11 +196,10 @@ async function startServer() {
    * @link {@see https://vike.dev}
    **/
   app.all("*", async (req: Request, res, next) => {
-    if (BATI.has("firebase-auth")) {
-      const pageContextInit = { urlOriginal: req.originalUrl, user: req.user };
-    } else {
-      const pageContextInit = { urlOriginal: req.originalUrl };
-    }
+    const pageContextInit = BATI.has("firebase-auth")
+      ? { urlOriginal: req.originalUrl, user: req.user }
+      : { urlOriginal: req.originalUrl };
+
     const pageContext = await renderPage(pageContextInit);
     if (pageContext.httpResponse === null) return next();
 
