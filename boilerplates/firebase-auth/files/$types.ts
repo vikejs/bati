@@ -1,12 +1,14 @@
 import { UserRecord } from "firebase-admin/auth";
 
 declare global {
+  /*{ @if (it.BATI.has("express")) }*/
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: UserRecord | null;
     }
   }
+  /*{ /if }*/
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Vike {
     interface PageContext {
