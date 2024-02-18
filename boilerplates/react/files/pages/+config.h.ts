@@ -7,6 +7,9 @@ import Layout from "../layouts/LayoutDefault";
 export default {
   Layout,
   Head,
+  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  passToClient: ["user"],
+  /*{ /if }*/
   // <title>
   title: "My Vike App",
   extends: vikeReact,

@@ -8,6 +8,9 @@ export default {
   Layout,
   Head,
   // <title>
+  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  passToClient: ["user"],
+  /*{ /if }*/
   title: "My Vike App",
   extends: vikeVue,
 } satisfies Config;
