@@ -1,7 +1,7 @@
 import { appendToEnv, type TransformerProps } from "@batijs/core";
 
 export default async function getEnv(props: TransformerProps) {
-  const envContent = await props.readFile?.();
+  const envContent = await props.readfile?.();
 
   const envs = [
     "VITE_FIREBASE_API_KEY",
