@@ -29,5 +29,23 @@
     "if": {
       "flag": "firebase-auth"
     }
+  },
+  "exports": {
+    "./types": {
+      "types": "./dist/types/types.d.ts"
+    },
+    "./libs/firebase": {
+      "types": "./dist/types/libs/firebase.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "types": [
+        "./dist/types/types.d.ts"
+      ],
+      "libs/firebase": [
+        "./dist/types/libs/firebase.d.ts"
+      ]
+    }
   }
 }
