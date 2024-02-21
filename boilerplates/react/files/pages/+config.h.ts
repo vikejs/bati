@@ -13,4 +13,11 @@ export default {
   // <title>
   title: "My Vike App",
   extends: vikeReact,
+  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  meta: {
+    firebaseApp: {
+      env: { client: true },
+    },
+  },
+  /*{ /if }*/
 } satisfies Config;

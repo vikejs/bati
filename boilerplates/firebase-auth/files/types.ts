@@ -1,4 +1,5 @@
-import { UserRecord } from "firebase-admin/auth";
+import type { UserRecord } from "firebase-admin/auth";
+import type { FirebaseApp } from "firebase/app";
 
 declare global {
   /*{ @if (it.BATI.has("express")) }*/
@@ -13,6 +14,9 @@ declare global {
   namespace Vike {
     interface PageContext {
       user?: UserRecord | null;
+    }
+    interface Config {
+      firebaseApp?: FirebaseApp;
     }
   }
 }
