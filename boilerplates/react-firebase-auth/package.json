@@ -39,5 +39,23 @@
         ]
       }
     }
+  },
+  "exports": {
+    "./pages/login/+Page": {
+      "types": "./dist/types/pages/login/+Page.d.ts"
+    },
+    "./pages/login/+config.h": {
+      "types": "./dist/types/pages/login/+config.h.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/login/+Page": [
+        "./dist/types/pages/login/+Page.d.ts"
+      ],
+      "pages/login/+config.h": [
+        "./dist/types/pages/login/+config.h.d.ts"
+      ]
+    }
   }
 }
