@@ -16,10 +16,10 @@
     "@batijs/shared-db": "workspace:^",
     "@batijs/trpc": "workspace:^",
     "@types/node": "^18.19.14",
-    "vike": "^0.4.161",
-    "vike-vue": "^0.6.1",
-    "vite": "^5.1.1",
-    "vue": "^3.4.18"
+    "vike": "^0.4.162",
+    "vike-vue": "^0.6.2",
+    "vite": "^5.1.3",
+    "vue": "^3.4.19"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -38,8 +38,8 @@
     }
   },
   "exports": {
-    "./pages/todo-trpc/+config.h": {
-      "types": "./dist/types/pages/todo-trpc/+config.h.d.ts"
+    "./pages/todo-trpc/+config": {
+      "types": "./dist/types/pages/todo-trpc/+config.d.ts"
     },
     "./pages/todo-trpc/+data": {
       "types": "./dist/types/pages/todo-trpc/+data.d.ts"
@@ -47,8 +47,8 @@
   },
   "typesVersions": {
     "*": {
-      "pages/todo-trpc/+config.h": [
-        "./dist/types/pages/todo-trpc/+config.h.d.ts"
+      "pages/todo-trpc/+config": [
+        "./dist/types/pages/todo-trpc/+config.d.ts"
       ],
       "pages/todo-trpc/+data": [
         "./dist/types/pages/todo-trpc/+data.d.ts"

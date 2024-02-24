@@ -16,10 +16,10 @@
     "@batijs/shared-db": "workspace:^",
     "@types/node": "^18.19.14",
     "telefunc": "^0.1.71",
-    "vike": "^0.4.161",
-    "vike-vue": "^0.6.1",
-    "vite": "^5.1.1",
-    "vue": "^3.4.18"
+    "vike": "^0.4.162",
+    "vike-vue": "^0.6.2",
+    "vite": "^5.1.3",
+    "vue": "^3.4.19"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -41,8 +41,8 @@
     "./components/TodoList.telefunc": {
       "types": "./dist/types/components/TodoList.telefunc.d.ts"
     },
-    "./pages/todo/+config.h": {
-      "types": "./dist/types/pages/todo/+config.h.d.ts"
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
     },
     "./pages/todo/+data": {
       "types": "./dist/types/pages/todo/+data.d.ts"
@@ -53,8 +53,8 @@
       "components/TodoList.telefunc": [
         "./dist/types/components/TodoList.telefunc.d.ts"
       ],
-      "pages/todo/+config.h": [
-        "./dist/types/pages/todo/+config.h.d.ts"
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
       ],
       "pages/todo/+data": [
         "./dist/types/pages/todo/+data.d.ts"

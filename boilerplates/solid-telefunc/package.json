@@ -15,10 +15,10 @@
     "@batijs/compile": "workspace:^",
     "@batijs/shared-db": "workspace:^",
     "@types/node": "^18.19.14",
-    "solid-js": "^1.8.14",
+    "solid-js": "^1.8.15",
     "telefunc": "^0.1.71",
-    "vike": "^0.4.161",
-    "vite": "^5.1.1"
+    "vike": "^0.4.162",
+    "vite": "^5.1.3"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -46,8 +46,8 @@
     "./pages/todo/+Page": {
       "types": "./dist/types/pages/todo/+Page.d.ts"
     },
-    "./pages/todo/+config.h": {
-      "types": "./dist/types/pages/todo/+config.h.d.ts"
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
     },
     "./pages/todo/+onBeforeRender": {
       "types": "./dist/types/pages/todo/+onBeforeRender.d.ts"
@@ -64,8 +64,8 @@
       "pages/todo/+Page": [
         "./dist/types/pages/todo/+Page.d.ts"
       ],
-      "pages/todo/+config.h": [
-        "./dist/types/pages/todo/+config.h.d.ts"
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
       ],
       "pages/todo/+onBeforeRender": [
         "./dist/types/pages/todo/+onBeforeRender.d.ts"

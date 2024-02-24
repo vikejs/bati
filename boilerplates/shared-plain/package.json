@@ -14,8 +14,8 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@types/node": "^18.19.14",
-    "vike": "^0.4.161",
-    "vite": "^5.1.1"
+    "vike": "^0.4.162",
+    "vite": "^5.1.3"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -43,8 +43,8 @@
     "./pages/index/+Page": {
       "types": "./dist/types/pages/index/+Page.d.ts"
     },
-    "./renderer/+config.h": {
-      "types": "./dist/types/renderer/+config.h.d.ts"
+    "./renderer/+config": {
+      "types": "./dist/types/renderer/+config.d.ts"
     },
     "./renderer/+onRenderHtml": {
       "types": "./dist/types/renderer/+onRenderHtml.d.ts"
@@ -55,8 +55,8 @@
       "pages/index/+Page": [
         "./dist/types/pages/index/+Page.d.ts"
       ],
-      "renderer/+config.h": [
-        "./dist/types/renderer/+config.h.d.ts"
+      "renderer/+config": [
+        "./dist/types/renderer/+config.d.ts"
       ],
       "renderer/+onRenderHtml": [
         "./dist/types/renderer/+onRenderHtml.d.ts"
