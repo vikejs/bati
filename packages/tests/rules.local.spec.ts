@@ -6,7 +6,10 @@ import { combinate } from "@batijs/tests-utils";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import { execLocalBati } from "./src/exec-bati.js";
 
-const matrix = combinate([["solid", "react", "vue"], "authjs"]);
+const matrix = combinate([
+  ["solid", "react", "vue"],
+  ["authjs", "firebase-auth"],
+]);
 
 function prepareAndExecute(flags: string[]) {
   const context = {

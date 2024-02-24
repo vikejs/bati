@@ -121,7 +121,7 @@ async function packageManagerInstall(context: GlobalContext) {
   // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
   await execa(npmCli, ["install", "--prefer-offline"], {
     // really slow on Windows CI
-    timeout: 3 * 60 * 1000,
+    timeout: 4 * 60 * 1000,
     cwd: context.tmpdir,
     stdout: process.stdout,
     stderr: process.stderr,
