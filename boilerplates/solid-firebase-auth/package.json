@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/react-firebase-auth",
+  "name": "@batijs/solid-firebase-auth",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -12,14 +12,11 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@batijs/compile": "workspace:*",
+    "@batijs/compile": "workspace:^",
     "@types/node": "^18.19.14",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
     "firebase": "^10.8.0",
     "firebaseui": "^6.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "solid-js": "^1.8.14",
     "vike": "^0.4.161",
     "vite": "^5.1.1"
   },
@@ -33,7 +30,7 @@
     "if": {
       "flag": {
         "$all": [
-          "react",
+          "solid",
           "firebase-auth"
         ]
       }

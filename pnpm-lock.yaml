@@ -452,9 +452,6 @@ importers:
       vike:
         specifier: ^0.4.161
         version: 0.4.161(vite@5.1.1)
-      vike-react:
-        specifier: ^0.4.4
-        version: 0.4.4(react-dom@18.2.0)(react@18.2.0)(vike@0.4.161)(vite@5.1.1)
       vite:
         specifier: ^5.1.1
         version: 5.1.1(@types/node@18.19.14)
@@ -634,6 +631,34 @@ importers:
       vite-plugin-solid:
         specifier: ^2.9.1
         version: 2.9.1(solid-js@1.8.14)(vite@5.1.1)
+
+  boilerplates/solid-firebase-auth:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:^
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.14
+      firebase:
+        specifier: ^10.8.0
+        version: 10.8.0
+      firebaseui:
+        specifier: ^6.1.0
+        version: 6.1.0(firebase@10.8.0)
+      solid-js:
+        specifier: ^1.8.14
+        version: 1.8.14
+      vike:
+        specifier: ^0.4.161
+        version: 0.4.161(vite@5.1.1)
+      vite:
+        specifier: ^5.1.1
+        version: 5.1.1(@types/node@18.19.14)
 
   boilerplates/solid-telefunc:
     dependencies:
