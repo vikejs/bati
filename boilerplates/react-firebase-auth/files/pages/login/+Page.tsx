@@ -30,6 +30,7 @@ function Page() {
                                 } else {
                                     setError(response.statusText)
                                 }
+                                await getAuth().signOut()
                             })
                         })
                         // Don't redirect after firebase client successfully sign-in, let vike handle the rest.

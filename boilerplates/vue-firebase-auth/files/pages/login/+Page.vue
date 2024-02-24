@@ -21,7 +21,7 @@ const uiCOnfig = {
     callbacks: {
         signInSuccessWithAuthResult(authResult: UserCredential) {
             authResult.user.getIdToken().then((idToken) => {
-                return fetch("/api/sessionLogin", {
+                fetch("/api/sessionLogin", {
                     method: "POST",
                     body: JSON.stringify({ idToken }),
                     headers: {
@@ -33,6 +33,7 @@ const uiCOnfig = {
                     } else {
                         error.value = response.statusText
                     }
+                    await getAuth().signOut()
                 })
             })
             // Don't redirect after firebase client successfully sign-in, let vike handle the rest.
