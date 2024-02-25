@@ -1,4 +1,6 @@
+/*{ @if (it.BATI.has("firebase-auth")) }*/
 import "dotenv/config";
+/*{ /if }*/
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
