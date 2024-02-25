@@ -1,4 +1,6 @@
+/*{ @if (it.BATI.has("firebase-auth")) }*/
 import "dotenv/config";
+/*{ /if }*/
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
