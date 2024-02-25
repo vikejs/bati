@@ -109,7 +109,7 @@ async function startServer() {
         const user = await auth.getUser(decodedIdToken.sub);
         req.user = user;
       } catch (error) {
-        console.log("error verifySessionCookie :", error);
+        // console.log("error verifySessionCookie :", error);
         req.user = null;
       }
 
