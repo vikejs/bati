@@ -8,14 +8,16 @@ export default async function getReadme(props: TransformerProps) {
 ## *Firebase*
 - You first need to **[Create a Firebase project](https://firebase.google.com/docs/web/setup#create-project)**.
 - Then register your app in the firebase console. **[Register your app](https://firebase.google.com/docs/web/setup#register-app)**
-- Copy Firebase project configuration and paste in .env. Example :
-\`\`\`sh
-VITE_FIREBASE_API_KEY="apiKey",
-VITE_FIREBASE_AUTH_DOMAIN="authDomain",
-VITE_FIREBASE_PROJECT_ID="projectId",
-VITE_FIREBASE_STORAGE_BUCKET="storageBucket",
-VITE_FIREBASE_MESSAGING_SENDER_ID="messagingSenderId",
-VITE_FIREBASE_APP_ID="appId",
+- Copy Your web app's Firebase configuration and paste in \`/pages/+firebaseApp.ts\` Example :
+\`\`\`ts
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+};
 \`\`\`
 - Download the Firebase service account from [Your Firebase Project Settings > Service accounts](https://console.firebase.google.com/u/0/project/{firebase-project-id}/settings/serviceaccounts/adminsdk)
 - Rename to service-account.json and paste to folder \`/firebase/\`.
