@@ -1,6 +1,3 @@
-/*{ @if (it.BATI.has("firebase-auth")) }*/
-import "dotenv/config";
-/*{ /if }*/
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,7 +7,7 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
-import { applicationDefault, deleteApp, getApp, getApps, initializeApp, type App } from "firebase-admin/app";
+import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin"
 import { getAuth, type UserRecord } from "firebase-admin/auth";
 import {
   createApp,
@@ -47,22 +44,6 @@ declare module "h3" {
   interface H3EventContext {
     user: UserRecord | null;
   }
-}
-
-let admin: App | undefined;
-
-function initializeAdminApp() {
-  return initializeApp({
-    credential: applicationDefault(),
-  });
-}
-
-if (!getApps().length) {
-  admin = initializeAdminApp();
-} else {
-  admin = getApp();
-  deleteApp(admin);
-  admin = initializeAdminApp();
 }
 /*{ /if }*/
 
@@ -130,6 +111,71 @@ async function startServer() {
     );
   }
 
+  if (BATI.has("firebase-auth")) {
+    app.use(
+      eventHandler(async (event) => {
+        const sessionCookie = getCookie(event, "__session");
+        if (sessionCookie) {
+          try {
+            const auth = getAuth(firebaseAdmin);
+            const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+            const user = await auth.getUser(decodedIdToken.sub);
+            event.context.user = user;
+          } catch (error) {
+            // console.log("error verifySessionCookie :", error);
+            event.context.user = null;
+          }
+        }
+      }),
+    );
+
+    router.post(
+      "/api/sessionLogin",
+      eventHandler(async (event) => {
+        const body = await readBody(event);
+        const idToken: string = body.idToken || "";
+
+        let status: number;
+        let text: string;
+
+        const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+
+        try {
+          const auth = getAuth(firebaseAdmin);
+          const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
+          setCookie(event, "__session", sessionCookie, {
+            maxAge: expiresIn,
+            httpOnly: true,
+            secure: true,
+          });
+          setResponseStatus(event, 200, "Success");
+
+          status = getResponseStatus(event);
+          text = getResponseStatusText(event);
+        } catch (error) {
+          setResponseStatus(event, 401, "UNAUTHORIZED REQUEST!");
+          console.log("createSessionCookie error :", error);
+          status = getResponseStatus(event);
+          text = getResponseStatusText(event);
+        }
+
+        return {
+          status,
+          text,
+        };
+      }),
+    );
+
+    router.post(
+      "/api/sessionLogout",
+      eventHandler((event) => {
+        deleteCookie(event, "__session");
+        setResponseStatus(event, 200, "Logged Out");
+        return "Logged Out";
+      }),
+    );
+  }
+
   if (BATI.has("trpc")) {
     /**
      * tRPC route
@@ -180,71 +226,6 @@ async function startServer() {
     );
   }
 
-  if (BATI.has("firebase-auth")) {
-    app.use(
-      eventHandler(async (event) => {
-        const sessionCookie = getCookie(event, "__session");
-        if (sessionCookie) {
-          try {
-            const auth = getAuth();
-            const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
-            const user = await auth.getUser(decodedIdToken.sub);
-            event.context.user = user;
-          } catch (error) {
-            // console.log("error verifySessionCookie :", error);
-            event.context.user = null;
-          }
-        }
-      }),
-    );
-
-    router.post(
-      "/api/sessionLogin",
-      eventHandler(async (event) => {
-        const body = await readBody(event);
-        const idToken: string = body.idToken || "";
-
-        let status: number;
-        let text: string;
-
-        const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-
-        try {
-          const auth = getAuth();
-          const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-          setCookie(event, "__session", sessionCookie, {
-            maxAge: expiresIn,
-            httpOnly: true,
-            secure: true,
-          });
-          setResponseStatus(event, 200, "Success");
-
-          status = getResponseStatus(event);
-          text = getResponseStatusText(event);
-        } catch (error) {
-          setResponseStatus(event, 401, "UNAUTHORIZED REQUEST!");
-          console.log("createSessionCookie error :", error);
-          status = getResponseStatus(event);
-          text = getResponseStatusText(event);
-        }
-
-        return {
-          status,
-          text,
-        };
-      }),
-    );
-
-    router.post(
-      "/api/sessionLogout",
-      eventHandler((event) => {
-        deleteCookie(event, "__session");
-        setResponseStatus(event, 200, "Logged Out");
-        return "Logged Out";
-      }),
-    );
-  }
-
   /**
    * Vike route
    *
@@ -256,9 +237,9 @@ async function startServer() {
       const pageContextInit = BATI.has("firebase-auth")
         ? { urlOriginal: event.node.req.originalUrl || event.node.req.url! }
         : {
-            urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-            user: event.context.user,
-          };
+          urlOriginal: event.node.req.originalUrl || event.node.req.url!,
+          user: event.context.user,
+        };
       const pageContext = await renderPage(pageContextInit);
       const response = pageContext.httpResponse;
 

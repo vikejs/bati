@@ -1,6 +1,3 @@
-/*{ @if (it.BATI.has("firebase-auth")) }*/
-import "dotenv/config";
-/*{ /if }*/
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
@@ -9,7 +6,7 @@ import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import express, { type Request } from "express";
-import { applicationDefault, deleteApp, getApp, getApps, initializeApp, type App } from "firebase-admin/app";
+import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin"
 import { getAuth } from "firebase-admin/auth";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
@@ -19,24 +16,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
-
-/*{ @if (it.BATI.has("firebase-auth")) }*/
-let admin: App | undefined;
-
-function initializeAdminApp() {
-  return initializeApp({
-    credential: applicationDefault(),
-  });
-}
-
-if (!getApps().length) {
-  admin = initializeAdminApp();
-} else {
-  admin = getApp();
-  deleteApp(admin);
-  admin = initializeAdminApp();
-}
-/*{ /if }*/
 
 startServer();
 
@@ -104,7 +83,7 @@ async function startServer() {
       const sessionCookie: string = req.cookies.__session || "";
 
       try {
-        const auth = getAuth();
+        const auth = getAuth(firebaseAdmin);
         const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
         const user = await auth.getUser(decodedIdToken.sub);
         req.user = user;
@@ -122,7 +101,7 @@ async function startServer() {
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
 
-      getAuth()
+      getAuth(firebaseAdmin)
         .createSessionCookie(idToken, { expiresIn })
         .then(
           (sessionCookie) => {
