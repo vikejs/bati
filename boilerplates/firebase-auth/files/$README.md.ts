@@ -20,7 +20,7 @@ const firebaseConfig = {
 };
 \`\`\`
 - Download Your Firebase service account from [Your Firebase Project Settings > Service accounts](https://console.firebase.google.com/u/0/project/{firebase-project-id}/settings/serviceaccounts/adminsdk)
-- Rename to service-account.json and move to folder \`/firebase/\`.
+- Rename to service-account.json and move it to folder \`/firebase/\`.
 - Read more about Firebase Auth at official [firebase auth docs](https://firebase.google.com/docs/auth)
 - Read FirebaseUI at [firebaseui-web docs](https://github.com/firebase/firebaseui-web?tab=readme-ov-file#using-firebaseui-for-authentication)
 ### Setup
