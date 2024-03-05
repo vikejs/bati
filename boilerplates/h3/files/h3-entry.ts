@@ -2,12 +2,12 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
-import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin"
 import { getAuth, type UserRecord } from "firebase-admin/auth";
 import {
   createApp,
@@ -122,7 +122,7 @@ async function startServer() {
             const user = await auth.getUser(decodedIdToken.sub);
             event.context.user = user;
           } catch (error) {
-            // console.log("error verifySessionCookie :", error);
+            console.error("verifySessionCookie:", error);
             event.context.user = null;
           }
         }
@@ -153,8 +153,8 @@ async function startServer() {
           status = getResponseStatus(event);
           text = getResponseStatusText(event);
         } catch (error) {
-          setResponseStatus(event, 401, "UNAUTHORIZED REQUEST!");
-          console.log("createSessionCookie error :", error);
+          console.error("createSessionCookie:", error);
+          setResponseStatus(event, 401, "Unauthorized Request");
           status = getResponseStatus(event);
           text = getResponseStatusText(event);
         }
@@ -237,9 +237,9 @@ async function startServer() {
       const pageContextInit = BATI.has("firebase-auth")
         ? { urlOriginal: event.node.req.originalUrl || event.node.req.url! }
         : {
-          urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-          user: event.context.user,
-        };
+            urlOriginal: event.node.req.originalUrl || event.node.req.url!,
+            user: event.context.user,
+          };
       const pageContext = await renderPage(pageContextInit);
       const response = pageContext.httpResponse;
 

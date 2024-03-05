@@ -1,12 +1,12 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import express, { type Request } from "express";
-import { firebaseAdmin } from "@batijs/shared-firebase/firebaseAdmin"
 import { getAuth } from "firebase-admin/auth";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
@@ -88,7 +88,7 @@ async function startServer() {
         const user = await auth.getUser(decodedIdToken.sub);
         req.user = user;
       } catch (error) {
-        // console.log("error verifySessionCookie :", error);
+        console.error("verifySessionCookie:", error);
         req.user = null;
       }
 
@@ -111,8 +111,8 @@ async function startServer() {
             res.end(JSON.stringify({ status: "success" }));
           },
           (error) => {
-            console.log("createSessionCookie error :", error);
-            res.status(401).send("UNAUTHORIZED REQUEST!");
+            console.error("createSessionCookie:", error);
+            res.status(401).send("Unauthorized Request");
           },
         );
     });

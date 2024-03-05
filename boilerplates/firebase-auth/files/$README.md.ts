@@ -23,11 +23,6 @@ const firebaseConfig = {
 - Rename to service-account.json and move it to folder \`/firebase/\`.
 - Read more about Firebase Auth at official [firebase auth docs](https://firebase.google.com/docs/auth)
 - Read FirebaseUI at [firebaseui-web docs](https://github.com/firebase/firebaseui-web?tab=readme-ov-file#using-firebaseui-for-authentication)
-### Setup
-\`\`\`sh
-npm install
-npm run dev
-\`\`\`
 `;
 
   content.addTodo(todo);
