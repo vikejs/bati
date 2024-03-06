@@ -126,9 +126,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
-      '@batijs/shared-firebase':
+      '@batijs/firebase-auth':
         specifier: workspace:*
-        version: link:../shared-firebase
+        version: link:../firebase-auth
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
@@ -228,9 +228,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
-      '@batijs/shared-firebase':
+      '@batijs/firebase-auth':
         specifier: workspace:*
-        version: link:../shared-firebase
+        version: link:../firebase-auth
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
@@ -428,6 +428,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/firebase-auth':
+        specifier: workspace:*
+        version: link:../firebase-auth
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.14
@@ -573,25 +576,6 @@ importers:
         specifier: ^18.19.14
         version: 18.19.14
 
-  boilerplates/shared-firebase:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@types/node':
-        specifier: ^18.19.14
-        version: 18.19.14
-      dotenv:
-        specifier: ^16.4.4
-        version: 16.4.5
-      firebase-admin:
-        specifier: ^12.0.0
-        version: 12.0.0
-
   boilerplates/shared-plain:
     dependencies:
       '@batijs/core':
@@ -660,6 +644,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:^
         version: link:../../packages/compile
+      '@batijs/firebase-auth':
+        specifier: workspace:*
+        version: link:../firebase-auth
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.14
@@ -905,6 +892,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/firebase-auth':
+        specifier: workspace:*
+        version: link:../firebase-auth
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.14
@@ -9387,6 +9377,7 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    requiresBuild: true
     dev: true
 
   /yocto-queue@1.0.0:

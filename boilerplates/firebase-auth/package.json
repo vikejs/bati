@@ -36,6 +36,12 @@
     "./types": {
       "types": "./dist/types/types.d.ts"
     },
+    "./libs/firebaseAdmin": {
+      "types": "./dist/types/libs/firebaseAdmin.d.ts"
+    },
+    "./libs/firebaseUI": {
+      "types": "./dist/types/libs/firebaseUI.d.ts"
+    },
     "./pages/+firebaseApp": {
       "types": "./dist/types/pages/+firebaseApp.d.ts"
     },
@@ -50,6 +56,12 @@
     "*": {
       "types": [
         "./dist/types/types.d.ts"
+      ],
+      "libs/firebaseAdmin": [
+        "./dist/types/libs/firebaseAdmin.d.ts"
+      ],
+      "libs/firebaseUI": [
+        "./dist/types/libs/firebaseUI.d.ts"
       ],
       "pages/+firebaseApp": [
         "./dist/types/pages/+firebaseApp.d.ts"
