@@ -1,10 +1,13 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import express from "express";
+import cookieParser from "cookie-parser";
+import express, { type Request } from "express";
+import { getAuth } from "firebase-admin/auth";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
@@ -74,6 +77,52 @@ async function startServer() {
     );
   }
 
+  if (BATI.has("firebase-auth")) {
+    app.use(cookieParser());
+    app.use(async function (req: Request, _, next) {
+      const sessionCookie: string = req.cookies.__session || "";
+
+      try {
+        const auth = getAuth(firebaseAdmin);
+        const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
+        const user = await auth.getUser(decodedIdToken.sub);
+        req.user = user;
+      } catch (error) {
+        console.error("verifySessionCookie:", error);
+        req.user = null;
+      }
+
+      next();
+    });
+
+    app.use(express.json()); // Parse & make HTTP request body available at `req.body`
+    app.post("/api/sessionLogin", (req: Request, res) => {
+      const idToken: string = req.body.idToken || "";
+
+      const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+
+      getAuth(firebaseAdmin)
+        .createSessionCookie(idToken, { expiresIn })
+        .then(
+          (sessionCookie) => {
+            // Set cookie policy for session cookie.
+            const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+            res.cookie("__session", sessionCookie, options);
+            res.end(JSON.stringify({ status: "success" }));
+          },
+          (error) => {
+            console.error("createSessionCookie:", error);
+            res.status(401).send("Unauthorized Request");
+          },
+        );
+    });
+
+    app.post("/api/sessionLogout", function (_, res) {
+      res.clearCookie("__session");
+      res.end();
+    });
+  }
+
   if (BATI.has("trpc")) {
     /**
      * tRPC route
@@ -127,8 +176,11 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*", async (req, res, next) => {
-    const pageContextInit = { urlOriginal: req.originalUrl };
+  app.all("*", async (req: Request, res, next) => {
+    const pageContextInit = BATI.has("firebase-auth")
+      ? { urlOriginal: req.originalUrl, user: req.user }
+      : { urlOriginal: req.originalUrl };
+
     const pageContext = await renderPage(pageContextInit);
     if (pageContext.httpResponse === null) return next();
 

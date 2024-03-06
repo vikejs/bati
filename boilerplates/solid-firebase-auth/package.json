@@ -1,0 +1,52 @@
+{
+  "name": "@batijs/solid-firebase-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:^",
+    "@batijs/firebase-auth": "workspace:*",
+    "@types/node": "^18.19.14",
+    "firebase": "^10.8.0",
+    "firebaseui": "^6.1.0",
+    "solid-js": "^1.8.14",
+    "vike": "^0.4.162",
+    "vite": "^5.1.3"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "solid",
+          "firebase-auth"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./pages/login/+Page": {
+      "types": "./dist/types/pages/login/+Page.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/login/+Page": [
+        "./dist/types/pages/login/+Page.d.ts"
+      ]
+    }
+  }
+}

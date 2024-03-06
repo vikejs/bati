@@ -1,0 +1,39 @@
+{
+  "name": "@batijs/vue-firebase-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/firebase-auth": "workspace:*",
+    "@types/node": "^18.19.14",
+    "firebase": "^10.8.0",
+    "firebaseui": "^6.1.0",
+    "vike": "^0.4.162",
+    "vite": "^5.1.3",
+    "vue": "^3.4.19"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "vue",
+          "firebase-auth"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "@batijs/firebase-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "dotenv": "^16.4.4",
+    "firebase": "^10.8.0",
+    "firebase-admin": "^12.0.0",
+    "firebaseui": "^6.1.0",
+    "vike": "^0.4.162",
+    "vite": "^5.1.3"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "firebase-auth"
+    }
+  },
+  "exports": {
+    "./types": {
+      "types": "./dist/types/types.d.ts"
+    },
+    "./libs/firebaseAdmin": {
+      "types": "./dist/types/libs/firebaseAdmin.d.ts"
+    },
+    "./libs/firebaseUI": {
+      "types": "./dist/types/libs/firebaseUI.d.ts"
+    },
+    "./pages/+firebaseApp": {
+      "types": "./dist/types/pages/+firebaseApp.d.ts"
+    },
+    "./pages/login/+config": {
+      "types": "./dist/types/pages/login/+config.d.ts"
+    },
+    "./pages/login/+guard": {
+      "types": "./dist/types/pages/login/+guard.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "types": [
+        "./dist/types/types.d.ts"
+      ],
+      "libs/firebaseAdmin": [
+        "./dist/types/libs/firebaseAdmin.d.ts"
+      ],
+      "libs/firebaseUI": [
+        "./dist/types/libs/firebaseUI.d.ts"
+      ],
+      "pages/+firebaseApp": [
+        "./dist/types/pages/+firebaseApp.d.ts"
+      ],
+      "pages/login/+config": [
+        "./dist/types/pages/login/+config.d.ts"
+      ],
+      "pages/login/+guard": [
+        "./dist/types/pages/login/+guard.d.ts"
+      ]
+    }
+  }
+}
