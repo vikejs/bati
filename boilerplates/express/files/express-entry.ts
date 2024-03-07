@@ -182,11 +182,16 @@ async function startServer() {
       : { urlOriginal: req.originalUrl };
 
     const pageContext = await renderPage(pageContextInit);
-    if (pageContext.httpResponse === null) return next();
+    const { httpResponse } = pageContext
 
-    const { statusCode, contentType } = pageContext.httpResponse;
-    res.status(statusCode).type(contentType);
-    pageContext.httpResponse.pipe(res);
+    if (!httpResponse) {
+      return next()
+    } else {
+      const { statusCode, headers } = httpResponse;
+      headers.forEach(([name, value]) => res.setHeader(name, value))
+      res.status(statusCode)
+      httpResponse.pipe(res);
+    }
   });
 
   app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000, () => {
