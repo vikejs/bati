@@ -10,7 +10,7 @@ function initStore() {
   const featuresInitialState: Feature[] = features.map((f: Feature) => ({
     ...f,
     alt: f.disabled ? "Coming soon" : undefined,
-    selected: false,
+    active: false,
   }));
 
   const [currentFeatures, setCurrentFeatures] = createStore<Feature[]>(featuresInitialState);

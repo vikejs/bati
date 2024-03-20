@@ -1,4 +1,4 @@
-import { categories, categoriesGroups, type Category, type CategoryLabels } from "@batijs/features";
+import { categories, type Category, type CategoryLabels } from "@batijs/features";
 import type { FeatureLink } from "@batijs/features/src/index";
 import { FormControl } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
@@ -8,13 +8,14 @@ import { EnrichedTooltip } from "#components/Tooltip";
 import { createMemo, For, Match, Show, Switch, useContext } from "solid-js";
 import type { Feature } from "../types";
 
-function FeaturesGroup(props: { categories: Category[] }) {
+function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
   const { currentFeatures, selectFeature } = useContext(StoreContext);
 
   return (
     <div
       id="bati-features"
-      class="grid grid-cols-[repeat(auto-fill,_minmax(14rem,_1fr))] gap-x-4 box-border w-full relative"
+      role="tablist"
+      class="tabs tabs-lg tabs-boxed gap-x-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(14rem,_1fr))] grid-flow-dense"
     >
       <For each={props.categories}>
         {({ label, multiple }) => {
@@ -23,17 +24,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
           const disabled = createMemo(() => fs().every((x) => x.disabled));
 
           return (
-            <FormControl
-              label={label}
-              flipLabel={label}
-              class="w-full sm:w-auto rounded-md bg-base-100"
-              classList={{
-                "border-success/60": inview(),
-                "border-base-200 opacity-70": disabled(),
-                "border-primary/60": !inview() && !disabled(),
-                "border-solid border-l-2": !multiple,
-              }}
-            >
+            <FormControl label={label} flipLabel={label} class="w-full sm:w-auto rounded-md bg-base-100">
               <div class="grid grid-rows-3 w-full gap-2 py-2 h-32 -mt-2">
                 <For each={fs()}>
                   {(feature) => (
@@ -99,20 +90,7 @@ function FeaturesGroup(props: { categories: Category[] }) {
 }
 
 export default function Features() {
-  return (
-    <>
-      <For each={Object.values(categoriesGroups)}>
-        {(group) => (
-          <>
-            <div class="divider divider-start mb-0 mt-5">
-              <h3 class="font-bold uppercase text-sm tracking-wider text-neutral-500">{group}</h3>
-            </div>
-            <FeaturesGroup categories={categories.filter((c) => c.group === group)} />
-          </>
-        )}
-      </For>
-    </>
-  );
+  return <FeaturesGroup categories={categories} />;
 }
 
 function BeatenPathTooltip() {
