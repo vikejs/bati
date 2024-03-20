@@ -7,7 +7,7 @@ export default async function getReadme(props: TransformerProps) {
     .join(" ");
 
   //language=Markdown
-  const intro = `This app has been created with [Bati](https://batijs.github.io) using the following flags: \`${flags}\``;
+  const intro = `This app has been created with [Bati](https://batijs.dev) using the following flags: \`${flags}\``;
 
   content.addIntro(intro);
 

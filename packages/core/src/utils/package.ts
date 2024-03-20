@@ -92,7 +92,7 @@ function warnScript(key: string, old: string, nnew: string) {
     )(`Possible conflict between flags for "package.json":
     Old \`scripts.${key}\`: ${dim(old)}
     New \`scripts.${key}\`: ${dim(nnew)}
-  You can check https://batijs.github.io for more details.
+  You can check https://batijs.dev for more details.
 `),
   );
 }
