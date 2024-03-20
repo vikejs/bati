@@ -1,3 +1,5 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
@@ -130,9 +132,13 @@ async function startServer() {
       authRequired: false, // Controls whether authentication is required for all routes
       auth0Logout: true, // Uses Auth0 logout feature
       baseURL: `http://localhost:${port}`, // The URL where the application is served
-      clientID: "{yourClientId}", // The Client ID found in your Application settings
-      issuerBaseURL: "https://{yourDomain}", // The Domain as a secure URL found in your Application settings
-      secret: "LONG_RANDOM_STRING", // A long, random string
+      clientID: process.env.CLIENT_ID, // The Client ID found in your Application settings
+      issuerBaseURL: process.env.ISSUER_BASE_URL, // The Domain as a secure URL found in your Application settings
+      secret: process.env.SECRET, // A long random string
+      routes: {
+        login: "/api/auth/login", // Custom login url, default /login
+        logout: "/api/auth/logout", // Custom logout url, default /logout
+      },
     };
 
     app.use(auth(config));

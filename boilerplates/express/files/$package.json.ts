@@ -23,7 +23,8 @@ export default async function getPackageJson(props: TransformerProps) {
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
     devDependencies: [
       "@types/express",
-      ...(props.meta.BATI.has("firebase-auth") ? (["@types/cookie-parser"] as const) : [])
+      ...(props.meta.BATI.has("firebase-auth") ? (["@types/cookie-parser"] as const) : []),
+      ...(props.meta.BATI.has("auth0") ? (["dotenv"] as const) : [])
     ],
     dependencies: [
       "@hattip/adapter-node",
