@@ -1,3 +1,5 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +10,8 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
+import express from "express";
+import { auth, type ConfigParams } from "express-openid-connect";
 import { getAuth, type UserRecord } from "firebase-admin/auth";
 import {
   createApp,
@@ -38,6 +42,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
+const port = process.env.PORT || 3000;
 
 /*{ @if (it.BATI.has("firebase-auth")) }*/
 declare module "h3" {
@@ -176,6 +181,25 @@ async function startServer() {
     );
   }
 
+  if (BATI.has("auth0")) {
+    const config: ConfigParams = {
+      authRequired: false, // Controls whether authentication is required for all routes
+      auth0Logout: true, // Uses Auth0 logout feature
+      baseURL: `http://localhost:${port}`, // The URL where the application is served
+      clientID: process.env.CLIENT_ID, // The Client ID found in your Application settings
+      issuerBaseURL: process.env.ISSUER_BASE_URL, // The Domain as a secure URL found in your Application settings
+      secret: process.env.SECRET, // A long random string
+      routes: {
+        login: "/api/auth/login", // Custom login route, default is "/login"
+        logout: "/api/auth/logout", // Custom logout route, default is "/logout"
+      },
+    };
+
+    const expressApp = express();
+
+    app.use(fromNodeMiddleware(expressApp.use(auth(config))));
+  }
+
   if (BATI.has("trpc")) {
     /**
      * tRPC route
@@ -252,9 +276,9 @@ async function startServer() {
 
   app.use(router);
 
-  const server = createServer(toNodeListener(app)).listen(process.env.PORT || 3000);
+  const server = createServer(toNodeListener(app)).listen(port);
 
   server.on("listening", () => {
-    console.log(`Server listening on http://localhost:${process.env.PORT || 3000}`);
+    console.log(`Server listening on http://localhost:${port}`);
   });
 }
