@@ -136,8 +136,8 @@ async function startServer() {
       issuerBaseURL: process.env.ISSUER_BASE_URL, // The Domain as a secure URL found in your Application settings
       secret: process.env.SECRET, // A long random string
       routes: {
-        login: "/api/auth/login", // Custom login url, default /login
-        logout: "/api/auth/logout", // Custom logout url, default /logout
+        login: "/api/auth/login", // Custom login route, default is : "/login"
+        logout: "/api/auth/logout", // Custom logout route, default is : "/logout"
       },
     };
 
