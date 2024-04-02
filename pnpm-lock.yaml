@@ -819,8 +819,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.14
       '@vite-plugin-vercel/vike':
-        specifier: ^4.0.2
-        version: 4.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7)
+        specifier: ^5.0.2
+        version: 5.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7)
       vike:
         specifier: ^0.4.168
         version: 0.4.168(vite@5.2.7)
@@ -829,7 +829,7 @@ importers:
         version: 5.2.7(@types/node@18.19.14)
       vite-plugin-vercel:
         specifier: ^4.0.2
-        version: 4.0.2(@vite-plugin-vercel/vike@4.0.2)(vike@0.4.168)(vite@5.2.7)
+        version: 4.0.2(@vite-plugin-vercel/vike@5.0.2)(vike@0.4.168)(vite@5.2.7)
 
   boilerplates/vue:
     dependencies:
@@ -3608,10 +3608,10 @@ packages:
       ajv: 6.12.6
     dev: true
 
-  /@vite-plugin-vercel/vike@4.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7):
-    resolution: {integrity: sha512-mGJVAhFnmQ2lJk4e4mS5U3DR98DrUm5KgnaY8Z6+6P4TREUiQQ8gXQRGqru9P5BfyHI52Ecpu6+ZYnV2R/IN2g==}
+  /@vite-plugin-vercel/vike@5.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7):
+    resolution: {integrity: sha512-/9ZH17g4qsMV/41crJ4od5N463WgqiENJJiOil26AVpfRW1sK9E0s12txZMKCkOiyRxIvrWm005Q8cz0KkPC0g==}
     peerDependencies:
-      vike: '*'
+      vike: ^0.4.162
       vite: ^4.4 || ^5.0.2
       vite-plugin-vercel: '*'
     dependencies:
@@ -3619,7 +3619,7 @@ packages:
       nanoid: 5.0.6
       vike: 0.4.168(vite@5.2.7)
       vite: 5.2.7(@types/node@18.19.14)
-      vite-plugin-vercel: 4.0.2(@vite-plugin-vercel/vike@4.0.2)(vike@0.4.168)(vite@5.2.7)
+      vite-plugin-vercel: 4.0.2(@vite-plugin-vercel/vike@5.0.2)(vike@0.4.168)(vite@5.2.7)
     dev: true
 
   /@vitejs/plugin-react@4.2.1(vite@5.2.7):
@@ -4771,6 +4771,7 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+    requiresBuild: true
     dev: true
 
   /emoji-regex@9.2.2:
@@ -6136,6 +6137,7 @@ packages:
   /is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /is-generator-function@1.0.10:
@@ -9084,7 +9086,7 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-vercel@4.0.2(@vite-plugin-vercel/vike@4.0.2)(vike@0.4.168)(vite@5.2.7):
+  /vite-plugin-vercel@4.0.2(@vite-plugin-vercel/vike@5.0.2)(vike@0.4.168)(vite@5.2.7):
     resolution: {integrity: sha512-ECAX2UkNW1/Ws+qqM1h6Vuz4w+/0zFl3D1xkB54cCjddiNpZgxxjlzv+PU24Idsiwhy7jI/+hlbGOYho7qjzKg==}
     peerDependencies:
       '@vite-plugin-vercel/vike': 4.0.2
@@ -9099,7 +9101,7 @@ packages:
       '@brillout/libassert': 0.5.8
       '@vercel/build-utils': 7.9.1
       '@vercel/routing-utils': 3.1.0
-      '@vite-plugin-vercel/vike': 4.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7)
+      '@vite-plugin-vercel/vike': 5.0.2(vike@0.4.168)(vite-plugin-vercel@4.0.2)(vite@5.2.7)
       esbuild: 0.20.2
       eval: 0.1.8
       fast-glob: 3.3.2
