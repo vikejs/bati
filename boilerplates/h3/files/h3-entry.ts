@@ -186,9 +186,6 @@ async function startServer() {
       authRequired: false, // Controls whether authentication is required for all routes
       auth0Logout: true, // Uses Auth0 logout feature
       baseURL: `http://localhost:${port}`, // The URL where the application is served
-      clientID: process.env.CLIENT_ID, // The Client ID found in your Application settings
-      issuerBaseURL: process.env.ISSUER_BASE_URL, // The Domain as a secure URL found in your Application settings
-      secret: process.env.SECRET, // A long random string
       routes: {
         login: "/api/auth/login", // Custom login route, default is "/login"
         logout: "/api/auth/logout", // Custom logout route, default is "/logout"
