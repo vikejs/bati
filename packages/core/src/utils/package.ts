@@ -13,6 +13,7 @@ export interface PackageJsonScripts {
     preview?: string;
     lint?: string;
     format?: string;
+    check?: string;
   };
 }
 
@@ -28,6 +29,7 @@ export interface PackageJsonScriptOptions {
   preview?: PackageJsonScriptOption;
   lint?: PackageJsonScriptOption;
   format?: PackageJsonScriptOption;
+  check?: PackageJsonScriptOption;
 }
 
 function* deps(obj: PackageJsonDeps) {
@@ -85,6 +87,7 @@ const previousScripts: Required<PackageJsonScriptOptions> = {
   preview: { precedence: -Infinity },
   lint: { precedence: -Infinity },
   format: { precedence: -Infinity },
+  check: { precedence: -Infinity },
 };
 
 function warnScript(key: string, old: string, nnew: string) {
@@ -101,7 +104,7 @@ function warnScript(key: string, old: string, nnew: string) {
 }
 
 export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts: PackageJsonScriptOptions) {
-  const keys = ["dev", "build", "preview", "lint", "format"] as const;
+  const keys = ["dev", "build", "preview", "lint", "format", "check"] as const;
 
   for (const key of keys) {
     const prev = previousScripts[key]!;

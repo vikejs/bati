@@ -11,6 +11,10 @@ export default async function getPackageJson(props: TransformerProps) {
     format: {
       value: "biome format --write ./",
       precedence: 0
+    },
+    check: {
+      value: 'biome check --apply-unsafe ./src',
+      precedence: 0
     }
   });
 
