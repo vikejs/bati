@@ -5,17 +5,13 @@ export default async function getPackageJson(props: TransformerProps) {
 
   setScripts(packageJson, {
     lint: {
-      value: "biome lint --apply ./",
+      value: "biome check --apply-unsafe ./",
       precedence: 0
     },
     format: {
       value: "biome format --write ./",
       precedence: 0
     },
-    check: {
-      value: 'biome check --apply-unsafe ./src',
-      precedence: 0
-    }
   });
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
