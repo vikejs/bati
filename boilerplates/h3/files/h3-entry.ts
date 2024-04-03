@@ -235,11 +235,11 @@ async function startServer() {
     "/**",
     eventHandler(async (event) => {
       const pageContextInit = BATI.has("firebase-auth")
-        ? { urlOriginal: event.node.req.originalUrl || event.node.req.url! }
-        : {
+        ? {
             urlOriginal: event.node.req.originalUrl || event.node.req.url!,
             user: event.context.user,
-          };
+          }
+        : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
       const pageContext = await renderPage(pageContextInit);
       const response = pageContext.httpResponse;
 
