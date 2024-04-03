@@ -1,3 +1,3 @@
 # @batijs/core
 
-[bati](https://batijs.github.io) internal utils.
+[bati](https://batijs.dev) internal utils.
