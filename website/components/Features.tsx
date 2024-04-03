@@ -1,31 +1,22 @@
 import { categories, type Category, type CategoryLabels } from "@batijs/features";
 import type { FeatureLink } from "@batijs/features/src/index";
-import { debounce } from "@solid-primitives/scheduled";
 import { FormControl } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
 import { ShieldBadge } from "#components/ShieldBadge";
 import { StoreContext } from "#components/Store.js";
-import { createEffect, createMemo, createSignal, For, Match, Show, Switch, useContext } from "solid-js";
-import { Motion, Presence } from "solid-motionone";
+import { EnrichedTooltip } from "#components/Tooltip";
+import { createMemo, For, Match, Show, Switch, useContext } from "solid-js";
+import { Motion } from "solid-motionone";
 import type { Feature } from "../types";
 
 function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
   const { currentFeatures, selectFeature } = useContext(StoreContext);
-  const [hoveredFeature, setHoveredFeature] = createSignal<Feature | undefined>(undefined, { equals: () => false });
-  const setHoveredFeatureDebounced = debounce(setHoveredFeature, 300);
-
-  createEffect(() => {
-    const feature = hoveredFeature();
-    if (feature) {
-      setHoveredFeatureDebounced.clear();
-    }
-  });
 
   return (
     <div
       id="bati-features"
       role="tablist"
-      class="tabs tabs-lg tabs-boxed gap-x-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(14rem,_1fr))] grid-flow-dense"
+      class="tabs tabs-boxed gap-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] grid-flow-dense overflow-hidden bg-transparent p-1 mt-4"
     >
       <For each={props.categories}>
         {({ label, multiple }) => {
@@ -40,88 +31,62 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
               features={fs()}
               class="w-full sm:w-auto rounded-md bg-base-100"
             >
-              <div class="flex">
+              <div class="flex relative gap-x-2">
                 <div class="basis-1/4 w-full gap-y-2 pl-2">
                   <For each={fs()}>
                     {(feature) => (
                       <>
-                        <label
-                          class="group flex items-center cursor-pointer h-12 min-w-60 col-start-1"
-                          classList={{
-                            "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
-                          }}
-                          onMouseEnter={() => setHoveredFeature(feature)}
-                          onMouseLeave={() => setHoveredFeatureDebounced(undefined)}
+                        <EnrichedTooltip
+                          tip={<CombinedTooltip feature={feature} />}
+                          class={"w-full px-1.5"}
+                          placement="right"
+                          arrow={true}
+                          offset={0}
+                          tooltipClass="w-72 lg:w-96 text-sm p-0"
+                          disabled={feature.disabled}
                         >
-                          <div class="flex justify-center items-center pr-2.5">
-                            <input
-                              aria-describedby="details"
-                              type="checkbox"
-                              checked={inview() && feature.selected}
-                              classList={{
-                                "checkbox-success": Boolean(inview() && feature.selected),
-                                "border-solid": !(disabled() || feature.disabled),
-                                rounded: multiple,
-                                "rounded-full": !multiple,
-                              }}
-                              class="checkbox"
-                              disabled={disabled() || feature.disabled}
-                              onChange={() => {
-                                selectFeature(label as CategoryLabels, feature.flag, !feature.selected);
-                              }}
-                              onFocusIn={() => setHoveredFeature(feature)}
-                              onFocusOut={(e) =>
-                                e.target !== document.activeElement && setHoveredFeatureDebounced(undefined)
-                              }
-                            />
-                          </div>
-
-                          <div class="inline-flex gap-2 items-center w-full group">
-                            {feature.image && (
-                              <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.label} logo`} />
-                            )}
-                            <div class="inline-flex flex-col gap-0 leading-5">
-                              <span>{feature.label}</span>
-                              {feature.alt && <span class="text-xs">{feature.alt}</span>}
+                          <label
+                            class="group flex items-center cursor-pointer h-12 min-w-60 col-start-1"
+                            classList={{
+                              "opacity-50 cursor-not-allowed": disabled() || feature.disabled,
+                            }}
+                          >
+                            <div class="flex justify-center items-center pr-2.5">
+                              <input
+                                aria-describedby="details"
+                                type="checkbox"
+                                checked={inview() && feature.selected}
+                                classList={{
+                                  "checkbox-success": Boolean(inview() && feature.selected),
+                                  "border-solid": !(disabled() || feature.disabled),
+                                  rounded: multiple,
+                                  "rounded-full": !multiple,
+                                }}
+                                class="checkbox"
+                                disabled={disabled() || feature.disabled}
+                                onChange={() => {
+                                  selectFeature(label as CategoryLabels, feature.flag, !feature.selected);
+                                }}
+                              />
                             </div>
-                          </div>
 
-                          <Presence>
-                            <Show when={hoveredFeature() == feature}>
-                              <Motion.div
-                                initial={{ opacity: 0 }}
-                                exit={{ opacity: 0 }}
-                                class="w-0 h-0 border-transparent border-t-8 border-b-8 border-r-8 border-r-primary"
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.3, easing: "ease-in-out" }}
-                              ></Motion.div>
-                            </Show>
-                          </Presence>
-                        </label>
+                            <div class="inline-flex gap-2 items-center w-full group">
+                              {feature.image && (
+                                <img class="max-w-5 max-h-5" src={feature.image} alt={`${feature.label} logo`} />
+                              )}
+                              <div class="inline-flex flex-col gap-0 leading-5">
+                                <span>{feature.label}</span>
+                                {feature.alt && <span class="text-xs">{feature.alt}</span>}
+                              </div>
+                            </div>
+                          </label>
+                        </EnrichedTooltip>
                       </>
                     )}
                   </For>
                 </div>
-                <div class="basis-3/4 flex">
-                  <Presence exitBeforeEnter>
-                    <Show when={hoveredFeature()} fallback={<DetailsFallback />}>
-                      {(feature) => (
-                        <Motion.div
-                          initial={{ opacity: 0 }}
-                          exit={{ opacity: 0 }}
-                          class="flex-1 opacity-0"
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3, easing: "ease-in-out" }}
-                          onMouseEnter={() => setHoveredFeature(feature())}
-                          onMouseLeave={() => setHoveredFeatureDebounced(undefined)}
-                          onFocusIn={() => setHoveredFeature(feature())}
-                          onFocusOut={() => setHoveredFeatureDebounced(undefined)}
-                        >
-                          <CombinedTooltip feature={feature()}></CombinedTooltip>
-                        </Motion.div>
-                      )}
-                    </Show>
-                  </Presence>
+                <div class="basis-3/4 flex bg-base-100">
+                  <DetailsFallback />
                 </div>
               </div>
             </FormControl>
@@ -167,7 +132,7 @@ function CombinedTooltip(props: { feature: Feature }) {
   }
 
   return (
-    <div class="rounded-md relative border-2 border-primary h-full" role="tooltip" id="details">
+    <div class="rounded-md relative h-full" role="tooltip" id="details">
       <div class="px-3 pb-2 pt-1">
         <div class="flex items-baseline">
           <h2 class="text-primary text-lg font-bold">{props.feature.label}</h2>
@@ -211,11 +176,10 @@ function CombinedTooltip(props: { feature: Feature }) {
 function DetailsFallback() {
   return (
     <Motion.div
-      initial={{ opacity: 0 }}
       exit={{ opacity: 0 }}
-      class="flex-1 opacity-0"
+      class="flex-1"
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3, easing: "ease-in-out" }}
+      transition={{ duration: 0.2, easing: "ease-in-out" }}
     >
       It’s recommended to choose a frontend lib to kickstart a new Vike project, as they come with a wide range of
       integrations. You can at any time eject and take control over integration code so that it doesn’t get in your way.

@@ -20,20 +20,39 @@ export function FormControl(props: {
       <button
         type="button"
         role="tab"
-        class="tab row-auto btn font-normal border-0 h-32"
+        aria-selected={isSelected()}
+        class="group row-auto btn font-normal px-2 h-32 card items-start rounded-md"
         classList={{
-          "tab-active": isSelected(),
+          "btn-active border !border-primary": isSelected(),
+          "bg-base-100": !isSelected(),
         }}
         onclick={(e) => {
           setSelected(isSelected() ? "" : props.label);
         }}
       >
-        {props.label}
-        <br />
-        <For each={props.features}>{(feature) => feature.label}</For>
+        <div class="grid grid-cols-1 justify-items-start card-body p-0">
+          <div class="card-title">{props.label}</div>
+          <div class="flex flex-row flex-wrap gap-1 self-start">
+            <For each={props.features}>
+              {(feature) => (
+                <span
+                  class="badge rounded-md badge-lg gap-1"
+                  classList={{
+                    "badge-primary": feature.selected,
+                  }}
+                >
+                  <Show when={feature.image}>
+                    <img class="w-4 h-4" src={feature.image} />
+                  </Show>
+                  {feature.label}
+                </span>
+              )}
+            </For>
+          </div>
+        </div>
       </button>
       <Show when={isSelected()}>
-        <div role="tabpanel" class="tab-content row-auto bg-base-100 border-base-300 rounded-box p-6 col-span-full">
+        <div role="tabpanel" class="row-auto border bg-base-100 border-base-300 rounded-md p-6 col-span-full">
           {props.children}
         </div>
       </Show>
