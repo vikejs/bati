@@ -18,15 +18,15 @@ export default function Head() {
       <meta property="og:title" content="Bati" />
       <meta property="og:type" content="website" />
       <meta property="og:image" content="https://raw.githubusercontent.com/batijs/bati/main/doc/bati.png" />
-      <meta property="og:url" content="https://batijs.github.io" />
+      <meta property="og:url" content="https://batijs.dev" />
       <meta
         property="og:description"
         content="Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want."
       />
 
       <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content="batijs.github.io" />
-      <meta property="twitter:url" content="https://batijs.github.io" />
+      <meta property="twitter:domain" content="batijs.dev" />
+      <meta property="twitter:url" content="https://batijs.dev" />
       <meta name="twitter:title" content="Bati" />
       <meta
         name="twitter:description"
