@@ -56,6 +56,8 @@ jobs:
         if: github.event.action != 'closed'
         run: pnpm run build:pages
         working-directory: website
+        env:
+          BASE: /pr-preview/pr-${{ github.event.number }}/
 
       - uses: rossjrw/pr-preview-action@v1
         with:
