@@ -16,7 +16,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
     <div
       id="bati-features"
       role="tablist"
-      class="tabs tabs-boxed gap-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] grid-flow-dense overflow-hidden bg-transparent p-1 mt-4"
+      class="tabs tabs-boxed gap-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] grid-flow-dense bg-transparent p-1 mt-4"
     >
       <For each={props.categories}>
         {({ label, multiple }) => {
@@ -31,7 +31,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
               features={fs()}
               class="w-full sm:w-auto rounded-md bg-base-100"
             >
-              <div class="flex relative gap-x-2">
+              <div class="flex relative gap-x-4">
                 <div class="basis-1/4 w-full gap-y-2 pl-2">
                   <For each={fs()}>
                     {(feature) => (
@@ -41,7 +41,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
                           class={"w-full px-1.5"}
                           placement="right"
                           arrow={true}
-                          offset={0}
+                          offset={10}
                           tooltipClass="w-72 lg:w-96 text-sm p-0"
                           disabled={feature.disabled}
                         >
@@ -78,6 +78,13 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
                                 <span>{feature.label}</span>
                                 {feature.alt && <span class="text-xs">{feature.alt}</span>}
                               </div>
+                              <div class="flex-1"></div>
+                              {feature.spectrum === "beaten_path" && (
+                                <IconTrainTrack class="w-4 opacity-80"></IconTrainTrack>
+                              )}
+                              {feature.spectrum === "bleeding_edge" && (
+                                <IconAlembic class="w-4 opacity-80"></IconAlembic>
+                              )}
                             </div>
                           </label>
                         </EnrichedTooltip>
@@ -85,7 +92,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
                     )}
                   </For>
                 </div>
-                <div class="basis-3/4 flex bg-base-100">
+                <div class="basis-3/4">
                   <DetailsFallback />
                 </div>
               </div>

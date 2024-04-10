@@ -21,9 +21,9 @@ export function FormControl(props: {
         type="button"
         role="tab"
         aria-selected={isSelected()}
-        class="group row-auto btn font-normal px-2 h-32 card items-start rounded-md"
+        class="group row-auto btn font-normal px-2 h-32 card items-start rounded-md shadow hover:scale-105 hover:bg-base-100/40"
         classList={{
-          "btn-active border !border-primary": isSelected(),
+          "btn-active bg-base-100/40 outline !outline-primary outline-offset-2": isSelected(),
           "bg-base-100": !isSelected(),
         }}
         onclick={(e) => {
@@ -32,13 +32,13 @@ export function FormControl(props: {
       >
         <div class="grid grid-cols-1 justify-items-start card-body p-0">
           <div class="card-title">{props.label}</div>
-          <div class="flex flex-row flex-wrap gap-1 self-start">
+          <div class="flex flex-row flex-wrap self-start gap-1">
             <For each={props.features}>
               {(feature) => (
                 <span
-                  class="badge rounded-md badge-lg gap-1"
+                  class="badge badge-ghost rounded-md badge-lg gap-1"
                   classList={{
-                    "badge-primary": feature.selected,
+                    "!badge-primary": feature.selected,
                   }}
                 >
                   <Show when={feature.image}>
@@ -52,7 +52,7 @@ export function FormControl(props: {
         </div>
       </button>
       <Show when={isSelected()}>
-        <div role="tabpanel" class="row-auto border bg-base-100 border-base-300 rounded-md p-6 col-span-full">
+        <div role="tabpanel" class="mx-4 row-auto bg-base-100 rounded-md pl-2 pr-6 py-4 col-span-full shadow-inner">
           {props.children}
         </div>
       </Show>

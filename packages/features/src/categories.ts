@@ -1,6 +1,11 @@
 import { categoriesGroups } from "./groups.js";
 import type { Category } from "./types.js";
 
+// TODO: Implement new grouping. See https://whimsical.com/bati-wizard-SNJAhTbuJHFF5hDSXgkp2i
+//  1. Move groups definition to website directly.
+//     That way it's easier to write conditional dependencies and display logic (can leverage solid)
+//  2. Find a way to group Utilities in a usable manner
+
 export const categories = [
   {
     label: "Framework",
