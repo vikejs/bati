@@ -19,7 +19,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
       class="tabs tabs-boxed gap-4 box-border relative grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] grid-flow-dense bg-transparent p-1 mt-4"
     >
       <For each={props.categories}>
-        {({ label, multiple }) => {
+        {({ label, multiple, description }) => {
           const fs = createMemo(() => currentFeatures.filter((f) => f.category === label));
           const inview = createMemo(() => fs().some((x) => x.selected));
           const disabled = createMemo(() => fs().every((x) => x.disabled));
@@ -93,7 +93,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
                   </For>
                 </div>
                 <div class="basis-3/4">
-                  <DetailsFallback />
+                  <DetailsFallback description={description} />
                 </div>
               </div>
             </FormControl>
@@ -180,7 +180,7 @@ function CombinedTooltip(props: { feature: Feature }) {
   );
 }
 
-function DetailsFallback() {
+function DetailsFallback(props: { description?: string }) {
   return (
     <Motion.div
       exit={{ opacity: 0 }}
@@ -188,9 +188,7 @@ function DetailsFallback() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, easing: "ease-in-out" }}
     >
-      It’s recommended to choose a frontend lib to kickstart a new Vike project, as they come with a wide range of
-      integrations. You can at any time eject and take control over integration code so that it doesn’t get in your way.
-      That being said, you can also choose to
+      {props.description}
     </Motion.div>
   );
 }

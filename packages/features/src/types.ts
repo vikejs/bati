@@ -26,4 +26,5 @@ export interface Category {
   group: categoriesGroups;
   // like <select multiple/>
   multiple?: boolean;
+  description?: string;
 }
