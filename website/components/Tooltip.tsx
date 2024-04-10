@@ -1,7 +1,7 @@
-import { autoUpdate, flip, type Placement } from "@floating-ui/dom";
+import { autoUpdate, offset, size, type Middleware, type Placement, type ReferenceElement } from "@floating-ui/dom";
 import type { Side } from "@floating-ui/utils";
 import clsx from "clsx";
-import { createMemo, createSignal, onMount, Show, type JSX } from "solid-js";
+import { createEffect, createMemo, createSignal, onMount, Show, type JSX } from "solid-js";
 import { useFloating } from "../lib/floating-solid";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {
@@ -23,19 +23,36 @@ export function EnrichedTooltip(props: {
   offset?: number;
   arrow?: boolean;
   disabled?: boolean;
+  reference?: ReferenceElement;
 }) {
-  const [reference, setReference] = createSignal<HTMLElement>();
+  createEffect(() => {
+    if (props.reference) {
+      setReference(props.reference);
+    }
+  });
+
+  const [reference, setReference] = createSignal<ReferenceElement | undefined>(props.reference);
   const [floating, setFloating] = createSignal<HTMLElement>();
-  const middlewares = [
-    flip({
-      fallbackAxisSideDirection: "end",
+  const middlewares: Middleware[] = [
+    // flip({
+    //   fallbackAxisSideDirection: "end",
+    // }),
+    offset(({ rects }) => -rects.reference.width - (props.arrow ? 4 : 0)),
+    size({
+      apply({ elements, rects }) {
+        Object.assign(elements.floating.style, {
+          width: `${rects.reference.width + (props.arrow ? 4 : 0) + 1}px`,
+          minHeight: `${rects.reference.height}px`,
+          transition: "transform 300ms",
+        });
+      },
     }),
   ];
   const position = useFloating(reference, floating, {
     placement: props.placement,
     whileElementsMounted: autoUpdate,
     middleware: middlewares,
-    offset: props.offset,
+    // offset: props.offset,
   });
 
   const arrowPosition = {
@@ -66,7 +83,7 @@ export function EnrichedTooltip(props: {
       }}
     >
       <div
-        ref={setReference}
+        ref={(x) => !props.reference && setReference(x)}
         class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
       >
@@ -81,13 +98,13 @@ export function EnrichedTooltip(props: {
         <Show when={props.arrow}>
           <div class="flex items-center justify-center">
             <div
-              class={clsx("shadow-md bg-base-200 dark:bg-neutral w-2 h-2 rotate-45", arrowOffset[placement()])}
+              class={clsx("bg-base-200 w-2 h-2 rotate-45 border-l border-b border-neutral", arrowOffset[placement()])}
             ></div>
           </div>
         </Show>
         <div
           class={clsx(
-            "shadow-md bg-base-200 text-neutral dark:bg-neutral dark:text-neutral-content rounded-lg flex-row items-center",
+            "shadow shadow-base-300 backdrop-blur-md bg-base-200/30 dark:bg-neutral/70 rounded-md flex-row items-center",
             props.tooltipClass,
           )}
         >
