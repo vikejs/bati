@@ -184,7 +184,7 @@ function DetailsFallback(props: { description?: string }) {
   return (
     <Motion.div
       exit={{ opacity: 0 }}
-      class="flex-1"
+      class="flex-1 rounded-md shadow-inner shadow-base-300 bg-base-200 h-full py-2 px-3"
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, easing: "ease-in-out" }}
     >
