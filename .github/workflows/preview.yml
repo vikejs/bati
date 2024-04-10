@@ -50,7 +50,7 @@ jobs:
 
       - name: Build website
         if: github.event.action != 'closed'
-        run: pnpm run build
+        run: pnpm run build:pages
         working-directory: website
 
       - uses: rossjrw/pr-preview-action@v1
