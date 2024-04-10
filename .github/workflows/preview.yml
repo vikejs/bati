@@ -48,6 +48,10 @@ jobs:
         if: github.event.action != 'closed'
         run: pnpm install
 
+      - name: Build dependencies
+        if: github.event.action != 'closed'
+        run: pnpm run build
+
       - name: Build website
         if: github.event.action != 'closed'
         run: pnpm run build:pages
