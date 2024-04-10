@@ -31,7 +31,7 @@ function FeaturesGroup(props: { categories: ReadonlyArray<Category> }) {
               features={fs()}
               class="w-full sm:w-auto rounded-md bg-base-100"
             >
-              <div class="flex relative gap-x-4">
+              <div class="flex flex-col md:flex-row relative gap-x-4">
                 <div class="basis-1/4 w-full gap-y-2 pl-2">
                   <For each={fs()}>
                     {(feature) => (
