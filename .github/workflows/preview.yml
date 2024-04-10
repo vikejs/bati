@@ -63,3 +63,6 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: auto
+          token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
+          deploy-repository: batijs/batijs.github.io
+          custom-url: https://batijs.dev
