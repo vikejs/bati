@@ -34,9 +34,11 @@ function FeaturesGroup(props: Category) {
                   tip={<CombinedTooltip feature={feature} />}
                   class={"w-full px-1.5"}
                   placement="right-start"
-                  arrow={false}
-                  tooltipClass="text-sm p-0 w-full"
+                  arrow={true}
+                  tooltipClass="text-sm p-0 w-full border-l-2 border-neutral-300 dark:border-neutral-500 shadow-md shadow-base-300 backdrop-blur-md bg-base-300/30 dark:bg-neutral/70"
+                  arrowClass="shadow shadow-base-300 bg-neutral-300 dark:bg-neutral-500"
                   disabled={feature.disabled}
+                  withReference={true}
                   reference={reference()}
                 >
                   <label
@@ -190,7 +192,7 @@ function DetailsFallback(props: { description?: string; ref?: JSX.CustomAttribut
   return (
     <Motion.div
       exit={{ opacity: 0 }}
-      class="flex-1 rounded-md shadow-inner shadow-base-300 bg-base-200 h-full py-2 px-3"
+      class="flex-1 rounded-md shadow-inner shadow-base-300 bg-base-200 h-full py-2 px-3 ml-4 lg:ml-0"
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, easing: "ease-in-out" }}
       ref={props.ref}

@@ -1,4 +1,4 @@
-import { autoUpdate, offset, size, type Middleware, type Placement, type ReferenceElement } from "@floating-ui/dom";
+import { autoUpdate, flip, offset, size, type Placement, type ReferenceElement } from "@floating-ui/dom";
 import type { Side } from "@floating-ui/utils";
 import clsx from "clsx";
 import { createEffect, createMemo, createSignal, onMount, Show, type JSX } from "solid-js";
@@ -18,11 +18,13 @@ export function EnrichedTooltip(props: {
   children: JSX.Element;
   class?: string;
   tooltipClass?: string;
+  arrowClass?: string;
   tip: JSX.Element;
   placement: Placement;
   offset?: number;
   arrow?: boolean;
   disabled?: boolean;
+  withReference?: boolean;
   reference?: ReferenceElement;
 }) {
   createEffect(() => {
@@ -32,28 +34,42 @@ export function EnrichedTooltip(props: {
   });
 
   const [reference, setReference] = createSignal<ReferenceElement | undefined>(props.reference);
+  const [defaultReference, setDefaultReference] = createSignal<HTMLElement>();
   const [floating, setFloating] = createSignal<HTMLElement>();
-  const middlewares: Middleware[] = [
-    // flip({
-    //   fallbackAxisSideDirection: "end",
-    // }),
-    offset(({ rects }) => -rects.reference.width - (props.arrow ? 4 : 0)),
-    size({
-      apply({ elements, rects }) {
-        Object.assign(elements.floating.style, {
-          width: `${rects.reference.width + (props.arrow ? 4 : 0) + 1}px`,
-          minHeight: `${rects.reference.height}px`,
-          transition: "transform 300ms",
-        });
-      },
-    }),
-  ];
+  const [arrowEl, setArrow] = createSignal<HTMLElement>();
+
   const position = useFloating(reference, floating, {
     placement: props.placement,
     whileElementsMounted: autoUpdate,
-    middleware: middlewares,
-    // offset: props.offset,
+    middleware: props.withReference
+      ? [
+          offset(({ rects }) => -rects.reference.width - (props.arrow ? 4 : 0)),
+          size({
+            apply({ elements, rects }) {
+              Object.assign(elements.floating.style, {
+                width: `${rects.reference.width + (props.arrow ? 4 : 0) + 1}px`,
+                minHeight: `${rects.reference.height}px`,
+                transition: "transform 300ms",
+              });
+            },
+          }),
+        ]
+      : [
+          flip({
+            fallbackAxisSideDirection: "end",
+          }),
+        ],
+    offset: props.offset,
   });
+
+  const positionArrow =
+    props.arrow && props.withReference
+      ? useFloating(defaultReference, arrowEl, {
+          placement: props.placement.split("-")[0] as Side,
+          whileElementsMounted: autoUpdate,
+          middleware: [],
+        })
+      : undefined;
 
   const arrowPosition = {
     right: "",
@@ -71,6 +87,7 @@ export function EnrichedTooltip(props: {
 
   onMount(() => {
     position.update();
+    positionArrow?.update();
   });
 
   const placement = createMemo(() => position.placement.split("-")[0] as Side);
@@ -83,7 +100,10 @@ export function EnrichedTooltip(props: {
       }}
     >
       <div
-        ref={(x) => !props.reference && setReference(x)}
+        ref={(x) => {
+          setDefaultReference(x);
+          !props.reference && setReference(x);
+        }}
         class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
       >
@@ -96,20 +116,25 @@ export function EnrichedTooltip(props: {
         style={position.modal}
       >
         <Show when={props.arrow}>
-          <div class="flex items-center justify-center">
+          <div
+            class="flex items-center justify-center"
+            classList={{
+              "w-1 relative hidden lg:block": props.withReference,
+            }}
+          >
             <div
-              class={clsx("bg-base-200 w-2 h-2 rotate-45 border-l border-b border-neutral", arrowOffset[placement()])}
+              ref={setArrow}
+              class={clsx("w-2 h-2 rotate-45", props.arrowClass, arrowOffset[placement()])}
+              classList={{
+                absolute: props.withReference,
+              }}
+              style={{
+                top: positionArrow?.y ? `${positionArrow.y - 4}px` : undefined,
+              }}
             ></div>
           </div>
         </Show>
-        <div
-          class={clsx(
-            "shadow shadow-base-300 backdrop-blur-md bg-base-200/30 dark:bg-neutral/70 rounded-md flex-row items-center",
-            props.tooltipClass,
-          )}
-        >
-          {props.tip}
-        </div>
+        <div class={clsx("rounded-md flex-row items-center", props.tooltipClass)}>{props.tip}</div>
       </div>
     </div>
   );
