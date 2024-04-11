@@ -211,7 +211,7 @@ export const features = [
   // Server
   {
     category: "Server",
-    label: "H3",
+    label: "h3",
     flag: "h3",
     url: "https://github.com/unjs/h3",
     tagline: "Minimal H(TTP) framework built for high performance and portability",

@@ -1,0 +1,70 @@
+name: Deploy PR previews
+concurrency: preview-${{ github.ref }}
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+    paths:
+      - 'website/**'
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: pnpm/action-setup@v2
+        if: github.event.action != 'closed'
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        if: github.event.action != 'closed'
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        if: github.event.action != 'closed'
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        run: pnpm install
+
+      - name: Build dependencies
+        if: github.event.action != 'closed'
+        run: pnpm run build
+
+      - name: Build website
+        if: github.event.action != 'closed'
+        run: pnpm run build:pages
+        working-directory: website
+        env:
+          BASE: /pr-preview/pr-${{ github.event.number }}/
+
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./website/dist/client
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+          token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
+          deploy-repository: batijs/batijs.github.io
+          custom-url: batijs.dev
