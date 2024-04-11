@@ -2,9 +2,13 @@ name: Tests
 
 on:
   pull_request:
+    paths-ignore:
+      - 'website/**'
   push:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
     branches: [ "main" ]
+    paths-ignore:
+      - 'website/**'
 
 jobs:
   cache-and-install:
