@@ -195,9 +195,11 @@ async function startServer() {
    * @link {@see https://vike.dev}
    **/
   app.all("*", async (req: Request, res, next) => {
-    const pageContextInit = BATI.has("firebase-auth")
-      ? { urlOriginal: req.originalUrl, user: req.user }
-      : { urlOriginal: req.originalUrl };
+    const pageContextInit = BATI.has("auth0")
+      ? { urlOriginal: req.originalUrl, user: req.oidc.user }
+      : BATI.has("firebase-auth")
+        ? { urlOriginal: req.originalUrl, user: req.user }
+        : { urlOriginal: req.originalUrl };
 
     const pageContext = await renderPage(pageContextInit);
     const { httpResponse } = pageContext;

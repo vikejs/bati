@@ -11,7 +11,7 @@ import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
 import express from "express";
-import { auth, type ConfigParams } from "express-openid-connect";
+import { auth, type ConfigParams, type RequestContext, type ResponseContext } from "express-openid-connect";
 import { getAuth, type UserRecord } from "firebase-admin/auth";
 import {
   createApp,
@@ -22,6 +22,8 @@ import {
   getCookie,
   getResponseStatus,
   getResponseStatusText,
+  NodeIncomingMessage,
+  NodeServerResponse,
   readBody,
   setCookie,
   setResponseHeaders,
@@ -43,6 +45,13 @@ const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT || 3000;
+
+/*{ @if (it.BATI.has("auth0")) }*/
+interface NodeEventContext {
+  req: NodeIncomingMessage & { originalUrl?: string } & { oidc: RequestContext };
+  res: NodeServerResponse & { oidc: ResponseContext };
+}
+/*{ /if }*/
 
 /*{ @if (it.BATI.has("firebase-auth")) }*/
 declare module "h3" {
@@ -255,12 +264,18 @@ async function startServer() {
   router.use(
     "/**",
     eventHandler(async (event) => {
-      const pageContextInit = BATI.has("firebase-auth")
+      const pageContextInit = BATI.has("auth0")
         ? {
             urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-            user: event.context.user,
+            user: (event.node as NodeEventContext).req.oidc.user,
           }
-        : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
+        : BATI.has("firebase-auth")
+          ? {
+              urlOriginal: event.node.req.originalUrl || event.node.req.url!,
+              user: event.context.user,
+            }
+          : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
+
       const pageContext = await renderPage(pageContextInit);
       const response = pageContext.httpResponse;
 
