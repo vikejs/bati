@@ -19,7 +19,8 @@ function Preset(props: {
       placement="bottom"
       arrow={true}
       offset={12}
-      tooltipClass="text-center w-64 p-2 text-sm"
+      tooltipClass="text-center w-64 p-2 text-sm shadow-md bg-base-200 text-neutral dark:bg-neutral dark:text-neutral-content"
+      arrowClass="bg-base-200 dark:bg-neutral"
       disabled={props.disabled}
     >
       <button
