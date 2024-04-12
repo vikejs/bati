@@ -22,8 +22,6 @@ import {
   getCookie,
   getResponseStatus,
   getResponseStatusText,
-  NodeIncomingMessage,
-  NodeServerResponse,
   readBody,
   setCookie,
   setResponseHeaders,
@@ -47,13 +45,20 @@ const root = __dirname;
 const port = process.env.PORT || 3000;
 
 /*{ @if (it.BATI.has("auth0")) }*/
-interface NodeEventContext {
-  req: NodeIncomingMessage & { originalUrl?: string } & { oidc: RequestContext };
-  res: NodeServerResponse & { oidc: ResponseContext };
+// Make h3 aware of express-openid-connect overrides
+declare module "node:http" {
+  interface IncomingMessage {
+    oidc: RequestContext;
+  }
+
+  interface ServerResponse {
+    oidc: ResponseContext;
+  }
 }
 /*{ /if }*/
 
 /*{ @if (it.BATI.has("firebase-auth")) }*/
+// Add user type to h3 context
 declare module "h3" {
   interface H3EventContext {
     user: UserRecord | null;
@@ -267,7 +272,7 @@ async function startServer() {
       const pageContextInit = BATI.has("auth0")
         ? {
             urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-            user: (event.node as NodeEventContext).req.oidc.user,
+            user: event.node.req.oidc.user,
           }
         : BATI.has("firebase-auth")
           ? {
