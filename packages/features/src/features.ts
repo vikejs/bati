@@ -154,7 +154,18 @@ export const features = [
     image:
       "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjllbSIgaGVpZ2h0PSIxZW0iIHZpZXdCb3g9IjAgMCAyNTYgMjg1Ij48cGF0aCBkPSJNMjIwLjQxMiAwaC05Mi40MTVsMjguNTYyIDg5LjAwNmg5Mi40MTZsLTc0Ljc3IDUzLjA3N2wyOC41NyA4OS41MTFjNDguMTI4LTM1LjA2IDYzLjg1NC04OC4xMiA0Ni4yMDgtMTQyLjU4OEwyMjAuNDEzIDBaTTcuMDE4IDg5LjAwNmg5Mi40MTZMMTI3Ljk5NyAwSDM1LjU4OUw3LjAxOSA4OS4wMDZjLTE3LjY1NSA1NC40NjgtMS45MiAxMDcuNTI5IDQ2LjIwNyAxNDIuNTg4bDI4LjU2My04OS41MWwtNzQuNzctNTMuMDc4Wm00Ni4yMDggMTQyLjU4OGw3NC43NyA1Mi45N2w3NC43Ny01Mi45N2wtNzQuNzctNTMuODQ3bC03NC43NyA1My44NDdaIi8+PC9zdmc+",
     url: "https://auth0.com",
-    disabled: true,
+    tagline: "Secure access for everyone. But not just anyone.",
+    repo: "auth0/express-openid-connect",
+    links: [
+      {
+        label: "Quickstarts",
+        href: "https://auth0.com/docs/quickstart/webapp/express/interactive",
+      },
+      {
+        label: "Docs",
+        href: "https://auth0.com/docs",
+      },
+    ],
   },
   {
     category: "Auth",
