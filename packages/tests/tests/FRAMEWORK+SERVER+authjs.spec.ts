@@ -3,22 +3,37 @@ import { describeBati } from "@batijs/tests-utils";
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3"],
-  process.env.FIREBASE_TEST ? ["authjs", "firebase-auth"] : ["authjs"],
+  ["authjs", ...(process.env.AUTH0_TEST ? ["auth0"] : []), ...(process.env.FIREBASE_TEST ? ["firebase-auth"] : [])],
   "eslint",
 ];
 
-await describeBati(({ test, expect, fetch, context }) => {
+await describeBati(({ test, expect, fetch, testMatch }) => {
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  test("auth/signin", async () => {
-    const url = context.flags.includes("firebase-auth") ? "/login" : "/api/auth/signin";
-    const res = await fetch(url);
-    expect(res.status).toBe(200);
-    expect(await res.text()).not.toContain('{"is404":true}');
+  testMatch<typeof matrix>("auth/signin", {
+    authjs: async () => {
+      const res = await fetch("/api/auth/signin");
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
+    },
+    auth0: async () => {
+      const res = await fetch("/api/auth/login", {
+        redirect: "manual",
+      });
+      expect(res.status).toBe(302);
+      expect(res.statusText).toBe("Found");
+      expect(res.headers.get("location")).toContain("auth0.com/authorize");
+      expect(await res.text()).not.toContain('{"is404":true}');
+    },
+    "firebase-auth": async () => {
+      const res = await fetch("/login");
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
+    },
   });
 
   test("telefunc", async () => {
