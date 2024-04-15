@@ -1,4 +1,3 @@
-import * as console from "node:console";
 import { type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {

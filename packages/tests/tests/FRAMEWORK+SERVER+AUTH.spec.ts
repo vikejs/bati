@@ -5,8 +5,8 @@ export const matrix = [
   ["express", "h3"],
   [
     "authjs",
-    ...(process.env.AUTH0_TEST ? (["auth0"] as const) : []),
-    ...(process.env.FIREBASE_TEST ? (["firebase-auth"] as const) : []),
+    ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : []),
+    ...(process.env.TEST_FIREBASE_ACCOUNT ? (["firebase-auth"] as const) : []),
   ],
   "eslint",
 ] as const;

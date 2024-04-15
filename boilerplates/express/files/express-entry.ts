@@ -19,7 +19,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
 startServer();
 
@@ -36,7 +37,7 @@ async function startServer() {
     const viteDevMiddleware = (
       await vite.createServer({
         root,
-        server: { middlewareMode: true },
+        server: { middlewareMode: true, hmr: { port: hmrPort } },
       })
     ).middlewares;
     app.use(viteDevMiddleware);
@@ -131,7 +132,7 @@ async function startServer() {
     const config: ConfigParams = {
       authRequired: false, // Controls whether authentication is required for all routes
       auth0Logout: true, // Uses Auth0 logout feature
-      baseURL: process.env.BASE_URL ?? `http://localhost:${port}`, // The URL where the application is served
+      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
       routes: {
         login: "/api/auth/login", // Custom login route, default is : "/login"
         logout: "/api/auth/logout", // Custom logout route, default is : "/logout"
@@ -216,6 +217,6 @@ async function startServer() {
   });
 
   app.listen(port, () => {
-    console.log("Server listening on http://localhost:3000");
+    console.log(`Server listening on http://localhost:${port}`);
   });
 }

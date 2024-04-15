@@ -19,7 +19,6 @@ export default async function getReadme(props: TransformerProps) {
 // .env
 SECRET=<random string>
 CLIENT_ID=<Client ID>
-CLIENT_SECRET=<Client Secret>
 ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
 \`\`\`
 

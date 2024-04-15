@@ -10,6 +10,7 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
 
   const context: GlobalContext = {
     port: 0,
+    port_1: 0,
     server: undefined,
     flags: basename(process.cwd()).split("--"),
   };
