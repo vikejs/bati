@@ -11,8 +11,8 @@ import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
 import express from "express";
-import { auth, type ConfigParams, type RequestContext, type ResponseContext } from "express-openid-connect";
-import { getAuth, type UserRecord } from "firebase-admin/auth";
+import { auth, type ConfigParams } from "express-openid-connect";
+import { getAuth } from "firebase-admin/auth";
 import {
   createApp,
   createRouter,
@@ -44,28 +44,6 @@ const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
-
-/*{ @if (it.BATI.has("auth0")) }*/
-// Make h3 aware of express-openid-connect overrides
-declare module "node:http" {
-  interface IncomingMessage {
-    oidc: RequestContext;
-  }
-
-  interface ServerResponse {
-    oidc: ResponseContext;
-  }
-}
-/*{ /if }*/
-
-/*{ @if (it.BATI.has("firebase-auth")) }*/
-// Add user type to h3 context
-declare module "h3" {
-  interface H3EventContext {
-    user: UserRecord | null;
-  }
-}
-/*{ /if }*/
 
 startServer();
 

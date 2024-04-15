@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { transformAndFormat, type Transformer, type VikeMeta } from "@batijs/core";
+import { mergeDts } from "./merge-dts.js";
 import { queue } from "./queue.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
@@ -71,7 +72,7 @@ export default async function main(options: { source: string | string[]; dist: s
   const sources = Array.isArray(options.source) ? options.source : [options.source];
   const targets = new Set<string>();
 
-  const simpleCopyQ = queue();
+  const priorityQ = queue();
   const transformAndWriteQ = queue();
 
   for (const source of sources) {
@@ -83,7 +84,7 @@ export default async function main(options: { source: string | string[]; dist: s
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
-Please report this issue to https://github.com/magne4000/bati`,
+Please report this issue to https://github.com/batijs/bati`,
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         transformAndWriteQ.add(async () => {
@@ -109,14 +110,26 @@ Please report this issue to https://github.com/magne4000/bati`,
           }
         });
       } else {
-        transformAndWriteQ.add(async () => {
+        priorityQ.add(async () => {
           const code = await readFile(p, { encoding: "utf-8" });
-          const fileContent = await transformAndFormat(code, meta, {
-            filepath: path.relative(source, p),
+          const filepath = path.relative(source, p);
+
+          let fileContent = await transformAndFormat(code, meta, {
+            filepath,
           });
 
+          if (p.endsWith(".d.ts") && targets.has(target)) {
+            // Merging .d.ts files here
+            fileContent = await mergeDts({
+              fileContent,
+              target,
+              meta,
+              filepath,
+            });
+          }
+
           if (fileContent) {
-            await safeWriteFile(target, fileContent);
+            await safeWriteFile(target, fileContent.trimStart());
             targets.add(target);
           }
         });
@@ -124,8 +137,8 @@ Please report this issue to https://github.com/magne4000/bati`,
     }
   }
 
-  // files that do not need transformation are handled first, so that subsequent transform steps
+  // files that do not need merging are handled first, so that subsequent transform steps
   // are sure to have necessary files on filesystem.
-  await simpleCopyQ.run();
+  await priorityQ.run();
   await transformAndWriteQ.run();
 }

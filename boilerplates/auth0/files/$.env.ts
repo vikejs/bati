@@ -3,12 +3,6 @@ import { appendToEnv, randomBytes, type TransformerProps } from "@batijs/core";
 export default async function getEnv(props: TransformerProps) {
   const auth0ClientId = process.env.TEST_AUTH0_CLIENT_ID;
   const auth0BaseUrl = process.env.TEST_AUTH0_ISSUER_BASE_URL;
-  if (!auth0ClientId || !auth0BaseUrl) {
-    if (process.env.CI) {
-      throw new Error("Must define TEST_AUTH0_CLIENT_ID and TEST_AUTH0_ISSUER_BASE_URL");
-    }
-    console.warn("No TEST_AUTH0_CLIENT_ID or TEST_AUTH0_ISSUER_BASE_URL defined");
-  }
 
   let envContent = await props.readfile?.();
 
