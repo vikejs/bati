@@ -1,6 +1,4 @@
-import { type TransformerProps } from "@batijs/core";
-
-export default async function getPackageJson(props: TransformerProps) {
+export default async function getPackageJson() {
   const firebaseAccountStringified = process.env.TEST_FIREBASE_ACCOUNT;
 
   return firebaseAccountStringified
