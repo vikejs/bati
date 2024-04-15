@@ -6,4 +6,5 @@ export * from "./utils/env.js";
 export * from "./which.js";
 export * from "./print.js";
 export * from "./markdown.js";
+export * from "./random.js";
 export type * from "./types.js";

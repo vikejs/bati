@@ -199,10 +199,11 @@ async function startServer() {
     const config: ConfigParams = {
       authRequired: false, // Controls whether authentication is required for all routes
       auth0Logout: true, // Uses Auth0 logout feature
-      baseURL: `http://localhost:${port}`, // The URL where the application is served
+      baseURL: process.env.BASE_URL ?? `http://localhost:${port}`, // The URL where the application is served
       routes: {
         login: "/api/auth/login", // Custom login route, default is "/login"
         logout: "/api/auth/logout", // Custom logout route, default is "/logout"
+        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
       },
     };
 
