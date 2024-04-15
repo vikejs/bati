@@ -7,7 +7,7 @@ import Layout from "../layouts/LayoutDefault";
 export default {
   Layout,
   Head,
-  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  /*{ @if (it.BATI.has("auth0") || it.BATI.has("firebase-auth")) }*/
   passToClient: ["user"],
   /*{ /if }*/
   // <title>
