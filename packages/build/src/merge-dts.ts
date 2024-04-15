@@ -30,7 +30,7 @@ export async function mergeDts({
     currentAst.imports[imp.local] = imp;
   }
 
-  const index = (previousAst.$ast as RootNode).body.findIndex(
+  const index = (currentAst.$ast as RootNode).body.findIndex(
     (node: Node) => node.type === "ExportNamedDeclaration" || node.type === "ExportDefaultDeclaration",
   );
 
