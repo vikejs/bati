@@ -137,8 +137,6 @@ Please report this issue to https://github.com/batijs/bati`,
     }
   }
 
-  // files that do not need merging are handled first, so that subsequent transform steps
-  // are sure to have necessary files on filesystem.
   await priorityQ.run();
   await transformAndWriteQ.run();
 }
