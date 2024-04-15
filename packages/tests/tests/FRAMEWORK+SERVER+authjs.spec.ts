@@ -3,9 +3,13 @@ import { describeBati } from "@batijs/tests-utils";
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3"],
-  ["authjs", ...(process.env.AUTH0_TEST ? ["auth0"] : []), ...(process.env.FIREBASE_TEST ? ["firebase-auth"] : [])],
+  [
+    "authjs",
+    ...(process.env.AUTH0_TEST ? (["auth0"] as const) : []),
+    ...(process.env.FIREBASE_TEST ? (["firebase-auth"] as const) : []),
+  ],
   "eslint",
-];
+] as const;
 
 await describeBati(({ test, expect, fetch, testMatch }) => {
   test("home", async () => {

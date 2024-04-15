@@ -48,6 +48,19 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  boilerplates/auth0:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.14
+
   boilerplates/compiled:
     dependencies:
       '@batijs/core':
