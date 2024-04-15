@@ -31,8 +31,8 @@ ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
 > - \`CLIENT_SECRET\`
 
 > [!NOTE]
-> Login route is \`http://localhost:3000/login\`.
-> Logout route is \`http://localhost:3000/logout\`.
+> Login route is \`http://localhost:3000/api/auth/login\`.
+> Logout route is \`http://localhost:3000/api/auth/logout\`.
 
 - Read more [Auth0 Express SDK Quickstarts: Login](https://auth0.com/docs/quickstart/webapp/express)
 - Read more [Auth0 Express SDK Quickstarts: Add Login to your Express App](https://auth0.com/docs/quickstart/webapp/express/interactive)
