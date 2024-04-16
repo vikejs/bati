@@ -2,7 +2,8 @@
 import { deleteApp, getApp, getApps, initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth, inMemoryPersistence } from "firebase/auth";
 
-// Your web app's Firebase configuration
+// TODO: Fill your web app's Firebase configuration
+// See https://firebase.google.com/docs/web/learn-more?hl=fr#config-object
 const firebaseConfig = {
   apiKey: "",
   authDomain: "",

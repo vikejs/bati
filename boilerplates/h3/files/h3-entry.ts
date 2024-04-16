@@ -120,7 +120,7 @@ async function startServer() {
             const user = await auth.getUser(decodedIdToken.sub);
             event.context.user = user;
           } catch (error) {
-            console.error("verifySessionCookie:", error);
+            console.debug("verifySessionCookie:", error);
             event.context.user = null;
           }
         }
