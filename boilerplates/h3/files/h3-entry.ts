@@ -1,3 +1,5 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,7 +10,9 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
-import { getAuth, type UserRecord } from "firebase-admin/auth";
+import express from "express";
+import { auth, type ConfigParams } from "express-openid-connect";
+import { getAuth } from "firebase-admin/auth";
 import {
   createApp,
   createRouter,
@@ -38,14 +42,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
-
-/*{ @if (it.BATI.has("firebase-auth")) }*/
-declare module "h3" {
-  interface H3EventContext {
-    user: UserRecord | null;
-  }
-}
-/*{ /if }*/
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
 startServer();
 
@@ -62,7 +60,7 @@ async function startServer() {
     const viteDevMiddleware = (
       await vite.createServer({
         root,
-        server: { middlewareMode: true },
+        server: { middlewareMode: true, hmr: { port: hmrPort } },
       })
     ).middlewares;
     app.use(fromNodeMiddleware(viteDevMiddleware));
@@ -122,7 +120,7 @@ async function startServer() {
             const user = await auth.getUser(decodedIdToken.sub);
             event.context.user = user;
           } catch (error) {
-            console.error("verifySessionCookie:", error);
+            console.debug("verifySessionCookie:", error);
             event.context.user = null;
           }
         }
@@ -174,6 +172,23 @@ async function startServer() {
         return "Logged Out";
       }),
     );
+  }
+
+  if (BATI.has("auth0")) {
+    const config: ConfigParams = {
+      authRequired: false, // Controls whether authentication is required for all routes
+      auth0Logout: true, // Uses Auth0 logout feature
+      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
+      routes: {
+        login: "/api/auth/login", // Custom login route, default is "/login"
+        logout: "/api/auth/logout", // Custom logout route, default is "/logout"
+        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
+      },
+    };
+
+    const expressApp = express();
+
+    app.use(fromNodeMiddleware(expressApp.use(auth(config))));
   }
 
   if (BATI.has("trpc")) {
@@ -234,12 +249,18 @@ async function startServer() {
   router.use(
     "/**",
     eventHandler(async (event) => {
-      const pageContextInit = BATI.has("firebase-auth")
+      const pageContextInit = BATI.has("auth0")
         ? {
             urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-            user: event.context.user,
+            user: event.node.req.oidc.user,
           }
-        : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
+        : BATI.has("firebase-auth")
+          ? {
+              urlOriginal: event.node.req.originalUrl || event.node.req.url!,
+              user: event.context.user,
+            }
+          : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
+
       const pageContext = await renderPage(pageContextInit);
       const response = pageContext.httpResponse;
 
@@ -252,9 +273,9 @@ async function startServer() {
 
   app.use(router);
 
-  const server = createServer(toNodeListener(app)).listen(process.env.PORT || 3000);
+  const server = createServer(toNodeListener(app)).listen(port);
 
   server.on("listening", () => {
-    console.log(`Server listening on http://localhost:${process.env.PORT || 3000}`);
+    console.log(`Server listening on http://localhost:${port}`);
   });
 }

@@ -4,6 +4,7 @@ import type { TestOptions } from "vitest";
 
 export interface GlobalContext {
   port: number;
+  port_1: number;
   server: ExecaChildProcess<string> | undefined;
   flags: string[];
 }

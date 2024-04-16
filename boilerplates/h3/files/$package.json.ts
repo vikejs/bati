@@ -21,7 +21,10 @@ export default async function getPackageJson(props: TransformerProps) {
   });
 
   return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
-    devDependencies: ["@types/serve-static"],
+    devDependencies: [
+      "@types/serve-static",
+      ...(props.meta.BATI.has("auth0") ? ([ "@types/express", "dotenv"] as const) : [])
+    ],
     dependencies: [
       "@hattip/polyfills",
       "h3",
@@ -30,6 +33,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "vike",
       "vite",
       ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(props.meta.BATI.has("auth0") ? ([ "express", "express-openid-connect"] as const) : [])
     ],
   });
 }

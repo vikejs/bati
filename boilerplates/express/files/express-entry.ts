@@ -1,3 +1,5 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
@@ -7,6 +9,7 @@ import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import express, { type Request } from "express";
+import { auth, type ConfigParams } from "express-openid-connect";
 import { getAuth } from "firebase-admin/auth";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
@@ -16,6 +19,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
 startServer();
 
@@ -32,7 +37,7 @@ async function startServer() {
     const viteDevMiddleware = (
       await vite.createServer({
         root,
-        server: { middlewareMode: true },
+        server: { middlewareMode: true, hmr: { port: hmrPort } },
       })
     ).middlewares;
     app.use(viteDevMiddleware);
@@ -88,7 +93,7 @@ async function startServer() {
         const user = await auth.getUser(decodedIdToken.sub);
         req.user = user;
       } catch (error) {
-        console.error("verifySessionCookie:", error);
+        console.debug("verifySessionCookie:", error);
         req.user = null;
       }
 
@@ -121,6 +126,21 @@ async function startServer() {
       res.clearCookie("__session");
       res.end();
     });
+  }
+
+  if (BATI.has("auth0")) {
+    const config: ConfigParams = {
+      authRequired: false, // Controls whether authentication is required for all routes
+      auth0Logout: true, // Uses Auth0 logout feature
+      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
+      routes: {
+        login: "/api/auth/login", // Custom login route, default is : "/login"
+        logout: "/api/auth/logout", // Custom logout route, default is : "/logout"
+        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
+      },
+    };
+
+    app.use(auth(config));
   }
 
   if (BATI.has("trpc")) {
@@ -177,24 +197,26 @@ async function startServer() {
    * @link {@see https://vike.dev}
    **/
   app.all("*", async (req: Request, res, next) => {
-    const pageContextInit = BATI.has("firebase-auth")
-      ? { urlOriginal: req.originalUrl, user: req.user }
-      : { urlOriginal: req.originalUrl };
+    const pageContextInit = BATI.has("auth0")
+      ? { urlOriginal: req.originalUrl, user: req.oidc.user }
+      : BATI.has("firebase-auth")
+        ? { urlOriginal: req.originalUrl, user: req.user }
+        : { urlOriginal: req.originalUrl };
 
     const pageContext = await renderPage(pageContextInit);
-    const { httpResponse } = pageContext
+    const { httpResponse } = pageContext;
 
     if (!httpResponse) {
-      return next()
+      return next();
     } else {
       const { statusCode, headers } = httpResponse;
-      headers.forEach(([name, value]) => res.setHeader(name, value))
-      res.status(statusCode)
+      headers.forEach(([name, value]) => res.setHeader(name, value));
+      res.status(statusCode);
       httpResponse.pipe(res);
     }
   });
 
-  app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000, () => {
-    console.log("Server listening on http://localhost:3000");
+  app.listen(port, () => {
+    console.log(`Server listening on http://localhost:${port}`);
   });
 }

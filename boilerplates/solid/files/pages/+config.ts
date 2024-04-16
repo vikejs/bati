@@ -8,7 +8,7 @@ export default {
   Layout,
   Head,
   // <title>
-  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  /*{ @if (it.BATI.has("auth0") || it.BATI.has("firebase-auth")) }*/
   passToClient: ["user"],
   /*{ /if }*/
   title: "My Vike App",

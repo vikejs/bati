@@ -1,10 +1,11 @@
 import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
 import { bunExists, execa, npmCli } from "@batijs/tests-utils";
+import dotenv from "dotenv";
 import pLimit from "p-limit";
 import packageJson from "../package.json";
 import { execLocalBati } from "./exec-bati.js";
@@ -184,11 +185,19 @@ function isVerdaccioRunning() {
   });
 }
 
+function loadDotEnvTest() {
+  dotenv.config({
+    path: resolve(__dirname, "..", "..", "..", ".env.test"),
+  });
+}
+
 async function main(context: GlobalContext) {
   await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
+
+  loadDotEnvTest();
 
   // load all test files matrices
   const testFiles = await Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath)));
