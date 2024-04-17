@@ -10,8 +10,8 @@ import { createMemo, createSignal, Show, useContext } from "solid-js";
 
 // avoid removing import when trying to optimize them
 // https://github.com/solidjs/solid/discussions/845
-const _copy = copy;
-const _flip = flip;
+copy;
+flip;
 
 export function Widget(props: { theme?: string; widget: boolean }) {
   const { selectedFeaturesFlags, rules } = useContext(StoreContext);

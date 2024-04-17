@@ -37,12 +37,6 @@
     }
   },
   "exports": {
-    "./pages/todo/TodoList.telefunc": {
-      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
-    },
-    "./pages/todo/TodoList": {
-      "types": "./dist/types/pages/todo/TodoList.d.ts"
-    },
     "./pages/todo/+Page": {
       "types": "./dist/types/pages/todo/+Page.d.ts"
     },
@@ -51,16 +45,16 @@
     },
     "./pages/todo/+onBeforeRender": {
       "types": "./dist/types/pages/todo/+onBeforeRender.d.ts"
+    },
+    "./pages/todo/TodoList.telefunc": {
+      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+    },
+    "./pages/todo/TodoList": {
+      "types": "./dist/types/pages/todo/TodoList.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "pages/todo/TodoList.telefunc": [
-        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
-      ],
-      "pages/todo/TodoList": [
-        "./dist/types/pages/todo/TodoList.d.ts"
-      ],
       "pages/todo/+Page": [
         "./dist/types/pages/todo/+Page.d.ts"
       ],
@@ -69,6 +63,12 @@
       ],
       "pages/todo/+onBeforeRender": [
         "./dist/types/pages/todo/+onBeforeRender.d.ts"
+      ],
+      "pages/todo/TodoList.telefunc": [
+        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+      ],
+      "pages/todo/TodoList": [
+        "./dist/types/pages/todo/TodoList.d.ts"
       ]
     }
   }

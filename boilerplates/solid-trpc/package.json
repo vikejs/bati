@@ -39,9 +39,6 @@
     }
   },
   "exports": {
-    "./pages/todo-trpc/TodoList": {
-      "types": "./dist/types/pages/todo-trpc/TodoList.d.ts"
-    },
     "./pages/todo-trpc/+Page": {
       "types": "./dist/types/pages/todo-trpc/+Page.d.ts"
     },
@@ -50,13 +47,13 @@
     },
     "./pages/todo-trpc/+onBeforeRender": {
       "types": "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+    },
+    "./pages/todo-trpc/TodoList": {
+      "types": "./dist/types/pages/todo-trpc/TodoList.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "pages/todo-trpc/TodoList": [
-        "./dist/types/pages/todo-trpc/TodoList.d.ts"
-      ],
       "pages/todo-trpc/+Page": [
         "./dist/types/pages/todo-trpc/+Page.d.ts"
       ],
@@ -65,6 +62,9 @@
       ],
       "pages/todo-trpc/+onBeforeRender": [
         "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
+      ],
+      "pages/todo-trpc/TodoList": [
+        "./dist/types/pages/todo-trpc/TodoList.d.ts"
       ]
     }
   }

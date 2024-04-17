@@ -7,22 +7,22 @@ export default async function getPackageJson(props: TransformerProps) {
     setScripts(packageJson, {
       lint: {
         value: "eslint --ext .js,.jsx,.ts,.tsx,.vue .",
-        precedence: 20
-      }
+        precedence: 20,
+      },
     });
 
-    addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
       devDependencies: ["eslint-plugin-vue"],
     });
   }
 
   if (props.meta.BATI.has("google-analytics")) {
-    addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
       dependencies: ["vue-gtag"],
     });
   }
 
-  return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["vite"],
     dependencies: [
       "@vitejs/plugin-vue",

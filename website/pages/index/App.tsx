@@ -16,12 +16,7 @@ export default function App() {
         </div>
       </div>
       <div class="fixed top-0 right-0">
-        <a
-          href="https://github.com/batijs/bati"
-          class="group"
-          title="Github"
-          target="_blank"
-        >
+        <a href="https://github.com/batijs/bati" class="group" title="Github" target="_blank">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"
@@ -29,10 +24,7 @@ export default function App() {
             viewBox="0 0 250 250"
             class="fill-base-100 transition-all group-hover:scale-110"
           >
-            <path
-              d="M0 0l115 115h15l12 27 108 108V0z"
-              class="fill-neutral-800 dark:fill-neutral-200"
-            />
+            <path d="M0 0l115 115h15l12 27 108 108V0z" class="fill-neutral-800 dark:fill-neutral-200" />
             <path
               class="octo-arm"
               d="M128 109c-15-9-9-19-9-19 3-7 2-11 2-11-1-7 3-2 3-2 4 5 2 11 2 11-3 10 5 15 9 16"
@@ -47,11 +39,7 @@ export default function App() {
       </div>
       <footer class="footer footer-center p-4 bg-base-200 text-base-content fixed bottom-0 z-10">
         <div class="flex">
-          <a
-            href="https://www.flaticon.com/free-icons/wall"
-            target="_blank"
-            title="wall icons"
-          >
+          <a href="https://www.flaticon.com/free-icons/wall" target="_blank" title="wall icons">
             Wall icons created by Freepik - Flaticon
           </a>
         </div>

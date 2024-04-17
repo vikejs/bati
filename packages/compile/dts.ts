@@ -79,7 +79,7 @@ export async function buildTypes() {
 
   if (emittedFiles && emittedFiles.length) {
     const distTypes = path.join(process.cwd(), "dist", "types");
-    const relFiles = emittedFiles.map((f) => path.relative(distTypes, f).replace(/\\/g, '/'));
+    const relFiles = emittedFiles.map((f) => path.relative(distTypes, f).replace(/\\/g, "/"));
 
     const packageJsonTypes = relFiles.reduce(
       (acc, cur) => {

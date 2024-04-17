@@ -32,11 +32,11 @@
   },
   "typesVersions": {
     "*": {
-      "trpc/server": [
-        "./dist/types/trpc/server.d.ts"
-      ],
       "trpc/client": [
         "./dist/types/trpc/client.d.ts"
+      ],
+      "trpc/server": [
+        "./dist/types/trpc/server.d.ts"
       ],
       "trpc/vite-plugin": [
         "./dist/types/trpc/vite-plugin.d.ts"
@@ -44,11 +44,11 @@
     }
   },
   "exports": {
-    "./trpc/server": {
-      "types": "./dist/types/trpc/server.d.ts"
-    },
     "./trpc/client": {
       "types": "./dist/types/trpc/client.d.ts"
+    },
+    "./trpc/server": {
+      "types": "./dist/types/trpc/server.d.ts"
     },
     "./trpc/vite-plugin": {
       "types": "./dist/types/trpc/vite-plugin.d.ts"
