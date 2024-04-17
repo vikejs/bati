@@ -11,7 +11,7 @@ on:
       - 'website/**'
 
 jobs:
-  cache-and-install:
+  build-and-tests:
     runs-on: ${{ matrix.os }}
 
     services:

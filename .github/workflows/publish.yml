@@ -20,7 +20,7 @@ jobs:
 #          GITHUB_CONTEXT: ${{ toJSON(github) }}
 #        run: echo "$GITHUB_CONTEXT"
 
-  build:
+  build-and-publish:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 

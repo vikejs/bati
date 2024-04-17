@@ -7,13 +7,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  cache-and-install:
-    runs-on: ${{ matrix.os }}
+  lint-and-check-types:
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node: ["18", "20"]
-        os: [ubuntu-latest]
       fail-fast: false
 
     steps:
