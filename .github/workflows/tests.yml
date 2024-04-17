@@ -97,7 +97,12 @@ jobs:
         run: pnpm run release:local
 
       - name: Run check types
+        if: matrix.os == 'ubuntu-latest'
         run: pnpm run check-types
+
+      - name: Run lint
+        if: matrix.os == 'ubuntu-latest'
+        run: pnpm run lint
 
       - name: Run tests
         run: pnpm run test
