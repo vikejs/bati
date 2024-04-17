@@ -1,6 +1,5 @@
 import { assert, test } from "vitest";
-import type { PackageJsonDeps } from "../../src/index.js";
-import { addDependency } from "../../src/index.js";
+import { addDependency, type PackageJsonDeps } from "../../src/index.js";
 
 // Tests that new dependencies are added to packageJson when keys parameter contains valid keys from scopedPackageJson dependencies/devDependencies.
 test("test_add_dependency_with_valid_keys", () => {
@@ -54,7 +53,7 @@ test("test_add_dependency_with_invalid_keys", () => {
   assert.throws(() =>
     addDependency(packageJson, scopedPackageJson, {
       dependencies: ["invalid_key"] as any,
-    })
+    }),
   );
 });
 

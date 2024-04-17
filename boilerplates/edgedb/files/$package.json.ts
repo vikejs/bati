@@ -6,7 +6,7 @@ export default async function getPackageJson(props: TransformerProps) {
   packageJson.scripts["edgedb:generate-queries"] = "@edgedb/generate queries";
   packageJson.scripts["edgedb:generate-edgeql-js"] = "@edgedb/generate edgeql-js";
 
-  return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@edgedb/generate"],
     dependencies: ["edgedb"],
   });

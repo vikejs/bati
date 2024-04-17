@@ -1,5 +1,5 @@
 import { createMemo, createSignal, For, Show, type JSX } from "solid-js";
-import type { Feature } from "../types";
+import type { Feature } from "../types.js";
 
 // TODO move to context
 const [selected, setSelected] = createSignal("");
@@ -26,7 +26,7 @@ export function FormControl(props: {
           "btn-active bg-base-100/40 outline !outline-primary outline-offset-2": isSelected(),
           "bg-base-100": !isSelected(),
         }}
-        onclick={(e) => {
+        onclick={() => {
           setSelected(isSelected() ? "" : props.label);
         }}
       >

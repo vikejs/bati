@@ -1,5 +1,4 @@
-import { categories, type Category, type CategoryLabels } from "@batijs/features";
-import type { FeatureLink } from "@batijs/features/src/index";
+import { categories, type Category, type CategoryLabels, type FeatureLink } from "@batijs/features";
 import type { VirtualElement } from "@floating-ui/dom";
 import { FormControl } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
@@ -8,7 +7,7 @@ import { StoreContext } from "#components/Store.js";
 import { EnrichedTooltip } from "#components/Tooltip";
 import { createMemo, createSignal, For, Match, Show, Switch, useContext, type JSX } from "solid-js";
 import { Motion } from "solid-motionone";
-import type { Feature } from "../types";
+import type { Feature } from "../types.js";
 
 function FeaturesGroup(props: Category) {
   const { currentFeatures, selectFeature } = useContext(StoreContext);

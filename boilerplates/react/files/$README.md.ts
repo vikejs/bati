@@ -4,11 +4,13 @@ export default async function getReadme(props: TransformerProps) {
   const content = await loadReadme(props);
 
   //language=Markdown
-  const about = `
+  const about =
+    `
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
 
 ### \`/pages/+config.ts\`
-Such `+` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
+Such ` +
+    ` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
 - A default [\`<Layout>\` component](https://vike.dev/Layout) (that wraps your [\`<Page>\` components](https://vike.dev/Page)).
 - A default [\`title\`](https://vike.dev/head).
 - Default [\`<head>\` tags](https://vike.dev/head).

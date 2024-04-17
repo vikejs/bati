@@ -1,7 +1,7 @@
 import { StoreContext } from "#components/Store.js";
 import clsx from "clsx";
 import { createMemo, useContext } from "solid-js";
-import type { Feature } from "../types";
+import type { Feature } from "../types.js";
 
 const lf = new Intl.ListFormat("en");
 
