@@ -4,7 +4,7 @@ export default defineConfig({
   entry: { index: "./src/index.ts", rules: "./src/rules/index.ts" },
   platform: "neutral",
   format: "esm",
-  target: "es2020",
+  target: "es2021",
   bundle: true,
   clean: true,
   dts: true,

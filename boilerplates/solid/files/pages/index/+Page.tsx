@@ -1,4 +1,4 @@
-import { Counter } from "./Counter";
+import { Counter } from "./Counter.js";
 
 export default function Page() {
   return (

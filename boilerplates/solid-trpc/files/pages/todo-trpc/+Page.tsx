@@ -1,6 +1,6 @@
 import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import { createSignal } from "solid-js";
-import { TodoList } from "./TodoList";
+import { TodoList } from "./TodoList.js";
 
 export default function Page(props: { initialTodoItems: TodoItem[] }) {
   return (

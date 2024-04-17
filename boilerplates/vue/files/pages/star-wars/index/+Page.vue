@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { useData } from "vike-vue/useData";
-import type { Data } from "./+data";
+import type { Data } from "./+data.js";
 
 const movies = useData<Data>();
 </script>

@@ -1,5 +1,5 @@
 import { createMemo, createSignal, For, Show, type JSX } from "solid-js";
-import type { Feature } from "../types";
+import type { Feature } from "../types.js";
 
 // TODO move to context
 const [selected, setSelected] = createSignal("");

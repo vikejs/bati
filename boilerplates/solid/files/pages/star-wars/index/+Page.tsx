@@ -1,6 +1,6 @@
 import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
-import type { Data } from "./+data";
+import type { Data } from "./+data.js";
 
 export default function Page() {
   const movies = useData<Data>();

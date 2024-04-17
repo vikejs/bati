@@ -1,5 +1,5 @@
 import { useData } from "vike-solid/useData";
-import type { Data } from "./+data";
+import type { Data } from "./+data.js";
 
 export default function Page() {
   const movie = useData<Data>();

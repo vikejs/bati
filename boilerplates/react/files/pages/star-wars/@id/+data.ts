@@ -2,7 +2,7 @@
 
 import fetch from "cross-fetch";
 import type { PageContextServer } from "vike/types";
-import type { MovieDetails } from "../types";
+import type { MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 

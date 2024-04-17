@@ -1,8 +1,8 @@
 import faviconUrl from "#assets/logo.svg";
 import vikeSolid from "vike-solid/config";
 import type { Config } from "vike/types";
-import Head from "../layouts/Head";
-import Layout from "../layouts/LayoutDefault";
+import Head from "../layouts/Head.js";
+import Layout from "../layouts/LayoutDefault.js";
 
 // Default config (can be overriden by pages)
 export default {
