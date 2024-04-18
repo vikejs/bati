@@ -10,7 +10,31 @@ export default async function getPackageJson(props: TransformerProps) {
     },
   });
 
+  if (props.meta.BATI.has("prettier")) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["eslint-plugin-prettier"],
+    });
+  }
+
+  if (props.meta.BATI.has("react")) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["eslint-plugin-react"],
+    });
+  }
+
+  if (props.meta.BATI.has("vue")) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["eslint-plugin-vue", "vue-eslint-parser"],
+    });
+  }
+
+  if (props.meta.BATI.has("solid")) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["eslint-plugin-solid"],
+    });
+  }
+
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["eslint", "@typescript-eslint/parser", "@typescript-eslint/eslint-plugin"],
+    devDependencies: ["eslint", "@eslint/js", "typescript-eslint"],
   });
 }
