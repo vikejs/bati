@@ -1,0 +1,47 @@
+{
+  "name": "@batijs/hono",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@hono/node-server": "^1.11.0",
+    "@hono/vite-dev-server": "^0.11.1",
+    "@types/node": "^18.19.14",
+    "hono": "^4.2.5",
+    "tsx": "^4.7.2",
+    "vike": "^0.4.168",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "hono"
+    }
+  },
+  "exports": {
+    "./hono-entry": {
+      "types": "./dist/types/hono-entry.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "hono-entry": [
+        "./dist/types/hono-entry.d.ts"
+      ]
+    }
+  }
+}
