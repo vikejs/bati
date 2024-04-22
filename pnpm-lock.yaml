@@ -372,6 +372,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@auth/core':
+        specifier: ^0.29.0
+        version: 0.29.0
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -393,6 +396,9 @@ importers:
       vike:
         specifier: ^0.4.168
         version: 0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike-authjs:
+        specifier: ^0.1.5
+        version: 0.1.5(@auth/core@0.29.0)
       vite:
         specifier: ^5.2.8
         version: 5.2.11(@types/node@18.19.31)
@@ -1400,6 +1406,20 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@auth/core@0.29.0':
+    resolution: {integrity: sha512-MdfEjU6WRjUnPG1+XeBWrTIlAsLZU6V0imCIqVDDDPxLI6UZWldXVqAA2EsDazGofV78jqiCLHaN85mJITDqdg==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
 
   '@auth/core@0.30.0':
     resolution: {integrity: sha512-8AE4m/nk+4EIiVCJwxZAsJeAQuzpEC8M8768mmKVn60CGDdupKQkVhxbRlm5Qh7eNRCoFFME+0DvtaX2aXrYaA==}
@@ -6347,6 +6367,16 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@auth/core@0.29.0':
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.4
+      oauth4webapi: 2.10.4
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
 
   '@auth/core@0.30.0':
     dependencies:
@@ -11616,6 +11646,10 @@ snapshots:
   validate-html-nesting@1.2.2: {}
 
   vary@1.1.2: {}
+
+  vike-authjs@0.1.5(@auth/core@0.29.0):
+    dependencies:
+      '@auth/core': 0.29.0
 
   vike-authjs@0.1.5(@auth/core@0.30.0):
     dependencies:

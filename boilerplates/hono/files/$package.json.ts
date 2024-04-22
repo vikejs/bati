@@ -22,6 +22,13 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@hono/vite-dev-server", "@types/node"],
-    dependencies: ["@hono/node-server", "hono", "tsx", "vite", "vike"],
+    dependencies: [
+      "@hono/node-server",
+      "hono",
+      "tsx",
+      "vite",
+      "vike",
+      ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+    ],
   });
 }
