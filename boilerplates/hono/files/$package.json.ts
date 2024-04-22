@@ -21,7 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
   });
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@hono/vite-dev-server"],
+    devDependencies: ["@hono/vite-dev-server", "@types/node"],
     dependencies: ["@hono/node-server", "hono", "tsx", "vite", "vike"],
   });
 }
