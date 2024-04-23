@@ -1,6 +1,8 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
+import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
 import { VikeAuth } from "vike-authjs";
@@ -58,6 +60,24 @@ if (BATI.has("authjs")) {
       request: c.req.raw,
     }),
   );
+}
+
+if (BATI.has("trpc")) {
+  /**
+   * tRPC route
+   *
+   * @link {@see https://trpc.io/docs/server/adapters}
+   **/
+  app.use("/api/trpc/*", (c) => {
+    return fetchRequestHandler({
+      endpoint: "/api/trpc",
+      req: c.req.raw,
+      router: appRouter,
+      createContext({ req, resHeaders }): FetchCreateContextFnOptions {
+        return { req, resHeaders };
+      },
+    });
+  });
 }
 
 app.all("*", async (c, next) => {
