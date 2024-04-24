@@ -5,6 +5,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
+import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
@@ -77,6 +78,28 @@ if (BATI.has("trpc")) {
         return { req, resHeaders };
       },
     });
+  });
+}
+
+if (BATI.has("telefunc")) {
+  /**
+   * Telefunc route
+   *
+   * @link {@see https://telefunc.com}
+   **/
+  app.post("/_telefunc", async (c) => {
+    const httpResponse = await telefunc({
+      url: c.req.url.toString(),
+      method: c.req.method,
+      body: await c.req.text(),
+      context: c,
+    });
+    const { body, statusCode, contentType } = httpResponse;
+
+    c.status(statusCode);
+    c.header("Content-Type", contentType);
+
+    return c.body(body);
   });
 }
 
