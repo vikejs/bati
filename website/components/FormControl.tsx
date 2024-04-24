@@ -1,4 +1,4 @@
-import type { Category } from "@batijs/features";
+import type { Category, CategoryLabels } from "@batijs/features";
 import { StoreContext } from "#components/Store";
 import { createMemo, createSignal, For, Show, untrack, useContext, type JSX } from "solid-js";
 
@@ -11,7 +11,7 @@ export function FormControl(props: {
   classList?: JSX.CustomAttributes<HTMLFieldSetElement>["classList"];
   style?: string;
 }) {
-  const { currentFeatures } = useContext(StoreContext);
+  const { currentFeatures, selectFeature } = useContext(StoreContext);
   const [modalRef, setModalRef] = createSignal<HTMLDialogElement>();
 
   function toggleInert() {
@@ -49,7 +49,7 @@ export function FormControl(props: {
           checked
           tabIndex={-1}
         />
-        <div class="tab-content bg-base-100 border-base-300 rounded-md px-6 h-80">
+        <div class="tab-content bg-base-100 border-base-300 rounded-md px-6 h-[22rem]">
           <div class="">
             <For each={props.categories}>
               {(category) => {
@@ -58,20 +58,25 @@ export function FormControl(props: {
                 return (
                   <div class="flex flex-col items-baseline">
                     <div class="divider divider-start">{category.label}</div>
-                    <div class="flex flex-row items-baseline flex-wrap gap-2">
+                    <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (
-                          <span
-                            class="badge badge-ghost rounded-md badge-lg gap-1 justify-self-center text-nowrap"
+                          <button
+                            type="button"
+                            class="btn btn-sm rounded-md text-nowrap"
+                            disabled={feature.disabled}
                             classList={{
-                              "!badge-primary": feature.selected,
+                              "btn-primary btn-active": feature.selected,
+                            }}
+                            onClick={() => {
+                              selectFeature(category.label as CategoryLabels, feature.flag, !feature.selected);
                             }}
                           >
                             <Show when={feature.image}>
                               <img class="w-4 h-4" src={feature.image} />
                             </Show>
                             {feature.label}
-                          </span>
+                          </button>
                         )}
                       </For>
                     </div>
