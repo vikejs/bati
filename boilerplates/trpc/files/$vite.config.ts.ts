@@ -6,7 +6,6 @@ export default async function getViteConfig(props: TransformerProps) {
   addVitePlugin(mod, {
     from: "./trpc/vite-plugin",
     constructor: "trpc",
-    index: props.meta.BATI.has("hono") ? 0 : undefined,
   });
 
   return mod.generate().code;
