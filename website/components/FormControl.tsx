@@ -1,4 +1,5 @@
 import type { Category, CategoryLabels } from "@batijs/features";
+import Messages from "#components/Messages";
 import { StoreContext } from "#components/Store";
 import { EnrichedTooltip } from "#components/Tooltip";
 import { createMemo, createSignal, For, Show, untrack, useContext, type JSX } from "solid-js";
@@ -12,7 +13,7 @@ export function FormControl(props: {
   classList?: JSX.CustomAttributes<HTMLFieldSetElement>["classList"];
   style?: string;
 }) {
-  const { currentFeatures, selectFeature } = useContext(StoreContext);
+  const { currentFeatures, selectFeature, rules } = useContext(StoreContext);
   const [modalRef, setModalRef] = createSignal<HTMLDialogElement>();
 
   function toggleInert() {
@@ -50,7 +51,7 @@ export function FormControl(props: {
           checked
           tabIndex={-1}
         />
-        <div class="tab-content bg-base-100 border-base-300 rounded-md px-6 h-[22rem]">
+        <div class="tab-content bg-base-100 border-base-300 rounded-md px-5 h-[22rem]">
           <div class="">
             <For each={props.categories}>
               {(category) => {
@@ -58,7 +59,7 @@ export function FormControl(props: {
 
                 return (
                   <div class="flex flex-col items-baseline">
-                    <div class="divider divider-start">{category.label}</div>
+                    <div class="divider divider-start font-semibold">{category.label}</div>
                     <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (
@@ -123,6 +124,11 @@ export function FormControl(props: {
       <dialog ref={setModalRef} class="modal" inert onClose={toggleInert}>
         <div class="modal-box w-11/12 max-w-5xl">
           <h3 class="font-bold text-xl">{props.label}</h3>
+          <Show when={rules().size > 0}>
+            <div class="flex flex-col gap-2 leading-6 rounded-md mt-4">
+              <Messages error={rules().error} warning={rules().warning} info={rules().info} />
+            </div>
+          </Show>
           <div>{props.children}</div>
           <div class="modal-action">
             <form method="dialog">

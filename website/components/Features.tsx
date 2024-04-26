@@ -46,7 +46,7 @@ function CategoryGroup(props: Category) {
 
   return (
     <>
-      <div class="divider divider-start">{props.label}</div>
+      <div class="divider divider-start font-semibold">{props.label}</div>
       <div class="flex flex-col lg:flex-row relative">
         <div class="basis-1/4 w-full gap-y-2">
           <For each={fs()}>
