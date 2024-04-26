@@ -44,20 +44,20 @@ export default function Presets() {
       <Preset title="Plain Vike" features={[]} description="Simple app with Plain Vike" />
       <Preset
         title="Frontend"
-        features={["Framework", "CSS", "Linter"]}
+        features={["UI Framework", "CSS", "Linter"]}
         description="Frontend app with a Framework and Tailwind CSS"
       />
       <Preset
         title="Full-stack"
-        features={["Framework", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]}
+        features={["UI Framework", "Data fetching", "Auth", "Database", "CSS", "Server", "Linter"]}
         description="Full-stack app with RPC (like server actions), Auth, Database and Server"
       />
       <Preset
         title="Next.js"
-        features={["react", "Auth", "RPC", "Server", "vercel", "Linter"]}
+        features={["react", "Auth", "Data fetching", "Server", "vercel", "Linter"]}
         description="Next.js like app with RPC (like server actions) and Vercel"
       />
-      <Preset title="E-commerce" features={["Framework"]} disabled={true} description="" />
+      <Preset title="E-commerce" features={["UI Framework"]} disabled={true} description="" />
     </div>
   );
 }

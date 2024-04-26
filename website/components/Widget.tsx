@@ -36,7 +36,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       data-theme={props.theme}
       class="flex flex-col bg-base-300 p-6 rounded-xl shadow-2xl font-sans bati-widget"
       classList={{
-        "w-4/5": !props.widget,
+        "w-11/12": !props.widget,
       }}
     >
       <div class="mb-2 w-full">

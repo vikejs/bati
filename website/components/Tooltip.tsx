@@ -120,6 +120,7 @@ export function EnrichedTooltip(props: {
             class="flex items-center justify-center"
             classList={{
               "w-1 relative hidden lg:block": props.withReference,
+              invisible: props.disabled,
             }}
           >
             <div
@@ -134,7 +135,14 @@ export function EnrichedTooltip(props: {
             ></div>
           </div>
         </Show>
-        <div class={clsx("rounded-md flex-row items-center", props.tooltipClass)}>{props.tip}</div>
+        <div
+          class={clsx("rounded-md flex-row items-center", props.tooltipClass)}
+          classList={{
+            invisible: props.disabled,
+          }}
+        >
+          {props.tip}
+        </div>
       </div>
     </div>
   );

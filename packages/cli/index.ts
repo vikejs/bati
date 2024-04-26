@@ -4,7 +4,7 @@ import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
 import { withIcon, type VikeMeta } from "@batijs/core";
-import { flags as coreFlags, features, type CategoryLabels, type Feature, type Flags } from "@batijs/features";
+import { cliFlags, features, type CategoryLabels, type Feature, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { defineCommand, runMain, type ArgsDef, type CommandDef, type ParsedArgs } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
@@ -232,7 +232,7 @@ async function run() {
       version: packageJson.version,
       description: packageJson.description,
     },
-    args: Object.assign({}, defaultDef, ...coreFlags.map((k) => toArg(k, findDescription(k)))) as Args,
+    args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findDescription(k)))) as Args,
     async run({ args }) {
       await checkArguments(args);
 
