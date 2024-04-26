@@ -211,7 +211,7 @@ export const features = [
 
   // RPC
   {
-    category: "RPC",
+    category: "Data fetching",
     label: "Telefunc",
     flag: "telefunc",
     image:
@@ -221,7 +221,7 @@ export const features = [
     repo: "brillout/telefunc",
   },
   {
-    category: "RPC",
+    category: "Data fetching",
     label: "tRPC",
     flag: "trpc",
     image:

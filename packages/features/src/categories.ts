@@ -27,7 +27,7 @@ They showcase their respective recommended usage and how they integrate with Vit
 Requires to also select a Server of your choosing.`,
   },
   {
-    label: "RPC",
+    label: "Data fetching",
     group: categoriesGroups.Data,
     description: `Data fetching libraries to help you interact with your backend.
 Selecting one of those usually requires you to also choose a Server.`,
