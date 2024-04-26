@@ -45,7 +45,7 @@ export function FormControl(props: {
       >
         <input
           type="radio"
-          class="tab tab-active font-semibold cursor-default"
+          class="tab tab-active text-xl font-semibold cursor-default"
           aria-label={props.label}
           checked
           tabIndex={-1}
@@ -122,6 +122,7 @@ export function FormControl(props: {
       </div>
       <dialog ref={setModalRef} class="modal" inert onClose={toggleInert}>
         <div class="modal-box w-11/12 max-w-5xl">
+          <h3 class="font-bold text-xl">{props.label}</h3>
           <div>{props.children}</div>
           <div class="modal-action">
             <form method="dialog">

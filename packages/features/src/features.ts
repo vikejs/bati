@@ -21,10 +21,6 @@ export const features = [
         label: "FAQ",
         href: "https://vike.dev/faq",
       },
-      {
-        label: "Examples",
-        href: "https://github.com/vikejs/vike/tree/main/examples",
-      },
     ],
     invisibleCli: true,
     readonly: true,
