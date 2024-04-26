@@ -1,5 +1,6 @@
 import type { Category, CategoryLabels } from "@batijs/features";
 import { StoreContext } from "#components/Store";
+import { EnrichedTooltip } from "#components/Tooltip";
 import { createMemo, createSignal, For, Show, untrack, useContext, type JSX } from "solid-js";
 
 export function FormControl(props: {
@@ -61,22 +62,38 @@ export function FormControl(props: {
                     <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (
-                          <button
-                            type="button"
-                            class="btn btn-sm rounded-md text-nowrap"
-                            disabled={feature.disabled}
-                            classList={{
-                              "btn-primary btn-active": feature.selected,
-                            }}
-                            onClick={() => {
-                              selectFeature(category.label as CategoryLabels, feature.flag, !feature.selected);
-                            }}
+                          <EnrichedTooltip
+                            tip={
+                              "Vike cannot be disabled. It is the foundation that allows all others tools to work cohesively"
+                            }
+                            placement="right"
+                            arrow={true}
+                            offset={8}
+                            tooltipClass="text-center w-64 p-2 text-sm shadow-md bg-primary text-primary-content"
+                            arrowClass="bg-primary"
+                            disabled={feature.flag !== "vike"}
                           >
-                            <Show when={feature.image}>
-                              <img class="w-4 h-4" src={feature.image} />
-                            </Show>
-                            {feature.label}
-                          </button>
+                            <button
+                              type="button"
+                              class="btn btn-sm rounded-md text-nowrap"
+                              disabled={feature.disabled}
+                              classList={{
+                                "!btn-primary !btn-active": feature.selected,
+                              }}
+                              onClick={() => {
+                                if (feature.readonly) {
+                                  return;
+                                }
+                                if (feature.disabled) return;
+                                selectFeature(category.label as CategoryLabels, feature.flag, !feature.selected);
+                              }}
+                            >
+                              <Show when={feature.image}>
+                                <img class="w-4 h-4" src={feature.image} />
+                              </Show>
+                              {feature.label}
+                            </button>
+                          </EnrichedTooltip>
                         )}
                       </For>
                     </div>

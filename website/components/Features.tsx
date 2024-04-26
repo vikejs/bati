@@ -110,7 +110,7 @@ function FeatureGroup(props: {
               "rounded-full": !props.category.multiple,
             }}
             class="checkbox"
-            disabled={props.feature.disabled}
+            disabled={props.feature.disabled || props.feature.readonly}
             onChange={() => {
               selectFeature(props.category.label as CategoryLabels, props.feature.flag, !props.feature.selected);
             }}

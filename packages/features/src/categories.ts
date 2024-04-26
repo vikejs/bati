@@ -3,7 +3,12 @@ import type { Category } from "./types.js";
 
 export const categories = [
   {
-    label: "Framework",
+    label: "Frontend Framework",
+    group: categoriesGroups.Frontend,
+    description: `Flexible, robust, community-driven, and fast Vite-based frontend framework.`,
+  },
+  {
+    label: "UI Framework",
     group: categoriesGroups.Frontend,
     description: `It’s recommended to choose a frontend lib to kickstart a new Vike project,
 as they each come with a wide range of integrations. You can at any time eject and take control over integration code
