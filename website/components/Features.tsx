@@ -1,6 +1,6 @@
 import { categories, categoriesGroups, type Category, type CategoryLabels, type FeatureLink } from "@batijs/features";
 import type { VirtualElement } from "@floating-ui/dom";
-import { FormControl } from "#components/FormControl.js";
+import { FormControl, setDoNotCollapseTabContent } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
 import { ShieldBadge } from "#components/ShieldBadge";
 import { StoreContext } from "#components/Store.js";
@@ -13,8 +13,19 @@ export default function Features() {
   return (
     <div
       id="bati-features"
-      class="grid grid-cols-1 lg:grid-cols-2 grid-flow-dense gap-4 box-border relative bg-transparent mt-4"
+      class="grid grid-cols-1 lg:grid-cols-2 grid-flow-dense items-start justify-start gap-x-4 box-border relative bg-transparent mt-4"
     >
+      <div class="form-control absolute -top-10 right-0">
+        <label class="cursor-pointer label">
+          <span class="label-text">Do not collapse tab content</span>
+          <input
+            type="checkbox"
+            class="toggle toggle-accent"
+            checked
+            onChange={(e) => setDoNotCollapseTabContent(e.currentTarget.checked)}
+          />
+        </label>
+      </div>
       <For each={Object.values(categoriesGroups)}>
         {(group) => {
           const currentCategories = createMemo(() => categories.filter((c) => c.group === group));
