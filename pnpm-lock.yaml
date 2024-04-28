@@ -378,6 +378,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/firebase-auth':
+        specifier: workspace:*
+        version: link:../firebase-auth
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
@@ -393,6 +396,9 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      firebase-admin:
+        specifier: ^12.1.0
+        version: 12.1.0
       hono:
         specifier: ^4.2.5
         version: 4.3.2

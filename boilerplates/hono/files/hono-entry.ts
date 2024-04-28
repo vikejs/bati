@@ -1,10 +1,13 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { getAuth } from "firebase-admin/auth";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
@@ -63,6 +66,50 @@ if (BATI.has("authjs")) {
   );
 }
 
+if (BATI.has("firebase-auth")) {
+  app.use(async (c, next) => {
+    const sessionCookie: string = getCookie(c, "__session") || "";
+    if (sessionCookie) {
+      const auth = getAuth(firebaseAdmin);
+      try {
+        const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
+        const user = await auth.getUser(decodedIdToken.sub);
+        c.set("user", user);
+      } catch (error) {
+        console.debug("verifySessionCookie:", error);
+        c.set("user", null);
+      }
+    }
+    await next();
+  });
+
+  app.post("/api/sessionLogin", async (c) => {
+    const body = await c.req.json();
+    const idToken: string = body.idToken || "";
+
+    let expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days. The auth.createSessionCookie() function of Firebase expects time to be specified in miliseconds.
+
+    const auth = getAuth(firebaseAdmin);
+    try {
+      const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
+      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+
+      expiresIn = 60 * 60 * 24 * 5; // 5 days. The setCookie() function of Hono expects time to be specified in seconds.
+      setCookie(c, "__session", sessionCookie, options);
+
+      return c.json({ status: "success" }, 200);
+    } catch (error) {
+      console.error("createSessionCookie failed :", error);
+      return c.text("Unathorized", 401);
+    }
+  });
+
+  app.post("/api/sessionLogout", (c) => {
+    deleteCookie(c, "__session");
+    return c.text("Logged Out", 200);
+  });
+}
+
 if (BATI.has("trpc")) {
   /**
    * tRPC route
@@ -104,9 +151,14 @@ if (BATI.has("telefunc")) {
 }
 
 app.all("*", async (c, next) => {
-  const pageContextInit = {
-    urlOriginal: c.req.url,
-  };
+  const pageContextInit = BATI.has("firebase-auth")
+    ? {
+        urlOriginal: c.req.url,
+        user: c.get("user"),
+      }
+    : {
+        urlOriginal: c.req.url,
+      };
   const pageContext = await renderPage(pageContextInit);
   const { httpResponse } = pageContext;
   if (!httpResponse) {
