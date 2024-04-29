@@ -12,12 +12,10 @@
     "pnpm"
   ],
   "postUpdateOptions": ["pnpmDedupe"],
-  // Exceptions
   "packageRules": [
-    // h3 1.10.0 has some typing issues
     {
-      "matchPackageNames": ["h3"],
-      "allowedVersions": "!/1\.10\.0/"
+      "matchPackageNames": ["vite-plugin-vercel", "@vite-plugin-vercel/vike"],
+      "groupName": "vite-plugin-vercel"
     }
   ]
 }
