@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Adapted from https://github.com/sweepline/eslint-plugin-unused-imports
 
 import tslint from "@typescript-eslint/eslint-plugin";
@@ -5,36 +6,24 @@ import type { ESLint, Linter } from "eslint";
 // @ts-ignore
 import ruleComposer from "eslint-rule-composer";
 
-const commaFilter = { filter: (token: { value: string }) => token.value === "," };
+const makePredicate =
+  (isImport: boolean, addFixer: any) =>
+  (problem: any, { sourceCode }: any) => {
+    const { parent } =
+      problem.node ??
+      // typescript-eslint >= 7.8 sets a range instead of a node
+      sourceCode.getNodeByRangeIndex(sourceCode.getIndexFromLoc(problem.loc.start));
+    return parent
+      ? /^Import(|Default|Namespace)Specifier$/.test(parent.type) == isImport &&
+          Object.assign(problem, addFixer?.(parent, sourceCode))
+      : problem; // If parent is null just let the composed rule handle it
+  };
+
+const commaFilter = { filter: (token: any) => token.value === "," };
 const includeCommentsFilter = { includeComments: true };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function unusedImportsPredicate(problem: any, context: any) {
-  const { sourceCode } = context;
-
-  const { node } = problem;
-  const { parent } = node;
-
-  // If parent is null just let the composed rule handle it
-  if (parent == null) {
-    return problem;
-  }
-
-  // Only handle these 3 cases.
-  switch (parent.type) {
-    case "ImportSpecifier":
-    case "ImportDefaultSpecifier":
-    case "ImportNamespaceSpecifier":
-      break;
-    default:
-      return false;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  problem.fix = (fixer: any) => {
-    if (!parent) {
-      return null;
-    }
+const unusedImportsPredicate = makePredicate(true, (parent: any, sourceCode: any) => ({
+  fix(fixer: any) {
     const grandParent = parent.parent;
 
     if (!grandParent) {
@@ -63,18 +52,18 @@ function unusedImportsPredicate(problem: any, context: any) {
     }
 
     // Default export and a single normal left, ex. "import default, { package1 } from 'module';"
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (grandParent.specifiers.filter((specifier: any) => specifier.type === "ImportSpecifier").length === 1) {
       const start = sourceCode.getTokenBefore(parent, commaFilter);
-      const end = sourceCode.getTokenAfter(parent, { filter: (token: { value: string }) => token.value === "}" });
+      const end = sourceCode.getTokenAfter(parent, {
+        filter: (token: any) => token.value === "}",
+      });
 
       return fixer.removeRange([start.range[0], end.range[1]]);
     }
 
     return fixer.removeRange([sourceCode.getTokenBefore(parent, commaFilter).range[0], parent.range[1]]);
-  };
-  return problem;
-}
+  },
+}));
 
 export default function pluginRemoveUnusedImports() {
   const rule = tslint.rules["no-unused-vars"];
