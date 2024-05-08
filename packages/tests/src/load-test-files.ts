@@ -30,9 +30,13 @@ export async function loadTestFileMatrix(filepath: string) {
   const f = await import(importFile);
 
   const matrix: unknown = f.matrix;
+  const exclude: unknown = f.exclude;
 
   assert(matrix, `Missing \`matrix\` export in "${filepath}"`);
   assert(Array.isArray(matrix), defaultErrorMessage);
+  if (exclude) {
+    assert(Array.isArray(exclude), `\`exclude\` export in "${filepath}" must be of type \`string[][]\``);
+  }
 
   const validKeys = new Set<unknown>(flags);
 
@@ -51,6 +55,7 @@ export async function loadTestFileMatrix(filepath: string) {
 
   return {
     matrix: combinate(matrix),
+    exclude: exclude as string[][] | undefined,
     filepath,
   };
 }

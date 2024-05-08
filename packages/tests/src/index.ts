@@ -191,6 +191,10 @@ function loadDotEnvTest() {
   });
 }
 
+function arrayIncludes(a: string[], b: string[]) {
+  return a.every((element) => b.includes(element));
+}
+
 async function main(context: GlobalContext) {
   await initTmpDir(context);
 
@@ -205,6 +209,10 @@ async function main(context: GlobalContext) {
   // for all matrices
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
+      if (testFile.exclude?.some((x) => arrayIncludes(x, flags))) {
+        continue;
+      }
+
       promises.push(
         limit(async () => {
           const projectDir = await execLocalBati(context, flags);

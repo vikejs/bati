@@ -11,6 +11,8 @@ export const matrix = [
   "eslint",
 ] as const;
 
+export const exclude = [["hono", "auth0"]];
+
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace
 // Then, for firebase, generate a service account json file, and put in .env.test like so
