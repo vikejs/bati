@@ -11,7 +11,7 @@ on:
       - 'website/**'
 jobs:
   deploy-preview:
-    if: github.repository == 'batijs/bati'
+    if: github.repository_owner == 'batijs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
