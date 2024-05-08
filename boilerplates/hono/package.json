@@ -1,0 +1,54 @@
+{
+  "name": "@batijs/hono",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@auth/core": "^0.29.0",
+    "@batijs/compile": "workspace:*",
+    "@batijs/firebase-auth": "workspace:*",
+    "@batijs/trpc": "workspace:^",
+    "@hono/node-server": "^1.11.1",
+    "@hono/vite-dev-server": "^0.12.0",
+    "@trpc/server": "^10.45.2",
+    "@types/node": "^18.19.14",
+    "firebase-admin": "^12.1.0",
+    "hono": "^4.2.9",
+    "telefunc": "^0.1.72",
+    "tsx": "^4.7.2",
+    "vike": "^0.4.168",
+    "vike-authjs": "^0.1.5",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "hono"
+    }
+  },
+  "exports": {
+    "./hono-entry": {
+      "types": "./dist/types/hono-entry.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "hono-entry": [
+        "./dist/types/hono-entry.d.ts"
+      ]
+    }
+  }
+}

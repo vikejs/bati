@@ -2,7 +2,7 @@ import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [
   ["solid", "react", "vue"],
-  ["express", "h3"],
+  ["express", "h3", "hono"],
   [
     "authjs",
     ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : []),
@@ -10,6 +10,8 @@ export const matrix = [
   ],
   "eslint",
 ] as const;
+
+export const exclude = [["hono", "auth0"]];
 
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace

@@ -272,6 +272,24 @@ export const features = [
   },
   {
     category: "Server",
+    label: "Hono",
+    flag: "hono",
+    url: "https://hono.dev",
+    tagline: "Fast, lightweight, built on web standards. Support for any JavaScript runtime.",
+    repo: "honojs/hono",
+    links: [
+      {
+        label: "Getting started",
+        href: "https://hono.dev/top",
+      },
+      {
+        label: "API",
+        href: "https://hono.dev/api/hono",
+      },
+    ],
+  },
+  {
+    category: "Server",
     label: "HatTip",
     flag: "hattip",
     image:
