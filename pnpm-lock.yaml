@@ -212,15 +212,24 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@auth/core':
+        specifier: ^0.29.0
+        version: 0.29.0
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@fastify/formbody':
+        specifier: ^7.4.0
+        version: 7.4.0
       '@fastify/middie':
         specifier: ^8.3.1
         version: 8.3.1
       '@fastify/static':
         specifier: ^7.0.4
         version: 7.0.4
+      '@hattip/adapter-node':
+        specifier: ^0.0.45
+        version: 0.0.45
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -235,7 +244,7 @@ importers:
         version: 0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-authjs:
         specifier: ^0.1.5
-        version: 0.1.5(@auth/core@0.30.0)
+        version: 0.1.5(@auth/core@0.29.0)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -2018,6 +2027,9 @@ packages:
 
   '@fastify/fast-json-stringify-compiler@4.3.0':
     resolution: {integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==}
+
+  '@fastify/formbody@7.4.0':
+    resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
 
   '@fastify/merge-json-schemas@0.1.1':
     resolution: {integrity: sha512-fERDVz7topgNjtXsJTTW1JKLy0rhuLRcquYqNR9rF7OcVpCa2OVW49ZPDIhaRRCaUuvVxI+N416xUoF76HNSXA==}
@@ -7047,6 +7059,11 @@ snapshots:
   '@fastify/fast-json-stringify-compiler@4.3.0':
     dependencies:
       fast-json-stringify: 5.15.1
+
+  '@fastify/formbody@7.4.0':
+    dependencies:
+      fast-querystring: 1.1.2
+      fastify-plugin: 4.5.1
 
   '@fastify/merge-json-schemas@0.1.1':
     dependencies:
