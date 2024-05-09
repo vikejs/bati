@@ -1,0 +1,48 @@
+{
+  "name": "@batijs/fastify",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@fastify/middie": "^8.3.1",
+    "@fastify/static": "^7.0.4",
+    "@types/node": "^18.19.14",
+    "fastify": "^4.27.0",
+    "tsx": "^4.9.3",
+    "vike": "^0.4.171",
+    "vike-authjs": "^0.1.5",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "fastify"
+    }
+  },
+  "exports": {
+    "./fastify-entry": {
+      "types": "./dist/types/fastify-entry.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "fastify-entry": [
+        "./dist/types/fastify-entry.d.ts"
+      ]
+    }
+  }
+}
