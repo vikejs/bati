@@ -1,8 +1,12 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { createMiddleware } from "@hattip/adapter-node";
+import express from "express";
+import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
 import { getAuth } from "firebase-admin/auth";
 import { VikeAuth } from "vike-authjs";
@@ -138,15 +142,34 @@ async function startServer() {
     });
   }
 
+  if (BATI.has("auth0")) {
+    const config: ConfigParams = {
+      authRequired: false, // Controls whether authentication is required for all routes
+      auth0Logout: true, // Uses Auth0 logout feature
+      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
+      routes: {
+        login: "/api/auth/login", // Custom login route, default is "/login"
+        logout: "/api/auth/logout", // Custom logout route, default is "/logout"
+        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
+      },
+    };
+
+    const expressApp = express();
+
+    app.use(expressApp.use(auth(config)));
+  }
+
   /**
    * Vike route
    *
    * @link {@see https://vike.dev}
    **/
   app.all("/*", async function (request, reply) {
-    const pageContextInit = BATI.has("firebase-auth")
-      ? { urlOriginal: request.url, user: request.user }
-      : { urlOriginal: request.url };
+    const pageContextInit = BATI.has("auth0")
+      ? { urlOriginal: request.url, user: request.raw.oidc.user }
+      : BATI.has("firebase-auth")
+        ? { urlOriginal: request.url, user: request.user }
+        : { urlOriginal: request.url };
 
     const pageContext = await renderPage(pageContextInit);
     const { httpResponse } = pageContext;

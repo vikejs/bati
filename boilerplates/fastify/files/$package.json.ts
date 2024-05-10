@@ -21,7 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
   });
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/node"],
+    devDependencies: ["@types/node", ...(props.meta.BATI.has("auth0") ? (["@types/express", "dotenv"] as const) : [])],
     dependencies: [
       "@fastify/middie",
       "@fastify/static",
@@ -33,6 +33,7 @@ export default async function getPackageJson(props: TransformerProps) {
         ? (["@auth/core", "@fastify/formbody", "@hattip/adapter-node", "vike-authjs"] as const)
         : []),
       ...(props.meta.BATI.has("firebase-auth") ? (["@fastify/cookie"] as const) : []),
+      ...(props.meta.BATI.has("auth0") ? (["express", "express-openid-connect"] as const) : []),
     ],
   });
 }
