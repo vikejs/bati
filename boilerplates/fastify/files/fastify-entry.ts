@@ -1,8 +1,10 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { createMiddleware } from "@hattip/adapter-node";
 import Fastify from "fastify";
+import { getAuth } from "firebase-admin/auth";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
@@ -86,13 +88,65 @@ async function startServer() {
     });
   }
 
+  if (BATI.has("firebase-auth")) {
+    await app.register(await import("@fastify/cookie"));
+
+    app.addHook("onRequest", async (request) => {
+      const sessionCookie = request.cookies.__session;
+      if (sessionCookie) {
+        try {
+          const auth = getAuth(firebaseAdmin);
+          const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+          const user = await auth.getUser(decodedIdToken.sub);
+          request.user = user;
+        } catch (error) {
+          console.debug("verifySessionCookie:", error);
+          request.user = null;
+        }
+      }
+    });
+
+    app.post<{ Body: { idToken: string } }>("/api/sessionLogin", async (request, reply) => {
+      const idToken = request.body.idToken || "";
+
+      const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+
+      try {
+        const auth = getAuth(firebaseAdmin);
+        const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
+        reply.setCookie("__session", sessionCookie, {
+          path: "/", // The path needs to be set manually; otherwise, it will default to "/api" in this case.
+          maxAge: expiresIn,
+          httpOnly: true,
+          secure: true,
+        });
+
+        reply.code(200);
+        return reply.send({ status: "success" });
+      } catch (error) {
+        console.error("createSessionCookie failed :", error);
+
+        reply.code(401);
+        return reply.send({ status: "Unauthorized" });
+      }
+    });
+
+    app.post("/api/sessionLogout", (_, reply) => {
+      reply.clearCookie("__session");
+      reply.code(200);
+      return reply.send({ status: "Logged Out" });
+    });
+  }
+
   /**
    * Vike route
    *
    * @link {@see https://vike.dev}
    **/
   app.all("/*", async function (request, reply) {
-    const pageContextInit = { urlOriginal: request.url };
+    const pageContextInit = BATI.has("firebase-auth")
+      ? { urlOriginal: request.url, user: request.user }
+      : { urlOriginal: request.url };
 
     const pageContext = await renderPage(pageContextInit);
     const { httpResponse } = pageContext;
