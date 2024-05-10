@@ -4,7 +4,13 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
+import {
+  fastifyTRPCPlugin,
+  type CreateFastifyContextOptions,
+  type FastifyTRPCPluginOptions,
+} from "@trpc/server/adapters/fastify";
 import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
@@ -157,6 +163,27 @@ async function startServer() {
     const expressApp = express();
 
     app.use(expressApp.use(auth(config)));
+  }
+
+  if (BATI.has("trpc")) {
+    /**
+     * tRPC route
+     *
+     * @link {@see https://trpc.io/docs/server/adapters/fastify}
+     **/
+    await app.register(fastifyTRPCPlugin, {
+      prefix: "/api/trpc",
+      trpcOptions: {
+        router: appRouter,
+        createContext({ req, res }: CreateFastifyContextOptions) {
+          return { req, res };
+        },
+        onError({ path, error }) {
+          // report to error monitoring
+          console.error(`Error in tRPC handler on path '${path}':`, error);
+        },
+      } satisfies FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
+    });
   }
 
   /**
