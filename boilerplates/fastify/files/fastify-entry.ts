@@ -15,6 +15,7 @@ import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
 import { getAuth } from "firebase-admin/auth";
+import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
@@ -186,6 +187,27 @@ async function startServer() {
     });
   }
 
+  if (BATI.has("telefunc")) {
+    /**
+     * Telefunc route
+     *
+     * @link {@see https://telefunc.com}
+     **/
+    app.post<{ Body: string }>("/_telefunc", async (request, reply) => {
+      const httpResponse = await telefunc({
+        url: request.originalUrl || request.url,
+        method: request.method,
+        body: request.body,
+        context: request,
+      });
+      const { body, statusCode, contentType } = httpResponse;
+
+      reply.code(statusCode);
+      reply.type(contentType);
+      return reply.send(body);
+    });
+  }
+
   /**
    * Vike route
    *
@@ -193,10 +215,10 @@ async function startServer() {
    **/
   app.all("/*", async function (request, reply) {
     const pageContextInit = BATI.has("auth0")
-      ? { urlOriginal: request.url, user: request.raw.oidc.user }
+      ? { urlOriginal: request.originalUrl || request.url, user: request.raw.oidc.user }
       : BATI.has("firebase-auth")
-        ? { urlOriginal: request.url, user: request.user }
-        : { urlOriginal: request.url };
+        ? { urlOriginal: request.originalUrl || request.url, user: request.user }
+        : { urlOriginal: request.originalUrl || request.url };
 
     const pageContext = await renderPage(pageContextInit);
     const { httpResponse } = pageContext;
