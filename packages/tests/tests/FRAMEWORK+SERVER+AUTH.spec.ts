@@ -2,7 +2,7 @@ import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [
   ["solid", "react", "vue"],
-  ["express", "h3", "hono"],
+  ["express", "h3", "hono", "fastify"],
   [
     "authjs",
     ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : []),
