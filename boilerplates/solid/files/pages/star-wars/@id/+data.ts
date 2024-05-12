@@ -17,6 +17,6 @@ export const data = async (pageContext: PageContextServer) => {
 
 function minimize(movie: MovieDetails): MovieDetails {
   const { id, title, release_date, director, producer } = movie;
-  movie = { id, title, release_date, director, producer };
-  return movie;
+  const minimizedMovie = { id, title, release_date, director, producer };
+  return minimizedMovie;
 }
