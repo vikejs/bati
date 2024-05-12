@@ -1,0 +1,69 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    # Ensures cache is computed on main branch so that it can be reused on all PRs
+    branches: [ "main" ]
+
+jobs:
+  lint-and-check-types:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: ["18", "20"]
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - uses: actions/cache@v4
+        name: Setup Turborepo cache
+        with:
+          path: ${{ runner.temp }}/bati-cache
+          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.event.repository.updated_at }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-bati-cache-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm run build
+
+      - name: Run check types
+        run: pnpm run check-types
+
+      - name: Run lint
+        run: pnpm run lint

@@ -2,7 +2,7 @@
 
 import fetch from "cross-fetch";
 import type { PageContextServer } from "vike/types";
-import type { MovieDetails } from "../types";
+import type { MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
@@ -17,6 +17,6 @@ export const data = async (pageContext: PageContextServer) => {
 
 function minimize(movie: MovieDetails): MovieDetails {
   const { id, title, release_date, director, producer } = movie;
-  movie = { id, title, release_date, director, producer };
-  return movie;
+  const minimizedMovie = { id, title, release_date, director, producer };
+  return minimizedMovie;
 }

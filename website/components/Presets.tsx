@@ -2,7 +2,7 @@ import type { CategoryLabels, Flags } from "@batijs/features";
 import { StoreContext } from "#components/Store.js";
 import clsx from "clsx";
 import { useContext } from "solid-js";
-import { EnrichedTooltip } from "./Tooltip";
+import { EnrichedTooltip } from "./Tooltip.js";
 
 function Preset(props: {
   title: string;
@@ -19,7 +19,8 @@ function Preset(props: {
       placement="bottom"
       arrow={true}
       offset={12}
-      tooltipClass="text-center w-64 p-2 text-sm"
+      tooltipClass="text-center w-64 p-2 text-sm shadow-md bg-base-200 text-neutral dark:bg-neutral dark:text-neutral-content"
+      arrowClass="bg-base-200 dark:bg-neutral"
       disabled={props.disabled}
     >
       <button
@@ -43,20 +44,20 @@ export default function Presets() {
       <Preset title="Plain Vike" features={[]} description="Simple app with Plain Vike" />
       <Preset
         title="Frontend"
-        features={["Framework", "CSS", "Linter"]}
+        features={["UI Framework", "CSS", "Linter"]}
         description="Frontend app with a Framework and Tailwind CSS"
       />
       <Preset
         title="Full-stack"
-        features={["Framework", "RPC", "Auth", "Database", "CSS", "Server", "Linter"]}
+        features={["UI Framework", "Data fetching", "Auth", "Database", "CSS", "Server", "Linter"]}
         description="Full-stack app with RPC (like server actions), Auth, Database and Server"
       />
       <Preset
         title="Next.js"
-        features={["react", "Auth", "RPC", "Server", "vercel", "Linter"]}
+        features={["react", "Auth", "Data fetching", "Server", "vercel", "Linter"]}
         description="Next.js like app with RPC (like server actions) and Vercel"
       />
-      <Preset title="E-commerce" features={["Framework"]} disabled={true} description="" />
+      <Preset title="E-commerce" features={["UI Framework"]} disabled={true} description="" />
     </div>
   );
 }

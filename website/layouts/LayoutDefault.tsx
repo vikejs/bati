@@ -1,6 +1,6 @@
 import "./tailwind.css";
-import type { JSX } from "solid-js";
 import { StoreProvider } from "#components/Store";
+import type { JSX } from "solid-js";
 
 export default function LayoutDefault(props: { children?: JSX.Element }) {
   return (

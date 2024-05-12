@@ -7,6 +7,7 @@ export async function runDevServer(context: GlobalContext) {
   context.server = execa(npmCli, ["run", "dev", "--port", String(context.port)], {
     env: {
       PORT: String(context.port),
+      HMR_PORT: String(context.port_1),
     },
   });
 

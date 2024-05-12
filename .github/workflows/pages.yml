@@ -11,7 +11,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
 
@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: pnpm/action-setup@v2
       with:
-        version: 8
+        version: 9
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -38,7 +38,9 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
+        force: false
         folder: website/dist/client
+        clean-exclude: pr-preview/
         token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
         repository-name: batijs/batijs.github.io
         clean: true

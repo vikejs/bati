@@ -1,17 +1,17 @@
-import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
-import exec, { walk } from "@batijs/build";
-import packageJson from "./package.json" assert { type: "json" };
-import { type VikeMeta, withIcon } from "@batijs/core";
-import { type CategoryLabels, type Feature, features, type Flags, flags as coreFlags } from "@batijs/features";
-import { execRules } from "@batijs/features/rules";
 import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join, parse } from "node:path";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
+import { dirname, join, parse } from "node:path";
+import { fileURLToPath } from "node:url";
+import exec, { walk } from "@batijs/build";
+import { withIcon, type VikeMeta } from "@batijs/core";
+import { cliFlags, features, type CategoryLabels, type Feature, type Flags } from "@batijs/features";
+import { execRules } from "@batijs/features/rules";
+import { defineCommand, runMain, type ArgsDef, type CommandDef, type ParsedArgs } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
-import type { BoilerplateDef, Hook } from "./types.js";
-import { rulesMessages } from "./rules.js";
 import sift from "sift";
+import packageJson from "./package.json";
+import { rulesMessages } from "./rules.js";
+import type { BoilerplateDef, Hook } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -45,7 +45,7 @@ function toArg(flag: string | undefined, description: string | undefined): ArgsD
 }
 
 function findDescription(key: string | undefined): string | undefined {
-  const feat: Feature | undefined = features.find(f => f.flag === key);
+  const feat: Feature | undefined = features.find((f) => f.flag === key);
   if (!feat) return;
 
   if (feat.description) {
@@ -76,7 +76,9 @@ function printOK(dist: string, flags: string[]): void {
   console.log(cmd3("pnpm install"));
   console.log(cmd3("pnpm run dev"));
 
-  console.log("\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."));
+  console.log(
+    "\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."),
+  );
 }
 
 const defaultDef = {
@@ -84,13 +86,13 @@ const defaultDef = {
     type: "positional",
     description: "Project directory",
     required: false,
-    default: 'my-app'
+    default: "my-app",
   },
   force: {
     type: "boolean",
     description: "If true, does no check if target directory already exists",
     required: false,
-  }
+  },
 } as const satisfies ArgsDef;
 
 type Args = typeof defaultDef &
@@ -159,38 +161,38 @@ async function checkArguments(args: ParsedArgs<Args>) {
 function checkRules(flags: string[]) {
   const potentialRulesMessages = execRules(flags as FeatureOrCategory[], rulesMessages);
 
-  const infos = potentialRulesMessages.filter(m => m.type === 'info');
-  const warnings = potentialRulesMessages.filter(m => m.type === 'warning');
-  const errors = potentialRulesMessages.filter(m => m.type === 'error');
+  const infos = potentialRulesMessages.filter((m) => m.type === "info");
+  const warnings = potentialRulesMessages.filter((m) => m.type === "warning");
+  const errors = potentialRulesMessages.filter((m) => m.type === "error");
 
   if (infos.length > 0) {
-    infos.forEach(m => {
-      console.info(blueBright(`ℹ ${m.value}.`))
+    infos.forEach((m) => {
+      console.info(blueBright(`ℹ ${m.value}.`));
     });
 
-    console.log('');
+    console.log("");
   }
 
   if (warnings.length > 0) {
-    warnings.forEach(m => {
-      console.warn(yellow(`⚠ ${m.value}.`))
+    warnings.forEach((m) => {
+      console.warn(yellow(`⚠ ${m.value}.`));
     });
 
-    console.log('');
+    console.log("");
   }
 
   if (errors.length > 0) {
-    errors.forEach(m => {
-      console.error(red(`⚠ ${m.value}.`))
+    errors.forEach((m) => {
+      console.error(red(`⚠ ${m.value}.`));
     });
 
-    console.log('');
+    console.log("");
     process.exit(5);
   }
 }
 
-async function retrieveHooks(hooks: string[]): Promise<Map<'after', Hook[]>> {
-  const map = new Map<'after', Hook[]>();
+async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
+  const map = new Map<"after", Hook[]>();
   for (const hook of hooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
@@ -213,7 +215,7 @@ async function retrieveHooks(hooks: string[]): Promise<Map<'after', Hook[]>> {
 
 function testFlags(flags: string[], bl: BoilerplateDef) {
   if (bl.config.if) {
-    return (sift as unknown as typeof sift.default)(bl.config.if)(flags.map(f => ({ flag: f })));
+    return (sift as unknown as typeof sift.default)(bl.config.if)(flags.map((f) => ({ flag: f })));
   }
 
   // No condition means always
@@ -230,11 +232,7 @@ async function run() {
       version: packageJson.version,
       description: packageJson.description,
     },
-    args: Object.assign(
-      {},
-      defaultDef,
-      ...coreFlags.map((k) => toArg(k, findDescription(k))),
-    ) as Args,
+    args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findDescription(k)))) as Args,
     async run({ args }) {
       await checkArguments(args);
 
@@ -244,7 +242,7 @@ async function run() {
         .filter(([, val]) => val === true)
         .map(([key]) => {
           const flag: string[] = [key];
-          const dependsOn = (features as ReadonlyArray<Feature>).find(f => f.flag === key)?.dependsOn;
+          const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
 
           if (dependsOn) {
             flag.push(...dependsOn);
@@ -257,10 +255,10 @@ async function run() {
 
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`
       boilerplates.sort((b1, b2) => {
-        if (b1.config.enforce === 'pre') return -1;
-        if (b1.config.enforce === 'post') return 1;
-        if (b2.config.enforce === 'pre') return 1;
-        if (b2.config.enforce === 'post') return -1;
+        if (b1.config.enforce === "pre") return -1;
+        if (b1.config.enforce === "post") return 1;
+        if (b2.config.enforce === "pre") return 1;
+        if (b2.config.enforce === "post") return -1;
         return 0;
       });
 

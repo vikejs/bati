@@ -1,6 +1,5 @@
-import { categories, features, type CategoryLabels, type Flags } from "@batijs/features";
+import { categories, features, type Category, type CategoryLabels, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
-import type { Category } from "@batijs/features/src/index";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Feature } from "../types.js";
@@ -10,7 +9,7 @@ function initStore() {
   const featuresInitialState: Feature[] = features.map((f: Feature) => ({
     ...f,
     alt: f.disabled ? "Coming soon" : undefined,
-    selected: false,
+    selected: Boolean(f.readonly),
   }));
 
   const [currentFeatures, setCurrentFeatures] = createStore<Feature[]>(featuresInitialState);
@@ -19,7 +18,7 @@ function initStore() {
     const multiple = (categories as ReadonlyArray<Category>).find((c) => c.label === k)?.multiple;
 
     if (!multiple) {
-      batch(() => setCurrentFeatures((f) => f.category === k, "selected", false));
+      batch(() => setCurrentFeatures((f) => f.category === k && !f.readonly, "selected", false));
     }
 
     setCurrentFeatures((f) => f.flag === flag, "selected", selected);
@@ -27,7 +26,11 @@ function initStore() {
 
   const selectedFeatures = createMemo<Feature[]>(() => currentFeatures.filter((f) => f.selected));
 
-  const selectedFeaturesFlags = createMemo(() => selectedFeatures().map((f) => f.flag));
+  const selectedFeaturesFlags = createMemo(() =>
+    selectedFeatures()
+      .filter((f) => !f.invisibleCli)
+      .map((f) => f.flag),
+  );
 
   function selectPreset(ks: (Flags | CategoryLabels)[]) {
     batch(() => {
@@ -35,16 +38,16 @@ function initStore() {
         if (ks.includes(initialFeature.category as CategoryLabels)) {
           const firstIndexOfCategory = featuresInitialState.findIndex((f) => f.category === initialFeature.category);
           setCurrentFeatures(
-            (f) => f.category === initialFeature.category,
+            (f) => f.category === initialFeature.category && !f.readonly,
             "selected",
             (_, [__, i]) => {
               return i === firstIndexOfCategory;
             },
           );
         } else if (ks.includes(initialFeature.flag as Flags)) {
-          setCurrentFeatures((f) => f.flag === initialFeature.flag, "selected", true);
+          setCurrentFeatures((f) => f.flag === initialFeature.flag && !f.readonly, "selected", true);
         } else {
-          setCurrentFeatures((f) => f.flag === initialFeature.flag, "selected", false);
+          setCurrentFeatures((f) => f.flag === initialFeature.flag && !f.readonly, "selected", false);
         }
       }
     });

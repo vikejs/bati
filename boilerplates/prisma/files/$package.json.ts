@@ -6,7 +6,7 @@ export default async function getPackageJson(props: TransformerProps) {
   packageJson.scripts["prisma:studio"] = "prisma studio";
   packageJson.scripts["prisma:generate"] = "prisma generate";
 
-  return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["prisma"],
     dependencies: ["@prisma/client"],
   });

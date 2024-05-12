@@ -6,6 +6,8 @@ on:
       - main
     types:
       - closed
+    paths-ignore:
+      - 'website/**'
 
 jobs:
 
@@ -18,7 +20,7 @@ jobs:
 #          GITHUB_CONTEXT: ${{ toJSON(github) }}
 #        run: echo "$GITHUB_CONTEXT"
 
-  build:
+  build-and-publish:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
@@ -35,7 +37,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 9
           run_install: false
 
       - name: Get pnpm store directory
@@ -59,6 +61,11 @@ jobs:
         run: |
           git config --global user.name "Joël Charles"
           git config --global user.email "joel.charles91@gmail.com"
+
+      - name: Set publishing config
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: pnpm run release:ci
         env:

@@ -98,6 +98,7 @@ export default defineConfig(({ mode, command }) => {
   }
 
   return {
+    base: process.env.BASE ?? undefined,
     resolve: {
       alias,
     },

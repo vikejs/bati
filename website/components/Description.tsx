@@ -1,14 +1,9 @@
 import { StoreContext } from "#components/Store.js";
 import clsx from "clsx";
 import { createMemo, useContext } from "solid-js";
-import type { Feature } from "../types";
+import type { Feature } from "../types.js";
 
 const lf = new Intl.ListFormat("en");
-
-const vike: Pick<Feature, "label" | "url"> = {
-  label: "Vike",
-  url: "https://vike.dev",
-};
 
 function FeatureWord(props: { feature: Pick<Feature, "label" | "url"> }) {
   if (props.feature.url) {
@@ -27,17 +22,12 @@ function FeatureWord(props: { feature: Pick<Feature, "label" | "url"> }) {
 
 export default function Description() {
   const { selectedFeatures } = useContext(StoreContext);
-  const selectedFeaturesWithVike = createMemo(() => [vike, ...selectedFeatures()]);
 
   const formattedLabels = createMemo(() =>
     lf
-      .formatToParts(selectedFeaturesWithVike().map((x) => x.label))
+      .formatToParts(selectedFeatures().map((x) => x.label))
       .map((p) =>
-        p.type === "literal" ? (
-          p.value
-        ) : (
-          <FeatureWord feature={selectedFeaturesWithVike().find((x) => x.label === p.value)!} />
-        ),
+        p.type === "literal" ? p.value : <FeatureWord feature={selectedFeatures().find((x) => x.label === p.value)!} />,
       ),
   );
 

@@ -21,7 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
     delete packageJson.scripts.preview;
   }
 
-  return addDependency(packageJson, await import("../package.json", { assert: { type: "json" } }), {
+  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
     dependencies: [
       "@hattip/core",

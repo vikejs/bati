@@ -41,7 +41,6 @@ export function copy(el: HTMLElement) {
     }
   }
 
-
   el.addEventListener("click", writeSelectionClipboard);
   el.addEventListener("mouseenter", handleMouseHover);
   el.addEventListener("mouseleave", handleMouseLeave);
