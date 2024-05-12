@@ -10,12 +10,11 @@ export default function Page() {
         <p>This page could not be found.</p>
       </>
     );
-  } else {
-    return (
-      <>
-        <h1>500 Internal Server Error</h1>
-        <p>Something went wrong.</p>
-      </>
-    );
   }
+  return (
+    <>
+      <h1>500 Internal Server Error</h1>
+      <p>Something went wrong.</p>
+    </>
+  );
 }
