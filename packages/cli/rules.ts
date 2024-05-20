@@ -33,4 +33,7 @@ export const rulesMessages = {
     `${inverse(bold("Auth0"))} does not support running on ${inverse(bold("Hono"))} with official plugins. Check https://batijs.dev for details`,
   ),
   [RulesMessage.INFO_HATTIP]: info(`${inverse(bold("HatTip"))} is an experimental project`),
+  [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}.`,
+  ),
 } satisfies Record<RulesMessage, RuleMessage>;
