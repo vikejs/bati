@@ -17,14 +17,14 @@ export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
               try {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",
-                  body: JSON.stringify({ text: newTodo })
-                })
+                  body: JSON.stringify({ text: newTodo }),
+                });
                 if (response.ok) {
-                  await reload()
+                  await reload();
                   setNewTodo("");
                 }
               } catch (error) {
-                console.log("error :", error)
+                console.log("error :", error);
               }
             }}
           >
