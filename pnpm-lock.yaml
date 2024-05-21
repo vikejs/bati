@@ -631,6 +631,43 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
 
+  boilerplates/react-drizzle:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      '@types/react':
+        specifier: ^18.3.2
+        version: 18.3.2
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      vike:
+        specifier: ^0.4.171
+        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike-react:
+        specifier: ^0.4.10
+        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11(@types/node@18.19.31)
+
   boilerplates/react-firebase-auth:
     dependencies:
       '@batijs/core':
