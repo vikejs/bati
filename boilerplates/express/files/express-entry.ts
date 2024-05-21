@@ -3,6 +3,8 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
@@ -189,6 +191,17 @@ async function startServer() {
         },
       ),
     );
+  }
+
+  if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+    app.use(express.json()); // Parse & make HTTP request body available at `req.body`
+    app.post("/api/todo/create", async (req, res) => {
+      const newTodo: TodoInsert = req.body;
+
+      await db.insert(todoTable).values({ text: newTodo.text });
+
+      res.status(201).send({ status: "success" });
+    });
   }
 
   /**
