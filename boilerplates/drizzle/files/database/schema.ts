@@ -6,3 +6,4 @@ export const todoTable = sqliteTable("todos", {
 });
 
 export type TodoItem = typeof todoTable.$inferSelect;
+export type TodoInsert = typeof todoTable.$inferInsert;

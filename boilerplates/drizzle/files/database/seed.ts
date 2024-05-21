@@ -1,4 +1,4 @@
-import { db } from ".";
+import { db } from "./db";
 import { todoTable } from "./schema";
 
 async function seed() {
