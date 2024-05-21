@@ -9,6 +9,7 @@ import { execRules } from "@batijs/features/rules";
 import { defineCommand, runMain, type ArgsDef, type CommandDef, type ParsedArgs } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import sift from "sift";
+import whichPm from "which-pm-runs";
 import packageJson from "./package.json";
 import { rulesMessages } from "./rules.js";
 import type { BoilerplateDef, Hook } from "./types.js";
@@ -16,6 +17,7 @@ import type { BoilerplateDef, Hook } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
+const pm = whichPm();
 
 type FeatureOrCategory = Flags | CategoryLabels;
 
@@ -73,8 +75,29 @@ function printOK(dist: string, flags: string[]): void {
 
   console.log("\n" + bold(arrow0("Ready to start you app:")));
   console.log(cmd3(`cd ${dist}`));
-  console.log(cmd3("pnpm install"));
-  console.log(cmd3("pnpm run dev"));
+
+  switch (pm?.name) {
+    case "bun": {
+      console.log(cmd3("bun install"));
+      console.log(cmd3("bun run dev"));
+      break;
+    }
+    case "yarn": {
+      console.log(cmd3("yarn install"));
+      console.log(cmd3("yarn run dev"));
+      break;
+    }
+    case "npm": {
+      console.log(cmd3("npm install"));
+      console.log(cmd3("npm run dev"));
+      break;
+    }
+    default: {
+      console.log(cmd3("pnpm install"));
+      console.log(cmd3("pnpm run dev"));
+      break;
+    }
+  }
 
   console.log(
     "\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."),
