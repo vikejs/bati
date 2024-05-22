@@ -5,6 +5,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
@@ -19,6 +20,7 @@ import {
   deleteCookie,
   eventHandler,
   fromNodeMiddleware,
+  fromWebHandler,
   getCookie,
   getResponseStatus,
   getResponseStatusText,
@@ -28,6 +30,7 @@ import {
   setResponseStatus,
   toNodeListener,
   toWebRequest,
+  type EventHandler,
 } from "h3";
 import serveStatic from "serve-static";
 import { telefunc } from "telefunc";
@@ -219,26 +222,7 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    router.post(
-      "/_telefunc",
-      eventHandler(async (event) => {
-        const request = toWebRequest(event);
-        const httpResponse = await telefunc({
-          url: request.url.toString(),
-          method: request.method,
-          body: await request.text(),
-          context: event,
-        });
-        const { body, statusCode, contentType } = httpResponse;
-
-        setResponseStatus(event, statusCode);
-        setResponseHeaders(event, {
-          "content-type": contentType,
-        });
-
-        return body;
-      }),
-    );
+    router.post("/_telefunc", fromWebHandler(telefuncHandler));
   }
 
   /**

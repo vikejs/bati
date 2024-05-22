@@ -2,7 +2,7 @@ import { telefunc } from "telefunc";
 
 export async function telefuncHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  context: Context,
+  context?: Context,
 ): Promise<Response> {
   const httpResponse = await telefunc({
     url: request.url.toString(),
