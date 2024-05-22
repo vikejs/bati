@@ -1,11 +1,19 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import type { HattipHandler } from "@hattip/core";
-import { createRouter } from "@hattip/router";
+import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
+
+function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
+  handler: (request: Request, context: Context) => Promise<Response>,
+): RouteHandler<unknown, unknown> {
+  return (context) => {
+    return handler(context.request, context as unknown as Context);
+  };
+}
 
 const router = createRouter();
 
@@ -15,21 +23,7 @@ if (BATI.has("telefunc")) {
    *
    * @link {@see https://telefunc.com}
    **/
-  router.post("/_telefunc", async (context) => {
-    const httpResponse = await telefunc({
-      url: context.url.toString(),
-      method: context.method,
-      body: await context.request.text(),
-      context,
-    });
-    const { body, statusCode, contentType } = httpResponse;
-    return new Response(body, {
-      status: statusCode,
-      headers: {
-        "content-type": contentType,
-      },
-    });
-  });
+  router.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
 if (BATI.has("trpc")) {
