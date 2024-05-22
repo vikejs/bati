@@ -18,6 +18,9 @@ export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",
                   body: JSON.stringify({ text: newTodo }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
                 });
                 if (response.ok) {
                   await reload();
