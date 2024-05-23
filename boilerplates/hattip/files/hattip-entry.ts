@@ -1,10 +1,10 @@
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
+import { vikeAdapter } from "@batijs/shared-server/server/vike-adapter";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import type { HattipHandler } from "@hattip/core";
 import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { renderPage } from "vike/server";
 
 function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
   handler: (request: Request, context: Context) => Promise<Response>,
@@ -52,15 +52,6 @@ if (BATI.has("authjs")) {
  *
  * @link {@see https://vike.dev}
  **/
-router.use(async (context) => {
-  const pageContextInit = { urlOriginal: context.request.url };
-  const pageContext = await renderPage(pageContextInit);
-  const response = pageContext.httpResponse;
-
-  return new Response(await response?.getBody(), {
-    status: response?.statusCode,
-    headers: response?.headers,
-  });
-});
+router.use(handlerAdapter(vikeAdapter));
 
 export default router.buildHandler() as HattipHandler;

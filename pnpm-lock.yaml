@@ -446,6 +446,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
       '@batijs/telefunc':
         specifier: workspace:^
         version: link:../telefunc
@@ -771,12 +774,6 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
-      esbuild-plugin-copy:
-        specifier: ^2.1.1
-        version: 2.1.1(esbuild@0.21.3)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -803,6 +800,27 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      vike:
+        specifier: ^0.4.171
+        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11(@types/node@18.19.31)
+
+  boilerplates/shared-server:
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@batijs/features':
+        specifier: workspace:*
+        version: link:../../packages/features
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
