@@ -1,5 +1,6 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
@@ -8,12 +9,20 @@ import { getAuth } from "firebase-admin/auth";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { telefunc } from "telefunc";
+import { createMiddleware } from "hono/factory";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
+  handler: (request: Request, context: Context) => Promise<Response>,
+) {
+  return createMiddleware((context) => {
+    return handler(context.req.raw, context as unknown as Context);
+  });
+}
 
 const app = new Hono();
 
@@ -134,20 +143,7 @@ if (BATI.has("telefunc")) {
    *
    * @link {@see https://telefunc.com}
    **/
-  app.post("/_telefunc", async (c) => {
-    const httpResponse = await telefunc({
-      url: c.req.url.toString(),
-      method: c.req.method,
-      body: await c.req.text(),
-      context: c,
-    });
-    const { body, statusCode, contentType } = httpResponse;
-
-    c.status(statusCode);
-    c.header("Content-Type", contentType);
-
-    return c.body(body);
-  });
+  app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
 app.all("*", async (c, next) => {
