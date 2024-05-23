@@ -200,7 +200,7 @@ async function startServer() {
 
       await db.insert(todoTable).values({ text: newTodo.text });
 
-      res.status(201).send({ status: "success" });
+      res.status(201).send({ message: "New Todo Created" });
     });
   }
 

@@ -253,11 +253,11 @@ async function startServer() {
 
         setResponseStatus(event, 201, "New Todo Created");
         const status = getResponseStatus(event);
-        const text = getResponseStatusText(event);
+        const message = getResponseStatusText(event);
 
         return {
           status,
-          text,
+          message,
         };
       }),
     );
