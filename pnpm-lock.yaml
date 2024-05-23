@@ -370,6 +370,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -424,9 +427,6 @@ importers:
       vike:
         specifier: ^0.4.171
         version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -6538,11 +6538,6 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vike-authjs@0.1.6:
-    resolution: {integrity: sha512-jfQ3oUxbLNEdUkpQE2wQnNYg2ihmL4+/2AJsjZllQwHQtdRM8Yzej8JtnF3GBwT5cbXgVtuHNNusNMtgOxeTEg==}
-    peerDependencies:
-      '@auth/core': '*'
-
   vike-react@0.4.10:
     resolution: {integrity: sha512-6zzt14oCO80B4NZWEKr0wj60CpSJgbGov1szuk3A56LOhWAAZ0NLNyrHZVod5ONqfxblLyi3pCLG1RHwSCkftQ==}
     peerDependencies:
@@ -12437,10 +12432,6 @@ snapshots:
   validate-html-nesting@1.2.2: {}
 
   vary@1.1.2: {}
-
-  vike-authjs@0.1.6(@auth/core@0.31.0):
-    dependencies:
-      '@auth/core': 0.31.0
 
   vike-react@0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
