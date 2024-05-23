@@ -4,6 +4,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import {
@@ -14,10 +15,11 @@ import {
 import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
+import type { RouteHandlerMethod } from "fastify/types/route";
 import { getAuth } from "firebase-admin/auth";
-import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
+import { newRequest } from "./server/request-adapter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,6 +27,15 @@ const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
+
+export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
+  handler: (request: Request, context: Context) => Promise<Response>,
+) {
+  return (async (request, reply) => {
+    const response = await handler(newRequest(request.raw), request.routeOptions.config as unknown as Context);
+    return reply.send(response);
+  }) satisfies RouteHandlerMethod;
+}
 
 startServer();
 
@@ -193,19 +204,7 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    app.post<{ Body: string }>("/_telefunc", async (request, reply) => {
-      const httpResponse = await telefunc({
-        url: request.originalUrl || request.url,
-        method: request.method,
-        body: request.body,
-        context: request,
-      });
-      const { body, statusCode, contentType } = httpResponse;
-
-      reply.code(statusCode);
-      reply.type(contentType);
-      return reply.send(body);
-    });
+    app.post<{ Body: string }>("/_telefunc", handlerAdapter(telefuncHandler));
   }
 
   /**

@@ -15,6 +15,7 @@
     "@auth/core": "^0.31.0",
     "@batijs/compile": "workspace:*",
     "@batijs/firebase-auth": "workspace:*",
+    "@batijs/telefunc": "workspace:^",
     "@batijs/trpc": "workspace:^",
     "@fastify/cookie": "^9.3.1",
     "@fastify/formbody": "^7.4.0",
@@ -47,12 +48,18 @@
     }
   },
   "exports": {
+    "./server/request-adapter": {
+      "types": "./dist/types/server/request-adapter.d.ts"
+    },
     "./fastify-entry": {
       "types": "./dist/types/fastify-entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "server/request-adapter": [
+        "./dist/types/server/request-adapter.d.ts"
+      ],
       "fastify-entry": [
         "./dist/types/fastify-entry.d.ts"
       ]
