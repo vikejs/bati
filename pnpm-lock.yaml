@@ -76,6 +76,22 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
 
+  boilerplates/authjs:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@auth/core':
+        specifier: ^0.31.0
+        version: 0.31.0
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+
   boilerplates/biome:
     dependencies:
       '@batijs/core':
@@ -476,6 +492,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -515,9 +534,6 @@ importers:
       vike:
         specifier: ^0.4.171
         version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
