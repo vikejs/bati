@@ -8,7 +8,13 @@ const env: Record<string, string | undefined> =
       ? (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env
       : {};
 
-globalThis.crypto ??= await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto);
+if (!globalThis.crypto) {
+  Object.defineProperty(globalThis, "crypto", {
+    value: await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto),
+    writable: false,
+    configurable: true,
+  });
+}
 
 /**
  * AuthJS
