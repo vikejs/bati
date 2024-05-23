@@ -1,4 +1,6 @@
 import CredentialsProvider from "@auth/core/providers/credentials";
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
@@ -147,6 +149,18 @@ if (BATI.has("telefunc")) {
     c.header("Content-Type", contentType);
 
     return c.body(body);
+  });
+}
+
+if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+  app.post("/api/todo/create", async (c) => {
+    const newTodo = await c.req.json<TodoInsert>();
+
+    await db.insert(todoTable).values({ text: newTodo.text });
+
+    c.status(201);
+
+    return c.json({ message: "New Todo Created" });
   });
 }
 
