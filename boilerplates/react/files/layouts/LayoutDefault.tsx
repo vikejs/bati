@@ -20,6 +20,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       <Sidebar>
         <Logo />
         <Link href="/">Welcome</Link>
+        {BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc")) ? <Link href="/todo">Todo (drizzle)</Link> : undefined}
         {BATI.has("telefunc") ? <Link href="/todo">Todo (telefunc)</Link> : undefined}
         {BATI.has("trpc") ? <Link href="/todo-trpc">Todo (tRPC)</Link> : undefined}
         <Link href="/star-wars">Data Fetching</Link>
