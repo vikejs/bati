@@ -2,17 +2,18 @@
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import CredentialsProvider from "@auth/core/providers/credentials";
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
-import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { firebaseAuthMiddleware } from "@batijs/firebase-auth/files/server/firebase-auth-middleware";
+import {
+  firebaseAuthLoginHandler,
+  firebaseAuthLogoutHandler,
+} from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import cookieParser from "cookie-parser";
 import express, { type Request as ExpressRequest } from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
-import { getAuth } from "firebase-admin/auth";
 import { renderPage } from "vike/server";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,12 +23,27 @@ const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
+interface Middleware<Context extends Record<string | number | symbol, unknown>> {
+  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
+}
+
 export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: (request: Request, context: Context) => Promise<Response>,
+  handler: Middleware<Context>,
 ) {
   return createMiddleware(
-    (context) => {
-      return handler(context.request, context as unknown as Context);
+    async (context) => {
+      const rawRequest = context.platform.request as unknown as Record<string, unknown>;
+      rawRequest.context ??= {};
+      const response = await handler(context.request, rawRequest.context as Context);
+
+      if (!response) {
+        context.passThrough();
+        return new Response("", {
+          status: 404,
+        });
+      }
+
+      return response;
     },
     {
       alwaysCallNext: false,
@@ -61,49 +77,9 @@ async function startServer() {
   }
 
   if (BATI.has("firebase-auth")) {
-    app.use(cookieParser());
-    app.use(async function (req: ExpressRequest, _, next) {
-      const sessionCookie: string = req.cookies.__session || "";
-
-      try {
-        const auth = getAuth(firebaseAdmin);
-        const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
-        const user = await auth.getUser(decodedIdToken.sub);
-        req.user = user;
-      } catch (error) {
-        console.debug("verifySessionCookie:", error);
-        req.user = null;
-      }
-
-      next();
-    });
-
-    app.use(express.json()); // Parse & make HTTP request body available at `req.body`
-    app.post("/api/sessionLogin", (req: ExpressRequest, res) => {
-      const idToken: string = req.body.idToken || "";
-
-      const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-
-      getAuth(firebaseAdmin)
-        .createSessionCookie(idToken, { expiresIn })
-        .then(
-          (sessionCookie) => {
-            // Set cookie policy for session cookie.
-            const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-            res.cookie("__session", sessionCookie, options);
-            res.end(JSON.stringify({ status: "success" }));
-          },
-          (error) => {
-            console.error("createSessionCookie:", error);
-            res.status(401).send("Unauthorized Request");
-          },
-        );
-    });
-
-    app.post("/api/sessionLogout", function (_, res) {
-      res.clearCookie("__session");
-      res.end();
-    });
+    app.use(handlerAdapter(firebaseAuthMiddleware));
+    app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
+    app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
   }
 
   if (BATI.has("auth0")) {

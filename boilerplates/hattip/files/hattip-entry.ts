@@ -10,7 +10,9 @@ function handlerAdapter<Context extends Record<string | number | symbol, unknown
   handler: (request: Request, context: Context) => Promise<Response>,
 ): RouteHandler<unknown, unknown> {
   return (context) => {
-    return handler(context.request, context as unknown as Context);
+    const rawContext = context as unknown as Record<string, unknown>;
+    rawContext.context ??= {};
+    return handler(context.request, rawContext.context as Context);
   };
 }
 

@@ -13,7 +13,9 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@types/cookie": "^0.6.0",
     "@types/node": "^18.19.14",
+    "cookie": "^0.6.0",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.0",
     "firebase-admin": "^12.1.0",
@@ -47,6 +49,9 @@
     },
     "./pages/login/+guard": {
       "types": "./dist/types/pages/login/+guard.d.ts"
+    },
+    "./server/firebase-auth-middleware": {
+      "types": "./dist/types/server/firebase-auth-middleware.d.ts"
     }
   },
   "typesVersions": {
@@ -65,6 +70,9 @@
       ],
       "pages/login/+guard": [
         "./dist/types/pages/login/+guard.d.ts"
+      ],
+      "server/firebase-auth-middleware": [
+        "./dist/types/server/firebase-auth-middleware.d.ts"
       ]
     }
   }
