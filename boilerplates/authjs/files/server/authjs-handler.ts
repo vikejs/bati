@@ -2,7 +2,13 @@ import { Auth } from "@auth/core";
 import CredentialsProvider from "@auth/core/providers/credentials";
 
 const env: Record<string, string | undefined> =
-  typeof process?.env !== "undefined" ? process.env : typeof import.meta?.env !== "undefined" ? import.meta.env : {};
+  typeof process?.env !== "undefined"
+    ? process.env
+    : import.meta && "env" in import.meta
+      ? (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env
+      : {};
+
+globalThis.crypto ??= await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto);
 
 /**
  * AuthJS

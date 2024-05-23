@@ -29,9 +29,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "tsx",
       "vike",
       "vite",
-      ...(props.meta.BATI.has("authjs")
-        ? (["@auth/core", "@fastify/formbody", "@hattip/adapter-node", "vike-authjs"] as const)
-        : []),
+      ...(props.meta.BATI.has("authjs") ? (["@auth/core", "@fastify/formbody", "@hattip/adapter-node"] as const) : []),
       ...(props.meta.BATI.has("firebase-auth") ? (["@fastify/cookie"] as const) : []),
       ...(props.meta.BATI.has("auth0") ? (["express", "express-openid-connect"] as const) : []),
     ],

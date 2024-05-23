@@ -26,7 +26,7 @@ export const toRequestError = (e: unknown): RequestError => {
   return new RequestError((e as Error).message, { cause: e });
 };
 
-export const GlobalRequest = global.Request;
+export const GlobalRequest: typeof global.Request = global.Request;
 export class Request extends GlobalRequest {
   constructor(input: string | Request, options?: RequestInit) {
     if (typeof input === "object" && getRequestCache in input) {
