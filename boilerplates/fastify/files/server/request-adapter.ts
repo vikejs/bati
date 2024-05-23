@@ -5,6 +5,7 @@
 import type { IncomingMessage } from "node:http";
 import { Http2ServerRequest } from "node:http2";
 import { Readable } from "node:stream";
+import type { ReadableStream } from "node:stream/web";
 import type { TLSSocket } from "node:tls";
 
 export class RequestError extends Error {
@@ -65,7 +66,7 @@ const newRequestFromIncoming = (
 
   if (!(method === "GET" || method === "HEAD")) {
     // lazy-consume request body
-    init.body = Readable.toWeb(incoming) as ReadableStream<Uint8Array>;
+    init.body = Readable.toWeb(incoming) as any;
   }
 
   return new Request(url, init);
