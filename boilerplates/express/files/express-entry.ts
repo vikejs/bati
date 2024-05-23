@@ -4,14 +4,14 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
-import express, { type Request } from "express";
+import express, { type Request as ExpressRequest } from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import { getAuth } from "firebase-admin/auth";
-import { telefunc } from "telefunc";
 import { VikeAuth } from "vike-authjs";
 import { renderPage } from "vike/server";
 
@@ -21,6 +21,19 @@ const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
+
+export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
+  handler: (request: Request, context: Context) => Promise<Response>,
+) {
+  return createMiddleware(
+    (context) => {
+      return handler(context.request, context as unknown as Context);
+    },
+    {
+      alwaysCallNext: false,
+    },
+  );
+}
 
 startServer();
 
@@ -84,7 +97,7 @@ async function startServer() {
 
   if (BATI.has("firebase-auth")) {
     app.use(cookieParser());
-    app.use(async function (req: Request, _, next) {
+    app.use(async function (req: ExpressRequest, _, next) {
       const sessionCookie: string = req.cookies.__session || "";
 
       try {
@@ -101,7 +114,7 @@ async function startServer() {
     });
 
     app.use(express.json()); // Parse & make HTTP request body available at `req.body`
-    app.post("/api/sessionLogin", (req: Request, res) => {
+    app.post("/api/sessionLogin", (req: ExpressRequest, res) => {
       const idToken: string = req.body.idToken || "";
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
@@ -166,29 +179,7 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    app.post(
-      "/_telefunc",
-      createMiddleware(
-        async (context) => {
-          const httpResponse = await telefunc({
-            url: context.request.url.toString(),
-            method: context.request.method,
-            body: await context.request.text(),
-            context,
-          });
-          const { body, statusCode, contentType } = httpResponse;
-          return new Response(body, {
-            status: statusCode,
-            headers: {
-              "content-type": contentType,
-            },
-          });
-        },
-        {
-          alwaysCallNext: false,
-        },
-      ),
-    );
+    app.post("/_telefunc", handlerAdapter(telefuncHandler));
   }
 
   /**
@@ -196,7 +187,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*", async (req: Request, res, next) => {
+  app.all("*", async (req: ExpressRequest, res, next) => {
     const pageContextInit = BATI.has("auth0")
       ? { urlOriginal: req.originalUrl, user: req.oidc.user }
       : BATI.has("firebase-auth")
