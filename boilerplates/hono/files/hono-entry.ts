@@ -1,25 +1,44 @@
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
-import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import {
+  firebaseAuthLoginHandler,
+  firebaseAuthLogoutHandler,
+  firebaseAuthMiddleware,
+} from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { getAuth } from "firebase-admin/auth";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
-import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { renderPage } from "vike/server";
 
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
+interface Middleware<Context extends Record<string | number | symbol, unknown>> {
+  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
+}
+
 export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: (request: Request, context: Context) => Promise<Response>,
+  handler: Middleware<Context>,
 ) {
-  return createMiddleware((context) => {
-    return handler(context.req.raw, context as unknown as Context);
+  return createMiddleware(async (context, next) => {
+    let ctx = context.get("context");
+    if (!ctx) {
+      ctx = {};
+      context.set("context", ctx);
+    }
+
+    const res = await handler(context.req.raw, ctx as Context);
+    context.set("context", ctx);
+
+    if (!res) {
+      await next();
+    }
+
+    return res;
   });
 }
 
@@ -41,47 +60,9 @@ if (BATI.has("authjs")) {
 }
 
 if (BATI.has("firebase-auth")) {
-  app.use(async (c, next) => {
-    const sessionCookie: string = getCookie(c, "__session") || "";
-    if (sessionCookie) {
-      const auth = getAuth(firebaseAdmin);
-      try {
-        const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
-        const user = await auth.getUser(decodedIdToken.sub);
-        c.set("user", user);
-      } catch (error) {
-        console.debug("verifySessionCookie:", error);
-        c.set("user", null);
-      }
-    }
-    await next();
-  });
-
-  app.post("/api/sessionLogin", async (c) => {
-    const body = await c.req.json();
-    const idToken: string = body.idToken || "";
-
-    let expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days. The auth.createSessionCookie() function of Firebase expects time to be specified in miliseconds.
-
-    const auth = getAuth(firebaseAdmin);
-    try {
-      const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-      const options = { maxAge: expiresIn / 1000, httpOnly: true, secure: true };
-
-      expiresIn = 60 * 60 * 24 * 5; // 5 days. The setCookie() function of Hono expects time to be specified in seconds.
-      setCookie(c, "__session", sessionCookie, options);
-
-      return c.json({ status: "success" }, 200);
-    } catch (error) {
-      console.error("createSessionCookie failed :", error);
-      return c.text("Unathorized", 401);
-    }
-  });
-
-  app.post("/api/sessionLogout", (c) => {
-    deleteCookie(c, "__session");
-    return c.text("Logged Out", 200);
-  });
+  app.use(handlerAdapter(firebaseAuthMiddleware));
+  app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
+  app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
 }
 
 if (BATI.has("trpc")) {
