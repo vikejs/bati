@@ -3,7 +3,11 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
-import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+import {
+  firebaseAuthLoginHandler,
+  firebaseAuthLogoutHandler,
+  firebaseAuthMiddleware,
+} from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import {
@@ -11,13 +15,12 @@ import {
   type CreateFastifyContextOptions,
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
+import { createRequestAdapter } from "@universal-middleware/express";
 import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
 import type { RouteHandlerMethod } from "fastify/types/route";
-import { getAuth } from "firebase-admin/auth";
 import { renderPage } from "vike/server";
-import { newRequest } from "./server/request-adapter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,12 +29,20 @@ const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
+interface Middleware<Context extends Record<string | number | symbol, unknown>> {
+  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
+}
+
 export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: (request: Request, context: Context) => Promise<Response>,
+  handler: Middleware<Context>,
 ) {
+  const requestAdapter = createRequestAdapter();
   return (async (request, reply) => {
-    const response = await handler(newRequest(request.raw), request.routeOptions.config as unknown as Context);
-    return reply.send(response);
+    const response = await handler(requestAdapter(request.raw)[0], request.routeOptions.config as unknown as Context);
+
+    if (response) {
+      return reply.send(response);
+    }
   }) satisfies RouteHandlerMethod;
 }
 
@@ -39,6 +50,13 @@ startServer();
 
 async function startServer() {
   const app = Fastify();
+
+  // Avoid pre-parsing body, otherwise it will cause issue with universal handlers
+  // This will probably change in the future though, you can follow https://github.com/magne4000/universal-handler for updates
+  app.removeAllContentTypeParsers();
+  app.addContentTypeParser("*", function (_request, _payload, done) {
+    done(null, "");
+  });
 
   await app.register(await import("@fastify/middie"));
 
@@ -62,59 +80,13 @@ async function startServer() {
   }
 
   if (BATI.has("authjs")) {
-    await app.register(await import("@fastify/formbody"));
-
     app.all("/api/auth/*", handlerAdapter(authjsHandler));
   }
 
   if (BATI.has("firebase-auth")) {
-    await app.register(await import("@fastify/cookie"));
-
-    app.addHook("onRequest", async (request) => {
-      const sessionCookie = request.cookies.__session;
-      if (sessionCookie) {
-        try {
-          const auth = getAuth(firebaseAdmin);
-          const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
-          const user = await auth.getUser(decodedIdToken.sub);
-          request.user = user;
-        } catch (error) {
-          console.debug("verifySessionCookie:", error);
-          request.user = null;
-        }
-      }
-    });
-
-    app.post<{ Body: { idToken: string } }>("/api/sessionLogin", async (request, reply) => {
-      const idToken = request.body.idToken || "";
-
-      const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-
-      try {
-        const auth = getAuth(firebaseAdmin);
-        const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-        reply.setCookie("__session", sessionCookie, {
-          path: "/", // The path needs to be set manually; otherwise, it will default to "/api" in this case.
-          maxAge: expiresIn,
-          httpOnly: true,
-          secure: true,
-        });
-
-        reply.code(200);
-        return reply.send({ status: "success" });
-      } catch (error) {
-        console.error("createSessionCookie failed :", error);
-
-        reply.code(401);
-        return reply.send({ status: "Unauthorized" });
-      }
-    });
-
-    app.post("/api/sessionLogout", (_, reply) => {
-      reply.clearCookie("__session");
-      reply.code(200);
-      return reply.send({ status: "Logged Out" });
-    });
+    app.addHook("onRequest", handlerAdapter(firebaseAuthMiddleware));
+    app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
+    app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
   }
 
   if (BATI.has("auth0")) {

@@ -39,7 +39,8 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
 
   return {
     fetch(path: string, init?: RequestInit) {
-      return nodeFetch(`http://localhost:${context.port}${path}`, init);
+      const url = path.startsWith("http") ? path : `http://localhost:${context.port}${path}`;
+      return nodeFetch(url, init);
     },
     context,
   };

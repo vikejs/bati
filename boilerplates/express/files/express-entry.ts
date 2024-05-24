@@ -3,15 +3,15 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
-import { firebaseAuthMiddleware } from "@batijs/firebase-auth/files/server/firebase-auth-middleware";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
+  firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
-import { createMiddleware } from "@hattip/adapter-node";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import { createMiddleware } from "@universal-middleware/express";
 import express, { type Request as ExpressRequest } from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import { renderPage } from "vike/server";

@@ -66,7 +66,7 @@ if (BATI.has("firebase-auth")) {
     const auth = getAuth(firebaseAdmin);
     try {
       const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+      const options = { maxAge: expiresIn / 1000, httpOnly: true, secure: true };
 
       expiresIn = 60 * 60 * 24 * 5; // 5 days. The setCookie() function of Hono expects time to be specified in seconds.
       setCookie(c, "__session", sessionCookie, options);

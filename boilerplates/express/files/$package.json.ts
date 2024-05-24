@@ -27,7 +27,7 @@ export default async function getPackageJson(props: TransformerProps) {
       ...(props.meta.BATI.has("auth0") ? (["dotenv"] as const) : []),
     ],
     dependencies: [
-      "@hattip/adapter-node",
+      "@universal-middleware/express",
       "express",
       "tsx",
       "vite",

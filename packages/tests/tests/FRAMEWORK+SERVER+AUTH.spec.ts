@@ -11,7 +11,10 @@ export const matrix = [
   "eslint",
 ] as const;
 
-export const exclude = [["hono", "auth0"]];
+export const exclude = [
+  ["hono", "auth0"],
+  ["hattip", "auth0"],
+];
 
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace
@@ -24,7 +27,7 @@ export const exclude = [["hono", "auth0"]];
 // TEST_AUTH0_CLIENT_ID=...
 // TEST_AUTH0_ISSUER_BASE_URL=https://<...>.auth0.com
 
-await describeBati(({ test, expect, fetch, testMatch }) => {
+await describeBati(({ test, expect, fetch, testMatch, context }) => {
   test("home", async () => {
     const res = await fetch("/");
     expect(res.status).toBe(200);
@@ -52,6 +55,66 @@ await describeBati(({ test, expect, fetch, testMatch }) => {
       expect(await res.text()).not.toContain('{"is404":true}');
     },
   });
+
+  if (context.flags.includes("firebase-auth")) {
+    const firebaseClientConfig = process.env.TEST_FIREBASE_CLIENT_CONFIG
+      ? JSON.parse(process.env.TEST_FIREBASE_CLIENT_CONFIG)
+      : undefined;
+
+    test("sessionLogin 401", async () => {
+      const res = await fetch("/api/sessionLogin", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+      expect(res.status).toBe(401);
+    });
+
+    test("sessionLogin", async () => {
+      if (!firebaseClientConfig?.apiKey || !process.env.TEST_FIREBASE_USER_UID) {
+        return;
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { firebaseAdmin, getAuth } = await import("./libs/firebaseAdmin.js");
+      const auth = getAuth(firebaseAdmin);
+      const customToken = await auth.createCustomToken(firebaseClientConfig.apiKey);
+      const data = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.TEST_FIREBASE_USER_UID}`,
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: customToken,
+            returnSecureToken: true,
+          }),
+        },
+      ).then((x) => x.json() as Promise<{ idToken: string }>);
+      const res = await fetch("/api/sessionLogin", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idToken: data.idToken,
+        }),
+      });
+      expect(await res.text()).toContain('{"status":"success"}');
+      expect(res.status).toBe(200);
+    });
+
+    test("sessionLogout", async () => {
+      const res = await fetch("/api/sessionLogout", {
+        method: "post",
+      });
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
+    });
+  }
 
   test("telefunc", async () => {
     const res = await fetch("/_telefunc", {

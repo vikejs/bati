@@ -24,7 +24,7 @@ export async function firebaseAuthMiddleware(
 
 export async function firebaseAuthLoginHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  _context: Context,
+  _context?: Context,
 ): Promise<Response> {
   const body = await request.json();
   const idToken: string = (body as { idToken?: string }).idToken || "";
@@ -34,7 +34,7 @@ export async function firebaseAuthLoginHandler<Context extends Record<string | n
   try {
     const sessionCookie = await getAuth(firebaseAdmin).createSessionCookie(idToken, { expiresIn });
 
-    const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+    const options = { maxAge: expiresIn / 1000, httpOnly: true, secure: true };
 
     return new Response(JSON.stringify({ status: "success" }), {
       status: 200,
@@ -54,7 +54,7 @@ export async function firebaseAuthLoginHandler<Context extends Record<string | n
 
 export async function firebaseAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
-  _context: Context,
+  _context?: Context,
 ): Promise<Response> {
   return new Response(JSON.stringify({ status: "success" }), {
     status: 200,

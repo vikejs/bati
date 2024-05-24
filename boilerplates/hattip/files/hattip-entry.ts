@@ -1,4 +1,9 @@
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
+import {
+  firebaseAuthLoginHandler,
+  firebaseAuthLogoutHandler,
+  firebaseAuthMiddleware,
+} from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { vikeAdapter } from "@batijs/shared-server/server/vike-adapter";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
@@ -6,8 +11,12 @@ import type { HattipHandler } from "@hattip/core";
 import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
+interface Middleware<Context extends Record<string | number | symbol, unknown>> {
+  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
+}
+
 function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: (request: Request, context: Context) => Promise<Response>,
+  handler: Middleware<Context>,
 ): RouteHandler<unknown, unknown> {
   return (context) => {
     const rawContext = context as unknown as Record<string, unknown>;
@@ -47,6 +56,12 @@ if (BATI.has("trpc")) {
 
 if (BATI.has("authjs")) {
   router.use("/api/auth/*", handlerAdapter(authjsHandler));
+}
+
+if (BATI.has("firebase-auth")) {
+  router.use(handlerAdapter(firebaseAuthMiddleware));
+  router.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
+  router.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
 }
 
 /**
