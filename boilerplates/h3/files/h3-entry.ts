@@ -9,6 +9,7 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import installCrypto from "@hattip/polyfills/crypto";
@@ -23,13 +24,10 @@ import {
   eventHandler,
   fromNodeMiddleware,
   fromWebHandler,
-  setResponseHeaders,
-  setResponseStatus,
   toNodeListener,
   toWebRequest,
 } from "h3";
 import serveStatic from "serve-static";
-import { renderPage } from "vike/server";
 
 installWhatwgNodeFetch();
 installGetSetCookie();
@@ -49,7 +47,11 @@ interface Middleware<Context extends Record<string | number | symbol, unknown>> 
 export function fromWebMiddleware<Context extends Record<string | number | symbol, unknown>>(
   handler: Middleware<Context>,
 ) {
-  return eventHandler((event) => handler(toWebRequest(event), event.context as unknown as Context));
+  return eventHandler((event) => {
+    const ctx = event.context as unknown as Record<string, unknown>;
+    ctx.context ??= {};
+    return handler(toWebRequest(event), ctx.context as Context);
+  });
 }
 
 startServer();
@@ -138,30 +140,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  router.use(
-    "/**",
-    eventHandler(async (event) => {
-      const pageContextInit = BATI.has("auth0")
-        ? {
-            urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-            user: event.node.req.oidc.user,
-          }
-        : BATI.has("firebase-auth")
-          ? {
-              urlOriginal: event.node.req.originalUrl || event.node.req.url!,
-              user: event.context.user,
-            }
-          : { urlOriginal: event.node.req.originalUrl || event.node.req.url! };
-
-      const pageContext = await renderPage(pageContextInit);
-      const response = pageContext.httpResponse;
-
-      setResponseStatus(event, response?.statusCode);
-      setResponseHeaders(event, Object.fromEntries(response?.headers ?? []));
-
-      return response?.getBody();
-    }),
-  );
+  router.use("/**", fromWebHandler(vikeHandler));
 
   app.use(router);
 

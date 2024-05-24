@@ -4,7 +4,7 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
-import { vikeAdapter } from "@batijs/shared-server/server/vike-adapter";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import type { HattipHandler } from "@hattip/core";
@@ -69,6 +69,6 @@ if (BATI.has("firebase-auth")) {
  *
  * @link {@see https://vike.dev}
  **/
-router.use(handlerAdapter(vikeAdapter));
+router.use(handlerAdapter(vikeHandler));
 
 export default router.buildHandler() as HattipHandler;

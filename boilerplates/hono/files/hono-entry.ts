@@ -4,6 +4,7 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
@@ -12,7 +13,6 @@ import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/ser
 import { Hono } from "hono";
 import { compress } from "hono/compress";
 import { createMiddleware } from "hono/factory";
-import { renderPage } from "vike/server";
 
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -92,27 +92,12 @@ if (BATI.has("telefunc")) {
   app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
-app.all("*", async (c, next) => {
-  const pageContextInit = BATI.has("firebase-auth")
-    ? {
-        urlOriginal: c.req.url,
-        user: c.get("user"),
-      }
-    : {
-        urlOriginal: c.req.url,
-      };
-  const pageContext = await renderPage(pageContextInit);
-  const { httpResponse } = pageContext;
-  if (!httpResponse) {
-    return next();
-  } else {
-    const { body, statusCode, headers } = httpResponse;
-    headers.forEach(([name, value]) => c.header(name, value));
-    c.status(statusCode);
-
-    return c.body(body);
-  }
-});
+/**
+ * Vike route
+ *
+ * @link {@see https://vike.dev}
+ **/
+app.all("*", handlerAdapter(vikeHandler));
 
 if (isProduction) {
   console.log(`Server listening on http://localhost:${port}`);

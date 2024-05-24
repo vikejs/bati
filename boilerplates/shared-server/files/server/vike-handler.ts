@@ -1,10 +1,10 @@
 import { renderPage } from "vike/server";
 
-export async function vikeAdapter<Context extends Record<string | number | symbol, unknown>>(
+export async function vikeHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   context?: Context,
 ): Promise<Response> {
-  const pageContextInit = { urlOriginal: request.url, ...(context ?? {}) };
+  const pageContextInit = { ...(context ?? {}), urlOriginal: request.url };
   const pageContext = await renderPage(pageContextInit);
   const response = pageContext.httpResponse;
 

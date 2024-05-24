@@ -8,13 +8,13 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { createMiddleware } from "@universal-middleware/express";
-import express, { type Request as ExpressRequest } from "express";
+import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
-import { renderPage } from "vike/server";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -128,25 +128,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*", async (req: ExpressRequest, res, next) => {
-    const pageContextInit = BATI.has("auth0")
-      ? { urlOriginal: req.originalUrl, user: req.oidc.user }
-      : BATI.has("firebase-auth")
-        ? { urlOriginal: req.originalUrl, user: req.user }
-        : { urlOriginal: req.originalUrl };
-
-    const pageContext = await renderPage(pageContextInit);
-    const { httpResponse } = pageContext;
-
-    if (!httpResponse) {
-      return next();
-    } else {
-      const { statusCode, headers } = httpResponse;
-      headers.forEach(([name, value]) => res.setHeader(name, value));
-      res.status(statusCode);
-      httpResponse.pipe(res);
-    }
-  });
+  app.all("*", handlerAdapter(vikeHandler));
 
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);

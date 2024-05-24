@@ -8,6 +8,7 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import {
@@ -20,7 +21,6 @@ import express from "express";
 import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
 import type { RouteHandlerMethod } from "fastify/types/route";
-import { renderPage } from "vike/server";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -38,7 +38,9 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
 ) {
   const requestAdapter = createRequestAdapter();
   return (async (request, reply) => {
-    const response = await handler(requestAdapter(request.raw)[0], request.routeOptions.config as unknown as Context);
+    const config = request.routeOptions.config as unknown as Record<string, unknown>;
+    config.context ??= {};
+    const response = await handler(requestAdapter(request.raw)[0], config.context as Context);
 
     if (response) {
       return reply.send(response);
@@ -141,27 +143,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("/*", async function (request, reply) {
-    const pageContextInit = BATI.has("auth0")
-      ? { urlOriginal: request.originalUrl || request.url, user: request.raw.oidc.user }
-      : BATI.has("firebase-auth")
-        ? { urlOriginal: request.originalUrl || request.url, user: request.user }
-        : { urlOriginal: request.originalUrl || request.url };
-
-    const pageContext = await renderPage(pageContextInit);
-    const { httpResponse } = pageContext;
-
-    if (!httpResponse) {
-      return;
-    } else {
-      const { statusCode, headers, body } = httpResponse;
-
-      headers.forEach(([name, value]) => reply.header(name, value));
-      reply.code(statusCode);
-
-      return reply.send(body);
-    }
-  });
+  app.all("/*", handlerAdapter(vikeHandler));
 
   app.listen(
     {
