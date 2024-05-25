@@ -1172,6 +1172,40 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(vue@3.4.27(typescript@5.4.5))
 
+  boilerplates/vue-drizzle:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
+      '@types/better-sqlite3':
+        specifier: ^7.6.10
+        version: 7.6.10
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      better-sqlite3:
+        specifier: ^10.0.0
+        version: 10.0.0
+      vike:
+        specifier: ^0.4.171
+        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike-vue:
+        specifier: ^0.6.6
+        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11(@types/node@18.19.31)
+      vue:
+        specifier: ^3.4.27
+        version: 3.4.27(typescript@5.4.5)
+
   boilerplates/vue-firebase-auth:
     dependencies:
       '@batijs/core':

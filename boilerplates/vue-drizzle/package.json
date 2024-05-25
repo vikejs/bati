@@ -1,0 +1,65 @@
+{
+  "name": "@batijs/vue-drizzle",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@types/better-sqlite3": "^7.6.10",
+    "@types/node": "^18.19.14",
+    "better-sqlite3": "^10.0.0",
+    "vike": "^0.4.171",
+    "vike-vue": "^0.6.6",
+    "vite": "^5.2.11",
+    "vue": "^3.4.27"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "vue",
+          "drizzle"
+        ],
+        "$not": {
+          "$in": [
+            "trpc",
+            "telefunc"
+          ]
+        }
+      }
+    }
+  },
+  "exports": {
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
+    },
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
+      ],
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
+      ]
+    }
+  }
+}
