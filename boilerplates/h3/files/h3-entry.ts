@@ -249,15 +249,13 @@ async function startServer() {
       eventHandler(async (event) => {
         const newTodo = await readBody<TodoInsert>(event);
 
-        await db.insert(todoTable).values({ text: newTodo.text });
+        const result = await db.insert(todoTable).values({ text: newTodo.text });
 
-        setResponseStatus(event, 201, "New Todo Created");
-        const status = getResponseStatus(event);
-        const message = getResponseStatusText(event);
+        setResponseStatus(event, 201);
 
         return {
-          status,
-          message,
+          message: "New Todo Created",
+          result,
         };
       }),
     );

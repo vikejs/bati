@@ -198,9 +198,9 @@ async function startServer() {
     app.post("/api/todo/create", async (req, res) => {
       const newTodo: TodoInsert = req.body;
 
-      await db.insert(todoTable).values({ text: newTodo.text });
+      const result = await db.insert(todoTable).values({ text: newTodo.text });
 
-      res.status(201).send({ message: "New Todo Created" });
+      res.status(201).send({ message: "New Todo Created", result });
     });
   }
 
