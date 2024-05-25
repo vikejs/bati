@@ -7,8 +7,8 @@ export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
   return (
     <>
       <ul>
-        {todoItems.map((todoItem, i) => (
-          <li key={i}>{todoItem.text}</li>
+        {todoItems.map((todoItem) => (
+          <li key={todoItem.id}>{todoItem.text}</li>
         ))}
         <li>
           <form
