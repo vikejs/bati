@@ -4,7 +4,7 @@ import { onNewTodo } from "./TodoList.telefunc.js";
 
 export function TodoList({ todoItemsInitial }: { todoItemsInitial: TodoItem[] }) {
   const [todoItems, setTodoItems] = useState(todoItemsInitial);
-  const [draft, setDraft] = useState("");
+  const [newTodo, setNewTodo] = useState("");
   return (
     <>
       <ul>
@@ -15,12 +15,12 @@ export function TodoList({ todoItemsInitial }: { todoItemsInitial: TodoItem[] })
           <form
             onSubmit={async (ev) => {
               ev.preventDefault();
-              const { todoItems } = await onNewTodo({ text: draft });
-              setDraft("");
+              const { todoItems } = await onNewTodo({ text: newTodo });
+              setNewTodo("");
               setTodoItems(todoItems);
             }}
           >
-            <input type="text" onChange={(ev) => setDraft(ev.target.value)} value={draft} />{" "}
+            <input type="text" onChange={(ev) => setNewTodo(ev.target.value)} value={newTodo} />{" "}
             <button type="submit">Add to-do</button>
           </form>
         </li>
