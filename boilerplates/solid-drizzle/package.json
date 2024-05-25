@@ -1,0 +1,75 @@
+{
+  "name": "@batijs/solid-drizzle",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@types/node": "^18.19.14",
+    "solid-js": "^1.8.17",
+    "vike": "^0.4.171",
+    "vike-solid": "^0.4.5",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "solid",
+          "drizzle"
+        ],
+        "$not": {
+          "$in": [
+            "trpc",
+            "telefunc"
+          ]
+        }
+      }
+    }
+  },
+  "exports": {
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
+    },
+    "./pages/todo/TodoList": {
+      "types": "./dist/types/pages/todo/TodoList.d.ts"
+    },
+    "./pages/todo/+Page": {
+      "types": "./dist/types/pages/todo/+Page.d.ts"
+    },
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
+      ],
+      "pages/todo/TodoList": [
+        "./dist/types/pages/todo/TodoList.d.ts"
+      ],
+      "pages/todo/+Page": [
+        "./dist/types/pages/todo/+Page.d.ts"
+      ],
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
+      ]
+    }
+  }
+}
