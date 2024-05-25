@@ -1,12 +1,15 @@
-import type { TodoItem } from "@batijs/shared-db/database/todoItems";
 import { createSignal } from "solid-js";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data.js";
 import { TodoList } from "./TodoList.js";
 
-export default function Page(props: { initialTodoItems: TodoItem[] }) {
+export default function Page() {
+  const initialTodoItems = useData<Data>();
+
   return (
     <>
       <h1>To-do List</h1>
-      <TodoList initialTodoItems={props.initialTodoItems} />
+      <TodoList initialTodoItems={initialTodoItems} />
       <Counter />
     </>
   );
