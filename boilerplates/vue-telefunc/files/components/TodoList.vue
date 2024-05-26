@@ -4,8 +4,8 @@
       {{ item.text }}
     </li>
     <li>
-      <form @submit.prevent="submitDraft()">
-        <input v-model="draft" type="text" />{{ " " }}
+      <form @submit.prevent="submitNewTodo()">
+        <input v-model="newTodo" type="text" />{{ " " }}
         <button type="submit">Add to-do</button>
       </form>
     </li>
@@ -21,13 +21,13 @@ type TodoItem = { text: string };
 const attrs = useAttrs();
 
 const todoItems = ref(attrs["todo-items-initial"]) as Ref<TodoItem[]>;
-const draft = ref("");
+const newTodo = ref("");
 
-const submitDraft = async () => {
+const submitNewTodo = async () => {
   const result = await onNewTodo({
-    text: draft.value,
+    text: newTodo.value,
   });
-  draft.value = "";
+  newTodo.value = "";
   todoItems.value = result.todoItems;
 };
 </script>

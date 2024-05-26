@@ -4,7 +4,7 @@ import { createSignal, For, untrack } from "solid-js";
 
 export function TodoList(props: { initialTodoItems: TodoItem[] }) {
   const [todoItems, setTodoItems] = createSignal(props.initialTodoItems);
-  const [draft, setDraft] = createSignal("");
+  const [newTodo, setNewTodo] = createSignal("");
   return (
     <>
       <ul>
@@ -13,12 +13,12 @@ export function TodoList(props: { initialTodoItems: TodoItem[] }) {
           <form
             onSubmit={async (ev) => {
               ev.preventDefault();
-              const { todoItems } = await trpc.onNewTodo.mutate(untrack(draft));
-              setDraft("");
+              const { todoItems } = await trpc.onNewTodo.mutate(untrack(newTodo));
+              setNewTodo("");
               setTodoItems(todoItems);
             }}
           >
-            <input type="text" onChange={(ev) => setDraft(ev.target.value)} value={draft()} />{" "}
+            <input type="text" onChange={(ev) => setNewTodo(ev.target.value)} value={newTodo()} />{" "}
             <button type="submit">Add to-do</button>
           </form>
         </li>
