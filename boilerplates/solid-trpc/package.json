@@ -19,7 +19,8 @@
     "@trpc/server": "^10.45.2",
     "@types/node": "^18.19.14",
     "solid-js": "^1.8.17",
-    "vike": "^0.4.171",
+    "vike": "^0.4.172",
+    "vike-solid": "^0.4.5",
     "vite": "^5.2.11"
   },
   "dependencies": {
@@ -39,6 +40,9 @@
     }
   },
   "exports": {
+    "./pages/todo-trpc/+data": {
+      "types": "./dist/types/pages/todo-trpc/+data.d.ts"
+    },
     "./pages/todo-trpc/TodoList": {
       "types": "./dist/types/pages/todo-trpc/TodoList.d.ts"
     },
@@ -47,13 +51,13 @@
     },
     "./pages/todo-trpc/+config": {
       "types": "./dist/types/pages/todo-trpc/+config.d.ts"
-    },
-    "./pages/todo-trpc/+onBeforeRender": {
-      "types": "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "pages/todo-trpc/+data": [
+        "./dist/types/pages/todo-trpc/+data.d.ts"
+      ],
       "pages/todo-trpc/TodoList": [
         "./dist/types/pages/todo-trpc/TodoList.d.ts"
       ],
@@ -62,9 +66,6 @@
       ],
       "pages/todo-trpc/+config": [
         "./dist/types/pages/todo-trpc/+config.d.ts"
-      ],
-      "pages/todo-trpc/+onBeforeRender": [
-        "./dist/types/pages/todo-trpc/+onBeforeRender.d.ts"
       ]
     }
   }
