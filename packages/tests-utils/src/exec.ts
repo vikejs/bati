@@ -1,7 +1,7 @@
 import stream from "node:stream";
 import { execa as execaOrig, type ExecaError, type Options } from "execa";
 import treeKill from "tree-kill";
-import type { ExecaChildProcess } from "./types.js";
+import type { ResultPromise } from "./types.js";
 
 // Pipe any process output to this stream in order to log it with timestamps.
 // See:
@@ -33,13 +33,13 @@ class LogStream extends stream.Writable {
 // - Add a member `log` to the returned process, for accessing the entire log at any time, even if the command hasn't
 //   finished yet.
 // - Add a `treekill()` method to the returned process, with a more reliable implementation as the original `kill()`.
-export function execa(file: string, args?: string[], options: Options = {}): ExecaChildProcess<string> {
+export function execa<T extends Options>(file: string, args?: string[], options?: T): ResultPromise<T> {
   const newOptions = {
-    ...options,
+    ...(options ?? {}),
     all: true, // create a single stream for stdout and stderr
   };
 
-  const childProcess = execaOrig(file, args, newOptions) as ExecaChildProcess<string>;
+  const childProcess = execaOrig(file, args, newOptions) as unknown as ResultPromise<T>;
   childProcess.log = "";
   childProcess.all?.pipe(new LogStream(childProcess));
   childProcess.treekill = treekill;
@@ -65,7 +65,7 @@ export function execa(file: string, args?: string[], options: Options = {}): Exe
     if (e.timedOut) {
       console.log(`'${e.command}' timed out. Output:`);
       console.log(childProcess.log);
-    } else if (e.exitCode && !e.killed && !e.signal && !childProcess.treekilled) {
+    } else if (e.exitCode && !e.isTerminated && !e.signal && !childProcess.treekilled) {
       console.log(`'${e.command}' failed with ${e.exitCode}. Output:`);
       console.log(childProcess.log);
     }
