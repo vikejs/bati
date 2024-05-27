@@ -1,11 +1,11 @@
-import type { ExecaChildProcess as ExecaChildProcessOrig } from "execa";
+import type { Options, ResultPromise as ResultPromiseOrig } from "execa";
 import type { RequestInit, Response } from "node-fetch";
 import type { TestOptions } from "vitest";
 
 export interface GlobalContext {
   port: number;
   port_1: number;
-  server: ExecaChildProcess<string> | undefined;
+  server: ResultPromise<Options> | undefined;
   flags: string[];
 }
 
@@ -13,7 +13,7 @@ export interface PrepareOptions {
   mode?: "dev" | "build" | "none";
 }
 
-export type ExecaChildProcess<T extends string> = ExecaChildProcessOrig<T> & {
+export type ResultPromise<T extends Options> = ResultPromiseOrig<T> & {
   // Will be fed in real time with stdout and stderr, with timestamps.
   log: string;
 
