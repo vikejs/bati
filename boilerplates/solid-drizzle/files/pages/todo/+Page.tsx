@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { useData } from "vike-solid/useData";
+import { TodoList } from "../../components/TodoList.jsx";
 import type { Data } from "./+data.js";
-import { TodoList } from "./TodoList.js";
 
 export default function Page() {
   const initialTodoItems = useData<Data>();

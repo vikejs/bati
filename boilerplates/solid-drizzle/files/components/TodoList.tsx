@@ -1,5 +1,5 @@
 import type { TodoItem } from "@batijs/drizzle/database/schema";
-import { onCreateTodo } from "@batijs/shared-telefunc/pages/todo/TodoList.telefunc";
+import { onCreateTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { createSignal, For, untrack } from "solid-js";
 import { reload } from "vike/client/router";
