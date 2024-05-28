@@ -35,7 +35,12 @@
         "$all": [
           "solid",
           "trpc"
-        ]
+        ],
+        "$not": {
+          "$in": [
+            "drizzle"
+          ]
+        }
       }
     }
   },
