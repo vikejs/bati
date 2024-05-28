@@ -42,11 +42,11 @@
     }
   },
   "exports": {
+    "./components/TodoList": {
+      "types": "./dist/types/components/TodoList.d.ts"
+    },
     "./pages/todo/+data": {
       "types": "./dist/types/pages/todo/+data.d.ts"
-    },
-    "./pages/todo/TodoList": {
-      "types": "./dist/types/pages/todo/TodoList.d.ts"
     },
     "./pages/todo/+Page": {
       "types": "./dist/types/pages/todo/+Page.d.ts"
@@ -57,11 +57,11 @@
   },
   "typesVersions": {
     "*": {
+      "components/TodoList": [
+        "./dist/types/components/TodoList.d.ts"
+      ],
       "pages/todo/+data": [
         "./dist/types/pages/todo/+data.d.ts"
-      ],
-      "pages/todo/TodoList": [
-        "./dist/types/pages/todo/TodoList.d.ts"
       ],
       "pages/todo/+Page": [
         "./dist/types/pages/todo/+Page.d.ts"

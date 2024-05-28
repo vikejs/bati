@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useData } from "vike-react/useData";
+import { TodoList } from "../../components/TodoList.jsx";
 import type { Data } from "./+data.js";
-import { TodoList } from "./TodoList.jsx";
 
 export default function Page() {
   const todoItems = useData<Data>();
