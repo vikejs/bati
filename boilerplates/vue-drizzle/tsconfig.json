@@ -1,3 +1,9 @@
 {
-  "extends": ["../tsconfig.base.json"]
+  "extends": ["../tsconfig.base.json"],
+  "compilerOptions": {
+    "types": ["vite/client", "@types/node", "@batijs/core/types", "@batijs/core/module"],
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"]
+  }
 }
