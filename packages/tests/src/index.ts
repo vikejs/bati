@@ -214,6 +214,13 @@ function arrayIncludes(a: string[], b: string[]) {
   return a.every((element) => b.includes(element));
 }
 
+async function spinner<T>(title: string, callback: () => T): Promise<T> {
+  if (process.env.CI) {
+    return callback();
+  }
+  return zx.spinner(title, callback);
+}
+
 async function main(context: GlobalContext) {
   await initTmpDir(context);
 
@@ -222,7 +229,7 @@ async function main(context: GlobalContext) {
 
   loadDotEnvTest();
 
-  const testFiles = await zx.spinner("Loading all test files matrices...", async () =>
+  const testFiles = await spinner("Loading all test files matrices...", async () =>
     Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
   );
 
@@ -247,7 +254,7 @@ async function main(context: GlobalContext) {
     }
   }
 
-  await zx.spinner("Generating test repositories...", () => Promise.all(promises));
+  await spinner("Generating test repositories...", () => Promise.all(promises));
 
   await createWorkspacePackageJson(context);
 
@@ -266,10 +273,10 @@ async function main(context: GlobalContext) {
   await linkTestUtils();
 
   // pnpm/bun install
-  await zx.spinner("Installing dependencies...", () => packageManagerInstall(context));
+  await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // exec turbo run test lint build
-  await zx.spinner("Executing test suite...", () => execTurborepo(context));
+  await spinner("Executing test suite...", () => execTurborepo(context));
 }
 
 // init context
