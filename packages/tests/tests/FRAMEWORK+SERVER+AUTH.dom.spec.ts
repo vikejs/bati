@@ -2,7 +2,7 @@ import { describeBati, dom } from "@batijs/tests-utils";
 
 export const matrix = [
   ["express", "h3", "hono", "fastify", "hattip"],
-  [...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : [])],
+  [...(process.env.TEST_AUTH0_CLIENT_ID ?? process.env.AUTH0_CLIENT_ID ? (["auth0"] as const) : [])],
   "eslint",
 ] as const;
 
