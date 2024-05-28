@@ -41,6 +41,20 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
     const response = await handler(requestAdapter(request.raw)[0], config.context as Context);
 
     if (response) {
+      if (!response.body) {
+        // Fastify currently doesn't send a response for body is null.
+        // To mimic express behavior, we convert the body to an empty ReadableStream.
+        Object.defineProperty(response, "body", {
+          value: new ReadableStream({
+            start(controller) {
+              controller.close();
+            },
+          }),
+          writable: false,
+          configurable: true,
+        });
+      }
+
       return reply.send(response);
     }
   }) satisfies RouteHandlerMethod;

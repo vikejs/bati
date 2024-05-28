@@ -6,17 +6,6 @@ export const matrix = [
   "eslint",
 ] as const;
 
-// How to configure your environment for testing auth?
-// First, create a .env.test file at the root of bati workspace
-// Then, for firebase, generate a service account json file, and put in .env.test like so
-// TEST_FIREBASE_ACCOUNT=`{
-//   ...
-// }`
-//
-// For auth0, you must put your client ID and Issuer base URL in .env.test like so
-// TEST_AUTH0_CLIENT_ID=...
-// TEST_AUTH0_ISSUER_BASE_URL=https://<...>.auth0.com
-
 await describeBati(({ testMatch, expect, context }) => {
   testMatch<typeof matrix>("auth/signin", {
     auth0: async () => {
@@ -25,15 +14,15 @@ await describeBati(({ testMatch, expect, context }) => {
 
       await page.goto(`http://localhost:${context.port}/api/auth/signin`);
 
-      const el = page.mainFrame.document.querySelector('form[action*="/api/auth/signin/auth0"] button');
+      const el = page.mainFrame.document.querySelector('form[action*="/api/auth/signin/auth0"]');
 
       if (el) {
-        (el as dom.HTMLButtonElement).click();
+        (el as dom.HTMLFormElement).submit();
       }
 
-      await page.waitForNavigation();
+      await page.waitUntilComplete();
 
-      expect(page.url).toBe("");
+      expect(page.url).toBe(`http://localhost:${context.port}/api/auth/signin/auth0`);
     },
   });
 });

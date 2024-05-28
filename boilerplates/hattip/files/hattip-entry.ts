@@ -1,3 +1,5 @@
+// BATI.has("auth0")
+import "dotenv/config";
 import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
 import {
   firebaseAuthLoginHandler,

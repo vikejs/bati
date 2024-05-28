@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { execa } from "@batijs/tests-utils";
+import { exec } from "@batijs/tests-utils";
 import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,7 +13,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
     // local verdaccio server is running.
     // This is better than using the local dist build directly
     // as we are also testing that the generated package dependencies are properly bundled.
-    await execa(
+    await exec(
       "npm",
       [
         "--registry",
@@ -30,7 +30,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       },
     );
   } else {
-    await execa(
+    await exec(
       "node",
       [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...flags.map((f) => `--${f}`), digest],
       {

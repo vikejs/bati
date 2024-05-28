@@ -228,9 +228,6 @@ importers:
       express-openid-connect:
         specifier: ^2.17.1
         version: 2.17.1(express@4.19.2)
-      firebase-admin:
-        specifier: ^12.1.1
-        version: 12.1.1
       telefunc:
         specifier: ^0.1.72
         version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -295,9 +292,6 @@ importers:
       fastify:
         specifier: ^4.27.0
         version: 4.27.0
-      firebase-admin:
-        specifier: ^12.1.1
-        version: 12.1.1
       telefunc:
         specifier: ^0.1.72
         version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -406,9 +400,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      firebase-admin:
-        specifier: ^12.1.1
-        version: 12.1.1
       h3:
         specifier: ~1.11.1
         version: 1.11.1
@@ -473,6 +464,9 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       hattip:
         specifier: ^0.0.33
         version: 0.0.33
@@ -525,9 +519,9 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      firebase-admin:
-        specifier: ^12.1.1
-        version: 12.1.1
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       hono:
         specifier: ^4.4.0
         version: 4.4.0
@@ -1454,9 +1448,6 @@ importers:
 
   packages/tests-utils:
     dependencies:
-      execa:
-        specifier: ^9.1.0
-        version: 9.1.0
       get-port:
         specifier: ^7.1.0
         version: 7.1.0
@@ -1466,15 +1457,15 @@ importers:
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
-      tree-kill:
-        specifier: ^1.2.2
-        version: 1.2.2
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.2)
       which:
         specifier: ^4.0.0
         version: 4.0.0
+      zx:
+        specifier: ^8.1.2
+        version: 8.1.2
     devDependencies:
       '@types/node':
         specifier: ^18.19.14
@@ -3009,6 +3000,9 @@ packages:
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
 
+  '@types/fs-extra@11.0.4':
+    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
+
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
 
@@ -3017,6 +3011,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/jsonfile@6.1.4':
+    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/jsonwebtoken@9.0.6':
     resolution: {integrity: sha512-/5hndP5dCjloafCXns6SZyESp3Ldq7YjH3zwzwczYnjxIT0Fqzk5ROSYVGfFyczIue7IUEj8hkvLbPoLQ18vQw==}
@@ -6920,6 +6917,11 @@ packages:
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
+  zx@8.1.2:
+    resolution: {integrity: sha512-zkCiXKh8D/eo6r58OmJvO5mc2NthcSRvysb3fuS6VQlHPbEPBcxduRwM3m6ZfHj+7cLHcrahCnuO2TDAbW+6xw==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -8391,11 +8393,22 @@ snapshots:
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
+  '@types/fs-extra@11.0.4':
+    dependencies:
+      '@types/jsonfile': 6.1.4
+      '@types/node': 18.19.31
+    optional: true
+
   '@types/http-cache-semantics@4.0.4': {}
 
   '@types/http-errors@2.0.4': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/jsonfile@6.1.4':
+    dependencies:
+      '@types/node': 18.19.31
+    optional: true
 
   '@types/jsonwebtoken@9.0.6':
     dependencies:
@@ -12948,3 +12961,8 @@ snapshots:
       stacktracey: 2.1.8
 
   zod@3.23.8: {}
+
+  zx@8.1.2:
+    optionalDependencies:
+      '@types/fs-extra': 11.0.4
+      '@types/node': 20.12.12
