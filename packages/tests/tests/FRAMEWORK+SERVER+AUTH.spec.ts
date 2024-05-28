@@ -1,23 +1,11 @@
-/**
- * @vitest-environment happy-dom
- */
 import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
-  [
-    "authjs",
-    ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : []),
-    ...(process.env.TEST_FIREBASE_ACCOUNT ? (["firebase-auth"] as const) : []),
-  ],
+  ["authjs", ...(process.env.TEST_FIREBASE_ACCOUNT ? (["firebase-auth"] as const) : [])],
   "eslint",
 ] as const;
-
-export const exclude = [
-  ["hono", "auth0"],
-  ["hattip", "auth0"],
-];
 
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace
@@ -41,21 +29,6 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
     authjs: async () => {
       const res = await fetch("/api/auth/signin");
       expect(res.status).toBe(200);
-      expect(await res.text()).not.toContain('{"is404":true}');
-    },
-    auth0: async () => {
-      // const res = await fetch("/api/auth/signin");
-      // expect(res.status).toBe(200);
-      // expect(await res.text()).not.toContain('{"is404":true}');
-      //
-      // res
-
-      const res = await fetch("/api/auth/login", {
-        redirect: "manual",
-      });
-      expect(res.status).toBe(302);
-      expect(res.statusText).toBe("Found");
-      expect(res.headers.get("location")).toContain("auth0.com/authorize");
       expect(await res.text()).not.toContain('{"is404":true}');
     },
     "firebase-auth": async () => {

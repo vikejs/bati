@@ -122,12 +122,48 @@ describe("ts: conditional", () => {
   );
 });
 
-describe("ts: comments", () => {
+describe("ts: comment above import", () => {
   testIfElse(
     `//# BATI.has("react")
 import "react";`,
     `import "react";`,
     ``,
+  );
+});
+
+describe("ts: comment in array", () => {
+  testIfElse(
+    `const a = [
+  1,
+  //# BATI.has("react")
+  Object({
+    a: 2,
+  }),
+  //# BATI.has("react")
+  new Object({
+    a: 3,
+  }),
+  //# BATI.has("react")
+  {
+    a: 4,
+  },
+];`,
+    `const a = [
+  1,
+
+  Object({
+    a: 2,
+  }),
+
+  new Object({
+    a: 3,
+  }),
+
+  {
+    a: 4,
+  },
+];`,
+    `const a = [1];`,
   );
 });
 

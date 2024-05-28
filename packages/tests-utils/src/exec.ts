@@ -39,35 +39,45 @@ export function execa<T extends Options>(file: string, args?: string[], options?
     all: true, // create a single stream for stdout and stderr
   };
 
-  const childProcess = execaOrig(file, args, newOptions) as unknown as ResultPromise<T>;
-  childProcess.log = "";
-  childProcess.all?.pipe(new LogStream(childProcess));
-  childProcess.treekill = treekill;
-  childProcess.treekilled = false;
-  childProcess.catch(printLogOnFailure);
-  return childProcess;
+  try {
+    const childProcess = execaOrig(file, args, newOptions) as unknown as ResultPromise<T>;
+    childProcess.log = "";
+    childProcess.all?.pipe(new LogStream(childProcess));
+    childProcess.treekill = treekill;
+    childProcess.treekilled = false;
+    childProcess.catch(printLogOnFailure);
+    return childProcess;
 
-  async function treekill() {
-    // Unfortunately on Linux `childProcess.kill()` won't kill all the children of the process. See also
-    // https://github.com/sindresorhus/execa/pull/170#issuecomment-504143618 . To work around this, we kill all the
-    // children by using node-tree-kill.
-    childProcess.treekilled = true;
-    const pid = childProcess.pid;
-    if (pid) {
-      await new Promise((resolve) => treeKill(pid, resolve));
-    } else {
-      childProcess.kill();
+    async function treekill() {
+      // Unfortunately on Linux `childProcess.kill()` won't kill all the children of the process. See also
+      // https://github.com/sindresorhus/execa/pull/170#issuecomment-504143618 . To work around this, we kill all the
+      // children by using node-tree-kill.
+      childProcess.treekilled = true;
+      const pid = childProcess.pid;
+      if (pid) {
+        await new Promise((resolve) => treeKill(pid, resolve));
+      } else {
+        childProcess.kill();
+      }
     }
-  }
 
-  // Print the logs with timestamps on failure or timeout, but not when the process was killed.
-  function printLogOnFailure(e: ExecaError) {
-    if (e.timedOut) {
-      console.log(`'${e.command}' timed out. Output:`);
-      console.log(childProcess.log);
-    } else if (e.exitCode && !e.isTerminated && !e.signal && !childProcess.treekilled) {
-      console.log(`'${e.command}' failed with ${e.exitCode}. Output:`);
-      console.log(childProcess.log);
+    // Print the logs with timestamps on failure or timeout, but not when the process was killed.
+    function printLogOnFailure(e: ExecaError) {
+      if (e.timedOut) {
+        console.error(`'${e.command}' timed out. Output:`);
+        console.error(childProcess.log);
+      } else if (e.exitCode && !e.isTerminated && !e.signal && !childProcess.treekilled) {
+        console.error(`'${e.command}' failed with ${e.exitCode}. Output:`);
+        console.error(childProcess.log);
+      }
     }
+  } catch (e) {
+    console.error({
+      file,
+      args,
+      newOptions,
+    });
+    console.error(e);
+    throw e;
   }
 }

@@ -23,29 +23,11 @@ export default function vueLinterConfig(meta: VikeMeta) {
             ImportDeclaration(node) {
               visitorImportStatement(context, node);
             },
+            ":expression"(node) {
+              visitorStatementWithComments(context, sourceCode, node, meta);
+            },
             ":statement"(node) {
-              const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
-
-              if (comments.length > 0) {
-                const comment = comments[0];
-
-                const condition = extractBatiConditionComment(comments[0]);
-
-                if (condition === null) return;
-
-                const testVal = evalCondition(condition, meta);
-
-                context.report({
-                  node: node as ESTree.Node,
-                  message: "bati/statement-comments",
-                  *fix(fixer) {
-                    if (!testVal) {
-                      yield fixer.removeRange(node.range!);
-                    }
-                    yield fixer.removeRange(comment.range!);
-                  },
-                });
-              }
+              visitorStatementWithComments(context, sourceCode, node, meta);
             },
             ConditionalExpression(node) {
               visitorIfStatement(context, sourceCode, node, meta);

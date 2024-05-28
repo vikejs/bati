@@ -29,6 +29,7 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
+  pkgjson.devDependencies["happy-dom"] = packageJson.devDependencies["happy-dom"];
   await writeFile(join(projectDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
 }
 
@@ -51,6 +52,10 @@ export default defineConfig({
   test: {
     include: ['*.spec.ts'],
     testTimeout: 100000,
+    environmentMatchGlobs: [
+      ['**/*.dom.spec.ts', 'happy-dom'],
+      ['**/*.spec.ts', 'node'],
+    ],
   },
 });`,
     "utf-8",

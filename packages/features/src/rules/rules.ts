@@ -9,5 +9,4 @@ export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
   includes(RulesMessage.INFO_HATTIP, "hattip"),
-  exclusive(RulesMessage.ERROR_AUTH0_E_HONO, ["auth0", "hono"]),
 ] satisfies Rule[];

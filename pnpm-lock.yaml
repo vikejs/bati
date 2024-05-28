@@ -292,12 +292,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      express:
-        specifier: ^4.19.2
-        version: 4.19.2
-      express-openid-connect:
-        specifier: ^2.17.1
-        version: 2.17.1(express@4.19.2)
       fastify:
         specifier: ^4.27.0
         version: 4.27.0
@@ -412,12 +406,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      express:
-        specifier: ^4.19.2
-        version: 4.19.2
-      express-openid-connect:
-        specifier: ^2.17.1
-        version: 2.17.1(express@4.19.2)
       firebase-admin:
         specifier: ^12.1.1
         version: 12.1.1
@@ -1396,7 +1384,7 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.2)
       vue-eslint-parser:
         specifier: ^9.4.2
         version: 9.4.2(eslint@8.57.0)
@@ -1420,7 +1408,7 @@ importers:
         version: 8.0.2(postcss@8.4.38)(typescript@5.4.5)
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.2)
 
   packages/tests:
     devDependencies:
@@ -1445,6 +1433,9 @@ importers:
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
+      happy-dom:
+        specifier: ^14.11.2
+        version: 14.11.2
       p-limit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1459,7 +1450,7 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^1.0.4
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.2)
 
   packages/tests-utils:
     dependencies:
@@ -1469,6 +1460,9 @@ importers:
       get-port:
         specifier: ^7.1.0
         version: 7.1.0
+      happy-dom:
+        specifier: ^14.11.2
+        version: 14.11.2
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -1477,7 +1471,7 @@ importers:
         version: 1.2.2
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.2)
       which:
         specifier: ^4.0.0
         version: 4.0.0
@@ -4497,6 +4491,10 @@ packages:
   h3@1.11.1:
     resolution: {integrity: sha512-AbaH6IDnZN6nmbnJOH72y3c5Wwh9P97soSVdGSBbcDACRdkC0FEWf25pzx4f/NuOCK6quHmW18yF2Wx+G4Zi1A==}
 
+  happy-dom@14.11.2:
+    resolution: {integrity: sha512-KUrwcT2GAVIGkFev287ude3n0BGGK3BWGltlVEPE8osMbDRU4zwKfcg6jUO7HkX1tAUU+kKt2g+LycmCH0Zwsg==}
+    engines: {node: '>=16.0.0'}
+
   has-bigints@1.0.2:
     resolution: {integrity: sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==}
 
@@ -6776,6 +6774,10 @@ packages:
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
 
+  webidl-conversions@7.0.0:
+    resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
+    engines: {node: '>=12'}
+
   webpack-sources@3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
@@ -6790,6 +6792,10 @@ packages:
   websocket-extensions@0.1.4:
     resolution: {integrity: sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==}
     engines: {node: '>=0.8.0'}
+
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
+    engines: {node: '>=12'}
 
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
@@ -10447,6 +10453,12 @@ snapshots:
     transitivePeerDependencies:
       - uWebSockets.js
 
+  happy-dom@14.11.2:
+    dependencies:
+      entities: 4.5.0
+      webidl-conversions: 7.0.0
+      whatwg-mimetype: 3.0.0
+
   has-bigints@1.0.2: {}
 
   has-flag@3.0.0: {}
@@ -12722,7 +12734,7 @@ snapshots:
     optionalDependencies:
       vite: 5.2.11(@types/node@20.12.12)
 
-  vitest@1.6.0(@types/node@18.19.31):
+  vitest@1.6.0(@types/node@18.19.31)(happy-dom@14.11.2):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -12746,6 +12758,7 @@ snapshots:
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 18.19.31
+      happy-dom: 14.11.2
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -12788,6 +12801,8 @@ snapshots:
 
   webidl-conversions@4.0.2: {}
 
+  webidl-conversions@7.0.0: {}
+
   webpack-sources@3.2.3: {}
 
   webpack-virtual-modules@0.6.1: {}
@@ -12799,6 +12814,8 @@ snapshots:
       websocket-extensions: 0.1.4
 
   websocket-extensions@0.1.4: {}
+
+  whatwg-mimetype@3.0.0: {}
 
   whatwg-url@5.0.0:
     dependencies:
