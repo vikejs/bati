@@ -856,6 +856,25 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
 
+  boilerplates/shared-telefunc:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
+      '@types/better-sqlite3':
+        specifier: ^7.6.10
+        version: 7.6.10
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+
   boilerplates/solid:
     dependencies:
       '@batijs/core':
