@@ -1104,6 +1104,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
       '@batijs/shared-db':
         specifier: workspace:*
         version: link:../shared-db
@@ -1113,9 +1116,15 @@ importers:
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
+      '@types/better-sqlite3':
+        specifier: ^7.6.10
+        version: 7.6.10
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      better-sqlite3:
+        specifier: ^10.0.0
+        version: 10.0.0
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)

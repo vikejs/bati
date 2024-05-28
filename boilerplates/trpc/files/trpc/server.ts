@@ -1,5 +1,8 @@
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable } from "@batijs/drizzle/database/schema";
 import { todoItems } from "@batijs/shared-db/database/todoItems";
 import { initTRPC } from "@trpc/server";
+import type { RunResult } from "better-sqlite3";
 
 /**
  * Initialization of tRPC backend
@@ -18,6 +21,20 @@ export const appRouter = router({
   demo: publicProcedure.query(async () => {
     return { demo: true };
   }),
+  /*{ @if (it.BATI.has("drizzle")) }*/
+  onCreateTodo: publicProcedure
+    .input((value): string => {
+      if (typeof value === "string") {
+        return value;
+      }
+      throw new Error("Input is not a string");
+    })
+    .mutation(async (opts) => {
+      const result: RunResult = await db.insert(todoTable).values({ text: opts.input });
+
+      return { result };
+    }),
+  /*{ #else }*/
   onNewTodo: publicProcedure
     .input((value): string => {
       if (typeof value === "string") {
@@ -29,6 +46,7 @@ export const appRouter = router({
       todoItems.push({ text: opts.input });
       return { todoItems };
     }),
+  /*{ /if }*/
 });
 
 export type AppRouter = typeof appRouter;
