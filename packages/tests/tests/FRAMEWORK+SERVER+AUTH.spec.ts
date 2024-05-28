@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment happy-dom
+ */
 import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [
@@ -41,6 +44,12 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
       expect(await res.text()).not.toContain('{"is404":true}');
     },
     auth0: async () => {
+      // const res = await fetch("/api/auth/signin");
+      // expect(res.status).toBe(200);
+      // expect(await res.text()).not.toContain('{"is404":true}');
+      //
+      // res
+
       const res = await fetch("/api/auth/login", {
         redirect: "manual",
       });

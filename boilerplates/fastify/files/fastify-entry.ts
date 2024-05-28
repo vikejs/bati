@@ -17,8 +17,6 @@ import {
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
 import { createRequestAdapter } from "@universal-middleware/express";
-import express from "express";
-import { auth, type ConfigParams } from "express-openid-connect";
 import Fastify from "fastify";
 import type { RouteHandlerMethod } from "fastify/types/route";
 
@@ -81,7 +79,7 @@ async function startServer() {
     app.use(viteDevMiddleware);
   }
 
-  if (BATI.has("authjs")) {
+  if (BATI.has("authjs") || BATI.has("auth0")) {
     app.all("/api/auth/*", handlerAdapter(authjsHandler));
   }
 
@@ -89,23 +87,6 @@ async function startServer() {
     app.addHook("onRequest", handlerAdapter(firebaseAuthMiddleware));
     app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
     app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
-  }
-
-  if (BATI.has("auth0")) {
-    const config: ConfigParams = {
-      authRequired: false, // Controls whether authentication is required for all routes
-      auth0Logout: true, // Uses Auth0 logout feature
-      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
-      routes: {
-        login: "/api/auth/login", // Custom login route, default is "/login"
-        logout: "/api/auth/logout", // Custom logout route, default is "/logout"
-        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
-      },
-    };
-
-    const expressApp = express();
-
-    app.use(expressApp.use(auth(config)));
   }
 
   if (BATI.has("trpc")) {

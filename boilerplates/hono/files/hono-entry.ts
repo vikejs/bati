@@ -55,7 +55,7 @@ if (isProduction) {
   );
 }
 
-if (BATI.has("authjs")) {
+if (BATI.has("authjs") || BATI.has("auth0")) {
   app.use("/api/auth/**", handlerAdapter(authjsHandler));
 }
 

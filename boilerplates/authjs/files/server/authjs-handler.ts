@@ -1,4 +1,5 @@
 import { Auth } from "@auth/core";
+import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 
 const env: Record<string, string | undefined> =
@@ -9,6 +10,9 @@ const env: Record<string, string | undefined> =
       : {};
 
 if (!globalThis.crypto) {
+  /**
+   * Polyfill needed if Auth.js code runs on node18
+   */
   Object.defineProperty(globalThis, "crypto", {
     value: await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto),
     writable: false,
@@ -48,6 +52,12 @@ export function authjsHandler<Context extends Record<string | number | symbol, u
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
           return user ?? null;
         },
+      }),
+      //# BATI.has("auth0")
+      Auth0({
+        issuer: env.AUTH0_ISSUER_BASE_URL,
+        clientId: env.AUTH0_CLIENT_ID,
+        clientSecret: env.AUTH0_CLIENT_SECRET,
       }),
     ],
   });

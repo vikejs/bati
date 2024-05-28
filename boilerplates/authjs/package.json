@@ -24,7 +24,12 @@
   ],
   "bati": {
     "if": {
-      "flag": "authjs"
+      "flag": {
+        "$in": [
+          "authjs",
+          "auth0"
+        ]
+      }
     }
   },
   "exports": {

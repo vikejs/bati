@@ -16,8 +16,6 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
-import express from "express";
-import { auth, type ConfigParams } from "express-openid-connect";
 import {
   createApp,
   createRouter,
@@ -77,7 +75,7 @@ async function startServer() {
 
   const router = createRouter();
 
-  if (BATI.has("authjs")) {
+  if (BATI.has("authjs") || BATI.has("auth0")) {
     router.use("/api/auth/**", fromWebHandler(authjsHandler));
   }
 
@@ -85,23 +83,6 @@ async function startServer() {
     app.use(fromWebMiddleware(firebaseAuthMiddleware));
     router.post("/api/sessionLogin", fromWebHandler(firebaseAuthLoginHandler));
     router.post("/api/sessionLogout", fromWebHandler(firebaseAuthLogoutHandler));
-  }
-
-  if (BATI.has("auth0")) {
-    const config: ConfigParams = {
-      authRequired: false, // Controls whether authentication is required for all routes
-      auth0Logout: true, // Uses Auth0 logout feature
-      baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
-      routes: {
-        login: "/api/auth/login", // Custom login route, default is "/login"
-        logout: "/api/auth/logout", // Custom logout route, default is "/logout"
-        callback: "/api/auth/callback", // Custom callback route, default is "/callback"
-      },
-    };
-
-    const expressApp = express();
-
-    app.use(fromNodeMiddleware(expressApp.use(auth(config))));
   }
 
   if (BATI.has("trpc")) {

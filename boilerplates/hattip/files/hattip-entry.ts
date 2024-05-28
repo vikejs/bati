@@ -54,7 +54,7 @@ if (BATI.has("trpc")) {
   });
 }
 
-if (BATI.has("authjs")) {
+if (BATI.has("authjs") || BATI.has("auth0")) {
   router.use("/api/auth/*", handlerAdapter(authjsHandler));
 }
 

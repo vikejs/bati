@@ -29,7 +29,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "hattip",
       "vite",
       "vike",
-      ...(props.meta.BATI.has("authjs") ? (["@auth/core"] as const) : []),
+      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core"] as const) : []),
     ],
   });
 }
