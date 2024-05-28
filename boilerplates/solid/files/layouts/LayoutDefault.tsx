@@ -20,8 +20,13 @@ export default function LayoutDefault(props: { children?: JSX.Element }) {
       <Sidebar>
         <Logo />
         <Link href="/">Welcome</Link>
-        {BATI.has("telefunc") ? <Link href="/todo">Todo (telefunc)</Link> : undefined}
-        {BATI.has("trpc") ? <Link href="/todo-trpc">Todo (tRPC)</Link> : undefined}
+        {BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc")) ? (
+          <Link href="/todo">Todo (drizzle)</Link>
+        ) : undefined}
+        {BATI.has("drizzle") && BATI.has("telefunc") ? <Link href="/todo">Todo (drizzle + telefunc)</Link> : undefined}
+        {BATI.has("drizzle") && BATI.has("trpc") ? <Link href="/todo">Todo (drizzle + trpc)</Link> : undefined}
+        {BATI.has("telefunc") && !BATI.has("drizzle") ? <Link href="/todo">Todo (telefunc)</Link> : undefined}
+        {BATI.has("trpc") && !BATI.has("drizzle") ? <Link href="/todo-trpc">Todo (tRPC)</Link> : undefined}
         <Link href="/star-wars">Data Fetching</Link>
       </Sidebar>
       <Content>{props.children}</Content>
