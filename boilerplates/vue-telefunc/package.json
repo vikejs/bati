@@ -33,7 +33,12 @@
         "$all": [
           "vue",
           "telefunc"
-        ]
+        ],
+        "$not": {
+          "$in": [
+            "drizzle"
+          ]
+        }
       }
     }
   },
