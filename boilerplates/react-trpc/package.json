@@ -36,7 +36,12 @@
         "$all": [
           "react",
           "trpc"
-        ]
+        ],
+        "$not": {
+          "$in": [
+            "drizzle"
+          ]
+        }
       }
     }
   },

@@ -36,7 +36,12 @@
         "$all": [
           "react",
           "telefunc"
-        ]
+        ],
+        "$not": {
+          "$in": [
+            "drizzle"
+          ]
+        }
       }
     }
   },
