@@ -29,8 +29,5 @@ export const rulesMessages = {
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(
     `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}.`,
   ),
-  [RulesMessage.ERROR_AUTH0_E_HONO]: error(
-    `${inverse(bold("Auth0"))} does not support running on ${inverse(bold("Hono"))} with official plugins. Check https://batijs.dev for details`,
-  ),
   [RulesMessage.INFO_HATTIP]: info(`${inverse(bold("HatTip"))} is an experimental project`),
 } satisfies Record<RulesMessage, RuleMessage>;

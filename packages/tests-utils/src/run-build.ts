@@ -1,29 +1,15 @@
-import { execa } from "./exec.js";
+import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
 import type { GlobalContext } from "./types.js";
 
 export async function runBuild(context: GlobalContext) {
-  context.server = execa(npmCli, ["run", "build"], {
-    timeout: 60000,
+  context.server = exec(npmCli, ["run", "build"], {
     env: {
       NODE_ENV: "production",
     },
-  });
+  }).timeout("1m");
 
-  try {
-    await Promise.race([
-      // wait for process to finish
-      context.server,
-      // or timeout
-      new Promise((_, reject) => {
-        setTimeout(reject, 60000);
-      }),
-    ]);
-  } catch (e) {
-    console.log("Build didn't finish in time or exited with error code. Current output:");
-    console.log(context.server.log);
-    throw e;
-  }
+  await context.server;
 
-  return { process: context.server };
+  return { server: context.server };
 }

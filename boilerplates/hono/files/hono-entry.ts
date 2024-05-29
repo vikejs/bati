@@ -1,19 +1,48 @@
-import CredentialsProvider from "@auth/core/providers/credentials";
-import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
+// BATI.has("auth0")
+import "dotenv/config";
+import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import {
+  firebaseAuthLoginHandler,
+  firebaseAuthLogoutHandler,
+  firebaseAuthMiddleware,
+} from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
+import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { getAuth } from "firebase-admin/auth";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
-import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { telefunc } from "telefunc";
-import { VikeAuth } from "vike-authjs";
-import { renderPage } from "vike/server";
+import { createMiddleware } from "hono/factory";
 
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+interface Middleware<Context extends Record<string | number | symbol, unknown>> {
+  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
+}
+
+export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
+  handler: Middleware<Context>,
+) {
+  return createMiddleware(async (context, next) => {
+    let ctx = context.get("context");
+    if (!ctx) {
+      ctx = {};
+      context.set("context", ctx);
+    }
+
+    const res = await handler(context.req.raw, ctx as Context);
+    context.set("context", ctx);
+
+    if (!res) {
+      await next();
+    }
+
+    return res;
+  });
+}
 
 const app = new Hono();
 
@@ -28,86 +57,23 @@ if (isProduction) {
   );
 }
 
-if (BATI.has("authjs")) {
+if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
-   * AuthJS
-   *
-   * TODO: Replace secret {@see https://authjs.dev/reference/core#secret}
-   * TODO: Choose and implement providers
-   *
-   * @link {@see https://authjs.dev/guides/providers/custom-provider}
+   * Append Auth.js session to context
    **/
-  const Auth = VikeAuth({
-    secret: "MY_SECRET",
-    providers: [
-      CredentialsProvider({
-        name: "Credentials",
-        credentials: {
-          username: { label: "Username", type: "text", placeholder: "jsmith" },
-          password: { label: "Password", type: "password" },
-        },
-        async authorize() {
-          // Add logic here to look up the user from the credentials supplied
-          const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+  app.use(handlerAdapter(authjsSessionMiddleware));
 
-          // Any object returned will be saved in `user` property of the JWT
-          // If you return null then an error will be displayed advising the user to check their details.
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-          return user ?? null;
-        },
-      }),
-    ],
-  });
-
-  app.use("/api/auth/**", (c) =>
-    Auth({
-      request: c.req.raw,
-    }),
-  );
+  /**
+   * Auth.js route
+   * @link {@see https://authjs.dev/getting-started/installation}
+   **/
+  app.use("/api/auth/**", handlerAdapter(authjsHandler));
 }
 
 if (BATI.has("firebase-auth")) {
-  app.use(async (c, next) => {
-    const sessionCookie: string = getCookie(c, "__session") || "";
-    if (sessionCookie) {
-      const auth = getAuth(firebaseAdmin);
-      try {
-        const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
-        const user = await auth.getUser(decodedIdToken.sub);
-        c.set("user", user);
-      } catch (error) {
-        console.debug("verifySessionCookie:", error);
-        c.set("user", null);
-      }
-    }
-    await next();
-  });
-
-  app.post("/api/sessionLogin", async (c) => {
-    const body = await c.req.json();
-    const idToken: string = body.idToken || "";
-
-    let expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days. The auth.createSessionCookie() function of Firebase expects time to be specified in miliseconds.
-
-    const auth = getAuth(firebaseAdmin);
-    try {
-      const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-
-      expiresIn = 60 * 60 * 24 * 5; // 5 days. The setCookie() function of Hono expects time to be specified in seconds.
-      setCookie(c, "__session", sessionCookie, options);
-
-      return c.json({ status: "success" }, 200);
-    } catch (error) {
-      console.error("createSessionCookie failed :", error);
-      return c.text("Unathorized", 401);
-    }
-  });
-
-  app.post("/api/sessionLogout", (c) => {
-    deleteCookie(c, "__session");
-    return c.text("Logged Out", 200);
-  });
+  app.use(handlerAdapter(firebaseAuthMiddleware));
+  app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
+  app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
 }
 
 if (BATI.has("trpc")) {
@@ -134,43 +100,15 @@ if (BATI.has("telefunc")) {
    *
    * @link {@see https://telefunc.com}
    **/
-  app.post("/_telefunc", async (c) => {
-    const httpResponse = await telefunc({
-      url: c.req.url.toString(),
-      method: c.req.method,
-      body: await c.req.text(),
-      context: c,
-    });
-    const { body, statusCode, contentType } = httpResponse;
-
-    c.status(statusCode);
-    c.header("Content-Type", contentType);
-
-    return c.body(body);
-  });
+  app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
-app.all("*", async (c, next) => {
-  const pageContextInit = BATI.has("firebase-auth")
-    ? {
-        urlOriginal: c.req.url,
-        user: c.get("user"),
-      }
-    : {
-        urlOriginal: c.req.url,
-      };
-  const pageContext = await renderPage(pageContextInit);
-  const { httpResponse } = pageContext;
-  if (!httpResponse) {
-    return next();
-  } else {
-    const { body, statusCode, headers } = httpResponse;
-    headers.forEach(([name, value]) => c.header(name, value));
-    c.status(statusCode);
-
-    return c.body(body);
-  }
-});
+/**
+ * Vike route
+ *
+ * @link {@see https://vike.dev}
+ **/
+app.all("*", handlerAdapter(vikeHandler));
 
 if (isProduction) {
   console.log(`Server listening on http://localhost:${port}`);

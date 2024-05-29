@@ -10,32 +10,23 @@ export default async function getReadme(props: TransformerProps) {
 - Create Application -> Regular Web Application 
 - What technology are you using for your project? -> Node.js (Express) -> Integrate Now
 - Configure Auth0:
-  - Allowed Callback URL: http://localhost:3000/api/auth/callback
+  - Allowed Callback URL: http://localhost:3000/api/auth/callback/auth0
   - Allowed Logout URLs: http://localhost:3000
 - Save Changes
-- Copy your \`clientID\` and \`issuerBaseURL\` and paste it in \`.env\` file like this:
+- Copy your \`Client ID\`, \`Client Secret\` and \`Domain\` and paste it in \`.env\` file like this:
 
 \`\`\`env
 // .env
-SECRET=<random string>
-CLIENT_ID=<Client ID>
-ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
+AUTH0_CLIENT_SECRET=<Client Secret>
+AUTH0_CLIENT_ID=<Client ID>
+AUTH0_ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
 \`\`\`
 
 > [!NOTE]
-> Environment variables that are automatically made available to Auth0 :
-> - \`SECRET\`
-> - \`ISSUER_BASE_URL\`
-> - \`BASE_URL\`
-> - \`CLIENT_ID\`
-> - \`CLIENT_SECRET\`
+> Login route is \`http://localhost:3000/api/auth/signin\`.
+> Logout route is \`http://localhost:3000/api/auth/signout\`.
 
-> [!NOTE]
-> Login route is \`http://localhost:3000/api/auth/login\`.
-> Logout route is \`http://localhost:3000/api/auth/logout\`.
-
-- Read more [Auth0 Express SDK Quickstarts: Login](https://auth0.com/docs/quickstart/webapp/express)
-- Read more [Auth0 Express SDK Quickstarts: Add Login to your Express App](https://auth0.com/docs/quickstart/webapp/express/interactive)
+- Read more [Auth.js: Auth0 provider](https://authjs.dev/reference/core/providers/auth0)
 `;
 
   content.addTodo(todo);

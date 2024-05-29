@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/shared",
+  "name": "@batijs/shared-server",
   "private": true,
   "version": "0.0.92",
   "description": "",
@@ -17,23 +17,34 @@
     "@batijs/core": "workspace:*",
     "@batijs/features": "workspace:*",
     "@types/node": "^18.19.14",
+    "vike": "^0.4.171",
     "vite": "^5.2.11"
   },
   "files": [
     "dist/"
   ],
   "bati": {
-    "enforce": "pre"
+    "if": {
+      "flag": {
+        "$in": [
+          "h3",
+          "hattip",
+          "hono",
+          "express",
+          "fastify"
+        ]
+      }
+    }
   },
   "exports": {
-    "./vite.config": {
-      "types": "./dist/types/vite.config.d.ts"
+    "./server/vike-handler": {
+      "types": "./dist/types/server/vike-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "vite.config": [
-        "./dist/types/vite.config.d.ts"
+      "server/vike-handler": [
+        "./dist/types/server/vike-handler.d.ts"
       ]
     }
   }

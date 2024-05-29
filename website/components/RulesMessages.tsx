@@ -53,19 +53,6 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.ERROR_AUTH0_E_HONO]: error(() => {
-    return (
-      <span class="inline-block">
-        <span class="font-bold">Auth0</span> does not support running on <span class="font-bold">Hono</span> with
-        official plugins
-        <ul class="list-custom list-dot">
-          <li>
-            Either pick another <span class="font-bold">Server</span>, or use <span class="font-bold">Auth.js</span>
-          </li>
-        </ul>
-      </span>
-    );
-  }),
   [RulesMessage.INFO_HATTIP]: info(() => {
     return (
       <span class="inline-block">

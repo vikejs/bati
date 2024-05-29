@@ -32,8 +32,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "tsx",
       "vike",
       "vite",
-      ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
-      ...(props.meta.BATI.has("auth0") ? (["express", "express-openid-connect"] as const) : []),
+      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core"] as const) : []),
     ],
   });
 }

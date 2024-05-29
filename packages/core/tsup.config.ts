@@ -38,7 +38,7 @@ export default defineConfig({
   entry: ["./src/index.ts"],
   platform: "node",
   format: "esm",
-  target: "es2020",
+  target: "es2022",
   outDir: "./dist",
   dts: true,
   bundle: true,

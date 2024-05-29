@@ -10,7 +10,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     build: {
-      value: "NODE_ENV=production hattip build ./hattip-entry.ts --client",
+      value: "NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
       precedence: 20,
       warnIfReplaced: true,
     },
@@ -29,7 +29,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "hattip",
       "vite",
       "vike",
-      ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core", "dotenv"] as const) : []),
     ],
   });
 }

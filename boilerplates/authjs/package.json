@@ -1,7 +1,7 @@
 {
-  "name": "@batijs/telefunc",
+  "name": "@batijs/authjs",
   "private": true,
-  "version": "0.0.92",
+  "version": "0.0.1",
   "description": "",
   "type": "module",
   "scripts": {
@@ -12,11 +12,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@auth/core": "^0.31.0",
     "@batijs/compile": "workspace:*",
-    "@types/node": "^18.19.14",
-    "telefunc": "^0.1.72",
-    "vike": "^0.4.172",
-    "vite": "^5.2.11"
+    "@types/node": "^18.19.14"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -26,18 +24,23 @@
   ],
   "bati": {
     "if": {
-      "flag": "telefunc"
+      "flag": {
+        "$in": [
+          "authjs",
+          "auth0"
+        ]
+      }
     }
   },
   "exports": {
-    "./server/telefunc-handler": {
-      "types": "./dist/types/server/telefunc-handler.d.ts"
+    "./server/authjs-handler": {
+      "types": "./dist/types/server/authjs-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "server/telefunc-handler": [
-        "./dist/types/server/telefunc-handler.d.ts"
+      "server/authjs-handler": [
+        "./dist/types/server/authjs-handler.d.ts"
       ]
     }
   }

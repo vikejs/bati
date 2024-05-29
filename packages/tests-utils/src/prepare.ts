@@ -28,18 +28,13 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
   // - Close the dev server
   // - Remove temp dir
   afterAll(async () => {
-    await Promise.race([context.server?.treekill(), new Promise((_resolve, reject) => setTimeout(reject, 5000))]).catch(
-      (e) => {
-        console.log("Failed to kill server in time. Output:");
-        console.log(context.server?.log);
-        throw e;
-      },
-    );
+    await Promise.race([context.server?.kill(), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
   }, 20000);
 
   return {
     fetch(path: string, init?: RequestInit) {
-      return nodeFetch(`http://localhost:${context.port}${path}`, init);
+      const url = path.startsWith("http") ? path : `http://localhost:${context.port}${path}`;
+      return nodeFetch(url, init);
     },
     context,
   };

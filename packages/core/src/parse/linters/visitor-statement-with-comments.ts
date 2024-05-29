@@ -14,6 +14,16 @@ export function visitorStatementWithComments(
   const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
 
   if (comments.length > 0) {
+    if (node.type === "Identifier" && (node as AST.Node).parent?.type === "CallExpression") {
+      node = (node as AST.Node).parent!;
+    }
+    const start = node.range![0];
+    let end = node.range![1];
+
+    while (sourceCode.text[end]?.match(/\s|,/)) {
+      end += 1;
+    }
+
     const comment = comments[0];
 
     const condition = extractBatiConditionComment(comment);
@@ -27,7 +37,7 @@ export function visitorStatementWithComments(
       message: "bati/statement-comments",
       *fix(fixer) {
         if (!testVal) {
-          yield fixer.remove(node as ESTree.Node);
+          yield fixer.removeRange([start, end]);
         }
         yield fixer.remove(comment as unknown as ESTree.Node);
       },
