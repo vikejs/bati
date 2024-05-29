@@ -1,4 +1,4 @@
-import { describeBati, execa, npmCli } from "@batijs/tests-utils";
+import { describeBati, exec, npmCli } from "@batijs/tests-utils";
 
 export const matrix = [
   ["solid", "react", "vue"],
@@ -10,9 +10,9 @@ export const matrix = [
 
 await describeBati(({ test, expect, fetch, testMatch, beforeAll }) => {
   beforeAll(async () => {
-    await execa(npmCli, ["run", "drizzle:generate"]);
-    await execa(npmCli, ["run", "drizzle:migrate"]);
-    await execa(npmCli, ["run", "drizzle:seed"]);
+    await exec(npmCli, ["run", "drizzle:generate"]);
+    await exec(npmCli, ["run", "drizzle:migrate"]);
+    await exec(npmCli, ["run", "drizzle:seed"]);
   }, 70000);
 
   test("home", async () => {
