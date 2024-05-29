@@ -24,6 +24,10 @@ import {
   eventHandler,
   fromNodeMiddleware,
   fromWebHandler,
+  getResponseStatus,
+  getResponseStatusText,
+  readBody,
+  setResponseStatus,
   toNodeListener,
   toWebRequest,
 } from "h3";
@@ -125,6 +129,26 @@ async function startServer() {
      * @link {@see https://telefunc.com}
      **/
     router.post("/_telefunc", fromWebHandler(telefuncHandler));
+  }
+
+  if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+    router.post(
+      "/api/todo/create",
+      eventHandler(async (event) => {
+        const newTodo = await readBody<TodoInsert>(event);
+
+        await db.insert(todoTable).values({ text: newTodo.text });
+
+        setResponseStatus(event, 201, "New Todo Created");
+        const status = getResponseStatus(event);
+        const message = getResponseStatusText(event);
+
+        return {
+          status,
+          message,
+        };
+      }),
+    );
   }
 
   /**

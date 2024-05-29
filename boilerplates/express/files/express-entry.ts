@@ -2,11 +2,9 @@
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import CredentialsProvider from "@auth/core/providers/credentials";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
-import { firebaseAdmin } from "@batijs/firebase-auth/libs/firebaseAdmin";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,

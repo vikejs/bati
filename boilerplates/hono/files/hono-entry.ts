@@ -105,6 +105,18 @@ if (BATI.has("telefunc")) {
   app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
+if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+  app.post("/api/todo/create", async (c) => {
+    const newTodo = await c.req.json<TodoInsert>();
+
+    await db.insert(todoTable).values({ text: newTodo.text });
+
+    c.status(201);
+
+    return c.json({ message: "New Todo Created" });
+  });
+}
+
 /**
  * Vike route
  *

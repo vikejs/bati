@@ -144,6 +144,17 @@ async function startServer() {
     app.post<{ Body: string }>("/_telefunc", handlerAdapter(telefuncHandler));
   }
 
+  if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+    app.post<{ Body: TodoInsert }>("/api/todo/create", async (request, reply) => {
+      const newTodo = request.body;
+
+      await db.insert(todoTable).values({ text: newTodo.text });
+
+      reply.code(201);
+      return reply.send({ message: "New Todo Created" });
+    });
+  }
+
   /**
    * Vike route
    *
