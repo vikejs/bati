@@ -48,8 +48,8 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       turbo:
         specifier: ^1.13.3
         version: 1.13.3
@@ -57,8 +57,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
       typescript-eslint:
-        specifier: ^7.9.0
-        version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+        specifier: ^7.10.0
+        version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       vue-eslint-parser:
         specifier: ^9.4.2
         version: 9.4.2(eslint@8.57.0)
@@ -69,6 +69,22 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+
+  boilerplates/authjs:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@auth/core':
+        specifier: ^0.31.0
+        version: 0.31.0
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -112,7 +128,7 @@ importers:
         version: 5.2.11(@types/node@18.19.31)
       vite-plugin-compiled-react:
         specifier: ^1.1.3
-        version: 1.1.3(@compiled/react@0.17.1(react@18.3.1))(@vitejs/plugin-react@4.2.1(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 1.1.3(@compiled/react@0.17.1(react@18.3.1))(@vitejs/plugin-react@4.3.0(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
 
   boilerplates/drizzle:
     dependencies:
@@ -137,7 +153,7 @@ importers:
         version: 0.21.2
       drizzle-orm:
         specifier: ^0.30.10
-        version: 0.30.10(@types/better-sqlite3@7.6.10)(@types/react@18.3.2)(better-sqlite3@10.0.0)(react@18.3.1)
+        version: 0.30.10(@types/better-sqlite3@7.6.10)(@types/react@18.3.3)(better-sqlite3@10.0.0)(react@18.3.1)
 
   boilerplates/edgedb:
     dependencies:
@@ -150,7 +166,7 @@ importers:
         version: link:../../packages/compile
       '@edgedb/generate':
         specifier: ^0.5.3
-        version: 0.5.3(edgedb@1.5.6)
+        version: 0.5.3(edgedb@1.5.7)
       '@prisma/client':
         specifier: ^5.14.0
         version: 5.14.0(prisma@5.14.0)
@@ -161,8 +177,8 @@ importers:
         specifier: ^2.0.20
         version: 2.0.20
       edgedb:
-        specifier: ^1.5.6
-        version: 1.5.6
+        specifier: ^1.5.7
+        version: 1.5.7
 
   boilerplates/eslint:
     dependencies:
@@ -174,11 +190,11 @@ importers:
         specifier: workspace:^
         version: link:../../packages/compile
       '@typescript-eslint/eslint-plugin':
-        specifier: ^7.9.0
-        version: 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
+        specifier: ^7.10.0
+        version: 7.11.0(@typescript-eslint/parser@7.11.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
-        specifier: ^7.9.0
-        version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+        specifier: ^7.10.0
+        version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -192,6 +208,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -201,12 +220,15 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
+      '@batijs/telefunc':
+        specifier: workspace:*
+        version: link:../telefunc
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
-      '@hattip/adapter-node':
-        specifier: ^0.0.45
-        version: 0.0.45
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
@@ -219,6 +241,9 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      '@universal-middleware/express':
+        specifier: ^0.0.2
+        version: 0.0.2
       cookie-parser:
         specifier: ^1.4.6
         version: 1.4.6
@@ -231,21 +256,15 @@ importers:
       express-openid-connect:
         specifier: ^2.17.1
         version: 2.17.1(express@4.19.2)
-      firebase-admin:
-        specifier: ^12.1.0
-        version: 12.1.0
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -259,6 +278,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -268,24 +290,21 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
+      '@batijs/telefunc':
+        specifier: workspace:^
+        version: link:../telefunc
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
-      '@fastify/cookie':
-        specifier: ^9.3.1
-        version: 9.3.1
-      '@fastify/formbody':
-        specifier: ^7.4.0
-        version: 7.4.0
       '@fastify/middie':
         specifier: ^8.3.1
         version: 8.3.1
       '@fastify/static':
         specifier: ^7.0.4
         version: 7.0.4
-      '@hattip/adapter-node':
-        specifier: ^0.0.45
-        version: 0.0.45
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
@@ -295,33 +314,24 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      '@universal-middleware/express':
+        specifier: ^0.0.2
+        version: 0.0.2
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      express:
-        specifier: ^4.19.2
-        version: 4.19.2
-      express-openid-connect:
-        specifier: ^2.17.1
-        version: 2.17.1(express@4.19.2)
       fastify:
         specifier: ^4.27.0
         version: 4.27.0
-      firebase-admin:
-        specifier: ^12.1.0
-        version: 12.1.0
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -335,24 +345,30 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@types/cookie':
+        specifier: ^0.6.0
+        version: 0.6.0
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
       firebase:
-        specifier: ^10.12.0
-        version: 10.12.0
+        specifier: ^10.12.1
+        version: 10.12.2
       firebase-admin:
-        specifier: ^12.1.0
-        version: 12.1.0
+        specifier: ^12.1.1
+        version: 12.1.1
       firebaseui:
         specifier: ^6.1.0
-        version: 6.1.0(firebase@10.12.0)
+        version: 6.1.0(firebase@10.12.2)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -379,6 +395,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -388,6 +407,12 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
+      '@batijs/telefunc':
+        specifier: workspace:^
+        version: link:../telefunc
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
@@ -409,15 +434,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      express:
-        specifier: ^4.19.2
-        version: 4.19.2
-      express-openid-connect:
-        specifier: ^2.17.1
-        version: 2.17.1(express@4.19.2)
-      firebase-admin:
-        specifier: ^12.1.0
-        version: 12.1.0
       h3:
         specifier: ~1.11.1
         version: 1.11.1
@@ -426,16 +442,13 @@ importers:
         version: 1.15.0
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -449,9 +462,21 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/firebase-auth':
+        specifier: workspace:*
+        version: link:../firebase-auth
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
+      '@batijs/telefunc':
+        specifier: workspace:^
+        version: link:../telefunc
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
@@ -473,18 +498,18 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       hattip:
         specifier: ^0.0.33
         version: 0.0.33
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -498,6 +523,9 @@ importers:
       '@auth/core':
         specifier: ^0.31.0
         version: 0.31.0
+      '@batijs/authjs':
+        specifier: workspace:*
+        version: link:../authjs
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -507,6 +535,12 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-server':
+        specifier: workspace:^
+        version: link:../shared-server
+      '@batijs/telefunc':
+        specifier: workspace:^
+        version: link:../telefunc
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
@@ -515,31 +549,28 @@ importers:
         version: 1.11.1
       '@hono/vite-dev-server':
         specifier: ^0.12.1
-        version: 0.12.1(hono@4.3.8)
+        version: 0.12.1(hono@4.4.0)
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      firebase-admin:
-        specifier: ^12.1.0
-        version: 12.1.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       hono:
-        specifier: ^4.3.8
-        version: 4.3.8
+        specifier: ^4.4.0
+        version: 4.4.0
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
-      vike-authjs:
-        specifier: ^0.1.6
-        version: 0.1.6(@auth/core@0.31.0)
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -592,14 +623,14 @@ importers:
         version: link:../../packages/core
     devDependencies:
       '@babel/core':
-        specifier: ^7.24.5
-        version: 7.24.5
+        specifier: ^7.24.6
+        version: 7.24.6
       '@babel/plugin-syntax-flow':
-        specifier: ^7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
+        specifier: ^7.24.6
+        version: 7.24.6(@babel/core@7.24.6)
       '@babel/plugin-transform-react-jsx':
-        specifier: ^7.23.4
-        version: 7.23.4(@babel/core@7.24.5)
+        specifier: ^7.24.6
+        version: 7.24.6(@babel/core@7.24.6)
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
@@ -607,14 +638,14 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@types/react':
-        specifier: ^18.3.2
-        version: 18.3.2
+        specifier: ^18.3.3
+        version: 18.3.3
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
       '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.2.1(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^4.3.0
+        version: 4.3.0(vite@5.2.11(@types/node@18.19.31))
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -634,11 +665,11 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-react:
         specifier: ^0.4.10
-        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.172(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -678,7 +709,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       vike:
         specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
       vike-react:
         specifier: ^0.4.10
         version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
@@ -702,17 +733,17 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@types/react':
-        specifier: ^18.3.2
-        version: 18.3.2
+        specifier: ^18.3.3
+        version: 18.3.3
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
       firebase:
-        specifier: ^10.12.0
-        version: 10.12.0
+        specifier: ^10.12.1
+        version: 10.12.2
       firebaseui:
         specifier: ^6.1.0
-        version: 6.1.0(firebase@10.12.0)
+        version: 6.1.0(firebase@10.12.2)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -720,8 +751,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -742,8 +773,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@types/react':
-        specifier: ^18.3.2
-        version: 18.3.2
+        specifier: ^18.3.3
+        version: 18.3.3
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
@@ -755,13 +786,13 @@ importers:
         version: 18.3.1(react@18.3.1)
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-react:
         specifier: ^0.4.10
-        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.172(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -785,8 +816,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@types/react':
-        specifier: ^18.3.2
-        version: 18.3.2
+        specifier: ^18.3.3
+        version: 18.3.3
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
@@ -797,11 +828,11 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-react:
         specifier: ^0.4.10
-        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.172(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -820,12 +851,6 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
-      esbuild-plugin-copy:
-        specifier: ^2.1.1
-        version: 2.1.1(esbuild@0.21.3)
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -856,8 +881,29 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       vike:
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11(@types/node@18.19.31)
+
+  boilerplates/shared-server:
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@batijs/features':
+        specifier: workspace:*
+        version: link:../../packages/features
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      vike:
         specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -909,11 +955,11 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-solid:
         specifier: ^0.4.5
-        version: 0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -947,7 +993,7 @@ importers:
         version: 1.8.17
       vike:
         specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
       vike-solid:
         specifier: ^0.4.5
         version: 0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
@@ -971,17 +1017,17 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       firebase:
-        specifier: ^10.12.0
-        version: 10.12.0
+        specifier: ^10.12.1
+        version: 10.12.2
       firebaseui:
         specifier: ^6.1.0
-        version: 6.1.0(firebase@10.12.0)
+        version: 6.1.0(firebase@10.12.2)
       solid-js:
         specifier: ^1.8.17
         version: 1.8.17
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1006,13 +1052,13 @@ importers:
         version: 1.8.17
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-solid:
         specifier: ^0.4.5
-        version: 0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1045,11 +1091,11 @@ importers:
         specifier: ^1.8.17
         version: 1.8.17
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-solid:
         specifier: ^0.4.5
-        version: 0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1079,8 +1125,8 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1099,10 +1145,10 @@ importers:
         version: 18.19.31
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1154,17 +1200,17 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@vite-plugin-vercel/vike':
-        specifier: ^6.0.1
-        version: 6.0.1(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@6.0.1)(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^7.0.0
+        version: 7.0.0(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@7.0.0)(vite@5.2.11(@types/node@18.19.31))
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
       vite-plugin-vercel:
-        specifier: ^6.0.1
-        version: 6.0.1(@vite-plugin-vercel/vike@6.0.1)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^7.0.0
+        version: 7.0.0(@vite-plugin-vercel/vike@7.0.0)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
 
   boilerplates/vue:
     dependencies:
@@ -1203,11 +1249,11 @@ importers:
         specifier: ^0.26.2
         version: 0.26.2(rollup@4.17.2)(vite@5.2.11(@types/node@18.19.31))
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-vue:
         specifier: ^0.6.6
-        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
+        version: 0.6.6(vike@0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1247,10 +1293,10 @@ importers:
         version: 10.0.0
       vike:
         specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        version: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
       vike-vue:
         specifier: ^0.6.6
-        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
+        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1274,14 +1320,14 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       firebase:
-        specifier: ^10.12.0
-        version: 10.12.0
+        specifier: ^10.12.1
+        version: 10.12.2
       firebaseui:
         specifier: ^6.1.0
-        version: 6.1.0(firebase@10.12.0)
+        version: 6.1.0(firebase@10.12.2)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1306,13 +1352,13 @@ importers:
         version: 18.19.31
       telefunc:
         specifier: ^0.1.72
-        version: 0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-vue:
         specifier: ^0.6.6
-        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
+        version: 0.6.6(vike@0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1339,11 +1385,11 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vike-vue:
         specifier: ^0.6.6
-        version: 0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
+        version: 0.6.6(vike@0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
@@ -1404,11 +1450,11 @@ importers:
         specifier: ^2.0.20
         version: 2.0.20
       esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
+        specifier: ^0.21.4
+        version: 0.21.4
       execa:
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^9.1.0
+        version: 9.1.0
       rimraf:
         specifier: ^5.0.7
         version: 5.0.7
@@ -1431,11 +1477,11 @@ importers:
   packages/compile:
     dependencies:
       esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
+        specifier: ^0.21.4
+        version: 0.21.4
       esbuild-plugin-copy:
         specifier: ^2.1.1
-        version: 2.1.1(esbuild@0.21.3)
+        version: 2.1.1(esbuild@0.21.4)
       globby:
         specifier: ^14.0.1
         version: 14.0.1
@@ -1471,17 +1517,17 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       '@typescript-eslint/parser':
-        specifier: ^7.9.0
-        version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+        specifier: ^7.10.0
+        version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/utils':
-        specifier: ^7.9.0
-        version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+        specifier: ^7.10.0
+        version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       colorette:
         specifier: ^2.0.20
         version: 2.0.20
       esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
+        specifier: ^0.21.4
+        version: 0.21.4
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -1507,14 +1553,14 @@ importers:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(typescript@5.4.5)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.4)
       vue-eslint-parser:
         specifier: ^9.4.2
         version: 9.4.2(eslint@8.57.0)
@@ -1538,7 +1584,7 @@ importers:
         version: 8.0.2(postcss@8.4.38)(typescript@5.4.5)
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.4)
 
   packages/tests:
     devDependencies:
@@ -1563,6 +1609,9 @@ importers:
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
+      happy-dom:
+        specifier: ^14.11.2
+        version: 14.11.4
       p-limit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1577,28 +1626,28 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^1.0.4
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.4)
 
   packages/tests-utils:
     dependencies:
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
       get-port:
         specifier: ^7.1.0
         version: 7.1.0
+      happy-dom:
+        specifier: ^14.11.2
+        version: 14.11.4
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
-      tree-kill:
-        specifier: ^1.2.2
-        version: 1.2.2
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@18.19.31)
+        version: 1.6.0(@types/node@18.19.31)(happy-dom@14.11.4)
       which:
         specifier: ^4.0.0
         version: 4.0.0
+      zx:
+        specifier: ^8.1.2
+        version: 8.1.2
     devDependencies:
       '@types/node':
         specifier: ^18.19.14
@@ -1610,8 +1659,8 @@ importers:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(typescript@5.4.5)
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1619,8 +1668,8 @@ importers:
   website:
     devDependencies:
       '@babel/core':
-        specifier: ^7.24.5
-        version: 7.24.5
+        specifier: ^7.24.6
+        version: 7.24.6
       '@batijs/features':
         specifier: workspace:*
         version: link:../packages/features
@@ -1641,7 +1690,7 @@ importers:
         version: 10.4.19(postcss@8.4.38)
       babel-preset-solid:
         specifier: ^1.8.17
-        version: 1.8.17(@babel/core@7.24.5)
+        version: 1.8.17(@babel/core@7.24.6)
       bumpp:
         specifier: ^9.4.1
         version: 9.4.1
@@ -1655,8 +1704,8 @@ importers:
         specifier: ^4.11.1
         version: 4.11.1(postcss@8.4.38)
       esbuild:
-        specifier: ^0.21.3
-        version: 0.21.3
+        specifier: ^0.21.4
+        version: 0.21.4
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -1679,17 +1728,17 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
       vike:
-        specifier: ^0.4.171
-        version: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.11))
+        specifier: ^0.4.172
+        version: 0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.13))
       vike-solid:
         specifier: ^0.4.5
-        version: 0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.11)))(vite@5.2.11(@types/node@20.12.11))
+        version: 0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.13)))(vite@5.2.11(@types/node@20.12.13))
       vite:
         specifier: ^5.2.11
-        version: 5.2.11(@types/node@20.12.11)
+        version: 5.2.11(@types/node@20.12.13)
       vite-plugin-solid:
         specifier: ^2.10.2
-        version: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.11))
+        version: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.13))
 
 packages:
 
@@ -1719,36 +1768,56 @@ packages:
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/compat-data@7.24.4':
-    resolution: {integrity: sha512-vg8Gih2MLK+kOkHJp4gBEIkyaIi00jgWot2D9QOmmfLC8jINSOzmCLta6Bvz/JSBCqnegV0L80jhxkol5GWNfQ==}
+  '@babel/code-frame@7.24.6':
+    resolution: {integrity: sha512-ZJhac6FkEd1yhG2AHOmfcXG4ceoLltoCVJjN5XsWN9BifBQr+cHJbWi0h68HZuSORq+3WtJ2z0hwF2NG1b5kcA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/core@7.24.5':
-    resolution: {integrity: sha512-tVQRucExLQ02Boi4vdPp49svNGcfL2GhdTCT9aldhXgCJVAI21EtRfBettiuLUwce/7r6bFdgs6JFkcdTiFttA==}
+  '@babel/compat-data@7.24.6':
+    resolution: {integrity: sha512-aC2DGhBq5eEdyXWqrDInSqQjO0k8xtPRf5YylULqx8MCd6jBtzqfta/3ETMRpuKIc5hyswfO80ObyA1MvkCcUQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/core@7.24.6':
+    resolution: {integrity: sha512-qAHSfAdVyFmIvl0VHELib8xar7ONuSHrE2hLnsaWkYNTI68dmi1x8GYDhJjMI/e7XWal9QBlZkwbOnkcw7Z8gQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/generator@7.24.5':
     resolution: {integrity: sha512-x32i4hEXvr+iI0NEoEfDKzlemF8AmtOP8CcrRaEcpzysWuoEb1KknpcvMsHKPONoKZiDuItklgWhB18xEhr9PA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-annotate-as-pure@7.22.5':
-    resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
+  '@babel/generator@7.24.6':
+    resolution: {integrity: sha512-S7m4eNa6YAPJRHmKsLHIDJhNAGNKoWNiWefz1MBbpnt8g9lvMDl1hir4P9bo/57bQEmuwEhnRU/AMWsD0G/Fbg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-compilation-targets@7.23.6':
-    resolution: {integrity: sha512-9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr5ObUQ6ZzYPqA+g9OTS2bBQoctLJrky0RDCAWRgQ==}
+  '@babel/helper-annotate-as-pure@7.24.6':
+    resolution: {integrity: sha512-DitEzDfOMnd13kZnDqns1ccmftwJTS9DMkyn9pYTxulS7bZxUxpMly3Nf23QQ6NwA4UB8lAqjbqWtyvElEMAkg==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-compilation-targets@7.24.6':
+    resolution: {integrity: sha512-VZQ57UsDGlX/5fFA7GkVPplZhHsVc+vuErWgdOiysI9Ksnw0Pbbd6pnPiR/mmJyKHgyIW0c7KT32gmhiF+cirg==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-environment-visitor@7.22.20':
     resolution: {integrity: sha512-zfedSIzFhat/gFhWfHtgWvlec0nqB9YEIVrpuwjruLlXfUSnA8cJB0miHKwqDnQ7d32aKo2xt88/xZptwxbfhA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/helper-environment-visitor@7.24.6':
+    resolution: {integrity: sha512-Y50Cg3k0LKLMjxdPjIl40SdJgMB85iXn27Vk/qbHZCFx/o5XO3PSnpi675h1KEmmDb6OFArfd5SCQEQ5Q4H88g==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-function-name@7.23.0':
     resolution: {integrity: sha512-OErEqsrxjZTJciZ4Oo+eoZqeW9UIiOcuYKRJA4ZAgV9myA+pOXhhmpfNCKjEH/auVfEYVFJ6y1Tc4r0eIApqiw==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/helper-function-name@7.24.6':
+    resolution: {integrity: sha512-xpeLqeeRkbxhnYimfr2PC+iA0Q7ljX/d1eZ9/inYbmfG2jpl8Lu3DyXvpOAnrS5kxkfOWJjioIMQsaMBXFI05w==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-hoist-variables@7.22.5':
     resolution: {integrity: sha512-wGjk9QZVzvknA6yKIUURb8zY3grXCcOZt+/7Wcy8O2uctxhplmUPkOdlgoNhmdVee2c92JXbf1xpMtVNbfoxRw==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-hoist-variables@7.24.6':
+    resolution: {integrity: sha512-SF/EMrC3OD7dSta1bLJIlrsVxwtd0UpjRJqLno6125epQMJ/kyFmpTT4pbvPbdQHzCHg+biQ7Syo8lnDtbR+uA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-module-imports@7.18.6':
@@ -1759,8 +1828,12 @@ packages:
     resolution: {integrity: sha512-viKb0F9f2s0BCS22QSF308z/+1YWKV/76mwt61NBzS5izMzDPwdq1pTrzf+Li3npBWX9KdQbkeCt1jSAM7lZqg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-module-transforms@7.24.5':
-    resolution: {integrity: sha512-9GxeY8c2d2mdQUP1Dye0ks3VDyIMS98kt/llQ2nUId8IsWqTF0l1LkSX0/uP7l7MCDrzXS009Hyhe2gzTiGW8A==}
+  '@babel/helper-module-imports@7.24.6':
+    resolution: {integrity: sha512-a26dmxFJBF62rRO9mmpgrfTLsAuyHk4e1hKTUkD/fcMfynt8gvEKwQPQDVxWhca8dHoDck+55DFt42zV0QMw5g==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-module-transforms@7.24.6':
+    resolution: {integrity: sha512-Y/YMPm83mV2HJTbX1Qh2sjgjqcacvOlhbzdCCsSlblOKjSYmQqEbO6rUniWQyRo9ncyfjT8hnUjlG06RXDEmcA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -1769,32 +1842,52 @@ packages:
     resolution: {integrity: sha512-9cUznXMG0+FxRuJfvL82QlTqIzhVW9sL0KjMPHhAOOvpQGL8QtdxnBKILjBqxlHyliz0yCa1G903ZXI/FuHy2w==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-simple-access@7.24.5':
-    resolution: {integrity: sha512-uH3Hmf5q5n7n8mz7arjUlDOCbttY/DW4DYhE6FUsjKJ/oYC1kQQUvwEQWxRwUpX9qQKRXeqLwWxrqilMrf32sQ==}
+  '@babel/helper-plugin-utils@7.24.6':
+    resolution: {integrity: sha512-MZG/JcWfxybKwsA9N9PmtF2lOSFSEMVCpIRrbxccZFLJPrJciJdG/UhSh5W96GEteJI2ARqm5UAHxISwRDLSNg==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-simple-access@7.24.6':
+    resolution: {integrity: sha512-nZzcMMD4ZhmB35MOOzQuiGO5RzL6tJbsT37Zx8M5L/i9KSrukGXWTjLe1knIbb/RmxoJE9GON9soq0c0VEMM5g==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-split-export-declaration@7.24.5':
     resolution: {integrity: sha512-5CHncttXohrHk8GWOFCcCl4oRD9fKosWlIRgWm4ql9VYioKm52Mk2xsmoohvm7f3JoiLSM5ZgJuRaf5QZZYd3Q==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/helper-split-export-declaration@7.24.6':
+    resolution: {integrity: sha512-CvLSkwXGWnYlF9+J3iZUvwgAxKiYzK3BWuo+mLzD/MDGOZDj7Gq8+hqaOkMxmJwmlv0iu86uH5fdADd9Hxkymw==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-string-parser@7.24.1':
     resolution: {integrity: sha512-2ofRCjnnA9y+wk8b9IAREroeUP02KHp431N2mhKniy2yKIDKpbrHv9eXwm8cBeWQYcJmzv5qKCu65P47eCF7CQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-string-parser@7.24.6':
+    resolution: {integrity: sha512-WdJjwMEkmBicq5T9fm/cHND3+UlFa2Yj8ALLgmoSQAJZysYbBjw+azChSGPN4DSPLXOcooGRvDwZWMcF/mLO2Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-validator-identifier@7.24.5':
     resolution: {integrity: sha512-3q93SSKX2TWCG30M2G2kwaKeTYgEUp5Snjuj8qm729SObL6nbtUldAi37qbxkD5gg3xnBio+f9nqpSepGZMvxA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-validator-option@7.23.5':
-    resolution: {integrity: sha512-85ttAOMLsr53VgXkTbkx8oA6YTfT4q7/HzXSLEYmjcSTJPMPQtvq1BD79Byep5xMUYbGRzEpDsjUf3dyp54IKw==}
+  '@babel/helper-validator-identifier@7.24.6':
+    resolution: {integrity: sha512-4yA7s865JHaqUdRbnaxarZREuPTHrjpDT+pXoAZ1yhyo6uFnIEpS8VMu16siFOHDpZNKYv5BObhsB//ycbICyw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helpers@7.24.5':
-    resolution: {integrity: sha512-CiQmBMMpMQHwM5m01YnrM6imUG1ebgYJ+fAIW4FZe6m4qHTPaRHti+R8cggAwkdz4oXhtO4/K9JWlh+8hIfR2Q==}
+  '@babel/helper-validator-option@7.24.6':
+    resolution: {integrity: sha512-Jktc8KkF3zIkePb48QO+IapbXlSapOW9S+ogZZkcO6bABgYAxtZcjZ/O005111YLf+j4M84uEgwYoidDkXbCkQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helpers@7.24.6':
+    resolution: {integrity: sha512-V2PI+NqnyFu1i0GyTd/O/cTpxzQCYioSkUIRmgo7gFEHKKCg5w46+r/A6WeUR1+P3TeQ49dspGPNd/E3n9AnnA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/highlight@7.24.2':
     resolution: {integrity: sha512-Yac1ao4flkTxTteCDZLEvdxg2fZfz1v8M4QpaGypq/WPDqg3ijHYbDfs+LG5hvzSoqaSZ9/Z9lKSP3CjZjv+pA==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/highlight@7.24.6':
+    resolution: {integrity: sha512-2YnuOp4HAk2BsBrJJvYCbItHx0zWscI1C3zgWkz+wDyD9I7GIVrfnLyrR4Y1VR+7p+chAEcrgRQYZAGIKMV7vQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/parser@7.24.5':
@@ -1802,8 +1895,13 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/plugin-syntax-flow@7.24.1':
-    resolution: {integrity: sha512-sxi2kLTI5DeW5vDtMUsk4mTPwvlUDbjOnoWayhynCwrw4QXRld4QEYwqzY8JmQXaJUtgUuCIurtSRH5sn4c7mA==}
+  '@babel/parser@7.24.6':
+    resolution: {integrity: sha512-eNZXdfU35nJC2h24RznROuOpO94h6x8sg9ju0tT9biNtLZ2vuP8SduLqqV+/8+cebSLV9SJEAN5Z3zQbJG/M+Q==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/plugin-syntax-flow@7.24.6':
+    resolution: {integrity: sha512-gNkksSdV8RbsCoHF9sjVYrHfYACMl/8U32UfUhJ9+84/ASXw8dlx+eHyyF0m6ncQJ9IBSxfuCkB36GJqYdXTOA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1814,14 +1912,20 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
+  '@babel/plugin-syntax-jsx@7.24.6':
+    resolution: {integrity: sha512-lWfvAIFNWMlCsU0DRUun2GpFwZdGTukLaHJqRh1JRb80NdAP5Sb1HDHB5X9P9OtgZHQl089UzQkpYlBq2VTPRw==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
   '@babel/plugin-transform-flow-strip-types@7.24.1':
     resolution: {integrity: sha512-iIYPIWt3dUmUKKE10s3W+jsQ3icFkw0JyRVyY1B7G4yK/nngAOHLVx8xlhA6b/Jzl/Y0nis8gjqhqKtRDQqHWQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-react-jsx-self@7.24.1':
-    resolution: {integrity: sha512-kDJgnPujTmAZ/9q2CN4m2/lRsUUPDvsG3+tSHWUJIzMGTt5U/b/fwWd3RO3n+5mjLrsBrVa5eKFRVSQbi3dF1w==}
+  '@babel/plugin-transform-react-jsx-self@7.24.6':
+    resolution: {integrity: sha512-FfZfHXtQ5jYPQsCRyLpOv2GeLIIJhs8aydpNh39vRDjhD411XcfWDni5i7OjP/Rs8GAtTn7sWFFELJSHqkIxYg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1832,8 +1936,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-react-jsx@7.23.4':
-    resolution: {integrity: sha512-5xOpoPguCZCRbo/JeHlloSkTA8Bld1J/E1/kLfD1nsuiW1m8tduTA1ERCgIZokDflX/IBzKcqR3l7VlRgiIfHA==}
+  '@babel/plugin-transform-react-jsx@7.24.6':
+    resolution: {integrity: sha512-pCtPHhpRZHfwdA5G1Gpk5mIzMA99hv0R8S/Ket50Rw+S+8hkt3wBWqdqHaPw0CuUYxdshUgsPiLQ5fAs4ASMhw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1842,12 +1946,24 @@ packages:
     resolution: {integrity: sha512-Bkf2q8lMB0AFpX0NFEqSbx1OkTHf0f+0j82mkw+ZpzBnkk7e9Ql0891vlfgi+kHwOk8tQjiQHpqh4LaSa0fKEA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/template@7.24.6':
+    resolution: {integrity: sha512-3vgazJlLwNXi9jhrR1ef8qiB65L1RK90+lEQwv4OxveHnqC3BfmnHdgySwRLzf6akhlOYenT+b7AfWq+a//AHw==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/traverse@7.24.5':
     resolution: {integrity: sha512-7aaBLeDQ4zYcUFDUD41lJc1fG8+5IU9DaNSJAgal866FGvmD5EbWQgnEC6kO1gGLsX0esNkfnJSndbTXA3r7UA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/traverse@7.24.6':
+    resolution: {integrity: sha512-OsNjaJwT9Zn8ozxcfoBc+RaHdj3gFmCmYoQLUII1o6ZrUwku0BMg80FoOTPx+Gi6XhcQxAYE4xyjPTo4SxEQqw==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/types@7.24.5':
     resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/types@7.24.6':
+    resolution: {integrity: sha512-WaMsgi6Q8zMgMth93GvWPXkhAIEobfsIkLTacoVZoK1J0CevIPGYY2Vo5YvJGqyHqXM6P4ppOYGsIRU8MM9pFQ==}
     engines: {node: '>=6.9.0'}
 
   '@biomejs/biome@1.7.3':
@@ -1905,6 +2021,9 @@ packages:
 
   '@brillout/import@0.2.3':
     resolution: {integrity: sha512-1T8WlD75eeFSMrptGy8jiLHmfHgMmSjWvLOIUvHmSVZt+6k0eQqYUoK4KbmE4T9pVLIfxvZSOm2D68VEqKRHRw==}
+
+  '@brillout/json-serializer@0.5.10':
+    resolution: {integrity: sha512-3bh/MS5pudu3H9l3a0KAE1RBfy/L95JWAEo8b2mPBN3H98wzCHYzgjQb9xRl58y+Kc7FgkjApgCFJV+zR06P5Q==}
 
   '@brillout/json-serializer@0.5.8':
     resolution: {integrity: sha512-vEuXw30ok+mJfJutOxXKBb4lBJ0HymA7lev9PcYK6W/hzjhCTPk9Bdk85HrcNcKZWRQiwoWtw0F2Di4TRJ7ssQ==}
@@ -2006,8 +2125,8 @@ packages:
     cpu: [ppc64]
     os: [aix]
 
-  '@esbuild/aix-ppc64@0.21.3':
-    resolution: {integrity: sha512-yTgnwQpFVYfvvo4SvRFB0SwrW8YjOxEoT7wfMT7Ol5v7v5LDNvSGo67aExmxOb87nQNeWPVvaGBNfQ7BXcrZ9w==}
+  '@esbuild/aix-ppc64@0.21.4':
+    resolution: {integrity: sha512-Zrm+B33R4LWPLjDEVnEqt2+SLTATlru1q/xYKVn8oVTbiRBGmK2VIMoIYGJDGyftnGaC788IuzGFAlb7IQ0Y8A==}
     engines: {node: '>=12'}
     cpu: [ppc64]
     os: [aix]
@@ -2030,8 +2149,8 @@ packages:
     cpu: [arm64]
     os: [android]
 
-  '@esbuild/android-arm64@0.21.3':
-    resolution: {integrity: sha512-c+ty9necz3zB1Y+d/N+mC6KVVkGUUOcm4ZmT5i/Fk5arOaY3i6CA3P5wo/7+XzV8cb4GrI/Zjp8NuOQ9Lfsosw==}
+  '@esbuild/android-arm64@0.21.4':
+    resolution: {integrity: sha512-fYFnz+ObClJ3dNiITySBUx+oNalYUT18/AryMxfovLkYWbutXsct3Wz2ZWAcGGppp+RVVX5FiXeLYGi97umisA==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [android]
@@ -2054,8 +2173,8 @@ packages:
     cpu: [arm]
     os: [android]
 
-  '@esbuild/android-arm@0.21.3':
-    resolution: {integrity: sha512-bviJOLMgurLJtF1/mAoJLxDZDL6oU5/ztMHnJQRejbJrSc9FFu0QoUoFhvi6qSKJEw9y5oGyvr9fuDtzJ30rNQ==}
+  '@esbuild/android-arm@0.21.4':
+    resolution: {integrity: sha512-E7H/yTd8kGQfY4z9t3nRPk/hrhaCajfA3YSQSBrst8B+3uTcgsi8N+ZWYCaeIDsiVs6m65JPCaQN/DxBRclF3A==}
     engines: {node: '>=12'}
     cpu: [arm]
     os: [android]
@@ -2078,8 +2197,8 @@ packages:
     cpu: [x64]
     os: [android]
 
-  '@esbuild/android-x64@0.21.3':
-    resolution: {integrity: sha512-JReHfYCRK3FVX4Ra+y5EBH1b9e16TV2OxrPAvzMsGeES0X2Ndm9ImQRI4Ket757vhc5XBOuGperw63upesclRw==}
+  '@esbuild/android-x64@0.21.4':
+    resolution: {integrity: sha512-mDqmlge3hFbEPbCWxp4fM6hqq7aZfLEHZAKGP9viq9wMUBVQx202aDIfc3l+d2cKhUJM741VrCXEzRFhPDKH3Q==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [android]
@@ -2102,8 +2221,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@esbuild/darwin-arm64@0.21.3':
-    resolution: {integrity: sha512-U3fuQ0xNiAkXOmQ6w5dKpEvXQRSpHOnbw7gEfHCRXPeTKW9sBzVck6C5Yneb8LfJm0l6le4NQfkNPnWMSlTFUQ==}
+  '@esbuild/darwin-arm64@0.21.4':
+    resolution: {integrity: sha512-72eaIrDZDSiWqpmCzVaBD58c8ea8cw/U0fq/PPOTqE3c53D0xVMRt2ooIABZ6/wj99Y+h4ksT/+I+srCDLU9TA==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [darwin]
@@ -2126,8 +2245,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@esbuild/darwin-x64@0.21.3':
-    resolution: {integrity: sha512-3m1CEB7F07s19wmaMNI2KANLcnaqryJxO1fXHUV5j1rWn+wMxdUYoPyO2TnAbfRZdi7ADRwJClmOwgT13qlP3Q==}
+  '@esbuild/darwin-x64@0.21.4':
+    resolution: {integrity: sha512-uBsuwRMehGmw1JC7Vecu/upOjTsMhgahmDkWhGLWxIgUn2x/Y4tIwUZngsmVb6XyPSTXJYS4YiASKPcm9Zitag==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [darwin]
@@ -2150,8 +2269,8 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
-  '@esbuild/freebsd-arm64@0.21.3':
-    resolution: {integrity: sha512-fsNAAl5pU6wmKHq91cHWQT0Fz0vtyE1JauMzKotrwqIKAswwP5cpHUCxZNSTuA/JlqtScq20/5KZ+TxQdovU/g==}
+  '@esbuild/freebsd-arm64@0.21.4':
+    resolution: {integrity: sha512-8JfuSC6YMSAEIZIWNL3GtdUT5NhUA/CMUCpZdDRolUXNAXEE/Vbpe6qlGLpfThtY5NwXq8Hi4nJy4YfPh+TwAg==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [freebsd]
@@ -2174,8 +2293,8 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
-  '@esbuild/freebsd-x64@0.21.3':
-    resolution: {integrity: sha512-tci+UJ4zP5EGF4rp8XlZIdq1q1a/1h9XuronfxTMCNBslpCtmk97Q/5qqy1Mu4zIc0yswN/yP/BLX+NTUC1bXA==}
+  '@esbuild/freebsd-x64@0.21.4':
+    resolution: {integrity: sha512-8d9y9eQhxv4ef7JmXny7591P/PYsDFc4+STaxC1GBv0tMyCdyWfXu2jBuqRsyhY8uL2HU8uPyscgE2KxCY9imQ==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [freebsd]
@@ -2198,8 +2317,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@esbuild/linux-arm64@0.21.3':
-    resolution: {integrity: sha512-vvG6R5g5ieB4eCJBQevyDMb31LMHthLpXTc2IGkFnPWS/GzIFDnaYFp558O+XybTmYrVjxnryru7QRleJvmZ6Q==}
+  '@esbuild/linux-arm64@0.21.4':
+    resolution: {integrity: sha512-/GLD2orjNU50v9PcxNpYZi+y8dJ7e7/LhQukN3S4jNDXCKkyyiyAz9zDw3siZ7Eh1tRcnCHAo/WcqKMzmi4eMQ==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [linux]
@@ -2222,8 +2341,8 @@ packages:
     cpu: [arm]
     os: [linux]
 
-  '@esbuild/linux-arm@0.21.3':
-    resolution: {integrity: sha512-f6kz2QpSuyHHg01cDawj0vkyMwuIvN62UAguQfnNVzbge2uWLhA7TCXOn83DT0ZvyJmBI943MItgTovUob36SQ==}
+  '@esbuild/linux-arm@0.21.4':
+    resolution: {integrity: sha512-2rqFFefpYmpMs+FWjkzSgXg5vViocqpq5a1PSRgT0AvSgxoXmGF17qfGAzKedg6wAwyM7UltrKVo9kxaJLMF/g==}
     engines: {node: '>=12'}
     cpu: [arm]
     os: [linux]
@@ -2246,8 +2365,8 @@ packages:
     cpu: [ia32]
     os: [linux]
 
-  '@esbuild/linux-ia32@0.21.3':
-    resolution: {integrity: sha512-HjCWhH7K96Na+66TacDLJmOI9R8iDWDDiqe17C7znGvvE4sW1ECt9ly0AJ3dJH62jHyVqW9xpxZEU1jKdt+29A==}
+  '@esbuild/linux-ia32@0.21.4':
+    resolution: {integrity: sha512-pNftBl7m/tFG3t2m/tSjuYeWIffzwAZT9m08+9DPLizxVOsUl8DdFzn9HvJrTQwe3wvJnwTdl92AonY36w/25g==}
     engines: {node: '>=12'}
     cpu: [ia32]
     os: [linux]
@@ -2270,8 +2389,8 @@ packages:
     cpu: [loong64]
     os: [linux]
 
-  '@esbuild/linux-loong64@0.21.3':
-    resolution: {integrity: sha512-BGpimEccmHBZRcAhdlRIxMp7x9PyJxUtj7apL2IuoG9VxvU/l/v1z015nFs7Si7tXUwEsvjc1rOJdZCn4QTU+Q==}
+  '@esbuild/linux-loong64@0.21.4':
+    resolution: {integrity: sha512-cSD2gzCK5LuVX+hszzXQzlWya6c7hilO71L9h4KHwqI4qeqZ57bAtkgcC2YioXjsbfAv4lPn3qe3b00Zt+jIfQ==}
     engines: {node: '>=12'}
     cpu: [loong64]
     os: [linux]
@@ -2294,8 +2413,8 @@ packages:
     cpu: [mips64el]
     os: [linux]
 
-  '@esbuild/linux-mips64el@0.21.3':
-    resolution: {integrity: sha512-5rMOWkp7FQGtAH3QJddP4w3s47iT20hwftqdm7b+loe95o8JU8ro3qZbhgMRy0VuFU0DizymF1pBKkn3YHWtsw==}
+  '@esbuild/linux-mips64el@0.21.4':
+    resolution: {integrity: sha512-qtzAd3BJh7UdbiXCrg6npWLYU0YpufsV9XlufKhMhYMJGJCdfX/G6+PNd0+v877X1JG5VmjBLUiFB0o8EUSicA==}
     engines: {node: '>=12'}
     cpu: [mips64el]
     os: [linux]
@@ -2318,8 +2437,8 @@ packages:
     cpu: [ppc64]
     os: [linux]
 
-  '@esbuild/linux-ppc64@0.21.3':
-    resolution: {integrity: sha512-h0zj1ldel89V5sjPLo5H1SyMzp4VrgN1tPkN29TmjvO1/r0MuMRwJxL8QY05SmfsZRs6TF0c/IDH3u7XYYmbAg==}
+  '@esbuild/linux-ppc64@0.21.4':
+    resolution: {integrity: sha512-yB8AYzOTaL0D5+2a4xEy7OVvbcypvDR05MsB/VVPVA7nL4hc5w5Dyd/ddnayStDgJE59fAgNEOdLhBxjfx5+dg==}
     engines: {node: '>=12'}
     cpu: [ppc64]
     os: [linux]
@@ -2342,8 +2461,8 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
-  '@esbuild/linux-riscv64@0.21.3':
-    resolution: {integrity: sha512-dkAKcTsTJ+CRX6bnO17qDJbLoW37npd5gSNtSzjYQr0svghLJYGYB0NF1SNcU1vDcjXLYS5pO4qOW4YbFama4A==}
+  '@esbuild/linux-riscv64@0.21.4':
+    resolution: {integrity: sha512-Y5AgOuVzPjQdgU59ramLoqSSiXddu7F3F+LI5hYy/d1UHN7K5oLzYBDZe23QmQJ9PIVUXwOdKJ/jZahPdxzm9w==}
     engines: {node: '>=12'}
     cpu: [riscv64]
     os: [linux]
@@ -2366,8 +2485,8 @@ packages:
     cpu: [s390x]
     os: [linux]
 
-  '@esbuild/linux-s390x@0.21.3':
-    resolution: {integrity: sha512-vnD1YUkovEdnZWEuMmy2X2JmzsHQqPpZElXx6dxENcIwTu+Cu5ERax6+Ke1QsE814Zf3c6rxCfwQdCTQ7tPuXA==}
+  '@esbuild/linux-s390x@0.21.4':
+    resolution: {integrity: sha512-Iqc/l/FFwtt8FoTK9riYv9zQNms7B8u+vAI/rxKuN10HgQIXaPzKZc479lZ0x6+vKVQbu55GdpYpeNWzjOhgbA==}
     engines: {node: '>=12'}
     cpu: [s390x]
     os: [linux]
@@ -2390,8 +2509,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@esbuild/linux-x64@0.21.3':
-    resolution: {integrity: sha512-IOXOIm9WaK7plL2gMhsWJd+l2bfrhfilv0uPTptoRoSb2p09RghhQQp9YY6ZJhk/kqmeRt6siRdMSLLwzuT0KQ==}
+  '@esbuild/linux-x64@0.21.4':
+    resolution: {integrity: sha512-Td9jv782UMAFsuLZINfUpoF5mZIbAj+jv1YVtE58rFtfvoKRiKSkRGQfHTgKamLVT/fO7203bHa3wU122V/Bdg==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [linux]
@@ -2414,8 +2533,8 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
-  '@esbuild/netbsd-x64@0.21.3':
-    resolution: {integrity: sha512-uTgCwsvQ5+vCQnqM//EfDSuomo2LhdWhFPS8VL8xKf+PKTCrcT/2kPPoWMTs22aB63MLdGMJiE3f1PHvCDmUOw==}
+  '@esbuild/netbsd-x64@0.21.4':
+    resolution: {integrity: sha512-Awn38oSXxsPMQxaV0Ipb7W/gxZtk5Tx3+W+rAPdZkyEhQ6968r9NvtkjhnhbEgWXYbgV+JEONJ6PcdBS+nlcpA==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [netbsd]
@@ -2438,8 +2557,8 @@ packages:
     cpu: [x64]
     os: [openbsd]
 
-  '@esbuild/openbsd-x64@0.21.3':
-    resolution: {integrity: sha512-vNAkR17Ub2MgEud2Wag/OE4HTSI6zlb291UYzHez/psiKarp0J8PKGDnAhMBcHFoOHMXHfExzmjMojJNbAStrQ==}
+  '@esbuild/openbsd-x64@0.21.4':
+    resolution: {integrity: sha512-IsUmQeCY0aU374R82fxIPu6vkOybWIMc3hVGZ3ChRwL9hA1TwY+tS0lgFWV5+F1+1ssuvvXt3HFqe8roCip8Hg==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [openbsd]
@@ -2462,8 +2581,8 @@ packages:
     cpu: [x64]
     os: [sunos]
 
-  '@esbuild/sunos-x64@0.21.3':
-    resolution: {integrity: sha512-W8H9jlGiSBomkgmouaRoTXo49j4w4Kfbl6I1bIdO/vT0+0u4f20ko3ELzV3hPI6XV6JNBVX+8BC+ajHkvffIJA==}
+  '@esbuild/sunos-x64@0.21.4':
+    resolution: {integrity: sha512-hsKhgZ4teLUaDA6FG/QIu2q0rI6I36tZVfM4DBZv3BG0mkMIdEnMbhc4xwLvLJSS22uWmaVkFkqWgIS0gPIm+A==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [sunos]
@@ -2486,8 +2605,8 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@esbuild/win32-arm64@0.21.3':
-    resolution: {integrity: sha512-EjEomwyLSCg8Ag3LDILIqYCZAq/y3diJ04PnqGRgq8/4O3VNlXyMd54j/saShaN4h5o5mivOjAzmU6C3X4v0xw==}
+  '@esbuild/win32-arm64@0.21.4':
+    resolution: {integrity: sha512-UUfMgMoXPoA/bvGUNfUBFLCh0gt9dxZYIx9W4rfJr7+hKe5jxxHmfOK8YSH4qsHLLN4Ck8JZ+v7Q5fIm1huErg==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [win32]
@@ -2510,8 +2629,8 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@esbuild/win32-ia32@0.21.3':
-    resolution: {integrity: sha512-WGiE/GgbsEwR33++5rzjiYsKyHywE8QSZPF7Rfx9EBfK3Qn3xyR6IjyCr5Uk38Kg8fG4/2phN7sXp4NPWd3fcw==}
+  '@esbuild/win32-ia32@0.21.4':
+    resolution: {integrity: sha512-yIxbspZb5kGCAHWm8dexALQ9en1IYDfErzjSEq1KzXFniHv019VT3mNtTK7t8qdy4TwT6QYHI9sEZabONHg+aw==}
     engines: {node: '>=12'}
     cpu: [ia32]
     os: [win32]
@@ -2534,8 +2653,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@esbuild/win32-x64@0.21.3':
-    resolution: {integrity: sha512-xRxC0jaJWDLYvcUvjQmHCJSfMrgmUuvsoXgDeU/wTorQ1ngDdUBuFtgY3W1Pc5sprGAvZBtWdJX7RPg/iZZUqA==}
+  '@esbuild/win32-x64@0.21.4':
+    resolution: {integrity: sha512-sywLRD3UK/qRJt0oBwdpYLBibk7KiRfbswmWRDabuncQYSlf8aLEEUor/oP6KRz8KEG+HoiVLBhPRD5JWjS8Sg==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
@@ -2573,17 +2692,11 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fastify/cookie@9.3.1':
-    resolution: {integrity: sha512-h1NAEhB266+ZbZ0e9qUE6NnNR07i7DnNXWG9VbbZ8uC6O/hxHpl+Zoe5sw1yfdZ2U6XhToUGDnzQtWJdCaPwfg==}
-
   '@fastify/error@3.4.1':
     resolution: {integrity: sha512-wWSvph+29GR783IhmvdwWnN4bUxTD01Vm5Xad4i7i1VuAOItLvbPAb69sb0IQ2N57yprvhNIwAP5B6xfKTmjmQ==}
 
   '@fastify/fast-json-stringify-compiler@4.3.0':
     resolution: {integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==}
-
-  '@fastify/formbody@7.4.0':
-    resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
 
   '@fastify/merge-json-schemas@0.1.1':
     resolution: {integrity: sha512-fERDVz7topgNjtXsJTTW1JKLy0rhuLRcquYqNR9rF7OcVpCa2OVW49ZPDIhaRRCaUuvVxI+N416xUoF76HNSXA==}
@@ -2597,16 +2710,16 @@ packages:
   '@fastify/static@7.0.4':
     resolution: {integrity: sha512-p2uKtaf8BMOZWLs6wu+Ihg7bWNBdjNgCwDza4MJtTqg+5ovKmcbgbR9Xs5/smZ1YISfzKOCNYmZV8LaCj+eJ1Q==}
 
-  '@firebase/analytics-compat@0.2.9':
-    resolution: {integrity: sha512-ZKXaUixA+drbf3meX1bhPCG90UWrpw1KDrCydhe2Uf0VFZmZyVVr0bAcVpqLm29W4td7qp2RpFjVwercZ5mxTg==}
+  '@firebase/analytics-compat@0.2.10':
+    resolution: {integrity: sha512-ia68RcLQLLMFWrM10JfmFod7eJGwqr4/uyrtzHpTDnxGX/6gNCBTOuxdAbyWIqXI5XmcMQdz9hDijGKOHgDfPw==}
     peerDependencies:
       '@firebase/app-compat': 0.x
 
   '@firebase/analytics-types@0.8.2':
     resolution: {integrity: sha512-EnzNNLh+9/sJsimsA/FGqzakmrAUKLeJvjRHlg8df1f97NLUlFidk9600y0ZgWOp3CAxn6Hjtk+08tixlUOWyw==}
 
-  '@firebase/analytics@0.10.3':
-    resolution: {integrity: sha512-pMADbAgmfM3vDSeINCw0qSTBA9nn6so8min2KaBfu5eda5kfemb/DeawNUKOIxrP3yV4teJgCKA3JFomfnozEg==}
+  '@firebase/analytics@0.10.4':
+    resolution: {integrity: sha512-OJEl/8Oye/k+vJ1zV/1L6eGpc1XzAj+WG2TPznJ7PszL7sOFLBXkL9IjHfOCGDGpXeO3btozy/cYUqv4zgNeHg==}
     peerDependencies:
       '@firebase/app': 0.x
 
@@ -2626,17 +2739,17 @@ packages:
     peerDependencies:
       '@firebase/app': 0.x
 
-  '@firebase/app-compat@0.2.33':
-    resolution: {integrity: sha512-CLXhYJBtLuHXCUvs894gpXEXhZ7Nhytn2icLLIesH+hPLnyBeBf2CSve6Wjig+TOxTdwOQUzdtYpdjmeeYDfpw==}
+  '@firebase/app-compat@0.2.35':
+    resolution: {integrity: sha512-vgay/WRjeH0r97/Q6L6df2CMx7oyNFDsE5yPQ9oR1G+zx2eT0s8vNNh0WlKqQxUEWaOLRnXhQ8gy7uu0cBgTRg==}
 
   '@firebase/app-types@0.9.2':
     resolution: {integrity: sha512-oMEZ1TDlBz479lmABwWsWjzHwheQKiAgnuKxE0pz0IXCVx7/rtlkx1fQ6GfgK24WCrxDKMplZrT50Kh04iMbXQ==}
 
-  '@firebase/app@0.10.3':
-    resolution: {integrity: sha512-+pW2wNjijh88aFRjNWhDNlVJI5vB7q1IKYEE79a7ErxwNS/Bo+oh16aAAPvunhT06EF5I8y9gAlNuHNN8u4z8g==}
+  '@firebase/app@0.10.5':
+    resolution: {integrity: sha512-iY/fNot+hWPk9sTX8aHMqlcX9ynRvpGkskWAdUZ2eQQdLo8d1hSFYcYNwPv0Q/frGMasw8udKWMcFOEpC9fG8g==}
 
-  '@firebase/auth-compat@0.5.8':
-    resolution: {integrity: sha512-qUgmv/mcth9wHPTOCKgAOeHe5c+BIOJVcbX2RfcjlXO3xnd8nRafwEkZKBNJUjy4oihYhqFMEMnTHLhwLJwLig==}
+  '@firebase/auth-compat@0.5.9':
+    resolution: {integrity: sha512-RX8Zh/3zz2CsVbmYfgHkfUm4fAEPCl+KHVIImNygV5jTGDF6oKOhBIpf4Yigclyu8ESQKZ4elyN0MBYm9/7zGw==}
     peerDependencies:
       '@firebase/app-compat': 0.x
 
@@ -2649,8 +2762,8 @@ packages:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
 
-  '@firebase/auth@1.7.3':
-    resolution: {integrity: sha512-RiU1PjziOxLuyswtYtLK2qSjHIQJQGCk1h986SUFRbMQfzLXbQg8ZgXwxac1UAfDOzgzqPNCXhBuIlSK2UomoQ==}
+  '@firebase/auth@1.7.4':
+    resolution: {integrity: sha512-d2Fw17s5QesojwebrA903el20Li9/YGgkoOGJjagM4I1qAT36APa/FcZ+OX86KxbYKCtQKTMqraU8pxG7C2JWA==}
     peerDependencies:
       '@firebase/app': 0.x
       '@react-native-async-storage/async-storage': ^1.18.1
@@ -2670,8 +2783,8 @@ packages:
   '@firebase/database@1.0.5':
     resolution: {integrity: sha512-cAfwBqMQuW6HbhwI3Cb/gDqZg7aR0OmaJ85WUxlnoYW2Tm4eR0hFl5FEijI3/gYPUiUcUPQvTkGV222VkT7KPw==}
 
-  '@firebase/firestore-compat@0.3.31':
-    resolution: {integrity: sha512-YbR9GGLfYY9A5Qh2SyyNz7EsNeC5SRjzgRxtMtqz2s2es+p+5sDfFUUNKqpgVaIcnoPGOtvCLhNNWG/TBmlQjw==}
+  '@firebase/firestore-compat@0.3.32':
+    resolution: {integrity: sha512-at71mwK7a/mUXH0OgyY0+gUzedm/EUydDFYSFsBoO8DYowZ23Mgd6P4Rzq/Ll3zI/3xJN7LGe7Qp4iE/V/3Arg==}
     peerDependencies:
       '@firebase/app-compat': 0.x
 
@@ -2681,8 +2794,8 @@ packages:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
 
-  '@firebase/firestore@4.6.2':
-    resolution: {integrity: sha512-sxHtvmfH/1689aPQRxOXBWDumaPqg5AjQVkfwpt+Z3rnaa0aLJlrt2PZs9Xh04qbmWiwtkDgztFmoR/aQdMQJQ==}
+  '@firebase/firestore@4.6.3':
+    resolution: {integrity: sha512-d/+N2iUsiJ/Dc7fApdpdmmTXzwuTCromsdA1lKwYfZtMIOd1fI881NSLwK2wV4I38wkLnvfKJUV6WpU1f3/ONg==}
     engines: {node: '>=10.10.0'}
     peerDependencies:
       '@firebase/app': 0.x
@@ -2776,8 +2889,8 @@ packages:
   '@firebase/util@1.9.6':
     resolution: {integrity: sha512-IBr1MZbp4d5MjBCXL3TW1dK/PDXX4yOGbiwRNh1oAbE/+ci5Uuvy9KIrsFYY80as1I0iOaD5oOMA9Q8j4TJWcw==}
 
-  '@firebase/vertexai-preview@0.0.1':
-    resolution: {integrity: sha512-N8m9Xr0YZKy0t9SpQDuHrL2ppEAT/iqf88Y/O00QNA/Td/BMCL8sJ0c+Savh1TVrqh0rNp9n6HkZ39e/O5mwhA==}
+  '@firebase/vertexai-preview@0.0.2':
+    resolution: {integrity: sha512-NOOL63kFQRq45ioi5P+hlqj/4LNmvn1URhGjQdvyV54c1Irvoq26aW861PRRLjrSMIeNeiLtCLD5pe+ediepAg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
@@ -2795,8 +2908,8 @@ packages:
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
 
-  '@google-cloud/firestore@7.6.0':
-    resolution: {integrity: sha512-WUDbaLY8UnPxgwsyIaxj6uxCtSDAaUyvzWJykNH5rZ9i92/SZCsPNNMN0ajrVpAR81hPIL4amXTaMJ40y5L+Yg==}
+  '@google-cloud/firestore@7.7.0':
+    resolution: {integrity: sha512-41/vBFXOeSYjFI/2mJuJrDwg2umGk+FDrI/SCGzBRUe+UZWDN4GoahIbGZ19YQsY0ANNl6DRiAy4wD6JezK02g==}
     engines: {node: '>=14.0.0'}
 
   '@google-cloud/paginator@5.0.0':
@@ -3154,6 +3267,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@sec-ant/readable-stream@0.4.1':
+    resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
+
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
 
@@ -3172,6 +3288,10 @@ packages:
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
+    engines: {node: '>=18'}
+
+  '@sindresorhus/merge-streams@4.0.0':
+    resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
   '@solid-primitives/props@3.1.11':
@@ -3273,6 +3393,9 @@ packages:
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
 
+  '@types/fs-extra@11.0.4':
+    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
+
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
 
@@ -3281,6 +3404,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/jsonfile@6.1.4':
+    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/jsonwebtoken@9.0.6':
     resolution: {integrity: sha512-/5hndP5dCjloafCXns6SZyESp3Ldq7YjH3zwzwczYnjxIT0Fqzk5ROSYVGfFyczIue7IUEj8hkvLbPoLQ18vQw==}
@@ -3309,6 +3435,9 @@ packages:
   '@types/node@20.12.11':
     resolution: {integrity: sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==}
 
+  '@types/node@20.12.13':
+    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
+
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
@@ -3323,6 +3452,9 @@ packages:
 
   '@types/react@18.3.2':
     resolution: {integrity: sha512-Btgg89dAnqD4vV7R3hlwOxgqobUQKgx3MmrQRi0yYbs/P0ym8XozIAlkqVilPqHQwXs4e9Tf63rrCgl58BcO4w==}
+
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/request@2.48.12':
     resolution: {integrity: sha512-G3sY+NpsA9jnwm0ixhAFQSJ3Q9JkpLZpJbI3GMv0mIAT0y3mRabYeINzal5WOChIiaTEGQYlHOKgkaM9EisWHw==}
@@ -3345,8 +3477,8 @@ packages:
   '@types/which@3.0.3':
     resolution: {integrity: sha512-2C1+XoY0huExTbs8MQv1DuS5FS86+SEjdM9F/+GS61gg5Hqbtj8ZiDSx8MfWcyei907fIPbfPGCOrNUTnVHY1g==}
 
-  '@typescript-eslint/eslint-plugin@7.9.0':
-    resolution: {integrity: sha512-6e+X0X3sFe/G/54aC3jt0txuMTURqLyekmEHViqyA2VnxhLMpvA6nqmcjIy+Cr9tLDHPssA74BP5Mx9HQIxBEA==}
+  '@typescript-eslint/eslint-plugin@7.11.0':
+    resolution: {integrity: sha512-P+qEahbgeHW4JQ/87FuItjBj8O3MYv5gELDzr8QaQ7fsll1gSMTYb6j87MYyxwf3DtD7uGFB9ShwgmCJB5KmaQ==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       '@typescript-eslint/parser': ^7.0.0
@@ -3356,8 +3488,8 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/parser@7.9.0':
-    resolution: {integrity: sha512-qHMJfkL5qvgQB2aLvhUSXxbK7OLnDkwPzFalg458pxQgfxKDfT1ZDbHQM/I6mDIf/svlMkj21kzKuQ2ixJlatQ==}
+  '@typescript-eslint/parser@7.11.0':
+    resolution: {integrity: sha512-yimw99teuaXVWsBcPO1Ais02kwJ1jmNA1KxE7ng0aT7ndr1pT1wqj0OJnsYVGKKlc4QJai86l/025L6z8CljOg==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
@@ -3365,13 +3497,17 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  '@typescript-eslint/scope-manager@7.11.0':
+    resolution: {integrity: sha512-27tGdVEiutD4POirLZX4YzT180vevUURJl4wJGmm6TrQoiYwuxTIY98PBp6L2oN+JQxzE0URvYlzJaBHIekXAw==}
+    engines: {node: ^18.18.0 || >=20.0.0}
 
   '@typescript-eslint/scope-manager@7.9.0':
     resolution: {integrity: sha512-ZwPK4DeCDxr3GJltRz5iZejPFAAr4Wk3+2WIBaj1L5PYK5RgxExu/Y68FFVclN0y6GGwH8q+KgKRCvaTmFBbgQ==}
     engines: {node: ^18.18.0 || >=20.0.0}
 
-  '@typescript-eslint/type-utils@7.9.0':
-    resolution: {integrity: sha512-6Qy8dfut0PFrFRAZsGzuLoM4hre4gjzWJB6sUvdunCYZsYemTkzZNwF1rnGea326PHPT3zn5Lmg32M/xfJfByA==}
+  '@typescript-eslint/type-utils@7.11.0':
+    resolution: {integrity: sha512-WmppUEgYy+y1NTseNMJ6mCFxt03/7jTOy08bcg7bxJJdsM4nuhnchyBbE8vryveaJUf62noH7LodPSo5Z0WUCg==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
@@ -3380,9 +3516,22 @@ packages:
       typescript:
         optional: true
 
+  '@typescript-eslint/types@7.11.0':
+    resolution: {integrity: sha512-MPEsDRZTyCiXkD4vd3zywDCifi7tatc4K37KqTprCvaXptP7Xlpdw0NR2hRJTetG5TxbWDB79Ys4kLmHliEo/w==}
+    engines: {node: ^18.18.0 || >=20.0.0}
+
   '@typescript-eslint/types@7.9.0':
     resolution: {integrity: sha512-oZQD9HEWQanl9UfsbGVcZ2cGaR0YT5476xfWE0oE5kQa2sNK2frxOlkeacLOTh9po4AlUT5rtkGyYM5kew0z5w==}
     engines: {node: ^18.18.0 || >=20.0.0}
+
+  '@typescript-eslint/typescript-estree@7.11.0':
+    resolution: {integrity: sha512-cxkhZ2C/iyi3/6U9EPc5y+a6csqHItndvN/CzbNXTNrsC3/ASoYQZEt9uMaEp+xFNjasqQyszp5TumAVKKvJeQ==}
+    engines: {node: ^18.18.0 || >=20.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@typescript-eslint/typescript-estree@7.9.0':
     resolution: {integrity: sha512-zBCMCkrb2YjpKV3LA0ZJubtKCDxLttxfdGmwZvTqqWevUPN0FZvSI26FalGFFUZU/9YQK/A4xcQF9o/VVaCKAg==}
@@ -3393,11 +3542,21 @@ packages:
       typescript:
         optional: true
 
+  '@typescript-eslint/utils@7.11.0':
+    resolution: {integrity: sha512-xlAWwPleNRHwF37AhrZurOxA1wyXowW4PqVXZVUNCLjB48CqdPJoJWkrpH2nij9Q3Lb7rtWindtoXwxjxlKKCA==}
+    engines: {node: ^18.18.0 || >=20.0.0}
+    peerDependencies:
+      eslint: ^8.56.0
+
   '@typescript-eslint/utils@7.9.0':
     resolution: {integrity: sha512-5KVRQCzZajmT4Ep+NEgjXCvjuypVvYHUW7RHlXzNPuak2oWpVoD1jf5xCP0dPAuNIchjC7uQyvbdaSTFaLqSdA==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
+
+  '@typescript-eslint/visitor-keys@7.11.0':
+    resolution: {integrity: sha512-7syYk4MzjxTEk0g/w3iqtgxnFQspDJfn6QKD36xMuuhTzjcxY7F8EmBLnALjVyaOF1/bVocu3bS/2/F7rXrveQ==}
+    engines: {node: ^18.18.0 || >=20.0.0}
 
   '@typescript-eslint/visitor-keys@7.9.0':
     resolution: {integrity: sha512-iESPx2TNLDNGQLyjKhUvIKprlP49XNEK+MvIf9nIO7ZZaZdbnfWKHnXAgufpxqfA0YryH8XToi4+CjBgVnFTSQ==}
@@ -3405,6 +3564,9 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@universal-middleware/express@0.0.2':
+    resolution: {integrity: sha512-qw9v/OOpmfcz69369xeDq3u8ZRJhd8l+0B6qo5uCcgUh7zWt5mOl6gPVciIxXuyrlgcHVW86hNoyf7pPLIQGlg==}
 
   '@vavite/connect@4.1.1':
     resolution: {integrity: sha512-UjJEPX9t1fPNJiDbTzzW/ZIorTipCWO9x9aQ0CkNqtH6+dKnaWI/a03gFiNU+7ybhYI1LxdY17ar10ns7DQ08Q==}
@@ -3422,26 +3584,26 @@ packages:
     peerDependencies:
       vite: ^2.8.1 || 3 || 4 || 5
 
-  '@vercel/build-utils@7.12.0':
-    resolution: {integrity: sha512-h6fO2LqEWtceK2RxoxGp7QhZZnIa4rK2x3kTJlAYc5ARZPhsn0KB7Wf+YhFCInIqaDq7S0S92YWABkHIJDKjBw==}
+  '@vercel/build-utils@8.2.0':
+    resolution: {integrity: sha512-yDr/zp/SX45mIy6DO8IRD6hmEs6gIr33/ajT3y8efUt/crQvgNtaSkbx9ubbwkR4RV/qKL213v6kXxj+EpsnlQ==}
 
-  '@vercel/nft@0.26.4':
-    resolution: {integrity: sha512-j4jCOOXke2t8cHZCIxu1dzKLHLcFmYzC3yqAK6MfZznOL1QIJKd0xcFsXK3zcqzU7ScsE2zWkiMMNHGMHgp+FA==}
+  '@vercel/nft@0.27.1':
+    resolution: {integrity: sha512-K6upzYHCV1cq2gP83r1o8uNV1vwvAlozvMqp7CEjYWxo0CMI8/4jKcDkVjlypVhrfZ54SXwh9QbH0ZIk/vQCsw==}
     engines: {node: '>=16'}
     hasBin: true
 
   '@vercel/routing-utils@3.1.0':
     resolution: {integrity: sha512-Ci5xTjVTJY/JLZXpCXpLehMft97i9fH34nu9PGav6DtwkVUF6TOPX86U0W0niQjMZ5n6/ZP0BwcJK2LOozKaGw==}
 
-  '@vite-plugin-vercel/vike@6.0.1':
-    resolution: {integrity: sha512-SIsNmB2pklJ0Of+6f0egPAhSXtamH9aZiYp1BaZw1dcS6s0ENwBBbYAUPRFkUD5Tjk6Too2DB1R5zrZBCYk1HQ==}
+  '@vite-plugin-vercel/vike@7.0.0':
+    resolution: {integrity: sha512-9OWL99T8wlquWKR01Jrz/WgOPanVMgaAm/cVeYXhodHUFEKXRZCx5DkUfOAzte/35FqiCK/Oskps1WAsyVVfiA==}
     peerDependencies:
-      vike: ^0.4.171
+      vike: ^0.4.172
       vite: ^4.4 || ^5.0.2
       vite-plugin-vercel: '*'
 
-  '@vitejs/plugin-react@4.2.1':
-    resolution: {integrity: sha512-oojO9IDc4nCUUi8qIR11KoQm0XFFLIwsRBwHRR4d/88IWghn1y6ckz/bJ8GHDCsYEJee8mDzqtJxh15/cisJNQ==}
+  '@vitejs/plugin-react@4.3.0':
+    resolution: {integrity: sha512-KcEbMsn4Dpk+LIbHMj7gDPRKaTMStxxWRkRmxsg/jVdFdJCZWt1SchZcf0M4t8lIKdwwMsEyzhrcOXRrDPtOBw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
@@ -3953,10 +4115,6 @@ packages:
   cookie-signature@1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
 
-  cookie-signature@1.2.1:
-    resolution: {integrity: sha512-78KWk9T26NhzXtuL26cIJ8/qNHANyJ/ZYrmEXFzUmhZdjpBv+DlWlOANRTGBt48YcyslsLrj0bMLFTmXvLRCOw==}
-    engines: {node: '>=6.6.0'}
-
   cookie@0.4.1:
     resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
     engines: {node: '>= 0.6'}
@@ -4274,8 +4432,8 @@ packages:
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
 
-  edgedb@1.5.6:
-    resolution: {integrity: sha512-UQqzwqeuza1EOTDC9ZzvfhOYj2ZvE9k1KvB1fVTQAoC3MYg+colaJWbIajSEMpdgCFmlljhzQlOar+9FZnU/2g==}
+  edgedb@1.5.7:
+    resolution: {integrity: sha512-PlINnSnjPUaRxFKUaq+vfIIirdtN8RO3WrYwDEE9qz58MaX9ZlFnrX23AmJExZSKAsHnJUI33GofZWn9qN2G5Q==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
@@ -4388,8 +4546,8 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
-  esbuild@0.21.3:
-    resolution: {integrity: sha512-Kgq0/ZsAPzKrbOjCQcjoSmPoWhlcVnGAUo7jvaLHoxW1Drto0KGkR1xBNg2Cp43b9ImvxmPEJZ9xkfcnqPsfBw==}
+  esbuild@0.21.4:
+    resolution: {integrity: sha512-sFMcNNrj+Q0ZDolrp5pDhH0nRPN9hLIM3fRPwgbLYJeSHHgnXSnbV3xYgSVuOeLWH9c73VwmEverVzupIv5xuA==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -4533,6 +4691,10 @@ packages:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
 
+  execa@9.1.0:
+    resolution: {integrity: sha512-lSgHc4Elo2m6bUDhc3Hl/VxvUDJdQWI40RZ4KMY9bKRc+hgMOT7II/JjbNDhI8VnMtrCb7U/fhpJIkLORZozWw==}
+    engines: {node: '>=18'}
+
   exit-hook@2.2.1:
     resolution: {integrity: sha512-eNTPlAD67BmP31LDINZ3U7HSF8l57TxOY2PmBJ1shpCvpnxBF93mWCE8YHBnXs8qiUZJc9WDcWIeC3a2HIAMfw==}
     engines: {node: '>=6'}
@@ -4624,6 +4786,10 @@ packages:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
     engines: {node: ^12.20 || >= 14.13}
 
+  figures@6.1.0:
+    resolution: {integrity: sha512-d+l3qxjSesT4V7v2fh+QnmFnUWv9lSpjarhShNTgBOfA0ttejbQUAlHLitbjkoRiDulW0OPoQPYIGhIC8ohejg==}
+    engines: {node: '>=18'}
+
   file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -4658,12 +4824,12 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  firebase-admin@12.1.0:
-    resolution: {integrity: sha512-bU7uPKMmIXAihWxntpY/Ma9zucn5y3ec+HQPqFQ/zcEfP9Avk9E/6D8u+yT/VwKHNZyg7yDVWOoJi73TIdR4Ww==}
+  firebase-admin@12.1.1:
+    resolution: {integrity: sha512-Nuoxk//gaYrspS7TvwBINdGvFhh2QeiaWpRW6+PJ+tWyn2/CugBc7jKa1NaBg0AvhGSOXFOCIsXhzCzHA47Rew==}
     engines: {node: '>=14'}
 
-  firebase@10.12.0:
-    resolution: {integrity: sha512-31UZyAK0+VZmF9jR/+6g31uyqWjBKsG+TV3ndRJEkw6+Skctb5ZX0+Ezq/pbC68iIRJ5TujOjyl632vTOqyS1w==}
+  firebase@10.12.2:
+    resolution: {integrity: sha512-ZxEdtSvP1I9su1yf32D8TIdgxtPgxwr6z3jYAR1TXS/t+fVfpoPc/N1/N2bxOco9mNjUoc+od34v5Fn4GeKs6Q==}
 
   firebaseui@6.1.0:
     resolution: {integrity: sha512-5WiVYVxPGMANuZKxg6KLyU1tyqIsbqf/59Zm4HrdFYwPtM5lxxB0THvgaIk4ix+hCgF0qmY89sKiktcifKzGIA==}
@@ -4790,6 +4956,10 @@ packages:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
     engines: {node: '>=16'}
 
+  get-stream@9.0.1:
+    resolution: {integrity: sha512-kVCxPF3vQM/N0B1PmoqVUqgHP+EeVjmZSQn+1oCRPxd2P21P2F19lIgbR3HBosbB1PUhOAoctJnfEn2GbN2eZA==}
+    engines: {node: '>=18'}
+
   get-symbol-description@1.0.2:
     resolution: {integrity: sha512-g0QYk1dZBxGwk+Ngc+ltRH2IBp2f7zBkBMBJZCDerh6EhlhSR6+9irMCuT/09zD6qkarHUSn529sK/yL4S27mg==}
     engines: {node: '>= 0.4'}
@@ -4859,8 +5029,8 @@ packages:
     resolution: {integrity: sha512-TJJXFzMlVGRlIH27gYZ6XXyPf5Y3OItsKFfefsDAafNNywYRTkei83nEO29IrYj8GtdHWU78YnW+YZdaZaXIJA==}
     engines: {node: '>=14'}
 
-  google-gax@4.3.2:
-    resolution: {integrity: sha512-2mw7qgei2LPdtGrmd1zvxQviOcduTnsvAWYzCxhOWXK4IQKmQztHnDQwD0ApB690fBQJemFKSU7DnceAy3RLzw==}
+  google-gax@4.3.5:
+    resolution: {integrity: sha512-zXRSGgHp33ottCQMdYlKEFX/MhWkzKVX5P3Vpmx+DW6rtseLILzp3V0YV5Rh4oQzzkM0BH9+nJIyX01EUgmd3g==}
     engines: {node: '>=14'}
 
   gopd@1.0.1:
@@ -4889,6 +5059,10 @@ packages:
 
   hanji@0.0.5:
     resolution: {integrity: sha512-Abxw1Lq+TnYiL4BueXqMau222fPSPMFtya8HdpWsz/xVAhifXou71mPh/kY2+08RgFcVccjG3uZHs6K5HAe3zw==}
+
+  happy-dom@14.11.4:
+    resolution: {integrity: sha512-n7p9GYkl9j5wfGtJSw3Xl0rpM2NRMIC+/WVLPi+uThI9Fe+viGnxpL4ce256LRCruvHnBWckEOm2YAyUD0hjxA==}
+    engines: {node: '>=16.0.0'}
 
   has-bigints@1.0.2:
     resolution: {integrity: sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==}
@@ -4932,8 +5106,8 @@ packages:
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
 
-  hono@4.3.8:
-    resolution: {integrity: sha512-IepU1cWz7oWY/os4Dbgq8dAjQh+APbS0LvLf85bL3cnh4sqMZ1MSBCYFkpm+MIpGoRUMmX8v9CeQh+TmBX3RUA==}
+  hono@4.4.0:
+    resolution: {integrity: sha512-Bb2GHk8jmlLIuxc3U+7UBGOoA5lByJTAFnRdH2N2fqEVy9TEQzJ9saIJUQ/ZqBvEvgEFe7UjPFNSFi8cyeU+3Q==}
     engines: {node: '>=16.0.0'}
 
   html-entities@2.3.3:
@@ -4980,6 +5154,10 @@ packages:
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
+
+  human-signals@7.0.0:
+    resolution: {integrity: sha512-74kytxOUSvNbjrT9KisAbaTZ/eJwD/LrbM/kh5j0IhPuJzwuA19dWvniFGwBzN9rVjg+O/e+F310PjObDXS+9Q==}
+    engines: {node: '>=18.18.0'}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -5114,6 +5292,10 @@ packages:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
 
+  is-plain-obj@4.1.0:
+    resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
+    engines: {node: '>=12'}
+
   is-promise@2.2.2:
     resolution: {integrity: sha512-+lP4/6lKUBfQjZ2pdxThZvLUAafmZb8OAxFb8XXtiQmS35INgr85hdOGoEs124ez1FCnZJt6jau/T+alh58QFQ==}
 
@@ -5137,6 +5319,10 @@ packages:
     resolution: {integrity: sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  is-stream@4.0.1:
+    resolution: {integrity: sha512-Dnz92NInDqYckGEUJv689RbRiTSEHCQ7wOVeALbkOz999YpqT46yMRIGtSNl2iCL1waAZSx40+h59NV/EwzV/A==}
+    engines: {node: '>=18'}
+
   is-string@1.0.7:
     resolution: {integrity: sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==}
     engines: {node: '>= 0.4'}
@@ -5148,6 +5334,10 @@ packages:
   is-typed-array@1.1.13:
     resolution: {integrity: sha512-uZ25/bUAlUY5fR4OKT4rZQEBrzQWYV9ZJYGGsUmEJ6thodVJ1HX64ePQ6Z0qPWP+m+Uq6e9UugrE38jeYsDSMw==}
     engines: {node: '>= 0.4'}
+
+  is-unicode-supported@2.0.0:
+    resolution: {integrity: sha512-FRdAyx5lusK1iHG0TWpVtk9+1i+GjrzRffhDg4ovQ7mcidMQ6mj+MhKPmvh7Xwyv5gIS06ns49CA7Sqg7lC22Q==}
+    engines: {node: '>=18'}
 
   is-url-superb@4.0.0:
     resolution: {integrity: sha512-GI+WjezhPPcbM+tqE9LnmsY5qqjwHzTvjJ36wxYX5ujNXefSUJ/T17r5bqDV8yLhcgB59KTPNOc9O9cmHTPWsA==}
@@ -5816,6 +6006,10 @@ packages:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
 
+  parse-ms@4.0.0:
+    resolution: {integrity: sha512-TXfryirbmq34y8QBwgqCVLi+8oA3oWx2eAnSn62ITyEhEYaWRlVZ2DvMM9eZbMs/RfxPu/PK/aBLyGj4IrqMHw==}
+    engines: {node: '>=18'}
+
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
@@ -6166,6 +6360,10 @@ packages:
   pretty-format@3.8.0:
     resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
 
+  pretty-ms@9.0.0:
+    resolution: {integrity: sha512-E9e9HJ9R9NasGOgPaPE8VMeiPKAyWR5jcFpNnwIejslIhWqdqOrb2wShBsncMPUb+BcCd2OPYfh7p2W6oemTng==}
+    engines: {node: '>=18'}
+
   printable-characters@1.0.42:
     resolution: {integrity: sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ==}
 
@@ -6194,6 +6392,10 @@ packages:
 
   protobufjs@7.2.6:
     resolution: {integrity: sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==}
+    engines: {node: '>=12.0.0'}
+
+  protobufjs@7.3.0:
+    resolution: {integrity: sha512-YWD03n3shzV9ImZRX3ccbjqLxj7NokGN0V/ESiBV5xWqrommYHYiihuIyavq03pWSGqlyvYUFmfoMKd+1rPA/g==}
     engines: {node: '>=12.0.0'}
 
   proxy-addr@2.0.7:
@@ -6260,8 +6462,8 @@ packages:
   react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
 
-  react-refresh@0.14.0:
-    resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
+  react-refresh@0.14.2:
+    resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
   react-streaming@0.3.28:
@@ -6649,6 +6851,10 @@ packages:
     resolution: {integrity: sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==}
     engines: {node: '>=12'}
 
+  strip-final-newline@4.0.0:
+    resolution: {integrity: sha512-aulFJcD6YK8V1G7iRB5tigAP4TsHBZZrOV8pjV++zdUwmeV8uzbY7yn6h9MswN62adStNZFuCIx4haBnRuMDaw==}
+    engines: {node: '>=18'}
+
   strip-json-comments@2.0.1:
     resolution: {integrity: sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==}
     engines: {node: '>=0.10.0'}
@@ -6844,6 +7050,11 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  tsx@4.11.0:
+    resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
@@ -6916,8 +7127,8 @@ packages:
     resolution: {integrity: sha512-/OxDN6OtAk5KBpGb28T+HZc2M+ADtvRxXrKKbUwtsLgdoxgX13hyy7ek6bFRl5+aBs2yZzB0c4CnQfAtVypW/g==}
     engines: {node: '>= 0.4'}
 
-  typescript-eslint@7.9.0:
-    resolution: {integrity: sha512-7iTn9c10teHHCys5Ud/yaJntXZrjt3h2mrx3feJGBOLgQkF3TB1X89Xs3aVQ/GgdXRAXpk2bPTdpRwHP4YkUow==}
+  typescript-eslint@7.11.0:
+    resolution: {integrity: sha512-ZKe3yHF/IS/kCUE4CGE3UgtK+Q7yRk1e9kwEI0rqm9XxMTd9P1eHe0LVVtrZ3oFuIQ2unJ9Xn0vTsLApzJ3aPw==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
@@ -7015,11 +7226,6 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vike-authjs@0.1.6:
-    resolution: {integrity: sha512-jfQ3oUxbLNEdUkpQE2wQnNYg2ihmL4+/2AJsjZllQwHQtdRM8Yzej8JtnF3GBwT5cbXgVtuHNNusNMtgOxeTEg==}
-    peerDependencies:
-      '@auth/core': '*'
-
   vike-react@0.4.10:
     resolution: {integrity: sha512-6zzt14oCO80B4NZWEKr0wj60CpSJgbGov1szuk3A56LOhWAAZ0NLNyrHZVod5ONqfxblLyi3pCLG1RHwSCkftQ==}
     peerDependencies:
@@ -7052,6 +7258,17 @@ packages:
       react-streaming:
         optional: true
 
+  vike@0.4.172:
+    resolution: {integrity: sha512-3IIGTmsrWT/0JXhTHNJ+UCZjH0soIKUxGVgPHrrmN9+SegBdRKsEfgDapd4PzmrNVOCAtxhbqiM5MZWz6lkQEw==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    peerDependencies:
+      react-streaming: '>=0.3.5'
+      vite: '>=4.4.0'
+    peerDependenciesMeta:
+      react-streaming:
+        optional: true
+
   vite-node@1.6.0:
     resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -7074,10 +7291,10 @@ packages:
       '@testing-library/jest-dom':
         optional: true
 
-  vite-plugin-vercel@6.0.1:
-    resolution: {integrity: sha512-UAi3zT2xd2t2VzykxUsTUR5tbPK7QAaqMbVSne0UN74PpG1lEMIMiWG7xv8Gcf30iV8ikdE/r3UzAgwOPU2/vQ==}
+  vite-plugin-vercel@7.0.0:
+    resolution: {integrity: sha512-8j1IuHW9LNeM5s+EqmW3k/kCVO//5FT+ikLJo87FGmXosc6zI/WXAGrFsr+2xt8+tlFXvUYt5tEE0BKwqbwjfA==}
     peerDependencies:
-      '@vite-plugin-vercel/vike': 6.0.1
+      '@vite-plugin-vercel/vike': 7.0.0
       vike: '*'
       vite: ^4.4 || ^5.0.2
     peerDependenciesMeta:
@@ -7176,6 +7393,10 @@ packages:
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
 
+  webidl-conversions@7.0.0:
+    resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
+    engines: {node: '>=12'}
+
   webpack-sources@3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
@@ -7190,6 +7411,10 @@ packages:
   websocket-extensions@0.1.4:
     resolution: {integrity: sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==}
     engines: {node: '>=0.8.0'}
+
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
+    engines: {node: '>=12'}
 
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
@@ -7307,11 +7532,23 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
+  yoctocolors@2.0.2:
+    resolution: {integrity: sha512-Ct97huExsu7cWeEjmrXlofevF8CvzUglJ4iGUet5B8xn1oumtAZBpHU4GzYuoE6PVqcZ5hghtBrSlhwHuR1Jmw==}
+    engines: {node: '>=18'}
+
   youch@3.3.3:
     resolution: {integrity: sha512-qSFXUk3UZBLfggAW3dJKg0BMblG5biqSF8M34E06o5CSsZtH92u9Hqmj2RzGiHDi64fhe83+4tENFP2DB6t6ZA==}
 
   zod@3.23.0:
     resolution: {integrity: sha512-OFLT+LTocvabn6q76BTwVB0hExEBS0IduTr3cqZyMqEDbOnYmcU+y0tUAYbND4uwclpBGi4I4UUBGzylWpjLGA==}
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
+  zx@8.1.2:
+    resolution: {integrity: sha512-zkCiXKh8D/eo6r58OmJvO5mc2NthcSRvysb3fuS6VQlHPbEPBcxduRwM3m6ZfHj+7cLHcrahCnuO2TDAbW+6xw==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
 
 snapshots:
 
@@ -7337,20 +7574,25 @@ snapshots:
       '@babel/highlight': 7.24.2
       picocolors: 1.0.0
 
-  '@babel/compat-data@7.24.4': {}
+  '@babel/code-frame@7.24.6':
+    dependencies:
+      '@babel/highlight': 7.24.6
+      picocolors: 1.0.0
 
-  '@babel/core@7.24.5':
+  '@babel/compat-data@7.24.6': {}
+
+  '@babel/core@7.24.6':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@babel/code-frame': 7.24.2
-      '@babel/generator': 7.24.5
-      '@babel/helper-compilation-targets': 7.23.6
-      '@babel/helper-module-transforms': 7.24.5(@babel/core@7.24.5)
-      '@babel/helpers': 7.24.5
-      '@babel/parser': 7.24.5
-      '@babel/template': 7.24.0
-      '@babel/traverse': 7.24.5
-      '@babel/types': 7.24.5
+      '@babel/code-frame': 7.24.6
+      '@babel/generator': 7.24.6
+      '@babel/helper-compilation-targets': 7.24.6
+      '@babel/helper-module-transforms': 7.24.6(@babel/core@7.24.6)
+      '@babel/helpers': 7.24.6
+      '@babel/parser': 7.24.6
+      '@babel/template': 7.24.6
+      '@babel/traverse': 7.24.6
+      '@babel/types': 7.24.6
       convert-source-map: 2.0.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
@@ -7366,28 +7608,46 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
 
-  '@babel/helper-annotate-as-pure@7.22.5':
+  '@babel/generator@7.24.6':
     dependencies:
-      '@babel/types': 7.24.5
+      '@babel/types': 7.24.6
+      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/trace-mapping': 0.3.25
+      jsesc: 2.5.2
 
-  '@babel/helper-compilation-targets@7.23.6':
+  '@babel/helper-annotate-as-pure@7.24.6':
     dependencies:
-      '@babel/compat-data': 7.24.4
-      '@babel/helper-validator-option': 7.23.5
+      '@babel/types': 7.24.6
+
+  '@babel/helper-compilation-targets@7.24.6':
+    dependencies:
+      '@babel/compat-data': 7.24.6
+      '@babel/helper-validator-option': 7.24.6
       browserslist: 4.23.0
       lru-cache: 5.1.1
       semver: 6.3.1
 
   '@babel/helper-environment-visitor@7.22.20': {}
 
+  '@babel/helper-environment-visitor@7.24.6': {}
+
   '@babel/helper-function-name@7.23.0':
     dependencies:
       '@babel/template': 7.24.0
       '@babel/types': 7.24.5
 
+  '@babel/helper-function-name@7.24.6':
+    dependencies:
+      '@babel/template': 7.24.6
+      '@babel/types': 7.24.6
+
   '@babel/helper-hoist-variables@7.22.5':
     dependencies:
       '@babel/types': 7.24.5
+
+  '@babel/helper-hoist-variables@7.24.6':
+    dependencies:
+      '@babel/types': 7.24.6
 
   '@babel/helper-module-imports@7.18.6':
     dependencies:
@@ -7397,38 +7657,49 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.5
 
-  '@babel/helper-module-transforms@7.24.5(@babel/core@7.24.5)':
+  '@babel/helper-module-imports@7.24.6':
     dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-environment-visitor': 7.22.20
-      '@babel/helper-module-imports': 7.24.3
-      '@babel/helper-simple-access': 7.24.5
-      '@babel/helper-split-export-declaration': 7.24.5
-      '@babel/helper-validator-identifier': 7.24.5
+      '@babel/types': 7.24.6
+
+  '@babel/helper-module-transforms@7.24.6(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
+      '@babel/helper-environment-visitor': 7.24.6
+      '@babel/helper-module-imports': 7.24.6
+      '@babel/helper-simple-access': 7.24.6
+      '@babel/helper-split-export-declaration': 7.24.6
+      '@babel/helper-validator-identifier': 7.24.6
 
   '@babel/helper-plugin-utils@7.24.0': {}
 
-  '@babel/helper-simple-access@7.24.5':
+  '@babel/helper-plugin-utils@7.24.6': {}
+
+  '@babel/helper-simple-access@7.24.6':
     dependencies:
-      '@babel/types': 7.24.5
+      '@babel/types': 7.24.6
 
   '@babel/helper-split-export-declaration@7.24.5':
     dependencies:
       '@babel/types': 7.24.5
 
+  '@babel/helper-split-export-declaration@7.24.6':
+    dependencies:
+      '@babel/types': 7.24.6
+
   '@babel/helper-string-parser@7.24.1': {}
+
+  '@babel/helper-string-parser@7.24.6': {}
 
   '@babel/helper-validator-identifier@7.24.5': {}
 
-  '@babel/helper-validator-option@7.23.5': {}
+  '@babel/helper-validator-identifier@7.24.6': {}
 
-  '@babel/helpers@7.24.5':
+  '@babel/helper-validator-option@7.24.6': {}
+
+  '@babel/helpers@7.24.6':
     dependencies:
-      '@babel/template': 7.24.0
-      '@babel/traverse': 7.24.5
-      '@babel/types': 7.24.5
-    transitivePeerDependencies:
-      - supports-color
+      '@babel/template': 7.24.6
+      '@babel/types': 7.24.6
 
   '@babel/highlight@7.24.2':
     dependencies:
@@ -7437,50 +7708,72 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.0.0
 
+  '@babel/highlight@7.24.6':
+    dependencies:
+      '@babel/helper-validator-identifier': 7.24.6
+      chalk: 2.4.2
+      js-tokens: 4.0.0
+      picocolors: 1.0.0
+
   '@babel/parser@7.24.5':
     dependencies:
       '@babel/types': 7.24.5
 
-  '@babel/plugin-syntax-flow@7.24.1(@babel/core@7.24.5)':
+  '@babel/parser@7.24.6':
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/types': 7.24.6
+
+  '@babel/plugin-syntax-flow@7.24.6(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
+      '@babel/helper-plugin-utils': 7.24.6
+
+  '@babel/plugin-syntax-jsx@7.24.1(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
       '@babel/helper-plugin-utils': 7.24.0
 
-  '@babel/plugin-syntax-jsx@7.24.1(@babel/core@7.24.5)':
+  '@babel/plugin-syntax-jsx@7.24.6(@babel/core@7.24.6)':
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
+      '@babel/helper-plugin-utils': 7.24.6
+
+  '@babel/plugin-transform-flow-strip-types@7.24.1(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
+      '@babel/helper-plugin-utils': 7.24.0
+      '@babel/plugin-syntax-flow': 7.24.6(@babel/core@7.24.6)
+
+  '@babel/plugin-transform-react-jsx-self@7.24.6(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
+      '@babel/helper-plugin-utils': 7.24.6
+
+  '@babel/plugin-transform-react-jsx-source@7.24.1(@babel/core@7.24.6)':
+    dependencies:
+      '@babel/core': 7.24.6
       '@babel/helper-plugin-utils': 7.24.0
 
-  '@babel/plugin-transform-flow-strip-types@7.24.1(@babel/core@7.24.5)':
+  '@babel/plugin-transform-react-jsx@7.24.6(@babel/core@7.24.6)':
     dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/plugin-syntax-flow': 7.24.1(@babel/core@7.24.5)
-
-  '@babel/plugin-transform-react-jsx-self@7.24.1(@babel/core@7.24.5)':
-    dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.24.0
-
-  '@babel/plugin-transform-react-jsx-source@7.24.1(@babel/core@7.24.5)':
-    dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.24.0
-
-  '@babel/plugin-transform-react-jsx@7.23.4(@babel/core@7.24.5)':
-    dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-module-imports': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
-      '@babel/types': 7.24.5
+      '@babel/core': 7.24.6
+      '@babel/helper-annotate-as-pure': 7.24.6
+      '@babel/helper-module-imports': 7.24.6
+      '@babel/helper-plugin-utils': 7.24.6
+      '@babel/plugin-syntax-jsx': 7.24.6(@babel/core@7.24.6)
+      '@babel/types': 7.24.6
 
   '@babel/template@7.24.0':
     dependencies:
       '@babel/code-frame': 7.24.2
       '@babel/parser': 7.24.5
       '@babel/types': 7.24.5
+
+  '@babel/template@7.24.6':
+    dependencies:
+      '@babel/code-frame': 7.24.6
+      '@babel/parser': 7.24.6
+      '@babel/types': 7.24.6
 
   '@babel/traverse@7.24.5':
     dependencies:
@@ -7497,10 +7790,31 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@babel/traverse@7.24.6':
+    dependencies:
+      '@babel/code-frame': 7.24.6
+      '@babel/generator': 7.24.6
+      '@babel/helper-environment-visitor': 7.24.6
+      '@babel/helper-function-name': 7.24.6
+      '@babel/helper-hoist-variables': 7.24.6
+      '@babel/helper-split-export-declaration': 7.24.6
+      '@babel/parser': 7.24.6
+      '@babel/types': 7.24.6
+      debug: 4.3.4
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/types@7.24.5':
     dependencies:
       '@babel/helper-string-parser': 7.24.1
       '@babel/helper-validator-identifier': 7.24.5
+      to-fast-properties: 2.0.0
+
+  '@babel/types@7.24.6':
+    dependencies:
+      '@babel/helper-string-parser': 7.24.6
+      '@babel/helper-validator-identifier': 7.24.6
       to-fast-properties: 2.0.0
 
   '@biomejs/biome@1.7.3':
@@ -7540,6 +7854,8 @@ snapshots:
 
   '@brillout/import@0.2.3': {}
 
+  '@brillout/json-serializer@0.5.10': {}
+
   '@brillout/json-serializer@0.5.8': {}
 
   '@brillout/libassert@0.5.8': {}
@@ -7569,7 +7885,7 @@ snapshots:
 
   '@compiled/babel-plugin-strip-runtime@0.25.0':
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/template': 7.24.0
       '@babel/traverse': 7.24.5
@@ -7581,12 +7897,12 @@ snapshots:
 
   '@compiled/babel-plugin@0.26.3':
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@babel/generator': 7.24.5
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/parser': 7.24.5
-      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
-      '@babel/plugin-transform-flow-strip-types': 7.24.1(@babel/core@7.24.5)
+      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.6)
+      '@babel/plugin-transform-flow-strip-types': 7.24.1(@babel/core@7.24.6)
       '@babel/template': 7.24.0
       '@babel/traverse': 7.24.5
       '@babel/types': 7.24.5
@@ -7628,10 +7944,10 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@edgedb/generate@0.5.3(edgedb@1.5.6)':
+  '@edgedb/generate@0.5.3(edgedb@1.5.7)':
     dependencies:
       '@iarna/toml': 2.2.5
-      edgedb: 1.5.6
+      edgedb: 1.5.7
 
   '@emotion/is-prop-valid@1.2.2':
     dependencies:
@@ -7655,7 +7971,7 @@ snapshots:
   '@esbuild/aix-ppc64@0.20.2':
     optional: true
 
-  '@esbuild/aix-ppc64@0.21.3':
+  '@esbuild/aix-ppc64@0.21.4':
     optional: true
 
   '@esbuild/android-arm64@0.18.20':
@@ -7667,7 +7983,7 @@ snapshots:
   '@esbuild/android-arm64@0.20.2':
     optional: true
 
-  '@esbuild/android-arm64@0.21.3':
+  '@esbuild/android-arm64@0.21.4':
     optional: true
 
   '@esbuild/android-arm@0.18.20':
@@ -7679,7 +7995,7 @@ snapshots:
   '@esbuild/android-arm@0.20.2':
     optional: true
 
-  '@esbuild/android-arm@0.21.3':
+  '@esbuild/android-arm@0.21.4':
     optional: true
 
   '@esbuild/android-x64@0.18.20':
@@ -7691,7 +8007,7 @@ snapshots:
   '@esbuild/android-x64@0.20.2':
     optional: true
 
-  '@esbuild/android-x64@0.21.3':
+  '@esbuild/android-x64@0.21.4':
     optional: true
 
   '@esbuild/darwin-arm64@0.18.20':
@@ -7703,7 +8019,7 @@ snapshots:
   '@esbuild/darwin-arm64@0.20.2':
     optional: true
 
-  '@esbuild/darwin-arm64@0.21.3':
+  '@esbuild/darwin-arm64@0.21.4':
     optional: true
 
   '@esbuild/darwin-x64@0.18.20':
@@ -7715,7 +8031,7 @@ snapshots:
   '@esbuild/darwin-x64@0.20.2':
     optional: true
 
-  '@esbuild/darwin-x64@0.21.3':
+  '@esbuild/darwin-x64@0.21.4':
     optional: true
 
   '@esbuild/freebsd-arm64@0.18.20':
@@ -7727,7 +8043,7 @@ snapshots:
   '@esbuild/freebsd-arm64@0.20.2':
     optional: true
 
-  '@esbuild/freebsd-arm64@0.21.3':
+  '@esbuild/freebsd-arm64@0.21.4':
     optional: true
 
   '@esbuild/freebsd-x64@0.18.20':
@@ -7739,7 +8055,7 @@ snapshots:
   '@esbuild/freebsd-x64@0.20.2':
     optional: true
 
-  '@esbuild/freebsd-x64@0.21.3':
+  '@esbuild/freebsd-x64@0.21.4':
     optional: true
 
   '@esbuild/linux-arm64@0.18.20':
@@ -7751,7 +8067,7 @@ snapshots:
   '@esbuild/linux-arm64@0.20.2':
     optional: true
 
-  '@esbuild/linux-arm64@0.21.3':
+  '@esbuild/linux-arm64@0.21.4':
     optional: true
 
   '@esbuild/linux-arm@0.18.20':
@@ -7763,7 +8079,7 @@ snapshots:
   '@esbuild/linux-arm@0.20.2':
     optional: true
 
-  '@esbuild/linux-arm@0.21.3':
+  '@esbuild/linux-arm@0.21.4':
     optional: true
 
   '@esbuild/linux-ia32@0.18.20':
@@ -7775,7 +8091,7 @@ snapshots:
   '@esbuild/linux-ia32@0.20.2':
     optional: true
 
-  '@esbuild/linux-ia32@0.21.3':
+  '@esbuild/linux-ia32@0.21.4':
     optional: true
 
   '@esbuild/linux-loong64@0.18.20':
@@ -7787,7 +8103,7 @@ snapshots:
   '@esbuild/linux-loong64@0.20.2':
     optional: true
 
-  '@esbuild/linux-loong64@0.21.3':
+  '@esbuild/linux-loong64@0.21.4':
     optional: true
 
   '@esbuild/linux-mips64el@0.18.20':
@@ -7799,7 +8115,7 @@ snapshots:
   '@esbuild/linux-mips64el@0.20.2':
     optional: true
 
-  '@esbuild/linux-mips64el@0.21.3':
+  '@esbuild/linux-mips64el@0.21.4':
     optional: true
 
   '@esbuild/linux-ppc64@0.18.20':
@@ -7811,7 +8127,7 @@ snapshots:
   '@esbuild/linux-ppc64@0.20.2':
     optional: true
 
-  '@esbuild/linux-ppc64@0.21.3':
+  '@esbuild/linux-ppc64@0.21.4':
     optional: true
 
   '@esbuild/linux-riscv64@0.18.20':
@@ -7823,7 +8139,7 @@ snapshots:
   '@esbuild/linux-riscv64@0.20.2':
     optional: true
 
-  '@esbuild/linux-riscv64@0.21.3':
+  '@esbuild/linux-riscv64@0.21.4':
     optional: true
 
   '@esbuild/linux-s390x@0.18.20':
@@ -7835,7 +8151,7 @@ snapshots:
   '@esbuild/linux-s390x@0.20.2':
     optional: true
 
-  '@esbuild/linux-s390x@0.21.3':
+  '@esbuild/linux-s390x@0.21.4':
     optional: true
 
   '@esbuild/linux-x64@0.18.20':
@@ -7847,7 +8163,7 @@ snapshots:
   '@esbuild/linux-x64@0.20.2':
     optional: true
 
-  '@esbuild/linux-x64@0.21.3':
+  '@esbuild/linux-x64@0.21.4':
     optional: true
 
   '@esbuild/netbsd-x64@0.18.20':
@@ -7859,7 +8175,7 @@ snapshots:
   '@esbuild/netbsd-x64@0.20.2':
     optional: true
 
-  '@esbuild/netbsd-x64@0.21.3':
+  '@esbuild/netbsd-x64@0.21.4':
     optional: true
 
   '@esbuild/openbsd-x64@0.18.20':
@@ -7871,7 +8187,7 @@ snapshots:
   '@esbuild/openbsd-x64@0.20.2':
     optional: true
 
-  '@esbuild/openbsd-x64@0.21.3':
+  '@esbuild/openbsd-x64@0.21.4':
     optional: true
 
   '@esbuild/sunos-x64@0.18.20':
@@ -7883,7 +8199,7 @@ snapshots:
   '@esbuild/sunos-x64@0.20.2':
     optional: true
 
-  '@esbuild/sunos-x64@0.21.3':
+  '@esbuild/sunos-x64@0.21.4':
     optional: true
 
   '@esbuild/win32-arm64@0.18.20':
@@ -7895,7 +8211,7 @@ snapshots:
   '@esbuild/win32-arm64@0.20.2':
     optional: true
 
-  '@esbuild/win32-arm64@0.21.3':
+  '@esbuild/win32-arm64@0.21.4':
     optional: true
 
   '@esbuild/win32-ia32@0.18.20':
@@ -7907,7 +8223,7 @@ snapshots:
   '@esbuild/win32-ia32@0.20.2':
     optional: true
 
-  '@esbuild/win32-ia32@0.21.3':
+  '@esbuild/win32-ia32@0.21.4':
     optional: true
 
   '@esbuild/win32-x64@0.18.20':
@@ -7919,7 +8235,7 @@ snapshots:
   '@esbuild/win32-x64@0.20.2':
     optional: true
 
-  '@esbuild/win32-x64@0.21.3':
+  '@esbuild/win32-x64@0.21.4':
     optional: true
 
   '@eslint-community/eslint-utils@4.4.0(eslint@8.57.0)':
@@ -7957,21 +8273,11 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fastify/cookie@9.3.1':
-    dependencies:
-      cookie-signature: 1.2.1
-      fastify-plugin: 4.5.1
-
   '@fastify/error@3.4.1': {}
 
   '@fastify/fast-json-stringify-compiler@4.3.0':
     dependencies:
       fast-json-stringify: 5.15.1
-
-  '@fastify/formbody@7.4.0':
-    dependencies:
-      fast-querystring: 1.1.2
-      fastify-plugin: 4.5.1
 
   '@fastify/merge-json-schemas@0.1.1':
     dependencies:
@@ -8001,11 +8307,11 @@ snapshots:
       fastq: 1.17.1
       glob: 10.3.12
 
-  '@firebase/analytics-compat@0.2.9(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/analytics-compat@0.2.10(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/analytics': 0.10.3(@firebase/app@0.10.3)
+      '@firebase/analytics': 0.10.4(@firebase/app@0.10.5)
       '@firebase/analytics-types': 0.8.2
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8014,20 +8320,20 @@ snapshots:
 
   '@firebase/analytics-types@0.8.2': {}
 
-  '@firebase/analytics@0.10.3(@firebase/app@0.10.3)':
+  '@firebase/analytics@0.10.4(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
 
-  '@firebase/app-check-compat@0.3.11(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/app-check-compat@0.3.11(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-check': 0.8.4(@firebase/app@0.10.3)
+      '@firebase/app-check': 0.8.4(@firebase/app@0.10.5)
       '@firebase/app-check-types': 0.5.2
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
@@ -8039,17 +8345,17 @@ snapshots:
 
   '@firebase/app-check-types@0.5.2': {}
 
-  '@firebase/app-check@0.8.4(@firebase/app@0.10.3)':
+  '@firebase/app-check@0.8.4(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
 
-  '@firebase/app-compat@0.2.33':
+  '@firebase/app-compat@0.2.35':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
@@ -8057,7 +8363,7 @@ snapshots:
 
   '@firebase/app-types@0.9.2': {}
 
-  '@firebase/app@0.10.3':
+  '@firebase/app@0.10.5':
     dependencies:
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
@@ -8065,10 +8371,10 @@ snapshots:
       idb: 7.1.1
       tslib: 2.6.2
 
-  '@firebase/auth-compat@0.5.8(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)':
+  '@firebase/auth-compat@0.5.9(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
-      '@firebase/auth': 1.7.3(@firebase/app@0.10.3)
+      '@firebase/app-compat': 0.2.35
+      '@firebase/auth': 1.7.4(@firebase/app@0.10.5)
       '@firebase/auth-types': 0.12.2(@firebase/app-types@0.9.2)(@firebase/util@1.9.6)
       '@firebase/component': 0.6.7
       '@firebase/util': 1.9.6
@@ -8086,9 +8392,9 @@ snapshots:
       '@firebase/app-types': 0.9.2
       '@firebase/util': 1.9.6
 
-  '@firebase/auth@1.7.3(@firebase/app@0.10.3)':
+  '@firebase/auth@1.7.4(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
@@ -8124,11 +8430,11 @@ snapshots:
       faye-websocket: 0.11.4
       tslib: 2.6.2
 
-  '@firebase/firestore-compat@0.3.31(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)':
+  '@firebase/firestore-compat@0.3.32(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
-      '@firebase/firestore': 4.6.2(@firebase/app@0.10.3)
+      '@firebase/firestore': 4.6.3(@firebase/app@0.10.5)
       '@firebase/firestore-types': 3.0.2(@firebase/app-types@0.9.2)(@firebase/util@1.9.6)
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8141,9 +8447,9 @@ snapshots:
       '@firebase/app-types': 0.9.2
       '@firebase/util': 1.9.6
 
-  '@firebase/firestore@4.6.2(@firebase/app@0.10.3)':
+  '@firebase/firestore@4.6.3(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
@@ -8153,11 +8459,11 @@ snapshots:
       tslib: 2.6.2
       undici: 5.28.4
 
-  '@firebase/functions-compat@0.3.11(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/functions-compat@0.3.11(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
-      '@firebase/functions': 0.11.5(@firebase/app@0.10.3)
+      '@firebase/functions': 0.11.5(@firebase/app@0.10.5)
       '@firebase/functions-types': 0.6.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8166,9 +8472,9 @@ snapshots:
 
   '@firebase/functions-types@0.6.2': {}
 
-  '@firebase/functions@0.11.5(@firebase/app@0.10.3)':
+  '@firebase/functions@0.11.5(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/app-check-interop-types': 0.3.2
       '@firebase/auth-interop-types': 0.2.3
       '@firebase/component': 0.6.7
@@ -8177,11 +8483,11 @@ snapshots:
       tslib: 2.6.2
       undici: 5.28.4
 
-  '@firebase/installations-compat@0.2.7(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)':
+  '@firebase/installations-compat@0.2.7(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
       '@firebase/installations-types': 0.5.2(@firebase/app-types@0.9.2)
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8193,9 +8499,9 @@ snapshots:
     dependencies:
       '@firebase/app-types': 0.9.2
 
-  '@firebase/installations@0.6.7(@firebase/app@0.10.3)':
+  '@firebase/installations@0.6.7(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/util': 1.9.6
       idb: 7.1.1
@@ -8205,11 +8511,11 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@firebase/messaging-compat@0.2.9(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/messaging-compat@0.2.9(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
-      '@firebase/messaging': 0.12.9(@firebase/app@0.10.3)
+      '@firebase/messaging': 0.12.9(@firebase/app@0.10.5)
       '@firebase/util': 1.9.6
       tslib: 2.6.2
     transitivePeerDependencies:
@@ -8217,22 +8523,22 @@ snapshots:
 
   '@firebase/messaging-interop-types@0.2.2': {}
 
-  '@firebase/messaging@0.12.9(@firebase/app@0.10.3)':
+  '@firebase/messaging@0.12.9(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
       '@firebase/messaging-interop-types': 0.2.2
       '@firebase/util': 1.9.6
       idb: 7.1.1
       tslib: 2.6.2
 
-  '@firebase/performance-compat@0.2.7(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/performance-compat@0.2.7(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
-      '@firebase/performance': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/performance': 0.6.7(@firebase/app@0.10.5)
       '@firebase/performance-types': 0.2.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8241,21 +8547,21 @@ snapshots:
 
   '@firebase/performance-types@0.2.2': {}
 
-  '@firebase/performance@0.6.7(@firebase/app@0.10.3)':
+  '@firebase/performance@0.6.7(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
 
-  '@firebase/remote-config-compat@0.2.7(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)':
+  '@firebase/remote-config-compat@0.2.7(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
       '@firebase/logger': 0.4.2
-      '@firebase/remote-config': 0.4.7(@firebase/app@0.10.3)
+      '@firebase/remote-config': 0.4.7(@firebase/app@0.10.5)
       '@firebase/remote-config-types': 0.3.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8264,20 +8570,20 @@ snapshots:
 
   '@firebase/remote-config-types@0.3.2': {}
 
-  '@firebase/remote-config@0.4.7(@firebase/app@0.10.3)':
+  '@firebase/remote-config@0.4.7(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.9.6
       tslib: 2.6.2
 
-  '@firebase/storage-compat@0.3.8(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)':
+  '@firebase/storage-compat@0.3.8(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app-compat': 0.2.33
+      '@firebase/app-compat': 0.2.35
       '@firebase/component': 0.6.7
-      '@firebase/storage': 0.12.5(@firebase/app@0.10.3)
+      '@firebase/storage': 0.12.5(@firebase/app@0.10.5)
       '@firebase/storage-types': 0.8.2(@firebase/app-types@0.9.2)(@firebase/util@1.9.6)
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8290,9 +8596,9 @@ snapshots:
       '@firebase/app-types': 0.9.2
       '@firebase/util': 1.9.6
 
-  '@firebase/storage@0.12.5(@firebase/app@0.10.3)':
+  '@firebase/storage@0.12.5(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/component': 0.6.7
       '@firebase/util': 1.9.6
       tslib: 2.6.2
@@ -8302,9 +8608,9 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@firebase/vertexai-preview@0.0.1(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)':
+  '@firebase/vertexai-preview@0.0.2(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)':
     dependencies:
-      '@firebase/app': 0.10.3
+      '@firebase/app': 0.10.5
       '@firebase/app-check-interop-types': 0.3.2
       '@firebase/app-types': 0.9.2
       '@firebase/component': 0.6.7
@@ -8325,11 +8631,11 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
-  '@google-cloud/firestore@7.6.0':
+  '@google-cloud/firestore@7.7.0':
     dependencies:
       fast-deep-equal: 3.1.3
       functional-red-black-tree: 1.0.1
-      google-gax: 4.3.2
+      google-gax: 4.3.5
       protobufjs: 7.2.6
     transitivePeerDependencies:
       - encoding
@@ -8441,10 +8747,10 @@ snapshots:
 
   '@hono/node-server@1.11.1': {}
 
-  '@hono/vite-dev-server@0.12.1(hono@4.3.8)':
+  '@hono/vite-dev-server@0.12.1(hono@4.4.0)':
     dependencies:
       '@hono/node-server': 1.11.1
-      hono: 4.3.8
+      hono: 4.4.0
       miniflare: 3.20240419.0
       minimatch: 9.0.4
     transitivePeerDependencies:
@@ -8466,7 +8772,7 @@ snapshots:
 
   '@ianvs/prettier-plugin-sort-imports@4.2.1(@vue/compiler-sfc@3.4.27)(prettier@3.2.5)':
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@babel/generator': 7.24.5
       '@babel/parser': 7.24.5
       '@babel/traverse': 7.24.5
@@ -8738,6 +9044,8 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.2':
     optional: true
 
+  '@sec-ant/readable-stream@0.4.1': {}
+
   '@sideway/address@4.1.5':
     dependencies:
       '@hapi/hoek': 9.3.0
@@ -8751,6 +9059,8 @@ snapshots:
   '@sindresorhus/is@4.6.0': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
+
+  '@sindresorhus/merge-streams@4.0.0': {}
 
   '@solid-primitives/props@3.1.11(solid-js@1.8.17)':
     dependencies:
@@ -8873,11 +9183,22 @@ snapshots:
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
+  '@types/fs-extra@11.0.4':
+    dependencies:
+      '@types/jsonfile': 6.1.4
+      '@types/node': 18.19.31
+    optional: true
+
   '@types/http-cache-semantics@4.0.4': {}
 
   '@types/http-errors@2.0.4': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/jsonfile@6.1.4':
+    dependencies:
+      '@types/node': 18.19.31
+    optional: true
 
   '@types/jsonwebtoken@9.0.6':
     dependencies:
@@ -8909,6 +9230,11 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
+  '@types/node@20.12.13':
+    dependencies:
+      undici-types: 5.26.5
+    optional: true
+
   '@types/prop-types@15.7.12': {}
 
   '@types/qs@6.9.15': {}
@@ -8917,9 +9243,14 @@ snapshots:
 
   '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 18.3.2
+      '@types/react': 18.3.3
 
   '@types/react@18.3.2':
+    dependencies:
+      '@types/prop-types': 15.7.12
+      csstype: 3.1.3
+
+  '@types/react@18.3.3':
     dependencies:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
@@ -8954,14 +9285,14 @@ snapshots:
 
   '@types/which@3.0.3': {}
 
-  '@typescript-eslint/eslint-plugin@7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
+  '@typescript-eslint/eslint-plugin@7.11.0(@typescript-eslint/parser@7.11.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
-      '@typescript-eslint/parser': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/scope-manager': 7.9.0
-      '@typescript-eslint/type-utils': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/utils': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/visitor-keys': 7.9.0
+      '@typescript-eslint/parser': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/scope-manager': 7.11.0
+      '@typescript-eslint/type-utils': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/visitor-keys': 7.11.0
       eslint: 8.57.0
       graphemer: 1.4.0
       ignore: 5.3.1
@@ -8972,12 +9303,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5)':
+  '@typescript-eslint/parser@7.11.0(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
-      '@typescript-eslint/scope-manager': 7.9.0
-      '@typescript-eslint/types': 7.9.0
-      '@typescript-eslint/typescript-estree': 7.9.0(typescript@5.4.5)
-      '@typescript-eslint/visitor-keys': 7.9.0
+      '@typescript-eslint/scope-manager': 7.11.0
+      '@typescript-eslint/types': 7.11.0
+      '@typescript-eslint/typescript-estree': 7.11.0(typescript@5.4.5)
+      '@typescript-eslint/visitor-keys': 7.11.0
       debug: 4.3.4
       eslint: 8.57.0
     optionalDependencies:
@@ -8985,15 +9316,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@typescript-eslint/scope-manager@7.11.0':
+    dependencies:
+      '@typescript-eslint/types': 7.11.0
+      '@typescript-eslint/visitor-keys': 7.11.0
+
   '@typescript-eslint/scope-manager@7.9.0':
     dependencies:
       '@typescript-eslint/types': 7.9.0
       '@typescript-eslint/visitor-keys': 7.9.0
 
-  '@typescript-eslint/type-utils@7.9.0(eslint@8.57.0)(typescript@5.4.5)':
+  '@typescript-eslint/type-utils@7.11.0(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
-      '@typescript-eslint/typescript-estree': 7.9.0(typescript@5.4.5)
-      '@typescript-eslint/utils': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/typescript-estree': 7.11.0(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
@@ -9002,7 +9338,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@typescript-eslint/types@7.11.0': {}
+
   '@typescript-eslint/types@7.9.0': {}
+
+  '@typescript-eslint/typescript-estree@7.11.0(typescript@5.4.5)':
+    dependencies:
+      '@typescript-eslint/types': 7.11.0
+      '@typescript-eslint/visitor-keys': 7.11.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      minimatch: 9.0.4
+      semver: 7.6.0
+      ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
 
   '@typescript-eslint/typescript-estree@7.9.0(typescript@5.4.5)':
     dependencies:
@@ -9019,6 +9372,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@typescript-eslint/utils@7.11.0(eslint@8.57.0)(typescript@5.4.5)':
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
+      '@typescript-eslint/scope-manager': 7.11.0
+      '@typescript-eslint/types': 7.11.0
+      '@typescript-eslint/typescript-estree': 7.11.0(typescript@5.4.5)
+      eslint: 8.57.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
   '@typescript-eslint/utils@7.9.0(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
@@ -9030,12 +9394,23 @@ snapshots:
       - supports-color
       - typescript
 
+  '@typescript-eslint/visitor-keys@7.11.0':
+    dependencies:
+      '@typescript-eslint/types': 7.11.0
+      eslint-visitor-keys: 3.4.3
+
   '@typescript-eslint/visitor-keys@7.9.0':
     dependencies:
       '@typescript-eslint/types': 7.9.0
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@universal-middleware/express@0.0.2':
+    dependencies:
+      '@hattip/core': 0.0.45
+      '@hattip/polyfills': 0.0.45
+      '@hattip/walk': 0.0.45
 
   '@vavite/connect@4.1.1(vite@5.2.11(@types/node@18.19.31))':
     dependencies:
@@ -9053,9 +9428,9 @@ snapshots:
     dependencies:
       vite: 5.2.11(@types/node@18.19.31)
 
-  '@vercel/build-utils@7.12.0': {}
+  '@vercel/build-utils@8.2.0': {}
 
-  '@vercel/nft@0.26.4':
+  '@vercel/nft@0.27.1':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
       '@rollup/pluginutils': 4.2.1
@@ -9079,21 +9454,21 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vite-plugin-vercel/vike@6.0.1(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@6.0.1)(vite@5.2.11(@types/node@18.19.31))':
+  '@vite-plugin-vercel/vike@7.0.0(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@7.0.0)(vite@5.2.11(@types/node@18.19.31))':
     dependencies:
       '@brillout/libassert': 0.5.8
       nanoid: 5.0.7
-      vike: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite: 5.2.11(@types/node@18.19.31)
-      vite-plugin-vercel: 6.0.1(@vite-plugin-vercel/vike@6.0.1)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
+      vite-plugin-vercel: 7.0.0(@vite-plugin-vercel/vike@7.0.0)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31))
 
-  '@vitejs/plugin-react@4.2.1(vite@5.2.11(@types/node@18.19.31))':
+  '@vitejs/plugin-react@4.3.0(vite@5.2.11(@types/node@18.19.31))':
     dependencies:
-      '@babel/core': 7.24.5
-      '@babel/plugin-transform-react-jsx-self': 7.24.1(@babel/core@7.24.5)
-      '@babel/plugin-transform-react-jsx-source': 7.24.1(@babel/core@7.24.5)
+      '@babel/core': 7.24.6
+      '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.24.6)
+      '@babel/plugin-transform-react-jsx-source': 7.24.1(@babel/core@7.24.6)
       '@types/babel__core': 7.20.5
-      react-refresh: 0.14.0
+      react-refresh: 0.14.2
       vite: 5.2.11(@types/node@18.19.31)
     transitivePeerDependencies:
       - supports-color
@@ -9416,11 +9791,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-jsx-dom-expressions@0.37.20(@babel/core@7.24.5):
+  babel-plugin-jsx-dom-expressions@0.37.20(@babel/core@7.24.6):
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@babel/helper-module-imports': 7.18.6
-      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
+      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.6)
       '@babel/types': 7.24.5
       html-entities: 2.3.3
       validate-html-nesting: 1.2.2
@@ -9433,10 +9808,10 @@ snapshots:
       reselect: 4.1.8
       resolve: 1.22.8
 
-  babel-preset-solid@1.8.17(@babel/core@7.24.5):
+  babel-preset-solid@1.8.17(@babel/core@7.24.6):
     dependencies:
-      '@babel/core': 7.24.5
-      babel-plugin-jsx-dom-expressions: 0.37.20(@babel/core@7.24.5)
+      '@babel/core': 7.24.6
+      babel-plugin-jsx-dom-expressions: 0.37.20(@babel/core@7.24.6)
 
   balanced-match@1.0.2: {}
 
@@ -9725,8 +10100,6 @@ snapshots:
 
   cookie-signature@1.0.6: {}
 
-  cookie-signature@1.2.1: {}
-
   cookie@0.4.1: {}
 
   cookie@0.5.0: {}
@@ -9967,10 +10340,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.30.10(@types/better-sqlite3@7.6.10)(@types/react@18.3.2)(better-sqlite3@10.0.0)(react@18.3.1):
+  drizzle-orm@0.30.10(@types/better-sqlite3@7.6.10)(@types/react@18.3.3)(better-sqlite3@10.0.0)(react@18.3.1):
     optionalDependencies:
       '@types/better-sqlite3': 7.6.10
-      '@types/react': 18.3.2
+      '@types/react': 18.3.3
       better-sqlite3: 10.0.0
       react: 18.3.1
 
@@ -9988,7 +10361,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  edgedb@1.5.6:
+  edgedb@1.5.7:
     dependencies:
       debug: 4.3.4
       env-paths: 3.0.0
@@ -10142,11 +10515,11 @@ snapshots:
       es6-iterator: 2.0.3
       es6-symbol: 3.1.4
 
-  esbuild-plugin-copy@2.1.1(esbuild@0.21.3):
+  esbuild-plugin-copy@2.1.1(esbuild@0.21.4):
     dependencies:
       chalk: 4.1.2
       chokidar: 3.6.0
-      esbuild: 0.21.3
+      esbuild: 0.21.4
       fs-extra: 10.1.0
       globby: 11.1.0
 
@@ -10234,31 +10607,31 @@ snapshots:
       '@esbuild/win32-ia32': 0.20.2
       '@esbuild/win32-x64': 0.20.2
 
-  esbuild@0.21.3:
+  esbuild@0.21.4:
     optionalDependencies:
-      '@esbuild/aix-ppc64': 0.21.3
-      '@esbuild/android-arm': 0.21.3
-      '@esbuild/android-arm64': 0.21.3
-      '@esbuild/android-x64': 0.21.3
-      '@esbuild/darwin-arm64': 0.21.3
-      '@esbuild/darwin-x64': 0.21.3
-      '@esbuild/freebsd-arm64': 0.21.3
-      '@esbuild/freebsd-x64': 0.21.3
-      '@esbuild/linux-arm': 0.21.3
-      '@esbuild/linux-arm64': 0.21.3
-      '@esbuild/linux-ia32': 0.21.3
-      '@esbuild/linux-loong64': 0.21.3
-      '@esbuild/linux-mips64el': 0.21.3
-      '@esbuild/linux-ppc64': 0.21.3
-      '@esbuild/linux-riscv64': 0.21.3
-      '@esbuild/linux-s390x': 0.21.3
-      '@esbuild/linux-x64': 0.21.3
-      '@esbuild/netbsd-x64': 0.21.3
-      '@esbuild/openbsd-x64': 0.21.3
-      '@esbuild/sunos-x64': 0.21.3
-      '@esbuild/win32-arm64': 0.21.3
-      '@esbuild/win32-ia32': 0.21.3
-      '@esbuild/win32-x64': 0.21.3
+      '@esbuild/aix-ppc64': 0.21.4
+      '@esbuild/android-arm': 0.21.4
+      '@esbuild/android-arm64': 0.21.4
+      '@esbuild/android-x64': 0.21.4
+      '@esbuild/darwin-arm64': 0.21.4
+      '@esbuild/darwin-x64': 0.21.4
+      '@esbuild/freebsd-arm64': 0.21.4
+      '@esbuild/freebsd-x64': 0.21.4
+      '@esbuild/linux-arm': 0.21.4
+      '@esbuild/linux-arm64': 0.21.4
+      '@esbuild/linux-ia32': 0.21.4
+      '@esbuild/linux-loong64': 0.21.4
+      '@esbuild/linux-mips64el': 0.21.4
+      '@esbuild/linux-ppc64': 0.21.4
+      '@esbuild/linux-riscv64': 0.21.4
+      '@esbuild/linux-s390x': 0.21.4
+      '@esbuild/linux-x64': 0.21.4
+      '@esbuild/netbsd-x64': 0.21.4
+      '@esbuild/openbsd-x64': 0.21.4
+      '@esbuild/sunos-x64': 0.21.4
+      '@esbuild/win32-arm64': 0.21.4
+      '@esbuild/win32-ia32': 0.21.4
+      '@esbuild/win32-x64': 0.21.4
 
   escalade@3.1.2: {}
 
@@ -10464,6 +10837,21 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
 
+  execa@9.1.0:
+    dependencies:
+      '@sindresorhus/merge-streams': 4.0.0
+      cross-spawn: 7.0.3
+      figures: 6.1.0
+      get-stream: 9.0.1
+      human-signals: 7.0.0
+      is-plain-obj: 4.1.0
+      is-stream: 4.0.1
+      npm-run-path: 5.3.0
+      pretty-ms: 9.0.0
+      signal-exit: 4.1.0
+      strip-final-newline: 4.0.0
+      yoctocolors: 2.0.2
+
   exit-hook@2.2.1: {}
 
   expand-template@2.0.3: {}
@@ -10618,6 +11006,10 @@ snapshots:
       node-domexception: 1.0.0
       web-streams-polyfill: 3.3.3
 
+  figures@6.1.0:
+    dependencies:
+      is-unicode-supported: 2.0.0
+
   file-entry-cache@6.0.1:
     dependencies:
       flat-cache: 3.2.0
@@ -10665,7 +11057,7 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  firebase-admin@12.1.0:
+  firebase-admin@12.1.1:
     dependencies:
       '@fastify/busboy': 2.1.1
       '@firebase/database-compat': 1.0.5
@@ -10678,48 +11070,48 @@ snapshots:
       node-forge: 1.3.1
       uuid: 9.0.1
     optionalDependencies:
-      '@google-cloud/firestore': 7.6.0
+      '@google-cloud/firestore': 7.7.0
       '@google-cloud/storage': 7.10.0
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  firebase@10.12.0:
+  firebase@10.12.2:
     dependencies:
-      '@firebase/analytics': 0.10.3(@firebase/app@0.10.3)
-      '@firebase/analytics-compat': 0.2.9(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/app': 0.10.3
-      '@firebase/app-check': 0.8.4(@firebase/app@0.10.3)
-      '@firebase/app-check-compat': 0.3.11(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/app-compat': 0.2.33
+      '@firebase/analytics': 0.10.4(@firebase/app@0.10.5)
+      '@firebase/analytics-compat': 0.2.10(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/app': 0.10.5
+      '@firebase/app-check': 0.8.4(@firebase/app@0.10.5)
+      '@firebase/app-check-compat': 0.3.11(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/app-compat': 0.2.35
       '@firebase/app-types': 0.9.2
-      '@firebase/auth': 1.7.3(@firebase/app@0.10.3)
-      '@firebase/auth-compat': 0.5.8(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)
+      '@firebase/auth': 1.7.4(@firebase/app@0.10.5)
+      '@firebase/auth-compat': 0.5.9(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)
       '@firebase/database': 1.0.5
       '@firebase/database-compat': 1.0.5
-      '@firebase/firestore': 4.6.2(@firebase/app@0.10.3)
-      '@firebase/firestore-compat': 0.3.31(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)
-      '@firebase/functions': 0.11.5(@firebase/app@0.10.3)
-      '@firebase/functions-compat': 0.3.11(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/installations': 0.6.7(@firebase/app@0.10.3)
-      '@firebase/installations-compat': 0.2.7(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)
-      '@firebase/messaging': 0.12.9(@firebase/app@0.10.3)
-      '@firebase/messaging-compat': 0.2.9(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/performance': 0.6.7(@firebase/app@0.10.3)
-      '@firebase/performance-compat': 0.2.7(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/remote-config': 0.4.7(@firebase/app@0.10.3)
-      '@firebase/remote-config-compat': 0.2.7(@firebase/app-compat@0.2.33)(@firebase/app@0.10.3)
-      '@firebase/storage': 0.12.5(@firebase/app@0.10.3)
-      '@firebase/storage-compat': 0.3.8(@firebase/app-compat@0.2.33)(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)
+      '@firebase/firestore': 4.6.3(@firebase/app@0.10.5)
+      '@firebase/firestore-compat': 0.3.32(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)
+      '@firebase/functions': 0.11.5(@firebase/app@0.10.5)
+      '@firebase/functions-compat': 0.3.11(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/installations': 0.6.7(@firebase/app@0.10.5)
+      '@firebase/installations-compat': 0.2.7(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)
+      '@firebase/messaging': 0.12.9(@firebase/app@0.10.5)
+      '@firebase/messaging-compat': 0.2.9(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/performance': 0.6.7(@firebase/app@0.10.5)
+      '@firebase/performance-compat': 0.2.7(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/remote-config': 0.4.7(@firebase/app@0.10.5)
+      '@firebase/remote-config-compat': 0.2.7(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5)
+      '@firebase/storage': 0.12.5(@firebase/app@0.10.5)
+      '@firebase/storage-compat': 0.3.8(@firebase/app-compat@0.2.35)(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)
       '@firebase/util': 1.9.6
-      '@firebase/vertexai-preview': 0.0.1(@firebase/app-types@0.9.2)(@firebase/app@0.10.3)
+      '@firebase/vertexai-preview': 0.0.2(@firebase/app-types@0.9.2)(@firebase/app@0.10.5)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
 
-  firebaseui@6.1.0(firebase@10.12.0):
+  firebaseui@6.1.0(firebase@10.12.2):
     dependencies:
       dialog-polyfill: 0.4.10
-      firebase: 10.12.0
+      firebase: 10.12.2
       material-design-lite: 1.3.0
 
   flat-cache@3.2.0:
@@ -10857,6 +11249,11 @@ snapshots:
 
   get-stream@8.0.1: {}
 
+  get-stream@9.0.1:
+    dependencies:
+      '@sec-ant/readable-stream': 0.4.1
+      is-stream: 4.0.1
+
   get-symbol-description@1.0.2:
     dependencies:
       call-bind: 1.0.7
@@ -10965,7 +11362,7 @@ snapshots:
       - supports-color
     optional: true
 
-  google-gax@4.3.2:
+  google-gax@4.3.5:
     dependencies:
       '@grpc/grpc-js': 1.10.6
       '@grpc/proto-loader': 0.7.12
@@ -10976,7 +11373,7 @@ snapshots:
       node-fetch: 2.7.0
       object-hash: 3.0.0
       proto3-json-serializer: 2.0.1
-      protobufjs: 7.2.6
+      protobufjs: 7.3.0
       retry-request: 7.0.2
       uuid: 9.0.1
     transitivePeerDependencies:
@@ -11042,6 +11439,12 @@ snapshots:
       lodash.throttle: 4.1.1
       sisteransi: 1.0.5
 
+  happy-dom@14.11.4:
+    dependencies:
+      entities: 4.5.0
+      webidl-conversions: 7.0.0
+      whatwg-mimetype: 3.0.0
+
   has-bigints@1.0.2: {}
 
   has-flag@3.0.0: {}
@@ -11072,7 +11475,7 @@ snapshots:
 
   hey-listen@1.0.8: {}
 
-  hono@4.3.8: {}
+  hono@4.4.0: {}
 
   html-entities@2.3.3: {}
 
@@ -11130,6 +11533,8 @@ snapshots:
   human-signals@2.1.0: {}
 
   human-signals@5.0.0: {}
+
+  human-signals@7.0.0: {}
 
   iconv-lite@0.4.24:
     dependencies:
@@ -11243,6 +11648,8 @@ snapshots:
 
   is-path-inside@3.0.3: {}
 
+  is-plain-obj@4.1.0: {}
+
   is-promise@2.2.2: {}
 
   is-regex@1.1.4:
@@ -11260,6 +11667,8 @@ snapshots:
 
   is-stream@3.0.0: {}
 
+  is-stream@4.0.1: {}
+
   is-string@1.0.7:
     dependencies:
       has-tostringtag: 1.0.2
@@ -11271,6 +11680,8 @@ snapshots:
   is-typed-array@1.1.13:
     dependencies:
       which-typed-array: 1.1.15
+
+  is-unicode-supported@2.0.0: {}
 
   is-url-superb@4.0.0: {}
 
@@ -11915,6 +12326,8 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
+  parse-ms@4.0.0: {}
+
   parseurl@1.3.3: {}
 
   path-browserify@1.0.1: {}
@@ -12232,6 +12645,10 @@ snapshots:
 
   pretty-format@3.8.0: {}
 
+  pretty-ms@9.0.0:
+    dependencies:
+      parse-ms: 4.0.0
+
   printable-characters@1.0.42: {}
 
   prisma@5.14.0:
@@ -12255,7 +12672,7 @@ snapshots:
 
   proto3-json-serializer@2.0.1:
     dependencies:
-      protobufjs: 7.2.6
+      protobufjs: 7.3.0
     optional: true
 
   protobufjs@7.2.6:
@@ -12272,6 +12689,22 @@ snapshots:
       '@protobufjs/utf8': 1.1.0
       '@types/node': 18.19.31
       long: 5.2.3
+
+  protobufjs@7.3.0:
+    dependencies:
+      '@protobufjs/aspromise': 1.1.2
+      '@protobufjs/base64': 1.1.2
+      '@protobufjs/codegen': 2.0.4
+      '@protobufjs/eventemitter': 1.1.0
+      '@protobufjs/fetch': 1.1.0
+      '@protobufjs/float': 1.0.2
+      '@protobufjs/inquire': 1.1.0
+      '@protobufjs/path': 1.1.2
+      '@protobufjs/pool': 1.1.0
+      '@protobufjs/utf8': 1.1.0
+      '@types/node': 18.19.31
+      long: 5.2.3
+    optional: true
 
   proxy-addr@2.0.7:
     dependencies:
@@ -12334,7 +12767,7 @@ snapshots:
 
   react-is@18.2.0: {}
 
-  react-refresh@0.14.0: {}
+  react-refresh@0.14.2: {}
 
   react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -12770,6 +13203,8 @@ snapshots:
 
   strip-final-newline@3.0.0: {}
 
+  strip-final-newline@4.0.0: {}
+
   strip-json-comments@2.0.1: {}
 
   strip-json-comments@3.1.1: {}
@@ -12892,7 +13327,7 @@ snapshots:
       - supports-color
     optional: true
 
-  telefunc@0.1.72(@babel/core@7.24.5)(@babel/parser@7.24.5)(@babel/types@7.24.5)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+  telefunc@0.1.72(@babel/core@7.24.6)(@babel/parser@7.24.6)(@babel/types@7.24.6)(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.8
@@ -12902,9 +13337,9 @@ snapshots:
       picocolors: 1.0.0
       ts-morph: 19.0.0
     optionalDependencies:
-      '@babel/core': 7.24.5
-      '@babel/parser': 7.24.5
-      '@babel/types': 7.24.5
+      '@babel/core': 7.24.6
+      '@babel/parser': 7.24.6
+      '@babel/types': 7.24.6
       react: 18.3.1
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
@@ -13000,6 +13435,13 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  tsx@4.11.0:
+    dependencies:
+      esbuild: 0.20.2
+      get-tsconfig: 4.7.5
+    optionalDependencies:
+      fsevents: 2.3.3
+
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
@@ -13078,11 +13520,11 @@ snapshots:
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
 
-  typescript-eslint@7.9.0(eslint@8.57.0)(typescript@5.4.5):
+  typescript-eslint@7.11.0(eslint@8.57.0)(typescript@5.4.5):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/parser': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/utils': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/eslint-plugin': 7.11.0(@typescript-eslint/parser@7.11.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/parser': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.5
@@ -13173,44 +13615,63 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vike-authjs@0.1.6(@auth/core@0.31.0):
-    dependencies:
-      '@auth/core': 0.31.0
-
   vike-react@0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.171(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      vike: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
+      vite: 5.2.11(@types/node@18.19.31)
+
+  vike-react@0.4.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.172(react-streaming@0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      vike: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
       vite: 5.2.11(@types/node@18.19.31)
 
   vike-solid@0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       solid-js: 1.8.17
-      vike: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vike: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
       vite: 5.2.11(@types/node@18.19.31)
       vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@18.19.31))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-solid@0.4.5(solid-js@1.8.17)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.11)))(vite@5.2.11(@types/node@20.12.11)):
+  vike-solid@0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       solid-js: 1.8.17
-      vike: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.11))
-      vite: 5.2.11(@types/node@20.12.11)
-      vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.11))
+      vike: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vite: 5.2.11(@types/node@18.19.31)
+      vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@18.19.31))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-vue@0.6.6(vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5)):
+  vike-solid@0.4.5(solid-js@1.8.17)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.13)))(vite@5.2.11(@types/node@20.12.13)):
     dependencies:
-      vike: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      solid-js: 1.8.17
+      vike: 0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.13))
+      vite: 5.2.11(@types/node@20.12.13)
+      vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.13))
+    transitivePeerDependencies:
+      - '@testing-library/jest-dom'
+      - supports-color
+
+  vike-vue@0.6.6(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5)):
+    dependencies:
+      vike: 0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31))
       vue: 3.4.27(typescript@5.4.5)
 
-  vike@0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)):
+  vike-vue@0.6.6(vike@0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)))(vue@3.4.27(typescript@5.4.5)):
+    dependencies:
+      vike: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      vue: 3.4.27(typescript@5.4.5)
+
+  vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.8
@@ -13228,10 +13689,10 @@ snapshots:
     optionalDependencies:
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.11)):
+  vike@0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       '@brillout/import': 0.2.3
-      '@brillout/json-serializer': 0.5.8
+      '@brillout/json-serializer': 0.5.10
       '@brillout/picocolors': 1.0.11
       '@brillout/require-shim': 0.1.2
       '@brillout/vite-plugin-server-entry': 0.4.6
@@ -13242,7 +13703,25 @@ snapshots:
       fast-glob: 3.3.2
       sirv: 2.0.4
       source-map-support: 0.5.21
-      vite: 5.2.11(@types/node@20.12.11)
+      vite: 5.2.11(@types/node@18.19.31)
+    optionalDependencies:
+      react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@20.12.13)):
+    dependencies:
+      '@brillout/import': 0.2.3
+      '@brillout/json-serializer': 0.5.10
+      '@brillout/picocolors': 1.0.11
+      '@brillout/require-shim': 0.1.2
+      '@brillout/vite-plugin-server-entry': 0.4.6
+      acorn: 8.11.3
+      cac: 6.7.14
+      es-module-lexer: 1.5.0
+      esbuild: 0.19.12
+      fast-glob: 3.3.2
+      sirv: 2.0.4
+      source-map-support: 0.5.21
+      vite: 5.2.11(@types/node@20.12.13)
     optionalDependencies:
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
@@ -13263,13 +13742,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-compiled-react@1.1.3(@compiled/react@0.17.1(react@18.3.1))(@vitejs/plugin-react@4.2.1(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
+  vite-plugin-compiled-react@1.1.3(@compiled/react@0.17.1(react@18.3.1))(@vitejs/plugin-react@4.3.0(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       '@babel/types': 7.24.5
       '@compiled/babel-plugin': 0.26.3
       '@compiled/babel-plugin-strip-runtime': 0.25.0
       '@compiled/react': 0.17.1(react@18.3.1)
-      '@vitejs/plugin-react': 4.2.1(vite@5.2.11(@types/node@18.19.31))
+      '@vitejs/plugin-react': 4.3.0(vite@5.2.11(@types/node@18.19.31))
       babel-plugin-module-resolver: 5.0.2
       vite: 5.2.11(@types/node@18.19.31)
     transitivePeerDependencies:
@@ -13277,9 +13756,9 @@ snapshots:
 
   vite-plugin-solid@2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@types/babel__core': 7.20.5
-      babel-preset-solid: 1.8.17(@babel/core@7.24.5)
+      babel-preset-solid: 1.8.17(@babel/core@7.24.6)
       merge-anything: 5.1.7
       solid-js: 1.8.17
       solid-refresh: 0.6.3(solid-js@1.8.17)
@@ -13288,35 +13767,35 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.11)):
+  vite-plugin-solid@2.10.2(solid-js@1.8.17)(vite@5.2.11(@types/node@20.12.13)):
     dependencies:
-      '@babel/core': 7.24.5
+      '@babel/core': 7.24.6
       '@types/babel__core': 7.20.5
-      babel-preset-solid: 1.8.17(@babel/core@7.24.5)
+      babel-preset-solid: 1.8.17(@babel/core@7.24.6)
       merge-anything: 5.1.7
       solid-js: 1.8.17
       solid-refresh: 0.6.3(solid-js@1.8.17)
-      vite: 5.2.11(@types/node@20.12.11)
-      vitefu: 0.2.5(vite@5.2.11(@types/node@20.12.11))
+      vite: 5.2.11(@types/node@20.12.13)
+      vitefu: 0.2.5(vite@5.2.11(@types/node@20.12.13))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@6.0.1(@vite-plugin-vercel/vike@6.0.1)(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
+  vite-plugin-vercel@7.0.0(@vite-plugin-vercel/vike@7.0.0)(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite@5.2.11(@types/node@18.19.31)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.1
-      '@vercel/build-utils': 7.12.0
-      '@vercel/nft': 0.26.4
+      '@vercel/build-utils': 8.2.0
+      '@vercel/nft': 0.27.1
       '@vercel/routing-utils': 3.1.0
-      esbuild: 0.20.2
+      esbuild: 0.21.4
       eval: 0.1.8
       fast-glob: 3.3.2
       magicast: 0.3.4
       vite: 5.2.11(@types/node@18.19.31)
-      zod: 3.23.0
+      zod: 3.23.8
     optionalDependencies:
-      '@vite-plugin-vercel/vike': 6.0.1(vike@0.4.171(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@6.0.1)(vite@5.2.11(@types/node@18.19.31))
-      vike: 0.4.171(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
+      '@vite-plugin-vercel/vike': 7.0.0(vike@0.4.172(react-streaming@0.3.28)(vite@5.2.11(@types/node@18.19.31)))(vite-plugin-vercel@7.0.0)(vite@5.2.11(@types/node@18.19.31))
+      vike: 0.4.172(react-streaming@0.3.28(react@18.3.1))(vite@5.2.11(@types/node@18.19.31))
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -13330,24 +13809,24 @@ snapshots:
       '@types/node': 18.19.31
       fsevents: 2.3.3
 
-  vite@5.2.11(@types/node@20.12.11):
+  vite@5.2.11(@types/node@20.12.13):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.17.2
     optionalDependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.13
       fsevents: 2.3.3
 
   vitefu@0.2.5(vite@5.2.11(@types/node@18.19.31)):
     optionalDependencies:
       vite: 5.2.11(@types/node@18.19.31)
 
-  vitefu@0.2.5(vite@5.2.11(@types/node@20.12.11)):
+  vitefu@0.2.5(vite@5.2.11(@types/node@20.12.13)):
     optionalDependencies:
-      vite: 5.2.11(@types/node@20.12.11)
+      vite: 5.2.11(@types/node@20.12.13)
 
-  vitest@1.6.0(@types/node@18.19.31):
+  vitest@1.6.0(@types/node@18.19.31)(happy-dom@14.11.4):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -13371,6 +13850,7 @@ snapshots:
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 18.19.31
+      happy-dom: 14.11.4
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -13413,6 +13893,8 @@ snapshots:
 
   webidl-conversions@4.0.2: {}
 
+  webidl-conversions@7.0.0: {}
+
   webpack-sources@3.2.3: {}
 
   webpack-virtual-modules@0.6.1: {}
@@ -13424,6 +13906,8 @@ snapshots:
       websocket-extensions: 0.1.4
 
   websocket-extensions@0.1.4: {}
+
+  whatwg-mimetype@3.0.0: {}
 
   whatwg-url@5.0.0:
     dependencies:
@@ -13549,6 +14033,8 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
+  yoctocolors@2.0.2: {}
+
   youch@3.3.3:
     dependencies:
       cookie: 0.5.0
@@ -13556,3 +14042,10 @@ snapshots:
       stacktracey: 2.1.8
 
   zod@3.23.0: {}
+
+  zod@3.23.8: {}
+
+  zx@8.1.2:
+    optionalDependencies:
+      '@types/fs-extra': 11.0.4
+      '@types/node': 20.12.13

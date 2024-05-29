@@ -1,7 +1,7 @@
 {
   "name": "@batijs/tests-utils",
   "private": true,
-  "version": "0.0.194",
+  "version": "0.0.196",
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
@@ -16,16 +16,16 @@
     "@types/node": "^18.19.14",
     "@types/which": "^3.0.3",
     "tsup": "^8.0.2",
-    "tsx": "^4.10.5",
+    "tsx": "^4.11.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "execa": "^8.0.1",
     "get-port": "^7.1.0",
+    "happy-dom": "^14.11.2",
     "node-fetch": "^3.3.2",
-    "tree-kill": "^1.2.2",
     "vitest": "^1.6.0",
-    "which": "^4.0.0"
+    "which": "^4.0.0",
+    "zx": "^8.1.2"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

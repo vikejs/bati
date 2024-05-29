@@ -24,17 +24,15 @@ export default async function getPackageJson(props: TransformerProps) {
     devDependencies: [
       "@types/express",
       ...(props.meta.BATI.has("firebase-auth") ? (["@types/cookie-parser"] as const) : []),
-      ...(props.meta.BATI.has("auth0") ? (["dotenv"] as const) : []),
     ],
     dependencies: [
-      "@hattip/adapter-node",
+      "@universal-middleware/express",
       "express",
       "tsx",
       "vite",
       "vike",
-      ...(props.meta.BATI.has("authjs") ? (["@auth/core", "vike-authjs"] as const) : []),
+      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core", "dotenv"] as const) : []),
       ...(props.meta.BATI.has("firebase-auth") ? (["cookie-parser"] as const) : []),
-      ...(props.meta.BATI.has("auth0") ? (["express-openid-connect"] as const) : []),
     ],
   });
 }

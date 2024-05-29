@@ -1,0 +1,47 @@
+{
+  "name": "@batijs/authjs",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@auth/core": "^0.31.0",
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$in": [
+          "authjs",
+          "auth0"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./server/authjs-handler": {
+      "types": "./dist/types/server/authjs-handler.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server/authjs-handler": [
+        "./dist/types/server/authjs-handler.d.ts"
+      ]
+    }
+  }
+}

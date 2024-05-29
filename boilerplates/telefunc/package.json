@@ -15,7 +15,7 @@
     "@batijs/compile": "workspace:*",
     "@types/node": "^18.19.14",
     "telefunc": "^0.1.72",
-    "vike": "^0.4.171",
+    "vike": "^0.4.172",
     "vite": "^5.2.11"
   },
   "dependencies": {
@@ -27,6 +27,18 @@
   "bati": {
     "if": {
       "flag": "telefunc"
+    }
+  },
+  "exports": {
+    "./server/telefunc-handler": {
+      "types": "./dist/types/server/telefunc-handler.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server/telefunc-handler": [
+        "./dist/types/server/telefunc-handler.d.ts"
+      ]
     }
   }
 }

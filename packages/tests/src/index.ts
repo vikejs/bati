@@ -4,7 +4,7 @@ import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
-import { bunExists, execa, npmCli } from "@batijs/tests-utils";
+import { bunExists, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import pLimit from "p-limit";
 import packageJson from "../package.json";
@@ -15,6 +15,7 @@ import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const root = resolve(__dirname, "..", "..", "..");
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
@@ -29,6 +30,7 @@ async function updatePackageJson(projectDir: string) {
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
+  pkgjson.devDependencies["happy-dom"] = packageJson.devDependencies["happy-dom"];
   await writeFile(join(projectDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
 }
 
@@ -51,6 +53,10 @@ export default defineConfig({
   test: {
     include: ['*.spec.ts'],
     testTimeout: 100000,
+    environmentMatchGlobs: [
+      ['**/*.dom.spec.ts', 'happy-dom'],
+      ['**/*.spec.ts', 'node'],
+    ],
   },
 });`,
     "utf-8",
@@ -94,6 +100,7 @@ async function createTurboConfig(context: GlobalContext) {
         },
         test: {
           dependsOn: ["build"],
+          env: ["TEST_*"],
         },
         lint: {
           dependsOn: ["build"],
@@ -110,8 +117,12 @@ async function createTurboConfig(context: GlobalContext) {
   );
 }
 
+async function createGitIgnore(context: GlobalContext) {
+  await copyFile(join(root, ".gitignore"), join(context.tmpdir, ".gitignore"));
+}
+
 function linkTestUtils() {
-  return execa(npmCli, bunExists ? ["link"] : ["link", "--global"], {
+  return exec(npmCli, bunExists ? ["link"] : ["link", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
@@ -119,23 +130,25 @@ function linkTestUtils() {
 }
 
 async function packageManagerInstall(context: GlobalContext) {
-  // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
-  await execa(npmCli, ["install", "--prefer-offline"], {
-    // really slow on Windows CI
-    timeout: 3 * 60 * 1000,
-    cwd: context.tmpdir,
-    stdout: process.stdout,
-    stderr: process.stderr,
-  });
+  {
+    // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
+    const child = exec(npmCli, ["install", "--prefer-offline"], {
+      // really slow on Windows CI
+      timeout: 3 * 60 * 1000,
+      cwd: context.tmpdir,
+    });
+
+    await child;
+  }
 
   if (!bunExists) {
     // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
-    await execa(npmCli, ["link", "--global", "@batijs/tests-utils"], {
+    const child = exec(npmCli, ["link", "--global", "@batijs/tests-utils"], {
       timeout: 60000,
       cwd: context.tmpdir,
-      stdout: process.stdout,
-      stderr: process.stderr,
     });
+
+    await child;
   }
 }
 
@@ -148,29 +161,35 @@ function execTurborepo(context: GlobalContext) {
     "lint",
     "typecheck",
     "build",
-    "--output-logs=errors-only",
+    "--output-logs",
+    "errors-only",
     "--no-update-notifier",
-    "--framework-inference=false",
+    "--framework-inference",
+    "false",
   ];
 
   if (process.env.CI) {
     const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
-    args.push("--concurrency=2");
     args.push("--env-mode=loose");
-    args.push(`--cache-dir="${cacheDir}"`);
+    args.push("--concurrency=2");
+    args.push(`--cache-dir`);
+    args.push(cacheDir);
     console.log("[turborepo] Using cache dir", cacheDir);
   } else {
-    args.push(`--cache-dir="${join(tmpdir(), "bati-cache")}"`);
+    const cacheDir = join(tmpdir(), "bati-cache");
+    args.push(`--cache-dir`);
+    args.push(cacheDir);
+    console.log("[turborepo] Using cache dir", cacheDir);
   }
 
-  return execa(npmCli, args, {
+  const child = exec(npmCli, args, {
     timeout: 60 * 10 * 1000,
     cwd: context.tmpdir,
-    shell: true,
-    stdout: process.stdout,
-    stderr: process.stderr,
-    env: process.env,
   });
+
+  child.stdout.pipe(process.stdout);
+
+  return child;
 }
 
 function isVerdaccioRunning() {
@@ -187,12 +206,19 @@ function isVerdaccioRunning() {
 
 function loadDotEnvTest() {
   dotenv.config({
-    path: resolve(__dirname, "..", "..", "..", ".env.test"),
+    path: join(root, ".env.test"),
   });
 }
 
 function arrayIncludes(a: string[], b: string[]) {
   return a.every((element) => b.includes(element));
+}
+
+async function spinner<T>(title: string, callback: () => T): Promise<T> {
+  if (process.env.CI) {
+    return callback();
+  }
+  return zx.spinner(title, callback);
 }
 
 async function main(context: GlobalContext) {
@@ -203,8 +229,9 @@ async function main(context: GlobalContext) {
 
   loadDotEnvTest();
 
-  // load all test files matrices
-  const testFiles = await Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath)));
+  const testFiles = await spinner("Loading all test files matrices...", async () =>
+    Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
+  );
 
   // for all matrices
   for (const testFile of testFiles) {
@@ -227,8 +254,7 @@ async function main(context: GlobalContext) {
     }
   }
 
-  // wait for concurrent cli
-  await Promise.all(promises);
+  await spinner("Generating test repositories...", () => Promise.all(promises));
 
   await createWorkspacePackageJson(context);
 
@@ -237,6 +263,9 @@ async function main(context: GlobalContext) {
     await createPnpmWorkspaceYaml(context);
   }
 
+  // create .gitignore file, used by turborepo cache hash computation
+  await createGitIgnore(context);
+
   // create turbo config
   await createTurboConfig(context);
 
@@ -244,10 +273,10 @@ async function main(context: GlobalContext) {
   await linkTestUtils();
 
   // pnpm/bun install
-  await packageManagerInstall(context);
+  await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // exec turbo run test lint build
-  await execTurborepo(context);
+  await spinner("Executing test suite...", () => execTurborepo(context));
 }
 
 // init context

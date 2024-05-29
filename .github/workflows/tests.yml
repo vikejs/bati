@@ -46,7 +46,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         name: Install bun
         with:
-          bun-version: "1.1.3"
+          bun-version: "1.1.10"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -101,3 +101,8 @@ jobs:
 
       - name: Run e2e tests
         run: pnpm run test:e2e
+        env:
+          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
+          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}

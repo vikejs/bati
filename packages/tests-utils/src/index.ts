@@ -8,3 +8,5 @@ export * from "./run-build.js";
 export * from "./run-dev.js";
 export type * from "./types.js";
 export * from "./wait-for-localhost.js";
+export * from "./happy-dom.js";
+export * from "./zx.js";
