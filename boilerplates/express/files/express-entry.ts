@@ -2,7 +2,7 @@
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
+import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -72,6 +72,15 @@ async function startServer() {
   }
 
   if (BATI.has("authjs") || BATI.has("auth0")) {
+    /**
+     * Append Auth.js session to context
+     **/
+    app.use(handlerAdapter(authjsSessionMiddleware));
+
+    /**
+     * Auth.js route
+     * @link {@see https://authjs.dev/getting-started/installation}
+     **/
     app.all("/api/auth/*", handlerAdapter(authjsHandler));
   }
 
@@ -80,21 +89,6 @@ async function startServer() {
     app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
     app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
   }
-
-  // if (BAsdfsdfsdfTI.has("auth0")) {
-  //   const config: ConfigParams = {
-  //     authRequired: false, // Controls whether authentication is required for all routes
-  //     auth0Logout: true, // Uses Auth0 logout feature
-  //     baseURL: process.env.BASE_URL?.startsWith("http") ? process.env.BASE_URL : `http://localhost:${port}`, // The URL where the application is served
-  //     routes: {
-  //       login: "/api/auth/login", // Custom login route, default is : "/login"
-  //       logout: "/api/auth/logout", // Custom logout route, default is : "/logout"
-  //       callback: "/api/auth/callback", // Custom callback route, default is "/callback"
-  //     },
-  //   };
-  //
-  //   app.use(auth(config));
-  // }
 
   if (BATI.has("trpc")) {
     /**

@@ -1,6 +1,6 @@
 // BATI.has("auth0")
 import "dotenv/config";
-import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
+import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -58,6 +58,15 @@ if (isProduction) {
 }
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
+  /**
+   * Append Auth.js session to context
+   **/
+  app.use(handlerAdapter(authjsSessionMiddleware));
+
+  /**
+   * Auth.js route
+   * @link {@see https://authjs.dev/getting-started/installation}
+   **/
   app.use("/api/auth/**", handlerAdapter(authjsHandler));
 }
 

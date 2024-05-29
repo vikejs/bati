@@ -3,7 +3,7 @@ import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { authjsHandler } from "@batijs/authjs/server/authjs-handler";
+import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -76,6 +76,15 @@ async function startServer() {
   const router = createRouter();
 
   if (BATI.has("authjs") || BATI.has("auth0")) {
+    /**
+     * Append Auth.js session to context
+     **/
+    app.use(fromWebMiddleware(authjsSessionMiddleware));
+
+    /**
+     * Auth.js route
+     * @link {@see https://authjs.dev/getting-started/installation}
+     **/
     router.use("/api/auth/**", fromWebHandler(authjsHandler));
   }
 
