@@ -3,9 +3,7 @@ import type { TSESTree } from "@typescript-eslint/utils";
 import { ESLint, Linter } from "eslint";
 // @ts-ignore
 import solid from "eslint-plugin-solid/configs/recommended";
-import type * as ESTree from "estree";
 import type { VikeMeta } from "../../types.js";
-import { evalCondition, extractBatiConditionComment } from "../eval.js";
 import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorImportStatement } from "./visitor-imports.js";
