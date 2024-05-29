@@ -22,16 +22,14 @@ export type FlagsFromMatrix<T extends FlagMatrix> = Exclude<FlatArray<T, 1>, und
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TestMatchFunction = () => Promise<any> | void;
 
+export type TestMatch = TestMatchFunction | [TestMatchFunction, TestOptions];
+
 export type TestMatches<T extends FlagMatrix> = {
-  [P in (FlagsFromMatrix<T> & string) | "_"]?: TestMatches<T> | TestMatchFunction;
+  [P in (FlagsFromMatrix<T> & string) | "_"]?: TestMatches<T> | TestMatch;
 };
 
 export type TestContext = typeof import("vitest") & {
   fetch: Fetch;
   context: GlobalContext;
-  testMatch: <T extends FlagMatrix>(
-    name: string,
-    matches: TestMatches<T>,
-    options?: number | TestOptions,
-  ) => Promise<unknown> | void;
+  testMatch: <T extends FlagMatrix>(name: string, matches: TestMatches<T>) => Promise<unknown> | void;
 };

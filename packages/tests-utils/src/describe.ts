@@ -1,19 +1,12 @@
 import type { TestOptions } from "vitest";
 import { prepare } from "./prepare.js";
-import type {
-  FlagMatrix,
-  GlobalContext,
-  PrepareOptions,
-  TestContext,
-  TestMatches,
-  TestMatchFunction,
-} from "./types.js";
+import type { FlagMatrix, GlobalContext, PrepareOptions, TestContext, TestMatch, TestMatches } from "./types.js";
 
 function* yieldMatchValue<T extends FlagMatrix>(
-  fnOrMatch: TestMatchFunction | TestMatches<T>,
+  fnOrMatch: TestMatch | TestMatches<T>,
   flags: string[],
-): Generator<TestMatchFunction> {
-  if (typeof fnOrMatch === "function") {
+): Generator<TestMatch> {
+  if (typeof fnOrMatch === "function" || Array.isArray(fnOrMatch)) {
     yield fnOrMatch;
     return;
   }
@@ -23,19 +16,23 @@ function* yieldMatchValue<T extends FlagMatrix>(
 function* yieldMatch<T extends FlagMatrix>(matches: TestMatches<T>, flags: string[]) {
   for (const [key, value] of Object.entries(matches)) {
     if (flags.includes(key) || key === "_") {
-      yield* yieldMatchValue(value as TestMatchFunction | TestMatches<T>, flags);
+      yield* yieldMatchValue(value as TestMatch | TestMatches<T>, flags);
       return;
     }
   }
 }
 
+function extractFnAndOptions(match: TestMatch) {
+  if (Array.isArray(match)) {
+    return match;
+  }
+  return [match, {} as TestOptions] as const;
+}
+
 function testMatchFactory(vitest: typeof import("vitest"), context: GlobalContext) {
-  return function testMatch<T extends FlagMatrix>(
-    name: string,
-    matches: TestMatches<T>,
-    options?: number | TestOptions,
-  ) {
-    for (const fn of yieldMatch(matches, context.flags)) {
+  return function testMatch<T extends FlagMatrix>(name: string, matches: TestMatches<T>) {
+    for (const match of yieldMatch(matches, context.flags)) {
+      const [fn, options] = extractFnAndOptions(match);
       vitest.test(name, fn, options);
     }
   };

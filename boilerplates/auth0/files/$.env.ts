@@ -1,9 +1,9 @@
 import { appendToEnv, type TransformerProps } from "@batijs/core";
 
 export default async function getEnv(props: TransformerProps) {
-  const auth0ClientId = process.env.TEST_AUTH0_CLIENT_ID ?? process.env.AUTH0_CLIENT_ID;
-  const auth0ClientSecret = process.env.TEST_AUTH0_CLIENT_SECRET ?? process.env.AUTH0_CLIENT_SECRET;
-  const auth0BaseUrl = process.env.TEST_AUTH0_ISSUER_BASE_URL ?? process.env.AUTH0_ISSUER_BASE_URL;
+  const auth0ClientId = process.env.TEST_AUTH0_CLIENT_ID;
+  const auth0ClientSecret = process.env.TEST_AUTH0_CLIENT_SECRET;
+  const auth0BaseUrl = process.env.TEST_AUTH0_ISSUER_BASE_URL;
 
   let envContent = await props.readfile?.();
 
