@@ -73,6 +73,10 @@ async function startServer() {
   app.addContentTypeParser("*", function (_request, _payload, done) {
     done(null, "");
   });
+  app.addContentTypeParser("application/json", { parseAs: "string" }, function (_request, payload, done) {
+    const json = JSON.parse(payload as string);
+    done(null, json);
+  });
 
   await app.register(await import("@fastify/middie"));
 
