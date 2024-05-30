@@ -73,6 +73,13 @@ async function startServer() {
   app.addContentTypeParser("*", function (_request, _payload, done) {
     done(null, "");
   });
+  app.addContentTypeParser("application/json", { parseAs: "string" }, function (_request, payload, done) {
+    if (typeof payload === "string") {
+      const json = JSON.parse(payload);
+      done(null, json);
+    }
+    done(null, "");
+  });
 
   await app.register(await import("@fastify/middie"));
 
@@ -145,10 +152,6 @@ async function startServer() {
   }
 
   if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
-    app.addContentTypeParser("application/json", { parseAs: "string" }, function (_request, payload, done) {
-      const json = JSON.parse(payload as string);
-      done(null, json);
-    });
     app.post<{ Body: TodoInsert }>("/api/todo/create", async (request, reply) => {
       const newTodo = request.body;
 
