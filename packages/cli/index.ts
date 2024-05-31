@@ -73,7 +73,7 @@ function printOK(dist: string, flags: string[]): void {
     console.log(list3(green(feature.label)));
   }
 
-  console.log("\n" + bold(arrow0("Ready to start you app:")));
+  console.log("\n" + bold(arrow0("Ready to start your app:")));
   console.log(cmd3(`cd ${dist}`));
 
   switch (pm?.name) {
