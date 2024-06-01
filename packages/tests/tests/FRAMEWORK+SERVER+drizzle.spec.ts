@@ -1,8 +1,14 @@
 import { describeBati, exec, npmCli } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], ["express", "h3", "hono", "fastify"], "drizzle", "eslint"];
+export const matrix = [
+  ["solid", "react", "vue"],
+  ["express", "h3", "hono", "fastify", "hattip"],
+  ["trpc", "telefunc", undefined],
+  "drizzle",
+  "eslint",
+];
 
-await describeBati(({ test, expect, fetch, beforeAll }) => {
+await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
   beforeAll(async () => {
     await exec(npmCli, ["run", "drizzle:generate"]);
     await exec(npmCli, ["run", "drizzle:migrate"]);
@@ -21,18 +27,54 @@ await describeBati(({ test, expect, fetch, beforeAll }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  test("/api/todo/create", async () => {
-    const res = await fetch("/api/todo/create", {
-      method: "POST",
-      body: JSON.stringify({ text: "test" }),
-      headers: {
-        "content-type": "application/json",
-      },
+  if (!context.flags.includes("telefunc") && !context.flags.includes("trpc"))
+    test("/api/todo/create", async () => {
+      const res = await fetch("/api/todo/create", {
+        method: "POST",
+        body: JSON.stringify({ text: "test" }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      expect(res.status).toBe(201);
+      expect(await res.json()).toEqual({
+        message: "New Todo Created",
+        result: { changes: 1, lastInsertRowid: 3 },
+      });
     });
-    expect(res.status).toBe(201);
-    expect(await res.json()).toEqual({
-      message: "New Todo Created",
-      result: { changes: 1, lastInsertRowid: 3 },
-    });
+
+  testMatch<typeof matrix>("onCreateTodo", {
+    telefunc: async () => {
+      const res = await fetch("/_telefunc", {
+        method: "POST",
+        body: JSON.stringify({
+          file: "/components/TodoList.telefunc.ts",
+          name: "onCreateTodo",
+          args: [{ text: "test" }],
+        }),
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toEqual({ ret: { result: { changes: 1, lastInsertRowid: 3 } } });
+    },
+    trpc: async () => {
+      const res = await fetch("/api/trpc/onCreateTodo", {
+        method: "POST",
+        body: JSON.stringify("test"),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toEqual({
+        result: {
+          data: {
+            result: {
+              changes: 1,
+              lastInsertRowid: 3,
+            },
+          },
+        },
+      });
+    },
   });
 });
