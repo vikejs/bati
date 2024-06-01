@@ -4,8 +4,7 @@ export default async function getReadme(props: TransformerProps) {
   const content = await loadReadme(props);
 
   //language=Markdown
-  const about =
-    `
+  const about = `
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [Vue](https://vuejs.org/guide/quick-start.html).
 
