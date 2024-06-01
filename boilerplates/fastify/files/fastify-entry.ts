@@ -3,8 +3,7 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
+import { createTodoHandler } from "@batijs/drizzle/server/create-todo-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -71,13 +70,6 @@ async function startServer() {
   // This will probably change in the future though, you can follow https://github.com/magne4000/universal-handler for updates
   app.removeAllContentTypeParsers();
   app.addContentTypeParser("*", function (_request, _payload, done) {
-    done(null, "");
-  });
-  app.addContentTypeParser("application/json", { parseAs: "string" }, function (_request, payload, done) {
-    if (typeof payload === "string") {
-      const json = JSON.parse(payload);
-      done(null, json);
-    }
     done(null, "");
   });
 
@@ -152,14 +144,7 @@ async function startServer() {
   }
 
   if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
-    app.post<{ Body: TodoInsert }>("/api/todo/create", async (request, reply) => {
-      const newTodo = request.body;
-
-      const result = await db.insert(todoTable).values({ text: newTodo.text });
-
-      reply.code(201);
-      return reply.send({ message: "New Todo Created", result });
-    });
+    app.post("/api/todo/create", handlerAdapter(createTodoHandler));
   }
 
   /**

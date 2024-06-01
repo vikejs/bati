@@ -4,8 +4,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
+import { createTodoHandler } from "@batijs/drizzle/server/create-todo-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -24,8 +23,6 @@ import {
   eventHandler,
   fromNodeMiddleware,
   fromWebHandler,
-  readBody,
-  setResponseStatus,
   toNodeListener,
   toWebRequest,
 } from "h3";
@@ -130,21 +127,7 @@ async function startServer() {
   }
 
   if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
-    router.post(
-      "/api/todo/create",
-      eventHandler(async (event) => {
-        const newTodo = await readBody<TodoInsert>(event);
-
-        const result = await db.insert(todoTable).values({ text: newTodo.text });
-
-        setResponseStatus(event, 201);
-
-        return {
-          message: "New Todo Created",
-          result,
-        };
-      }),
-    );
+    router.post("/api/todo/create", fromWebHandler(createTodoHandler));
   }
 
   /**

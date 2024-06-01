@@ -1,8 +1,7 @@
 // BATI.has("auth0")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
+import { createTodoHandler } from "@batijs/drizzle/server/create-todo-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -106,15 +105,7 @@ if (BATI.has("telefunc")) {
 }
 
 if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
-  app.post("/api/todo/create", async (c) => {
-    const newTodo = await c.req.json<TodoInsert>();
-
-    const result = await db.insert(todoTable).values({ text: newTodo.text });
-
-    c.status(201);
-
-    return c.json({ message: "New Todo Created", result });
-  });
+  app.post("/api/todo/create", handlerAdapter(createTodoHandler));
 }
 
 /**

@@ -1,6 +1,7 @@
 // BATI.has("auth0")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { createTodoHandler } from "@batijs/drizzle/server/create-todo-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -73,6 +74,10 @@ if (BATI.has("firebase-auth")) {
   router.use(handlerAdapter(firebaseAuthMiddleware));
   router.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
   router.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+}
+
+if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
+  router.post("/api/todo/create", handlerAdapter(createTodoHandler));
 }
 
 /**

@@ -3,8 +3,7 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable, type TodoInsert } from "@batijs/drizzle/database/schema";
+import { createTodoHandler } from "@batijs/drizzle/server/create-todo-handler";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
@@ -119,14 +118,7 @@ async function startServer() {
   }
 
   if (BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc"))) {
-    app.use(express.json()); // Parse & make HTTP request body available at `req.body`
-    app.post("/api/todo/create", async (req, res) => {
-      const newTodo: TodoInsert = req.body;
-
-      const result = await db.insert(todoTable).values({ text: newTodo.text });
-
-      res.status(201).send({ message: "New Todo Created", result });
-    });
+    app.post("/api/todo/create", handlerAdapter(createTodoHandler));
   }
 
   /**
