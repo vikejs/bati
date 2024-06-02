@@ -1,5 +1,5 @@
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable } from "@batijs/drizzle/database/schema";
+import { db } from "../../database/db";
+import { todoTable } from "../../database/schema";
 
 export type Data = ReturnType<typeof data>;
 

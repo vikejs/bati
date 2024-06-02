@@ -43,6 +43,12 @@
     "./database/seed": {
       "types": "./dist/types/database/seed.d.ts"
     },
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
+    },
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
+    },
     "./server/create-todo-handler": {
       "types": "./dist/types/server/create-todo-handler.d.ts"
     }
@@ -60,6 +66,12 @@
       ],
       "database/seed": [
         "./dist/types/database/seed.d.ts"
+      ],
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
+      ],
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
       ],
       "server/create-todo-handler": [
         "./dist/types/server/create-todo-handler.d.ts"
