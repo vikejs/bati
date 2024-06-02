@@ -16,7 +16,9 @@
     "@batijs/drizzle": "workspace:*",
     "@batijs/shared-telefunc": "workspace:*",
     "@batijs/trpc": "workspace:^",
+    "@types/better-sqlite3": "^7.6.10",
     "@types/node": "^18.19.14",
+    "better-sqlite3": "^10.0.0",
     "solid-js": "^1.8.17",
     "vike": "^0.4.171",
     "vike-solid": "^0.4.5",
@@ -42,14 +44,8 @@
     "./components/TodoList": {
       "types": "./dist/types/components/TodoList.d.ts"
     },
-    "./pages/todo/+data": {
-      "types": "./dist/types/pages/todo/+data.d.ts"
-    },
     "./pages/todo/+Page": {
       "types": "./dist/types/pages/todo/+Page.d.ts"
-    },
-    "./pages/todo/+config": {
-      "types": "./dist/types/pages/todo/+config.d.ts"
     }
   },
   "typesVersions": {
@@ -57,14 +53,8 @@
       "components/TodoList": [
         "./dist/types/components/TodoList.d.ts"
       ],
-      "pages/todo/+data": [
-        "./dist/types/pages/todo/+data.d.ts"
-      ],
       "pages/todo/+Page": [
         "./dist/types/pages/todo/+Page.d.ts"
-      ],
-      "pages/todo/+config": [
-        "./dist/types/pages/todo/+config.d.ts"
       ]
     }
   }
