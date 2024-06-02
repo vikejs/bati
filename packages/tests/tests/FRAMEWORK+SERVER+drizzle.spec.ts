@@ -43,21 +43,21 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
       });
     });
 
-  testMatch<typeof matrix>("onCreateTodo", {
+  testMatch<typeof matrix>("onNewTodo", {
     telefunc: async () => {
       const res = await fetch("/_telefunc", {
         method: "POST",
         body: JSON.stringify({
           file: "/components/TodoList.telefunc.ts",
-          name: "onCreateTodo",
+          name: "onNewTodo",
           args: [{ text: "test" }],
         }),
       });
       expect(res.status).toBe(200);
-      expect(await res.json()).toEqual({ ret: { result: { changes: 1, lastInsertRowid: 3 } } });
+      expect(await res.json()).toEqual({ ret: { changes: 1, lastInsertRowid: 3 } });
     },
     trpc: async () => {
-      const res = await fetch("/api/trpc/onCreateTodo", {
+      const res = await fetch("/api/trpc/onNewTodo", {
         method: "POST",
         body: JSON.stringify("test"),
         headers: {
@@ -68,10 +68,8 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
       expect(await res.json()).toEqual({
         result: {
           data: {
-            result: {
-              changes: 1,
-              lastInsertRowid: 3,
-            },
+            changes: 1,
+            lastInsertRowid: 3,
           },
         },
       });
