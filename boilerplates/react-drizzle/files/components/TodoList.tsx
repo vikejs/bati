@@ -1,10 +1,11 @@
 import type { TodoItem } from "@batijs/drizzle/database/schema";
-import { onCreateTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
+import { onNewTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
+import type { RunResult } from "better-sqlite3";
 import React, { useState } from "react";
-import { reload } from "vike/client/router";
 
-export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
+export function TodoList({ initialTodoItems }: { initialTodoItems: TodoItem[] }) {
+  const [todoItems, setTodoItems] = useState(initialTodoItems);
   const [newTodo, setNewTodo] = useState("");
   return (
     <>
@@ -17,13 +18,14 @@ export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
             onSubmit={async (ev) => {
               ev.preventDefault();
               if (BATI.has("telefunc")) {
-                await onCreateTodo({ text: newTodo });
+                const result = await onNewTodo({ text: newTodo });
+                setTodoItems((prev) => [...prev, { id: result.lastInsertRowid as number, text: newTodo }]);
                 setNewTodo("");
-                await reload();
               } else if (BATI.has("trpc")) {
-                await trpc.onCreateTodo.mutate(newTodo);
+                const result = await trpc.onNewTodo.mutate(newTodo);
+                /*{ @if (it.BATI.has("feature")) }*/ // @ts-expect-error /*{ /if }*/
+                setTodoItems((prev) => [...prev, { id: result.lastInsertRowid as number, text: newTodo }]);
                 setNewTodo("");
-                await reload();
               } else {
                 try {
                   const response = await fetch("/api/todo/create", {
@@ -34,7 +36,8 @@ export function TodoList({ todoItems }: { todoItems: TodoItem[] }) {
                     },
                   });
                   if (response.ok) {
-                    await reload();
+                    const { result } = (await response.json()) as { message: string; result: RunResult };
+                    setTodoItems((prev) => [...prev, { id: result.lastInsertRowid as number, text: newTodo }]);
                     setNewTodo("");
                   }
                 } catch (error) {
