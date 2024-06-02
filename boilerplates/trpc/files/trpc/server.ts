@@ -21,20 +21,6 @@ export const appRouter = router({
   demo: publicProcedure.query(async () => {
     return { demo: true };
   }),
-  /*{ @if (it.BATI.has("drizzle")) }*/
-  onCreateTodo: publicProcedure
-    .input((value): string => {
-      if (typeof value === "string") {
-        return value;
-      }
-      throw new Error("Input is not a string");
-    })
-    .mutation(async (opts) => {
-      const result: RunResult = await db.insert(todoTable).values({ text: opts.input });
-
-      return { result };
-    }),
-  /*{ #else }*/
   onNewTodo: publicProcedure
     .input((value): string => {
       if (typeof value === "string") {
@@ -43,10 +29,14 @@ export const appRouter = router({
       throw new Error("Input is not a string");
     })
     .mutation(async (opts) => {
-      todoItems.push({ text: opts.input });
-      return { todoItems };
+      if (BATI.has("drizzle")) {
+        const result: RunResult = await db.insert(todoTable).values({ text: opts.input });
+        return result;
+      } else {
+        todoItems.push({ text: opts.input });
+        return { todoItems };
+      }
     }),
-  /*{ /if }*/
 });
 
 export type AppRouter = typeof appRouter;
