@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Data } from "@batijs/drizzle/pages/todo/+data";
 import { useData } from "vike-vue/useData";
-import type { Data } from "./+data.js";
 import TodoList from "../../components/TodoList.vue";
 
 const todoItems = useData<Data>();

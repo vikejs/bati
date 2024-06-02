@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { ref, useAttrs, type Ref } from "vue";
 import type { TodoItem } from "@batijs/drizzle/database/schema";
-import { onCreateTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
+import { onNewTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import type { RunResult } from "better-sqlite3";
 
@@ -26,11 +26,12 @@ const newTodo = ref("");
 
 const submitNewTodo = async () => {
   if (BATI.has("telefunc")) {
-    const { result } = await onCreateTodo({ text: newTodo.value });
+    const result = await onNewTodo({ text: newTodo.value });
     todoItems.value.push({ id: result.lastInsertRowid as number, text: newTodo.value })
     newTodo.value = "";
   } else if (BATI.has("trpc")) {
-    const { result } = await trpc.onCreateTodo.mutate(newTodo.value);
+    const result = await trpc.onNewTodo.mutate(newTodo.value);
+    /*{ @if (it.BATI.has("feature")) }*/ // @ts-expect-error /*{ /if }*/
     todoItems.value.push({ id: result.lastInsertRowid as number, text: newTodo.value })
     newTodo.value = "";
   } else {
