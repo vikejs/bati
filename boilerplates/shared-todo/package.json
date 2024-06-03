@@ -14,6 +14,7 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
     "@types/node": "^18.19.14"
   },
   "dependencies": {
@@ -24,9 +25,6 @@
   ],
   "bati": {},
   "exports": {
-    "./database/todoItems": {
-      "types": "./dist/types/database/todoItems.d.ts"
-    },
     "./pages/todo/+config": {
       "types": "./dist/types/pages/todo/+config.d.ts"
     },
@@ -39,9 +37,6 @@
   },
   "typesVersions": {
     "*": {
-      "database/todoItems": [
-        "./dist/types/database/todoItems.d.ts"
-      ],
       "pages/todo/+config": [
         "./dist/types/pages/todo/+config.d.ts"
       ],

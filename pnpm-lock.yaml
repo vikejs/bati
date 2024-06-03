@@ -154,6 +154,9 @@ importers:
       drizzle-orm:
         specifier: ^0.30.10
         version: 0.30.10(@types/better-sqlite3@7.6.10)(@types/react@18.3.3)(better-sqlite3@10.0.0)(react@18.3.1)
+      tsx:
+        specifier: ^4.11.2
+        version: 4.11.2
 
   boilerplates/edgedb:
     dependencies:
@@ -762,6 +765,22 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
 
+  boilerplates/shared-no-db:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      lowdb:
+        specifier: ^7.0.1
+        version: 7.0.1
+
   boilerplates/shared-plain:
     dependencies:
       '@batijs/core':
@@ -814,6 +833,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
+      '@batijs/shared-no-db':
+        specifier: workspace:*
+        version: link:../shared-no-db
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -944,6 +966,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
+      '@batijs/shared-no-db':
+        specifier: workspace:*
+        version: link:../shared-no-db
       '@batijs/shared-todo':
         specifier: workspace:*
         version: link:../shared-todo
@@ -972,6 +997,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
+      '@batijs/shared-no-db':
+        specifier: workspace:*
+        version: link:../shared-no-db
       '@batijs/shared-todo':
         specifier: workspace:*
         version: link:../shared-todo
@@ -5206,6 +5234,10 @@ packages:
   loupe@2.3.7:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
 
+  lowdb@7.0.1:
+    resolution: {integrity: sha512-neJAj8GwF0e8EpycYIDFqEPcx9Qz4GUho20jWFR7YiFeXzF1YMLdxB36PypcTSPMA+4+LvgyMacYhlr18Zlymw==}
+    engines: {node: '>=18'}
+
   lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
     engines: {node: '>=8'}
@@ -6391,6 +6423,10 @@ packages:
   std-env@3.7.0:
     resolution: {integrity: sha512-JPbdCEQLj1w5GilpiHAx3qJvFndqybBysA3qUOnznweH4QbNYUsW/ea8QzSrnh0vNsezMMw5bcVool8lM0gwzg==}
 
+  steno@4.0.2:
+    resolution: {integrity: sha512-yhPIQXjrlt1xv7dyPQg2P17URmXbuM5pdGkpiMB3RenprfiBlvK415Lctfe0eshk90oA7/tNq7WEiMK8RSP39A==}
+    engines: {node: '>=18'}
+
   stoppable@1.1.0:
     resolution: {integrity: sha512-KXDYZ9dszj6bzvnEMRYvxgeTHU74QBFL54XKtP3nyMuJ81CFYtABZ3bAzL2EdFUaEwJOBOgENyFj3R7oTzDyyw==}
     engines: {node: '>=4', npm: '>=6'}
@@ -6655,6 +6691,11 @@ packages:
 
   tsx@4.11.0:
     resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
+  tsx@4.11.2:
+    resolution: {integrity: sha512-V5DL5v1BuItjsQ2FN9+4OjR7n5cr8hSgN+VGmm/fd2/0cgQdBIWHcQ3bFYm/5ZTmyxkTDBUIaRuW2divgfPe0A==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -11401,6 +11442,10 @@ snapshots:
     dependencies:
       get-func-name: 2.0.2
 
+  lowdb@7.0.1:
+    dependencies:
+      steno: 4.0.2
+
   lowercase-keys@2.0.0: {}
 
   lru-cache@10.2.0: {}
@@ -12566,6 +12611,8 @@ snapshots:
 
   std-env@3.7.0: {}
 
+  steno@4.0.2: {}
+
   stoppable@1.1.0: {}
 
   stream-events@1.0.5:
@@ -12872,6 +12919,13 @@ snapshots:
       - ts-node
 
   tsx@4.11.0:
+    dependencies:
+      esbuild: 0.20.2
+      get-tsconfig: 4.7.5
+    optionalDependencies:
+      fsevents: 2.3.3
+
+  tsx@4.11.2:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.5

@@ -1,6 +1,6 @@
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
-import { todoItems } from "../database/todoItems";
+import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 
 export async function createTodoHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
@@ -12,7 +12,7 @@ export async function createTodoHandler<Context extends Record<string | number |
   if (BATI.has("drizzle")) {
     await db.insert(todoTable).values({ text: newTodo.text });
   } else {
-    todoItems.push({ text: newTodo.text });
+    await lowDb.update(({ todo }) => todo.push({ text: newTodo.text }));
   }
 
   return new Response(JSON.stringify({ status: "OK" }), {
