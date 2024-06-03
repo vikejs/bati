@@ -183,7 +183,7 @@ function execTurborepo(context: GlobalContext) {
   }
 
   const child = exec(npmCli, args, {
-    timeout: 80 * 10 * 1000,
+    timeout: "30m",
     cwd: context.tmpdir,
   });
 
