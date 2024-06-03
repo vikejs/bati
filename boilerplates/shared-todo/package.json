@@ -1,7 +1,7 @@
 {
-  "name": "@batijs/telefunc",
+  "name": "@batijs/shared-todo",
   "private": true,
-  "version": "0.0.92",
+  "version": "0.0.1",
   "description": "",
   "type": "module",
   "scripts": {
@@ -15,10 +15,7 @@
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
     "@batijs/shared-db": "workspace:*",
-    "@types/node": "^18.19.14",
-    "telefunc": "^0.1.72",
-    "vike": "^0.4.172",
-    "vite": "^5.2.11"
+    "@types/node": "^18.19.14"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -28,24 +25,31 @@
   ],
   "bati": {
     "if": {
-      "flag": "telefunc"
+      "$in": [
+        "react",
+        "vue",
+        "solid",
+        "svelte",
+        "preact",
+        "angular"
+      ]
     }
   },
   "exports": {
-    "./pages/todo/TodoList.telefunc": {
-      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
     },
-    "./server/telefunc-handler": {
-      "types": "./dist/types/server/telefunc-handler.d.ts"
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "pages/todo/TodoList.telefunc": [
-        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
       ],
-      "server/telefunc-handler": [
-        "./dist/types/server/telefunc-handler.d.ts"
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
       ]
     }
   }

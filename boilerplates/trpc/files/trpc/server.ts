@@ -2,7 +2,6 @@ import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
 import { todoItems } from "@batijs/shared-db/database/todoItems";
 import { initTRPC } from "@trpc/server";
-import type { RunResult } from "better-sqlite3";
 
 /**
  * Initialization of tRPC backend
@@ -30,11 +29,9 @@ export const appRouter = router({
     })
     .mutation(async (opts) => {
       if (BATI.has("drizzle")) {
-        const result: RunResult = await db.insert(todoTable).values({ text: opts.input });
-        return result;
+        await db.insert(todoTable).values({ text: opts.input });
       } else {
         todoItems.push({ text: opts.input });
-        return { todoItems };
       }
     }),
 });

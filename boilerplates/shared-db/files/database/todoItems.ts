@@ -1,4 +1,7 @@
-type TodoItem = { text: string };
+interface TodoItem {
+  text: string;
+}
+
 const todoItems: TodoItem[] = [];
 init();
 
