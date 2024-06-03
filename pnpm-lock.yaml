@@ -223,6 +223,9 @@ importers:
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
+      '@batijs/shared-todo':
+        specifier: workspace:^
+        version: link:../shared-todo
       '@batijs/telefunc':
         specifier: workspace:*
         version: link:../telefunc
@@ -293,6 +296,9 @@ importers:
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
+      '@batijs/shared-todo':
+        specifier: workspace:^
+        version: link:../shared-todo
       '@batijs/telefunc':
         specifier: workspace:^
         version: link:../telefunc
@@ -410,6 +416,9 @@ importers:
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
+      '@batijs/shared-todo':
+        specifier: workspace:^
+        version: link:../shared-todo
       '@batijs/telefunc':
         specifier: workspace:^
         version: link:../telefunc
@@ -477,6 +486,9 @@ importers:
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
+      '@batijs/shared-todo':
+        specifier: workspace:^
+        version: link:../shared-todo
       '@batijs/telefunc':
         specifier: workspace:^
         version: link:../telefunc
@@ -541,6 +553,9 @@ importers:
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
+      '@batijs/shared-todo':
+        specifier: workspace:^
+        version: link:../shared-todo
       '@batijs/telefunc':
         specifier: workspace:^
         version: link:../telefunc
@@ -640,9 +655,6 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:^
         version: link:../drizzle
-      '@batijs/shared-db':
-        specifier: workspace:^
-        version: link:../shared-db
       '@batijs/shared-todo':
         specifier: workspace:^
         version: link:../shared-todo
@@ -750,19 +762,6 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)
 
-  boilerplates/shared-db:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@types/node':
-        specifier: ^18.19.14
-        version: 18.19.31
-
   boilerplates/shared-plain:
     dependencies:
       '@batijs/core':
@@ -815,9 +814,6 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-db':
-        specifier: workspace:*
-        version: link:../shared-db
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -948,9 +944,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-db':
+      '@batijs/shared-todo':
         specifier: workspace:*
-        version: link:../shared-db
+        version: link:../shared-todo
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -976,24 +972,18 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-db':
+      '@batijs/shared-todo':
         specifier: workspace:*
-        version: link:../shared-db
+        version: link:../shared-todo
       '@trpc/client':
         specifier: ^10.45.2
         version: 10.45.2(@trpc/server@10.45.2)
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
-      '@types/better-sqlite3':
-        specifier: ^7.6.10
-        version: 7.6.10
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      better-sqlite3:
-        specifier: ^10.0.0
-        version: 10.0.0
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@18.19.31)

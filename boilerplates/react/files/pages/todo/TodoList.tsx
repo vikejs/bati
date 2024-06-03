@@ -6,11 +6,13 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
   const [todoItems, setTodoItems] = useState(initialTodoItems);
   const [newTodo, setNewTodo] = useState("");
   return (
-    <ul>
-      {todoItems.map((todoItem) => (
-        <li>{todoItem.text}</li>
-      ))}
-      <li>
+    <>
+      <ul>
+        {todoItems.map((todoItem) => (
+          <li key={todoItem.text}>{todoItem.text}</li>
+        ))}
+      </ul>
+      <div>
         <form
           onSubmit={async (ev) => {
             ev.preventDefault();
@@ -43,7 +45,7 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
           <input type="text" onChange={(ev) => setNewTodo(ev.target.value)} value={newTodo} />{" "}
           <button type="submit">Add to-do</button>
         </form>
-      </li>
-    </ul>
+      </div>
+    </>
   );
 }

@@ -14,7 +14,6 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
-    "@batijs/shared-db": "workspace:*",
     "@types/node": "^18.19.14"
   },
   "dependencies": {
@@ -23,33 +22,34 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "$in": [
-        "react",
-        "vue",
-        "solid",
-        "svelte",
-        "preact",
-        "angular"
-      ]
-    }
-  },
+  "bati": {},
   "exports": {
+    "./database/todoItems": {
+      "types": "./dist/types/database/todoItems.d.ts"
+    },
     "./pages/todo/+config": {
       "types": "./dist/types/pages/todo/+config.d.ts"
     },
     "./pages/todo/+data": {
       "types": "./dist/types/pages/todo/+data.d.ts"
+    },
+    "./server/create-todo-handler": {
+      "types": "./dist/types/server/create-todo-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "database/todoItems": [
+        "./dist/types/database/todoItems.d.ts"
+      ],
       "pages/todo/+config": [
         "./dist/types/pages/todo/+config.d.ts"
       ],
       "pages/todo/+data": [
         "./dist/types/pages/todo/+data.d.ts"
+      ],
+      "server/create-todo-handler": [
+        "./dist/types/server/create-todo-handler.d.ts"
       ]
     }
   }

@@ -1,6 +1,6 @@
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
-import { todoItems } from "@batijs/shared-db/database/todoItems";
+import { todoItems } from "@batijs/shared-todo/database/todoItems";
 import { initTRPC } from "@trpc/server";
 
 /**
