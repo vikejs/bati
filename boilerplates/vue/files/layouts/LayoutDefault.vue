@@ -3,16 +3,7 @@
     <Sidebar>
       <Logo />
       <Link href="/"> Welcome </Link>
-      <!-- BATI.has("drizzle") && !(BATI.has("telefunc") || BATI.has("trpc")) -->
-      <Link href="/todo"> Todo (drizzle) </Link>
-      <!-- BATI.has("drizzle") && BATI.has("telefunc") -->
-      <Link href="/todo"> Todo (drizzle + telefunc) </Link>
-      <!-- BATI.has("drizzle") && BATI.has("trpc") -->
-      <Link href="/todo"> Todo (drizzle + trpc) </Link>
-      <!-- BATI.has("telefunc") && !BATI.has("drizzle") -->
-      <Link href="/todo"> Todo (telefunc) </Link>
-      <!-- BATI.has("trpc") && !BATI.has("drizzle") -->
-      <Link href="/todo-trpc"> Todo (tRPC) </Link>
+      <Link href="/todo"> Todo </Link>
       <Link href="/star-wars"> Data Fetching </Link>
     </Sidebar>
     <Content><slot /></Content>
