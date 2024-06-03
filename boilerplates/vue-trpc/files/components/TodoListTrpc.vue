@@ -26,6 +26,7 @@ const newTodo = ref("");
 const submitNewTodo = async () => {
   const result = await trpc.onNewTodo.mutate(newTodo.value);
   newTodo.value = "";
+  /*{ @if (it.BATI.has("feature")) }*/ // @ts-expect-error /*{ /if }*/
   todoItems.value = result.todoItems;
 };
 </script>

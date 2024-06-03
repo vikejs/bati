@@ -13,6 +13,7 @@ export function TodoList(props: { initialTodoItems: TodoItem[] }) {
           <form
             onSubmit={async (ev) => {
               ev.preventDefault();
+              /*{ @if (it.BATI.has("feature")) }*/ // @ts-expect-error /*{ /if }*/
               const { todoItems } = await trpc.onNewTodo.mutate(untrack(newTodo));
               setNewTodo("");
               setTodoItems(todoItems);

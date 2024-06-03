@@ -15,6 +15,7 @@ export function TodoList({ todoItemsInitial }: { todoItemsInitial: TodoItem[] })
           <form
             onSubmit={async (ev) => {
               ev.preventDefault();
+              /*{ @if (it.BATI.has("feature")) }*/ // @ts-expect-error /*{ /if }*/
               const { todoItems } = await trpc.onNewTodo.mutate(draft);
               setDraft("");
               setTodoItems(todoItems);
