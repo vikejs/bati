@@ -29,19 +29,6 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  if (!context.flags.includes("telefunc") && !context.flags.includes("trpc")) {
-    test("/api/todo/create", async () => {
-      const res = await fetch("/api/todo/create", {
-        method: "POST",
-        body: JSON.stringify({ text: "test" }),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      expect(res.status).toBe(200);
-    });
-  }
-
   testMatch<typeof matrix>("onNewTodo", {
     telefunc: async () => {
       const res = await fetch("/_telefunc", {
@@ -58,6 +45,16 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
       const res = await fetch("/api/trpc/onNewTodo", {
         method: "POST",
         body: JSON.stringify("test"),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      expect(res.status).toBe(200);
+    },
+    _: async () => {
+      const res = await fetch("/api/todo/create", {
+        method: "POST",
+        body: JSON.stringify({ text: "test" }),
         headers: {
           "content-type": "application/json",
         },
