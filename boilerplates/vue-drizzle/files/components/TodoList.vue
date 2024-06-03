@@ -13,15 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useAttrs, type Ref } from "vue";
+import { ref, defineProps } from "vue";
 import type { TodoItem } from "@batijs/drizzle/database/schema";
 import { onNewTodo } from "@batijs/shared-telefunc/components/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import type { RunResult } from "better-sqlite3";
 
-const attrs = useAttrs();
-
-const todoItems = ref(attrs["todo-items"]) as Ref<TodoItem[]>;
+const props = defineProps<{initialTodoItems: TodoItem[]}>()
+const todoItems = ref(props.initialTodoItems);
 const newTodo = ref("");
 
 const submitNewTodo = async () => {
