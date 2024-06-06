@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{ initialTodoItems: { text: string }[] }>();
 const todoItems = ref(props.initialTodoItems);
