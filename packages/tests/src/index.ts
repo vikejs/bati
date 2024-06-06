@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as process from "process";
 import { bunExists, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
+import mri from "mri";
 import pLimit from "p-limit";
 import packageJson from "../package.json";
 import { execLocalBati } from "./exec-bati.js";
@@ -16,6 +17,10 @@ import type { GlobalContext } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = resolve(__dirname, "..", "..", "..");
+
+interface CliOptions {
+  filter?: string;
+}
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
@@ -221,11 +226,19 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-async function main(context: GlobalContext) {
+async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
+  const filter = args.filter ? args.filter.split(",") : undefined;
   await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
+  const matrices: Map<
+    string,
+    {
+      testFiles: string[];
+      flags: string[];
+    }
+  > = new Map();
 
   loadDotEnvTest();
 
@@ -233,25 +246,42 @@ async function main(context: GlobalContext) {
     Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
   );
 
-  // for all matrices
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
       if (testFile.exclude?.some((x) => arrayIncludes(x, flags))) {
         continue;
       }
+      if (filter && !arrayIncludes(filter, flags)) {
+        continue;
+      }
 
-      promises.push(
-        limit(async () => {
-          const projectDir = await execLocalBati(context, flags);
-          await Promise.all([
-            copyFile(testFile.filepath, join(projectDir, basename(testFile.filepath))),
-            updatePackageJson(projectDir),
-            updateTsconfig(projectDir),
-            updateVitestConfig(projectDir),
-          ]);
-        }),
-      );
+      const hash = JSON.stringify([...new Set(flags)]);
+
+      if (matrices.has(hash)) {
+        matrices.get(hash)!.testFiles.push(testFile.filepath);
+      } else {
+        matrices.set(hash, {
+          testFiles: [testFile.filepath],
+          flags,
+        });
+      }
     }
+  }
+
+  // for all matrices
+  for (const { testFiles, flags } of matrices.values()) {
+    promises.push(
+      limit(async () => {
+        const projectDir = await execLocalBati(context, flags);
+        const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
+        await Promise.all([
+          ...filesP,
+          updatePackageJson(projectDir),
+          updateTsconfig(projectDir),
+          updateVitestConfig(projectDir),
+        ]);
+      }),
+    );
   }
 
   await spinner("Generating test repositories...", () => Promise.all(promises));
@@ -284,7 +314,8 @@ const context: GlobalContext = { tmpdir: "", localRepository: false };
 
 try {
   context.localRepository = await isVerdaccioRunning();
-  await main(context);
+  const argv = process.argv.slice(2);
+  await main(context, mri<CliOptions>(argv));
 } finally {
   if (context.tmpdir) {
     // delete all tmp dirs
