@@ -13,6 +13,10 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-todo": "workspace:*",
+    "@batijs/telefunc": "workspace:*",
+    "@batijs/trpc": "workspace:^",
     "@types/node": "^18.19.14",
     "cross-fetch": "^4.0.0",
     "eslint-plugin-solid": "^0.14.0",
@@ -83,6 +87,12 @@
     },
     "./pages/star-wars/index/+title": {
       "types": "./dist/types/pages/star-wars/index/+title.d.ts"
+    },
+    "./pages/todo/TodoList": {
+      "types": "./dist/types/pages/todo/TodoList.d.ts"
+    },
+    "./pages/todo/+Page": {
+      "types": "./dist/types/pages/todo/+Page.d.ts"
     }
   },
   "typesVersions": {
@@ -134,6 +144,12 @@
       ],
       "pages/star-wars/index/+title": [
         "./dist/types/pages/star-wars/index/+title.d.ts"
+      ],
+      "pages/todo/TodoList": [
+        "./dist/types/pages/todo/TodoList.d.ts"
+      ],
+      "pages/todo/+Page": [
+        "./dist/types/pages/todo/+Page.d.ts"
       ]
     }
   }

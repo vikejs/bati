@@ -8,7 +8,7 @@ import { execLocalBati } from "./src/exec-bati.js";
 
 const matrix = combinate([
   ["solid", "react", "vue"],
-  ["authjs", "firebase-auth", "auth0"],
+  ["authjs", "firebase-auth", "auth0", "drizzle"],
 ]);
 
 function prepareAndExecute(flags: string[]) {

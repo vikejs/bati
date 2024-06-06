@@ -6,12 +6,12 @@ on:
       - opened
       - reopened
       - synchronize
-      - closed
     paths:
       - 'website/**'
 jobs:
   deploy-preview:
-    if: github.repository_owner == 'batijs'
+    # If it's a PR from within the same repo, deploy to a preview page
+    if: github.repository_owner == 'batijs' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +22,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - uses: pnpm/action-setup@v2
-        if: github.event.action != 'closed'
         name: Install pnpm
         id: pnpm-install
         with:
@@ -30,14 +29,12 @@ jobs:
           run_install: false
 
       - name: Get pnpm store directory
-        if: github.event.action != 'closed'
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v4
-        if: github.event.action != 'closed'
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -46,15 +43,12 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        if: github.event.action != 'closed'
         run: pnpm install
 
       - name: Build dependencies
-        if: github.event.action != 'closed'
         run: pnpm run build
 
       - name: Build website
-        if: github.event.action != 'closed'
         run: pnpm run build:pages
         working-directory: website
         env:

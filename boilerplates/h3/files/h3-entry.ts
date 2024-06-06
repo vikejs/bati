@@ -10,6 +10,7 @@ import {
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
+import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import installCrypto from "@hattip/polyfills/crypto";
@@ -123,6 +124,10 @@ async function startServer() {
      * @link {@see https://telefunc.com}
      **/
     router.post("/_telefunc", fromWebHandler(telefuncHandler));
+  }
+
+  if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+    router.post("/api/todo/create", fromWebHandler(createTodoHandler));
   }
 
   /**

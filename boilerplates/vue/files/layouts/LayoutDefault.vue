@@ -3,10 +3,7 @@
     <Sidebar>
       <Logo />
       <Link href="/"> Welcome </Link>
-      <!-- BATI.has("telefunc") -->
-      <Link href="/todo"> Todo (telefunc) </Link>
-      <!-- BATI.has("trpc") -->
-      <Link href="/todo-trpc"> Todo (tRPC) </Link>
+      <Link href="/todo"> Todo </Link>
       <Link href="/star-wars"> Data Fetching </Link>
     </Sidebar>
     <Content><slot /></Content>

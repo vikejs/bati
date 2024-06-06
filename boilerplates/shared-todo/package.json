@@ -1,0 +1,53 @@
+{
+  "name": "@batijs/shared-todo",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
+    "@types/node": "^18.19.14"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "enforce": "pre"
+  },
+  "exports": {
+    "./pages/todo/+config": {
+      "types": "./dist/types/pages/todo/+config.d.ts"
+    },
+    "./pages/todo/+data": {
+      "types": "./dist/types/pages/todo/+data.d.ts"
+    },
+    "./server/create-todo-handler": {
+      "types": "./dist/types/server/create-todo-handler.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/todo/+config": [
+        "./dist/types/pages/todo/+config.d.ts"
+      ],
+      "pages/todo/+data": [
+        "./dist/types/pages/todo/+data.d.ts"
+      ],
+      "server/create-todo-handler": [
+        "./dist/types/server/create-todo-handler.d.ts"
+      ]
+    }
+  }
+}

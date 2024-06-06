@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
+      "inputs": ["$TURBO_DEFAULT$", "files/**", "hooks/**"],
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },

@@ -13,6 +13,9 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
+    "@batijs/shared-todo": "workspace:*",
     "@types/node": "^18.19.14",
     "telefunc": "^0.1.72",
     "vike": "^0.4.172",
@@ -30,12 +33,18 @@
     }
   },
   "exports": {
+    "./pages/todo/TodoList.telefunc": {
+      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+    },
     "./server/telefunc-handler": {
       "types": "./dist/types/server/telefunc-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "pages/todo/TodoList.telefunc": [
+        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+      ],
       "server/telefunc-handler": [
         "./dist/types/server/telefunc-handler.d.ts"
       ]

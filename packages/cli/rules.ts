@@ -30,4 +30,7 @@ export const rulesMessages = {
     `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}.`,
   ),
   [RulesMessage.INFO_HATTIP]: info(`${inverse(bold("HatTip"))} is an experimental project`),
+  [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}.`,
+  ),
 } satisfies Record<RulesMessage, RuleMessage>;

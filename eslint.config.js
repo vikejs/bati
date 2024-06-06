@@ -39,6 +39,9 @@ export default tseslint.config(
         sourceType: "module",
         ecmaVersion: 2021,
       },
+      globals: {
+        BATI: false,
+      },
     },
   },
   {

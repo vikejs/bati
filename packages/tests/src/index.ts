@@ -134,7 +134,7 @@ async function packageManagerInstall(context: GlobalContext) {
     // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
     const child = exec(npmCli, ["install", "--prefer-offline"], {
       // really slow on Windows CI
-      timeout: 3 * 60 * 1000,
+      timeout: 5 * 60 * 1000,
       cwd: context.tmpdir,
     });
 
@@ -183,7 +183,7 @@ function execTurborepo(context: GlobalContext) {
   }
 
   const child = exec(npmCli, args, {
-    timeout: 60 * 10 * 1000,
+    timeout: "30m",
     cwd: context.tmpdir,
   });
 

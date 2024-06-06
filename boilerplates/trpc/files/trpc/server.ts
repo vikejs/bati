@@ -1,4 +1,6 @@
-import { todoItems } from "@batijs/shared-db/database/todoItems";
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable } from "@batijs/drizzle/database/schema";
+import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { initTRPC } from "@trpc/server";
 
 /**
@@ -26,8 +28,11 @@ export const appRouter = router({
       throw new Error("Input is not a string");
     })
     .mutation(async (opts) => {
-      todoItems.push({ text: opts.input });
-      return { todoItems };
+      if (BATI.has("drizzle")) {
+        await db.insert(todoTable).values({ text: opts.input });
+      } else {
+        await lowDb.update(({ todo }) => todo.push({ text: opts.input }));
+      }
     }),
 });
 

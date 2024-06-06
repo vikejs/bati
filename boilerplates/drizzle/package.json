@@ -1,0 +1,64 @@
+{
+  "name": "@batijs/drizzle",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/better-sqlite3": "^7.6.10",
+    "@types/node": "^18.19.14",
+    "better-sqlite3": "^11.0.0",
+    "drizzle-kit": "^0.21.2",
+    "drizzle-orm": "^0.30.10",
+    "tsx": "^4.11.2"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "drizzle"
+    }
+  },
+  "exports": {
+    "./drizzle.config": {
+      "types": "./dist/types/drizzle.config.d.ts"
+    },
+    "./database/schema": {
+      "types": "./dist/types/database/schema.d.ts"
+    },
+    "./database/db": {
+      "types": "./dist/types/database/db.d.ts"
+    },
+    "./database/seed": {
+      "types": "./dist/types/database/seed.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "drizzle.config": [
+        "./dist/types/drizzle.config.d.ts"
+      ],
+      "database/schema": [
+        "./dist/types/database/schema.d.ts"
+      ],
+      "database/db": [
+        "./dist/types/database/db.d.ts"
+      ],
+      "database/seed": [
+        "./dist/types/database/seed.d.ts"
+      ]
+    }
+  }
+}
