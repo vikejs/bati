@@ -1,11 +1,23 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"],
-  "pipeline": {
+  "extends": [
+    "//"
+  ],
+  "tasks": {
     "build-cli": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "inputs": ["*", "../../boilerplates/*/dist/**", "../../boilerplates/*/files/**", "../../boilerplates/*/hooks/**", "../../boilerplates/*/*"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "inputs": [
+        "*",
+        "../../boilerplates/*/dist/**",
+        "../../boilerplates/*/files/**",
+        "../../boilerplates/*/hooks/**",
+        "../../boilerplates/*/*"
+      ]
     },
     "check-types": {}
   }

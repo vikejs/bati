@@ -3,11 +3,11 @@ import { useData } from "vike-solid/useData";
 import { TodoList } from "./TodoList.js";
 
 export default function Page() {
-  const initialTodoItems = useData<Data>();
+  const data = useData<Data>();
   return (
     <>
       <h1>To-do List</h1>
-      <TodoList initialTodoItems={initialTodoItems} />
+      <TodoList initialTodoItems={data.todo} />
     </>
   );
 }

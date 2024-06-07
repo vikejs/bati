@@ -7,7 +7,8 @@
     "check-types": "tsc --noEmit",
     "start": "tsx src/index.ts",
     "test": "vitest run",
-    "test:e2e": "tsx src/index.ts"
+    "test:e2e": "tsx src/index.ts; bash scripts/turbo.sh",
+    "test:e2e-win": "tsx src/index.ts; @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./scripts/turbo.ps1"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -26,7 +27,7 @@
     "mri": "^1.2.0",
     "p-limit": "^5.0.0",
     "tsx": "^4.10.2",
-    "turbo": "1.13.3",
+    "turbo": "2.0.3",
     "typescript": "^5.4.2",
     "vitest": "^1.0.4"
   }

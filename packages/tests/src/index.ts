@@ -1,6 +1,6 @@
-import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, readFile, writeFile } from "node:fs/promises";
 import http from "node:http";
-import { cpus, tmpdir } from "node:os";
+import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
@@ -68,7 +68,17 @@ export default defineConfig({
   );
 }
 
-function createWorkspacePackageJson(context: GlobalContext) {
+async function getPackageManagerVersion() {
+  const res = await exec(npmCli, ["--version"], {
+    timeout: "5s",
+  });
+
+  return res.stdout.trim();
+}
+
+async function createWorkspacePackageJson(context: GlobalContext) {
+  const version = await getPackageManagerVersion();
+
   return writeFile(
     join(context.tmpdir, "package.json"),
     JSON.stringify({
@@ -78,6 +88,7 @@ function createWorkspacePackageJson(context: GlobalContext) {
         turbo: packageJson.devDependencies.turbo,
       },
       ...(bunExists ? { workspaces: ["packages/*"] } : {}),
+      packageManager: `${npmCli}@${version}`,
     }),
     "utf-8",
   );
@@ -98,7 +109,7 @@ async function createTurboConfig(context: GlobalContext) {
     join(context.tmpdir, "turbo.json"),
     JSON.stringify({
       $schema: "https://turbo.build/schema.json",
-      pipeline: {
+      tasks: {
         build: {
           dependsOn: ["^build"],
           outputs: ["dist/**"],
@@ -155,46 +166,6 @@ async function packageManagerInstall(context: GlobalContext) {
 
     await child;
   }
-}
-
-function execTurborepo(context: GlobalContext) {
-  const args = [
-    bunExists ? "x" : "exec",
-    "turbo",
-    "run",
-    "test",
-    "lint",
-    "typecheck",
-    "build",
-    "--output-logs",
-    "errors-only",
-    "--no-update-notifier",
-    "--framework-inference",
-    "false",
-  ];
-
-  if (process.env.CI) {
-    const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
-    args.push("--env-mode=loose");
-    args.push("--concurrency=2");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
-    console.log("[turborepo] Using cache dir", cacheDir);
-  } else {
-    const cacheDir = join(tmpdir(), "bati-cache");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
-    console.log("[turborepo] Using cache dir", cacheDir);
-  }
-
-  const child = exec(npmCli, args, {
-    timeout: "30m",
-    cwd: context.tmpdir,
-  });
-
-  child.stdout.pipe(process.stdout);
-
-  return child;
 }
 
 function isVerdaccioRunning() {
@@ -268,6 +239,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     }
   }
 
+  console.log(`Testing ${matrices.size} combinations`);
+
   // for all matrices
   for (const { testFiles, flags } of matrices.values()) {
     promises.push(
@@ -305,20 +278,12 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // pnpm/bun install
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
-  // exec turbo run test lint build
-  await spinner("Executing test suite...", () => execTurborepo(context));
+  // then turbo cli is executed by a shell script (this avoids issues with stdin/stdout)
 }
 
 // init context
 const context: GlobalContext = { tmpdir: "", localRepository: false };
 
-try {
-  context.localRepository = await isVerdaccioRunning();
-  const argv = process.argv.slice(2);
-  await main(context, mri<CliOptions>(argv));
-} finally {
-  if (context.tmpdir) {
-    // delete all tmp dirs
-    await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
-  }
-}
+context.localRepository = await isVerdaccioRunning();
+const argv = process.argv.slice(2);
+await main(context, mri<CliOptions>(argv));
