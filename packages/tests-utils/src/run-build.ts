@@ -4,10 +4,11 @@ import type { GlobalContext } from "./types.js";
 
 export async function runBuild(context: GlobalContext) {
   context.server = exec(npmCli, ["run", "build"], {
+    timeout: 60 * 1000, // 1min
     env: {
       NODE_ENV: "production",
     },
-  }).timeout("1m");
+  });
 
   await context.server;
 

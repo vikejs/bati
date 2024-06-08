@@ -69,11 +69,20 @@ export default defineConfig({
 }
 
 async function getPackageManagerVersion() {
-  const res = await exec(npmCli, ["--version"], {
-    timeout: "5s",
+  const process = exec(npmCli, ["--version"], {
+    timeout: 5 * 1000, // 5sec
+    stdio: "pipe",
   });
 
-  return res.stdout.trim();
+  let version = "";
+
+  process.stdout!.on("data", function (data) {
+    version += data.toString();
+  });
+
+  await process;
+
+  return version.trim();
 }
 
 async function createWorkspacePackageJson(context: GlobalContext) {
@@ -142,6 +151,7 @@ function linkTestUtils() {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
+    stdio: ["ignore", "ignore", "inherit"],
   });
 }
 
@@ -152,6 +162,7 @@ async function packageManagerInstall(context: GlobalContext) {
       // really slow on Windows CI
       timeout: 5 * 60 * 1000,
       cwd: context.tmpdir,
+      stdio: ["ignore", "ignore", "inherit"],
     });
 
     await child;
@@ -162,49 +173,36 @@ async function packageManagerInstall(context: GlobalContext) {
     const child = exec(npmCli, ["link", "--global", "@batijs/tests-utils"], {
       timeout: 60000,
       cwd: context.tmpdir,
+      stdio: ["ignore", "ignore", "inherit"],
     });
 
     await child;
   }
 }
-function execTurborepo(context: GlobalContext) {
-  const args = [
-    bunExists ? "x" : "exec",
-    "turbo",
-    "run",
-    "test",
-    "lint",
-    "typecheck",
-    "build",
-    "--output-logs",
-    "errors-only",
-    "--no-update-notifier",
-    "--framework-inference",
-    "false",
-  ];
+async function execTurborepo(context: GlobalContext) {
+  const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
+  const args_2 = ["--only", "--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
   if (process.env.CI) {
     const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
-    args.push("--env-mode=loose");
-    args.push("--concurrency=2");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
+    args_2.push("--concurrency");
+    args_2.push("2");
+    args_2.push(`--cache-dir`);
+    args_2.push(cacheDir);
     console.log("[turborepo] Using cache dir", cacheDir);
   } else {
     const cacheDir = join(tmpdir(), "bati-cache");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
+    args_2.push(`--cache-dir`);
+    args_2.push(cacheDir);
     console.log("[turborepo] Using cache dir", cacheDir);
   }
 
-  const child = exec(npmCli, args, {
-    timeout: "30m",
-    cwd: context.tmpdir,
-  });
-
-  child.stdout.pipe(process.stdout);
-
-  return child;
+  for (const task of ["build", "test", "lint", "typecheck"]) {
+    await exec(npmCli, [...args_1, task, ...args_2], {
+      timeout: 30 * 60 * 1000, // 30min
+      cwd: context.tmpdir,
+    });
+  }
 }
 
 function isVerdaccioRunning() {
@@ -331,6 +329,8 @@ try {
 } finally {
   if (context.tmpdir) {
     // delete all tmp dirs
-    await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
+    await spinner("Cleaning temporary folder...", () =>
+      rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
+    );
   }
 }

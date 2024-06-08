@@ -1,11 +1,11 @@
+import type { ChildProcess } from "child_process";
 import type { RequestInit, Response } from "node-fetch";
 import type { TestOptions } from "vitest";
-import type { ProcessPromise } from "zx";
 
 export interface GlobalContext {
   port: number;
   port_1: number;
-  server: ProcessPromise | undefined;
+  server: (Promise<void> & ChildProcess) | undefined;
   flags: string[];
 }
 

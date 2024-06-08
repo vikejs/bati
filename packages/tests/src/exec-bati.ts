@@ -27,6 +27,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       {
         timeout: 15000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+        stdio: ["ignore", "ignore", "inherit"],
       },
     );
   } else {
@@ -36,6 +37,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       {
         timeout: 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+        stdio: ["ignore", "ignore", "inherit"],
       },
     );
   }
