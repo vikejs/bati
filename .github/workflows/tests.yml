@@ -100,7 +100,7 @@ jobs:
         run: pnpm run test
 
       - name: Run e2e tests
-        run: ${{ (matrix.os == 'windows-latest') && 'pnpm run test:e2e-win' || 'pnpm run test:e2e' }}
+        run: pnpm run test:e2e
         env:
           TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}

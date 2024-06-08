@@ -1,6 +1,6 @@
-import { copyFile, readFile, writeFile } from "node:fs/promises";
+import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
-import { cpus } from "node:os";
+import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
@@ -167,6 +167,45 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 }
+function execTurborepo(context: GlobalContext) {
+  const args = [
+    bunExists ? "x" : "exec",
+    "turbo",
+    "run",
+    "test",
+    "lint",
+    "typecheck",
+    "build",
+    "--output-logs",
+    "errors-only",
+    "--no-update-notifier",
+    "--framework-inference",
+    "false",
+  ];
+
+  if (process.env.CI) {
+    const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
+    args.push("--env-mode=loose");
+    args.push("--concurrency=2");
+    args.push(`--cache-dir`);
+    args.push(cacheDir);
+    console.log("[turborepo] Using cache dir", cacheDir);
+  } else {
+    const cacheDir = join(tmpdir(), "bati-cache");
+    args.push(`--cache-dir`);
+    args.push(cacheDir);
+    console.log("[turborepo] Using cache dir", cacheDir);
+  }
+
+  const child = exec(npmCli, args, {
+    timeout: "30m",
+    cwd: context.tmpdir,
+  });
+
+  child.stdout.pipe(process.stdout);
+
+  return child;
+}
 
 function isVerdaccioRunning() {
   return new Promise<boolean>((resolve) => {
@@ -278,12 +317,20 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // pnpm/bun install
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
-  // then turbo cli is executed by a shell script (this avoids issues with stdin/stdout)
+  // exec turbo run test lint build
+  await execTurborepo(context);
 }
 
 // init context
 const context: GlobalContext = { tmpdir: "", localRepository: false };
 
-context.localRepository = await isVerdaccioRunning();
-const argv = process.argv.slice(2);
-await main(context, mri<CliOptions>(argv));
+try {
+  context.localRepository = await isVerdaccioRunning();
+  const argv = process.argv.slice(2);
+  await main(context, mri<CliOptions>(argv));
+} finally {
+  if (context.tmpdir) {
+    // delete all tmp dirs
+    await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
+  }
+}

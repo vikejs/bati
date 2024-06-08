@@ -14,7 +14,6 @@
     "check-types": "turbo run check-types",
     "test": "turbo run test",
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
-    "test:e2e-win": "pnpm --filter \"@batijs/tests\" test:e2e-win",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build --no-daemon && turbo run build-cli --no-daemon",
     "lint": "eslint ."
