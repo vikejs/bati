@@ -93,7 +93,7 @@ jobs:
         run: pnpm run build
 
       - name: Release in local repo
-        if:
+        if: matrix.os == 'ubuntu-latest'
         run: pnpm run release:local
 
       - name: Run tests
