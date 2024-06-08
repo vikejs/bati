@@ -1,5 +1,6 @@
 import { basename } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
+import { kill } from "zx";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
 import { runDevServer } from "./run-dev.js";
@@ -28,7 +29,8 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
   // - Close the dev server
   // - Remove temp dir
   afterAll(async () => {
-    await Promise.race([context.server?.kill(), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+    const pid = context.server?.pid;
+    await Promise.race([...(pid ? [kill(pid)] : []), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
   }, 20000);
 
   return {

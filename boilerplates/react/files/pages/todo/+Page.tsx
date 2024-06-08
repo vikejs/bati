@@ -4,11 +4,11 @@ import { useData } from "vike-react/useData";
 import { TodoList } from "./TodoList.js";
 
 export default function Page() {
-  const todoItemsInitial = useData<Data>();
+  const data = useData<Data>();
   return (
     <>
       <h1>To-do List</h1>
-      <TodoList initialTodoItems={todoItemsInitial} />
+      <TodoList initialTodoItems={data.todo} />
     </>
   );
 }

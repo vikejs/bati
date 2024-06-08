@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as process from "process";
 import { bunExists, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
+import mri from "mri";
 import pLimit from "p-limit";
 import packageJson from "../package.json";
 import { execLocalBati } from "./exec-bati.js";
@@ -16,6 +17,10 @@ import type { GlobalContext } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = resolve(__dirname, "..", "..", "..");
+
+interface CliOptions {
+  filter?: string;
+}
 
 async function updatePackageJson(projectDir: string) {
   // add vitest and lint script
@@ -63,7 +68,26 @@ export default defineConfig({
   );
 }
 
-function createWorkspacePackageJson(context: GlobalContext) {
+async function getPackageManagerVersion() {
+  const process = exec(npmCli, ["--version"], {
+    timeout: 5 * 1000, // 5sec
+    stdio: "pipe",
+  });
+
+  let version = "";
+
+  process.stdout!.on("data", function (data) {
+    version += data.toString();
+  });
+
+  await process;
+
+  return version.trim();
+}
+
+async function createWorkspacePackageJson(context: GlobalContext) {
+  const version = await getPackageManagerVersion();
+
   return writeFile(
     join(context.tmpdir, "package.json"),
     JSON.stringify({
@@ -73,6 +97,7 @@ function createWorkspacePackageJson(context: GlobalContext) {
         turbo: packageJson.devDependencies.turbo,
       },
       ...(bunExists ? { workspaces: ["packages/*"] } : {}),
+      packageManager: `${npmCli}@${version}`,
     }),
     "utf-8",
   );
@@ -93,7 +118,7 @@ async function createTurboConfig(context: GlobalContext) {
     join(context.tmpdir, "turbo.json"),
     JSON.stringify({
       $schema: "https://turbo.build/schema.json",
-      pipeline: {
+      tasks: {
         build: {
           dependsOn: ["^build"],
           outputs: ["dist/**"],
@@ -126,6 +151,7 @@ function linkTestUtils() {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
+    stdio: ["ignore", "ignore", "inherit"],
   });
 }
 
@@ -136,6 +162,7 @@ async function packageManagerInstall(context: GlobalContext) {
       // really slow on Windows CI
       timeout: 5 * 60 * 1000,
       cwd: context.tmpdir,
+      stdio: ["ignore", "ignore", "inherit"],
     });
 
     await child;
@@ -146,50 +173,36 @@ async function packageManagerInstall(context: GlobalContext) {
     const child = exec(npmCli, ["link", "--global", "@batijs/tests-utils"], {
       timeout: 60000,
       cwd: context.tmpdir,
+      stdio: ["ignore", "ignore", "inherit"],
     });
 
     await child;
   }
 }
-
-function execTurborepo(context: GlobalContext) {
-  const args = [
-    bunExists ? "x" : "exec",
-    "turbo",
-    "run",
-    "test",
-    "lint",
-    "typecheck",
-    "build",
-    "--output-logs",
-    "errors-only",
-    "--no-update-notifier",
-    "--framework-inference",
-    "false",
-  ];
+async function execTurborepo(context: GlobalContext) {
+  const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
+  const args_2 = ["--only", "--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
   if (process.env.CI) {
     const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
-    args.push("--env-mode=loose");
-    args.push("--concurrency=2");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
+    args_2.push("--concurrency");
+    args_2.push("2");
+    args_2.push(`--cache-dir`);
+    args_2.push(cacheDir);
     console.log("[turborepo] Using cache dir", cacheDir);
   } else {
     const cacheDir = join(tmpdir(), "bati-cache");
-    args.push(`--cache-dir`);
-    args.push(cacheDir);
+    args_2.push(`--cache-dir`);
+    args_2.push(cacheDir);
     console.log("[turborepo] Using cache dir", cacheDir);
   }
 
-  const child = exec(npmCli, args, {
-    timeout: "30m",
-    cwd: context.tmpdir,
-  });
-
-  child.stdout.pipe(process.stdout);
-
-  return child;
+  for (const task of ["build", "test", "lint", "typecheck"]) {
+    await exec(npmCli, [...args_1, task, ...args_2], {
+      timeout: 30 * 60 * 1000, // 30min
+      cwd: context.tmpdir,
+    });
+  }
 }
 
 function isVerdaccioRunning() {
@@ -221,11 +234,19 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-async function main(context: GlobalContext) {
+async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
+  const filter = args.filter ? args.filter.split(",") : undefined;
   await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
+  const matrices: Map<
+    string,
+    {
+      testFiles: string[];
+      flags: string[];
+    }
+  > = new Map();
 
   loadDotEnvTest();
 
@@ -233,25 +254,44 @@ async function main(context: GlobalContext) {
     Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
   );
 
-  // for all matrices
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
       if (testFile.exclude?.some((x) => arrayIncludes(x, flags))) {
         continue;
       }
+      if (filter && !arrayIncludes(filter, flags)) {
+        continue;
+      }
 
-      promises.push(
-        limit(async () => {
-          const projectDir = await execLocalBati(context, flags);
-          await Promise.all([
-            copyFile(testFile.filepath, join(projectDir, basename(testFile.filepath))),
-            updatePackageJson(projectDir),
-            updateTsconfig(projectDir),
-            updateVitestConfig(projectDir),
-          ]);
-        }),
-      );
+      const hash = JSON.stringify([...new Set(flags)]);
+
+      if (matrices.has(hash)) {
+        matrices.get(hash)!.testFiles.push(testFile.filepath);
+      } else {
+        matrices.set(hash, {
+          testFiles: [testFile.filepath],
+          flags,
+        });
+      }
     }
+  }
+
+  console.log(`Testing ${matrices.size} combinations`);
+
+  // for all matrices
+  for (const { testFiles, flags } of matrices.values()) {
+    promises.push(
+      limit(async () => {
+        const projectDir = await execLocalBati(context, flags);
+        const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
+        await Promise.all([
+          ...filesP,
+          updatePackageJson(projectDir),
+          updateTsconfig(projectDir),
+          updateVitestConfig(projectDir),
+        ]);
+      }),
+    );
   }
 
   await spinner("Generating test repositories...", () => Promise.all(promises));
@@ -276,7 +316,7 @@ async function main(context: GlobalContext) {
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // exec turbo run test lint build
-  await spinner("Executing test suite...", () => execTurborepo(context));
+  await execTurborepo(context);
 }
 
 // init context
@@ -284,10 +324,13 @@ const context: GlobalContext = { tmpdir: "", localRepository: false };
 
 try {
   context.localRepository = await isVerdaccioRunning();
-  await main(context);
+  const argv = process.argv.slice(2);
+  await main(context, mri<CliOptions>(argv));
 } finally {
   if (context.tmpdir) {
     // delete all tmp dirs
-    await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
+    await spinner("Cleaning temporary folder...", () =>
+      rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
+    );
   }
 }
