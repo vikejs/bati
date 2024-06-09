@@ -36,7 +36,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
   const pnpm = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags()]);
   const yarn = createMemo(() => ["yarn", "dlx", "@batijs/cli", ...getFlags()]);
   const bun = createMemo(() => ["bun", "create", "@batijs/app", ...getFlags()]);
-  const npm = createMemo(() => ["npm", "create", "@batijs/app", ...getFlags()]);
+  const npm = createMemo(() => ["npm", "create", "@batijs/app", "--", ...getFlags()]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
