@@ -6,6 +6,7 @@ import Presets from "#components/Presets.js";
 import Stackblitz from "#components/Stackblitz";
 import { StoreContext } from "#components/Store.js";
 import { createMemo, createSignal, Show, useContext, type JSX } from "solid-js";
+import { track } from "../lib/track";
 
 export function CliGroup(
   props: {
@@ -42,7 +43,11 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     setTooltipText("Copy to Clipboard");
   };
 
-  const handleCopy = () => {
+  const handleCopy = (packageManager: string) => {
+    track("copy", {
+      flags: selectedFeaturesFlags(),
+      package_manager: packageManager,
+    });
     setTooltipText("Copied to Clipboard!");
   };
 
@@ -61,25 +66,45 @@ export function Widget(props: { theme?: string; widget: boolean }) {
         <div role="tablist" class="tabs tabs-lifted tabs-sm flex-1">
           <input type="radio" name="package_manager" role="tab" class="tab" aria-label="pnpm" checked />
 
-          <CliGroup onMouseEnter={handleMouseEnter} onClick={handleCopy} tooltipText={tooltipText()} flags={getFlags()}>
+          <CliGroup
+            onMouseEnter={handleMouseEnter}
+            onClick={() => handleCopy("pnpm")}
+            tooltipText={tooltipText()}
+            flags={getFlags()}
+          >
             {pnpm().join(" ")}
           </CliGroup>
 
           <input type="radio" name="package_manager" role="tab" class="tab" aria-label="yarn" />
 
-          <CliGroup onMouseEnter={handleMouseEnter} onClick={handleCopy} tooltipText={tooltipText()} flags={getFlags()}>
+          <CliGroup
+            onMouseEnter={handleMouseEnter}
+            onClick={() => handleCopy("yarn")}
+            tooltipText={tooltipText()}
+            flags={getFlags()}
+          >
             {yarn().join(" ")}
           </CliGroup>
 
           <input type="radio" name="package_manager" role="tab" class="tab" aria-label="bun" />
 
-          <CliGroup onMouseEnter={handleMouseEnter} onClick={handleCopy} tooltipText={tooltipText()} flags={getFlags()}>
+          <CliGroup
+            onMouseEnter={handleMouseEnter}
+            onClick={() => handleCopy("bun")}
+            tooltipText={tooltipText()}
+            flags={getFlags()}
+          >
             {bun().join(" ")}
           </CliGroup>
 
           <input type="radio" name="package_manager" role="tab" class="tab" aria-label="npm" />
 
-          <CliGroup onMouseEnter={handleMouseEnter} onClick={handleCopy} tooltipText={tooltipText()} flags={getFlags()}>
+          <CliGroup
+            onMouseEnter={handleMouseEnter}
+            onClick={() => handleCopy("npm")}
+            tooltipText={tooltipText()}
+            flags={getFlags()}
+          >
             {npm().join(" ")}
           </CliGroup>
         </div>
