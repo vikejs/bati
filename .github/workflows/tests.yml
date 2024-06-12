@@ -69,7 +69,7 @@ jobs:
         name: Setup Turborepo cache
         with:
           path: ${{ runner.temp }}/bati-cache
-          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.event.repository.updated_at }}
+          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-bati-cache-
 
