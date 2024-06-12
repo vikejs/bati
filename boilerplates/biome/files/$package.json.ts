@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   setScripts(packageJson, {
     lint: {
-      value: "biome lint --apply .",
+      value: "biome lint --write .",
       precedence: 0,
     },
     format: {

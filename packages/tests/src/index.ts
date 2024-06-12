@@ -20,6 +20,8 @@ const root = resolve(__dirname, "..", "..", "..");
 
 interface CliOptions {
   filter?: string;
+  steps?: string;
+  force?: boolean;
 }
 
 async function updatePackageJson(projectDir: string) {
@@ -40,7 +42,7 @@ async function updatePackageJson(projectDir: string) {
 }
 
 async function updateTsconfig(projectDir: string) {
-  // add tsconfig exlude option
+  // add tsconfig exclude option
   const tsconfig = JSON.parse(await readFile(join(projectDir, "tsconfig.json"), "utf-8"));
   tsconfig.exclude ??= [];
   // exclude temp vite config files
@@ -179,7 +181,7 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 }
-async function execTurborepo(context: GlobalContext) {
+async function execTurborepo(context: GlobalContext, steps?: string[], force?: boolean) {
   const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
   const args_2 = ["--only", "--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
@@ -198,6 +200,12 @@ async function execTurborepo(context: GlobalContext) {
   }
 
   for (const task of ["build", "test", "lint", "typecheck"]) {
+    if (steps && !steps.includes(task) && task !== "build") continue;
+
+    if (force && task !== "build") {
+      args_2.push("--force");
+    }
+
     await exec(npmCli, [...args_1, task, ...args_2], {
       timeout: 30 * 60 * 1000, // 30min
       cwd: context.tmpdir,
@@ -236,6 +244,7 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const filter = args.filter ? args.filter.split(",") : undefined;
+  const steps = args.steps ? args.steps.split(",") : undefined;
   await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
@@ -316,7 +325,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // exec turbo run test lint build
-  await execTurborepo(context);
+  await execTurborepo(context, steps, args.force);
 }
 
 // init context
