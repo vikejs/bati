@@ -3,7 +3,11 @@ import { describeBati } from "@batijs/tests-utils";
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
-  ["authjs", ...(process.env.TEST_FIREBASE_ACCOUNT ? (["firebase-auth"] as const) : [])],
+  [
+    "authjs",
+    ...(process.env.TEST_FIREBASE_ACCOUNT ? (["firebase-auth"] as const) : []),
+    ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : []),
+  ],
   "eslint",
 ] as const;
 
@@ -26,13 +30,13 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
   });
 
   testMatch<typeof matrix>("auth/signin", {
-    authjs: async () => {
-      const res = await fetch("/api/auth/signin");
+    "firebase-auth": async () => {
+      const res = await fetch("/login");
       expect(res.status).toBe(200);
       expect(await res.text()).not.toContain('{"is404":true}');
     },
-    "firebase-auth": async () => {
-      const res = await fetch("/login");
+    _: async () => {
+      const res = await fetch("/api/auth/signin");
       expect(res.status).toBe(200);
       expect(await res.text()).not.toContain('{"is404":true}');
     },
