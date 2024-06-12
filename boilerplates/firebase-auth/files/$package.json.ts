@@ -5,6 +5,6 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["dotenv"],
-    dependencies: ["firebase", "firebase-admin", "firebaseui"],
+    dependencies: ["firebase", "firebase-admin", "firebaseui", "cookie"],
   });
 }
