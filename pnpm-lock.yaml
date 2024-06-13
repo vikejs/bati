@@ -1016,6 +1016,25 @@ importers:
         specifier: ^5.2.13
         version: 5.2.13(@types/node@18.19.31)
 
+  boilerplates/ts-rest:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@ts-rest/core':
+        specifier: ^3.45.2
+        version: 3.45.2(zod@3.23.8)
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+      vite:
+        specifier: ^5.2.13
+        version: 5.2.13(@types/node@18.19.31)
+
   boilerplates/vercel:
     dependencies:
       '@batijs/core':
@@ -3016,6 +3035,14 @@ packages:
 
   '@ts-morph/common@0.20.0':
     resolution: {integrity: sha512-7uKjByfbPpwuzkstL3L5MQyuXPSKdoNG93Fmi2JoDcTf3pEP731JdRFAduRVkOs8oqxPsXKA+ScrWkdQ8t/I+Q==}
+
+  '@ts-rest/core@3.45.2':
+    resolution: {integrity: sha512-Eiv+Sa23MbsAd1Gx9vNJ+IFCDyLZNdJ+UuGMKbFvb+/NmgcBR1VL1UIVtEkd5DJxpYMMd8SLvW91RgB2TS8iPw==}
+    peerDependencies:
+      zod: ^3.22.3
+    peerDependenciesMeta:
+      zod:
+        optional: true
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -8586,6 +8613,10 @@ snapshots:
       minimatch: 7.4.6
       mkdirp: 2.1.6
       path-browserify: 1.0.1
+
+  '@ts-rest/core@3.45.2(zod@3.23.8)':
+    optionalDependencies:
+      zod: 3.23.8
 
   '@types/babel__core@7.20.5':
     dependencies:
