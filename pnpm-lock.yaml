@@ -223,6 +223,9 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-no-db':
+        specifier: workspace:*
+        version: link:../shared-no-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -235,9 +238,15 @@ importers:
       '@batijs/trpc':
         specifier: workspace:*
         version: link:../trpc
+      '@batijs/ts-rest':
+        specifier: workspace:*
+        version: link:../ts-rest
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
+      '@ts-rest/express':
+        specifier: ^3.45.2
+        version: 3.45.2(express@4.19.2)(zod@3.23.8)
       '@types/cookie-parser':
         specifier: ^1.4.7
         version: 1.4.7
@@ -3039,6 +3048,15 @@ packages:
   '@ts-rest/core@3.45.2':
     resolution: {integrity: sha512-Eiv+Sa23MbsAd1Gx9vNJ+IFCDyLZNdJ+UuGMKbFvb+/NmgcBR1VL1UIVtEkd5DJxpYMMd8SLvW91RgB2TS8iPw==}
     peerDependencies:
+      zod: ^3.22.3
+    peerDependenciesMeta:
+      zod:
+        optional: true
+
+  '@ts-rest/express@3.45.2':
+    resolution: {integrity: sha512-GypL5auYuh3WS2xCc58J9OpgpYYJoPY2NvBxJxHOLdhMOoGHhYI8oIUtxfxIxWZcPJOAokrrQJ2zb2hrPUuR1A==}
+    peerDependencies:
+      express: ^4.0.0
       zod: ^3.22.3
     peerDependenciesMeta:
       zod:
@@ -8615,6 +8633,12 @@ snapshots:
       path-browserify: 1.0.1
 
   '@ts-rest/core@3.45.2(zod@3.23.8)':
+    optionalDependencies:
+      zod: 3.23.8
+
+  '@ts-rest/express@3.45.2(express@4.19.2)(zod@3.23.8)':
+    dependencies:
+      express: 4.19.2
     optionalDependencies:
       zod: 3.23.8
 
