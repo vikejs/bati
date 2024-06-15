@@ -434,6 +434,9 @@ importers:
       '@batijs/firebase-auth':
         specifier: workspace:*
         version: link:../firebase-auth
+      '@batijs/shared-no-db':
+        specifier: workspace:*
+        version: link:../shared-no-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -446,12 +449,18 @@ importers:
       '@batijs/trpc':
         specifier: workspace:^
         version: link:../trpc
+      '@batijs/ts-rest':
+        specifier: workspace:*
+        version: link:../ts-rest
       '@hattip/polyfills':
         specifier: ^0.0.45
         version: 0.0.45
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
+      '@ts-rest/serverless':
+        specifier: ^3.45.2
+        version: 3.45.2(zod@3.23.8)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -3080,6 +3089,20 @@ packages:
       zod:
         optional: true
 
+  '@ts-rest/serverless@3.45.2':
+    resolution: {integrity: sha512-7+37i9s9j/5OfdzLB17/PDQBco9v38WYn3fbYLr6x/zHYQqq8RfXXbmHYGvFdE+y3eizat2J0pM2Djqsb4Uppg==}
+    peerDependencies:
+      '@types/aws-lambda': ^8.10.115
+      next: ^12.0.0 || ^13.0.0 || ^14.0.0
+      zod: ^3.22.3
+    peerDependenciesMeta:
+      '@types/aws-lambda':
+        optional: true
+      next:
+        optional: true
+      zod:
+        optional: true
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -5025,6 +5048,9 @@ packages:
 
   iterator.prototype@1.1.2:
     resolution: {integrity: sha512-DR33HMMr8EzwuRL8Y9D3u2BMj8+RqSE850jfGu59kS7tbmPLzGkZmVSfyCFSDxuZiEY6Rzt3T2NA/qU+NwVj1w==}
+
+  itty-router@5.0.17:
+    resolution: {integrity: sha512-ZHnPI0OOyTTLuNp2FdciejYaK4Wl3ZV3O0yEm8njOGggh/k/ek3BL7X2I5YsCOfc5vLhIJgj3Z4pUtLs6k9Ucg==}
 
   jackspeak@2.3.6:
     resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
@@ -8666,6 +8692,13 @@ snapshots:
     optionalDependencies:
       zod: 3.23.8
 
+  '@ts-rest/serverless@3.45.2(zod@3.23.8)':
+    dependencies:
+      '@ts-rest/core': 3.45.2(zod@3.23.8)
+      itty-router: 5.0.17
+    optionalDependencies:
+      zod: 3.23.8
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.24.7
@@ -11136,6 +11169,8 @@ snapshots:
       has-symbols: 1.0.3
       reflect.getprototypeof: 1.0.6
       set-function-name: 2.0.2
+
+  itty-router@5.0.17: {}
 
   jackspeak@2.3.6:
     dependencies:

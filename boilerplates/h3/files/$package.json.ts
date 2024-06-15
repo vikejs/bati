@@ -33,6 +33,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "vike",
       "vite",
       ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core"] as const) : []),
+      ...(props.meta.BATI.has("ts-rest") ? (["@ts-rest/serverless"] as const) : []),
     ],
   });
 }

@@ -4,19 +4,24 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable } from "@batijs/drizzle/database/schema";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
+import { contract } from "@batijs/ts-rest/ts-rest/contract";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
+import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import {
   createApp,
   createRouter,
@@ -25,6 +30,7 @@ import {
   fromWebHandler,
   toNodeListener,
   toWebRequest,
+  type H3EventContext,
 } from "h3";
 import serveStatic from "serve-static";
 
@@ -126,7 +132,55 @@ async function startServer() {
     router.post("/_telefunc", fromWebHandler(telefuncHandler));
   }
 
-  if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+  if (BATI.has("ts-rest")) {
+    /**
+     * ts-rest route
+     *
+     * @link {@see https://ts-rest.com/docs/serverless/fetch-runtimes/}
+     **/
+    const tsrRouter = tsr.platformContext<{ context: H3EventContext }>().router(contract, {
+      demo: async () => {
+        return {
+          status: 200,
+          body: {
+            demo: true,
+          },
+        };
+      },
+      createTodo: async ({ body }) => {
+        if (BATI.has("drizzle")) {
+          await db.insert(todoTable).values({ text: body.text });
+        } else {
+          lowDb.update(({ todo }) => todo.push({ text: body.text }));
+        }
+        return {
+          status: 200,
+          body: {
+            status: "Ok",
+          },
+        };
+      },
+    });
+
+    router.use(
+      "/api/**",
+      eventHandler((event) => {
+        return fetchRequestHandler({
+          request: toWebRequest(event),
+          contract,
+          router: tsrRouter,
+          platformContext: {
+            context: event.context,
+          },
+          options: {
+            basePath: "/api",
+          },
+        });
+      }),
+    );
+  }
+
+  if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
     router.post("/api/todo/create", fromWebHandler(createTodoHandler));
   }
 
