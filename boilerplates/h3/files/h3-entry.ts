@@ -172,9 +172,7 @@ async function startServer() {
           platformContext: {
             context: event.context,
           },
-          options: {
-            basePath: "/api",
-          },
+          options: {},
         });
       }),
     );

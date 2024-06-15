@@ -144,9 +144,7 @@ if (BATI.has("ts-rest")) {
       request: new Request(c.req.url, c.req.raw),
       contract,
       router,
-      options: {
-        basePath: "/api",
-      },
+      options: {},
       platformContext: {
         context: c,
       },

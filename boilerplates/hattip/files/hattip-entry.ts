@@ -100,9 +100,7 @@ if (BATI.has("ts-rest")) {
       platformContext: {
         context,
       },
-      options: {
-        basePath: "/api",
-      },
+      options: {},
     });
   });
 }
