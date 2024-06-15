@@ -1,19 +1,24 @@
 // BATI.has("auth0")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { db } from "@batijs/drizzle/database/db";
+import { todoTable } from "@batijs/drizzle/database/schema";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
+import { contract } from "@batijs/ts-rest/ts-rest/contract";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { Hono } from "hono";
+import { tsr, fetchRequestHandler as tsrFetchRequestHandler } from "@ts-rest/serverless/fetch";
+import { Hono, type Context } from "hono";
 import { compress } from "hono/compress";
 import { createMiddleware } from "hono/factory";
 
@@ -104,7 +109,52 @@ if (BATI.has("telefunc")) {
   app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
-if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+if (BATI.has("ts-rest")) {
+  /**
+   * ts-rest route
+   *
+   * @link {@see https://ts-rest.com/docs/serverless/fetch-runtimes/}
+   **/
+  const router = tsr.platformContext<{ context: Context }>().router(contract, {
+    demo: async () => {
+      return {
+        status: 200,
+        body: {
+          demo: true,
+        },
+      };
+    },
+    createTodo: async ({ body }) => {
+      if (BATI.has("drizzle")) {
+        await db.insert(todoTable).values({ text: body.text });
+      } else {
+        lowDb.update(({ todo }) => todo.push({ text: body.text }));
+      }
+      return {
+        status: 200,
+        body: {
+          status: "Ok",
+        },
+      };
+    },
+  });
+
+  app.all("/api/*", async (c) => {
+    return tsrFetchRequestHandler({
+      request: new Request(c.req.url, c.req.raw),
+      contract,
+      router,
+      options: {
+        basePath: "/api",
+      },
+      platformContext: {
+        context: c,
+      },
+    });
+  });
+}
+
+if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
   app.post("/api/todo/create", handlerAdapter(createTodoHandler));
 }
 
