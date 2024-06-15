@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="item in todoItems" :key="item.text">
+    <li v-for="(item, i) in todoItems" :key="i">
       {{ item.text }}
     </li>
     <li>
@@ -15,6 +15,7 @@
 <script lang="ts" setup>
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
+import { client } from "@batijs/ts-rest/ts-rest/client";
 import { ref } from "vue";
 
 const props = defineProps<{ initialTodoItems: { text: string }[] }>();
@@ -29,6 +30,8 @@ const submitNewTodo = async () => {
       await onNewTodo({ text: newTodo.value });
     } else if (BATI.has("trpc")) {
       await trpc.onNewTodo.mutate(newTodo.value);
+    } else if (BATI.has("ts-rest")) {
+      await client.createTodo({ body: { text: newTodo.value } });
     } else {
       const response = await fetch("/api/todo/create", {
         method: "POST",
