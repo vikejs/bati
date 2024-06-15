@@ -9,8 +9,8 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
   return (
     <>
       <ul>
-        {todoItems.map((todoItem, i) => (
-          <li key={i}>{todoItem.text}</li>
+        {todoItems.map((todoItem) => (
+          <li key={todoItem.text}>{todoItem.text}</li>
         ))}
       </ul>
       <div>
