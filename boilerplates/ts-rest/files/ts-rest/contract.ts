@@ -2,6 +2,13 @@ import { initContract } from "@ts-rest/core";
 
 const c = initContract();
 
+/**
+ * ts-rest contract
+ *
+ * Create a contract, this should ideally be shared between your consumers and producers
+ * Think of this as your HTTP Schema that both your client and backend can use.
+ * @link {@see https://ts-rest.com/docs/core/}
+ **/
 export const contract = c.router(
   {
     demo: {

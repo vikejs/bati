@@ -13,9 +13,11 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
     "@ts-rest/core": "^3.45.2",
-    "@types/node": "^18.19.14",
-    "vite": "^5.2.13"
+    "@ts-rest/serverless": "^3.45.2",
+    "@types/node": "^18.19.14"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -32,6 +34,9 @@
     "./ts-rest/contract": {
       "types": "./dist/types/ts-rest/contract.d.ts"
     },
+    "./server/ts-rest-handler": {
+      "types": "./dist/types/server/ts-rest-handler.d.ts"
+    },
     "./ts-rest/client": {
       "types": "./dist/types/ts-rest/client.d.ts"
     }
@@ -40,6 +45,9 @@
     "*": {
       "ts-rest/contract": [
         "./dist/types/ts-rest/contract.d.ts"
+      ],
+      "server/ts-rest-handler": [
+        "./dist/types/server/ts-rest-handler.d.ts"
       ],
       "ts-rest/client": [
         "./dist/types/ts-rest/client.d.ts"
