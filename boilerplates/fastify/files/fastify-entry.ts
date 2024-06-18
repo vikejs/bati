@@ -3,25 +3,21 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable } from "@batijs/drizzle/database/schema";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
-import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
-import { contract } from "@batijs/ts-rest/ts-rest/contract";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import {
   fastifyTRPCPlugin,
   type CreateFastifyContextOptions,
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
-import { initServer } from "@ts-rest/fastify";
 import { createRequestAdapter } from "@universal-middleware/express";
 import Fastify from "fastify";
 import type { RouteHandlerMethod } from "fastify/types/route";
@@ -77,15 +73,6 @@ async function startServer() {
   app.addContentTypeParser("*", function (_request, _payload, done) {
     done(null, "");
   });
-  if (BATI.has("ts-rest")) {
-    app.addContentTypeParser("application/json", { parseAs: "string" }, function (_request, payload, done) {
-      if (typeof payload === "string") {
-        const json = JSON.parse(payload);
-        done(null, json);
-      }
-      done(null, "");
-    });
-  }
 
   await app.register(await import("@fastify/middie"));
 
@@ -158,37 +145,7 @@ async function startServer() {
   }
 
   if (BATI.has("ts-rest")) {
-    /**
-     * ts-rest route
-     *
-     * @link {@see https://ts-rest.com/docs/fastify/}
-     **/
-    const s = initServer();
-    const router = s.router(contract, {
-      demo: async () => {
-        return {
-          status: 200,
-          body: {
-            demo: true,
-          },
-        };
-      },
-      createTodo: async ({ body }) => {
-        if (BATI.has("drizzle")) {
-          await db.insert(todoTable).values({ text: body.text });
-        } else {
-          lowDb.update(({ todo }) => todo.push({ text: body.text }));
-        }
-        return {
-          status: 200,
-          body: {
-            status: "Ok",
-          },
-        };
-      },
-    });
-
-    await app.register(s.plugin(router));
+    app.all("/api/*", handlerAdapter(tsRestHandler));
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {

@@ -1,23 +1,19 @@
 // BATI.has("auth0")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable } from "@batijs/drizzle/database/schema";
 import {
   firebaseAuthLoginHandler,
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
-import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
-import { contract } from "@batijs/ts-rest/ts-rest/contract";
-import type { AdapterRequestContext, HattipHandler } from "@hattip/core";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
+import type { HattipHandler } from "@hattip/core";
 import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { tsr, fetchRequestHandler as tsrFetchRequestHandler } from "@ts-rest/serverless/fetch";
 
 interface Middleware<Context extends Record<string | number | symbol, unknown>> {
   (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
@@ -63,46 +59,7 @@ if (BATI.has("trpc")) {
 }
 
 if (BATI.has("ts-rest")) {
-  /**
-   * ts-rest route
-   *
-   * @link {@see https://ts-rest.com/docs/serverless/fetch-runtimes/}
-   **/
-  const tsrRouter = tsr.platformContext<{ context: AdapterRequestContext }>().router(contract, {
-    demo: async () => {
-      return {
-        status: 200,
-        body: {
-          demo: true,
-        },
-      };
-    },
-    createTodo: async ({ body }) => {
-      if (BATI.has("drizzle")) {
-        await db.insert(todoTable).values({ text: body.text });
-      } else {
-        lowDb.update(({ todo }) => todo.push({ text: body.text }));
-      }
-      return {
-        status: 200,
-        body: {
-          status: "Ok",
-        },
-      };
-    },
-  });
-
-  router.use("/api/*", (context) => {
-    return tsrFetchRequestHandler({
-      request: context.request,
-      contract,
-      router: tsrRouter,
-      platformContext: {
-        context,
-      },
-      options: {},
-    });
-  });
+  router.use("/api/*", handlerAdapter(tsRestHandler));
 }
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
