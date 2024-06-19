@@ -1,10 +1,10 @@
 {
   "extends": ["../tsconfig.base.json"],
   "compilerOptions": {
-    "types": ["vite/client", "@types/node", "vike-react", "@batijs/core/types"],
+    "types": ["vite/client", "@types/node", "vike-react", "@batijs/core/types", "vite-plugin-compiled-react"],
     "jsx": "preserve",
     "jsxImportSource": "react",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "baseUrl": ".",
+    "baseUrl": "."
   }
 }

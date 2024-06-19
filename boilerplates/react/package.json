@@ -12,15 +12,15 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-syntax-flow": "^7.24.7",
+    "@babel/plugin-transform-react-jsx": "^7.24.7",
     "@batijs/compile": "workspace:^",
     "@batijs/drizzle": "workspace:^",
     "@batijs/shared-todo": "workspace:^",
     "@batijs/telefunc": "workspace:^",
     "@batijs/trpc": "workspace:^",
     "@batijs/ts-rest": "workspace:*",
-    "@babel/core": "^7.24.7",
-    "@babel/plugin-syntax-flow": "^7.24.7",
-    "@babel/plugin-transform-react-jsx": "^7.24.7",
     "@types/node": "^18.19.14",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -33,7 +33,8 @@
     "typescript": "^5.4.5",
     "vike": "^0.4.177",
     "vike-react": "^0.4.14",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vite-plugin-compiled-react": "^1.1.3"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
