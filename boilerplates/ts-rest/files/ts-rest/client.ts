@@ -8,7 +8,6 @@ import { contract } from "./contract";
  * @link {@see https://ts-rest.com/docs/core/fetch/}
  **/
 export const client = initClient(contract, {
-  // TODO: properly retrieve host
   baseUrl: "",
   baseHeaders: {},
 });
