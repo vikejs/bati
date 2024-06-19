@@ -1,0 +1,57 @@
+{
+  "name": "@batijs/ts-rest",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
+    "@ts-rest/core": "^3.45.2",
+    "@ts-rest/serverless": "^3.45.2",
+    "@types/node": "^18.19.14"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "ts-rest"
+    }
+  },
+  "exports": {
+    "./ts-rest/contract": {
+      "types": "./dist/types/ts-rest/contract.d.ts"
+    },
+    "./server/ts-rest-handler": {
+      "types": "./dist/types/server/ts-rest-handler.d.ts"
+    },
+    "./ts-rest/client": {
+      "types": "./dist/types/ts-rest/client.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "ts-rest/contract": [
+        "./dist/types/ts-rest/contract.d.ts"
+      ],
+      "server/ts-rest-handler": [
+        "./dist/types/server/ts-rest-handler.d.ts"
+      ],
+      "ts-rest/client": [
+        "./dist/types/ts-rest/client.d.ts"
+      ]
+    }
+  }
+}

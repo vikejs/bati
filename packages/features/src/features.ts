@@ -241,6 +241,26 @@ export const features = [
       },
     ],
   },
+  {
+    category: "Data fetching",
+    label: "ts-rest",
+    flag: "ts-rest",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTE2JyBoZWlnaHQ9JzExNScgdmlld0JveD0nMCAwIDExNiAxMTUnIGZpbGw9J25vbmUnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PGcgY2xpcC1wYXRoPSd1cmwoI2NsaXAwXzEzXzIwKSc+PHJlY3Qgd2lkdGg9JzExNicgaGVpZ2h0PScxMTYnIHJ4PScyNicgZmlsbD0nIzkzMzNFQScvPjxwYXRoIGQ9J002Mi40ODcgNTkuOTU2Nkw5NS4xMTY2IDYwLjEyNjJMOTUuMTQ5MyA1My44MjEyTDYyLjUxOTggNTMuNjUxN0w2Mi40ODcgNTkuOTU2NlpNNjIuNTg2MyA0MC44NDY5TDk1LjIxNTkgNDEuMDE2NEw5NS4yNDkzIDM0LjU4MTVMNjIuNjE5NyAzNC40MTJMNjIuNTg2MyA0MC44NDY5Wk02Mi40MTY4IDczLjQ3NjVMOTUuMDQ2MyA3My42NDZMOTUuMDEyOSA4MC4wODA5TDYyLjM4MzMgNzkuOTExNEw2Mi40MTY4IDczLjQ3NjVaJyBmaWxsPSd3aGl0ZScvPjxwYXRoIGQ9J000Ni4wNiA2NC45MkM1Mi4zIDYyLjU4IDU1Ljg3NSA1Ny41MSA1NS44NzUgNTAuNTU1QzU1Ljg3NSA0MC41NDUgNDguNTk1IDM0LjUgMzYuNyAzNC41SDE4LjVWNDAuOTM1SDM2LjQ0QzQ0LjMwNSA0MC45MzUgNDguNCA0NC40NDUgNDguNCA1MC41NTVDNDguNCA1Ni42IDQ0LjMwNSA2MC4xNzUgMzYuNDQgNjAuMTc1SDE4LjVWODBIMjUuOTFWNjYuNDhIMzYuN0MzNy40OCA2Ni40OCAzOC4zMjUgNjYuNDggMzkuMDQgNjYuNDE1TDQ4LjU5NSA4MEg1Ni42NTVMNDYuMDYgNjQuOTJaJyBmaWxsPSd3aGl0ZScvPjwvZz48ZGVmcz48Y2xpcFBhdGggaWQ9J2NsaXAwXzEzXzIwJz48cmVjdCB3aWR0aD0nMTE2JyBoZWlnaHQ9JzExNScgZmlsbD0nd2hpdGUnLz48L2NsaXBQYXRoPjwvZGVmcz48L3N2Zz4=",
+    url: "https://ts-rest.com",
+    tagline: "Incrementally adoptable type-safety for your new and existing APIs",
+    repo: "ts-rest/ts-rest",
+    links: [
+      {
+        label: "Quickstart",
+        href: "https://ts-rest.com/docs/quickstart",
+      },
+      {
+        label: "Docs",
+        href: "https://ts-rest.com/docs/intro",
+      },
+    ],
+  },
 
   // Server
   {

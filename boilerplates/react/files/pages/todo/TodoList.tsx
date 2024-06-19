@@ -1,5 +1,6 @@
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
+import { client } from "@batijs/ts-rest/ts-rest/client";
 import React, { useState } from "react";
 
 export function TodoList({ initialTodoItems }: { initialTodoItems: { text: string }[] }) {
@@ -24,6 +25,8 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
                 await onNewTodo({ text: newTodo });
               } else if (BATI.has("trpc")) {
                 await trpc.onNewTodo.mutate(newTodo);
+              } else if (BATI.has("ts-rest")) {
+                await client.createTodo({ body: { text: newTodo } });
               } else {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",

@@ -12,6 +12,7 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import {
   fastifyTRPCPlugin,
   type CreateFastifyContextOptions,
@@ -143,7 +144,11 @@ async function startServer() {
     app.post<{ Body: string }>("/_telefunc", handlerAdapter(telefuncHandler));
   }
 
-  if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+  if (BATI.has("ts-rest")) {
+    app.all("/api/*", handlerAdapter(tsRestHandler));
+  }
+
+  if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
     app.post("/api/todo/create", handlerAdapter(createTodoHandler));
   }
 

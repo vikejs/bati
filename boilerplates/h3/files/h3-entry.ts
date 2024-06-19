@@ -13,6 +13,7 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
@@ -126,7 +127,11 @@ async function startServer() {
     router.post("/_telefunc", fromWebHandler(telefuncHandler));
   }
 
-  if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+  if (BATI.has("ts-rest")) {
+    router.use("/api/**", fromWebHandler(tsRestHandler));
+  }
+
+  if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
     router.post("/api/todo/create", fromWebHandler(createTodoHandler));
   }
 

@@ -10,6 +10,7 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
@@ -104,7 +105,11 @@ if (BATI.has("telefunc")) {
   app.post("/_telefunc", handlerAdapter(telefuncHandler));
 }
 
-if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+if (BATI.has("ts-rest")) {
+  app.all("/api/*", handlerAdapter(tsRestHandler));
+}
+
+if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
   app.post("/api/todo/create", handlerAdapter(createTodoHandler));
 }
 

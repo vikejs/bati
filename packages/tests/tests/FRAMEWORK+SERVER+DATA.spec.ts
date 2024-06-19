@@ -3,7 +3,7 @@ import { describeBati, exec, npmCli } from "@batijs/tests-utils";
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
-  ["trpc", "telefunc", undefined],
+  ["trpc", "telefunc", "ts-rest", undefined],
   ["drizzle", undefined],
   "eslint",
 ] as const;

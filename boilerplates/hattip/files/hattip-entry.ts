@@ -10,6 +10,7 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { createTodoHandler } from "@batijs/shared-todo/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import type { HattipHandler } from "@hattip/core";
 import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
@@ -57,6 +58,10 @@ if (BATI.has("trpc")) {
   });
 }
 
+if (BATI.has("ts-rest")) {
+  router.use("/api/*", handlerAdapter(tsRestHandler));
+}
+
 if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
    * Append Auth.js session to context
@@ -76,7 +81,7 @@ if (BATI.has("firebase-auth")) {
   router.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
 }
 
-if (!BATI.has("telefunc") && !BATI.has("trpc")) {
+if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
   router.post("/api/todo/create", handlerAdapter(createTodoHandler));
 }
 

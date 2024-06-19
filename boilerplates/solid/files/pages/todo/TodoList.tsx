@@ -1,5 +1,6 @@
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
+import { client } from "@batijs/ts-rest/ts-rest/client";
 import { createSignal, For, untrack } from "solid-js";
 
 export function TodoList(props: { initialTodoItems: { text: string }[] }) {
@@ -22,6 +23,8 @@ export function TodoList(props: { initialTodoItems: { text: string }[] }) {
                 await onNewTodo({ text: untrack(newTodo) });
               } else if (BATI.has("trpc")) {
                 await trpc.onNewTodo.mutate(untrack(newTodo));
+              } else if (BATI.has("ts-rest")) {
+                await client.createTodo({ body: { text: untrack(newTodo) } });
               } else {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",
