@@ -7,6 +7,8 @@ export default function Page() {
       <h1
         //# BATI.has("tailwindcss")
         className="font-bold text-3xl pb-4"
+        //# BATI.has("compiled-css")
+        css={{ fontWeight: "700", fontSize: "1.875rem", paddingBottom: "1rem" }}
       >
         My Vike app
       </h1>
