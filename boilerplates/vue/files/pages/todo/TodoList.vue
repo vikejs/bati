@@ -25,28 +25,36 @@ const newTodo = ref("");
 const submitNewTodo = async () => {
   // Optimistic UI update
   todoItems.value.push({ text: newTodo.value });
-  try {
-    if (BATI.has("telefunc")) {
-      await onNewTodo({ text: newTodo.value });
-    } else if (BATI.has("trpc")) {
-      await trpc.onNewTodo.mutate(newTodo.value);
-    } else if (BATI.has("ts-rest")) {
-      await client.createTodo({ body: { text: newTodo.value } });
-    } else {
-      const response = await fetch("/api/todo/create", {
-        method: "POST",
-        body: JSON.stringify({ text: newTodo.value }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      await response.blob();
+  if (
+    BATI.has("express") ||
+    BATI.has("fastify") ||
+    BATI.has("h3") ||
+    BATI.has("hattip") ||
+    BATI.has("hono")
+  ) {
+    try {
+      if (BATI.has("telefunc")) {
+        await onNewTodo({ text: newTodo.value });
+      } else if (BATI.has("trpc")) {
+        await trpc.onNewTodo.mutate(newTodo.value);
+      } else if (BATI.has("ts-rest")) {
+        await client.createTodo({ body: { text: newTodo.value } });
+      } else {
+        const response = await fetch("/api/todo/create", {
+          method: "POST",
+          body: JSON.stringify({ text: newTodo.value }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        await response.blob();
+      }
+      newTodo.value = "";
+    } catch (e) {
+      console.error(e);
+      // rollback
+      todoItems.value.slice(0, -1);
     }
-    newTodo.value = "";
-  } catch (e) {
-    console.error(e);
-    // rollback
-    todoItems.value.slice(0, -1);
   }
 };
 </script>
