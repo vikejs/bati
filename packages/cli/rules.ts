@@ -33,4 +33,7 @@ export const rulesMessages = {
   [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}.`,
   ),
+  [RulesMessage.ERROR_DATA_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}.`,
+  ),
 } satisfies Record<RulesMessage, RuleMessage>;

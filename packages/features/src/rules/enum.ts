@@ -6,6 +6,8 @@ export enum RulesMessage {
   ERROR_COMPILED_R_REACT,
   // A Server is required when using Drizzle
   ERROR_DRIZZLE_R_SERVER,
+  // A Server is required when using Data fetching / RPC
+  ERROR_DATA_R_SERVER,
   // --- WARNING
 
   // --- INFO

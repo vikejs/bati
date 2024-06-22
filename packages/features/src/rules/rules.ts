@@ -10,4 +10,5 @@ export default [
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
   includes(RulesMessage.INFO_HATTIP, "hattip"),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
+  requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
 ] satisfies Rule[];
