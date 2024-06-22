@@ -15,7 +15,9 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/core": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
     "@batijs/features": "workspace:*",
+    "@batijs/shared-no-db": "workspace:*",
     "@types/node": "^18.19.14",
     "vike": "^0.4.177",
     "vite": "^5.3.1"
@@ -37,12 +39,18 @@
     }
   },
   "exports": {
+    "./server/create-todo-handler": {
+      "types": "./dist/types/server/create-todo-handler.d.ts"
+    },
     "./server/vike-handler": {
       "types": "./dist/types/server/vike-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "server/create-todo-handler": [
+        "./dist/types/server/create-todo-handler.d.ts"
+      ],
       "server/vike-handler": [
         "./dist/types/server/vike-handler.d.ts"
       ]

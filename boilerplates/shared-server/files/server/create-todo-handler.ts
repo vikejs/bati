@@ -12,7 +12,7 @@ export async function createTodoHandler<Context extends Record<string | number |
   if (BATI.has("drizzle")) {
     await db.insert(todoTable).values({ text: newTodo.text });
   } else {
-    await lowDb.update(({ todo }) => todo.push({ text: newTodo.text }));
+    lowDb.update(({ todo }) => todo.push({ text: newTodo.text }));
   }
 
   return new Response(JSON.stringify({ status: "OK" }), {
