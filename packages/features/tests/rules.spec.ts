@@ -34,10 +34,12 @@ test("requires - extended", () => {
 
   expect(extendedRequires(prepare(["authjs"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(extendedRequires(prepare(["authjs", "hattip"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(extendedRequires(prepare(["authjs", "hattip", "Framework"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
+  expect(extendedRequires(prepare(["authjs", "hattip", "UI Framework"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(extendedRequires(prepare(["firebase-auth"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(extendedRequires(prepare(["firebase-auth", "hattip"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(extendedRequires(prepare(["firebase-auth", "hattip", "Framework"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
+  expect(extendedRequires(prepare(["firebase-auth", "hattip", "UI Framework"]))).toEqual(
+    RulesMessage.ERROR_AUTH_R_SERVER,
+  );
 });
 
 test("exclusive", () => {
