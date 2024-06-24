@@ -14,12 +14,13 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { Hono } from "hono";
+import { Hono, type Context } from "hono";
+import { env } from "hono/adapter";
 import { compress } from "hono/compress";
 import { createMiddleware } from "hono/factory";
 
-const isProduction = process.env.NODE_ENV === "production";
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const envs = env<{ NODE_ENV: string; PORT: string }>({ env: {} } as unknown as Context<object>);
+const isProduction = envs.NODE_ENV === "production";
 
 interface Middleware<Context extends Record<string | number | symbol, unknown>> {
   (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
@@ -121,6 +122,8 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
 app.all("*", handlerAdapter(vikeHandler));
 
 if (isProduction) {
+  const port = envs.PORT ? parseInt(envs.PORT, 10) : 3000;
+
   console.log(`Server listening on http://localhost:${port}`);
   serve({
     fetch: app.fetch,
