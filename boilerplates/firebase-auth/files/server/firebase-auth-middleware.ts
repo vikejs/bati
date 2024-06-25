@@ -34,7 +34,7 @@ export async function firebaseAuthLoginHandler<Context extends Record<string | n
   try {
     const sessionCookie = await getAuth(firebaseAdmin).createSessionCookie(idToken, { expiresIn });
 
-    const options = { maxAge: expiresIn / 1000, httpOnly: true, secure: true };
+    const options = { maxAge: expiresIn / 1000, httpOnly: true, secure: true, path: "/" };
 
     return new Response(JSON.stringify({ status: "success" }), {
       status: 200,
