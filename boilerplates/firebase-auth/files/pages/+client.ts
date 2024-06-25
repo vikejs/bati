@@ -28,6 +28,3 @@ const auth = getAuth(firebaseApp);
 // As httpOnly cookies are to be used, do not persist any state client side.
 // `inMemoryPersistence` is an implementation of Persistence of type 'NONE'.
 auth.setPersistence(inMemoryPersistence);
-
-// export the firebaseApp
-export default firebaseApp;
