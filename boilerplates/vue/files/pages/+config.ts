@@ -16,11 +16,4 @@ export default {
     BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
       ? "web"
       : true,
-  //# BATI.has("firebase-auth")
-  meta: {
-    // Temporary workaround until +client.js is implemented: https://github.com/vikejs/vike/issues/1468
-    firebaseApp: {
-      env: { client: true },
-    },
-  },
 } satisfies Config;

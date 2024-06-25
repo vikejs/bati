@@ -8,7 +8,7 @@ export default async function getReadme(props: TransformerProps) {
 ## *Firebase*
 - You first need to **[Create a Firebase project](https://firebase.google.com/docs/web/setup#create-project)**.
 - Then register your app in the firebase console. **[Register your app](https://firebase.google.com/docs/web/setup#register-app)**
-- Copy Your web app's Firebase configuration and paste in \`/pages/+firebaseApp.ts\` Example :
+- Copy Your web app's Firebase configuration and paste in \`/pages/+client.ts\` Example :
 \`\`\`ts
 const firebaseConfig = {
   apiKey: "",
