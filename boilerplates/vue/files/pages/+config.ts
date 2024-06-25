@@ -13,6 +13,10 @@ export default {
   /*{ /if }*/
   title: "My Vike App",
   extends: vikeVue,
+  stream:
+    BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
+      ? "web"
+      : true,
   /*{ @if (it.BATI.has("firebase-auth")) }*/
   meta: {
     // Temporary workaround until +client.js is implemented: https://github.com/vikejs/vike/issues/1468
