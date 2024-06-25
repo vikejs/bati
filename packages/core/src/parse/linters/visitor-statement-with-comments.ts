@@ -14,7 +14,8 @@ export function visitorStatementWithComments(
   const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
 
   if (comments.length > 0) {
-    if (node.type === "Identifier" && (node as AST.Node).parent?.type === "CallExpression") {
+    const identifierParents: (string | undefined)[] = ["CallExpression", "Property"];
+    if (node.type === "Identifier" && identifierParents.includes((node as AST.Node).parent?.type)) {
       node = (node as AST.Node).parent!;
     }
     const start = node.range![0];

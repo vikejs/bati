@@ -9,7 +9,7 @@ import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
 
-export default function vueLinterConfig(meta: VikeMeta) {
+export default function tsLinterConfig(meta: VikeMeta) {
   const plugin: ESLint.Plugin = {
     rules: {
       ts: {
