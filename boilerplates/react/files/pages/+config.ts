@@ -12,6 +12,10 @@ export default {
   /*{ /if }*/
   // <title>
   title: "My Vike App",
+  stream:
+    BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
+      ? "web"
+      : true,
   extends: vikeReact,
   /*{ @if (it.BATI.has("firebase-auth")) }*/
   meta: {

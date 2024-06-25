@@ -12,6 +12,10 @@ export default {
   passToClient: ["user"],
   /*{ /if }*/
   title: "My Vike App",
+  stream:
+    BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
+      ? "web"
+      : true,
   extends: vikeSolid,
   /*{ @if (it.BATI.has("firebase-auth")) }*/
   meta: {
