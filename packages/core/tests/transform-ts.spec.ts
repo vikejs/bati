@@ -17,7 +17,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
   }
 
   test("if", async () => {
-    const filename = ctx.jsx ? "test.tsx" : "test.ts";
+    const filename = ctx.jsx ? "test-if.tsx" : "test-if.ts";
     const renderedOutput = await transformAndFormat(
       code,
       {
@@ -31,7 +31,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
 
   if (expectedElseIf) {
     test("else-if", async () => {
-      const filename = ctx.jsx ? "test.tsx" : "test.ts";
+      const filename = ctx.jsx ? "test-else-if.tsx" : "test-else-if.ts";
       const renderedOutput = await transformAndFormat(
         code,
         {
@@ -45,7 +45,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
   }
 
   test("else", async () => {
-    const filename = ctx.jsx ? "test.tsx" : "test.ts";
+    const filename = ctx.jsx ? "test-else.tsx" : "test-else.ts";
     const renderedOutput = await transformAndFormat(
       code,
       {
@@ -164,6 +164,31 @@ describe("ts: comment in array", () => {
   },
 ];`,
     `const a = [1];`,
+  );
+});
+
+describe("ts: comment in object", () => {
+  testIfElse(
+    `const a = {
+  //# BATI.has("react")
+  key1: 1,
+  //# BATI.has("react")
+  key2: new Object({
+    a: 2,
+  }),
+  key3: 3,
+};`,
+    `const a = {
+  key1: 1,
+
+  key2: new Object({
+    a: 2,
+  }),
+  key3: 3,
+};`,
+    `const a = {
+  key3: 3,
+};`,
   );
 });
 
