@@ -8,21 +8,19 @@ export default {
   Layout,
   Head,
   // <title>
-  /*{ @if (it.BATI.has("auth0") || it.BATI.has("firebase-auth")) }*/
+  //# BATI.has("auth0") || BATI.has("firebase-auth") || BATI.has("authjs")
   passToClient: ["user"],
-  /*{ /if }*/
   title: "My Vike App",
   stream:
     BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
       ? "web"
       : true,
   extends: vikeSolid,
-  /*{ @if (it.BATI.has("firebase-auth")) }*/
+  //# BATI.has("firebase-auth")
   meta: {
     // Temporary workaround until +client.js is implemented: https://github.com/vikejs/vike/issues/1468
     firebaseApp: {
       env: { client: true },
     },
   },
-  /*{ /if }*/
 } satisfies Config;
