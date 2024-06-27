@@ -12,8 +12,4 @@ export default {
   // <title>
   title: "My Vike App",
   extends: vikeVue,
-  stream:
-    BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
-      ? "web"
-      : true,
 } satisfies Config;

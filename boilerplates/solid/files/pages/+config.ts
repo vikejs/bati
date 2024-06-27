@@ -11,9 +11,5 @@ export default {
   passToClient: ["user"],
   // <title>
   title: "My Vike App",
-  stream:
-    BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")
-      ? "web"
-      : true,
   extends: vikeSolid,
 } satisfies Config;
