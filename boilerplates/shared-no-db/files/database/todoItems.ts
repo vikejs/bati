@@ -1,13 +1,10 @@
-import type { LowSync } from "lowdb";
-import { JSONFileSyncPreset } from "lowdb/node";
-
 interface TodoItem {
   text: string;
 }
 
-const lowDb: LowSync<{ todo: TodoItem[] }> = JSONFileSyncPreset<{ todo: TodoItem[] }>("db.json", {
+const todos = {
   todo: [{ text: "Buy milk" }, { text: "Buy strawberries" }],
-});
+};
 
-export { lowDb };
+export { todos };
 export type { TodoItem };

@@ -1,6 +1,5 @@
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
-import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import { contract } from "../ts-rest/contract";
 
@@ -22,7 +21,8 @@ const router = tsr.router(contract, {
     if (BATI.has("drizzle")) {
       await db.insert(todoTable).values({ text: body.text });
     } else {
-      lowDb.update(({ todo }) => todo.push({ text: body.text }));
+      // This is where you'd persist the data
+      console.log("Received new todo", { text: body.text });
     }
     return {
       status: 200,

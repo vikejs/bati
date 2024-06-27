@@ -1,7 +1,7 @@
 // https://vike.dev/data
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
-import { lowDb } from "@batijs/shared-no-db/database/todoItems";
+import { todos } from "@batijs/shared-no-db/database/todoItems";
 
 export type Data = {
   todo: { text: string }[];
@@ -13,7 +13,6 @@ export default async function data(): Promise<Data> {
 
     return { todo };
   } else {
-    lowDb.read();
-    return lowDb.data;
+    return todos;
   }
 }

@@ -1,6 +1,5 @@
 import { db } from "@batijs/drizzle/database/db";
 import { todoTable } from "@batijs/drizzle/database/schema";
-import { lowDb } from "@batijs/shared-no-db/database/todoItems";
 import { initTRPC } from "@trpc/server";
 
 /**
@@ -31,7 +30,8 @@ export const appRouter = router({
       if (BATI.has("drizzle")) {
         await db.insert(todoTable).values({ text: opts.input });
       } else {
-        await lowDb.update(({ todo }) => todo.push({ text: opts.input }));
+        // This is where you'd persist the data
+        console.log("Received new todo", { text: opts.input });
       }
     }),
 });
