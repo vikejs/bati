@@ -12,8 +12,8 @@ importers:
         specifier: ^9.5.0
         version: 9.5.0
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.2.1
-        version: 4.2.1(@vue/compiler-sfc@3.4.30)(prettier@3.3.2)
+        specifier: ^4.3.0
+        version: 4.3.0(@vue/compiler-sfc@3.4.30)(prettier@3.3.2)
       '@types/eslint__js':
         specifier: ^8.42.3
         version: 8.42.3
@@ -172,7 +172,7 @@ importers:
         version: 0.5.3(edgedb@1.5.7)
       '@prisma/client':
         specifier: ^5.15.1
-        version: 5.15.1(prisma@5.15.1)
+        version: 5.15.1(prisma@5.16.0)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -626,7 +626,7 @@ importers:
         version: link:../../packages/compile
       '@prisma/client':
         specifier: ^5.15.1
-        version: 5.15.1(prisma@5.15.1)
+        version: 5.15.1(prisma@5.16.0)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -635,7 +635,7 @@ importers:
         version: 2.0.20
       prisma:
         specifier: ^5.15.1
-        version: 5.15.1
+        version: 5.16.0
 
   boilerplates/react:
     dependencies:
@@ -783,9 +783,6 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
-      lowdb:
-        specifier: ^7.0.1
-        version: 7.0.1
 
   boilerplates/shared-plain:
     dependencies:
@@ -1511,16 +1508,16 @@ importers:
         version: 5.5.2
       vike:
         specifier: ^0.4.177
-        version: 0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.8))
+        version: 0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.9))
       vike-solid:
         specifier: ^0.6.2
-        version: 0.6.2(solid-js@1.8.17)(vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.8)))(vite@5.3.1(@types/node@20.14.8))
+        version: 0.6.2(solid-js@1.8.17)(vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.9)))(vite@5.3.1(@types/node@20.14.9))
       vite:
         specifier: ^5.3.1
-        version: 5.3.1(@types/node@20.14.8)
+        version: 5.3.1(@types/node@20.14.9)
       vite-plugin-solid:
         specifier: ^2.10.2
-        version: 2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.8))
+        version: 2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.9))
 
 packages:
 
@@ -2585,8 +2582,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
 
-  '@ianvs/prettier-plugin-sort-imports@4.2.1':
-    resolution: {integrity: sha512-NKN1LVFWUDGDGr3vt+6Ey3qPeN/163uR1pOPAlkWpgvAqgxQ6kSdUf1F0it8aHUtKRUzEGcK38Wxd07O61d7+Q==}
+  '@ianvs/prettier-plugin-sort-imports@4.3.0':
+    resolution: {integrity: sha512-OOMtUcO4J3LoL63dOKAe7bn+lSRRPeit2DqNHpx+wvBp3Grejo2PMaK4Mp1mwy8pnat64ccSgk/lBZbsAdLErw==}
     peerDependencies:
       '@vue/compiler-sfc': 2.7.x || 3.x
       prettier: 2 || 3
@@ -2718,20 +2715,20 @@ packages:
       prisma:
         optional: true
 
-  '@prisma/debug@5.15.1':
-    resolution: {integrity: sha512-NQjdEplhXEcPvf84ghxExC+LD+iTimbg3sZvA3BhybVQIocBEBxFf9GTHhmRVPmjrWoBaYJBVgEEBXZT27JTbQ==}
+  '@prisma/debug@5.16.0':
+    resolution: {integrity: sha512-pfdOGxMShqZKkNNskYB0yXICsqL6rOkQUKNktouUZ9Y9ASd5736+ae2fpzif7onwJiIyEpu/yvOO3rFUbliKTA==}
 
-  '@prisma/engines-version@5.15.1-1.5675a3182f972f1a8f31d16eee6abf4fd54910e3':
-    resolution: {integrity: sha512-7csphKGCG6n/cN1MkT1mJvQ78Ir18IknlYZ8eyEoLKdQBb0HscR/6TyPmzqrMA7Rz01K1KeXqctwAqxtA/lKQg==}
+  '@prisma/engines-version@5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303':
+    resolution: {integrity: sha512-HkT2WbfmFZ9WUPyuJHhkiADxazHg8Y4gByrTSVeb3OikP6tjQ7txtSUGu9OBOBH0C13dPKN2qqH12xKtHu/Hiw==}
 
-  '@prisma/engines@5.15.1':
-    resolution: {integrity: sha512-1iTRxJEFvpBpEWf2bYiMG6LBBQhX7X+GA5piH+tmPWgc/v+/ElxQf2kjQxby8AErmZqtZkdoKJ7FSRjNjBPE9Q==}
+  '@prisma/engines@5.16.0':
+    resolution: {integrity: sha512-OGvi/GvLX3XwTWQ+k/57kLyHGidQ8rC8zB+Zq9nEE7gegjazyzgLYN9qzfdcCfyI8ilc6IMxOyX4sspwkv98hg==}
 
-  '@prisma/fetch-engine@5.15.1':
-    resolution: {integrity: sha512-mj0wfsJ+mAdDp1ynT2JKxAXa+CoYMT267qF7g2Uv+oaVTI2CMfGWouMARht8T2QLTgl+gpXSFTwIYbcR+oWEtw==}
+  '@prisma/fetch-engine@5.16.0':
+    resolution: {integrity: sha512-8C8y6J9eWRl+R/aO3vQ2HlmM9IbjAmrZaaEAdC0OJfG3CHvbTOcL7VRY6CEUKo8RwZ8bdATOePaSMS634fHWgw==}
 
-  '@prisma/get-platform@5.15.1':
-    resolution: {integrity: sha512-oFccp7bYys+ZYkmtYzjR+0cRrGKvSuF+h5QhSkyEsYQ9kzJzQRvuWt2SiHRPt8xOQ4MTmujM+bP5uOexnnAHdQ==}
+  '@prisma/get-platform@5.16.0':
+    resolution: {integrity: sha512-ynp2jAYfYdd7OObX+uWaFRpvhPVmpF0nsRMhbrWdVVUj39q3Zr8dGz5WDj2g+BTUE++u1T1Am3RyM3PBQdDZXA==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -3043,8 +3040,8 @@ packages:
   '@types/node@18.19.31':
     resolution: {integrity: sha512-ArgCD39YpyyrtFKIqMDvjz79jto5fcI/SVUs2HwB+f0dAzq68yqOdyaSivLiLugSziTpNXLQrVb7RZFmdZzbhA==}
 
-  '@types/node@20.14.8':
-    resolution: {integrity: sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==}
+  '@types/node@20.14.9':
+    resolution: {integrity: sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -5102,10 +5099,6 @@ packages:
   loupe@2.3.7:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
 
-  lowdb@7.0.1:
-    resolution: {integrity: sha512-neJAj8GwF0e8EpycYIDFqEPcx9Qz4GUho20jWFR7YiFeXzF1YMLdxB36PypcTSPMA+4+LvgyMacYhlr18Zlymw==}
-    engines: {node: '>=18'}
-
   lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
     engines: {node: '>=8'}
@@ -5866,8 +5859,8 @@ packages:
   printable-characters@1.0.42:
     resolution: {integrity: sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ==}
 
-  prisma@5.15.1:
-    resolution: {integrity: sha512-pYsUVpTlYvZ6mWvZKDv9rKdUa7tlfSUJY1CVtgb8Had1pHbIm9fr1MBASccr5XnSuCUrjnvKhWNwgSYy6aCajA==}
+  prisma@5.16.0:
+    resolution: {integrity: sha512-T1ZWJT/vgzp3rtRmd1iCSnPPsgOItXnnny+/cfpHraowiBEvUMD2pEI6yEOL6CP2EelTmq4wKDbXbYucy4Fd+A==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -6278,10 +6271,6 @@ packages:
 
   std-env@3.7.0:
     resolution: {integrity: sha512-JPbdCEQLj1w5GilpiHAx3qJvFndqybBysA3qUOnznweH4QbNYUsW/ea8QzSrnh0vNsezMMw5bcVool8lM0gwzg==}
-
-  steno@4.0.2:
-    resolution: {integrity: sha512-yhPIQXjrlt1xv7dyPQg2P17URmXbuM5pdGkpiMB3RenprfiBlvK415Lctfe0eshk90oA7/tNq7WEiMK8RSP39A==}
-    engines: {node: '>=18'}
 
   stoppable@1.1.0:
     resolution: {integrity: sha512-KXDYZ9dszj6bzvnEMRYvxgeTHU74QBFL54XKtP3nyMuJ81CFYtABZ3bAzL2EdFUaEwJOBOgENyFj3R7oTzDyyw==}
@@ -8121,7 +8110,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.2.1(@vue/compiler-sfc@3.4.30)(prettier@3.3.2)':
+  '@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.30)(prettier@3.3.2)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/generator': 7.24.7
@@ -8286,30 +8275,30 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@prisma/client@5.15.1(prisma@5.15.1)':
+  '@prisma/client@5.15.1(prisma@5.16.0)':
     optionalDependencies:
-      prisma: 5.15.1
+      prisma: 5.16.0
 
-  '@prisma/debug@5.15.1': {}
+  '@prisma/debug@5.16.0': {}
 
-  '@prisma/engines-version@5.15.1-1.5675a3182f972f1a8f31d16eee6abf4fd54910e3': {}
+  '@prisma/engines-version@5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303': {}
 
-  '@prisma/engines@5.15.1':
+  '@prisma/engines@5.16.0':
     dependencies:
-      '@prisma/debug': 5.15.1
-      '@prisma/engines-version': 5.15.1-1.5675a3182f972f1a8f31d16eee6abf4fd54910e3
-      '@prisma/fetch-engine': 5.15.1
-      '@prisma/get-platform': 5.15.1
+      '@prisma/debug': 5.16.0
+      '@prisma/engines-version': 5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303
+      '@prisma/fetch-engine': 5.16.0
+      '@prisma/get-platform': 5.16.0
 
-  '@prisma/fetch-engine@5.15.1':
+  '@prisma/fetch-engine@5.16.0':
     dependencies:
-      '@prisma/debug': 5.15.1
-      '@prisma/engines-version': 5.15.1-1.5675a3182f972f1a8f31d16eee6abf4fd54910e3
-      '@prisma/get-platform': 5.15.1
+      '@prisma/debug': 5.16.0
+      '@prisma/engines-version': 5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303
+      '@prisma/get-platform': 5.16.0
 
-  '@prisma/get-platform@5.15.1':
+  '@prisma/get-platform@5.16.0':
     dependencies:
-      '@prisma/debug': 5.15.1
+      '@prisma/debug': 5.16.0
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -8588,7 +8577,7 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.14.8':
+  '@types/node@20.14.9':
     dependencies:
       undici-types: 5.26.5
 
@@ -8728,12 +8717,12 @@ snapshots:
 
   '@vavite/connect@4.1.1(vite@5.3.1(@types/node@18.19.31))':
     dependencies:
-      '@types/node': 20.14.8
+      '@types/node': 20.14.9
       vite: 5.3.1(@types/node@18.19.31)
 
   '@vavite/multibuild@4.1.1(vite@5.3.1(@types/node@18.19.31))':
     dependencies:
-      '@types/node': 20.14.8
+      '@types/node': 20.14.9
       cac: 6.7.14
       picocolors: 1.0.1
       vite: 5.3.1(@types/node@18.19.31)
@@ -10270,7 +10259,7 @@ snapshots:
       '@fastify/busboy': 2.1.1
       '@firebase/database-compat': 1.0.5
       '@firebase/database-types': 1.0.3
-      '@types/node': 20.14.8
+      '@types/node': 20.14.9
       farmhash-modern: 1.1.0
       jsonwebtoken: 9.0.2
       jwks-rsa: 3.1.0
@@ -11115,10 +11104,6 @@ snapshots:
     dependencies:
       get-func-name: 2.0.2
 
-  lowdb@7.0.1:
-    dependencies:
-      steno: 4.0.2
-
   lowercase-keys@2.0.0: {}
 
   lru-cache@10.2.0: {}
@@ -11807,9 +11792,9 @@ snapshots:
 
   printable-characters@1.0.42: {}
 
-  prisma@5.15.1:
+  prisma@5.16.0:
     dependencies:
-      '@prisma/engines': 5.15.1
+      '@prisma/engines': 5.16.0
 
   process-warning@3.0.0: {}
 
@@ -12262,8 +12247,6 @@ snapshots:
   statuses@2.0.1: {}
 
   std-env@3.7.0: {}
-
-  steno@4.0.2: {}
 
   stoppable@1.1.0: {}
 
@@ -12762,12 +12745,12 @@ snapshots:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-solid@0.6.2(solid-js@1.8.17)(vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.8)))(vite@5.3.1(@types/node@20.14.8)):
+  vike-solid@0.6.2(solid-js@1.8.17)(vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.9)))(vite@5.3.1(@types/node@20.14.9)):
     dependencies:
       solid-js: 1.8.17
-      vike: 0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.8))
-      vite: 5.3.1(@types/node@20.14.8)
-      vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.8))
+      vike: 0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.9))
+      vite: 5.3.1(@types/node@20.14.9)
+      vite-plugin-solid: 2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.9))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
@@ -12834,7 +12817,7 @@ snapshots:
     optionalDependencies:
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.8)):
+  vike@0.4.177(react-streaming@0.3.28)(vite@5.3.1(@types/node@20.14.9)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12849,7 +12832,7 @@ snapshots:
       semver: 7.6.2
       sirv: 2.0.4
       source-map-support: 0.5.21
-      vite: 5.3.1(@types/node@20.14.8)
+      vite: 5.3.1(@types/node@20.14.9)
     optionalDependencies:
       react-streaming: 0.3.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
@@ -12895,7 +12878,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.8)):
+  vite-plugin-solid@2.10.2(solid-js@1.8.17)(vite@5.3.1(@types/node@20.14.9)):
     dependencies:
       '@babel/core': 7.24.7
       '@types/babel__core': 7.20.5
@@ -12903,8 +12886,8 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.8.17
       solid-refresh: 0.6.3(solid-js@1.8.17)
-      vite: 5.3.1(@types/node@20.14.8)
-      vitefu: 0.2.5(vite@5.3.1(@types/node@20.14.8))
+      vite: 5.3.1(@types/node@20.14.9)
+      vitefu: 0.2.5(vite@5.3.1(@types/node@20.14.9))
     transitivePeerDependencies:
       - supports-color
 
@@ -12937,22 +12920,22 @@ snapshots:
       '@types/node': 18.19.31
       fsevents: 2.3.3
 
-  vite@5.3.1(@types/node@20.14.8):
+  vite@5.3.1(@types/node@20.14.9):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.38
       rollup: 4.18.0
     optionalDependencies:
-      '@types/node': 20.14.8
+      '@types/node': 20.14.9
       fsevents: 2.3.3
 
   vitefu@0.2.5(vite@5.3.1(@types/node@18.19.31)):
     optionalDependencies:
       vite: 5.3.1(@types/node@18.19.31)
 
-  vitefu@0.2.5(vite@5.3.1(@types/node@20.14.8)):
+  vitefu@0.2.5(vite@5.3.1(@types/node@20.14.9)):
     optionalDependencies:
-      vite: 5.3.1(@types/node@20.14.8)
+      vite: 5.3.1(@types/node@20.14.9)
 
   vitest@1.6.0(@types/node@18.19.31)(happy-dom@14.12.3):
     dependencies:
@@ -13172,4 +13155,4 @@ snapshots:
   zx@8.1.3:
     optionalDependencies:
       '@types/fs-extra': 11.0.4
-      '@types/node': 20.14.8
+      '@types/node': 20.14.9
