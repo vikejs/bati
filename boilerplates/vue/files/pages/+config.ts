@@ -7,9 +7,9 @@ import Layout from "../layouts/LayoutDefault.vue";
 export default {
   Layout,
   Head,
-  // <title>
   //# BATI.has("auth0") || BATI.has("firebase-auth") || BATI.has("authjs")
   passToClient: ["user"],
+  // <title>
   title: "My Vike App",
   extends: vikeVue,
   stream:
