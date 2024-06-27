@@ -15,7 +15,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     preview: {
-      value: "NODE_ENV=production tsx ./hono-entry.ts",
+      value: "cross-env NODE_ENV=production tsx ./hono-entry.node.ts",
       precedence: 20,
     },
   });
@@ -24,6 +24,7 @@ export default async function getPackageJson(props: TransformerProps) {
     devDependencies: ["@hono/vite-dev-server", "@types/node"],
     dependencies: [
       "@hono/node-server",
+      "cross-env",
       "hono",
       "tsx",
       "vite",

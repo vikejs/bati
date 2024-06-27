@@ -10,7 +10,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     build: {
-      value: "NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
+      value: "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
       precedence: 20,
       warnIfReplaced: true,
     },
@@ -26,6 +26,7 @@ export default async function getPackageJson(props: TransformerProps) {
     dependencies: [
       "@hattip/core",
       "@hattip/router",
+      "cross-env",
       "hattip",
       "vite",
       "vike",

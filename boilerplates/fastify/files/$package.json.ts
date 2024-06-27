@@ -15,7 +15,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     preview: {
-      value: "NODE_ENV=production tsx ./fastify-entry.ts",
+      value: "cross-env NODE_ENV=production tsx ./fastify-entry.ts",
       precedence: 20,
     },
   });
@@ -26,6 +26,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "@fastify/middie",
       "@fastify/static",
       "@universal-middleware/express",
+      "cross-env",
       "fastify",
       "tsx",
       "vike",

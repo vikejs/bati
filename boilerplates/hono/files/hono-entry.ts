@@ -11,16 +11,9 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { serve } from "@hono/node-server";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { Hono, type Context } from "hono";
-import { env } from "hono/adapter";
-import { compress } from "hono/compress";
+import { Hono } from "hono";
 import { createMiddleware } from "hono/factory";
-
-const envs = env<{ NODE_ENV: string; PORT: string }>({ env: {} } as unknown as Context<object>);
-const isProduction = envs.NODE_ENV === "production";
 
 interface Middleware<Context extends Record<string | number | symbol, unknown>> {
   (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
@@ -48,17 +41,6 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
 }
 
 const app = new Hono();
-
-app.use(compress());
-
-if (isProduction) {
-  app.use(
-    "/*",
-    serveStatic({
-      root: `dist/client/`,
-    }),
-  );
-}
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
@@ -120,15 +102,5 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
  * @link {@see https://vike.dev}
  **/
 app.all("*", handlerAdapter(vikeHandler));
-
-if (isProduction) {
-  const port = envs.PORT ? parseInt(envs.PORT, 10) : 3000;
-
-  console.log(`Server listening on http://localhost:${port}`);
-  serve({
-    fetch: app.fetch,
-    port: port,
-  });
-}
 
 export default app;

@@ -15,7 +15,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     preview: {
-      value: "NODE_ENV=production tsx ./h3-entry.ts",
+      value: "cross-env NODE_ENV=production tsx ./h3-entry.ts",
       precedence: 20,
     },
   });
@@ -27,6 +27,7 @@ export default async function getPackageJson(props: TransformerProps) {
     ],
     dependencies: [
       "@hattip/polyfills",
+      "cross-env",
       "h3",
       "serve-static",
       "tsx",

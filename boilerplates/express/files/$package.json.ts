@@ -15,7 +15,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     },
     preview: {
-      value: "NODE_ENV=production tsx ./express-entry.ts",
+      value: "cross-env NODE_ENV=production tsx ./express-entry.ts",
       precedence: 20,
     },
   });
@@ -27,6 +27,7 @@ export default async function getPackageJson(props: TransformerProps) {
     ],
     dependencies: [
       "@universal-middleware/express",
+      "cross-env",
       "express",
       "tsx",
       "vite",
