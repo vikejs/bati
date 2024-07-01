@@ -18,17 +18,17 @@ await describeBati(
 
     testMatch<typeof matrix>("cloudflare-worker.mjs", {
       hono: async () => {
-        const content = JSON.parse(await readFile(worker_filepath, "utf-8"));
+        const content = await readFile(worker_filepath, "utf-8");
         expect(content).toContain(`import { Hono } from "hono"`);
       },
       hattip: async () => {
-        const content = JSON.parse(await readFile(worker_filepath, "utf-8"));
+        const content = await readFile(worker_filepath, "utf-8");
         expect(content).toContain(
           `import cloudflareWorkersAdapter from "@hattip/adapter-cloudflare-workers/no-static"`,
         );
       },
       _: async () => {
-        const content = JSON.parse(await readFile(worker_filepath, "utf-8"));
+        const content = await readFile(worker_filepath, "utf-8");
         expect(content).toContain(`import { renderPage } from "vike/server"`);
       },
     });
