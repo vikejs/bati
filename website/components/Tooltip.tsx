@@ -14,6 +14,10 @@ export function Tooltip(props: { children?: JSX.Element; class?: string; tip: st
   );
 }
 
+function isFirefox() {
+  return Boolean(globalThis.navigator) && /firefox/i.test(navigator.userAgent);
+}
+
 export function EnrichedTooltip(props: {
   children: JSX.Element;
   class?: string;
@@ -38,6 +42,16 @@ export function EnrichedTooltip(props: {
   const [floating, setFloating] = createSignal<HTMLElement>();
   const [arrowEl, setArrow] = createSignal<HTMLElement>();
 
+  // Weird firefox bug https://discourse.webflow.com/t/backdrop-filter-blur-not-working-for-nested-elements/244665/2
+  const transition = isFirefox()
+    ? {
+        transition: "none",
+        transform: "none",
+      }
+    : {
+        transition: "transform 300ms",
+      };
+
   const position = useFloating(reference, floating, {
     placement: props.placement,
     whileElementsMounted: autoUpdate,
@@ -49,7 +63,7 @@ export function EnrichedTooltip(props: {
               Object.assign(elements.floating.style, {
                 width: `${rects.reference.width + (props.arrow ? 4 : 0) + 1}px`,
                 minHeight: `${rects.reference.height}px`,
-                transition: "transform 300ms",
+                ...transition,
               });
             },
           }),
