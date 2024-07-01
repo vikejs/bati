@@ -4,19 +4,12 @@
     "//"
   ],
   "tasks": {
-    "build-cli": {
+    "build": {
       "dependsOn": [
-        "^build"
+          "^build"
       ],
       "outputs": [
         "dist/**"
-      ],
-      "inputs": [
-        "*",
-        "../../boilerplates/*/dist/**",
-        "../../boilerplates/*/files/**",
-        "../../boilerplates/*/hooks/**",
-        "../../boilerplates/*/*"
       ]
     },
     "check-types": {}

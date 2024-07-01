@@ -6,6 +6,7 @@
   "description": "@batijs monorepo",
   "scripts": {
     "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
+    "list-boilerplates": "tsx ./scripts/helpers/boilerplates.ts",
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
@@ -15,7 +16,7 @@
     "test": "turbo run test",
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
-    "build": "turbo run build --no-daemon && turbo run build-cli --no-daemon",
+    "build": "turbo run build --no-daemon",
     "lint": "eslint ."
   },
   "keywords": [],
