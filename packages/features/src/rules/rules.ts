@@ -1,5 +1,5 @@
 import { RulesMessage } from "./enum.js";
-import { includes, requires, type Rule } from "./utils.js";
+import { filter, includes, requires, type Rule } from "./utils.js";
 
 // Defines all rules such as
 // - conflicts between packages
@@ -11,4 +11,16 @@ export default [
   includes(RulesMessage.INFO_HATTIP, "hattip"),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
+  filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {
+    if (fts.has("cloudflare")) {
+      if (fts.has("hono") || fts.has("hattip")) {
+        return false;
+      }
+
+      // If it has any other server, return the message
+      return fts.has("Server");
+    }
+
+    return false;
+  }),
 ] satisfies Rule[];

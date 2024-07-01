@@ -81,10 +81,27 @@ export const rulesMessages = {
     return (
       <span class="inline-block">
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Data fetching</span>.
-        Check{" "}
         <ul class="list-custom list-dot">
           <li>
             Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">{selectedData()}</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER]: error(() => {
+    const { selectedFeatures } = useContext(StoreContext);
+
+    const selectedServer = createMemo(() => selectedFeatures().filter((f) => f.category === "Server")?.[0].label);
+
+    return (
+      <span class="inline-block">
+        <span class="font-bold">Cloudflare</span> is not compatible with{" "}
+        <span class="font-bold">{selectedServer()}</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>, or unselect{" "}
+            <span class="font-bold">{selectedServer()}</span>
           </li>
         </ul>
       </span>

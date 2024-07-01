@@ -36,4 +36,8 @@ export const rulesMessages = {
   [RulesMessage.ERROR_DATA_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}.`,
   ),
+  [RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER]: error(
+    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
+Choose one of them, or simply remove selected Server.`,
+  ),
 } satisfies Record<RulesMessage, RuleMessage>;

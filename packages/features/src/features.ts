@@ -265,6 +265,26 @@ export const features = [
   // Server
   {
     category: "Server",
+    label: "Hono",
+    flag: "hono",
+    image:
+      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjUwMHB4IiBoZWlnaHQ9IjUwMHB4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjAuOTkzIiBmaWxsPSIjZmY1YjExIiBkPSJNIDI1Ny41LDAuNSBDIDI1OC44MjIsMC4zMzAwMzQgMjU5Ljk4OSwwLjY2MzM2OCAyNjEsMS41QyAyOTguMTkzLDQ2Ljg5MzYgMzMzLjE5Myw5My44OTM2IDM2NiwxNDIuNUMgMzkwLjI4OSwxNzkuMDY5IDQxMC45NTUsMjE3LjczNSA0MjgsMjU4LjVDIDQ1NS4yMjEsMzMxLjEwNCA0NDEuMDU0LDM5NC4yNzEgMzg1LjUsNDQ4QyAzMzYuODkyLDQ4OS4wODIgMjgwLjg5Miw1MDUuMDgyIDIxNy41LDQ5NkMgMTQxLjcyNyw0ODAuNTUxIDkwLjIyNjUsNDM2LjcxOCA2MywzNjQuNUMgNTUuOTA4MSwzNDAuOTg5IDUzLjU3NDgsMzE2Ljk4OSA1NiwyOTIuNUMgNjAuMDM4NCwyNTAuMzQ3IDcwLjAzODQsMjA5LjY4IDg2LDE3MC41QyA5Mi42NTA5LDE1NC41MTQgMTAxLjMxOCwxMzkuODQ4IDExMiwxMjYuNUMgMTIwLjcxNSwxMzYuODggMTI5LjA0OCwxNDcuNTQ3IDEzNywxNTguNUMgMTQwLjY4MiwxNjIuMzQ5IDE0NC41MTUsMTY2LjAxNiAxNDguNSwxNjkuNUMgMTc4LjkxNywxMDkuMTM2IDIxNS4yNTEsNTIuODAyOCAyNTcuNSwwLjUgWiIvPjwvZz4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iI2ZmOTc1OCIgZD0iTSAyNTAuNSw4MS41IEMgMjg3LjE5MywxMjQuMDYgMzIwLjM2LDE2OS4zOTMgMzUwLDIxNy41QyAzNTkuMjkzLDIzMy40MTggMzY2Ljk1OSwyNTAuMDg1IDM3MywyNjcuNUMgMzg1LjU4NCwzMTcuMDA4IDM3Mi4wODQsMzU3Ljg0MiAzMzIuNSwzOTBDIDI5NC4yMTYsNDE2LjkzOSAyNTIuMjE2LDQyNC45MzkgMjA2LjUsNDE0QyAxNTcuMjAxLDM5OC43MDIgMTI4LjcwMSwzNjUuNTM1IDEyMSwzMTQuNUMgMTE5LjEzMSwyOTguNDA5IDEyMC43OTgsMjgyLjc0MiAxMjYsMjY3LjVDIDEzMy40MTgsMjQ4LjY2MyAxNDIuNDE4LDIzMC42NjMgMTUzLDIxMy41QyAxNjMsMTk4LjgzMyAxNzMsMTg0LjE2NyAxODMsMTY5LjVDIDIwNS43MTYsMTQwLjI5IDIyOC4yMTYsMTEwLjk1NyAyNTAuNSw4MS41IFoiLz48L2c+Cjwvc3ZnPgo=",
+    url: "https://hono.dev",
+    tagline: "Fast, lightweight, built on web standards. Support for any JavaScript runtime.",
+    repo: "honojs/hono",
+    links: [
+      {
+        label: "Getting started",
+        href: "https://hono.dev/top",
+      },
+      {
+        label: "API",
+        href: "https://hono.dev/api/hono",
+      },
+    ],
+  },
+  {
+    category: "Server",
     label: "h3",
     flag: "h3",
     url: "https://github.com/unjs/h3",
@@ -287,26 +307,6 @@ export const features = [
       {
         label: "API",
         href: "https://expressjs.com/en/4x/api.html",
-      },
-    ],
-  },
-  {
-    category: "Server",
-    label: "Hono",
-    flag: "hono",
-    image:
-      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjUwMHB4IiBoZWlnaHQ9IjUwMHB4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjAuOTkzIiBmaWxsPSIjZmY1YjExIiBkPSJNIDI1Ny41LDAuNSBDIDI1OC44MjIsMC4zMzAwMzQgMjU5Ljk4OSwwLjY2MzM2OCAyNjEsMS41QyAyOTguMTkzLDQ2Ljg5MzYgMzMzLjE5Myw5My44OTM2IDM2NiwxNDIuNUMgMzkwLjI4OSwxNzkuMDY5IDQxMC45NTUsMjE3LjczNSA0MjgsMjU4LjVDIDQ1NS4yMjEsMzMxLjEwNCA0NDEuMDU0LDM5NC4yNzEgMzg1LjUsNDQ4QyAzMzYuODkyLDQ4OS4wODIgMjgwLjg5Miw1MDUuMDgyIDIxNy41LDQ5NkMgMTQxLjcyNyw0ODAuNTUxIDkwLjIyNjUsNDM2LjcxOCA2MywzNjQuNUMgNTUuOTA4MSwzNDAuOTg5IDUzLjU3NDgsMzE2Ljk4OSA1NiwyOTIuNUMgNjAuMDM4NCwyNTAuMzQ3IDcwLjAzODQsMjA5LjY4IDg2LDE3MC41QyA5Mi42NTA5LDE1NC41MTQgMTAxLjMxOCwxMzkuODQ4IDExMiwxMjYuNUMgMTIwLjcxNSwxMzYuODggMTI5LjA0OCwxNDcuNTQ3IDEzNywxNTguNUMgMTQwLjY4MiwxNjIuMzQ5IDE0NC41MTUsMTY2LjAxNiAxNDguNSwxNjkuNUMgMTc4LjkxNywxMDkuMTM2IDIxNS4yNTEsNTIuODAyOCAyNTcuNSwwLjUgWiIvPjwvZz4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iI2ZmOTc1OCIgZD0iTSAyNTAuNSw4MS41IEMgMjg3LjE5MywxMjQuMDYgMzIwLjM2LDE2OS4zOTMgMzUwLDIxNy41QyAzNTkuMjkzLDIzMy40MTggMzY2Ljk1OSwyNTAuMDg1IDM3MywyNjcuNUMgMzg1LjU4NCwzMTcuMDA4IDM3Mi4wODQsMzU3Ljg0MiAzMzIuNSwzOTBDIDI5NC4yMTYsNDE2LjkzOSAyNTIuMjE2LDQyNC45MzkgMjA2LjUsNDE0QyAxNTcuMjAxLDM5OC43MDIgMTI4LjcwMSwzNjUuNTM1IDEyMSwzMTQuNUMgMTE5LjEzMSwyOTguNDA5IDEyMC43OTgsMjgyLjc0MiAxMjYsMjY3LjVDIDEzMy40MTgsMjQ4LjY2MyAxNDIuNDE4LDIzMC42NjMgMTUzLDIxMy41QyAxNjMsMTk4LjgzMyAxNzMsMTg0LjE2NyAxODMsMTY5LjVDIDIwNS43MTYsMTQwLjI5IDIyOC4yMTYsMTEwLjk1NyAyNTAuNSw4MS41IFoiLz48L2c+Cjwvc3ZnPgo=",
-    url: "https://hono.dev",
-    tagline: "Fast, lightweight, built on web standards. Support for any JavaScript runtime.",
-    repo: "honojs/hono",
-    links: [
-      {
-        label: "Getting started",
-        href: "https://hono.dev/top",
-      },
-      {
-        label: "API",
-        href: "https://hono.dev/api/hono",
       },
     ],
   },
