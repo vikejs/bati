@@ -11,6 +11,10 @@ const matrix = combinate([
   ["authjs", "firebase-auth", "auth0", "drizzle", "telefunc", "trpc", "ts-rest"],
 ]);
 
+matrix.push(["cloudflare", "express"]);
+matrix.push(["cloudflare", "fastify"]);
+matrix.push(["cloudflare", "h3"]);
+
 function prepareAndExecute(flags: string[]) {
   const context = {
     tmpdir: "",

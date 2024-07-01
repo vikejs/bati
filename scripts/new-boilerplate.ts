@@ -1,12 +1,14 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineCommand, runMain } from "citty";
 import sharedPackageJson from "../boilerplates/shared/package.json";
+import { listBoilerplates } from "./helpers/boilerplates.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const __boilerplates = resolve(__dirname, "..", "boilerplates");
+const __packages = resolve(__dirname, "..", "packages");
 
 const validNameRe = /[a-z0-9-.]/;
 
@@ -63,11 +65,27 @@ async function createTsconfig(name: string) {
   await writeFile(dest, JSON.stringify(json, undefined, 2), "utf-8");
 }
 
+async function updateCliDependencies() {
+  const deps = ["^build"];
+
+  for await (const dep of listBoilerplates()) {
+    deps.push(`${dep}#build`);
+  }
+
+  const cliTurboJson = join(__packages, "cli", "turbo.json");
+  const content = JSON.parse(await readFile(cliTurboJson, "utf-8"));
+
+  content.tasks.build.dependsOn = deps;
+
+  await writeFile(cliTurboJson, JSON.stringify(content, undefined, 2), "utf-8");
+}
+
 async function exec(name: string) {
   const root = await createFolders(name);
 
   await createPackageJson(name);
   await createTsconfig(name);
+  await updateCliDependencies();
 
   return root;
 }

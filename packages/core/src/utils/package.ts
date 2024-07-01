@@ -1,19 +1,18 @@
 import { dim, yellow } from "colorette";
 import { withIcon } from "../print.js";
 
+const keys = ["dev", "build", "preview", "lint", "format", "deploy"] as const;
+
+type Scripts = (typeof keys)[number];
+type ValidScripts = Scripts | `${Scripts}:${string}`;
+
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
 }
 
 export interface PackageJsonScripts {
-  scripts: {
-    dev?: string;
-    build?: string;
-    preview?: string;
-    lint?: string;
-    format?: string;
-  };
+  scripts: Partial<Record<ValidScripts, string>>;
 }
 
 export interface PackageJsonScriptOption {
@@ -22,13 +21,7 @@ export interface PackageJsonScriptOption {
   warnIfReplaced?: boolean;
 }
 
-export interface PackageJsonScriptOptions {
-  dev?: PackageJsonScriptOption;
-  build?: PackageJsonScriptOption;
-  preview?: PackageJsonScriptOption;
-  lint?: PackageJsonScriptOption;
-  format?: PackageJsonScriptOption;
-}
+export type PackageJsonScriptOptions = Partial<Record<ValidScripts, PackageJsonScriptOption>>;
 
 function* deps(obj: PackageJsonDeps) {
   if (obj.devDependencies) {
@@ -79,13 +72,7 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
   return packageJson;
 }
 
-const previousScripts: Required<PackageJsonScriptOptions> = {
-  dev: { precedence: -Infinity },
-  build: { precedence: -Infinity },
-  preview: { precedence: -Infinity },
-  lint: { precedence: -Infinity },
-  format: { precedence: -Infinity },
-};
+const previousScripts: PackageJsonScriptOptions = {};
 
 function warnScript(key: string, old: string, nnew: string) {
   console.warn(
@@ -101,10 +88,10 @@ function warnScript(key: string, old: string, nnew: string) {
 }
 
 export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts: PackageJsonScriptOptions) {
-  const keys = ["dev", "build", "preview", "lint", "format"] as const;
+  const keys = Object.keys(scripts) as ValidScripts[];
 
   for (const key of keys) {
-    const prev = previousScripts[key]!;
+    const prev = previousScripts[key] ?? { precedence: -Infinity };
     const sub = scripts[key];
 
     if (sub) {
@@ -114,7 +101,7 @@ export function setScripts<T extends PackageJsonScripts>(packageJson: T, scripts
         }
 
         packageJson.scripts[key] = sub.value;
-        previousScripts[key] = sub;
+        previousScripts[key] = Object.assign({ precedence: -Infinity }, sub);
       } else {
         if (sub.warnIfReplaced) {
           warnScript(key, sub.value!, prev.value!);

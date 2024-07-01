@@ -27,13 +27,17 @@ export const rulesMessages = {
     )}. Check https://vike.dev/integration#server-side-tools for details and https://batijs.dev for available servers`,
   ),
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(
-    `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}.`,
+    `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}`,
   ),
   [RulesMessage.INFO_HATTIP]: info(`${inverse(bold("HatTip"))} is an experimental project`),
   [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
-    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}.`,
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}`,
   ),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(
-    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}.`,
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,
+  ),
+  [RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER]: error(
+    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
+Choose one of them, or simply remove selected Server`,
   ),
 } satisfies Record<RulesMessage, RuleMessage>;

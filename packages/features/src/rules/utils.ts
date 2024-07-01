@@ -14,7 +14,7 @@ export function exclusive(message: RulesMessage, rules: FeatureOrCategory[]): Ru
 }
 
 /**
- * Returns a message if subject is present but rules are not
+ * Returns a message if ifPresent is present but any mustAlsoInclude is not
  */
 export function requires(
   message: RulesMessage,
@@ -30,6 +30,13 @@ export function requires(
  */
 export function includes(message: RulesMessage, ifPresent: FeatureOrCategory): Rule {
   return (fts: Set<FeatureOrCategory>) => fts.has(ifPresent) && message;
+}
+
+/**
+ * Returns a message if callback return true
+ */
+export function filter(message: RulesMessage, callback: (fts: Set<FeatureOrCategory>) => boolean): Rule {
+  return (fts: Set<FeatureOrCategory>) => callback(fts) && message;
 }
 
 /**
