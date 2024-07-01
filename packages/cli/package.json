@@ -5,8 +5,8 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "prerelease": "rimraf ./dist",
-    "prepublishOnly": "pnpm run build-cli",
-    "build-cli": "rimraf ./dist && tsup"
+    "prepublishOnly": "pnpm run build",
+    "build": "rimraf ./dist && tsup"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",

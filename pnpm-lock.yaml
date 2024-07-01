@@ -108,6 +108,19 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
 
+  boilerplates/cloudflare:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.31
+
   boilerplates/compiled:
     dependencies:
       '@batijs/core':
