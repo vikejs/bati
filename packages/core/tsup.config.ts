@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import type { Plugin } from "esbuild";
 import { defineConfig } from "tsup";
+import { purgePolyfills } from "unplugin-purge-polyfills";
 
 const eslintFixPlugin: Plugin = {
   name: "eslint-fix-plugin",
@@ -42,7 +43,7 @@ export default defineConfig({
   outDir: "./dist",
   dts: true,
   bundle: true,
-  esbuildPlugins: [eslintFixPlugin],
+  esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({})],
   minify: true,
   // metafile: true,
 

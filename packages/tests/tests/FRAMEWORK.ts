@@ -27,7 +27,9 @@ await describeBati(({ test, expect, fetch }) => {
     expect(text).not.toContain('src="https://plausible.io');
   });
 
-  test("Bati render files are NOT present", async () => {
+  test("Bati optional files are NOT present", async () => {
     expect(existsSync(path.join(process.cwd(), "renderer", "+onRenderHtml.ts"))).toBe(false);
+    expect(existsSync(path.join(process.cwd(), "server", "vike-handler.ts"))).toBe(false);
+    expect(existsSync(path.join(process.cwd(), "server", "create-todo-handler.ts"))).toBe(false);
   });
 });

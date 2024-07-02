@@ -1,7 +1,7 @@
 ### Syntax
 
 Bati uses specific syntaxes to generate its boilerplates.
-The global idea is to have templating as code, so that it is easy to write and maintain templates.
+The global idea is to have templating as code, making it is easy to write and maintain templates.
 
 <table>
 <tr>
@@ -85,6 +85,31 @@ import "./mycss";
 
 ```ts
 import "./mycss";
+```
+
+</td>
+<td>
+
+nothing
+
+</td>
+</tr>
+<tr>
+<tr>
+<td>
+
+```ts
+/*# BATI include-if-imported #*/
+
+const a = 1;
+```
+
+</td>
+<td>
+true if the file is at least imported by any other generated file
+
+```ts
+const a = 1;
 ```
 
 </td>

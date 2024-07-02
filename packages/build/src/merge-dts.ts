@@ -50,7 +50,9 @@ export async function mergeDts({
     }
   }
 
-  return transformAndFormat(currentAst.generate().code, meta, {
+  const res = await transformAndFormat(currentAst.generate().code, meta, {
     filepath,
   });
+
+  return res.code;
 }

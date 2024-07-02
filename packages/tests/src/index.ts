@@ -185,19 +185,12 @@ async function execTurborepo(context: GlobalContext, steps?: string[], force?: b
   const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
   const args_2 = ["--only", "--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
-  if (process.env.CI) {
-    const cacheDir = join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache");
-    args_2.push("--concurrency");
-    args_2.push("2");
-    args_2.push(`--cache-dir`);
-    args_2.push(cacheDir);
-    console.log("[turborepo] Using cache dir", cacheDir);
-  } else {
-    const cacheDir = join(tmpdir(), "bati-cache");
-    args_2.push(`--cache-dir`);
-    args_2.push(cacheDir);
-    console.log("[turborepo] Using cache dir", cacheDir);
-  }
+  const cacheDir = process.env.CI
+    ? join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache")
+    : join(tmpdir(), "bati-cache");
+  args_2.push(`--cache-dir`);
+  args_2.push(cacheDir);
+  console.log("[turborepo] Using cache dir", cacheDir);
 
   for (const task of ["build", "test", "lint", "typecheck"]) {
     if (steps && !steps.includes(task) && task !== "build") continue;

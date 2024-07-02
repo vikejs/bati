@@ -6,6 +6,7 @@ import solid from "eslint-plugin-solid/configs/recommended";
 import type { VikeMeta } from "../../types.js";
 import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
+import { visitorGlobalComments } from "./visitor-global-comments.js";
 import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
 
@@ -17,7 +18,11 @@ export default function tsLinterConfig(meta: VikeMeta) {
         // @ts-ignore
         create(context) {
           const sourceCode = context.sourceCode;
+
           return {
+            Program(node) {
+              visitorGlobalComments(context, sourceCode, node);
+            },
             ImportDeclaration(node) {
               visitorImportStatement(context, node);
             },
