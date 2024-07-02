@@ -18,7 +18,7 @@ nodeApp.use(
   }),
 );
 
-nodeApp.mount("/", app.fetch);
+nodeApp.route("/", app);
 
 const port = envs.PORT ? parseInt(envs.PORT, 10) : 3000;
 
