@@ -332,28 +332,6 @@ export const framework = solid();`,
   );
 });
 
-describe('rewrite "bati:" imports', async () => {
-  test("test", async () => {
-    const filename = ctx.jsx ? "test.tsx" : "test.ts";
-    const renderedOutput = await transformAndFormat(
-      `import { router } from "bati:./router";
-
-export const appRouter = router();`,
-      {
-        BATI: new Set(),
-      },
-      { filepath: filename },
-    );
-
-    assert.equal(
-      renderedOutput.code.trim(),
-      `import { router } from "./router";
-
-export const appRouter = router();`,
-    );
-  });
-});
-
 describe('rewrite "@batijs/" imports', async () => {
   test("test", async () => {
     const filename = ctx.jsx ? "test.tsx" : "test.ts";

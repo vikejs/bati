@@ -14,4 +14,9 @@ await describeBati(({ test, expect, fetch }) => {
   test("Bati render files are present", async () => {
     expect(existsSync(path.join(process.cwd(), "renderer", "+onRenderHtml.ts"))).toBe(true);
   });
+
+  test("Bati optional files are NOT present", async () => {
+    expect(existsSync(path.join(process.cwd(), "server", "vike-handler.ts"))).toBe(false);
+    expect(existsSync(path.join(process.cwd(), "server", "create-todo-handler.ts"))).toBe(false);
+  });
 });

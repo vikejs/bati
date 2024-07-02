@@ -1,7 +1,10 @@
-import { Linter } from "eslint";
+import { Linter, type Rule } from "eslint";
+
+export type AllowedContextFlags = "include-if-imported";
 
 export interface FileContext {
-  flags: Set<string>;
+  flags: Set<AllowedContextFlags>;
+  imports: Set<string>;
 }
 
 export function getLinter() {
@@ -10,37 +13,33 @@ export function getLinter() {
   });
 }
 
+export class Extractor {
+  flags: Set<AllowedContextFlags>;
+  imports: Set<string>;
+
+  constructor() {
+    this.flags = new Set();
+    this.imports = new Set();
+  }
+
+  addImport(imp: string) {
+    this.imports.add(imp);
+  }
+
+  addFlag(flag: string) {
+    this.flags.add(flag as AllowedContextFlags);
+  }
+}
+
+export function getExtractor(context: Rule.RuleContext): Extractor | undefined {
+  return context.settings?.extractor as Extractor;
+}
+
 export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename: string) {
   const linter = getLinter();
-  const context: FileContext = {
-    flags: new Set(),
-  };
+  const extractor = new Extractor();
 
-  const report = linter.verifyAndFix(code, config, {
-    // Extract metadata from global comment
-    postprocess(messages) {
-      const ret: Linter.LintMessage[] = [];
-
-      for (const message of messages.flat(1)) {
-        if (typeof message.message === "string") {
-          ret.push(message);
-        } else {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const m: any = message.message;
-
-          if ("flags" in m && Array.isArray(m.flags)) {
-            m.flags.forEach((flag: string) => context.flags.add(flag));
-          }
-
-          ret.push({
-            ...message,
-            message: "extracted-flags",
-          });
-        }
-      }
-
-      return ret;
-    },
+  const report = linter.verifyAndFix(code, [...config, { settings: { extractor } }], {
     filename,
   });
 
@@ -54,6 +53,6 @@ export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename
 
   return {
     code: report.output,
-    context,
+    context: extractor,
   };
 }
