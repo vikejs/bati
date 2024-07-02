@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 /// <reference lib="webworker" />
 import { renderPage } from "vike/server";
 

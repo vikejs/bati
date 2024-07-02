@@ -15,7 +15,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
       { filepath: filename },
     );
 
-    assert.equal(renderedOutput.trim(), expectedIf);
+    assert.equal(renderedOutput.code.trim(), expectedIf);
   });
 
   test("else", async () => {
@@ -27,7 +27,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
       { filepath: filename },
     );
 
-    assert.equal(renderedOutput.trim(), expectedElse);
+    assert.equal(renderedOutput.code.trim(), expectedElse);
   });
 }
 
@@ -158,7 +158,7 @@ describe('vue/script: rewrite "bati:" imports', async () => {
     );
 
     assert.equal(
-      renderedOutput.trim(),
+      renderedOutput.code.trim(),
       `<script>
   import { router } from "./router";
   export const appRouter = router();
@@ -181,7 +181,7 @@ describe('vue/script: rewrite "@batijs/" imports', async () => {
     );
 
     assert.equal(
-      renderedOutput.trim(),
+      renderedOutput.code.trim(),
       `<script>
   import { router } from "./router";
   export const appRouter = router();
@@ -238,5 +238,5 @@ test("vue formatter", async () => {
     BATI: new Set(["vue"]),
   });
 
-  assert.equal(await formatCode(renderedOutput, { filepath: "test.vue" }), code);
+  assert.equal(await formatCode(renderedOutput.code, { filepath: "test.vue" }), code);
 });

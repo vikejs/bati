@@ -26,3 +26,14 @@ export function extractBatiConditionComment(comment: { value: string }) {
 
   return comment.value.replace(/^# /, "").trim();
 }
+
+export function extractBatiGlobalComment(comment: { value: string }) {
+  if (!comment.value.includes(" BATI ")) return null;
+
+  return comment.value
+    .replace(/^#/, "")
+    .replace(/#$/, "")
+    .replace(/\s+BATI\s+/, "")
+    .trim()
+    .split(",");
+}

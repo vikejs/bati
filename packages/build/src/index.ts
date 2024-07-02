@@ -114,18 +114,24 @@ Please report this issue to https://github.com/batijs/bati`,
           const code = await readFile(p, { encoding: "utf-8" });
           const filepath = path.relative(source, p);
 
-          let fileContent = await transformAndFormat(code, meta, {
+          const result = await transformAndFormat(code, meta, {
             filepath,
           });
 
+          // TODO use result.context
+
+          let fileContent = result.code;
+
           if (p.endsWith(".d.ts") && targets.has(target)) {
             // Merging .d.ts files here
-            fileContent = await mergeDts({
-              fileContent,
-              target,
-              meta,
-              filepath,
-            });
+            fileContent = (
+              await mergeDts({
+                fileContent,
+                target,
+                meta,
+                filepath,
+              })
+            ).code;
           }
 
           if (fileContent) {

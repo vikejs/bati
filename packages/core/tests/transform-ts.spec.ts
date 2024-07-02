@@ -1,4 +1,4 @@
-import { afterEach, assert, beforeEach, describe, test } from "vitest";
+import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
 
@@ -26,7 +26,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       { filepath: filename },
     );
 
-    assert.equal(renderedOutput.trim(), expectedIf);
+    assert.equal(renderedOutput.code.trim(), expectedIf);
   });
 
   if (expectedElseIf) {
@@ -40,7 +40,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
         { filepath: filename },
       );
 
-      assert.equal(renderedOutput.trim(), expectedElseIf);
+      assert.equal(renderedOutput.code.trim(), expectedElseIf);
     });
   }
 
@@ -54,7 +54,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       { filepath: filename },
     );
 
-    assert.equal(renderedOutput.trim(), expectedElse);
+    assert.equal(renderedOutput.code.trim(), expectedElse);
   });
 }
 
@@ -346,7 +346,7 @@ export const appRouter = router();`,
     );
 
     assert.equal(
-      renderedOutput.trim(),
+      renderedOutput.code.trim(),
       `import { router } from "./router";
 
 export const appRouter = router();`,
@@ -368,10 +368,54 @@ export const test = trpc;`,
     );
 
     assert.equal(
-      renderedOutput.trim(),
+      renderedOutput.code.trim(),
       `import { trpc } from "./trpc/client";
 
 export const test = trpc;`,
     );
+  });
+});
+
+describe("global meta comments", async () => {
+  const options = { filepath: "test.ts" };
+
+  test("valid flags", async () => {
+    const renderedOutput = await transformAndFormat(
+      `/*# BATI include-if-imported #*/      
+const a = 1;`,
+      {
+        BATI: new Set(),
+      },
+      options,
+    );
+
+    assert.equal(renderedOutput.code.trim(), `const a = 1;`);
+    assert.isTrue(renderedOutput.context?.flags.has("include-if-imported"));
+  });
+
+  test("invalid flags", async () => {
+    expect(
+      transformAndFormat(
+        `/*# BATI invalid #*/      
+const a = 1;`,
+        {
+          BATI: new Set(),
+        },
+        options,
+      ),
+    ).rejects.toThrow(`Unknown BATI file flag invalid`);
+  });
+
+  test("mix valid and invalid flags", async () => {
+    expect(
+      transformAndFormat(
+        `/*# BATI include-if-imported,invalid #*/      
+const a = 1;`,
+        {
+          BATI: new Set(),
+        },
+        options,
+      ),
+    ).rejects.toThrow(`Unknown BATI file flag invalid`);
   });
 });
