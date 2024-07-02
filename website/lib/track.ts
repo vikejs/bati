@@ -26,9 +26,9 @@ function generateUUID() {
 }
 
 export function track<T extends Events>(event: T["name"], data: T["data"]) {
-  const interactionId = generateUUID();
+  const interactionid = generateUUID();
   console.log({
-    interactionId,
+    interactionid,
     event,
     data,
   });
@@ -38,14 +38,14 @@ export function track<T extends Events>(event: T["name"], data: T["data"]) {
         globalThis.zaraz?.track(event, {
           flag: undefined,
           package_manager: data.package_manager,
-          interaction_id: interactionId,
+          interactionid,
         });
       }
       for (const flag of data.flags) {
         globalThis.zaraz?.track(event, {
           flag,
           package_manager: data.package_manager,
-          interaction_id: interactionId,
+          interactionid,
         });
       }
     }
