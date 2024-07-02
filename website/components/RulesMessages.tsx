@@ -56,8 +56,8 @@ export const rulesMessages = {
   [RulesMessage.INFO_HATTIP]: info(() => {
     return (
       <span class="inline-block">
-        <span class="font-bold">HatTip</span> is an experimental project. Prefer <span class="font-bold">H3</span> or{" "}
-        <span class="font-bold">Express</span> for production use
+        <span class="font-bold">HatTip</span> is an experimental project. Prefer{" "}
+        <span class="font-bold">(Hono / Express.js / H3 / Fastify)</span> for production use
       </span>
     );
   }),
