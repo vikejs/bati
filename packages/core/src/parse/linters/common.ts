@@ -1,4 +1,6 @@
 import { Linter, type Rule } from "eslint";
+import { getBatiImportMatch } from "./visitor-imports.js";
+import { relative } from "../../relative.js";
 
 export type AllowedContextFlags = "include-if-imported";
 
@@ -16,14 +18,32 @@ export function getLinter() {
 export class Extractor {
   flags: Set<AllowedContextFlags>;
   imports: Set<string>;
+  filename: string;
 
-  constructor() {
+  constructor(filename: string) {
+    this.filename = filename;
     this.flags = new Set();
     this.imports = new Set();
   }
 
   addImport(imp: string) {
-    this.imports.add(imp);
+    const matches = getBatiImportMatch(imp);
+
+    if (matches) {
+      this.imports.add(relative(this.filename, matches[1]));
+    } else {
+      this.imports.add(imp);
+    }
+  }
+
+  deleteImport(imp: string) {
+    const matches = getBatiImportMatch(imp);
+
+    if (matches) {
+      this.imports.delete(relative(this.filename, matches[1]));
+    } else {
+      this.imports.delete(imp);
+    }
   }
 
   addFlag(flag: string) {
@@ -37,7 +57,7 @@ export function getExtractor(context: Rule.RuleContext): Extractor | undefined {
 
 export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename: string) {
   const linter = getLinter();
-  const extractor = new Extractor();
+  const extractor = new Extractor(filename);
 
   const report = linter.verifyAndFix(code, [...config, { settings: { extractor } }], {
     filename,

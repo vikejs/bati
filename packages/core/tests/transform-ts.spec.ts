@@ -333,7 +333,7 @@ export const framework = solid();`,
 });
 
 describe('rewrite "@batijs/" imports', async () => {
-  test("test", async () => {
+  test("simple", async () => {
     const filename = ctx.jsx ? "test.tsx" : "test.ts";
     const renderedOutput = await transformAndFormat(
       `import { trpc } from "@batijs/trpc/trpc/client";
@@ -351,6 +351,23 @@ export const test = trpc;`,
 
 export const test = trpc;`,
     );
+    assert.isTrue(renderedOutput.context?.imports.has("./trpc/client"));
+  });
+
+  test("With unused import", async () => {
+    const filename = ctx.jsx ? "test.tsx" : "test.ts";
+    const renderedOutput = await transformAndFormat(
+      `import { trpc } from "@batijs/trpc/trpc/client";
+
+export const test = 1;`,
+      {
+        BATI: new Set(),
+      },
+      { filepath: filename },
+    );
+
+    assert.equal(renderedOutput.code.trim(), `export const test = 1;`);
+    assert.isFalse(renderedOutput.context?.imports.has("./trpc/client"));
   });
 });
 

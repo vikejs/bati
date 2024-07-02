@@ -5,12 +5,15 @@ import type AST from "vue-eslint-parser/ast";
 import { relative } from "../../relative.js";
 import { getExtractor } from "./common.js";
 
+export function getBatiImportMatch(subject: string) {
+  return subject.match(/^@batijs\/[^/]+\/(.+)$/);
+}
+
 export function visitorImportStatement(
   context: Rule.RuleContext,
   node: AST.ESLintImportDeclaration | ESTree.ImportDeclaration | TSESTree.ImportDeclaration,
 ) {
-  const matches = (node as TSESTree.ImportDeclaration).source.value.match(/^@batijs\/[^/]+\/(.+)$/);
-
+  const matches = getBatiImportMatch((node as TSESTree.ImportDeclaration).source.value);
   const extractor = getExtractor(context);
 
   if (matches) {
