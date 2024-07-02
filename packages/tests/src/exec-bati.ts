@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { exec } from "@batijs/tests-utils";
+import { bunExists, exec } from "@batijs/tests-utils";
 import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,7 +32,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
     );
   } else {
     await exec(
-      "node",
+      bunExists ? "bun" : "node",
       [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...flags.map((f) => `--${f}`), digest],
       {
         timeout: 10000,
