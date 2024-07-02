@@ -1,7 +1,7 @@
 <template>
   <h1>Star Wars Movies</h1>
   <ol>
-    <li v-for="item in movies" :key="item.id">
+    <li v-for="item in movies.data" :key="item.id">
       <a :href="'/star-wars/' + item.id">{{ item.title }}</a> ({{ item.release_date }})
     </li>
   </ol>

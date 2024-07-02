@@ -11,7 +11,7 @@ export const data = async () => {
   // We remove data we don't need because the data is passed to the client; we should
   // minimize what is sent over the network.
   const movies = minimize(moviesData);
-  return movies;
+  return { data: movies };
 };
 
 function minimize(movies: MovieDetails[]): Movie[] {
