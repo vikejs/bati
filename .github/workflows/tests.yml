@@ -67,6 +67,15 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - uses: actions/cache@v4
+        name: Setup bun cache
+        with:
+          path: ~/.bun/install/cache
+          # Uses pnpm hash to avoid too many cache creations
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - uses: actions/cache@v4
         name: Setup Bati cache
         with:
           path: ${{ runner.temp }}/bati-cache
