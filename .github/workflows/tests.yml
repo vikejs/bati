@@ -64,7 +64,6 @@ jobs:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
             ${{ runner.os }}-pnpm-store-
 
       - uses: actions/cache@v4
@@ -74,7 +73,6 @@ jobs:
           # Uses pnpm hash to avoid too many cache creations
           key: ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
             ${{ runner.os }}-bun-
 
       - uses: actions/cache@v4
