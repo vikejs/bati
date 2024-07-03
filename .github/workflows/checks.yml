@@ -51,10 +51,10 @@ jobs:
       - uses: actions/cache@v4
         name: Setup Turborepo cache
         with:
-          path: ${{ runner.temp }}/bati-cache
-          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.sha }}
+          path: .turbo
+          key: ${{ runner.os }}-${{ matrix.node }}-turbo-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node }}-bati-cache-
+            ${{ runner.os }}-${{ matrix.node }}-turbo-
 
       - name: Install dependencies
         run: pnpm install
