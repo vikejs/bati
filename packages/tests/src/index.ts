@@ -193,23 +193,21 @@ async function execTurborepo(context: GlobalContext, steps?: string[], force?: b
   console.log("[turborepo] Using cache dir", cacheDir);
 
   if (process.env.CI) {
-    // Github CI seems to fail more often with default concurrency
+    // GitHub CI seems to fail more often with default concurrency
     args_2.push("--concurrency");
     args_2.push("3");
+    // Debug cache hits
+    args_2.push("--summarize");
   }
 
-  for (const task of ["build", "test", "lint", "typecheck"]) {
-    if (steps && !steps.includes(task) && task !== "build") continue;
-
-    if (force && task !== "build") {
-      args_2.push("--force");
-    }
-
-    await exec(npmCli, [...args_1, task, ...args_2], {
-      timeout: 30 * 60 * 1000, // 30min
-      cwd: context.tmpdir,
-    });
+  if (force) {
+    args_2.push("--force");
   }
+
+  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck"]), ...args_2], {
+    timeout: 30 * 60 * 1000, // 30min
+    cwd: context.tmpdir,
+  });
 }
 
 function isVerdaccioRunning() {
@@ -335,8 +333,10 @@ try {
   const argv = process.argv.slice(2);
   await main(context, mri<CliOptions>(argv));
 } finally {
-  if (context.tmpdir) {
-    // delete all tmp dirs
+  if (context.tmpdir && !process.env.CI) {
+    // Delete all tmp dirs
+    // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
+    // which are generated in `${context.tmpdir}/.turbo/runs`
     await spinner("Cleaning temporary folder...", () =>
       rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
     );

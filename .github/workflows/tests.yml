@@ -14,12 +14,13 @@ jobs:
   build-and-tests:
     runs-on: ${{ matrix.os }}
 
-    services:
-      verdaccio:
-        # See https://github.com/actions/runner/issues/822#issuecomment-1524826092
-        image: ${{ (matrix.os == 'ubuntu-latest') && 'verdaccio/verdaccio' || '' }}
-        ports:
-          - 4873:4873
+    # Uncomment to debug discrepancies between published package and local one
+#    services:
+#      verdaccio:
+#        # See https://github.com/actions/runner/issues/822#issuecomment-1524826092
+#        image: ${{ (matrix.os == 'ubuntu-latest') && 'verdaccio/verdaccio' || '' }}
+#        ports:
+#          - 4873:4873
 
     strategy:
       matrix:
@@ -81,18 +82,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-turbo-
 
-      - name: Install global dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: pnpm install --global npm-cli-login
+#      - name: Install global dependencies
+#        if: matrix.os == 'ubuntu-latest'
+#        run: pnpm install --global npm-cli-login
 
-      - name: Login to verdaccio
-        if: matrix.os == 'ubuntu-latest'
-        run: npm-cli-login
-        env:
-          NPM_USER: bati
-          NPM_PASS: bati
-          NPM_EMAIL: bati@example.com
-          NPM_REGISTRY: http://localhost:4873
+#      - name: Login to verdaccio
+#        if: matrix.os == 'ubuntu-latest'
+#        run: npm-cli-login
+#        env:
+#          NPM_USER: bati
+#          NPM_PASS: bati
+#          NPM_EMAIL: bati@example.com
+#          NPM_REGISTRY: http://localhost:4873
 
       - name: Install dependencies
         run: pnpm install
@@ -100,9 +101,9 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
-      - name: Release in local repo
-        if: matrix.os == 'ubuntu-latest'
-        run: pnpm run release:local
+#      - name: Release in local repo
+#        if: matrix.os == 'ubuntu-latest'
+#        run: pnpm run release:local
 
       - name: Run tests
         run: pnpm run test
@@ -114,3 +115,10 @@ jobs:
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
           TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
           TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary
+          path: |
+            ${{ runner.temp }}/bati/.turbo/runs
