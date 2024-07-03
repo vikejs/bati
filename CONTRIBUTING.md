@@ -27,7 +27,7 @@ pnpm build # At the monorepo root
 
 <br/>
 
-## Create a new integration
+## Integrate a new feature
 ```shell
 # At the monorepo root
 
