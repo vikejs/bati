@@ -192,6 +192,12 @@ async function execTurborepo(context: GlobalContext, steps?: string[], force?: b
   args_2.push(cacheDir);
   console.log("[turborepo] Using cache dir", cacheDir);
 
+  if (process.env.CI) {
+    // Github CI seems to fail more often with default concurrency
+    args_2.push("--concurrency");
+    args_2.push("3");
+  }
+
   for (const task of ["build", "test", "lint", "typecheck"]) {
     if (steps && !steps.includes(task) && task !== "build") continue;
 
