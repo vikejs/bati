@@ -22,14 +22,14 @@ Each boilerplate contains at least:
 
 ## How to keep code maintainable
 
-The most important thing is to avoid duplicating code as much as possible. And we have several ways to help us:
-- Create multiple boilerplates if necessary, each with [different conditions](#packagejsonbati-condition)
+The most important thing is to avoid duplicating code as much as possible. And we have several tools to help us:
+- Split a _feature_ into multiple boilerplates if necessary, each with [different conditions](#packagejsonbati-condition)
 - Make use of [Bati's own templating syntax](https://github.com/batijs/bati/blob/main/boilerplates/README.md)
 - Use [special `$*.ts` filename syntax](#ts-files)
 
 One other important goal is to keep code safely typed. Thanks to Bati's [special syntax](https://github.com/batijs/bati/blob/main/boilerplates/README.md), mixing code and templating is usually straightforward.
 
-> [!NOTE]
+> [!TIP]
 > You can require boilerplates files from any other boilerplate. Use the special `@batijs/*` imports to achieve this.
 > For instance, importing `@batijs/trpc/trpc/server` imports the `boilerplates/trpc/files/trpc/server.ts` file. Typing information is conserved when doing so.
 > Upon scaffolding, those imports are replaced by relative ones.
@@ -47,12 +47,12 @@ Most notably, the `bati.if` property leverages [sift](https://www.npmjs.com/pack
 `files/` folder can contain special `$*.ts` files which, contrary to other files which are [mostly](https://github.com/batijs/bati/blob/main/boilerplates/README.md) copied as-is,
 are interpreted.
 
-> [!TIP]
+> [!NOTE]
 > When generating the proper filename of the destination file, the `$` and `.ts` parts are removed.
 > For instance, `$vite.config.ts.ts` is renamed `vite.config.ts`, or `$package.json.ts` is renamed `package.json`.
 
 Those files MUST export a default function which returns either a `string` or `undefined` (or some serializable object for `.json` files).
-If the function returns `undefined`, nothing happens (existing file is not altered, and no empty file created).
+If the function returns `undefined`, nothing happens (existing file is not altered, and no empty file is created).
 
 ```ts
 // files/$vite.config.ts.ts
