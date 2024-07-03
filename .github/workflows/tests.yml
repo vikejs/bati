@@ -120,6 +120,6 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: summary
+          name: ${{ runner.os }}-${{ matrix.node }}-summary
           path: |
             ${{ runner.temp }}/bati/.turbo/runs/*.json
