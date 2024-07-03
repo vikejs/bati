@@ -3,7 +3,7 @@ Any folder contained in [boilerplates](https://github.com/batijs/bati/tree/main/
 Each boilerplate may be related to one or multiple _features_.
 
 > [!NOTE]
-> `react`, `eslint`, `auth0`, etc. are each considered a _feature_.
+> `react`, `eslint`, `auth0`, etc. are each considered as _features_.
 > They are visible on the [website](https://batijs.dev/) and available through flags in the CLI.
 > They are defined in [features.ts](https://github.com/batijs/bati/blob/main/packages/features/src/features.ts).
 > On the CLI, each flag (i.e. `--solid`) enables the given feature.
