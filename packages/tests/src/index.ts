@@ -205,7 +205,7 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push("--force");
   }
 
-  if (process.env.CI || args.summarize) {
+  if (args.summarize) {
     // Debug cache hits
     args_2.push("--summarize");
   }
@@ -340,7 +340,7 @@ try {
   context.localRepository = await isVerdaccioRunning();
   await main(context, args);
 } finally {
-  if (context.tmpdir && !process.env.CI && !args.keep) {
+  if (context.tmpdir && !args.keep) {
     // Delete all tmp dirs
     // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
     // which are generated in `${context.tmpdir}/.turbo/runs`
