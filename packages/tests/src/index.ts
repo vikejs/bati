@@ -22,6 +22,8 @@ interface CliOptions {
   filter?: string;
   steps?: string;
   force?: boolean;
+  summarize?: boolean;
+  keep?: boolean;
 }
 
 async function updatePackageJson(projectDir: string) {
@@ -181,9 +183,10 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 }
-async function execTurborepo(context: GlobalContext, steps?: string[], force?: boolean) {
+async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>) {
+  const steps = args.steps ? args.steps.split(",") : undefined;
   const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
-  const args_2 = ["--only", "--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
+  const args_2 = ["--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
   const cacheDir = process.env.CI
     ? join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache")
@@ -192,18 +195,25 @@ async function execTurborepo(context: GlobalContext, steps?: string[], force?: b
   args_2.push(cacheDir);
   console.log("[turborepo] Using cache dir", cacheDir);
 
-  for (const task of ["build", "test", "lint", "typecheck"]) {
-    if (steps && !steps.includes(task) && task !== "build") continue;
-
-    if (force && task !== "build") {
-      args_2.push("--force");
-    }
-
-    await exec(npmCli, [...args_1, task, ...args_2], {
-      timeout: 30 * 60 * 1000, // 30min
-      cwd: context.tmpdir,
-    });
+  if (process.env.CI) {
+    // GitHub CI seems to fail more often with default concurrency
+    args_2.push("--concurrency");
+    args_2.push("3");
   }
+
+  if (args.force) {
+    args_2.push("--force");
+  }
+
+  if (args.summarize) {
+    // Debug cache hits
+    args_2.push("--summarize");
+  }
+
+  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck"]), ...args_2], {
+    timeout: 30 * 60 * 1000, // 30min
+    cwd: context.tmpdir,
+  });
 }
 
 function isVerdaccioRunning() {
@@ -237,7 +247,6 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const filter = args.filter ? args.filter.split(",") : undefined;
-  const steps = args.steps ? args.steps.split(",") : undefined;
   await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
@@ -318,19 +327,23 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // exec turbo run test lint build
-  await execTurborepo(context, steps, args.force);
+  await execTurborepo(context, args);
 }
 
 // init context
 const context: GlobalContext = { tmpdir: "", localRepository: false };
 
+const argv = process.argv.slice(2);
+const args = mri<CliOptions>(argv);
+
 try {
   context.localRepository = await isVerdaccioRunning();
-  const argv = process.argv.slice(2);
-  await main(context, mri<CliOptions>(argv));
+  await main(context, args);
 } finally {
-  if (context.tmpdir) {
-    // delete all tmp dirs
+  if (context.tmpdir && !args.keep) {
+    // Delete all tmp dirs
+    // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
+    // which are generated in `${context.tmpdir}/.turbo/runs`
     await spinner("Cleaning temporary folder...", () =>
       rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
     );
