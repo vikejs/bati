@@ -4,10 +4,6 @@ export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
 
   addVitePlugin(mod, {
-    from: "vike/plugin",
-    constructor: "ssr",
-  });
-  addVitePlugin(mod, {
     from: "@vitejs/plugin-vue",
     constructor: "vue",
     options: {
