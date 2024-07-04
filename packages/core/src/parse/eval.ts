@@ -1,11 +1,13 @@
 import type { SourceCode } from "eslint";
 import type { VikeMeta } from "../types.js";
 
-export function evalCondition(code: string, meta: VikeMeta): boolean {
-  const func = new Function(`{ return function(BATI){ return ${code} } };`);
-  const result = func.call(null).call(null, meta.BATI);
+export type ValidEvalResponse = boolean | "remove-comments-only";
 
-  if (typeof result !== "boolean") {
+export function evalCondition(code: string, meta: VikeMeta): ValidEvalResponse {
+  const func = new Function(`{ return function(BATI){ return ${code} } };`);
+  const result: unknown = func.call(null).call(null, meta.BATI);
+
+  if (result !== "remove-comments-only" && typeof result !== "boolean") {
     throw new Error("Condition evaluation failed");
   }
 

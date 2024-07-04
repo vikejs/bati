@@ -131,6 +131,28 @@ import "react";`,
   );
 });
 
+describe("ts: comment above comment", () => {
+  testIfElse(
+    `//# BATI.has("react")
+/// <reference types="vite-plugin-vercel/types" />
+const a = 1;`,
+    `/// <reference types="vite-plugin-vercel/types" />
+const a = 1;`,
+    ``,
+  );
+});
+
+describe("ts: remove-comments-only", () => {
+  testIfElse(
+    `//# BATI.has("react") || "remove-comments-only"
+/// <reference types="vite-plugin-vercel/types" />
+const a = 1;`,
+    `/// <reference types="vite-plugin-vercel/types" />
+const a = 1;`,
+    `const a = 1;`,
+  );
+});
+
 describe("ts: comment in array", () => {
   testIfElse(
     `const a = [

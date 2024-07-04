@@ -19,7 +19,6 @@ import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
@@ -57,7 +56,7 @@ startServer();
 async function startServer() {
   const app = express();
 
-  if (isProduction) {
+  if (process.env.NODE_ENV === "production") {
     app.use(express.static(`${root}/dist/client`));
   } else {
     // Instantiate Vite's development server and integrate its middleware to our server.
