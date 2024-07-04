@@ -6,7 +6,6 @@
   "description": "@batijs monorepo",
   "scripts": {
     "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
-    "list-boilerplates": "tsx ./scripts/helpers/boilerplates.ts",
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
