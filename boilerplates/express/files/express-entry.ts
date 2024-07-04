@@ -51,7 +51,7 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
   );
 }
 
-startServer();
+export default (await startServer()) as unknown;
 
 async function startServer() {
   const app = express();
@@ -135,4 +135,6 @@ async function startServer() {
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
   });
+
+  return app;
 }
