@@ -1,3 +1,6 @@
+> [!TIP]
+> `BATI` is a global available during the templating phase, which is a `Set` containing all chosen _features_
+
 ### Syntax
 
 Bati uses specific syntaxes to generate its boilerplates.
