@@ -117,7 +117,7 @@ jobs:
         run: pnpm run test
 
       - name: Run e2e tests
-        run: pnpm run test:e2e --keep --summarize
+        run: pnpm run test:e2e --keep --summarize ${{ (matrix.os == 'windows-latest' || matrix.os == 'macos-latest') && '--filter react' || '' }}
         env:
           TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}

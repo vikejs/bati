@@ -70,7 +70,7 @@ async function importTransformer(p: string) {
 
 function importToPotentialTargets(imp: string) {
   let subject = imp;
-  const ext = path.posix.extname(imp);
+  const ext = path.extname(imp);
   const targets: string[] = [];
 
   if (ext.match(/^\.[jt]sx?$/)) {
@@ -99,7 +99,7 @@ export default async function main(options: { source: string | string[]; dist: s
     if (!imports) return;
 
     for (const imp of imports.values()) {
-      const importTarget = path.posix.resolve(path.posix.dirname(target), imp);
+      const importTarget = path.resolve(path.dirname(target), imp);
       const importTargets = importToPotentialTargets(importTarget);
 
       for (const imp2 of importTargets) {
@@ -112,9 +112,8 @@ export default async function main(options: { source: string | string[]; dist: s
     if (!imports) return;
 
     for (const imp of imports.values()) {
-      const importTarget = path.posix.resolve(path.posix.dirname(target), imp);
+      const importTarget = path.resolve(path.dirname(target), imp);
       const importTargets = importToPotentialTargets(importTarget);
-      // console.log("triggerPendingTargets(targets)", importTarget, importTargets);
 
       for (const imp2 of importTargets) {
         if (includeIfImported.has(imp2)) {
@@ -130,7 +129,7 @@ export default async function main(options: { source: string | string[]; dist: s
   for (const source of sources) {
     for await (const p of walk(source)) {
       const target = toDist(p, source, options.dist);
-      const targetAbsolute = path.resolve(target);
+      const targetAbsolute = path.isAbsolute(target) ? target : path.resolve(target);
       const parsed = path.parse(p);
       if (parsed.name.match(reIgnoreFile)) {
         continue;

@@ -14,17 +14,6 @@ export function visitorStatementWithComments(
   const comments = sourceCode.getCommentsBefore(node as ESTree.Node);
 
   if (comments.length > 0) {
-    const identifierParents: (string | undefined)[] = ["CallExpression", "Property"];
-    if (node.type === "Identifier" && identifierParents.includes((node as AST.Node).parent?.type)) {
-      node = (node as AST.Node).parent!;
-    }
-    const start = node.range![0];
-    let end = node.range![1];
-
-    while (sourceCode.text[end]?.match(/\s|,/)) {
-      end += 1;
-    }
-
     const comment = comments[0];
 
     const condition = extractBatiConditionComment(comment);
@@ -33,14 +22,38 @@ export function visitorStatementWithComments(
 
     const testVal = evalCondition(condition, meta);
 
+    let start: number | undefined = undefined;
+    let end: number | undefined = undefined;
+
+    const removeCommentsOnly = comments.length > 1 && testVal === "remove-comments-only";
+
+    if (!removeCommentsOnly) {
+      const identifierParents: (string | undefined)[] = ["CallExpression", "Property"];
+      if (node.type === "Identifier" && identifierParents.includes((node as AST.Node).parent?.type)) {
+        node = (node as AST.Node).parent!;
+      }
+      start = node.range![0];
+      end = node.range![1];
+
+      while (sourceCode.text[end]?.match(/\s|,/)) {
+        end += 1;
+      }
+    }
+
     context.report({
       node: node as ESTree.Node,
       message: "bati/statement-comments",
       *fix(fixer) {
-        if (!testVal) {
-          yield fixer.removeRange([start, end]);
+        if (!testVal || testVal === "remove-comments-only") {
+          if (start !== undefined && end !== undefined) {
+            yield fixer.removeRange([start, end]);
+          }
+          for (const c of comments) {
+            yield fixer.remove(c as unknown as ESTree.Node);
+          }
+        } else {
+          yield fixer.remove(comment as unknown as ESTree.Node);
         }
-        yield fixer.remove(comment as unknown as ESTree.Node);
       },
     });
   }

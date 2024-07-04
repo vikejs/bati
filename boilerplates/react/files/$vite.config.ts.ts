@@ -16,11 +16,6 @@ export default async function getViteConfig(props: TransformerProps) {
     constructor: "react",
     options: reactOptions,
   });
-  addVitePlugin(mod, {
-    from: "vike/plugin",
-    constructor: "ssr",
-    options: vikeOptions,
-  });
 
   return mod.generate().code;
 }
