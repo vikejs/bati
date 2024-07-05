@@ -1,5 +1,6 @@
 //# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 /// <reference types="vite-plugin-vercel/types" />
+/// <reference types="@batijs/core/types" />
 import type { UserConfig } from "vite";
 import vike from "vike/plugin";
 
@@ -10,12 +11,12 @@ export default {
       prerender: true,
     }),
   ],
-  //# BATI.has("vercel") && BATI.has("express")
+  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify"))
   vercel: {
     additionalEndpoints: [
       {
         // entry file to the server. Default export must be a node server or a function
-        source: "express-entry.ts",
+        source: BATI.has("fastify") ? "fastify-entry.ts" : "express-entry.ts",
         // replaces default Vike target
         destination: "ssr_",
         // already added by default Vike route
