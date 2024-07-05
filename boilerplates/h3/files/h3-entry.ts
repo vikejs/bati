@@ -17,7 +17,7 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
-import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
+import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
 import {
   createApp,
   createRouter,
@@ -54,7 +54,7 @@ export function fromWebMiddleware<Context extends Record<string | number | symbo
   });
 }
 
-startServer();
+export default startServer();
 
 async function startServer() {
   const app = createApp();
@@ -149,4 +149,6 @@ async function startServer() {
   server.on("listening", () => {
     console.log(`Server listening on http://localhost:${port}`);
   });
+
+  return server;
 }

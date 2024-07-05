@@ -15,6 +15,13 @@ export function visitorStatementWithComments(
 
   if (comments.length > 0) {
     const comment = comments[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((comment as any).handled) {
+      return;
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (comment as any).handled = true;
+    }
 
     const condition = extractBatiConditionComment(comment);
 
@@ -37,6 +44,9 @@ export function visitorStatementWithComments(
 
       while (sourceCode.text[end]?.match(/\s|,/)) {
         end += 1;
+        if (sourceCode.text[end - 1] === ",") {
+          break;
+        }
       }
     }
 
