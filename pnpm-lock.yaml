@@ -549,6 +549,9 @@ importers:
       '@hattip/adapter-node':
         specifier: ^0.0.46
         version: 0.0.46
+      '@hattip/adapter-vercel-edge':
+        specifier: ^0.0.46
+        version: 0.0.46
       '@hattip/core':
         specifier: ^0.0.46
         version: 0.0.46
@@ -818,6 +821,9 @@ importers:
       '@batijs/features':
         specifier: workspace:*
         version: link:../../packages/features
+      '@hattip/vite':
+        specifier: ^0.0.46
+        version: 0.0.46(vite@5.3.3(@types/node@18.19.31))
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
@@ -2885,6 +2891,9 @@ packages:
 
   '@hattip/adapter-node@0.0.46':
     resolution: {integrity: sha512-DvG2VH4/116T7x1ibzzeGcoGA940w4G0Gy7XjVOgE6ZXwAOunoXS2zfqTlSxFsdTegDnXpGxI50XVq6cdcwBKA==}
+
+  '@hattip/adapter-vercel-edge@0.0.46':
+    resolution: {integrity: sha512-ODcYRjaP2FIZ8ZYHNBoc/zMREY+wVPKTRX8i35oooFiokn1zISe/wkSxvDrCZeOr+UA8NCBDKuj9LObVFteFMg==}
 
   '@hattip/compose@0.0.46':
     resolution: {integrity: sha512-CZRQ+6CnJWY5tslKGgRnS8kKaEBvkViIz9V49Obk4ieGXK0HlGMU9Cyflktx5Pcb5tVNwbrX0dTRiIDesJ1maA==}
@@ -8376,6 +8385,10 @@ snapshots:
       '@hattip/core': 0.0.46
       '@hattip/polyfills': 0.0.46
       '@hattip/walk': 0.0.46
+
+  '@hattip/adapter-vercel-edge@0.0.46':
+    dependencies:
+      '@hattip/core': 0.0.46
 
   '@hattip/compose@0.0.46':
     dependencies:

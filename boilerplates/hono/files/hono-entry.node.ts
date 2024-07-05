@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { Hono, type Context } from "hono";
+import { type Context, Hono } from "hono";
 import { env } from "hono/adapter";
 import { compress } from "hono/compress";
 import app from "./hono-entry.js";
@@ -18,7 +18,7 @@ nodeApp.use(
   }),
 );
 
-nodeApp.route("/", app);
+nodeApp.route("/", app!);
 
 const port = envs.PORT ? parseInt(envs.PORT, 10) : 3000;
 

@@ -187,6 +187,23 @@ describe("ts: comment in array", () => {
 ];`,
     `const a = [1];`,
   );
+
+  testIfElse(
+    `export default defineConfig({
+  plugins: [
+    //# BATI.has("react")
+    process.env.NODE_ENV !== "production" ? hattip() : undefined,
+    //# !BATI.has("react")
+    hattip(),
+  ],
+});`,
+    `export default defineConfig({
+  plugins: [process.env.NODE_ENV !== "production" ? hattip() : undefined],
+});`,
+    `export default defineConfig({
+  plugins: [hattip()],
+});`,
+  );
 });
 
 describe("ts: comment in object", () => {

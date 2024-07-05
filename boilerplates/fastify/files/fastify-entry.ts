@@ -14,8 +14,8 @@ import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import {
-  fastifyTRPCPlugin,
   type CreateFastifyContextOptions,
+  fastifyTRPCPlugin,
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
 import { createRequestAdapter } from "@universal-middleware/express";
@@ -24,7 +24,6 @@ import type { RouteHandlerMethod } from "fastify/types/route";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
@@ -62,8 +61,6 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
   }) satisfies RouteHandlerMethod;
 }
 
-startServer();
-
 async function startServer() {
   const app = Fastify();
 
@@ -76,7 +73,7 @@ async function startServer() {
 
   await app.register(await import("@fastify/middie"));
 
-  if (isProduction) {
+  if (process.env.NODE_ENV === "production") {
     await app.register(await import("@fastify/static"), {
       root: `${root}/dist/client`,
       wildcard: false,
@@ -159,6 +156,31 @@ async function startServer() {
    **/
   app.all("/*", handlerAdapter(vikeHandler));
 
+  return app;
+}
+
+const app = await startServer();
+
+//# BATI.has('vercel')
+// Vercel handler
+export default async (req: Request, res: Response) => {
+  await app.ready();
+  app.server.emit("request", req, res);
+};
+
+if (BATI.has("vercel")) {
+  // Development listener
+  if (process.env.NODE_ENV !== "production") {
+    app.listen(
+      {
+        port: port,
+      },
+      () => {
+        console.log(`Server listening on http://localhost:${port}`);
+      },
+    );
+  }
+} else {
   app.listen(
     {
       port: port,

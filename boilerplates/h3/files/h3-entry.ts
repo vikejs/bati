@@ -17,7 +17,7 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
-import { nodeHTTPRequestHandler, type NodeHTTPCreateContextFnOptions } from "@trpc/server/adapters/node-http";
+import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
 import {
   createApp,
   createRouter,
@@ -35,7 +35,6 @@ installCrypto();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const isProduction = process.env.NODE_ENV === "production";
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
@@ -54,12 +53,12 @@ export function fromWebMiddleware<Context extends Record<string | number | symbo
   });
 }
 
-startServer();
+export default await startServer();
 
 async function startServer() {
   const app = createApp();
 
-  if (isProduction) {
+  if (process.env.NODE_ENV === "production") {
     app.use("/", fromNodeMiddleware(serveStatic(`${root}/dist/client`)));
   } else {
     // Instantiate Vite's development server and integrate its middleware to our server.
@@ -144,9 +143,23 @@ async function startServer() {
 
   app.use(router);
 
-  const server = createServer(toNodeListener(app)).listen(port);
+  const server = createServer(toNodeListener(app));
 
-  server.on("listening", () => {
-    console.log(`Server listening on http://localhost:${port}`);
-  });
+  if (BATI.has("vercel")) {
+    if (process.env.NODE_ENV !== "production") {
+      server.listen(port);
+
+      server.on("listening", () => {
+        console.log(`Server listening on http://localhost:${port}`);
+      });
+    }
+  } else {
+    server.listen(port);
+
+    server.on("listening", () => {
+      console.log(`Server listening on http://localhost:${port}`);
+    });
+  }
+
+  return server;
 }
