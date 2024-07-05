@@ -1,17 +1,22 @@
 //# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 /// <reference types="vite-plugin-vercel/types" />
 /// <reference types="@batijs/core/types" />
-import type { UserConfig } from "vite";
+import { defineConfig } from "vite";
 import vike from "vike/plugin";
+import { hattip } from "@hattip/vite";
 
-export default {
+export default defineConfig({
   plugins: [
     vike({
       //# BATI.has("vercel")
       prerender: true,
     }),
+    //# BATI.has("hattip") && BATI.has("vercel")
+    process.env.NODE_ENV !== "production" ? hattip() : undefined,
+    //# BATI.has("hattip") && !BATI.has("vercel")
+    hattip(),
   ],
-  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify") || BATI.has("hono") || BATI.has("hattip"))
+  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify") || BATI.has("hono") || BATI.has("hattip") || BATI.has("h3"))
   vercel: {
     additionalEndpoints: [
       {
@@ -22,7 +27,9 @@ export default {
             ? "hono-entry.ts"
             : BATI.has("hattip")
               ? "hattip-entry.ts"
-              : "express-entry.ts",
+              : BATI.has("h3")
+                ? "h3-entry.ts"
+                : "express-entry.ts",
         // replaces default Vike target
         destination: "ssr_",
         // already added by default Vike route
@@ -30,4 +37,4 @@ export default {
       },
     ],
   },
-} satisfies UserConfig;
+});

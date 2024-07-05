@@ -9,12 +9,25 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 20,
       warnIfReplaced: true,
     },
-    build: {
-      value: "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
-      precedence: 20,
-      warnIfReplaced: true,
-    },
   });
+
+  if (props.meta.BATI.has("vercel")) {
+    setScripts(packageJson, {
+      build: {
+        value: "cross-env NODE_ENV=production vite build",
+        precedence: 20,
+        warnIfReplaced: true,
+      },
+    });
+  } else {
+    setScripts(packageJson, {
+      build: {
+        value: "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
+        precedence: 20,
+        warnIfReplaced: true,
+      },
+    });
+  }
 
   // Not supported yet
   if (packageJson.scripts.preview) {

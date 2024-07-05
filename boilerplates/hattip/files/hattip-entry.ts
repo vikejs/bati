@@ -95,8 +95,9 @@ router.use(handlerAdapter(vikeHandler));
 
 const handler: HattipHandler = router.buildHandler();
 
-export default BATI.has("vercel")
-  ? process.env.NODE_ENV === "production"
-    ? vercelAdapter(handler)
-    : handler
-  : handler;
+//# BATI.has("vercel")
+export const GET = vercelAdapter(handler);
+//# BATI.has("vercel")
+export const POST = vercelAdapter(handler);
+
+export default BATI.has("vercel") ? (process.env.NODE_ENV === "production" ? undefined : handler) : handler;
