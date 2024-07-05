@@ -14,6 +14,7 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import type { HattipHandler } from "@hattip/core";
 import { createRouter, type RouteHandler } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import vercelAdapter from "@hattip/adapter-vercel-edge";
 
 interface Middleware<Context extends Record<string | number | symbol, unknown>> {
   (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
@@ -92,4 +93,10 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
  **/
 router.use(handlerAdapter(vikeHandler));
 
-export default router.buildHandler() as HattipHandler;
+const handler: HattipHandler = router.buildHandler();
+
+export default BATI.has("vercel")
+  ? process.env.NODE_ENV === "production"
+    ? vercelAdapter(handler)
+    : handler
+  : handler;

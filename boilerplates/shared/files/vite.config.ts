@@ -11,12 +11,18 @@ export default {
       prerender: true,
     }),
   ],
-  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify") || BATI.has("hono"))
+  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify") || BATI.has("hono") || BATI.has("hattip"))
   vercel: {
     additionalEndpoints: [
       {
         // entry file to the server. Default export must be a node server or a function
-        source: BATI.has("fastify") ? "fastify-entry.ts" : BATI.has("hono") ? "hono-entry.ts" : "express-entry.ts",
+        source: BATI.has("fastify")
+          ? "fastify-entry.ts"
+          : BATI.has("hono")
+            ? "hono-entry.ts"
+            : BATI.has("hattip")
+              ? "hattip-entry.ts"
+              : "express-entry.ts",
         // replaces default Vike target
         destination: "ssr_",
         // already added by default Vike route
