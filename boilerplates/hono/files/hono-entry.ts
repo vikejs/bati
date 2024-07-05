@@ -11,8 +11,9 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { type FetchCreateContextFnOptions, fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
+import { handle } from "hono/vercel";
 import { createMiddleware } from "hono/factory";
 
 interface Middleware<Context extends Record<string | number | symbol, unknown>> {
@@ -103,4 +104,9 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
  **/
 app.all("*", handlerAdapter(vikeHandler));
 
-export default app;
+//# BATI.has("vercel")
+export const GET = handle(app);
+//# BATI.has("vercel")
+export const POST = handle(app);
+
+export default BATI.has("vercel") ? (process.env.NODE_ENV === "production" ? undefined : app) : app;
