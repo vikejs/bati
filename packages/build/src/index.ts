@@ -158,6 +158,7 @@ Please report this issue to https://github.com/batijs/bati`,
 
           if (fileContent !== null) {
             await safeWriteFile(target, fileContent);
+            targets.add(target);
           }
         });
       } else {
