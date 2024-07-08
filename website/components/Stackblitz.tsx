@@ -24,7 +24,11 @@ function StackblitzLogo(props: { class?: string }) {
 export default function Stackblitz(props: { class?: string; flags: string[] }) {
   return (
     <button
-      class={clsx("btn btn-sm hover:btn-ghost group h-auto", props.class)}
+      id="stackblitz-cta"
+      class={clsx(
+        "tooltip tooltip-bottom tooltip-warning left-[1px] btn btn-sm hover:btn-ghost group h-auto",
+        props.class,
+      )}
       onclick={() =>
         openProject({
           title: "Bati project",
@@ -38,7 +42,7 @@ export default function Stackblitz(props: { class?: string; flags: string[] }) {
       }
     >
       <StackblitzLogo class="h-6" />
-      <span class="text-nowrap overflow-hidden inline-block">Try me in Stackblitz</span>
+      <span class="text-nowrap overflow-hidden inline-block font-bold">Try me in Stackblitz</span>
     </button>
   );
 }

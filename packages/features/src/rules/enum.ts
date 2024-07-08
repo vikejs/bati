@@ -8,11 +8,13 @@ export enum RulesMessage {
   ERROR_DRIZZLE_R_SERVER,
   // A Server is required when using Data fetching / RPC
   ERROR_DATA_R_SERVER,
-  // A comptabible Server (or no Server) is required when using Cloudflare
+  // A compabible Server (or no Server) is required when using Cloudflare
   ERROR_CLOUDFLARE_R_COMPAT_SERVER,
   // --- WARNING
 
   // --- INFO
   // HatTip is an experimental project
   INFO_HATTIP,
+  // Drizzle does not work on Stackblitz (because of better-sqlite3 dependency)
+  INFO_DRIZZLE_STACKBLITZ,
 }

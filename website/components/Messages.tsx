@@ -1,4 +1,4 @@
-import { For, Show, type ComponentProps, type ValidComponent } from "solid-js";
+import { type ComponentProps, For, Show, type ValidComponent } from "solid-js";
 import { Dynamic } from "solid-js/web";
 
 function Alert(props: { children?: ValidComponent[]; info?: boolean; warning?: boolean; error?: boolean }) {
@@ -37,6 +37,7 @@ export type MessagesProps<T extends ValidComponent, P = ComponentProps<T>> = {
   info?: T[];
   warning?: T[];
   error?: T[];
+  invisible?: T[];
 };
 
 export default function Messages<T extends ValidComponent>(props: MessagesProps<T>) {
@@ -50,6 +51,9 @@ export default function Messages<T extends ValidComponent>(props: MessagesProps<
       </Show>
       <Show when={props.error?.length}>
         <Alert error>{props.error}</Alert>
+      </Show>
+      <Show when={props.invisible?.length}>
+        <For each={props.invisible}>{(el: ValidComponent) => <Dynamic component={el} />}</For>
       </Show>
     </>
   );
