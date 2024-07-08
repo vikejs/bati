@@ -23,4 +23,5 @@ export default [
 
     return false;
   }),
+  includes(RulesMessage.INFO_DRIZZLE_STACKBLITZ, "drizzle"),
 ] satisfies Rule[];

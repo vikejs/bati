@@ -1,9 +1,9 @@
 import { RulesMessage } from "@batijs/features/rules";
-import { createMemo, useContext, type ValidComponent } from "solid-js";
+import { createMemo, onCleanup, onMount, useContext, type ValidComponent } from "solid-js";
 import { StoreContext } from "./Store.js";
 
 export interface RuleMessage {
-  type: "info" | "warning" | "error";
+  type: "info" | "warning" | "error" | "invisible";
   value: ValidComponent;
 }
 
@@ -17,6 +17,13 @@ function error(value: ValidComponent): RuleMessage {
 function info(value: ValidComponent): RuleMessage {
   return {
     type: "info",
+    value,
+  };
+}
+
+function invisible(value: ValidComponent): RuleMessage {
+  return {
+    type: "invisible",
     value,
   };
 }
@@ -106,5 +113,18 @@ export const rulesMessages = {
         </ul>
       </span>
     );
+  }),
+  [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: invisible(() => {
+    onMount(() => {
+      document
+        .querySelector("#stackblitz-cta")!
+        .setAttribute("data-tip", "The Drizzle example uses better-sqlite3, which is not supported by Stackblitz");
+    });
+
+    onCleanup(() => {
+      document.querySelector("#stackblitz-cta")!.removeAttribute("data-tip");
+    });
+
+    return <></>;
   }),
 } satisfies Record<RulesMessage, RuleMessage>;

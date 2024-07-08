@@ -1,4 +1,4 @@
-import { categories, features, type Category, type CategoryLabels, type Flags } from "@batijs/features";
+import { categories, type Category, type CategoryLabels, features, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
@@ -63,6 +63,7 @@ function initStore() {
       error: r.filter((x) => x.type === "error").map((x) => x.value),
       warning: r.filter((x) => x.type === "warning").map((x) => x.value),
       info: r.filter((x) => x.type === "info").map((x) => x.value),
+      invisible: r.filter((x) => x.type === "invisible").map((x) => x.value),
     };
   });
 

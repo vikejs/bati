@@ -5,7 +5,7 @@ import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
 import Stackblitz from "#components/Stackblitz";
 import { StoreContext } from "#components/Store.js";
-import { createMemo, createSignal, Show, useContext, type JSX } from "solid-js";
+import { createMemo, createSignal, type JSX, Show, useContext } from "solid-js";
 import { track } from "../lib/track";
 
 export function CliGroup(
@@ -20,7 +20,7 @@ export function CliGroup(
         <Cli onMouseEnter={props.onMouseEnter} onClick={props.onClick} tooltipText={props.tooltipText}>
           {props.children}
         </Cli>
-        <Stackblitz flags={props.flags} class="join-item hidden sm:flex" />
+        <Stackblitz flags={props.flags} class="join-item hidden sm:flex font-normal" />
       </div>
     </div>
   );
@@ -111,7 +111,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       </div>
       <Show when={rules().size > 0}>
         <div class="flex flex-col gap-2 leading-6 rounded-md mt-4">
-          <Messages error={rules().error} warning={rules().warning} info={rules().info} />
+          <Messages error={rules().error} warning={rules().warning} info={rules().info} invisible={rules().invisible} />
         </div>
       </Show>
 

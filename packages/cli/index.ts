@@ -3,15 +3,15 @@ import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { withIcon, type VikeMeta } from "@batijs/core";
-import { cliFlags, features, type CategoryLabels, type Feature, type Flags } from "@batijs/features";
+import { type VikeMeta, withIcon } from "@batijs/core";
+import { type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
-import { defineCommand, runMain, type ArgsDef, type CommandDef, type ParsedArgs } from "citty";
+import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import sift from "sift";
 import whichPm from "which-pm-runs";
 import packageJson from "./package.json";
-import { rulesMessages } from "./rules.js";
+import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, Hook } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -184,9 +184,9 @@ async function checkArguments(args: ParsedArgs<Args>) {
 function checkRules(flags: string[]) {
   const potentialRulesMessages = execRules(flags as FeatureOrCategory[], rulesMessages);
 
-  const infos = potentialRulesMessages.filter((m) => m.type === "info");
-  const warnings = potentialRulesMessages.filter((m) => m.type === "warning");
-  const errors = potentialRulesMessages.filter((m) => m.type === "error");
+  const infos = potentialRulesMessages.filter((m): m is RuleMessage => m?.type === "info");
+  const warnings = potentialRulesMessages.filter((m): m is RuleMessage => m?.type === "warning");
+  const errors = potentialRulesMessages.filter((m): m is RuleMessage => m?.type === "error");
 
   if (infos.length > 0) {
     infos.forEach((m) => {
