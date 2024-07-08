@@ -5,21 +5,21 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  array-includes: npm:@nolyfill/array-includes@^1
-  array.prototype.findlast: npm:@nolyfill/array.prototype.findlast@^1
-  array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1
-  array.prototype.flatmap: npm:@nolyfill/array.prototype.flatmap@^1
+  array-includes: npm:@nolyfill/array-includes@^1.0.28
+  array.prototype.findlast: npm:@nolyfill/array.prototype.findlast@^1.0.24
+  array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1.0.28
+  array.prototype.flatmap: npm:@nolyfill/array.prototype.flatmap@^1.0.28
   array.prototype.toreversed: npm:@nolyfill/array.prototype.toreversed@^1
-  array.prototype.tosorted: npm:@nolyfill/array.prototype.tosorted@^1
-  es-iterator-helpers: npm:@nolyfill/es-iterator-helpers@^1
+  array.prototype.tosorted: npm:@nolyfill/array.prototype.tosorted@^1.0.24
+  es-iterator-helpers: npm:@nolyfill/es-iterator-helpers@^1.0.21
   is-core-module: npm:@nolyfill/is-core-module@^1
-  object.assign: npm:@nolyfill/object.assign@^1
-  object.entries: npm:@nolyfill/object.entries@^1
-  object.fromentries: npm:@nolyfill/object.fromentries@^1
-  object.hasown: npm:@nolyfill/object.hasown@^1
-  object.values: npm:@nolyfill/object.values@^1
-  side-channel: npm:@nolyfill/side-channel@^1
-  string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1
+  object.assign: npm:@nolyfill/object.assign@^1.0.28
+  object.entries: npm:@nolyfill/object.entries@^1.0.28
+  object.fromentries: npm:@nolyfill/object.fromentries@^1.0.28
+  object.hasown: npm:@nolyfill/object.hasown@^1.0.24
+  object.values: npm:@nolyfill/object.values@^1.0.28
+  side-channel: npm:@nolyfill/side-channel@^1.0.29
+  string.prototype.matchall: npm:@nolyfill/string.prototype.matchall@^1.0.28
 
 importers:
 
@@ -59,8 +59,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       rimraf:
-        specifier: ^5.0.7
-        version: 5.0.7
+        specifier: ^5.0.8
+        version: 5.0.8
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
@@ -142,10 +142,10 @@ importers:
         version: 6.2.2
       vike-cloudflare:
         specifier: ^0.0.4
-        version: 0.0.4(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+        version: 0.0.4(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
       wrangler:
-        specifier: ^3.63.0
-        version: 3.63.0(@cloudflare/workers-types@4.20240620.0)
+        specifier: ^3.63.1
+        version: 3.63.1(@cloudflare/workers-types@4.20240620.0)
 
   boilerplates/compiled:
     dependencies:
@@ -306,13 +306,13 @@ importers:
         version: 2.17.1(express@4.19.2)
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -379,13 +379,13 @@ importers:
         version: 4.28.1
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -421,8 +421,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(firebase@10.12.3)
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -502,13 +502,13 @@ importers:
         version: 1.15.0
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -578,10 +578,10 @@ importers:
         version: 0.0.33
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -623,8 +623,8 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0
       '@hono/vite-dev-server':
-        specifier: ^0.12.2
-        version: 0.12.2(hono@4.4.11)
+        specifier: ^0.13.0
+        version: 0.13.0(hono@4.4.12)
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
@@ -638,17 +638,17 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       hono:
-        specifier: ^4.4.11
-        version: 4.4.11
+        specifier: ^4.4.12
+        version: 4.4.12
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -758,11 +758,11 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vike-react:
-        specifier: ^0.4.16
-        version: 0.4.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.178(react-streaming@0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.17
+        version: 0.4.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.179(react-streaming@0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -804,8 +804,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -828,14 +828,14 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
       vite-plugin-vercel:
         specifier: ^7.0.2
-        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
 
   boilerplates/shared-no-db:
     dependencies:
@@ -863,8 +863,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -890,8 +890,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -958,11 +958,11 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vike-solid:
         specifier: ^0.6.2
-        version: 0.6.2(solid-js@1.8.18)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+        version: 0.6.2(solid-js@1.8.18)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -995,8 +995,8 @@ importers:
         specifier: ^1.8.18
         version: 1.8.18
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -1026,8 +1026,8 @@ importers:
         specifier: ^3.4.4
         version: 3.4.4
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -1055,10 +1055,10 @@ importers:
         version: 18.19.31
       telefunc:
         specifier: ^0.1.76
-        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1)
+        version: 0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1)
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -1133,16 +1133,16 @@ importers:
         version: 18.19.31
       '@vite-plugin-vercel/vike':
         specifier: ^7.0.1
-        version: 7.0.1(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))
+        version: 7.0.1(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
       vite-plugin-vercel:
         specifier: ^7.0.2
-        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
 
   boilerplates/vue:
     dependencies:
@@ -1196,11 +1196,11 @@ importers:
         specifier: ^0.26.2
         version: 0.26.2(rollup@4.18.0)(vite@5.3.3(@types/node@18.19.31))
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vike-vue:
         specifier: ^0.7.6
-        version: 0.7.6(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vue@3.4.31(typescript@5.5.3))
+        version: 0.7.6(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vue@3.4.31(typescript@5.5.3))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -1233,8 +1233,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(firebase@10.12.3)
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
@@ -1301,8 +1301,8 @@ importers:
         specifier: ^9.3.0
         version: 9.3.0
       rimraf:
-        specifier: ^5.0.7
-        version: 5.0.7
+        specifier: ^5.0.8
+        version: 5.0.8
       sift:
         specifier: ^17.1.3
         version: 17.1.3
@@ -1582,11 +1582,11 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
       vike:
-        specifier: ^0.4.178
-        version: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@20.14.9))
+        specifier: ^0.4.179
+        version: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@20.14.9))
       vike-solid:
         specifier: ^0.6.2
-        version: 0.6.2(solid-js@1.8.18)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@20.14.9)))(vite@5.3.3(@types/node@20.14.9))
+        version: 0.6.2(solid-js@1.8.18)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@20.14.9)))(vite@5.3.3(@types/node@20.14.9))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.9)
@@ -2937,8 +2937,8 @@ packages:
     resolution: {integrity: sha512-e6oHjNiErRxsZRZBmc2KucuvY3btlO/XPncIpP2X75bRdTilF9GLjm3NHvKKunpJbbJJj31/FoPTksTf8djAVw==}
     engines: {node: '>=18.14.1'}
 
-  '@hono/vite-dev-server@0.12.2':
-    resolution: {integrity: sha512-aq09IUi/+Ut/EXR8t1lCjsV/OEnSQoO4F6RmV7Ufvy3x0tE2TIYLs6YL0kZ7+gLIbmVg6V2MppHGQaLMNs7G8Q==}
+  '@hono/vite-dev-server@0.13.0':
+    resolution: {integrity: sha512-Qy+wEMFb6sphFsOoCSVsgt0tM4rXdNs/9Y9OJSu5kjs+xqNoKzCTXahFQJQYXkQQ1RAOOZxJaPZfdomD14zmwA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: '*'
@@ -4939,8 +4939,8 @@ packages:
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
 
-  hono@4.4.11:
-    resolution: {integrity: sha512-R5RADpjoRsR3/VsnFovpsYNLPnC1f+FgdfsePk3qIgjb4D41Sg7uW5QCj41kzEOwXCjBg0sVvOZMvUNZ0DKB7g==}
+  hono@4.4.12:
+    resolution: {integrity: sha512-Lx4Vwbws0IqFfXIVYychxUW0A4EE+7dn/jsjVeM34OXSA2Xs45MkDDP14Mzznp7LlDemUNHQG2uv2N5jQld0hA==}
     engines: {node: '>=16.0.0'}
 
   html-entities@2.3.3:
@@ -6185,8 +6185,8 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
-  react-streaming@0.3.40:
-    resolution: {integrity: sha512-37vMjhLnp6WBIZn+ZBJIq2pdfBqN6++j/4S2iwQg0sSQIPdQZNDFGk1CWzb4X3dHiQXvZ6LYZrAyRsGOl0Tfyw==}
+  react-streaming@0.3.41:
+    resolution: {integrity: sha512-ALLhB32V9rjU+LjIwzDBXNuUyJRmyY6sT+yCApssXt7Azm8OxOcEq8Z5qckzWtUWHM7SK2e7dvOFiVsqnGRbxw==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -6286,9 +6286,9 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rimraf@5.0.7:
-    resolution: {integrity: sha512-nV6YcJo5wbLW77m+8KjH8aB/7/rxQy9SZ0HY5shnwULfS+9nmTtVXAJET5NdZmCzA4fPI/Hm1wo/Po/4mopOdg==}
-    engines: {node: '>=14.18'}
+  rimraf@5.0.8:
+    resolution: {integrity: sha512-XSh0V2/yNhDEi8HwdIefD8MLgs4LQXPag/nEJWs3YUc3Upn+UHa1GyIkEg9xSSNt7HnkO5FjTvmcRzgf+8UZuw==}
+    engines: {node: '>=18'}
     hasBin: true
 
   rollup-plugin-inject@3.0.2:
@@ -6904,8 +6904,8 @@ packages:
       vike: ^0.4.174
       vite: ^5.3.0
 
-  vike-react@0.4.16:
-    resolution: {integrity: sha512-lawyL8HHjVgDNwPRp21qsmOLHokGdjElm6zgKaVg0ul5Dcv6JxglaTfqq5P8NU6V8MW4vYd7WqxSpv64iscu4Q==}
+  vike-react@0.4.17:
+    resolution: {integrity: sha512-kUhJr7DmxwQy4NEK0ghDLXEqjprmai8gLut5721s57o1OUQWwq3sjiVsi1rSc2h2gN4BmZctXDjIYjPbwDIy9g==}
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
@@ -6925,12 +6925,12 @@ packages:
       vike: '>=0.4.172'
       vue: '>=3.0.0'
 
-  vike@0.4.178:
-    resolution: {integrity: sha512-TSfb9HYUIQjvcvlS24pZmTakYa2yxUg7Bjtu24VLDj9BULLsltXcd+ladgCJyUBJqV0y/eMa/aefyqRWgjX7Cg==}
+  vike@0.4.179:
+    resolution: {integrity: sha512-Uie4cUCUa4DULy5O5s4tHvQcbySTRGpNFkIxctBY6nXB/DgkJaQVx+o/nSBcK+np43WXbAciNGt6VX/qfIoUvw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      react-streaming: '>=0.3.36'
+      react-streaming: '>=0.3.41'
       vite: '>=4.4.0'
     peerDependenciesMeta:
       react-streaming:
@@ -7120,8 +7120,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.63.0:
-    resolution: {integrity: sha512-FMIGorXhYN161S1qotoIlg9EqpfRsPqtB/fd9J+qXTJ5xpctq4meaQAmRKfLI87cQDdkjUXpQBJyNgBXw4i81Q==}
+  wrangler@3.63.1:
+    resolution: {integrity: sha512-fxMPNEyDc9pZNtQOuYqRikzv6lL5eP4S1zv7L/kw24uu1cCEmJ39j8bfJGzrAEqKDNsiFXVjEka0RjlpgEVWPg==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -8449,10 +8449,10 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/vite-dev-server@0.12.2(hono@4.4.11)':
+  '@hono/vite-dev-server@0.13.0(hono@4.4.12)':
     dependencies:
       '@hono/node-server': 1.12.0
-      hono: 4.4.11
+      hono: 4.4.12
       miniflare: 3.20240701.0
       minimatch: 9.0.5
     transitivePeerDependencies:
@@ -9173,13 +9173,13 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vite-plugin-vercel/vike@7.0.1(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))':
+  '@vite-plugin-vercel/vike@7.0.1(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))':
     dependencies:
       '@brillout/libassert': 0.5.8
       nanoid: 5.0.7
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite: 5.3.3(@types/node@18.19.31)
-      vite-plugin-vercel: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
+      vite-plugin-vercel: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31))
 
   '@vitejs/plugin-react@4.3.1(vite@5.3.3(@types/node@18.19.31))':
     dependencies:
@@ -10875,7 +10875,7 @@ snapshots:
 
   hey-listen@1.0.8: {}
 
-  hono@4.4.11: {}
+  hono@4.4.12: {}
 
   html-entities@2.3.3: {}
 
@@ -12026,7 +12026,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-streaming@0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-streaming@0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12130,7 +12130,7 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rimraf@5.0.7:
+  rimraf@5.0.8:
     dependencies:
       glob: 10.3.12
 
@@ -12521,7 +12521,7 @@ snapshots:
       - supports-color
     optional: true
 
-  telefunc@0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.40(react@18.3.1))(react@18.3.1):
+  telefunc@0.1.76(@babel/core@7.24.7)(@babel/parser@7.24.7)(@babel/types@7.24.7)(react-streaming@0.3.41(react@18.3.1))(react@18.3.1):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12535,7 +12535,7 @@ snapshots:
       '@babel/parser': 7.24.7
       '@babel/types': 7.24.7
       react: 18.3.1
-      react-streaming: 0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-streaming: 0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   text-table@0.2.0: {}
 
@@ -12773,47 +12773,47 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vike-cloudflare@0.0.4(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
+  vike-cloudflare@0.0.4(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite: 5.3.3(@types/node@18.19.31)
     optionalDependencies:
       '@hattip/adapter-cloudflare-workers': 0.0.46
 
-  vike-react@0.4.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.178(react-streaming@0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
+  vike-react@0.4.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vike@0.4.179(react-streaming@0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-streaming: 0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      vike: 0.4.178(react-streaming@0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31))
+      react-streaming: 0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      vike: 0.4.179(react-streaming@0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31))
       vite: 5.3.3(@types/node@18.19.31)
 
-  vike-solid@0.6.2(solid-js@1.8.18)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
+  vike-solid@0.6.2(solid-js@1.8.18)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
       solid-js: 1.8.18
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vite: 5.3.3(@types/node@18.19.31)
       vite-plugin-solid: 2.10.2(solid-js@1.8.18)(vite@5.3.3(@types/node@18.19.31))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-solid@0.6.2(solid-js@1.8.18)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@20.14.9)))(vite@5.3.3(@types/node@20.14.9)):
+  vike-solid@0.6.2(solid-js@1.8.18)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@20.14.9)))(vite@5.3.3(@types/node@20.14.9)):
     dependencies:
       solid-js: 1.8.18
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@20.14.9))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@20.14.9))
       vite: 5.3.3(@types/node@20.14.9)
       vite-plugin-solid: 2.10.2(solid-js@1.8.18)(vite@5.3.3(@types/node@20.14.9))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-vue@0.7.6(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vue@3.4.31(typescript@5.5.3)):
+  vike-vue@0.7.6(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vue@3.4.31(typescript@5.5.3)):
     dependencies:
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
       vue: 3.4.31(typescript@5.5.3)
 
-  vike@0.4.178(react-streaming@0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)):
+  vike@0.4.179(react-streaming@0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12830,9 +12830,9 @@ snapshots:
       source-map-support: 0.5.21
       vite: 5.3.3(@types/node@18.19.31)
     optionalDependencies:
-      react-streaming: 0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-streaming: 0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)):
+  vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12849,9 +12849,9 @@ snapshots:
       source-map-support: 0.5.21
       vite: 5.3.3(@types/node@18.19.31)
     optionalDependencies:
-      react-streaming: 0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-streaming: 0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@20.14.9)):
+  vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@20.14.9)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
@@ -12868,7 +12868,7 @@ snapshots:
       source-map-support: 0.5.21
       vite: 5.3.3(@types/node@20.14.9)
     optionalDependencies:
-      react-streaming: 0.3.40(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-streaming: 0.3.41(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   vite-node@1.6.0(@types/node@18.19.31):
     dependencies:
@@ -12925,7 +12925,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
+  vite-plugin-vercel@7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite@5.3.3(@types/node@18.19.31)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.2
@@ -12938,8 +12938,8 @@ snapshots:
       vite: 5.3.3(@types/node@18.19.31)
       zod: 3.23.8
     optionalDependencies:
-      '@vite-plugin-vercel/vike': 7.0.1(vike@0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))
-      vike: 0.4.178(react-streaming@0.3.40)(vite@5.3.3(@types/node@18.19.31))
+      '@vite-plugin-vercel/vike': 7.0.1(vike@0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.3(@types/node@18.19.31))
+      vike: 0.4.179(react-streaming@0.3.41)(vite@5.3.3(@types/node@18.19.31))
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -13093,7 +13093,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240701.0
       '@cloudflare/workerd-windows-64': 1.20240701.0
 
-  wrangler@3.63.0(@cloudflare/workers-types@4.20240620.0):
+  wrangler@3.63.1(@cloudflare/workers-types@4.20240620.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
