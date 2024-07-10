@@ -6,7 +6,7 @@ export async function vikeHandler<Context extends Record<string | number | symbo
   request: Request,
   context?: Context,
 ): Promise<Response> {
-  const pageContextInit = { ...context, urlOriginal: request.url };
+  const pageContextInit = { ...context, urlOriginal: request.url, headersOriginal: request.headers };
   const pageContext = await renderPage(pageContextInit);
   const response = pageContext.httpResponse;
 
