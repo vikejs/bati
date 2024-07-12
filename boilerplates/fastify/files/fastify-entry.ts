@@ -39,7 +39,7 @@ export function handlerAdapter<Context extends Record<string | number | symbol, 
   return (async (request, reply) => {
     const config = request.routeOptions.config as unknown as Record<string, unknown>;
     config.context ??= {};
-    const response = await handler(requestAdapter(request.raw)[0], config.context as Context);
+    const response = await handler(requestAdapter(request.raw), config.context as Context);
 
     if (response) {
       if (!response.body) {
