@@ -23,5 +23,6 @@ await describeBati(
   },
   {
     mode: "build",
+    retry: 3,
   },
 );

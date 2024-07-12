@@ -631,6 +631,9 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.31
+      '@universal-middleware/hono':
+        specifier: ^0.1.1
+        version: 0.1.1
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -3560,8 +3563,14 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
+  '@universal-middleware/core@0.1.1':
+    resolution: {integrity: sha512-1paKMQ/B/l5NL9j5vR3T7mvk3VqfP3aIuJj0XU5WvlrqZGjde1qFyjEDfw4RQtSkgloUobgttdhs4qzop9lS2g==}
+
   '@universal-middleware/express@0.1.0':
     resolution: {integrity: sha512-+U1X/jDJwzOcyxpNBWiT0OG+h5s0tpVVd+8MwEB/DDWEEmc2O/F/vP6kJqg6rV04bqmP/LTAX028bzQJ/S00aA==}
+
+  '@universal-middleware/hono@0.1.1':
+    resolution: {integrity: sha512-qEuodw9xN1Q3NAON9i+fEiXo+CTDfOln52KeWfe1oRSzzEqFWHzZ0+xLMZPVHvUgfP74wZsAwIjxbeXFXsJZRw==}
 
   '@vavite/connect@4.1.1':
     resolution: {integrity: sha512-UjJEPX9t1fPNJiDbTzzW/ZIorTipCWO9x9aQ0CkNqtH6+dKnaWI/a03gFiNU+7ybhYI1LxdY17ar10ns7DQ08Q==}
@@ -9092,7 +9101,13 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
+  '@universal-middleware/core@0.1.1': {}
+
   '@universal-middleware/express@0.1.0': {}
+
+  '@universal-middleware/hono@0.1.1':
+    dependencies:
+      '@universal-middleware/core': 0.1.1
 
   '@vavite/connect@4.1.1(vite@5.3.3(@types/node@18.19.31))':
     dependencies:

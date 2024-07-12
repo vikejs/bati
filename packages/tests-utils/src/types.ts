@@ -11,6 +11,7 @@ export interface GlobalContext {
 
 export interface PrepareOptions {
   mode?: "dev" | "build" | "none";
+  retry?: number;
 }
 
 type Fetch = (path: string, init?: RequestInit) => Promise<Response>;
