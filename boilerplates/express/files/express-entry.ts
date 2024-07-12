@@ -14,7 +14,7 @@ import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { createMiddleware } from "@universal-middleware/express";
+import { createHandler, createMiddleware } from "@universal-middleware/express";
 import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,34 +22,6 @@ const __dirname = dirname(__filename);
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
-
-interface Middleware<Context extends Record<string | number | symbol, unknown>> {
-  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
-}
-
-export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: Middleware<Context>,
-) {
-  return createMiddleware(
-    async (context) => {
-      const rawRequest = context.platform.request as unknown as Record<string, unknown>;
-      rawRequest.context ??= {};
-      const response = await handler(context.request, rawRequest.context as Context);
-
-      if (!response) {
-        context.passThrough();
-        return new Response("", {
-          status: 404,
-        });
-      }
-
-      return response;
-    },
-    {
-      alwaysCallNext: false,
-    },
-  );
-}
 
 export default (await startServer()) as unknown;
 
@@ -76,19 +48,19 @@ async function startServer() {
     /**
      * Append Auth.js session to context
      **/
-    app.use(handlerAdapter(authjsSessionMiddleware));
+    app.use(createMiddleware(authjsSessionMiddleware));
 
     /**
      * Auth.js route
      * @link {@see https://authjs.dev/getting-started/installation}
      **/
-    app.all("/api/auth/*", handlerAdapter(authjsHandler));
+    app.all("/api/auth/*", createHandler(authjsHandler));
   }
 
   if (BATI.has("firebase-auth")) {
-    app.use(handlerAdapter(firebaseAuthMiddleware));
-    app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
-    app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+    app.use(createMiddleware(firebaseAuthMiddleware));
+    app.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler));
+    app.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler));
   }
 
   if (BATI.has("trpc")) {
@@ -114,15 +86,15 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    app.post("/_telefunc", handlerAdapter(telefuncHandler));
+    app.post("/_telefunc", createHandler(telefuncHandler));
   }
 
   if (BATI.has("ts-rest")) {
-    app.all("/api/*", handlerAdapter(tsRestHandler));
+    app.all("/api/*", createHandler(tsRestHandler));
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-    app.post("/api/todo/create", handlerAdapter(createTodoHandler));
+    app.post("/api/todo/create", createHandler(createTodoHandler));
   }
 
   /**
@@ -130,7 +102,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*", handlerAdapter(vikeHandler));
+  app.all("*", createHandler(vikeHandler));
 
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
