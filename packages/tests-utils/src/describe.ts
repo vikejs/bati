@@ -33,7 +33,7 @@ function testMatchFactory(vitest: typeof import("vitest"), context: GlobalContex
   return function testMatch<T extends FlagMatrix>(name: string, matches: TestMatches<T>) {
     for (const match of yieldMatch(matches, context.flags)) {
       const [fn, options] = extractFnAndOptions(match);
-      vitest.test(name, fn, options);
+      vitest.test(name, options, fn);
     }
   };
 }
@@ -45,7 +45,7 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
   const p = await prepare(options);
   const testMatch = testMatchFactory(vitest, p.context);
 
-  vitest.describe.concurrent(p.context.flags.join("--"), () => {
+  vitest.describe.concurrent(p.context.flags.join("--"), { retry: options?.retry }, () => {
     fn({
       ...vitest,
       ...p,

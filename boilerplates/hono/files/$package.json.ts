@@ -24,6 +24,7 @@ export default async function getPackageJson(props: TransformerProps) {
     devDependencies: ["@hono/vite-dev-server", "@types/node"],
     dependencies: [
       "@hono/node-server",
+      "@universal-middleware/hono",
       "cross-env",
       "hono",
       "tsx",

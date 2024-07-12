@@ -14,32 +14,7 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { type FetchCreateContextFnOptions, fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { createMiddleware } from "hono/factory";
-
-interface Middleware<Context extends Record<string | number | symbol, unknown>> {
-  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
-}
-
-export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: Middleware<Context>,
-) {
-  return createMiddleware(async (context, next) => {
-    let ctx = context.get("context");
-    if (!ctx) {
-      ctx = {};
-      context.set("context", ctx);
-    }
-
-    const res = await handler(context.req.raw, ctx as Context);
-    context.set("context", ctx);
-
-    if (!res) {
-      await next();
-    }
-
-    return res;
-  });
-}
+import { createHandler, createMiddleware } from "@universal-middleware/hono";
 
 const app = new Hono();
 
@@ -47,19 +22,19 @@ if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
    * Append Auth.js session to context
    **/
-  app.use(handlerAdapter(authjsSessionMiddleware));
+  app.use(createMiddleware(authjsSessionMiddleware));
 
   /**
    * Auth.js route
    * @link {@see https://authjs.dev/getting-started/installation}
    **/
-  app.use("/api/auth/**", handlerAdapter(authjsHandler));
+  app.use("/api/auth/**", createHandler(authjsHandler));
 }
 
 if (BATI.has("firebase-auth")) {
-  app.use(handlerAdapter(firebaseAuthMiddleware));
-  app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
-  app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+  app.use(createMiddleware(firebaseAuthMiddleware));
+  app.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler));
+  app.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler));
 }
 
 if (BATI.has("trpc")) {
@@ -86,15 +61,15 @@ if (BATI.has("telefunc")) {
    *
    * @link {@see https://telefunc.com}
    **/
-  app.post("/_telefunc", handlerAdapter(telefuncHandler));
+  app.post("/_telefunc", createHandler(telefuncHandler));
 }
 
 if (BATI.has("ts-rest")) {
-  app.all("/api/*", handlerAdapter(tsRestHandler));
+  app.all("/api/*", createHandler(tsRestHandler));
 }
 
 if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-  app.post("/api/todo/create", handlerAdapter(createTodoHandler));
+  app.post("/api/todo/create", createHandler(createTodoHandler));
 }
 
 /**
@@ -102,7 +77,7 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
  *
  * @link {@see https://vike.dev}
  **/
-app.all("*", handlerAdapter(vikeHandler));
+app.all("*", createHandler(vikeHandler));
 
 //# BATI.has("vercel")
 export const GET = handle(app);
