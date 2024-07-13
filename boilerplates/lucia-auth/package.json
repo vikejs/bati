@@ -1,0 +1,61 @@
+{
+  "name": "@batijs/lucia-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@lucia-auth/adapter-sqlite": "^3.0.2",
+    "@node-rs/argon2": "^1.8.3",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/cookie": "^0.6.0",
+    "@types/node": "^18.19.14",
+    "arctic": "^1.9.1",
+    "better-sqlite3": "^11.1.2",
+    "cookie": "^0.6.0",
+    "lucia": "^3.2.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "lucia-auth"
+    }
+  },
+  "exports": {
+    "./libs/db": {
+      "types": "./dist/types/libs/db.d.ts"
+    },
+    "./libs/auth": {
+      "types": "./dist/types/libs/auth.d.ts"
+    },
+    "./server/lucia-auth-handlers": {
+      "types": "./dist/types/server/lucia-auth-handlers.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "libs/db": [
+        "./dist/types/libs/db.d.ts"
+      ],
+      "libs/auth": [
+        "./dist/types/libs/auth.d.ts"
+      ],
+      "server/lucia-auth-handlers": [
+        "./dist/types/server/lucia-auth-handlers.d.ts"
+      ]
+    }
+  }
+}
