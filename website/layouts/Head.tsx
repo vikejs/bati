@@ -17,7 +17,7 @@ export default function Head() {
 
       <meta property="og:title" content="Bati" />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="https://raw.githubusercontent.com/batijs/bati/main/doc/bati.png" />
+      <meta property="og:image" content="https://raw.githubusercontent.com/vikejs/bati/main/doc/bati.png" />
       <meta property="og:url" content="https://batijs.dev" />
       <meta
         property="og:description"
@@ -32,7 +32,7 @@ export default function Head() {
         name="twitter:description"
         content="Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want."
       />
-      <meta name="twitter:image" content="https://raw.githubusercontent.com/batijs/bati/main/doc/bati.png" />
+      <meta name="twitter:image" content="https://raw.githubusercontent.com/vikejs/bati/main/doc/bati.png" />
     </NoHydration>
   );
 }
