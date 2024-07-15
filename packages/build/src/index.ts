@@ -136,7 +136,7 @@ export default async function main(options: { source: string | string[]; dist: s
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
-Please report this issue to https://github.com/batijs/bati`,
+Please report this issue to https://github.com/vikejs/bati`,
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         transformAndWriteQ.add(async () => {

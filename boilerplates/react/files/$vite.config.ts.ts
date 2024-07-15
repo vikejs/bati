@@ -3,7 +3,7 @@ import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/co
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
 
-  // See https://github.com/batijs/bati/pull/124
+  // See https://github.com/vikejs/bati/pull/124
   const reactOptions = props.meta.BATI.has("vercel") && props.meta.BATI.has("hattip") ? { jsxRuntime: "classic" } : {};
 
   addVitePlugin(mod, {

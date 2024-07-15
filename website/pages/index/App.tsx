@@ -16,7 +16,7 @@ export default function App() {
         </div>
       </div>
       <div class="fixed top-0 right-0">
-        <a href="https://github.com/batijs/bati" class="group" title="Github" target="_blank">
+        <a href="https://github.com/vikejs/bati" class="group" title="Github" target="_blank">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"

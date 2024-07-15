@@ -1,1 +1,1 @@
-Utils for https://github.com/batijs/bati/tree/main/packages/tests
+Utils for https://github.com/vikejs/bati/tree/main/packages/tests
