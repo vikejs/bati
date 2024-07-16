@@ -2,6 +2,11 @@ import sqlite, { type Database } from "better-sqlite3";
 
 export const db: Database = sqlite(":memory:");
 
+/**
+ * SQLite Schema
+ *
+ * @link {@see https://lucia-auth.com/database/sqlite#schema}
+ */
 db.exec(`CREATE TABLE IF NOT EXISTS users (
     id TEXT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL,

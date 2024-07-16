@@ -6,14 +6,23 @@ import { type DatabaseUser, db } from "../libs/db";
 import { OAuth2RequestError, generateState } from "arctic";
 import { parse, serialize } from "cookie";
 
+/**
+ * Recommended minimum parameters when using Argon2
+ *
+ * @link {@see https://thecopenhagenbook.com/password-authentication#argon2id}
+ */
 const hashOptions: Options = {
-  // recommended minimum parameters
   memoryCost: 19456,
   timeCost: 2,
   outputLen: 32,
   parallelism: 1,
 };
 
+/**
+ * CSRF protection middleware
+ *
+ * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
+ */
 export function luciaCsrfMiddleware<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   _context?: Context,
@@ -31,6 +40,11 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
   }
 }
 
+/**
+ * Validate session cookies middleware
+ *
+ * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
+ */
 export async function luciaAuthMiddleware(
   request: Request,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,6 +70,11 @@ export async function luciaAuthMiddleware(
   }
 }
 
+/**
+ * Register user handler
+ *
+ * @link {@see https://lucia-auth.com/guides/email-and-password/basics#register-user}
+ */
 export async function luciaAuthSignupHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   _context?: Context,
@@ -116,6 +135,11 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
   }
 }
 
+/**
+ * Sign in user handler
+ *
+ * @link {@see https://lucia-auth.com/guides/email-and-password/basics#sign-in-user}
+ */
 export async function luciaAuthLoginHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   _context: Context,
@@ -173,6 +197,9 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
   });
 }
 
+/**
+ * Log out user handler
+ */
 export async function luciaAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
   context: Context & { session: Session },
@@ -184,8 +211,18 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
       status: 401,
     });
   }
+  /**
+   * Invalidate sessions
+   *
+   * @link {@see https://lucia-auth.com/basics/sessions#invalidate-sessions}
+   */
   await lucia.invalidateSession(session.id);
 
+  /**
+   * Delete session cookie
+   *
+   * @link {@see https://lucia-auth.com/basics/sessions#delete-session-cookie}
+   */
   return new Response(null, {
     status: 301,
     headers: {
@@ -195,6 +232,11 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
   });
 }
 
+/**
+ * Github OAuth authorization handler
+ *
+ * @link {@see https://lucia-auth.com/guides/oauth/basics#creating-authorization-url}
+ */
 export async function luciaGithubLoginHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
   _context: Context,
@@ -217,6 +259,11 @@ export async function luciaGithubLoginHandler<Context extends Record<string | nu
   });
 }
 
+/**
+ * Github OAuth validate callback handler
+ *
+ * @link {@see https://lucia-auth.com/guides/oauth/basics#validate-callback}
+ */
 export async function luciaGithubCallbackHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   _context: Context,
