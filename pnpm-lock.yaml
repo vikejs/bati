@@ -665,6 +665,12 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
+      '@lucia-auth/adapter-drizzle':
+        specifier: ^1.0.7
+        version: 1.0.7(lucia@3.2.0)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@11.1.2)(lucia@3.2.0)
@@ -689,6 +695,9 @@ importers:
       cookie:
         specifier: ^0.6.0
         version: 0.6.0
+      drizzle-orm:
+        specifier: ^0.32.0
+        version: 0.32.0(@cloudflare/workers-types@4.20240701.0)(@prisma/client@5.16.2)(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(react@18.3.1)
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -3035,6 +3044,11 @@ packages:
 
   '@kamilkisiela/fast-url-parser@1.1.4':
     resolution: {integrity: sha512-gbkePEBupNydxCelHCESvFSFM8XPh1Zs/OAVRW/rKpEqPAl5PbOM90Si8mv9bvnR53uPD2s/FiRxdvSejpRJew==}
+
+  '@lucia-auth/adapter-drizzle@1.0.7':
+    resolution: {integrity: sha512-X/V7fLBca8EC/gPXCntwbQpb0+F9oEuRoHElvsi9rCrdnGhCMNxHgwAvgiQ6pes+rIYpyvx4n3hvjqo/fPo03A==}
+    peerDependencies:
+      lucia: 3.x
 
   '@lucia-auth/adapter-sqlite@3.0.2':
     resolution: {integrity: sha512-UlXpF+2UoFEdm1AsriJii5BOARwqko6SX29rQ8T8Za7rnjj9KLXLaRVQUgBhGmggAyvzCtguJ2+XOZDsfWm6Sw==}
@@ -8877,6 +8891,10 @@ snapshots:
       type-detect: 4.0.8
 
   '@kamilkisiela/fast-url-parser@1.1.4': {}
+
+  '@lucia-auth/adapter-drizzle@1.0.7(lucia@3.2.0)':
+    dependencies:
+      lucia: 3.2.0
 
   '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.1.2)(lucia@3.2.0)':
     dependencies:

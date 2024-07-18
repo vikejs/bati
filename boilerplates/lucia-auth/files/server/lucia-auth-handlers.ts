@@ -4,6 +4,9 @@ import { SqliteError } from "better-sqlite3";
 import { sqliteDb } from "../database/sqliteDb";
 import { OAuth2RequestError, generateState } from "arctic";
 import { parse, serialize } from "cookie";
+import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
+import { userTable, oauthAccountTable } from "../database/schema/auth";
+import { getExistingUser, getExistingAccount } from "../database/auth-actions";
 
 /**
  * CSRF protection middleware
@@ -100,9 +103,13 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
   const userId = generateId(15);
 
   try {
-    sqliteDb
-      .prepare("INSERT INTO users (id, username, password_hash) VALUES(?, ?, ?)")
-      .run(userId, username, passwordHash);
+    if (BATI.has("drizzle")) {
+      drizzleDb.insert(userTable).values({ id: userId, username, passwordHash }).run();
+    } else {
+      sqliteDb
+        .prepare("INSERT INTO users (id, username, password_hash) VALUES(?, ?, ?)")
+        .run(userId, username, passwordHash);
+    }
 
     const session = await lucia.createSession(userId, {});
 
@@ -162,9 +169,7 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
     });
   }
 
-  const existingUser = sqliteDb.prepare("SELECT * FROM users WHERE username = ?").get(username) as
-    | DatabaseUser
-    | undefined;
+  const existingUser = getExistingUser(username) as DatabaseUser | undefined;
   if (!existingUser) {
     return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
       status: 422,
@@ -292,9 +297,7 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     });
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
-    const existingAccount = sqliteDb
-      .prepare("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
-      .get("github", githubUser.id) as DatabaseUser | undefined;
+    const existingAccount = getExistingAccount("github", githubUser.id) as DatabaseUser | undefined;
 
     if (existingAccount) {
       const session = await lucia.createSession(existingAccount.id, {});
@@ -308,11 +311,15 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     }
     const userId = generateId(15);
 
-    sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
-
-    sqliteDb
-      .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
-      .run("github", githubUser.id, userId);
+    if (BATI.has("drizzle")) {
+      drizzleDb.insert(userTable).values({ id: userId, username: githubUser.login }).run();
+      drizzleDb.insert(oauthAccountTable).values({ providerId: "github", providerUserId: githubUser.id, userId }).run();
+    } else {
+      sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
+      sqliteDb
+        .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
+        .run("github", githubUser.id, userId);
+    }
 
     const session = await lucia.createSession(userId, {});
 

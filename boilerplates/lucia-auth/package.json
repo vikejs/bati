@@ -13,6 +13,8 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@lucia-auth/adapter-sqlite": "^3.0.2",
     "@node-rs/argon2": "^1.8.3",
     "@types/better-sqlite3": "^7.6.11",
@@ -21,6 +23,7 @@
     "arctic": "^1.9.1",
     "better-sqlite3": "^11.1.2",
     "cookie": "^0.6.0",
+    "drizzle-orm": "^0.32.0",
     "lucia": "^3.2.0"
   },
   "dependencies": {
@@ -38,6 +41,12 @@
     "./database/sqliteDb": {
       "types": "./dist/types/database/sqliteDb.d.ts"
     },
+    "./database/schema/auth": {
+      "types": "./dist/types/database/schema/auth.d.ts"
+    },
+    "./database/auth-actions": {
+      "types": "./dist/types/database/auth-actions.d.ts"
+    },
     "./lib/lucia-auth": {
       "types": "./dist/types/lib/lucia-auth.d.ts"
     },
@@ -49,6 +58,12 @@
     "*": {
       "database/sqliteDb": [
         "./dist/types/database/sqliteDb.d.ts"
+      ],
+      "database/schema/auth": [
+        "./dist/types/database/schema/auth.d.ts"
+      ],
+      "database/auth-actions": [
+        "./dist/types/database/auth-actions.d.ts"
       ],
       "lib/lucia-auth": [
         "./dist/types/lib/lucia-auth.d.ts"

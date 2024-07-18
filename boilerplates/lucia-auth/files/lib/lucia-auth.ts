@@ -2,6 +2,9 @@ import { Lucia } from "lucia";
 import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
 import { sqliteDb } from "../database/sqliteDb";
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
+import { sessionTable, userTable } from "../database/schema/auth";
 
 /**
  * Polyfill needed if you're using Node.js 18 or below
@@ -12,14 +15,16 @@ import { sqliteDb } from "../database/sqliteDb";
 // globalThis.crypto = webcrypto as Crypto;
 
 /**
- * BetterSqlite3Adapter takes a Database instance and a list of table names.
+ * Database setup
  *
- * @link {@see https://lucia-auth.com/database/sqlite/}
+ * @link {@see https://lucia-auth.com/database/#database-setup}
  **/
-const adapter = new BetterSqlite3Adapter(sqliteDb, {
-  user: "users",
-  session: "sessions",
-});
+const adapter = BATI.has("drizzle")
+  ? new DrizzleSQLiteAdapter(drizzleDb, sessionTable, userTable)
+  : new BetterSqlite3Adapter(sqliteDb, {
+      user: "users",
+      session: "sessions",
+    });
 
 /**
  * Initialize Lucia
