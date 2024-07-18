@@ -1,22 +1,9 @@
-import { generateId, verifyRequestOrigin, type Session } from "lucia";
+import { generateId, verifyRequestOrigin, Scrypt, type Session } from "lucia";
 import { github, lucia } from "../libs/auth";
-import { hash, verify, type Options } from "@node-rs/argon2";
 import { SqliteError } from "better-sqlite3";
 import { type DatabaseUser, db } from "../libs/db";
 import { OAuth2RequestError, generateState } from "arctic";
 import { parse, serialize } from "cookie";
-
-/**
- * Recommended minimum parameters when using Argon2
- *
- * @link {@see https://thecopenhagenbook.com/password-authentication#argon2id}
- */
-const hashOptions: Options = {
-  memoryCost: 19456,
-  timeCost: 2,
-  outputLen: 32,
-  parallelism: 1,
-};
 
 /**
  * CSRF protection middleware
@@ -100,7 +87,15 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
     });
   }
 
-  const passwordHash = await hash(password, hashOptions);
+  /**
+   * A pure JS implementation of Scrypt.
+   * It's slower than implementations based on native code.
+   *
+   * @link {@see https://lucia-auth.com/reference/main/Scrypt}
+   * @link {@see https://lucia-auth.com/guides/email-and-password/basics#hashing-passwords}
+   */
+  const scrypt = new Scrypt();
+  const passwordHash = await scrypt.hash(password);
 
   const userId = generateId(15);
 
@@ -175,7 +170,8 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
     });
   }
 
-  const validPassword = existingUser.password_hash && (await verify(existingUser.password_hash, password, hashOptions));
+  const scrypt = new Scrypt();
+  const validPassword = existingUser.password_hash && (await scrypt.verify(existingUser.password_hash, password));
 
   if (!validPassword) {
     return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
