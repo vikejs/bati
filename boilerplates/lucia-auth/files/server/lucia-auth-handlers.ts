@@ -1,4 +1,5 @@
-import { generateId, verifyRequestOrigin, Scrypt, type Session } from "lucia";
+import { generateId, verifyRequestOrigin, Scrypt } from "lucia";
+import type { Session, User } from "lucia";
 import { github, lucia, type DatabaseUser } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { sqliteDb } from "../database/sqliteDb";
@@ -35,10 +36,9 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
  *
  * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
  */
-export async function luciaAuthMiddleware(
+export async function luciaAuthMiddleware<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any,
+  context: Context & { session: Session | null; user: User | null },
 ): Promise<void> {
   const sessionId = lucia.readSessionCookie(request.headers.get("cookie") ?? "");
 

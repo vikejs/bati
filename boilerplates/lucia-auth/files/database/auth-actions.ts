@@ -6,8 +6,9 @@ import { eq, and } from "drizzle-orm";
 export function getExistingUser(username: string) {
   if (BATI.has("drizzle")) {
     return drizzleDb.select().from(userTable).where(eq(userTable.username, username)).get();
+  } else {
+    return sqliteDb.prepare("SELECT * FROM users WHERE username = ?").get(username);
   }
-  return sqliteDb.prepare("SELECT * FROM users WHERE username = ?").get(username);
 }
 
 export function getExistingAccount(providerId: string, providerUserId: string) {
@@ -17,8 +18,9 @@ export function getExistingAccount(providerId: string, providerUserId: string) {
       .from(oauthAccountTable)
       .where(and(eq(oauthAccountTable.providerId, providerId), eq(oauthAccountTable.providerUserId, providerUserId)))
       .get();
+  } else {
+    return sqliteDb
+      .prepare("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
+      .get(providerId, providerUserId);
   }
-  return sqliteDb
-    .prepare("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
-    .get(providerId, providerUserId);
 }
