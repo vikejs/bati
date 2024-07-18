@@ -35,11 +35,11 @@
     }
   },
   "exports": {
-    "./libs/db": {
-      "types": "./dist/types/libs/db.d.ts"
+    "./database/sqliteDb": {
+      "types": "./dist/types/database/sqliteDb.d.ts"
     },
-    "./libs/auth": {
-      "types": "./dist/types/libs/auth.d.ts"
+    "./lib/lucia-auth": {
+      "types": "./dist/types/lib/lucia-auth.d.ts"
     },
     "./server/lucia-auth-handlers": {
       "types": "./dist/types/server/lucia-auth-handlers.d.ts"
@@ -47,11 +47,11 @@
   },
   "typesVersions": {
     "*": {
-      "libs/db": [
-        "./dist/types/libs/db.d.ts"
+      "database/sqliteDb": [
+        "./dist/types/database/sqliteDb.d.ts"
       ],
-      "libs/auth": [
-        "./dist/types/libs/auth.d.ts"
+      "lib/lucia-auth": [
+        "./dist/types/lib/lucia-auth.d.ts"
       ],
       "server/lucia-auth-handlers": [
         "./dist/types/server/lucia-auth-handlers.d.ts"

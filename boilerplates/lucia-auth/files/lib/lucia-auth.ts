@@ -1,7 +1,7 @@
 import { Lucia } from "lucia";
 import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
-import { db, type DatabaseUser } from "./db";
+import { sqliteDb } from "../database/sqliteDb";
 
 /**
  * Polyfill needed if you're using Node.js 18 or below
@@ -16,7 +16,7 @@ import { db, type DatabaseUser } from "./db";
  *
  * @link {@see https://lucia-auth.com/database/sqlite/}
  **/
-const adapter = new BetterSqlite3Adapter(db, {
+const adapter = new BetterSqlite3Adapter(sqliteDb, {
   user: "users",
   session: "sessions",
 });
@@ -61,4 +61,10 @@ declare module "lucia" {
     Lucia: typeof lucia;
     DatabaseUserAttributes: Omit<DatabaseUser, "id">;
   }
+}
+
+export interface DatabaseUser {
+  id: string;
+  username: string;
+  password_hash?: string;
 }

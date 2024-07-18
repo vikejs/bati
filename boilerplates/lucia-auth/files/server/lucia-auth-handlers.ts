@@ -1,7 +1,7 @@
 import { generateId, verifyRequestOrigin, Scrypt, type Session } from "lucia";
-import { github, lucia } from "../libs/auth";
+import { github, lucia, type DatabaseUser } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
-import { type DatabaseUser, db } from "../libs/db";
+import { sqliteDb } from "../database/sqliteDb";
 import { OAuth2RequestError, generateState } from "arctic";
 import { parse, serialize } from "cookie";
 
@@ -100,7 +100,9 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
   const userId = generateId(15);
 
   try {
-    db.prepare("INSERT INTO users (id, username, password_hash) VALUES(?, ?, ?)").run(userId, username, passwordHash);
+    sqliteDb
+      .prepare("INSERT INTO users (id, username, password_hash) VALUES(?, ?, ?)")
+      .run(userId, username, passwordHash);
 
     const session = await lucia.createSession(userId, {});
 
@@ -160,7 +162,9 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
     });
   }
 
-  const existingUser = db.prepare("SELECT * FROM users WHERE username = ?").get(username) as DatabaseUser | undefined;
+  const existingUser = sqliteDb.prepare("SELECT * FROM users WHERE username = ?").get(username) as
+    | DatabaseUser
+    | undefined;
   if (!existingUser) {
     return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
       status: 422,
@@ -288,7 +292,7 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     });
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
-    const existingAccount = db
+    const existingAccount = sqliteDb
       .prepare("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
       .get("github", githubUser.id) as DatabaseUser | undefined;
 
@@ -304,13 +308,11 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     }
     const userId = generateId(15);
 
-    db.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
+    sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
 
-    db.prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)").run(
-      "github",
-      githubUser.id,
-      userId,
-    );
+    sqliteDb
+      .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
+      .run("github", githubUser.id, userId);
 
     const session = await lucia.createSession(userId, {});
 
