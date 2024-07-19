@@ -34,10 +34,10 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
-  const pnpm = createMemo(() => ["pnpm", "create", "@batijs/app", ...getFlags()]);
+  const pnpm = createMemo(() => ["pnpm", "create", "bati", ...getFlags()]);
   const yarn = createMemo(() => ["yarn", "dlx", "@batijs/cli", ...getFlags()]);
-  const bun = createMemo(() => ["bun", "create", "@batijs/app", ...getFlags()]);
-  const npm = createMemo(() => ["npm", "create", "@batijs/app", "--", ...getFlags()]);
+  const bun = createMemo(() => ["bun", "create", "bati", ...getFlags()]);
+  const npm = createMemo(() => ["npm", "create", "bati", "--", ...getFlags()]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
