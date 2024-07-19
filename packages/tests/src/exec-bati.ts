@@ -15,15 +15,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
     // as we are also testing that the generated package dependencies are properly bundled.
     await exec(
       "npm",
-      [
-        "--registry",
-        "http://localhost:4873",
-        "create",
-        "@batijs/app@local",
-        "--",
-        ...flags.map((f) => `--${f}`),
-        digest,
-      ],
+      ["--registry", "http://localhost:4873", "create", "bati@local", "--", ...flags.map((f) => `--${f}`), digest],
       {
         timeout: 15000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,

@@ -6,7 +6,7 @@ tempD=$(mktemp -d)
 cd $tempD
 
 # Then run the following commands
-# pnpm --loglevel=error create @batijs/app --solid --tailwindcss --telefunc --eslint
+# pnpm --loglevel=error create bati --solid --tailwindcss --telefunc --eslint
 # cd my-app
 # pnpm install
 # pnpm run dev
