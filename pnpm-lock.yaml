@@ -1288,9 +1288,6 @@ importers:
       '@types/which':
         specifier: ^3.0.4
         version: 3.0.4
-      '@types/which-pm-runs':
-        specifier: ^1.0.2
-        version: 1.0.2
       citty:
         specifier: ^0.1.6
         version: 0.1.6
@@ -1321,9 +1318,6 @@ importers:
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@18.19.31)
-      which-pm-runs:
-        specifier: ^1.1.0
-        version: 1.1.0
 
   packages/compile:
     dependencies:
@@ -1421,6 +1415,12 @@ importers:
       which:
         specifier: ^4.0.0
         version: 4.0.0
+
+  packages/create-bati:
+    dependencies:
+      '@batijs/cli':
+        specifier: workspace:*
+        version: link:../cli
 
   packages/create-batijs-app:
     dependencies:
@@ -3491,9 +3491,6 @@ packages:
 
   '@types/tough-cookie@4.0.5':
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
-
-  '@types/which-pm-runs@1.0.2':
-    resolution: {integrity: sha512-M0ZefeDApctHbjqtATOiixiwafG7pXD3exxnjku4XmX9+2DmONGghv5Z8Pnm0lNLBZKvDQyuG+4pLkH2UkP5gg==}
 
   '@types/which@3.0.4':
     resolution: {integrity: sha512-liyfuo/106JdlgSchJzXEQCVArk0CvevqPote8F8HgWgJ3dRCcTHgJIsLDuee0kxk/mhbInzIZk3QWSZJ8R+2w==}
@@ -7324,10 +7321,6 @@ packages:
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
 
-  which-pm-runs@1.1.0:
-    resolution: {integrity: sha512-n1brCuqClxfFfq/Rb0ICg9giSZqCS+pLtccdag6C2HyufBrh3fBOiy9nb6ggRMvWOVH5GrdJskj5iGTZNxd7SA==}
-    engines: {node: '>=4'}
-
   which-typed-array@1.1.15:
     resolution: {integrity: sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==}
     engines: {node: '>= 0.4'}
@@ -9248,8 +9241,6 @@ snapshots:
 
   '@types/tough-cookie@4.0.5':
     optional: true
-
-  '@types/which-pm-runs@1.0.2': {}
 
   '@types/which@3.0.4': {}
 
@@ -13640,8 +13631,6 @@ snapshots:
       is-number-object: 1.0.7
       is-string: 1.0.7
       is-symbol: 1.0.4
-
-  which-pm-runs@1.1.0: {}
 
   which-typed-array@1.1.15:
     dependencies:

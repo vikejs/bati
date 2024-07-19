@@ -1,15 +1,15 @@
 import { existsSync } from "node:fs";
+import { exec as nodeExec } from "node:child_process";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { type VikeMeta, withIcon } from "@batijs/core";
+import { packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
 import { type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import sift from "sift";
-import whichPm from "which-pm-runs";
 import packageJson from "./package.json";
 import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, Hook } from "./types.js";
@@ -17,7 +17,7 @@ import type { BoilerplateDef, Hook } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
-const pm = whichPm();
+const pm = packageManager();
 
 type FeatureOrCategory = Flags | CategoryLabels;
 
@@ -113,6 +113,11 @@ const defaultDef = {
   force: {
     type: "boolean",
     description: "If true, does no check if target directory already exists",
+    required: false,
+  },
+  ["skip-git"]: {
+    type: "boolean",
+    description: "If true, does not execute `git init`",
     required: false,
   },
 } as const satisfies ArgsDef;
@@ -273,6 +278,25 @@ function testFlags(flags: string[], bl: BoilerplateDef) {
   return true;
 }
 
+async function gitInit(cwd: string) {
+  try {
+    const exists = which("git");
+    if (!exists) return;
+
+    await new Promise((resolve, reject) => {
+      nodeExec("git init", { cwd }, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(undefined);
+        }
+      });
+    });
+  } catch (e) {
+    console.warn(`${yellow("⚠")} failed to execute \`git init\` in destination folder. Skipping.`);
+  }
+}
+
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await parseBoilerplates(dir);
@@ -336,6 +360,10 @@ async function run() {
         },
         meta,
       );
+
+      if (!args["skip-git"]) {
+        await gitInit(args.project);
+      }
 
       printOK(args.project, flags);
 
