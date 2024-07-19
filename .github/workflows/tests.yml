@@ -67,7 +67,7 @@ jobs:
 
       - uses: actions/cache@v4
         # REALLY slow on windows
-        if: matrix.os == 'windows-latest'
+        if: matrix.os != 'windows-latest'
         name: Setup bun cache
         with:
           path: ~/.bun/install/cache
