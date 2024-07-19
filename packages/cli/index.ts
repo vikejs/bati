@@ -109,7 +109,6 @@ const defaultDef = {
     type: "positional",
     description: "Project directory",
     required: false,
-    default: "my-app",
   },
   force: {
     type: "boolean",
@@ -146,11 +145,31 @@ export default function yn(value: unknown, default_?: boolean) {
   return default_;
 }
 
+function generateRandomFilename(size: number) {
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  for (let i = 0; i < size; i++) {
+    // Pick a random character from the string and add it to the result
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    result += chars[randomIndex];
+  }
+  return result;
+}
+
 async function checkArguments(args: ParsedArgs<Args>) {
+  const projectChosenByUser = Boolean(args.project);
+  if (!args.project) {
+    // Try to default to `my-app`, otherwise `my-app[randomString]`
+    args.project = "my-app";
+  }
+
   if (existsSync(args.project)) {
     // is target a directory
     const stat = await lstat(args.project);
-    if (!stat.isDirectory()) {
+    if (!projectChosenByUser) {
+      args.project = `my-app-${generateRandomFilename(5)}`;
+      return;
+    } else if (!stat.isDirectory()) {
       console.error(
         `${yellow("⚠")} Target ${cyan(args.project)} already exists but is not a directory. ${yellow("Aborting")}.`,
       );
@@ -170,13 +189,22 @@ async function checkArguments(args: ParsedArgs<Args>) {
     }
 
     // is target an empty directory
-    if (!args.force && (await readdir(args.project)).length > 0) {
-      console.error(
-        `${yellow("⚠")} Target folder ${cyan(
-          args.project,
-        )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`,
-      );
-      process.exit(4);
+    if (!args.force) {
+      const isFolderEmpty = (await readdir(args.project)).length === 0;
+
+      if (!isFolderEmpty) {
+        if (!projectChosenByUser) {
+          args.project = `my-app-${generateRandomFilename(5)}`;
+          return;
+        } else {
+          console.error(
+            `${yellow("⚠")} Target folder ${cyan(
+              args.project,
+            )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`,
+          );
+          process.exit(4);
+        }
+      }
     }
   }
 }
