@@ -1,13 +1,14 @@
 import { generateId, verifyRequestOrigin, Scrypt } from "lucia";
+import { github, lucia } from "../lib/lucia-auth";
 import type { Session, User } from "lucia";
-import { github, lucia, type DatabaseUser } from "../lib/lucia-auth";
+import type { DatabaseUser, GitHubUser } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { sqliteDb } from "../database/sqliteDb";
 import { OAuth2RequestError, generateState } from "arctic";
 import { parse, serialize } from "cookie";
 import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
 import { userTable, oauthAccountTable } from "../database/schema/auth";
-import { getExistingUser, getExistingAccount } from "../database/auth-actions";
+import { validateInput, getExistingUser, getExistingAccount } from "../database/auth-actions";
 
 /**
  * CSRF protection middleware
@@ -70,19 +71,13 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
   _context?: Context,
 ): Promise<Response> {
   const body = (await request.json()) as { username: string; password: string };
-  const username = body.username || null;
-  const password = body.password || null;
+  const username = body.username ?? "";
+  const password = body.password ?? "";
 
-  if (!username || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
-    return new Response(JSON.stringify({ errors: { username: "Invalid username" } }), {
-      status: 422,
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-  }
-  if (!password || password.length < 6 || password.length > 255) {
-    return new Response(JSON.stringify({ errors: { password: "Invalid password" } }), {
+  const validated = validateInput(username, password);
+
+  if (!validated.success) {
+    return new Response(JSON.stringify({ error: validated.error }), {
       status: 422,
       headers: {
         "content-type": "application/json",
@@ -122,7 +117,7 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
     });
   } catch (error) {
     if (error instanceof SqliteError && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
-      return new Response(JSON.stringify({ errors: { username: "Username already used" } }), {
+      return new Response(JSON.stringify({ error: { username: "Username already used" } }), {
         status: 422,
         headers: {
           "content-type": "application/json",
@@ -149,19 +144,13 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
   _context: Context,
 ): Promise<Response> {
   const body = (await request.json()) as { username: string; password: string };
-  const username = body.username || null;
-  const password = body.password || null;
+  const username = body.username ?? "";
+  const password = body.password ?? "";
 
-  if (!username || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
-    return new Response(JSON.stringify({ errors: { username: "Invalid username" } }), {
-      status: 422,
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-  }
-  if (!password || password.length < 6 || password.length > 255) {
-    return new Response(JSON.stringify({ errors: { password: "Invalid password" } }), {
+  const validated = validateInput(username, password);
+
+  if (!validated.success) {
+    return new Response(JSON.stringify({ error: validated.error }), {
       status: 422,
       headers: {
         "content-type": "application/json",
@@ -332,7 +321,6 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     });
   } catch (error) {
     if (error instanceof OAuth2RequestError && error.message === "bad_verification_code") {
-      // invalid code
       return new Response(JSON.stringify({ error: error.message }), {
         status: 400,
         headers: {
@@ -347,9 +335,4 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
       },
     });
   }
-}
-
-interface GitHubUser {
-  id: string;
-  login: string;
 }

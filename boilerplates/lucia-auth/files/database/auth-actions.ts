@@ -24,3 +24,31 @@ export function getExistingAccount(providerId: string, providerUserId: string) {
       .get(providerId, providerUserId);
   }
 }
+
+export function validateInput(username: string | null, password: string | null) {
+  const error: {
+    username: string | null;
+    password: string | null;
+  } = {
+    username: null,
+    password: null,
+  };
+
+  if (!username || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
+    error.username = "Invalid username";
+  }
+  if (!password || password.length < 6 || password.length > 255) {
+    error.password = "Invalid password";
+  }
+
+  if (error.username || error.password) {
+    return {
+      error,
+      success: false,
+    };
+  }
+  return {
+    error,
+    success: true,
+  };
+}

@@ -73,3 +73,8 @@ export interface DatabaseUser {
   username: string;
   password_hash?: string;
 }
+
+export interface GitHubUser {
+  id: string;
+  login: string;
+}
