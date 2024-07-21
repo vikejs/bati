@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Lucia } from "lucia";
 import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
@@ -76,5 +77,5 @@ export interface DatabaseUser {
 
 export interface GitHubUser {
   id: string;
-  login: string;
+  login: string; // username
 }

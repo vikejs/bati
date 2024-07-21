@@ -4,7 +4,7 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/better-sqlite3", "@types/cookie"],
+    devDependencies: ["dotenv", "@types/better-sqlite3", "@types/cookie"],
     dependencies: [
       "arctic",
       "cookie",
