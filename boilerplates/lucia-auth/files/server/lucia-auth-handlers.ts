@@ -39,7 +39,7 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
  */
 export async function luciaAuthMiddleware<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  context: Context & { session: Session | null; user: User | null },
+  context: Context & { session?: Session | null; user?: User | null },
 ): Promise<void> {
   const sessionId = lucia.readSessionCookie(request.headers.get("cookie") ?? "");
 
@@ -196,7 +196,7 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
  */
 export async function luciaAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
-  context: Context & { session: Session },
+  context: Context & { session?: Session },
 ): Promise<Response> {
   const { session } = context;
 

@@ -9,7 +9,7 @@ export const sqliteDb: Database = sqlite(":memory:");
  */
 sqliteDb.exec(`CREATE TABLE IF NOT EXISTS users (
     id TEXT NOT NULL PRIMARY KEY,
-    username TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
     password_hash TEXT
 )`);
 
