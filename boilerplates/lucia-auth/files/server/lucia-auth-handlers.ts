@@ -26,7 +26,7 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
   const hostHeader = request.headers.get("Host") ?? null;
 
   if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
-    return new Response(null, {
+    return new Response("Forbidden Request", {
       status: 403,
     });
   }
@@ -201,7 +201,7 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
   const { session } = context;
 
   if (!session) {
-    return new Response(null, {
+    return new Response("Unauthorized Request", {
       status: 401,
     });
   }
@@ -217,10 +217,9 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
    *
    * @link {@see https://lucia-auth.com/basics/sessions#delete-session-cookie}
    */
-  return new Response(null, {
-    status: 301,
+  return new Response(JSON.stringify({ status: "success" }), {
+    status: 200,
     headers: {
-      Location: "/login",
       "set-cookie": lucia.createBlankSessionCookie().serialize(),
     },
   });
@@ -269,11 +268,8 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
   const storedState = cookies.github_oauth_state || null;
 
   if (!code || !state || !storedState || state !== storedState) {
-    return new Response(null, {
-      status: 400,
-      headers: {
-        "content-type": "application/json",
-      },
+    return new Response("Unauthorized Request", {
+      status: 401,
     });
   }
 
@@ -291,9 +287,8 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     if (existingAccount) {
       const session = await lucia.createSession(existingAccount.id, {});
       return new Response(JSON.stringify({ status: "success" }), {
-        status: 301,
+        status: 200,
         headers: {
-          Location: "/",
           "set-cookie": lucia.createSessionCookie(session.id).serialize(),
         },
       });
@@ -313,9 +308,8 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     const session = await lucia.createSession(userId, {});
 
     return new Response(JSON.stringify({ status: "success" }), {
-      status: 301,
+      status: 200,
       headers: {
-        Location: "/",
         "set-cookie": lucia.createSessionCookie(session.id).serialize(),
       },
     });
