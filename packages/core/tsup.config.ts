@@ -15,23 +15,6 @@ const eslintFixPlugin: Plugin = {
         .replace("esquery.parse", "esquery.default.parse");
       return { contents, loader: "default" };
     });
-
-    // unsupported require.resolve
-    build.onLoad({ filter: /eslint[/\\]lib[/\\]rule-tester[/\\]rule-tester\.js$/ }, async (args) => {
-      let contents = await readFile(args.path, "utf8");
-
-      if (!contents.includes(`require.resolve("espree")`)) {
-        throw new Error(
-          '[eslintFixPlugin] __require.resolve("espree") usage updated, eslint-fix-plugin probably needs to be updated',
-        );
-      }
-
-      contents = contents
-        .replace(`const espreePath = require.resolve("espree");`, ``)
-        .replace(`config.parser = espreePath;`, `config.parser = "espree";`);
-
-      return { contents, loader: "default" };
-    });
   },
 };
 

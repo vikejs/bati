@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="(item) in todoItems" :key="item.text">
+    <li v-for="item in todoItems" :key="item.text">
       {{ item.text }}
     </li>
     <li>
@@ -25,13 +25,7 @@ const newTodo = ref("");
 const submitNewTodo = async () => {
   // Optimistic UI update
   todoItems.value.push({ text: newTodo.value });
-  if (
-    BATI.has("express") ||
-    BATI.has("fastify") ||
-    BATI.has("h3") ||
-    BATI.has("hattip") ||
-    BATI.has("hono")
-  ) {
+  if (BATI.has("express") || BATI.has("fastify") || BATI.has("h3") || BATI.has("hattip") || BATI.has("hono")) {
     try {
       if (BATI.has("telefunc")) {
         await onNewTodo({ text: newTodo.value });

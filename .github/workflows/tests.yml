@@ -124,7 +124,7 @@ jobs:
         run: pnpm run test
 
       - name: Run e2e tests
-        run: pnpm run test:e2e --keep --summarize ${{ (matrix.os == 'windows-latest' || matrix.os == 'macos-latest') && '--filter react' || '' }}
+        run: pnpm run test:e2e --keep --summarize ${{ (matrix.os == 'windows-latest' || matrix.os == 'macos-latest') && '--filter solid' || '' }}
         env:
           TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
@@ -138,3 +138,66 @@ jobs:
           name: ${{ runner.os }}-${{ matrix.node }}-summary
           path: |
             ${{ runner.temp }}/bati/.turbo/runs/*.json
+
+  clean-cache:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ Windows, macOS, Linux ]
+        key: [ bati-cache, turbo, bun, pnpm-store ]
+        exclude:
+          - os: Windows
+            key: bun
+        include:
+          - key: bati-cache
+            node: 20
+          - key: turbo
+            node: 20
+          - key: bati-cache
+            os: Linux
+            node: 18
+          - key: turbo
+            os: Linux
+            node: 18
+          - key: bati-cache
+            os: Linux
+            node: 22
+          - key: turbo
+            os: Linux
+            node: 22
+    steps:
+      - name: Cleanup
+        run: |
+          gh extension install actions/gh-actions-cache
+
+          if [[ -n "${{ matrix.node }}" ]]; then
+            key="${{ matrix.os }}-${{ matrix.node }}-${{ matrix.key }}"
+          else
+            key="${{ matrix.os }}-${{ matrix.key }}"
+          fi
+          
+          echo "Fetching list of cache keys with key: $key"
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order desc --key $key -L 100 | cut -f 1)
+
+          ## Setting this to not fail the workflow while deleting cache keys.
+          set +e
+          
+          # Convert the list of cache keys to an array
+          cacheKeysArray=($cacheKeysForPR)
+
+          # Get the number of cache keys
+          cacheKeyCount=${#cacheKeysArray[@]}
+
+          # Delete all cache keys except the last one
+          echo "Deleting caches for key: $key..."
+          for ((i=0; i<cacheKeyCount-1; i++))
+          do
+              gh actions-cache delete ${cacheKeysArray[$i]} -R $REPO -B $BRANCH --confirm
+          done
+
+          echo "Done"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge

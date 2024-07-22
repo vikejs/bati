@@ -17,6 +17,9 @@ export interface PackageJsonScripts {
 
 export interface PackageJsonScriptOption {
   value?: string;
+  /**
+   * Higher values have priority
+   */
   precedence: number;
   warnIfReplaced?: boolean;
 }

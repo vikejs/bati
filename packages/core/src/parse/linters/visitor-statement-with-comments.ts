@@ -35,8 +35,9 @@ export function visitorStatementWithComments(
     const removeCommentsOnly = comments.length > 1 && testVal === "remove-comments-only";
 
     if (!removeCommentsOnly) {
-      const identifierParents: (string | undefined)[] = ["CallExpression", "Property"];
-      if (node.type === "Identifier" && identifierParents.includes((node as AST.Node).parent?.type)) {
+      const identifierParents: (string | undefined)[] = ["Property"];
+      const identifierElement: (string | undefined)[] = ["SpreadElement", "Identifier"];
+      if (identifierElement.includes(node.type) && identifierParents.includes((node as AST.Node).parent?.type)) {
         node = (node as AST.Node).parent!;
       }
       start = node.range![0];

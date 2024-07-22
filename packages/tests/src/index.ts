@@ -60,14 +60,15 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ['*.spec.ts'],
+    include: ["*.spec.ts"],
     testTimeout: 100000,
     environmentMatchGlobs: [
-      ['**/*.dom.spec.ts', 'happy-dom'],
-      ['**/*.spec.ts', 'node'],
+      ["**/*.dom.spec.ts", "happy-dom"],
+      ["**/*.spec.ts", "node"],
     ],
   },
-});`,
+});
+`,
     "utf-8",
   );
 }

@@ -8,7 +8,6 @@ import {
 import type { Side } from "@floating-ui/utils";
 import { createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ignore<T>(_value: T): void {
   // no-op
 }
