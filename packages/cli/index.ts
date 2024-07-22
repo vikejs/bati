@@ -376,7 +376,7 @@ async function run() {
       );
 
       if (!args["skip-git"]) {
-        await gitInit(args.project);
+        gitInit(args.project);
       }
 
       printOK(args.project, flags);
