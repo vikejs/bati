@@ -33,8 +33,13 @@ export function getArgs() {
 }
 
 export function getVersion() {
+  const parts = packageJson.version.split(".");
+  const first = parts[0];
+  const second = parts[1];
+  const third = parts.slice(2).join(".");
+
   return {
     version: packageJson.version,
-    semver: packageJson.version.split(".") as [string, string, string],
+    semver: [first, second, third],
   };
 }
