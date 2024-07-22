@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 import sqlite, { type Database } from "better-sqlite3";
 
 export const sqliteDb: Database = sqlite(":memory:");
@@ -15,7 +16,7 @@ sqliteDb.exec(`CREATE TABLE IF NOT EXISTS users (
 
 sqliteDb.exec(`CREATE TABLE IF NOT EXISTS oauth_accounts (
     provider_id TEXT NOT NULL,
-    provider_user_id TEXT NOT NULL,
+    provider_user_id INTEGER NOT NULL,
     user_id TEXT NOT NULL,
     PRIMARY KEY (provider_id, provider_user_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE cascade ON DELETE cascade

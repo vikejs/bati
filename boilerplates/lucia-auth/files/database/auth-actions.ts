@@ -11,7 +11,7 @@ export function getExistingUser(username: string) {
   }
 }
 
-export function getExistingAccount(providerId: string, providerUserId: string) {
+export function getExistingAccount(providerId: string, providerUserId: number) {
   if (BATI.has("drizzle")) {
     return drizzleDb
       .select()

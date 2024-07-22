@@ -1,5 +1,5 @@
 /*# BATI include-if-imported #*/
-import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, primaryKey, sqliteTable, text, int } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("users", {
   id: text("id").notNull().primaryKey(),
@@ -11,7 +11,7 @@ export const oauthAccountTable = sqliteTable(
   "oauth_accounts",
   {
     providerId: text("provider_id").notNull(),
-    providerUserId: text("provider_user_id").notNull(),
+    providerUserId: int("provider_user_id").notNull(),
     userId: text("user_id")
       .notNull()
       .references(() => userTable.id, {

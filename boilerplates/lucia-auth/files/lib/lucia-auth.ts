@@ -75,7 +75,17 @@ export interface DatabaseUser {
   password_hash?: string;
 }
 
+export interface DatabaseOAuthAccount {
+  provider_id: string;
+  provider_user_id: string;
+  /*{ @if (it.BATI.has("drizzle")) }*/
+  userId: string;
+  /*{ #else }*/
+  user_id: string;
+  /*{ /if }*/
+}
+
 export interface GitHubUser {
-  id: string;
+  id: number;
   login: string; // username
 }

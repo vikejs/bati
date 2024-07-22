@@ -1,7 +1,7 @@
 import { generateId, verifyRequestOrigin, Scrypt } from "lucia";
 import { github, lucia } from "../lib/lucia-auth";
 import type { Session, User } from "lucia";
-import type { DatabaseUser, GitHubUser } from "../lib/lucia-auth";
+import type { DatabaseUser, DatabaseOAuthAccount, GitHubUser } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { sqliteDb } from "../database/sqliteDb";
 import { OAuth2RequestError, generateState } from "arctic";
@@ -282,17 +282,22 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     });
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
-    const existingAccount = getExistingAccount("github", githubUser.id) as DatabaseUser | undefined;
+    const existingAccount = getExistingAccount("github", githubUser.id) as DatabaseOAuthAccount | undefined;
 
     if (existingAccount) {
-      const session = await lucia.createSession(existingAccount.id, {});
-      return new Response(JSON.stringify({ status: "success" }), {
-        status: 200,
+      const session = await lucia.createSession(
+        BATI.has("drizzle") ? existingAccount.userId : existingAccount.user_id,
+        {},
+      );
+      return new Response(null, {
+        status: 301,
         headers: {
+          Location: "/",
           "set-cookie": lucia.createSessionCookie(session.id).serialize(),
         },
       });
     }
+
     const userId = generateId(15);
 
     if (BATI.has("drizzle")) {
@@ -307,9 +312,10 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
 
     const session = await lucia.createSession(userId, {});
 
-    return new Response(JSON.stringify({ status: "success" }), {
-      status: 200,
+    return new Response(null, {
+      status: 301,
       headers: {
+        Location: "/",
         "set-cookie": lucia.createSessionCookie(session.id).serialize(),
       },
     });
