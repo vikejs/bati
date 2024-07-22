@@ -2,13 +2,8 @@
 
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
-//# BATI.has("react") || "remove-comments-only"
-// missing "exports" in package.json
 import react from "eslint-plugin-react/configs/recommended.js";
-//# BATI.has("solid") || "remove-comments-only"
-// See https://github.com/solidjs-community/eslint-plugin-solid/issues/118
-// import solid from "eslint-plugin-solid/configs/typescript";
-import solid from "eslint-plugin-solid/dist/configs/typescript.js";
+import solid from "eslint-plugin-solid/configs/typescript.js";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import tseslint from "typescript-eslint";
