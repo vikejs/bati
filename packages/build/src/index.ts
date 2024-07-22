@@ -43,6 +43,7 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
       case ".js":
       case ".tsx":
       case ".jsx":
+        return (fileContent as string).endsWith("\n") ? (fileContent as string) : (fileContent as string) + "\n";
       case ".env":
       case ".env.local":
       case ".env.development":
