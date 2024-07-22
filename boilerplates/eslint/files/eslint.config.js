@@ -20,6 +20,8 @@ export default tseslint.config(
       "*.js",
       "*.cjs",
       "*.mjs",
+      //# BATI.has("vercel")
+      ".vercel/*",
     ],
   },
   eslint.configs.recommended,
@@ -93,6 +95,17 @@ export default tseslint.config(
       "vue/singleline-html-element-content-newline": "off",
       "vue/max-attributes-per-line": "off",
       "vue/html-self-closing": "off",
+    },
+  },
+  //# BATI.has("compiled-css")
+  {
+    rules: {
+      "react/no-unknown-property": [
+        "error",
+        {
+          ignore: ["css"],
+        },
+      ],
     },
   },
   //# BATI.has("prettier")
