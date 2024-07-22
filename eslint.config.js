@@ -15,7 +15,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["**/*.cjs", "**/dist/*", "**/node_modules/*"],
+    ignores: ["**/*.cjs", "**/dist/*", "**/node_modules/*", "**/.DS_Store", "pnpm-lock.yaml"],
   },
   {
     languageOptions: {
@@ -84,13 +84,43 @@ export default tseslint.config(
     },
   },
   {
+    files: ["boilerplates/react/**/*.tsx", "boilerplates/react-*/**/*.tsx"],
+    rules: {
+      "react/no-unknown-property": [
+        "error",
+        {
+          ignore: ["css"],
+        },
+      ],
+    },
+  },
+  {
     // SolidJS
     ...solid,
     files: ["boilerplates/solid/**/*", "boilerplates/solid-*/**/*"],
     rules: {
       "solid/components-return-once": 0,
     },
+    languageOptions: {
+      parser: tseslint.parser,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
   },
+  {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: tseslint.parser,
+        sourceType: "module",
+        ecmaVersion: "latest",
+      },
+    },
+  },
+  // Vue
   ...pluginVue.configs["flat/recommended"],
   {
     rules: {
@@ -100,15 +130,5 @@ export default tseslint.config(
       "vue/html-self-closing": 0,
     },
   },
-  // {
-  //   // VueJS
-  //   extends: ["plugin:vue/vue3-recommended"],
-  //   files: ["boilerplates/vue/**/*.vue", "boilerplates/vue-*/**/*.vue"],
-  //   parserOptions: {
-  //     parser: "@typescript-eslint/parser",
-  //     sourceType: "module",
-  //     ecmaVersion: 2021,
-  //   },
-  // },
   prettier,
 );
