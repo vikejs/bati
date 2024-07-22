@@ -1,7 +1,7 @@
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
 // @ts-ignore
-import react from "eslint-plugin-react/configs/recommended.js";
+import react from "eslint-plugin-react/configs/recommended";
 // See https://github.com/solidjs-community/eslint-plugin-solid/issues/118
 // import solid from "eslint-plugin-solid/configs/typescript";
 import solid from "eslint-plugin-solid/dist/configs/typescript.js";
@@ -100,6 +100,7 @@ export default tseslint.config(
     files: ["boilerplates/solid/**/*", "boilerplates/solid-*/**/*"],
     rules: {
       "solid/components-return-once": 0,
+      "solid/no-innerhtml": "error",
     },
     languageOptions: {
       parser: tseslint.parser,

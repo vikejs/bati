@@ -44,7 +44,7 @@ export default defineConfig({
   dts: true,
   bundle: true,
   esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({})],
-  minify: false,
+  minify: true,
   // metafile: true,
 
   noExternal: ["espree"],
