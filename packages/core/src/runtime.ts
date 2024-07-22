@@ -1,3 +1,5 @@
+import packageJson from "../package.json";
+
 export function packageManager() {
   if (!process.env.npm_config_user_agent) {
     return undefined;
@@ -31,14 +33,13 @@ export function getArgs() {
 }
 
 export function getVersion() {
-  const v = process.env.npm_package_version;
+  const parts = packageJson.version.split(".");
+  const first = parts[0];
+  const second = parts[1];
+  const third = parts.slice(2).join(".");
 
-  if (v) {
-    return {
-      version: v,
-      semver: v.split(".") as [string, string, string],
-    };
-  }
-
-  return;
+  return {
+    version: packageJson.version,
+    semver: [first, second, third],
+  };
 }
