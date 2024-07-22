@@ -18,15 +18,7 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
-import {
-  createApp,
-  createRouter,
-  eventHandler,
-  fromNodeMiddleware,
-  fromWebHandler,
-  toNodeListener,
-  toWebRequest,
-} from "h3";
+import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener, toWebRequest } from "h3";
 import serveStatic from "serve-static";
 
 installWhatwgNodeFetch();
@@ -86,13 +78,13 @@ async function startServer() {
      * Auth.js route
      * @link {@see https://authjs.dev/getting-started/installation}
      **/
-    router.use("/api/auth/**", fromWebHandler(authjsHandler));
+    router.use("/api/auth/**", fromWebMiddleware(authjsHandler));
   }
 
   if (BATI.has("firebase-auth")) {
     app.use(fromWebMiddleware(firebaseAuthMiddleware));
-    router.post("/api/sessionLogin", fromWebHandler(firebaseAuthLoginHandler));
-    router.post("/api/sessionLogout", fromWebHandler(firebaseAuthLogoutHandler));
+    router.post("/api/sessionLogin", fromWebMiddleware(firebaseAuthLoginHandler));
+    router.post("/api/sessionLogout", fromWebMiddleware(firebaseAuthLogoutHandler));
   }
 
   if (BATI.has("trpc")) {
@@ -123,15 +115,15 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    router.post("/_telefunc", fromWebHandler(telefuncHandler));
+    router.post("/_telefunc", fromWebMiddleware(telefuncHandler));
   }
 
   if (BATI.has("ts-rest")) {
-    router.use("/api/**", fromWebHandler(tsRestHandler));
+    router.use("/api/**", fromWebMiddleware(tsRestHandler));
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-    router.post("/api/todo/create", fromWebHandler(createTodoHandler));
+    router.post("/api/todo/create", fromWebMiddleware(createTodoHandler));
   }
 
   /**
@@ -139,7 +131,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  router.use("/**", fromWebHandler(vikeHandler));
+  router.use("/**", fromWebMiddleware(vikeHandler));
 
   app.use(router);
 
