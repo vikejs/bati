@@ -1,5 +1,5 @@
-import { existsSync } from "node:fs";
-import { exec as nodeExec } from "node:child_process";
+import { existsSync, rmSync } from "node:fs";
+import { execSync } from "node:child_process";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -278,22 +278,36 @@ function testFlags(flags: string[], bl: BoilerplateDef) {
   return true;
 }
 
-async function gitInit(cwd: string) {
-  try {
-    const exists = which("git");
-    if (!exists) return;
+function gitInit(cwd: string) {
+  const exists = which("git");
+  if (!exists) return;
 
-    await new Promise((resolve, reject) => {
-      nodeExec("git init", { cwd }, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(undefined);
-        }
-      });
+  try {
+    execSync("git init", {
+      cwd,
+      stdio: "ignore",
     });
+
+    execSync("git add .", { cwd, stdio: "ignore" });
+    execSync(
+      [
+        "git",
+        '-c user.name="Bati"',
+        '-c user.email="no-reply@batijs.dev"',
+        "commit",
+        "--no-gpg-sign",
+        '--message="scaffold Vike app with Bati"',
+      ].join(" "),
+      { cwd, stdio: "ignore" },
+    );
   } catch (e) {
-    console.warn(`${yellow("⚠")} failed to execute \`git init\` in destination folder. Skipping.`);
+    try {
+      rmSync(join(cwd, ".git"), { recursive: true, force: true });
+    } catch {
+      /* empty */
+    }
+
+    console.warn(`${yellow("⚠")} failed to initialize a git repository in destination folder. Skipping.`);
   }
 }
 
