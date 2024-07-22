@@ -231,6 +231,29 @@ describe("ts: comment in object", () => {
   );
 });
 
+describe("ts: comment in function args", () => {
+  testIfElse(
+    `export default tseslint.config(
+  //# BATI.has("vue")
+  VUE1,
+  //# BATI.has("react")
+  REACT1,
+  //# BATI.has("react")
+  ...REACT2,
+  //# BATI.has("react")
+  REACT3,
+);`,
+    `export default tseslint.config(
+  REACT1,
+
+  ...REACT2,
+
+  REACT3,
+);`,
+    `export default tseslint.config();`,
+  );
+});
+
 describe("ts: jsx comments", () => {
   beforeEach(() => {
     ctx.jsx = true;

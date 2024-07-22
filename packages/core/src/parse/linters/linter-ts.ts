@@ -32,6 +32,9 @@ export default function tsLinterConfig(meta: VikeMeta) {
             ":statement"(node) {
               visitorStatementWithComments(context, sourceCode, node, meta);
             },
+            SpreadElement(node) {
+              visitorStatementWithComments(context, sourceCode, node, meta);
+            },
             ConditionalExpression(node) {
               visitorIfStatement(context, sourceCode, node, meta);
             },
