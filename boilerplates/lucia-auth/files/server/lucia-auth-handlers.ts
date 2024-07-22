@@ -141,7 +141,7 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
  */
 export async function luciaAuthLoginHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  _context: Context,
+  _context?: Context,
 ): Promise<Response> {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
@@ -196,9 +196,9 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
  */
 export async function luciaAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
-  context: Context & { session?: Session },
+  context?: Context & { session?: Session | null },
 ): Promise<Response> {
-  const { session } = context;
+  const session = context?.session ?? null;
 
   if (!session) {
     return new Response("Unauthorized Request", {
@@ -232,7 +232,7 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
  */
 export async function luciaGithubLoginHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
-  _context: Context,
+  _context?: Context,
 ): Promise<Response> {
   const state = generateState();
   const url = await github.createAuthorizationURL(state);
@@ -259,13 +259,13 @@ export async function luciaGithubLoginHandler<Context extends Record<string | nu
  */
 export async function luciaGithubCallbackHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
-  _context: Context,
+  _context?: Context,
 ): Promise<Response> {
-  const cookies = parse(request.headers.get("cookie") || "");
+  const cookies = parse(request.headers.get("cookie") ?? "");
   const params = new URL(request.url).searchParams;
   const code = params.get("code");
   const state = params.get("state");
-  const storedState = cookies.github_oauth_state || null;
+  const storedState = cookies.github_oauth_state ?? null;
 
   if (!code || !state || !storedState || state !== storedState) {
     return new Response("Unauthorized Request", {
