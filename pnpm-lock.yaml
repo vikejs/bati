@@ -837,8 +837,8 @@ importers:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@18.19.31)
       vite-plugin-vercel:
-        specifier: ^7.0.2
-        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
+        specifier: ^8.0.0
+        version: 8.0.0(@vite-plugin-vercel/vike@8.0.0)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
 
   boilerplates/shared-no-db:
     dependencies:
@@ -1135,8 +1135,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.31
       '@vite-plugin-vercel/vike':
-        specifier: ^7.0.1
-        version: 7.0.1(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.4(@types/node@18.19.31))
+        specifier: ^8.0.0
+        version: 8.0.0(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@8.0.0)(vite@5.3.4(@types/node@18.19.31))
       vike:
         specifier: ^0.4.181
         version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31))
@@ -1144,8 +1144,8 @@ importers:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@18.19.31)
       vite-plugin-vercel:
-        specifier: ^7.0.2
-        version: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
+        specifier: ^8.0.0
+        version: 8.0.0(@vite-plugin-vercel/vike@8.0.0)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
 
   boilerplates/vue:
     dependencies:
@@ -3577,21 +3577,21 @@ packages:
     peerDependencies:
       vite: ^2.8.1 || 3 || 4 || 5
 
-  '@vercel/build-utils@8.3.0':
-    resolution: {integrity: sha512-/Vdr4ZqPOoEfLk739DbxwtvzOdj1F37AmxGJE4Ds9tbhS0RSyYpkDFdZZ/VOWpl2GhC0L+RGdKt84IVKzgyZKA==}
+  '@vercel/build-utils@8.3.5':
+    resolution: {integrity: sha512-lJNcA1XKMbQg6npC8grQBEVg11w8BSBr8bXUSZokYmvtNXheL/5cKGAD01Uba9x1P/ae9lJ9zDorpoSq4AWSfw==}
 
-  '@vercel/nft@0.27.2':
-    resolution: {integrity: sha512-7LeioS1yE5hwPpQfD3DdH04tuugKjo5KrJk3yK5kAI3Lh76iSsK/ezoFQfzuT08X3ZASQOd1y9ePjLNI9+TxTQ==}
+  '@vercel/nft@0.27.3':
+    resolution: {integrity: sha512-oySTdDSzUAFDXpsSLk9Q943o+/Yu/+TCFxnehpFQEf/3khi2stMpTHPVNwFdvZq/Z4Ky93lE+MGHpXCRpMkSCA==}
     engines: {node: '>=16'}
     hasBin: true
 
   '@vercel/routing-utils@3.1.0':
     resolution: {integrity: sha512-Ci5xTjVTJY/JLZXpCXpLehMft97i9fH34nu9PGav6DtwkVUF6TOPX86U0W0niQjMZ5n6/ZP0BwcJK2LOozKaGw==}
 
-  '@vite-plugin-vercel/vike@7.0.1':
-    resolution: {integrity: sha512-qwS7Rwa1TVj9ARonXETiHiN4ksi62Ax/9T1oYxmpTy+XUJvjxNeBfOo0Vb2wRag8es4zR/hC7PsgIkPzpAb8jg==}
+  '@vite-plugin-vercel/vike@8.0.0':
+    resolution: {integrity: sha512-nZgHFAdVXGWbi/t1NsM+xRhOT42CGbUnJjC3ociHDgBGgbbZ6RBh0r861PMUrlbP3yX+P9fR5tVbU4iUDcUqdA==}
     peerDependencies:
-      vike: ^0.4.177
+      vike: ^0.4.179
       vite: ^4.4 || ^5.0.2
       vite-plugin-vercel: '*'
 
@@ -7250,10 +7250,10 @@ packages:
       '@testing-library/jest-dom':
         optional: true
 
-  vite-plugin-vercel@7.0.2:
-    resolution: {integrity: sha512-e0Wo3tng2UbnMXIkgveuSBZlhxkktSiVuRXO3Ep8APpCqR7bO6KTWYyRM+nbpBXh/cWuwaFLnLLi7gzqh8GySw==}
+  vite-plugin-vercel@8.0.0:
+    resolution: {integrity: sha512-k0uoqL2Q5JS8VtYVXgx5F1TGdHuUx2y1gY5qu4njKNVbr3HT7Vrvc9O66o2QmNzBrOtLlGdg2XA2aYAwpognbg==}
     peerDependencies:
-      '@vite-plugin-vercel/vike': 7.0.1
+      '@vite-plugin-vercel/vike': 8.0.0
       vike: '*'
       vite: ^4.4 || ^5.0.2
     peerDependenciesMeta:
@@ -9412,9 +9412,9 @@ snapshots:
     dependencies:
       vite: 5.3.4(@types/node@18.19.31)
 
-  '@vercel/build-utils@8.3.0': {}
+  '@vercel/build-utils@8.3.5': {}
 
-  '@vercel/nft@0.27.2':
+  '@vercel/nft@0.27.3':
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.11
       '@rollup/pluginutils': 4.2.1
@@ -9438,13 +9438,13 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vite-plugin-vercel/vike@7.0.1(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.4(@types/node@18.19.31))':
+  '@vite-plugin-vercel/vike@8.0.0(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@8.0.0)(vite@5.3.4(@types/node@18.19.31))':
     dependencies:
       '@brillout/libassert': 0.5.8
       nanoid: 5.0.7
       vike: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31))
       vite: 5.3.4(@types/node@18.19.31)
-      vite-plugin-vercel: 7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
+      vite-plugin-vercel: 8.0.0(@vite-plugin-vercel/vike@8.0.0)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31))
 
   '@vitejs/plugin-react@4.3.1(vite@5.3.4(@types/node@18.19.31))':
     dependencies:
@@ -13594,12 +13594,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@7.0.2(@vite-plugin-vercel/vike@7.0.1)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31)):
+  vite-plugin-vercel@8.0.0(@vite-plugin-vercel/vike@8.0.0)(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite@5.3.4(@types/node@18.19.31)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.2
-      '@vercel/build-utils': 8.3.0
-      '@vercel/nft': 0.27.2
+      '@vercel/build-utils': 8.3.5
+      '@vercel/nft': 0.27.3
       '@vercel/routing-utils': 3.1.0
       esbuild: 0.23.0
       fast-glob: 3.3.2
@@ -13607,7 +13607,7 @@ snapshots:
       vite: 5.3.4(@types/node@18.19.31)
       zod: 3.23.8
     optionalDependencies:
-      '@vite-plugin-vercel/vike': 7.0.1(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@7.0.2)(vite@5.3.4(@types/node@18.19.31))
+      '@vite-plugin-vercel/vike': 8.0.0(vike@0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31)))(vite-plugin-vercel@8.0.0)(vite@5.3.4(@types/node@18.19.31))
       vike: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.31))
     transitivePeerDependencies:
       - encoding
