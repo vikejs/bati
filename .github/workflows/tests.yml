@@ -167,9 +167,6 @@ jobs:
             os: Linux
             node: 22
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache
