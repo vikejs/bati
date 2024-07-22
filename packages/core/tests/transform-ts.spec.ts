@@ -282,10 +282,7 @@ describe("ts: jsx comments", () => {
 };`,
     `const x = () => {
   return (
-    <div
-      id="sidebar"
-      class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-    >
+    <div id="sidebar" class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200">
       {props.children}
     </div>
   );
