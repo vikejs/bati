@@ -1,8 +1,7 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { ESLint, Linter } from "eslint";
-// @ts-ignore
-import solid from "eslint-plugin-solid/configs/recommended";
+import solid from "eslint-plugin-solid/dist/configs/recommended.js";
 import type { VikeMeta } from "../../types.js";
 import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
@@ -66,6 +65,7 @@ export default function tsLinterConfig(meta: VikeMeta) {
   ];
 
   if (meta.BATI.has("solid")) {
+    // @ts-ignore
     config.push({
       files: ["**/*.{ts,tsx}"],
       ...solid,
