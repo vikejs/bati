@@ -174,7 +174,7 @@ jobs:
           for key in "${keys[@]}"
           do
             echo "Fetching list of cache keys with key: $key"
-            cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order asc --key $key -L 100 | cut -f 1)
+            cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort created-at --order asc --key $key -L 100 | cut -f 1)
   
             ## Setting this to not fail the workflow while deleting cache keys.
             set +e
