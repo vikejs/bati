@@ -66,7 +66,7 @@ async function createTsconfig(name: string) {
 }
 
 async function updateCliDependencies() {
-  const deps = ["^build"];
+  const deps: string[] = [];
 
   for await (const dep of listBoilerplates()) {
     deps.push(`${dep}#build`);
@@ -75,7 +75,7 @@ async function updateCliDependencies() {
   const cliTurboJson = join(__packages, "cli", "turbo.json");
   const content = JSON.parse(await readFile(cliTurboJson, "utf-8"));
 
-  content.tasks.build.dependsOn = deps;
+  content.tasks.build.dependsOn = ["^build", ...deps.sort()];
 
   await writeFile(cliTurboJson, JSON.stringify(content, undefined, 2), "utf-8");
 }
