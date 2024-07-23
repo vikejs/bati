@@ -6,6 +6,15 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import {
+  luciaAuthLoginHandler,
+  luciaAuthLogoutHandler,
+  luciaAuthMiddleware,
+  luciaAuthSignupHandler,
+  luciaCsrfMiddleware,
+  luciaGithubCallbackHandler,
+  luciaGithubLoginHandler,
+} from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -80,6 +89,17 @@ if (BATI.has("firebase-auth")) {
   router.use(handlerAdapter(firebaseAuthMiddleware));
   router.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
   router.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+}
+
+if (BATI.has("lucia-auth")) {
+  router.use(handlerAdapter(luciaCsrfMiddleware));
+  router.use(handlerAdapter(luciaAuthMiddleware));
+
+  router.post("/api/signup", handlerAdapter(luciaAuthSignupHandler));
+  router.post("/api/login", handlerAdapter(luciaAuthLoginHandler));
+  router.post("/api/logout", handlerAdapter(luciaAuthLogoutHandler));
+  router.get("/api/login/github", handlerAdapter(luciaGithubLoginHandler));
+  router.get("/api/login/github/callback", handlerAdapter(luciaGithubCallbackHandler));
 }
 
 if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
