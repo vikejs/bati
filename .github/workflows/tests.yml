@@ -178,7 +178,7 @@ jobs:
           cacheKeyCount=${#cacheKeysArray[@]}
 
           # Delete all cache keys except the last one
-          echo "Deleting $cacheKeyCount cache entries for key: $key..."
+          echo "Deleting $cacheKeyCount cache entries for key: $KEY..."
           for ((i=0; i<cacheKeyCount-1; i++))
           do
               gh actions-cache delete ${cacheKeysArray[$i]} -R $REPO -B $BRANCH --confirm
