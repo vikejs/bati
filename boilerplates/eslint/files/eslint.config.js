@@ -13,12 +13,14 @@ export default tseslint.config(
   {
     ignores: [
       "dist/*",
+      // Temporary compiled files
+      "**/*.ts.build-*.mjs",
+      //# BATI.has("vercel")
+      ".vercel/*",
       // JS files at the root of the project
       "*.js",
       "*.cjs",
       "*.mjs",
-      //# BATI.has("vercel")
-      ".vercel/*",
     ],
   },
   eslint.configs.recommended,

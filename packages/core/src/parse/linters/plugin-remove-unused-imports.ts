@@ -78,7 +78,7 @@ export default function pluginRemoveUnusedImports() {
     },
   };
 
-  const config: Linter.FlatConfig[] = [
+  const config: Linter.Config[] = [
     {
       plugins: {
         "unused-imports": plugin,

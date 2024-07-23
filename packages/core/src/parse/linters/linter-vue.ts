@@ -92,13 +92,13 @@ export default function vueLinterConfig(meta: VikeMeta) {
     },
   };
 
-  const config: Linter.FlatConfig[] = [
+  const config: Linter.Config[] = [
     {
       plugins: {
         batiVue: plugin,
       },
       languageOptions: {
-        parser: vueParseForESLint as Linter.ParserModule,
+        parser: vueParseForESLint,
         parserOptions: {
           parser: tsParseForESLint,
           ecmaVersion: 2022,
