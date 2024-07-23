@@ -49,13 +49,13 @@ export default function tsLinterConfig(meta: VikeMeta) {
     },
   };
 
-  const config: Linter.FlatConfig[] = [
+  const config: Linter.Config[] = [
     {
       plugins: {
         batiTs: plugin,
       },
       languageOptions: {
-        parser: tsParseForESLint as Linter.ParserModule,
+        parser: tsParseForESLint,
       },
       rules: {
         "batiTs/ts": "error",
@@ -70,7 +70,7 @@ export default function tsLinterConfig(meta: VikeMeta) {
       files: ["**/*.{ts,tsx}"],
       ...solid,
       languageOptions: {
-        parser: tsParseForESLint as Linter.ParserModule,
+        parser: tsParseForESLint,
       },
     });
   }
