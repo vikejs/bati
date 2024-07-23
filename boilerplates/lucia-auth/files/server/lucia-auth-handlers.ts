@@ -196,9 +196,9 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
  */
 export async function luciaAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
   _request: Request,
-  context?: Context & { session?: Session | null },
+  context: Context & { session?: Session | null },
 ): Promise<Response> {
-  const session = context?.session ?? null;
+  const session = context.session ?? null;
 
   if (!session) {
     return new Response("Unauthorized Request", {
