@@ -737,6 +737,12 @@ importers:
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
+      vike:
+        specifier: ^0.4.181
+        version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.41))
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@18.19.41)
 
   boilerplates/prettier:
     dependencies:
@@ -876,6 +882,37 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@10.12.4)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      vike:
+        specifier: ^0.4.181
+        version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.41))
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@18.19.41)
+
+  boilerplates/react-lucia-auth:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.41
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1067,6 +1104,28 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@10.12.4)
+      solid-js:
+        specifier: ^1.8.18
+        version: 1.8.18
+      vike:
+        specifier: ^0.4.181
+        version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.41))
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@18.19.41)
+
+  boilerplates/solid-lucia-auth:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.41
       solid-js:
         specifier: ^1.8.18
         version: 1.8.18
@@ -1305,6 +1364,28 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@10.12.4)
+      vike:
+        specifier: ^0.4.181
+        version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.41))
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@18.19.41)
+      vue:
+        specifier: ^3.4.33
+        version: 3.4.33(typescript@5.5.4)
+
+  boilerplates/vue-lucia-auth:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.41
       vike:
         specifier: ^0.4.181
         version: 0.4.181(react-streaming@0.3.42)(vite@5.3.4(@types/node@18.19.41))

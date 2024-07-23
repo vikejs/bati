@@ -1,0 +1,11 @@
+{
+  "extends": ["../tsconfig.base.json"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vite/client", "@types/node", "@batijs/core/types"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+  }
+}

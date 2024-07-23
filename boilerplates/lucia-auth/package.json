@@ -24,7 +24,9 @@
     "cookie": "^0.6.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.32.0",
-    "lucia": "^3.2.0"
+    "lucia": "^3.2.0",
+    "vike": "^0.4.181",
+    "vite": "^5.3.4"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -50,6 +52,9 @@
     "./lib/lucia-auth": {
       "types": "./dist/types/lib/lucia-auth.d.ts"
     },
+    "./pages/login/+guard": {
+      "types": "./dist/types/pages/login/+guard.d.ts"
+    },
     "./server/lucia-auth-handlers": {
       "types": "./dist/types/server/lucia-auth-handlers.d.ts"
     }
@@ -67,6 +72,9 @@
       ],
       "lib/lucia-auth": [
         "./dist/types/lib/lucia-auth.d.ts"
+      ],
+      "pages/login/+guard": [
+        "./dist/types/pages/login/+guard.d.ts"
       ],
       "server/lucia-auth-handlers": [
         "./dist/types/server/lucia-auth-handlers.d.ts"
