@@ -144,41 +144,29 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ Windows, macOS, Linux ]
-        key: [ bati-cache, turbo, bun, pnpm-store ]
-        exclude:
-          - os: Windows
-            key: bun
-        include:
-          - key: bati-cache
-            node: 20
-          - key: turbo
-            node: 20
-          - key: bati-cache
-            os: Linux
-            node: 18
-          - key: turbo
-            os: Linux
-            node: 18
-          - key: bati-cache
-            os: Linux
-            node: 22
-          - key: turbo
-            os: Linux
-            node: 22
+        key:
+          - Windows-20-bati-cache
+          - Windows-20-turbo
+          - Windows-pnpm-store
+          - macOS-20-bati-cache
+          - macOS-20-turbo
+          - macOS-pnpm-store
+          - macOS-bun
+          - Linux-20-bati-cache
+          - Linux-20-turbo
+          - Linux-pnpm-store
+          - Linux-bun
+          - Linux-18-bati-cache
+          - Linux-18-turbo
+          - Linux-22-bati-cache
+          - Linux-22-turbo
     steps:
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache
-
-          if [[ -n "${{ matrix.node }}" ]]; then
-            key="${{ matrix.os }}-${{ matrix.node }}-${{ matrix.key }}"
-          else
-            key="${{ matrix.os }}-${{ matrix.key }}"
-          fi
           
           echo "Fetching list of cache keys with key: $key"
-          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order desc --key $key -L 100 | cut -f 1)
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order desc --key $KEY -L 100 | cut -f 1)
 
           ## Setting this to not fail the workflow while deleting cache keys.
           set +e
@@ -200,4 +188,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
+          KEY: ${{ matrix.key }}
           BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
