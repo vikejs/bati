@@ -146,51 +146,60 @@ jobs:
   clean-cache:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        key:
-          - Windows-20-bati-cache
-          - Windows-20-turbo
-          - Windows-pnpm-store
-          - macOS-20-bati-cache
-          - macOS-20-turbo
-          - macOS-pnpm-store
-          - macOS-bun
-          - Linux-20-bati-cache
-          - Linux-20-turbo
-          - Linux-pnpm-store
-          - Linux-bun
-          - Linux-18-bati-cache
-          - Linux-18-turbo
-          - Linux-22-bati-cache
-          - Linux-22-turbo
     steps:
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache
           
-          echo "Fetching list of cache keys with key: $key"
-          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order desc --key $KEY -L 100 | cut -f 1)
-
-          ## Setting this to not fail the workflow while deleting cache keys.
-          set +e
+          keys=(
+            "Windows-20-bati-cache"
+            "Windows-20-turbo"
+            "Windows-pnpm-store"
+            "macOS-20-bati-cache"
+            "macOS-20-turbo"
+            "macOS-pnpm-store"
+            "macOS-bun"
+            "Linux-20-bati-cache"
+            "Linux-20-turbo"
+            "Linux-pnpm-store"
+            "Linux-bun"
+            "Linux-18-bati-cache"
+            "Linux-18-turbo"
+            "Linux-22-bati-cache"
+            "Linux-22-turbo"
+          )
           
-          # Convert the list of cache keys to an array
-          cacheKeysArray=($cacheKeysForPR)
-
-          # Get the number of cache keys
-          cacheKeyCount=${#cacheKeysArray[@]}
-
-          # Delete all cache keys except the last one
-          echo "Deleting $cacheKeyCount cache entries for key: $KEY..."
-          for ((i=0; i<cacheKeyCount-1; i++))
+          totalDeleted=0
+          
+          for key in "${keys[@]}"
           do
+            echo "Fetching list of cache keys with key: $key"
+            cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH --sort last-used --order desc --key $key -L 100 | cut -f 1)
+  
+            ## Setting this to not fail the workflow while deleting cache keys.
+            set +e
+            
+            # Convert the list of cache keys to an array
+            cacheKeysArray=($cacheKeysForPR)
+  
+            # Get the number of cache keys
+            cacheKeyCount=${#cacheKeysArray[@]}
+  
+            # Delete all cache keys except the last one
+            echo "Deleting caches for key: $key..."
+            deletedCount=0
+            for ((i=0; i<cacheKeyCount-1; i++))
+            do
               gh actions-cache delete ${cacheKeysArray[$i]} -R $REPO -B $BRANCH --confirm
+              ((deletedCount++))
+            done
+            totalDeleted=$((totalDeleted + deletedCount))
+  
+            echo "Deleted $deletedCount entries for key: $key"
           done
-
-          echo "Done"
+          
+          echo "Cleanup completed. Total deleted entries: $totalDeleted"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          KEY: ${{ matrix.key }}
           BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
