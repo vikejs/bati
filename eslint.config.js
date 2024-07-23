@@ -13,7 +13,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["**/*.cjs", "**/dist/*", "**/node_modules/*", "**/.DS_Store", "pnpm-lock.yaml"],
+    ignores: ["**/*.cjs", "**/*.ts.build-*.mjs", "**/dist/*", "**/node_modules/*", "**/.DS_Store", "pnpm-lock.yaml"],
   },
   {
     languageOptions: {
