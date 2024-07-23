@@ -7,7 +7,7 @@ import Layout from "../layouts/LayoutDefault.js";
 export default {
   Layout,
   Head,
-  //# BATI.has("auth0") || BATI.has("firebase-auth") || BATI.has("authjs")
+  //# BATI.has("auth0") || BATI.has("firebase-auth") || BATI.has("authjs") || BATI.has("lucia-auth")
   passToClient: ["user"],
   // <title>
   title: "My Vike App",
