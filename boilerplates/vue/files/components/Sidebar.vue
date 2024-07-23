@@ -1,9 +1,6 @@
 <template>
   <!-- BATI.has("tailwindcss") -->
-  <div
-    id="sidebar"
-    class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-  >
+  <div id="sidebar" class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200">
     <slot />
   </div>
   <!-- !BATI.has("tailwindcss") -->
@@ -21,5 +18,4 @@
     <slot />
   </div>
 </template>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

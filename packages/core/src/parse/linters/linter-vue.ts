@@ -32,8 +32,8 @@ export default function vueLinterConfig(meta: VikeMeta) {
         meta: { fixable: "code" },
         create(context) {
           const sourceCode = context.sourceCode;
-          const tokenStore = context.parserServices.getTemplateBodyTokenStore();
-          return context.parserServices.defineTemplateBodyVisitor(
+          const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore();
+          return sourceCode.parserServices.defineTemplateBodyVisitor(
             // template
             {
               ConditionalExpression(node) {
@@ -101,6 +101,7 @@ export default function vueLinterConfig(meta: VikeMeta) {
         parser: vueParseForESLint as Linter.ParserModule,
         parserOptions: {
           parser: tsParseForESLint,
+          ecmaVersion: 2022,
           sourceType: "module",
         },
       },

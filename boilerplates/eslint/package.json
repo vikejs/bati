@@ -13,9 +13,16 @@
   },
   "devDependencies": {
     "@batijs/compile": "workspace:^",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
-    "eslint": "^8.57.0"
+    "@eslint/js": "^9.7.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "typescript-eslint": "^7.16.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "eslint": "^9.7.0",
+    "eslint-plugin-solid": "^0.14.1",
+    "globals": "^15.8.0",
+    "vue-eslint-parser": "^9.4.3"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -28,8 +35,16 @@
       "flag": "eslint"
     }
   },
-  "exports": {},
+  "exports": {
+    "./eslint.config": {
+      "types": "./dist/types/eslint.config.d.ts"
+    }
+  },
   "typesVersions": {
-    "*": {}
+    "*": {
+      "eslint.config": [
+        "./dist/types/eslint.config.d.ts"
+      ]
+    }
   }
 }

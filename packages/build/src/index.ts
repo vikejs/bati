@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { transformAndFormat, type Transformer, type VikeMeta } from "@batijs/core";
+import { formatCode, transformAndFormat, type Transformer, type VikeMeta } from "@batijs/core";
 import { mergeDts } from "./merge-dts.js";
 import { queue } from "./queue.js";
 
@@ -32,7 +32,7 @@ export async function* walk(dir: string): AsyncGenerator<string> {
   }
 }
 
-function transformFileAfterExec(filepath: string, fileContent: unknown): string | null {
+async function transformFileAfterExec(filepath: string, fileContent: unknown): Promise<string | null> {
   if (fileContent === undefined || fileContent === null) return null;
   const parsed = path.parse(filepath);
   const toTest = [parsed.base, parsed.ext, parsed.name].filter(Boolean);
@@ -43,6 +43,9 @@ function transformFileAfterExec(filepath: string, fileContent: unknown): string 
       case ".js":
       case ".tsx":
       case ".jsx":
+        return formatCode(fileContent as string, {
+          filepath,
+        });
       case ".env":
       case ".env.local":
       case ".env.development":
@@ -136,7 +139,7 @@ export default async function main(options: { source: string | string[]; dist: s
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
-Please report this issue to https://github.com/batijs/bati`,
+Please report this issue to https://github.com/vikejs/bati`,
         );
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
         transformAndWriteQ.add(async () => {
@@ -146,7 +149,7 @@ Please report this issue to https://github.com/batijs/bati`,
             return readFile(target, { encoding: "utf-8" });
           };
 
-          const fileContent = transformFileAfterExec(
+          const fileContent = await transformFileAfterExec(
             target,
             await transformer({
               readfile: targets.has(target) ? rf : undefined,

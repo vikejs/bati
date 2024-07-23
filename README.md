@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/batijs/bati/main/website/assets/logo.svg" height="150">
+<img src="https://raw.githubusercontent.com/vikejs/bati/main/website/assets/logo.svg" height="150">
 </p>
 
 <h1 align="center">
@@ -26,4 +26,4 @@ Next-gen scaffolder. Get started with fully-functional apps, and choose any tool
 
 <hr>
 
-**Not seeing your favorite tool? Upvote or request it [here](https://github.com/batijs/bati/discussions/categories/integration-request) and/or [contribute to Bati](https://github.com/batijs/bati/blob/main/CONTRIBUTING.md).**
+**Not seeing your favorite tool? Upvote or request it [here](https://github.com/vikejs/bati/discussions/categories/integration-request) and/or [contribute to Bati](https://github.com/vikejs/bati/blob/main/CONTRIBUTING.md).**

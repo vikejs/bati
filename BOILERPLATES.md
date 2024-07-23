@@ -1,15 +1,15 @@
-Any folder contained in [boilerplates](https://github.com/batijs/bati/tree/main/boilerplates) folder is considered a _boilerplate_.
+Any folder contained in [boilerplates](https://github.com/vikejs/bati/tree/main/boilerplates) folder is considered a _boilerplate_.
 
 Each boilerplate may be related to one or multiple _features_.
 
 > [!NOTE]
 > `react`, `eslint`, `auth0`, etc. are each considered as _features_.
 > They are visible on the [website](https://batijs.dev/) and available through flags in the CLI.
-> They are defined in [features.ts](https://github.com/batijs/bati/blob/main/packages/features/src/features.ts).
+> They are defined in [features.ts](https://github.com/vikejs/bati/blob/main/packages/features/src/features.ts).
 > On the CLI, each flag (i.e. `--solid`) enables the given feature.
 
-Some features are well contained in a dedicated boilerplate ([Cloudflare](https://github.com/batijs/bati/tree/main/boilerplates/cloudflare)),
-some others are [split](https://github.com/batijs/bati/tree/main/boilerplates/firebase-auth) [into](https://github.com/batijs/bati/tree/main/boilerplates/react-firebase-auth) [several](https://github.com/batijs/bati/tree/main/boilerplates/solid-firebase-auth) [ones](https://github.com/batijs/bati/tree/main/boilerplates/vue-firebase-auth).
+Some features are well contained in a dedicated boilerplate ([Cloudflare](https://github.com/vikejs/bati/tree/main/boilerplates/cloudflare)),
+some others are [split](https://github.com/vikejs/bati/tree/main/boilerplates/firebase-auth) [into](https://github.com/vikejs/bati/tree/main/boilerplates/react-firebase-auth) [several](https://github.com/vikejs/bati/tree/main/boilerplates/solid-firebase-auth) [ones](https://github.com/vikejs/bati/tree/main/boilerplates/vue-firebase-auth).
 
 ## Anatomy of a boilerplate
 
@@ -24,10 +24,10 @@ Each boilerplate contains at least:
 
 The most important thing is to avoid duplicating code as much as possible. And we have several tools to help us:
 - Split a _feature_ into multiple boilerplates if necessary, each with [different conditions](#packagejsonbati-condition)
-- Make use of [Bati's own templating syntax](https://github.com/batijs/bati/blob/main/boilerplates/README.md)
+- Make use of [Bati's own templating syntax](https://github.com/vikejs/bati/blob/main/boilerplates/README.md)
 - Use [special `$*.ts` filename syntax](#ts-files)
 
-One other important goal is to keep code safely typed. Thanks to Bati's [special syntax](https://github.com/batijs/bati/blob/main/boilerplates/README.md), mixing code and templating is usually straightforward.
+One other important goal is to keep code safely typed. Thanks to Bati's [special syntax](https://github.com/vikejs/bati/blob/main/boilerplates/README.md), mixing code and templating is usually straightforward.
 
 > [!TIP]
 > You can require boilerplates files from any other boilerplate. Use the special `@batijs/*` imports to achieve this.
@@ -44,7 +44,7 @@ Most notably, the `bati.if` property leverages [sift](https://www.npmjs.com/pack
 
 ## `$*.ts` files
 
-`files/` folder can contain special `$*.ts` files which, contrary to other files which are [mostly](https://github.com/batijs/bati/blob/main/boilerplates/README.md) copied as-is,
+`files/` folder can contain special `$*.ts` files which, contrary to other files which are [mostly](https://github.com/vikejs/bati/blob/main/boilerplates/README.md) copied as-is,
 are interpreted.
 
 > [!NOTE]
@@ -91,9 +91,9 @@ export default async function getViteConfig(props: TransformerProps) {
 ## Advanced rules
 
 Some _features_ could be incompatible with one another. For instance, `compiled` can only be used with `react`.
-To materialize those conflicts (or contextual information), Bati defines them in [packages/features/src/rules](https://github.com/batijs/bati/tree/main/packages/features/src/rules).
+To materialize those conflicts (or contextual information), Bati defines them in [packages/features/src/rules](https://github.com/vikejs/bati/tree/main/packages/features/src/rules).
 
-- [enum.ts](https://github.com/batijs/bati/blob/main/packages/features/src/rules/enum.ts) uniquely identify a message shown by the CLI or the website
-- [rules.ts](https://github.com/batijs/bati/blob/main/packages/features/src/rules/rules.ts) where the logic behind each message is defined
+- [enum.ts](https://github.com/vikejs/bati/blob/main/packages/features/src/rules/enum.ts) uniquely identify a message shown by the CLI or the website
+- [rules.ts](https://github.com/vikejs/bati/blob/main/packages/features/src/rules/rules.ts) where the logic behind each message is defined
 
-Each message should then be defined on the [website](https://github.com/batijs/bati/blob/main/website/components/RulesMessages.tsx) and on the [CLI](https://github.com/batijs/bati/blob/main/packages/cli/rules.ts).
+Each message should then be defined on the [website](https://github.com/vikejs/bati/blob/main/website/components/RulesMessages.tsx) and on the [CLI](https://github.com/vikejs/bati/blob/main/packages/cli/rules.ts).

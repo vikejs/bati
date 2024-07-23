@@ -1,13 +1,9 @@
-// @ts-check
+// @ts-nocheck
 
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
-// @ts-ignore
-import react from "eslint-plugin-react";
-// See https://github.com/solidjs-community/eslint-plugin-solid/issues/118
-// import solid from "eslint-plugin-solid/configs/typescript";
+import react from "eslint-plugin-react/configs/recommended.js";
 import solid from "eslint-plugin-solid/dist/configs/typescript.js";
-// @ts-ignore
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -16,17 +12,14 @@ import vueParser from "vue-eslint-parser";
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
-  ...tseslint.config({
-    rules: {},
-  }),
   {
-    ignores: ["**/*.cjs", "**/dist/*", "**/node_modules/*"],
+    ignores: ["**/*.cjs", "**/dist/*", "**/node_modules/*", "**/.DS_Store", "pnpm-lock.yaml"],
   },
   {
     languageOptions: {
       parserOptions: {
         sourceType: "module",
-        ecmaVersion: 2021,
+        ecmaVersion: 2022,
       },
     },
   },
@@ -37,7 +30,7 @@ export default tseslint.config(
       parserOptions: {
         parser: tseslint.parser,
         sourceType: "module",
-        ecmaVersion: 2021,
+        ecmaVersion: 2022,
       },
       globals: {
         BATI: false,
@@ -69,18 +62,16 @@ export default tseslint.config(
   },
   {
     // React
-    plugins: {
-      react,
-    },
-    files: ["boilerplates/react/**/*", "boilerplates/react-*/**/*"],
+    files: [
+      "boilerplates/react/**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}",
+      "boilerplates/react-*/**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}",
+    ],
+    ...react,
     languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-        globals: {
-          ...globals.browser,
-        },
+      ...react.languageOptions,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
       },
     },
 
@@ -91,13 +82,44 @@ export default tseslint.config(
     },
   },
   {
+    files: ["boilerplates/react/**/*.tsx", "boilerplates/react-*/**/*.tsx"],
+    rules: {
+      "react/no-unknown-property": [
+        "error",
+        {
+          ignore: ["css"],
+        },
+      ],
+    },
+  },
+  {
     // SolidJS
     ...solid,
     files: ["boilerplates/solid/**/*", "boilerplates/solid-*/**/*"],
     rules: {
       "solid/components-return-once": 0,
+      "solid/no-innerhtml": "error",
+    },
+    languageOptions: {
+      parser: tseslint.parser,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
     },
   },
+  {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: tseslint.parser,
+        sourceType: "module",
+        ecmaVersion: "latest",
+      },
+    },
+  },
+  // Vue
   ...pluginVue.configs["flat/recommended"],
   {
     rules: {
@@ -107,15 +129,5 @@ export default tseslint.config(
       "vue/html-self-closing": 0,
     },
   },
-  // {
-  //   // VueJS
-  //   extends: ["plugin:vue/vue3-recommended"],
-  //   files: ["boilerplates/vue/**/*.vue", "boilerplates/vue-*/**/*.vue"],
-  //   parserOptions: {
-  //     parser: "@typescript-eslint/parser",
-  //     sourceType: "module",
-  //     ecmaVersion: 2021,
-  //   },
-  // },
   prettier,
 );

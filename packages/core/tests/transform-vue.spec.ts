@@ -71,12 +71,12 @@ describe("vue/template: conditional", () => {
 describe("vue/script: if block", () => {
   testIfElse(
     `<script>
-  if (BATI.has("vue")) {
-    console.log("vue");
-  }
+if (BATI.has("vue")) {
+  console.log("vue");
+}
 </script>`,
     `<script>
-  console.log("vue");
+console.log("vue");
 </script>`,
     `<script></script>`,
   );
@@ -85,17 +85,17 @@ describe("vue/script: if block", () => {
 describe("vue/script: if-else block", () => {
   testIfElse(
     `<script>
-  if (BATI.has("vue")) {
-    console.log("vue");
-  } else {
-    console.log("solid");
-  }
-</script>`,
-    `<script>
+if (BATI.has("vue")) {
   console.log("vue");
+} else {
+  console.log("solid");
+}
 </script>`,
     `<script>
-  console.log("solid");
+console.log("vue");
+</script>`,
+    `<script>
+console.log("solid");
 </script>`,
   );
 });
@@ -103,16 +103,16 @@ describe("vue/script: if-else block", () => {
 describe("vue/script: if-else statement", () => {
   testIfElse(
     `<script>
-  if (BATI.has("vue"))
-    console.log("vue");
-  else
-    console.log("solid");
-</script>`,
-    `<script>
+if (BATI.has("vue"))
   console.log("vue");
+else
+  console.log("solid");
 </script>`,
     `<script>
-  console.log("solid");
+console.log("vue");
+</script>`,
+    `<script>
+console.log("solid");
 </script>`,
   );
 });
@@ -120,13 +120,13 @@ describe("vue/script: if-else statement", () => {
 describe("vue/script: conditional", () => {
   testIfElse(
     `<script>
-  const x = BATI.has("vue") ? "a" : "b";
+const x = BATI.has("vue") ? "a" : "b";
 </script>`,
     `<script>
-  const x = "a";
+const x = "a";
 </script>`,
     `<script>
-  const x = "b";
+const x = "b";
 </script>`,
   );
 });
@@ -134,11 +134,11 @@ describe("vue/script: conditional", () => {
 describe("vue/script: comment", () => {
   testIfElse(
     `<script>
-  //# BATI.has("vue")
-  console.log("vue");
+//# BATI.has("vue")
+console.log("vue");
 </script>`,
     `<script>
-  console.log("vue");
+console.log("vue");
 </script>`,
     `<script></script>`,
   );
@@ -148,8 +148,8 @@ describe('vue/script: rewrite "@batijs/" imports', async () => {
   test("test", async () => {
     const renderedOutput = await transformAndFormat(
       `<script>
-  import { router } from "@batijs/trpc/router";
-  export const appRouter = router();
+import { router } from "@batijs/trpc/router";
+export const appRouter = router();
 </script>`,
       {
         BATI: new Set(["vue"]),
@@ -160,8 +160,8 @@ describe('vue/script: rewrite "@batijs/" imports', async () => {
     assert.equal(
       renderedOutput.code.trim(),
       `<script>
-  import { router } from "./router";
-  export const appRouter = router();
+import { router } from "./router";
+export const appRouter = router();
 </script>`,
     );
   });
@@ -171,16 +171,16 @@ describe("vue/style: squirelly", () => {
   testIfElse(
     `<style>
 /*{ @if (it.BATI.has("vue")) }*/
-  @import "./vue.css";
+@import "./vue.css";
 /*{ #else }*/
-  @import "./base.css";
+@import "./base.css";
 /*{ /if }*/
 </style>`,
     `<style>
-  @import "./vue.css";
+@import "./vue.css";
 </style>`,
     `<style>
-  @import "./base.css";
+@import "./base.css";
 </style>`,
   );
 });
@@ -191,19 +191,19 @@ test("vue formatter", async () => {
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        msg: "Hello world!",
-      };
-    },
-  };
+export default {
+  data() {
+    return {
+      msg: "Hello world!",
+    };
+  },
+};
 </script>
 
 <style>
-  .example {
-    color: red;
-  }
+.example {
+  color: red;
+}
 </style>
 
 <custom1>

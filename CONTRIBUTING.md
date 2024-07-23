@@ -3,7 +3,7 @@
 **1. Install**
 
 ```shell
-git clone git@github.com:batijs/bati.git
+git clone git@github.com:vikejs/bati.git
 cd bati # Go to the monorepo root
 pnpm install
 ```
@@ -36,7 +36,7 @@ pnpm i
 ```
 
 This will create a new folder in `boilerplates/` folder.
-You can then check the [boilerplates documentation](https://github.com/batijs/bati/blob/main/BOILERPLATES.md),
+You can then check the [boilerplates documentation](https://github.com/vikejs/bati/blob/main/BOILERPLATES.md),
 or take inspiration from existing ones.
 
 <br/>

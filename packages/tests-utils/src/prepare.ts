@@ -6,7 +6,24 @@ import { runBuild } from "./run-build.js";
 import { runDevServer } from "./run-dev.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
 
-export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
+async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
+  let error: unknown = undefined;
+  try {
+    return await task();
+  } catch (e) {
+    error = e;
+  }
+  if (error) {
+    if (typeof retriesLeft !== "number" || retriesLeft <= 0) {
+      throw error;
+    } else {
+      return await retryX(task, retriesLeft - 1);
+    }
+  }
+  throw new Error("Unreachable");
+}
+
+export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
   const { beforeAll, afterAll } = await import("vitest");
 
   const context: GlobalContext = {
@@ -21,7 +38,7 @@ export async function prepare({ mode = "dev" }: PrepareOptions = {}) {
       await initPort(context);
       await runDevServer(context);
     } else if (mode === "build") {
-      await runBuild(context);
+      await retryX(() => runBuild(context), retry);
     }
   }, 120000);
 

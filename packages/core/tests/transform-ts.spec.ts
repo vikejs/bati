@@ -231,6 +231,29 @@ describe("ts: comment in object", () => {
   );
 });
 
+describe("ts: comment in function args", () => {
+  testIfElse(
+    `export default tseslint.config(
+  //# BATI.has("vue")
+  VUE1,
+  //# BATI.has("react")
+  REACT1,
+  //# BATI.has("react")
+  ...REACT2,
+  //# BATI.has("react")
+  REACT3,
+);`,
+    `export default tseslint.config(
+  REACT1,
+
+  ...REACT2,
+
+  REACT3,
+);`,
+    `export default tseslint.config();`,
+  );
+});
+
 describe("ts: jsx comments", () => {
   beforeEach(() => {
     ctx.jsx = true;
@@ -259,10 +282,7 @@ describe("ts: jsx comments", () => {
 };`,
     `const x = () => {
   return (
-    <div
-      id="sidebar"
-      class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-    >
+    <div id="sidebar" class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200">
       {props.children}
     </div>
   );

@@ -8,32 +8,22 @@ const __dirname = dirname(__filename);
 
 export async function execLocalBati(context: GlobalContext, flags: string[], monorepo = true) {
   const digest = flags.join("--") || "empty";
+  // --skip-git ensures proper turborepo cache computation
+  const mappedFlags = ["skip-git", ...flags].map((f) => `--${f}`);
 
   if (context.localRepository) {
     // local verdaccio server is running.
     // This is better than using the local dist build directly
     // as we are also testing that the generated package dependencies are properly bundled.
-    await exec(
-      "npm",
-      [
-        "--registry",
-        "http://localhost:4873",
-        "create",
-        "@batijs/app@local",
-        "--",
-        ...flags.map((f) => `--${f}`),
-        digest,
-      ],
-      {
-        timeout: 15000,
-        cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
-        stdio: ["ignore", "ignore", "inherit"],
-      },
-    );
+    await exec("npm", ["--registry", "http://localhost:4873", "create", "bati@local", "--", ...mappedFlags, digest], {
+      timeout: 15000,
+      cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+      stdio: ["ignore", "ignore", "inherit"],
+    });
   } else {
     await exec(
       bunExists ? "bun" : "node",
-      [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...flags.map((f) => `--${f}`), digest],
+      [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
       {
         timeout: 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,

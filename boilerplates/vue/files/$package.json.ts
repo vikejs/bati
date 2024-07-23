@@ -1,20 +1,7 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
-
-  if (props.meta.BATI.has("eslint")) {
-    setScripts(packageJson, {
-      lint: {
-        value: "eslint --ext .js,.jsx,.ts,.tsx,.vue .",
-        precedence: 20,
-      },
-    });
-
-    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-      devDependencies: ["eslint-plugin-vue"],
-    });
-  }
 
   if (props.meta.BATI.has("google-analytics")) {
     addDependency(packageJson, await import("../package.json").then((x) => x.default), {

@@ -26,6 +26,7 @@ export async function transformAndFormat(code: string, meta: VikeMeta, options: 
     context = res.context;
     format = true;
   }
+
   return {
     code: format ? await formatCode(c, options) : c,
     context,
