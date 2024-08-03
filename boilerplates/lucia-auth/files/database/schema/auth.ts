@@ -4,7 +4,7 @@ import { integer, primaryKey, sqliteTable, text, int } from "drizzle-orm/sqlite-
 export const userTable = sqliteTable("users", {
   id: text("id").notNull().primaryKey(),
   username: text("username").notNull().unique(),
-  passwordHash: text("password_hash"),
+  password: text("password"),
 });
 
 export const oauthAccountTable = sqliteTable(

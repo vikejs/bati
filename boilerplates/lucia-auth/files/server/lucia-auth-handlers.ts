@@ -99,10 +99,10 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
 
   try {
     if (BATI.has("drizzle")) {
-      drizzleDb.insert(userTable).values({ id: userId, username, passwordHash }).run();
+      drizzleDb.insert(userTable).values({ id: userId, username, password: passwordHash }).run();
     } else {
       sqliteDb
-        .prepare("INSERT INTO users (id, username, password_hash) VALUES(?, ?, ?)")
+        .prepare("INSERT INTO users (id, username, password) VALUES(?, ?, ?)")
         .run(userId, username, passwordHash);
     }
 
@@ -169,7 +169,7 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
   }
 
   const scrypt = new Scrypt();
-  const validPassword = existingUser.password_hash && (await scrypt.verify(existingUser.password_hash, password));
+  const validPassword = existingUser.password && (await scrypt.verify(existingUser.password, password));
 
   if (!validPassword) {
     return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
