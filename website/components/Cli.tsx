@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { copy } from "#components/Copy.js";
 import { flip } from "#components/Flip.js";
 import type { JSX } from "solid-js";

@@ -31,7 +31,7 @@ export function startViewTransition(name: string, callback: () => void) {
 
   (ref.style as any).viewTransitionName = name;
 
-  (document.startViewTransition as Function)(() => {
+  (document.startViewTransition as any)(() => {
     (ref.style as any).viewTransitionName = "";
 
     callback();

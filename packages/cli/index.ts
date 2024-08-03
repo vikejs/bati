@@ -184,7 +184,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
     // is target a writable directory
     try {
       await access(args.project, constants.W_OK);
-    } catch (_) {
+    } catch {
       console.error(
         `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow(
           "Aborting",
@@ -300,7 +300,7 @@ function gitInit(cwd: string) {
       ].join(" "),
       { cwd, stdio: "ignore" },
     );
-  } catch (e) {
+  } catch {
     try {
       rmSync(join(cwd, ".git"), { recursive: true, force: true });
     } catch {
