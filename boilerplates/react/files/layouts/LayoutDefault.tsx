@@ -28,6 +28,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         <Link href="/">Welcome</Link>
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
+        {BATI.has("firebase-auth") || BATI.has("lucia-auth") ? <Link href="/login">Login</Link> : ""}
       </Sidebar>
       <Content>{children}</Content>
     </div>
