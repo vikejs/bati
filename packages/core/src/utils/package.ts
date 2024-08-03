@@ -1,6 +1,7 @@
 import { dim, yellow } from "colorette";
 import { withIcon } from "../print.js";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const keys = ["dev", "build", "preview", "lint", "format", "deploy"] as const;
 
 type Scripts = (typeof keys)[number];
