@@ -5,7 +5,7 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *Lucia Auth with GitHub OAuth*
+## *Example: Lucia Auth with GitHub OAuth*
 - Create a [GitHub OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app). Set the Authorization callback URL to \`http://localhost:3000/api/login/github/callback\`. 
 - Copy your \`Client ID\` and \`Client Secret\` then paste it in \`.env\` file like this:
 

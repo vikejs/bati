@@ -238,7 +238,7 @@ export async function luciaGithubLoginHandler<Context extends Record<string | nu
   const url = await github.createAuthorizationURL(state);
 
   return new Response(null, {
-    status: 301,
+    status: 302,
     headers: {
       Location: url.toString(),
       "set-cookie": serialize("github_oauth_state", state, {
@@ -290,7 +290,7 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
         {},
       );
       return new Response(null, {
-        status: 301,
+        status: 302,
         headers: {
           Location: "/",
           "set-cookie": lucia.createSessionCookie(session.id).serialize(),
@@ -313,7 +313,7 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     const session = await lucia.createSession(userId, {});
 
     return new Response(null, {
-      status: 301,
+      status: 302,
       headers: {
         Location: "/",
         "set-cookie": lucia.createSessionCookie(session.id).serialize(),
