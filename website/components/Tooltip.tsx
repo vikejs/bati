@@ -116,7 +116,9 @@ export function EnrichedTooltip(props: {
       <div
         ref={(x) => {
           setDefaultReference(x);
-          !props.reference && setReference(x);
+          if (!props.reference) {
+            setReference(x);
+          }
         }}
         class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
