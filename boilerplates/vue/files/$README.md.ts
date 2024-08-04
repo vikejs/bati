@@ -12,8 +12,8 @@ This app is ready to start. It's powered by [Vike](https://vike.dev) and [Vue](h
 
 Such \`+\` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
 - A default [\`<Layout>\` component](https://vike.dev/Layout) (that wraps your [\`<Page>\` components](https://vike.dev/Page)).
-- A default [\`title\`](https://vike.dev/head).
-- Default [\`<head>\` tags](https://vike.dev/head).
+- A default [\`title\`](https://vike.dev/title).
+- Global [\`<head>\` tags](https://vike.dev/head-tags).
 
 ### Routing
 
