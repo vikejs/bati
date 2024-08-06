@@ -12,8 +12,13 @@ import { sessionTable, userTable } from "../database/schema/auth";
  *
  * @link {@see https://lucia-auth.com/getting-started/#polyfill}
  */
-// import { webcrypto } from "node:crypto";
-// globalThis.crypto = webcrypto as Crypto;
+if (!globalThis.crypto) {
+  Object.defineProperty(globalThis, "crypto", {
+    value: await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto),
+    writable: false,
+    configurable: true,
+  });
+}
 
 /**
  * Database setup
