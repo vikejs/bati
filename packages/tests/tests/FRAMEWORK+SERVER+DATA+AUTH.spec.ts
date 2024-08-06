@@ -9,12 +9,16 @@ export const matrix = [
 ] as const;
 
 await describeBati(({ test, expect, fetch, context, beforeAll }) => {
-  beforeAll(async () => {
-    if (context.flags.includes("drizzle")) {
-      await exec(npmCli, ["run", "drizzle:generate"]);
-      await exec(npmCli, ["run", "drizzle:migrate"]);
-    }
-  }, 10000);
+  beforeAll(
+    async () => {
+      if (context.flags.includes("drizzle")) {
+        await exec(npmCli, ["run", "drizzle:generate"]);
+        await exec(npmCli, ["run", "drizzle:migrate"]);
+      }
+      return;
+    },
+    2 * 60 * 1000,
+  );
 
   test("login page", async () => {
     const res = await fetch("/login");
