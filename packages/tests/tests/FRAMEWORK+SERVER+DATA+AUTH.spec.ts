@@ -14,7 +14,6 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
       await exec(npmCli, ["run", "drizzle:generate"]);
       await exec(npmCli, ["run", "drizzle:migrate"]);
     }
-    return;
   }, 10000);
 
   test("login page", async () => {
