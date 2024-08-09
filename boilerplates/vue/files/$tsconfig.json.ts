@@ -5,7 +5,6 @@ export default async function getTsConfig(props: TransformerProps) {
 
   tsConfig.compilerOptions.jsx = "preserve";
   tsConfig.compilerOptions.jsxImportSource = "vue";
-  tsConfig.compilerOptions.types = [...(tsConfig.compilerOptions.types ?? []), "vike-vue"];
 
   return tsConfig;
 }
