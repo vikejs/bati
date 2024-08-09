@@ -120,7 +120,7 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
     });
   } catch (error) {
     if (error instanceof SqliteError && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
-      return new Response(JSON.stringify({ error: { username: "Username already used" } }), {
+      return new Response(JSON.stringify({ error: { username: "Username already in use" } }), {
         status: 422,
         headers: {
           "content-type": "application/json",
@@ -304,13 +304,17 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
     const userId = generateId(15);
 
     if (BATI.has("drizzle")) {
-      drizzleDb.insert(userTable).values({ id: userId, username: githubUser.login }).run();
-      drizzleDb.insert(oauthAccountTable).values({ providerId: "github", providerUserId: githubUser.id, userId }).run();
+      await drizzleDb.transaction(async (tx) => {
+        await tx.insert(userTable).values({ id: userId, username: githubUser.login });
+        await tx.insert(oauthAccountTable).values({ providerId: "github", providerUserId: githubUser.id, userId });
+      });
     } else {
-      sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
-      sqliteDb
-        .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
-        .run("github", githubUser.id, userId);
+      sqliteDb.transaction(() => {
+        sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
+        sqliteDb
+          .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
+          .run("github", githubUser.id, userId);
+      });
     }
 
     const session = await lucia.createSession(userId, {});
