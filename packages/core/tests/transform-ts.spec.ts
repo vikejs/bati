@@ -22,6 +22,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       code,
       {
         BATI: new Set(["react"]),
+        BATI_TEST: false,
       },
       { filepath: filename },
     );
@@ -36,6 +37,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
         code,
         {
           BATI: new Set(["solid"]),
+          BATI_TEST: false,
         },
         { filepath: filename },
       );
@@ -50,6 +52,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       code,
       {
         BATI: new Set(),
+        BATI_TEST: true,
       },
       { filepath: filename },
     );
@@ -472,4 +475,36 @@ const a = 1;`,
       ),
     ).rejects.toThrow(`Unknown BATI file flag invalid`);
   });
+});
+
+describe("BATI_TEST", () => {
+  testIfElse(
+    `if (BATI_TEST) {
+    content = "test";
+  }`,
+    ``,
+    `content = "test";`,
+  );
+});
+
+describe("BATI_TEST + BATI.has", () => {
+  testIfElse(
+    `if (BATI_TEST || BATI.has("react")) {
+    content = "test";
+  } else if (BATI.has("solid")) {
+    content = "solid";
+  }`,
+    `content = "test";`,
+    `content = "solid";`,
+    `content = "test";`,
+  );
+});
+
+describe("BATI_TEST: comment above import", () => {
+  testIfElse(
+    `//# BATI_TEST
+import "react";`,
+    ``,
+    `import "react";`,
+  );
 });

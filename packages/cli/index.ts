@@ -365,6 +365,7 @@ async function run() {
       const hooksMap = await retrieveHooks(hooks);
       const meta: VikeMeta = {
         BATI: new Set(flags as Flags[]),
+        BATI_TEST: process.env.NODE_ENV === "test",
       };
 
       await exec(
