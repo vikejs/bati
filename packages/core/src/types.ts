@@ -4,6 +4,7 @@ export type ContentGetter = () => string | Promise<string>;
 
 export interface VikeMeta {
   BATI: Set<Flags>;
+  BATI_TEST: boolean;
 }
 
 export type TransformerProps = {
