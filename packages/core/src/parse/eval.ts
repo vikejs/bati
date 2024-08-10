@@ -29,8 +29,6 @@ export function extractBatiCondition(sourceCode: SourceCode, node: { test: { ran
 }
 
 export function extractBatiConditionComment(comment: { value: string }) {
-  if (!comment.value.includes("BATI.has")) return null;
-
   return _extractCondition(comment.value);
 }
 
