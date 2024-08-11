@@ -54,7 +54,7 @@ const formData = reactive({
 
 async function handleOnSubmit(action: "login" | "signup") {
   try {
-    const response = await fetch(`http://localhost:3000/api/${action}`, {
+    const response = await fetch(`/api/${action}`, {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },

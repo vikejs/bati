@@ -16,7 +16,7 @@ export function Page() {
   const handleOnSubmit = async (e: Event, action: "login" | "signup") => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/${action}`, {
+      const response = await fetch(`/api/${action}`, {
         method: "POST",
         body: JSON.stringify(untrack(formData)),
         headers: { "Content-Type": "application/json" },

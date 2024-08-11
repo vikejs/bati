@@ -18,7 +18,7 @@ export default function Page() {
   const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: "login" | "signup") => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/${action}`, {
+      const response = await fetch(`/api/${action}`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },

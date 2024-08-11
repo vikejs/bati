@@ -8,6 +8,12 @@ export const matrix = [
   "eslint",
 ] as const;
 
+// How to configure your environment for testing github oauth?
+// First, create a .env.test file at the root of bati workspace
+// Then, you must put your client ID and client SECRET in a .env.test like so
+// TEST_GITHUB_CLIENT_ID=...
+// TEST_GITHUB_CLIENT_SECRET=...
+
 await describeBati(({ test, expect, fetch, context, beforeAll }) => {
   beforeAll(
     async () => {
@@ -51,5 +57,6 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
       redirect: "manual",
     });
     expect(res.status).toBe(302);
+    expect(res.headers.get("location")?.includes(process.env.TEST_GITHUB_CLIENT_ID));
   });
 });

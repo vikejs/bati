@@ -90,7 +90,7 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
 
   /**
    * A pure JS implementation of Scrypt.
-   * It's slower than implementations based on native code.
+   * It's portable but slower than implementations based on native code.
    *
    * @link {@see https://lucia-auth.com/reference/main/Scrypt}
    * @link {@see https://lucia-auth.com/guides/email-and-password/basics#hashing-passwords}

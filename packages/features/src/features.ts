@@ -221,7 +221,7 @@ export const features = [
         href: "https://lucia-auth.com/getting-started/",
       },
       {
-        label: "lucia API reference",
+        label: "API reference",
         href: "https://lucia-auth.com/reference/main/",
       },
     ],
