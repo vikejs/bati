@@ -5,6 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     dependencies: ["@ts-rest/core", "@ts-rest/serverless"],
+    devDependencies: ["zod"],
   });
 
   // 2024-07-05: ts-rest not compatible with TS 5.5 yet at the moment of writing
