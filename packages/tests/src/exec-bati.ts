@@ -18,6 +18,9 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
     await exec("npm", ["--registry", "http://localhost:4873", "create", "bati@local", "--", ...mappedFlags, digest], {
       timeout: 15000,
       cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+      env: {
+        BATI_TEST: "1",
+      },
       stdio: ["ignore", "ignore", "inherit"],
     });
   } else {
@@ -27,6 +30,9 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       {
         timeout: 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+        env: {
+          BATI_TEST: "1",
+        },
         stdio: ["ignore", "ignore", "inherit"],
       },
     );
