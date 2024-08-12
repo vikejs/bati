@@ -10,9 +10,6 @@ import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
 import { userTable, oauthAccountTable } from "../database/schema/auth";
 import { validateInput, getExistingUser, getExistingAccount } from "../database/auth-actions";
 
-// Temporary for e2e tests
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-
 /**
  * CSRF protection middleware
  *
@@ -25,13 +22,15 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
   if (request.method === "GET") {
     return;
   }
-  const originHeader = request.headers.get("Origin") ?? `http://localhost:${port}`; /** null */
-  const hostHeader = request.headers.get("Host") ?? `localhost:${port}`; /** null */
+  if (!BATI_TEST) {
+    const originHeader = request.headers.get("Origin") ?? null;
+    const hostHeader = request.headers.get("Host") ?? null;
 
-  if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
-    return new Response("Forbidden Request", {
-      status: 403,
-    });
+    if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
+      return new Response("Forbidden Request", {
+        status: 403,
+      });
+    }
   }
 }
 
