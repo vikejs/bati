@@ -6,8 +6,18 @@ export default async function getEnv(props: TransformerProps) {
 
   let envContent = await props.readfile?.();
 
-  envContent = appendToEnv(envContent, "GITHUB_CLIENT_ID", githubClientId ?? "", "Gihub Client ID");
-  envContent = appendToEnv(envContent, "GITHUB_CLIENT_SECRET", githubClientSecret ?? "", "Gihub Client Secret");
+  envContent = appendToEnv(
+    envContent,
+    "GITHUB_CLIENT_ID",
+    githubClientId ?? "",
+    "GitHub Client ID. Used for authentication",
+  );
+  envContent = appendToEnv(
+    envContent,
+    "GITHUB_CLIENT_SECRET",
+    githubClientSecret ?? "",
+    "GitHub Client Secret. Used for authentication",
+  );
 
   return envContent;
 }
