@@ -1,14 +1,14 @@
-import { generateId, verifyRequestOrigin, Scrypt } from "lucia";
-import { github, lucia } from "../lib/lucia-auth";
 import type { Session, User } from "lucia";
-import type { DatabaseUser, DatabaseOAuthAccount, GitHubUser } from "../lib/lucia-auth";
+import { generateId, Scrypt, verifyRequestOrigin } from "lucia";
+import type { DatabaseOAuthAccount, DatabaseUser, GitHubUser } from "../lib/lucia-auth";
+import { github, lucia } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { sqliteDb } from "../database/sqliteDb";
-import { OAuth2RequestError, generateState } from "arctic";
+import { generateState, OAuth2RequestError } from "arctic";
 import { parse, serialize } from "cookie";
 import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { userTable, oauthAccountTable } from "../database/schema/auth";
-import { validateInput, getExistingUser, getExistingAccount } from "../database/auth-actions";
+import { oauthAccountTable, userTable } from "../database/schema/auth";
+import { getExistingAccount, getExistingUser, validateInput } from "../database/auth-actions";
 
 /**
  * CSRF protection middleware
@@ -18,7 +18,7 @@ import { validateInput, getExistingUser, getExistingAccount } from "../database/
 export function luciaCsrfMiddleware<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
   _context?: Context,
-): void | Response {
+): Response | undefined {
   if (request.method === "GET") {
     return;
   }
@@ -51,7 +51,7 @@ export async function luciaAuthMiddleware<Context extends Record<string | number
   } else {
     const { session, user } = await lucia.validateSession(sessionId);
 
-    if (session && session.fresh) {
+    if (session?.fresh) {
       request.headers.append("Set-Cookie", lucia.createSessionCookie(session.id).serialize());
     }
     if (!session) {
