@@ -127,7 +127,7 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
       });
     }
 
-    return new Response(JSON.stringify({ error: "An unknown error occurred" }), {
+    return new Response(JSON.stringify({ error: { invalid: "An unknown error has occurred" } }), {
       status: 500,
       headers: {
         "content-type": "application/json",
@@ -162,7 +162,7 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
 
   const existingUser = getExistingUser(username) as DatabaseUser | undefined;
   if (!existingUser) {
-    return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
+    return new Response(JSON.stringify({ error: { invalid: "Incorrect username or password" } }), {
       status: 422,
       headers: {
         "content-type": "application/json",
@@ -174,7 +174,7 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
   const validPassword = existingUser.password && (await scrypt.verify(existingUser.password, password));
 
   if (!validPassword) {
-    return new Response(JSON.stringify({ error: "Incorrect username or password" }), {
+    return new Response(JSON.stringify({ error: { invalid: "Incorrect username or password" } }), {
       status: 422,
       headers: {
         "content-type": "application/json",

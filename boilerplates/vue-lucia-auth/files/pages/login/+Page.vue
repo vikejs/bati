@@ -13,10 +13,13 @@
             autocomplete="username"
           />
         </div>
+        <span v-if="error.username" class="field-error">{{ error.username }}</span>
 
         <div class="field">
           <input id="password" v-model="formData.password" type="password" name="password" placeholder="Password" />
         </div>
+        <span v-if="error.password" class="field-error">{{ error.password }}</span>
+        <span v-if="error.invalid" class="field-error">{{ error.invalid }}</span>
 
         <div class="field button-group">
           <button type="button" class="button-field signup-button" @click.prevent="handleOnSubmit('signup')">
@@ -45,28 +48,40 @@
 <script lang="ts" setup>
 import "./style.css";
 import { navigate } from "vike/client/router";
-import { reactive } from "vue";
+import { ref } from "vue";
 
-const formData = reactive({
+type ValidationError = {
+  username: string | null;
+  password: string | null;
+  invalid?: string;
+};
+
+const formData = ref({
   username: "",
   password: "",
+});
+
+let error = ref<ValidationError>({
+  username: null,
+  password: null,
 });
 
 async function handleOnSubmit(action: "login" | "signup") {
   try {
     const response = await fetch(`/api/${action}`, {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData.value),
       headers: { "Content-Type": "application/json" },
     });
     const result = await response.json();
     if ("error" in result) {
-      console.error("An error has occurred :", result.error);
+      console.error("A validation error has occurred :", result.error);
+      error.value = { ...result.error };
     } else {
       await navigate("/");
     }
   } catch (err) {
-    console.error("An error has occurred :", err);
+    console.error("An unknown error has occurred :", err);
   }
 }
 </script>

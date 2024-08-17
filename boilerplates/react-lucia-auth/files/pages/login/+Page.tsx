@@ -2,13 +2,17 @@ import "./style.css";
 import React, { useState } from "react";
 import { navigate } from "vike/client/router";
 
+type ValidationError = { username: string | null; password: string | null; invalid?: string };
+
 export default function Page() {
-  const [formData, setFormData] = useState<{
-    username: string;
-    password: string;
-  }>({
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
+  });
+
+  const [error, setError] = useState<ValidationError>({
+    username: null,
+    password: null,
   });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +29,13 @@ export default function Page() {
       });
       const result = await response.json();
       if ("error" in result) {
-        console.error("An error has occurred :", result.error);
+        console.error("A validation error has occurred :", result.error);
+        setError(result.error);
       } else {
         await navigate("/");
       }
     } catch (err) {
-      console.error("An error has occurred :", err);
+      console.error("An unknown error has occurred :", err);
     }
   };
 
@@ -50,6 +55,7 @@ export default function Page() {
               autoComplete="username"
             />
           </div>
+          {error.username && <span className="field-error">{error.username}</span>}
 
           <div className="field">
             <input
@@ -61,6 +67,8 @@ export default function Page() {
               placeholder="Password"
             />
           </div>
+          {error.password && <span className="field-error">{error.password}</span>}
+          {error.invalid && <span className="field-error">{error.invalid}</span>}
 
           <div className="field button-group">
             <button type="button" className="button-field signup-button" onClick={(e) => handleOnSubmit(e, "signup")}>
