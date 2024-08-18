@@ -12,6 +12,15 @@ export const exclude = [
   // Testing drizzle with React only is enough
   ["solid", "drizzle"],
   ["vue", "drizzle"],
+  // Testing React with all servers, but others UIs with only h3
+  ["solid", "express"],
+  ["solid", "hono"],
+  ["solid", "fastify"],
+  ["solid", "hattip"],
+  ["vue", "express"],
+  ["vue", "hono"],
+  ["vue", "fastify"],
+  ["vue", "hattip"],
 ];
 
 // How to configure your environment for testing github oauth?

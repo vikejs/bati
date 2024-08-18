@@ -12,14 +12,13 @@ export const exclude = [
   // Testing drizzle with Solid only is enough
   ["react", "drizzle"],
   ["vue", "drizzle"],
-  // Testing all servers with Solid, but all others with only Hono
+  // Testing Solid with all servers, but others UIs with only Hono
   ["react", "express"],
   ["react", "h3"],
   ["react", "fastify"],
   ["react", "hattip"],
   ["vue", "express"],
   ["vue", "h3"],
-  ["vue", "fastify"],
   ["vue", "fastify"],
   ["vue", "hattip"],
 ];
