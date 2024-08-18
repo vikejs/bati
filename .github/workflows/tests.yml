@@ -134,6 +134,8 @@ jobs:
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
           TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
           TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
       - name: Archive summary
         if: matrix.os == 'ubuntu-latest'

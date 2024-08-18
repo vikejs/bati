@@ -1,0 +1,84 @@
+{
+  "name": "@batijs/lucia-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@lucia-auth/adapter-sqlite": "^3.0.2",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/cookie": "^0.6.0",
+    "@types/node": "^18.19.14",
+    "arctic": "^1.9.2",
+    "better-sqlite3": "^11.1.2",
+    "cookie": "^0.6.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "lucia": "^3.2.0",
+    "vike": "^0.4.183",
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "lucia-auth"
+    }
+  },
+  "exports": {
+    "./database/sqliteDb": {
+      "types": "./dist/types/database/sqliteDb.d.ts"
+    },
+    "./database/schema/auth": {
+      "types": "./dist/types/database/schema/auth.d.ts"
+    },
+    "./database/auth-actions": {
+      "types": "./dist/types/database/auth-actions.d.ts"
+    },
+    "./lib/lucia-auth": {
+      "types": "./dist/types/lib/lucia-auth.d.ts"
+    },
+    "./pages/login/+guard": {
+      "types": "./dist/types/pages/login/+guard.d.ts"
+    },
+    "./server/lucia-auth-handlers": {
+      "types": "./dist/types/server/lucia-auth-handlers.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "database/sqliteDb": [
+        "./dist/types/database/sqliteDb.d.ts"
+      ],
+      "database/schema/auth": [
+        "./dist/types/database/schema/auth.d.ts"
+      ],
+      "database/auth-actions": [
+        "./dist/types/database/auth-actions.d.ts"
+      ],
+      "lib/lucia-auth": [
+        "./dist/types/lib/lucia-auth.d.ts"
+      ],
+      "pages/login/+guard": [
+        "./dist/types/pages/login/+guard.d.ts"
+      ],
+      "server/lucia-auth-handlers": [
+        "./dist/types/server/lucia-auth-handlers.d.ts"
+      ]
+    }
+  }
+}

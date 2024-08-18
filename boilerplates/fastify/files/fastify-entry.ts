@@ -8,6 +8,15 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
+import {
+  luciaAuthLoginHandler,
+  luciaAuthLogoutHandler,
+  luciaAuthMiddleware,
+  luciaAuthSignupHandler,
+  luciaCsrfMiddleware,
+  luciaGithubCallbackHandler,
+  luciaGithubLoginHandler,
+} from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -109,6 +118,17 @@ async function startServer() {
     app.addHook("onRequest", handlerAdapter(firebaseAuthMiddleware));
     app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
     app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+  }
+
+  if (BATI.has("lucia-auth")) {
+    app.addHook("onRequest", handlerAdapter(luciaCsrfMiddleware));
+    app.addHook("onRequest", handlerAdapter(luciaAuthMiddleware));
+
+    app.post("/api/signup", handlerAdapter(luciaAuthSignupHandler));
+    app.post("/api/login", handlerAdapter(luciaAuthLoginHandler));
+    app.post("/api/logout", handlerAdapter(luciaAuthLogoutHandler));
+    app.get("/api/login/github", handlerAdapter(luciaGithubLoginHandler));
+    app.get("/api/login/github/callback", handlerAdapter(luciaGithubCallbackHandler));
   }
 
   if (BATI.has("trpc")) {

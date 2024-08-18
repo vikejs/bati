@@ -1,0 +1,49 @@
+{
+  "name": "@batijs/solid-lucia-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "solid-js": "^1.8.20",
+    "vike": "^0.4.183",
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "solid",
+          "lucia-auth"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./pages/login/+Page": {
+      "types": "./dist/types/pages/login/+Page.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/login/+Page": [
+        "./dist/types/pages/login/+Page.d.ts"
+      ]
+    }
+  }
+}

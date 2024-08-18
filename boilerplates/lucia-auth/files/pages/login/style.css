@@ -1,0 +1,94 @@
+header {
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+}
+.form {
+  position: absolute;
+  max-width: 430px;
+  width: 100%;
+}
+.form .field {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 6px;
+}
+.field input,
+.button-field {
+  height: 100%;
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 6px;
+}
+.button-group {
+  display: flex;
+}
+.login-button {
+  background-color: #0171d3e8;
+}
+.login-button:hover {
+  background-color: #016dcb;
+}
+.signup-button {
+  background-color: #d30101f6;
+}
+.signup-button:hover {
+  background-color: #cb010b;
+}
+.field input {
+  outline: none;
+  padding: 0 15px;
+  border: 1px solid#CACACA;
+}
+.field input:focus {
+  border-bottom-width: 2px;
+}
+.field button {
+  color: #fff;
+  margin: 0 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.field-error {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 85%;
+  color: #dc3545;
+}
+.media-options a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a.github {
+  color: #fff;
+  background-color: #000;
+}
+a.github .github-icon {
+  height: 28px;
+  width: 28px;
+  color: #000;
+  font-size: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+.github-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+@media screen and (max-width: 400px) {
+  .form {
+    padding: 20px 10px;
+  }
+}

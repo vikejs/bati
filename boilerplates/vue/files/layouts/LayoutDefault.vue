@@ -5,6 +5,8 @@
       <Link href="/"> Welcome </Link>
       <Link href="/todo"> Todo </Link>
       <Link href="/star-wars"> Data Fetching </Link>
+      <!-- BATI.has("firebase-auth") || BATI.has("lucia-auth") -->
+      <Link href="/login">Login</Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>

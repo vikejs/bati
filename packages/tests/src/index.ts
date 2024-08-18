@@ -212,7 +212,7 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
   }
 
   await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck"]), ...args_2], {
-    timeout: 30 * 60 * 1000, // 30min
+    timeout: 35 * 60 * 1000, // 35min
     cwd: context.tmpdir,
   });
 }

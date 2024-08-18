@@ -1,5 +1,5 @@
-import { db } from "@batijs/drizzle/database/db";
-import { todoTable } from "@batijs/drizzle/database/schema";
+import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
+import { todoTable } from "@batijs/drizzle/database/schema/todos";
 
 export async function createTodoHandler<Context extends Record<string | number | symbol, unknown>>(
   request: Request,
@@ -9,7 +9,7 @@ export async function createTodoHandler<Context extends Record<string | number |
   const newTodo = (await request.json()) as { text: string };
 
   if (BATI.has("drizzle")) {
-    await db.insert(todoTable).values({ text: newTodo.text });
+    await drizzleDb.insert(todoTable).values({ text: newTodo.text });
   } else {
     // This is where you'd persist the data
     console.log("Received new todo", newTodo);

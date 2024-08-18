@@ -1,0 +1,36 @@
+{
+  "name": "@batijs/vue-lucia-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "vike": "^0.4.183",
+    "vite": "^5.4.0",
+    "vue": "^3.4.37"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "vue",
+          "lucia-auth"
+        ]
+      }
+    }
+  }
+}
