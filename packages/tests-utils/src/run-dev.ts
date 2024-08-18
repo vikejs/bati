@@ -11,12 +11,16 @@ export async function runDevServer(context: GlobalContext) {
     },
   });
 
-  await Promise.race([
+  const res = await Promise.race([
     // wait for port
-    waitForLocalhost({ port: context.port, useGet: true, timeout: 60000 }),
+    waitForLocalhost({ port: context.port, useGet: true, timeout: process.env.CI ? 20000 : 5000 }),
     // or for server to crash
     context.server,
   ]);
+
+  if (!res) {
+    throw new Error("Server stopped before tests could run");
+  }
 
   return { server: context.server, port: context.port };
 }

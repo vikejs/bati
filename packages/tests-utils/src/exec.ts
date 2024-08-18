@@ -34,7 +34,7 @@ export function exec(
   const { timeout, ...restOptions } = options;
 
   const childProcess = spawn(command, args, {
-    stdio: "inherit",
+    stdio: ["ignore", "inherit", "inherit"],
     ...restOptions,
     env: {
       ...process.env,
