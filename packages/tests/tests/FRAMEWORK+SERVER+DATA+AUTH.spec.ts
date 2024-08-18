@@ -8,6 +8,12 @@ export const matrix = [
   "eslint",
 ] as const;
 
+export const exclude = [
+  // Testing drizzle with React only is enough
+  ["solid", "drizzle"],
+  ["vue", "drizzle"],
+];
+
 // How to configure your environment for testing github oauth?
 // First, create a .env.test file at the root of bati workspace
 // Then, you must put your client ID and client SECRET in a .env.test like so

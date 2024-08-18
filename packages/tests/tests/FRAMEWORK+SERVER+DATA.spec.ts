@@ -8,6 +8,12 @@ export const matrix = [
   "eslint",
 ] as const;
 
+export const exclude = [
+  // Testing drizzle with Solid only is enough
+  ["react", "drizzle"],
+  ["vue", "drizzle"],
+];
+
 await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
   beforeAll(async () => {
     if (context.flags.includes("drizzle")) {
