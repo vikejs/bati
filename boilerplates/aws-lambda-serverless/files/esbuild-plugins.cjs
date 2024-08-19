@@ -1,14 +1,20 @@
+// @ts-ignore
 const { copy } = require('esbuild-plugin-copy')
 // https://github.com/evanw/esbuild/issues/1051#issuecomment-806325487
 const nativeNodeModules = {
   name: 'native-node-modules',
+  /**
+   * @param {{ onResolve: (arg0: { filter: RegExp; namespace: string; }, arg1: { (args: any): { path: any; namespace: string; } | undefined; (args: any): { path: any; namespace: string; }; }) => void; onLoad: (arg0: { filter: RegExp; namespace: string; }, arg1: (args: any) => { contents: string; }) => void; initialOptions: any; }} build
+   */
   setup(build) {
     // If a ".node" file is imported within a module in the "file" namespace, resolve
     // it to an absolute path and put it into the "node-file" virtual namespace.
+    // @ts-ignore
     build.onResolve({ filter: /\.node$/, namespace: 'file' }, args => {
       // Ignore "react-dom/server.node" because it is not a native module
       if (args.path.startsWith('react-dom/')) return undefined
       return ({
+        // @ts-ignore
         path: require.resolve(args.path, { paths: [args.resolveDir] }),
         namespace: 'node-file',
       })

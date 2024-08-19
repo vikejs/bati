@@ -515,7 +515,8 @@ export const features = [
     image:
       "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDBweCIgaGVpZ2h0PSIyNDBweCIgdmlld0JveD0iMCAwIDI0MCAyNDAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZjY4OTI4O308L3N0eWxlPjwvZGVmcz48dGl0bGU+QXdzX0xhbWJkYV9MaWdodDwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTIwIDBDNTMuODI3IDAgMCA1My44MjcgMCAxMjBzNTMuODI3IDEyMCAxMjAgMTIwIDEyMC01My44MjcgMTIwLTEyMFMyODYuMTcyIDAgMTIwIDB6bTAgMjMwYy01OC44MDYgMC0xMTAuMDM2LTMxLjA5NC0xMzc1NzUtODAgMzEuMDk0IDMyMTA0NzUgODAgMTEwMDM2IDB6Ii8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTMuNDYgMzMuNzMxSDczLjg5MXYxNjEuM2gyMS43ODd2MjkuMzI0SDczLjg5MXYyNy4zMjRoNTguMDE0djI5LjMyMkg4MC4xNjdMNjYuMjUgMjEyLjI2NmgtMjguNTE0TDkzLjQ2IDM3LjM3M3pNNy41NTEgMTA5Ljc4NmwxMi4wMy0xOS4zMjRoMjkuMzI0bC0xMS44MzggMTkuMzI0TDcuNTUxIDEwLjc4NmguMDAxeiIvPjwvc3ZnPg==",
     url: "https://www.serverless.com",
-    tagline: "Deploy APIs, scheduled tasks, workflows and event-driven apps to AWS Lambda easily with the Serverless Framework.",
+    tagline:
+      "Deploy APIs, scheduled tasks, workflows and event-driven apps to AWS Lambda easily with the Serverless Framework.",
     links: [
       {
         label: "Docs",

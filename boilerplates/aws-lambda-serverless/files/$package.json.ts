@@ -4,9 +4,10 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   setScripts(packageJson, {
-    "aws:deploy": {
+    "deploy:aws": {
       value: "cross-env NODE_ENV=production sls deploy",
       precedence: 20,
+      warnIfReplaced: true,
     },
   });
 
