@@ -6,6 +6,7 @@
   "description": "@batijs monorepo",
   "scripts": {
     "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
+    "screenshot": "node ./scripts/screenshot.js",
     "release": "pnpm -r prerelease && bumpp && pnpm run publish",
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
@@ -40,6 +41,10 @@
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.1.0",
     "vue-eslint-parser": "^9.4.3"
+  },
+  "optionalDependencies": {
+    "browserless": "^10.5.2",
+    "puppeteer": "^23.1.0"
   },
   "engines": {
     "node": ">=18",
