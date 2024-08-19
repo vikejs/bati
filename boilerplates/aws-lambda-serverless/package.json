@@ -1,0 +1,58 @@
+{
+  "name": "@batijs/aws-lambda-serverless",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.45",
+    "esbuild-plugin-copy": "^2.1.1",
+    "serverless": "^3.39.0",
+    "serverless-cloudfront-invalidate": "^1.12.2",
+    "serverless-esbuild": "^1.52.1",
+    "serverless-s3-sync": "^3.3.0",
+    "serverless-scriptable-plugin": "^1.3.1"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "hono",
+          "aws-lambda-serverless"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./esbuild-plugins.": {
+      "types": "./dist/types/esbuild-plugins.d.cts"
+    },
+    "./esbuild.config.": {
+      "types": "./dist/types/esbuild.config.d.cts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "esbuild-plugins.": [
+        "./dist/types/esbuild-plugins.d.cts"
+      ],
+      "esbuild.config.": [
+        "./dist/types/esbuild.config.d.cts"
+      ]
+    }
+  }
+}
