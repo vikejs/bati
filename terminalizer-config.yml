@@ -7,12 +7,11 @@ command: sh
 # Export additional ENV variables
 env:
   recording: true
-  PS1: "$ "
 
 # Explicitly set the number of columns
 # or use `auto` to take the current
 # number of columns of your shell
-cols: 79
+cols: 119
 
 # Explicitly set the number of rows
 # or use `auto` to take the current
@@ -43,12 +42,11 @@ maxIdleTime: 2000
 # To hide the title use the value null
 # Don't forget to add a backgroundColor style with a null as type
 frameBox:
-  type: floating
-  title: Terminalizer
+  type: solid
+  title: null
   style:
-    border: 0px black solid
-    # boxShadow: none
-    # margin: 0px
+    boxShadow: none
+    margin: 0px
 
 # Add a watermark image to the rendered gif
 # You need to specify an absolute path for
@@ -73,7 +71,7 @@ cursorStyle: block
 fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
 
 # The size of the font
-fontSize: 12
+fontSize: 16
 
 # The height of lines
 lineHeight: 1

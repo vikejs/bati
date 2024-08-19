@@ -9,8 +9,13 @@ Bâti
 Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want.
 <p>
 
+<h3 align="center">
+<a href="https://batijs.dev/">batijs.dev</a>
+<h3>
+
 [![Try the CLI generator](doc/screenshot.png)](https://batijs.dev/)
 
+#### CLI example
 ![Demo](doc/demo.gif)
 
 ## Features
