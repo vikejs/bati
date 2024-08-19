@@ -1,12 +1,9 @@
 import { parse, serialize } from "cookie";
 import { getAuth } from "firebase-admin/auth";
 import { firebaseAdmin } from "../libs/firebaseAdmin";
+import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
-export async function firebaseAuthMiddleware(
-  request: Request,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any,
-): Promise<void> {
+export const firebaseAuthMiddleware = (() => async (request, context) => {
   if (!request.headers.has("cookie")) return;
 
   const cookies = parse(request.headers.get("cookie")!);
@@ -15,17 +12,21 @@ export async function firebaseAuthMiddleware(
   try {
     const auth = getAuth(firebaseAdmin);
     const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
-    context.user = await auth.getUser(decodedIdToken.sub);
+    const user = await auth.getUser(decodedIdToken.sub);
+    return {
+      ...context,
+      user,
+    };
   } catch (error) {
     console.debug("verifySessionCookie:", error);
-    context.user = null;
+    return {
+      ...context,
+      user: null,
+    };
   }
-}
+}) satisfies Get<[], UniversalMiddleware>;
 
-export async function firebaseAuthLoginHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const firebaseAuthLoginHandler: Get<[], UniversalHandler> = () => async (request) => {
   const body = await request.json();
   const idToken: string = (body as { idToken?: string }).idToken || "";
 
@@ -50,12 +51,9 @@ export async function firebaseAuthLoginHandler<Context extends Record<string | n
       status: 401,
     });
   }
-}
+};
 
-export async function firebaseAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
-  _request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const firebaseAuthLogoutHandler: Get<[], UniversalHandler> = () => async () => {
   return new Response(JSON.stringify({ status: "success" }), {
     status: 200,
     headers: {
@@ -69,4 +67,4 @@ export async function firebaseAuthLogoutHandler<Context extends Record<string | 
       }),
     },
   });
-}
+};

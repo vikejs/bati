@@ -32,7 +32,6 @@ export default async function getPackageJson(props: TransformerProps) {
       "tsx",
       "vite",
       "vike",
-      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core", "dotenv"] as const) : []),
       ...(props.meta.BATI.has("firebase-auth") ? (["cookie-parser"] as const) : []),
     ],
   });

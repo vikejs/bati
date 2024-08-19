@@ -4,6 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    dependencies: ["telefunc"],
+    dependencies: ["telefunc", "@universal-middleware/core"],
   });
 }

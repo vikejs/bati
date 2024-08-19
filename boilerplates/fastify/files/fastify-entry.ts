@@ -9,9 +9,10 @@ import {
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import {
+  luciaAuthContextMiddleware,
+  luciaAuthCookieMiddleware,
   luciaAuthLoginHandler,
   luciaAuthLogoutHandler,
-  luciaAuthMiddleware,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
   luciaGithubCallbackHandler,
@@ -27,9 +28,8 @@ import {
   fastifyTRPCPlugin,
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
-import { createRequestAdapter } from "@universal-middleware/express";
 import Fastify from "fastify";
-import type { RouteHandlerMethod } from "fastify/types/route";
+import { createHandler, createMiddleware } from "@universal-middleware/fastify";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,44 +37,11 @@ const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
 
-interface Middleware<Context extends Record<string | number | symbol, unknown>> {
-  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
-}
-
-export function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: Middleware<Context>,
-) {
-  const requestAdapter = createRequestAdapter();
-  return (async (request, reply) => {
-    const config = request.routeOptions.config as unknown as Record<string, unknown>;
-    config.context ??= {};
-    const response = await handler(requestAdapter(request.raw), config.context as Context);
-
-    if (response) {
-      if (!response.body) {
-        // Fastify currently doesn't send a response for body is null.
-        // To mimic express behavior, we convert the body to an empty ReadableStream.
-        Object.defineProperty(response, "body", {
-          value: new ReadableStream({
-            start(controller) {
-              controller.close();
-            },
-          }),
-          writable: false,
-          configurable: true,
-        });
-      }
-
-      return reply.send(response);
-    }
-  }) satisfies RouteHandlerMethod;
-}
-
 async function startServer() {
   const app = Fastify();
 
   // Avoid pre-parsing body, otherwise it will cause issue with universal handlers
-  // This will probably change in the future though, you can follow https://github.com/magne4000/universal-handler for updates
+  // This will probably change in the future though, you can follow https://github.com/magne4000/universal-middleware for updates
   app.removeAllContentTypeParsers();
   app.addContentTypeParser("*", function (_request, _payload, done) {
     done(null, "");
@@ -105,30 +72,31 @@ async function startServer() {
     /**
      * Append Auth.js session to context
      **/
-    app.addHook("onRequest", handlerAdapter(authjsSessionMiddleware));
+    app.register(createMiddleware(authjsSessionMiddleware)());
 
     /**
      * Auth.js route
      * @link {@see https://authjs.dev/getting-started/installation}
      **/
-    app.all("/api/auth/*", handlerAdapter(authjsHandler));
+    app.all("/api/auth/*", createHandler(authjsHandler)());
   }
 
   if (BATI.has("firebase-auth")) {
-    app.addHook("onRequest", handlerAdapter(firebaseAuthMiddleware));
-    app.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
-    app.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+    app.register(createMiddleware(firebaseAuthMiddleware)());
+    app.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler)());
+    app.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler)());
   }
 
   if (BATI.has("lucia-auth")) {
-    app.addHook("onRequest", handlerAdapter(luciaCsrfMiddleware));
-    app.addHook("onRequest", handlerAdapter(luciaAuthMiddleware));
+    app.register(createMiddleware(luciaCsrfMiddleware)());
+    app.register(createMiddleware(luciaAuthContextMiddleware)());
+    app.register(createMiddleware(luciaAuthCookieMiddleware)());
 
-    app.post("/api/signup", handlerAdapter(luciaAuthSignupHandler));
-    app.post("/api/login", handlerAdapter(luciaAuthLoginHandler));
-    app.post("/api/logout", handlerAdapter(luciaAuthLogoutHandler));
-    app.get("/api/login/github", handlerAdapter(luciaGithubLoginHandler));
-    app.get("/api/login/github/callback", handlerAdapter(luciaGithubCallbackHandler));
+    app.post("/api/signup", createHandler(luciaAuthSignupHandler)());
+    app.post("/api/login", createHandler(luciaAuthLoginHandler)());
+    app.post("/api/logout", createHandler(luciaAuthLogoutHandler)());
+    app.get("/api/login/github", createHandler(luciaGithubLoginHandler)());
+    app.get("/api/login/github/callback", createHandler(luciaGithubCallbackHandler)());
   }
 
   if (BATI.has("trpc")) {
@@ -158,15 +126,15 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    app.post<{ Body: string }>("/_telefunc", handlerAdapter(telefuncHandler));
+    app.post<{ Body: string }>("/_telefunc", createHandler(telefuncHandler)());
   }
 
   if (BATI.has("ts-rest")) {
-    app.all("/api/*", handlerAdapter(tsRestHandler));
+    app.all("/api/*", createHandler(tsRestHandler));
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-    app.post("/api/todo/create", handlerAdapter(createTodoHandler));
+    app.post("/api/todo/create", createHandler(createTodoHandler)());
   }
 
   /**
@@ -174,7 +142,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("/*", handlerAdapter(vikeHandler));
+  app.all("/*", createHandler(vikeHandler)());
 
   return app;
 }

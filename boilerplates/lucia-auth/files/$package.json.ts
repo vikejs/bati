@@ -9,6 +9,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "arctic",
       "cookie",
       "lucia",
+      "@universal-middleware/core",
       ...(props.meta.BATI.has("drizzle")
         ? (["@lucia-auth/adapter-drizzle"] as const)
         : (["better-sqlite3", "@lucia-auth/adapter-sqlite"] as const)),

@@ -9,16 +9,14 @@ import { parse, serialize } from "cookie";
 import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
 import { oauthAccountTable, userTable } from "../database/schema/auth";
 import { getExistingAccount, getExistingUser, validateInput } from "../database/auth-actions";
+import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
 /**
  * CSRF protection middleware
  *
  * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
  */
-export function luciaCsrfMiddleware<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Response | undefined {
+export const luciaCsrfMiddleware = (() => async (request) => {
   if (request.method === "GET") {
     return;
   }
@@ -32,46 +30,56 @@ export function luciaCsrfMiddleware<Context extends Record<string | number | sym
       });
     }
   }
-}
+}) satisfies Get<[], UniversalMiddleware>;
 
 /**
- * Validate session cookies middleware
+ * Validate session cookies middleware and set context
  *
  * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
  */
-export async function luciaAuthMiddleware<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  context: Context & { session?: Session | null; user?: User | null },
-): Promise<void> {
+export const luciaAuthContextMiddleware = (() => async (request, context) => {
   const sessionId = lucia.readSessionCookie(request.headers.get("cookie") ?? "");
 
   if (!sessionId) {
-    context.user = null;
-    context.session = null;
+    return {
+      ...context,
+      session: null,
+      user: null,
+    };
   } else {
     const { session, user } = await lucia.validateSession(sessionId);
 
-    if (session?.fresh) {
-      request.headers.append("Set-Cookie", lucia.createSessionCookie(session.id).serialize());
+    return {
+      ...context,
+      sessionId,
+      session,
+      user,
+    };
+  }
+}) satisfies Get<[], UniversalMiddleware>;
+
+/**
+ * Set Set-Cookie headers if in context
+ */
+export const luciaAuthCookieMiddleware = (() => (_request, context) => {
+  return (response: Response) => {
+    if (context.session?.fresh) {
+      response.headers.append("Set-Cookie", lucia.createSessionCookie(context.session.id).serialize());
     }
-    if (!session) {
-      request.headers.append("Set-Cookie", lucia.createBlankSessionCookie().serialize());
+    if (context.sessionId && !context.session) {
+      response.headers.append("Set-Cookie", lucia.createBlankSessionCookie().serialize());
     }
 
-    context.session = session;
-    context.user = user;
-  }
-}
+    return response;
+  };
+}) satisfies Get<[], UniversalMiddleware<{ session?: Session | null; user?: User | null; sessionId?: string | null }>>;
 
 /**
  * Register user handler
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#register-user}
  */
-export async function luciaAuthSignupHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const luciaAuthSignupHandler = (() => async (request) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -134,17 +142,14 @@ export async function luciaAuthSignupHandler<Context extends Record<string | num
       },
     });
   }
-}
+}) satisfies Get<[], UniversalMiddleware>;
 
 /**
  * Sign in user handler
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#sign-in-user}
  */
-export async function luciaAuthLoginHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const luciaAuthLoginHandler = (() => async (request) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -191,15 +196,12 @@ export async function luciaAuthLoginHandler<Context extends Record<string | numb
       "set-cookie": lucia.createSessionCookie(session.id).serialize(),
     },
   });
-}
+}) satisfies Get<[], UniversalMiddleware>;
 
 /**
  * Log out user handler
  */
-export async function luciaAuthLogoutHandler<Context extends Record<string | number | symbol, unknown>>(
-  _request: Request,
-  context: Context & { session?: Session | null },
-): Promise<Response> {
+export const luciaAuthLogoutHandler = (() => async (_request, context) => {
   const session = context.session ?? null;
 
   if (!session) {
@@ -225,17 +227,14 @@ export async function luciaAuthLogoutHandler<Context extends Record<string | num
       "set-cookie": lucia.createBlankSessionCookie().serialize(),
     },
   });
-}
+}) satisfies Get<[], UniversalMiddleware<{ session?: Session | null }>>;
 
 /**
  * Github OAuth authorization handler
  *
  * @link {@see https://lucia-auth.com/guides/oauth/basics#creating-authorization-url}
  */
-export async function luciaGithubLoginHandler<Context extends Record<string | number | symbol, unknown>>(
-  _request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const luciaGithubLoginHandler = (() => async () => {
   const state = generateState();
   const url = await github.createAuthorizationURL(state);
 
@@ -252,17 +251,14 @@ export async function luciaGithubLoginHandler<Context extends Record<string | nu
       }),
     },
   });
-}
+}) satisfies Get<[], UniversalHandler>;
 
 /**
  * Github OAuth validate callback handler
  *
  * @link {@see https://lucia-auth.com/guides/oauth/basics#validate-callback}
  */
-export async function luciaGithubCallbackHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const luciaGithubCallbackHandler = (() => async (request) => {
   const cookies = parse(request.headers.get("cookie") ?? "");
   const params = new URL(request.url).searchParams;
   const code = params.get("code");
@@ -341,4 +337,4 @@ export async function luciaGithubCallbackHandler<Context extends Record<string |
       },
     });
   }
-}
+}) satisfies Get<[], UniversalHandler>;
