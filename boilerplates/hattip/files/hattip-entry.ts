@@ -7,9 +7,10 @@ import {
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import {
+  luciaAuthContextMiddleware,
+  luciaAuthCookieMiddleware,
   luciaAuthLoginHandler,
   luciaAuthLogoutHandler,
-  luciaAuthMiddleware,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
   luciaGithubCallbackHandler,
@@ -21,23 +22,10 @@ import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import type { HattipHandler } from "@hattip/core";
-import { createRouter, type RouteHandler } from "@hattip/router";
+import { createRouter } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import vercelAdapter from "@hattip/adapter-vercel-edge";
-
-interface Middleware<Context extends Record<string | number | symbol, unknown>> {
-  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
-}
-
-function handlerAdapter<Context extends Record<string | number | symbol, unknown>>(
-  handler: Middleware<Context>,
-): RouteHandler<unknown, unknown> {
-  return (context) => {
-    const rawContext = context as unknown as Record<string, unknown>;
-    rawContext.context ??= {};
-    return handler(context.request, rawContext.context as Context);
-  };
-}
+import { createHandler, createMiddleware } from "@universal-middleware/hattip";
 
 const router = createRouter();
 
@@ -47,7 +35,7 @@ if (BATI.has("telefunc")) {
    *
    * @link {@see https://telefunc.com}
    **/
-  router.post("/_telefunc", handlerAdapter(telefuncHandler));
+  router.post("/_telefunc", createHandler(telefuncHandler)());
 }
 
 if (BATI.has("trpc")) {
@@ -69,41 +57,42 @@ if (BATI.has("trpc")) {
 }
 
 if (BATI.has("ts-rest")) {
-  router.use("/api/*", handlerAdapter(tsRestHandler));
+  router.use("/api/*", createMiddleware(tsRestHandler)());
 }
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
    * Append Auth.js session to context
    **/
-  router.use(handlerAdapter(authjsSessionMiddleware));
+  router.use(createMiddleware(authjsSessionMiddleware)());
 
   /**
    * Auth.js route
    * @link {@see https://authjs.dev/getting-started/installation}
    **/
-  router.use("/api/auth/*", handlerAdapter(authjsHandler));
+  router.use("/api/auth/*", createHandler(authjsHandler)());
 }
 
 if (BATI.has("firebase-auth")) {
-  router.use(handlerAdapter(firebaseAuthMiddleware));
-  router.post("/api/sessionLogin", handlerAdapter(firebaseAuthLoginHandler));
-  router.post("/api/sessionLogout", handlerAdapter(firebaseAuthLogoutHandler));
+  router.use(createMiddleware(firebaseAuthMiddleware)());
+  router.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler)());
+  router.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler)());
 }
 
 if (BATI.has("lucia-auth")) {
-  router.use(handlerAdapter(luciaCsrfMiddleware));
-  router.use(handlerAdapter(luciaAuthMiddleware));
+  router.use(createMiddleware(luciaCsrfMiddleware)());
+  router.use(createMiddleware(luciaAuthContextMiddleware)());
+  router.use(createMiddleware(luciaAuthCookieMiddleware)());
 
-  router.post("/api/signup", handlerAdapter(luciaAuthSignupHandler));
-  router.post("/api/login", handlerAdapter(luciaAuthLoginHandler));
-  router.post("/api/logout", handlerAdapter(luciaAuthLogoutHandler));
-  router.get("/api/login/github", handlerAdapter(luciaGithubLoginHandler));
-  router.get("/api/login/github/callback", handlerAdapter(luciaGithubCallbackHandler));
+  router.post("/api/signup", createHandler(luciaAuthSignupHandler)());
+  router.post("/api/login", createHandler(luciaAuthLoginHandler)());
+  router.post("/api/logout", createHandler(luciaAuthLogoutHandler)());
+  router.get("/api/login/github", createHandler(luciaGithubLoginHandler)());
+  router.get("/api/login/github/callback", createHandler(luciaGithubCallbackHandler)());
 }
 
 if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-  router.post("/api/todo/create", handlerAdapter(createTodoHandler));
+  router.post("/api/todo/create", createHandler(createTodoHandler)());
 }
 
 /**
@@ -111,7 +100,7 @@ if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
  *
  * @link {@see https://vike.dev}
  **/
-router.use(handlerAdapter(vikeHandler));
+router.use(createHandler(vikeHandler)());
 
 const handler: HattipHandler = router.buildHandler();
 

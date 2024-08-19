@@ -1,9 +1,7 @@
 import { telefunc } from "telefunc";
+import type { Get, UniversalHandler } from "@universal-middleware/core";
 
-export async function telefuncHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  context?: Context,
-): Promise<Response> {
+export const telefuncHandler: Get<[], UniversalHandler> = () => async (request, context) => {
   const httpResponse = await telefunc({
     url: request.url.toString(),
     method: request.method,
@@ -17,4 +15,4 @@ export async function telefuncHandler<Context extends Record<string | number | s
       "content-type": contentType,
     },
   });
-}
+};

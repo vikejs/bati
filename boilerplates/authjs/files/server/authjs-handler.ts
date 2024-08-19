@@ -1,7 +1,8 @@
-import { Auth, createActionURL, setEnvDefaults, type AuthConfig } from "@auth/core";
+import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
+import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
 const env: Record<string, string | undefined> =
   typeof process?.env !== "undefined"
@@ -76,25 +77,25 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
  * Add Auth.js session to context
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
  **/
-export async function authjsSessionMiddleware(
-  request: Request,
-  context: Record<string | number | symbol, unknown>,
-): Promise<void> {
+export const authjsSessionMiddleware = (() => async (request, context) => {
   try {
-    context.session = await getSession(request, authjsConfig);
+    return {
+      ...context,
+      session: await getSession(request, authjsConfig),
+    };
   } catch (error) {
     console.debug("authjsSessionMiddleware:", error);
-    context.user = null;
+    return {
+      ...context,
+      session: null,
+    };
   }
-}
+}) satisfies Get<[], UniversalMiddleware>;
 
 /**
  * Auth.js route
  * @link {@see https://authjs.dev/getting-started/installation}
  **/
-export function authjsHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
+export const authjsHandler = (() => async (request) => {
   return Auth(request, authjsConfig);
-}
+}) satisfies Get<[], UniversalHandler>;

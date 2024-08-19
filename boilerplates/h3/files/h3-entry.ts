@@ -10,9 +10,10 @@ import {
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import {
+  luciaAuthContextMiddleware,
+  luciaAuthCookieMiddleware,
   luciaAuthLoginHandler,
   luciaAuthLogoutHandler,
-  luciaAuthMiddleware,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
   luciaGithubCallbackHandler,
@@ -27,8 +28,9 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
-import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener, toWebRequest } from "h3";
+import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener } from "h3";
 import serveStatic from "serve-static";
+import { createHandler, createMiddleware } from "@universal-middleware/h3";
 
 installWhatwgNodeFetch();
 installGetSetCookie();
@@ -39,20 +41,6 @@ const __dirname = dirname(__filename);
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
-
-interface Middleware<Context extends Record<string | number | symbol, unknown>> {
-  (request: Request, context: Context): Response | void | Promise<Response> | Promise<void>;
-}
-
-export function fromWebMiddleware<Context extends Record<string | number | symbol, unknown>>(
-  handler: Middleware<Context>,
-) {
-  return eventHandler((event) => {
-    const ctx = event.context as unknown as Record<string, unknown>;
-    ctx.context ??= {};
-    return handler(toWebRequest(event), ctx.context as Context);
-  });
-}
 
 export default await startServer();
 
@@ -81,30 +69,31 @@ async function startServer() {
     /**
      * Append Auth.js session to context
      **/
-    app.use(fromWebMiddleware(authjsSessionMiddleware));
+    app.use(createMiddleware(authjsSessionMiddleware)());
 
     /**
      * Auth.js route
      * @link {@see https://authjs.dev/getting-started/installation}
      **/
-    router.use("/api/auth/**", fromWebMiddleware(authjsHandler));
+    router.use("/api/auth/**", createHandler(authjsHandler)());
   }
 
   if (BATI.has("firebase-auth")) {
-    app.use(fromWebMiddleware(firebaseAuthMiddleware));
-    router.post("/api/sessionLogin", fromWebMiddleware(firebaseAuthLoginHandler));
-    router.post("/api/sessionLogout", fromWebMiddleware(firebaseAuthLogoutHandler));
+    app.use(createMiddleware(firebaseAuthMiddleware)());
+    router.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler)());
+    router.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler)());
   }
 
   if (BATI.has("lucia-auth")) {
-    app.use(fromWebMiddleware(luciaCsrfMiddleware));
-    app.use(fromWebMiddleware(luciaAuthMiddleware));
+    app.use(createMiddleware(luciaCsrfMiddleware)());
+    app.use(createMiddleware(luciaAuthContextMiddleware)());
+    app.use(createMiddleware(luciaAuthCookieMiddleware)());
 
-    router.post("/api/signup", fromWebMiddleware(luciaAuthSignupHandler));
-    router.post("/api/login", fromWebMiddleware(luciaAuthLoginHandler));
-    router.post("/api/logout", fromWebMiddleware(luciaAuthLogoutHandler));
-    router.get("/api/login/github", fromWebMiddleware(luciaGithubLoginHandler));
-    router.get("/api/login/github/callback", fromWebMiddleware(luciaGithubCallbackHandler));
+    router.post("/api/signup", createHandler(luciaAuthSignupHandler)());
+    router.post("/api/login", createHandler(luciaAuthLoginHandler)());
+    router.post("/api/logout", createHandler(luciaAuthLogoutHandler)());
+    router.get("/api/login/github", createHandler(luciaGithubLoginHandler)());
+    router.get("/api/login/github/callback", createHandler(luciaGithubCallbackHandler)());
   }
 
   if (BATI.has("trpc")) {
@@ -135,15 +124,15 @@ async function startServer() {
      *
      * @link {@see https://telefunc.com}
      **/
-    router.post("/_telefunc", fromWebMiddleware(telefuncHandler));
+    router.post("/_telefunc", createHandler(telefuncHandler)());
   }
 
   if (BATI.has("ts-rest")) {
-    router.use("/api/**", fromWebMiddleware(tsRestHandler));
+    router.use("/api/**", createHandler(tsRestHandler)());
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
-    router.post("/api/todo/create", fromWebMiddleware(createTodoHandler));
+    router.post("/api/todo/create", createHandler(createTodoHandler)());
   }
 
   /**
@@ -151,7 +140,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  router.use("/**", fromWebMiddleware(vikeHandler));
+  router.use("/**", createHandler(vikeHandler)());
 
   app.use(router);
 

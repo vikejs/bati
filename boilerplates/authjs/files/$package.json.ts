@@ -4,7 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["dotenv", "@types/cookie"],
-    dependencies: ["firebase", "firebase-admin", "firebaseui", "cookie", "@universal-middleware/core"],
+    dependencies: ["@auth/core", "@universal-middleware/core", "dotenv"],
   });
 }

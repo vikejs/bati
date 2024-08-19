@@ -25,13 +25,12 @@ export default async function getPackageJson(props: TransformerProps) {
     dependencies: [
       "@fastify/middie",
       "@fastify/static",
-      "@universal-middleware/express",
+      "@universal-middleware/fastify",
       "cross-env",
       "fastify",
       "tsx",
       "vike",
       "vite",
-      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core", "dotenv"] as const) : []),
     ],
   });
 }

@@ -2,6 +2,7 @@ import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
 import { todoTable } from "@batijs/drizzle/database/schema/todos";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import { contract } from "../ts-rest/contract";
+import { Get, UniversalHandler } from "@universal-middleware/core";
 
 /**
  * ts-rest route
@@ -33,14 +34,10 @@ const router = tsr.router(contract, {
   },
 });
 
-export async function tsRestHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  _context?: Context,
-): Promise<Response> {
-  return fetchRequestHandler({
+export const tsRestHandler: Get<[], UniversalHandler> = () => async (request) =>
+  fetchRequestHandler({
     request: new Request(request.url, request),
     contract,
     router,
     options: {},
   });
-}

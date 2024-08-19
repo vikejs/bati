@@ -1,11 +1,9 @@
 /*# BATI include-if-imported #*/
 /// <reference lib="webworker" />
 import { renderPage } from "vike/server";
+import type { Get, UniversalHandler } from "@universal-middleware/core";
 
-export async function vikeHandler<Context extends Record<string | number | symbol, unknown>>(
-  request: Request,
-  context?: Context,
-): Promise<Response> {
+export const vikeHandler: Get<[], UniversalHandler> = () => async (request, context) => {
   const pageContextInit = { ...context, urlOriginal: request.url, headersOriginal: request.headers };
   const pageContext = await renderPage(pageContextInit);
   const response = pageContext.httpResponse;
@@ -18,4 +16,4 @@ export async function vikeHandler<Context extends Record<string | number | symbo
     status: response?.statusCode,
     headers: response?.headers,
   });
-}
+};
