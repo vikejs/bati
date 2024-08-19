@@ -1,0 +1,243 @@
+service: ${self:custom.project}-${self:provider.stage}
+frameworkVersion: '3'
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  architecture: arm64
+  deploymentMethod: direct
+  region: us-east-1 # North Virginia
+  stage: ${opt:stage, 'dev'}
+  versionFunctions: false # true is required for lamda edge deployment
+
+plugins:
+  - serverless-esbuild
+  - serverless-s3-sync
+  - serverless-cloudfront-invalidate
+  - serverless-scriptable-plugin
+
+functions:
+  vikeapp:
+    handler: hono-entry_aws_lambda.handler
+    environment:
+      NODE_ENV: production
+    events:
+      - httpApi: "*"
+
+custom:
+  project: vike
+  scriptable:
+    # add custom hooks
+    hooks:
+      before:package:createDeploymentArtifacts: 
+        - pnpm build
+  esbuild:
+    config: './esbuild.config.cjs'
+
+  s3Sync:
+    - bucketNameKey: WebsiteStaticBucketnameKey
+      localDir: dist/client
+      deleteRemoved: true
+      acl: public-read # required
+      params:
+        - "assets/pwa/sw.js":
+            CacheControl: 'no-cache'
+            #ServiceWorkerAllowed: '/'
+        - "assets/pwa/manifest.webmanifest":
+            CacheControl: 'no-cache'
+        - "*.*":
+            CacheControl: 'public, max-age=31536000'
+  cloudfrontInvalidate:
+    - distributionIdKey: 'FrontendCloudFrontDistributionId'
+      autoInvalidate: true
+      items:
+        - '/*'
+
+resources:
+  Resources:
+    WebsiteStaticBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+        Tags:
+          - Key: project
+            Value: ${self:custom.project}
+        WebsiteConfiguration:
+          ErrorDocument: index.html
+          IndexDocument: index.html
+    ssrAppCachePolicy:
+      Type: AWS::CloudFront::CachePolicy
+      Properties:
+        CachePolicyConfig:
+          DefaultTTL: 2
+          MinTTL: 2
+          MaxTTL: 600
+          Name: ssrapp-${self:custom.project}-${self:provider.stage}
+          Comment: SSR Content
+          ParametersInCacheKeyAndForwardedToOrigin:
+            CookiesConfig:
+              # Possible values are 'none', 'whitelist', 'allExcept' and 'all'
+              CookieBehavior: all
+              # Cookies:
+              #   - my-public-cookie
+            EnableAcceptEncodingBrotli: true # optional
+            EnableAcceptEncodingGzip: true
+            HeadersConfig:
+              # Possible values are 'none' and 'whitelist'
+              HeaderBehavior: whitelist
+              Headers:
+                - authorization
+                - content-type
+                # forwading "host" will block access to API Gateway
+                # - host
+                - cloudfront-viewer-country
+            QueryStringsConfig:
+              # Possible values are 'none', 'whitelist', 'allExcept' and 'all'
+              QueryStringBehavior: all
+              # QueryStrings:
+              #   - not-cached-query-string
+    assetsCachePolicy:
+      Type: AWS::CloudFront::CachePolicy
+      Properties:
+        CachePolicyConfig:
+          DefaultTTL: 86400 # 1 day
+          MinTTL: 1
+          MaxTTL: 31536000 # 1 year
+          Name: assets-${self:custom.project}-${self:provider.stage}
+          Comment: assets Content
+          ParametersInCacheKeyAndForwardedToOrigin:
+            CookiesConfig:
+              # Possible values are 'none', 'whitelist', 'allExcept' and 'all'
+              CookieBehavior: none
+              # Cookies:
+              #   - my-public-cookie
+            EnableAcceptEncodingBrotli: true # optional
+            EnableAcceptEncodingGzip: true
+            HeadersConfig:
+              # Possible values are 'none' and 'whitelist'
+              HeaderBehavior: none
+              # Headers:
+              #   - authorization
+              #   - content-type
+              #   - host
+              #   - cloudfront-viewer-country
+            QueryStringsConfig:
+              # Possible values are 'none', 'whitelist', 'allExcept' and 'all'
+              QueryStringBehavior: none
+              # QueryStrings:
+              #   - not-cached-query-string
+    FrontendDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        Tags:
+          - Key: project
+            Value: ${self:custom.project}
+        DistributionConfig:
+          Origins:
+            - # Use the S3 Website URL without http:// as the CDN origin
+              DomainName: !Select [2, !Split ["/", !GetAtt WebsiteStaticBucket.WebsiteURL]]
+              Id: !Ref WebsiteStaticBucket
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: http-only
+            - DomainName:
+                Fn::Join:
+                  - ""
+                  - - !Ref HttpApi
+                    - ".execute-api.${self:provider.region}.amazonaws.com"
+              Id: ${self:service}-${self:provider.stage}-ssrApp
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                # API Gateway doesn't support the SSLv3 protocol.
+                OriginSSLProtocols:
+                  - TLSv1.2
+          Enabled: true
+          # Aliases:
+          #   - ${self:custom.domain.name}
+          HttpVersion: http2
+          IPV6Enabled: true
+          #DefaultRootObject: index.html
+          ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html
+          # Configure the caching behavior for our CDN
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 404
+              ResponsePagePath: /404/index.html
+            - ErrorCode: 403
+              ResponseCode: 404
+              ResponsePagePath: /404/index.html
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - DELETE
+              - PATCH
+              - POST
+              - PUT
+            Compress: true
+            CachePolicyId: !Ref ssrAppCachePolicy
+            ## The origin id defined above
+            TargetOriginId: ${self:service}-${self:provider.stage}-ssrApp
+            ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+          CacheBehaviors:
+            - PathPattern: "/assets/*"
+              AllowedMethods:
+                - GET
+                - HEAD
+                # - OPTIONS
+                # - DELETE
+                # - PATCH
+                # - POST
+                # - PUT
+              Compress: true
+              CachePolicyId: !Ref assetsCachePolicy
+              ## The origin id defined above
+              TargetOriginId: !Ref WebsiteStaticBucket
+              ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+            - PathPattern: "/images/*"
+              AllowedMethods:
+                - GET
+                - HEAD
+                # - OPTIONS
+                # - DELETE
+                # - PATCH
+                # - POST
+                # - PUT
+              Compress: true
+              CachePolicyId: !Ref assetsCachePolicy
+              ## The origin id defined above
+              TargetOriginId: !Ref WebsiteStaticBucket
+              ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+          PriceClass: PriceClass_100
+          ## The certificate to use when viewers use HTTPS to request objects.
+          # ViewerCertificate:
+          #   AcmCertificateArn: ${self:custom.domain.certificate}
+          #   MinimumProtocolVersion: TLSv1.1_2016
+          #   SslSupportMethod: sni-only
+    # CFRoute53RecordSet:
+    #   Type: AWS::Route53::RecordSet
+    #   Properties:
+    #     HostedZoneId: ${self:custom.domain.HostedZoneId}
+    #     Name: "${self:custom.domain.name}."
+    #     Type: CNAME
+    #     TTL: 300
+    #     ResourceRecords:
+    #       - !GetAtt FrontendDistribution.DomainName
+  Outputs:
+    WebsiteStaticBucketnameKey: # required for s3 sync to work
+      Value: !Ref WebsiteStaticBucket
+    FrontendCloudFrontDistributionId:
+      Value:
+        Ref: FrontendDistribution
+    CloudFrontDistributionUrl:
+      Description: "CloudFront distribution URL"
+      Value: !Join ['', ['https://', !GetAtt FrontendDistribution.DomainName]]

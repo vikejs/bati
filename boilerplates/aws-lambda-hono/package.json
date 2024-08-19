@@ -1,0 +1,46 @@
+{
+  "name": "@batijs/aws-lambda-hono",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "hono",
+          "aws-lambda-serverless"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./hono-entry_aws_lambda": {
+      "types": "./dist/types/hono-entry_aws_lambda.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "hono-entry_aws_lambda": [
+        "./dist/types/hono-entry_aws_lambda.d.ts"
+      ]
+    }
+  }
+}
