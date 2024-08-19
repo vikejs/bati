@@ -12,12 +12,15 @@ export default async function getReadme(props: TransformerProps) {
   ### Setup
 
   1. Change the project name (custom.project) in the \`serverless.yml\` file. **This is required to create a worldwide unique S3 bucket!**.
+  2. Stage can be changed in the \`serverless.yml\` file or by adding the option \`--stage prod\`.
+  3. The region can be changed in the \`serverless.yml\` .
 
   ### Deploy
 
-  \`pnpm aws:deploy\`
+  \`pnpm deploy:aws\`
 
   The url of the CloudFront distribution is printed with \`pnpm sls info --verbose\` - see \`CloudFrontDistributionUrl: \`.
+
 
   ### Remove
 
@@ -33,6 +36,7 @@ export default async function getReadme(props: TransformerProps) {
   * S3 bucket for the static files (only \`dist/client/assets\` is uploaded!)
   * CloudFront distribution for the static files and the Lambda function
   * Lambda function with the Node.js runtime and the entry file \`hono-entry_aws_lambda.ts\`
+  * Default Stage: dev
   
   `;
 
