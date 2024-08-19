@@ -2,7 +2,7 @@ import type { Category, CategoryLabels } from "@batijs/features";
 import Messages from "#components/Messages";
 import { StoreContext } from "#components/Store";
 import { EnrichedTooltip } from "#components/Tooltip";
-import { createMemo, createSignal, For, Show, untrack, useContext, type JSX } from "solid-js";
+import { createMemo, createSignal, For, type JSX, Show, untrack, useContext } from "solid-js";
 
 export function FormControl(props: {
   children: JSX.Element;
@@ -77,6 +77,7 @@ export function FormControl(props: {
                             <button
                               type="button"
                               class="btn btn-sm rounded-md text-nowrap"
+                              data-flag={feature.flag}
                               disabled={feature.disabled}
                               classList={{
                                 "!btn-primary !btn-active": feature.selected,
