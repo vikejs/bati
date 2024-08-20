@@ -1,5 +1,5 @@
 /*
-hono-entry_aws_lambda.ts
+entry_aws_lambda.ts
 
 This file is the entry point for AWS Lambda
 
@@ -22,7 +22,7 @@ type Bindings = {
 const lambdaApp = new Hono<{ Bindings: Bindings }>();
 
 lambdaApp.use(
-  "/assets/*",
+  "/*",
   serveStatic({
     root: `./dist/client/`,
   }),

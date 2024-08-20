@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   setScripts(packageJson, {
     "deploy:aws": {
-      value: "cross-env NODE_ENV=production sls deploy",
+      value: "cross-env NODE_ENV=production sls deploy && pnpm sls info --verbose | grep CloudFrontDistributionUrl",
       precedence: 20,
       warnIfReplaced: true,
     },

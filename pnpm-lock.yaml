@@ -122,6 +122,34 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
 
+  boilerplates/aws-lambda-hattip:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@hattip/adapter-aws-lambda':
+        specifier: ^0.0.47
+        version: 0.0.47
+      '@hattip/static':
+        specifier: ^0.0.47
+        version: 0.0.47
+      '@hattip/walk':
+        specifier: ^0.0.47
+        version: 0.0.47
+      '@types/aws-lambda':
+        specifier: ^8.10.143
+        version: 8.10.143
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.45
+      aws-lambda:
+        specifier: ^1.0.7
+        version: 1.0.7
+
   boilerplates/aws-lambda-hono:
     dependencies:
       '@batijs/core':
@@ -1333,7 +1361,7 @@ importers:
         version: 3.50.0(@types/node@18.19.44)(zod@3.23.8)
       '@ts-rest/serverless':
         specifier: ^3.50.0
-        version: 3.50.0(@ts-rest/core@3.50.0(@types/node@18.19.44)(zod@3.23.8))(zod@3.23.8)
+        version: 3.50.0(@ts-rest/core@3.50.0(@types/node@18.19.44)(zod@3.23.8))(@types/aws-lambda@8.10.143)(zod@3.23.8)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -3369,6 +3397,9 @@ packages:
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
 
+  '@hattip/adapter-aws-lambda@0.0.47':
+    resolution: {integrity: sha512-Bhfr70xF2QpF+rw5h7FRYlKeZq2LxrrkGl6apPbghvXBgD57wc5C6OE2GcQa1M0mjss8D4R25NapGCQWxxsw3A==}
+
   '@hattip/adapter-cloudflare-workers@0.0.46':
     resolution: {integrity: sha512-onPh5wcVZQkyaw+T1ckbK/zT7Fl6zD7hdXkkE/IPQZ1EFmJJoFX6Q52UM8DIXZK1tw8NyxFigWtAsQQm25q6tg==}
 
@@ -3398,6 +3429,9 @@ packages:
 
   '@hattip/router@0.0.47':
     resolution: {integrity: sha512-XpwrvKQuEh26KCa1OyIawmmGn1bIAt2O1RZCvAKcE2z9zy9IM7v8R81b6gt0qOwfmMae92Grfyjl5tcH6/eGbA==}
+
+  '@hattip/static@0.0.47':
+    resolution: {integrity: sha512-YvrxyTBFKUK0EEaY8+W8tXSFOwqVuh4wwTcj09+LzNUQXoYa5MQZDz+C4KeH+n63f3IG+r5ickCHGHTH/RXHgA==}
 
   '@hattip/vite@0.0.47':
     resolution: {integrity: sha512-mo9fd7pkqOBhWyC7sfZ6t0a4OTvwvIHJYW0KQaAebzDJkgUIy0uXmNwJtdteSc7w1S9H5SeXGIec9OAmmWfrzg==}
@@ -4588,6 +4622,9 @@ packages:
   '@tybys/wasm-util@0.8.3':
     resolution: {integrity: sha512-Z96T/L6dUFFxgFJ+pQtkPpne9q7i6kIPYCFnQBHSgSPV9idTsKfIhCss0h5iM9irweZCatkrdeP8yi5uM1eX6Q==}
 
+  '@types/aws-lambda@8.10.143':
+    resolution: {integrity: sha512-u5vzlcR14ge/4pMTTMDQr3MF0wEe38B2F9o84uC4F43vN5DGTy63npRrB6jQhyt+C0lGv4ZfiRcRkqJoZuPnmg==}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -5123,6 +5160,10 @@ packages:
   avvio@8.4.0:
     resolution: {integrity: sha512-CDSwaxINFy59iNwhYnkvALBwZiTydGkOecZyPkqBpABYR1KqGEsET0VOOYDwtleZSUIdeY36DC2bSZ24CO1igA==}
 
+  aws-lambda@1.0.7:
+    resolution: {integrity: sha512-9GNFMRrEMG5y3Jvv+V4azWvc+qNWdWLTjDdhf/zgMlz8haaaLWv0xeAIWxz9PuWUBawsVxy0zZotjCdR3Xq+2w==}
+    hasBin: true
+
   aws-sdk@2.1678.0:
     resolution: {integrity: sha512-7+MNi7hholVrQYBu8bVbfzOBHxKlC63BfuxUwwMaUrFN1hok4pdB0QsEvL6YHwZtF+3Bq5zhONImnT2Q7W15yg==}
     engines: {node: '>= 10.0.0'}
@@ -5491,6 +5532,9 @@ packages:
 
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+
+  commander@3.0.2:
+    resolution: {integrity: sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==}
 
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -7378,6 +7422,9 @@ packages:
   known-css-properties@0.30.0:
     resolution: {integrity: sha512-VSWXYUnsPu9+WYKkfmJyLKtIvaRJi1kXUqVmBACORXZQxT5oZDsoZ2vQP+bQFDnWtpI/4eq3MLoRMjI2fnLzTQ==}
 
+  lambda-stream@0.5.0:
+    resolution: {integrity: sha512-AaMXqUM+GcJ2OpNF2LI78jzbZ84rSckH+uKfstMQFqXDn+ZBLIkJgkUk+L0fuCGzw+LP5VToUxJKDfAbtLXSGw==}
+
   lazystream@1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
@@ -9007,6 +9054,10 @@ packages:
       esbuild-node-externals:
         optional: true
 
+  serverless-http@3.2.0:
+    resolution: {integrity: sha512-QvSyZXljRLIGqwcJ4xsKJXwkZnAVkse1OajepxfjkBXV0BMvRS5R546Z4kCBI8IygDzkQY0foNPC/rnipaE9pQ==}
+    engines: {node: '>=12.0'}
+
   serverless-s3-sync@3.3.0:
     resolution: {integrity: sha512-1tW6URG8iwZ70okAvr1c+M/R/kBK8qmt3G3BjM3Rfc6I+KzPP0kiKYV3akfif+lSVUxBsPpEdVJK/uEJJlbH+A==}
     peerDependencies:
@@ -10004,6 +10055,10 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  watchpack@2.4.2:
+    resolution: {integrity: sha512-TnbFSbcOCcDgjZ4piURLCbJ3nJhznVh9kw6F6iokjiFPl8ONxe9A6nMDVXDiNbrSfLILs6vB07F7wLBrwPYzJw==}
+    engines: {node: '>=10.13.0'}
 
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
@@ -12320,6 +12375,15 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
+  '@hattip/adapter-aws-lambda@0.0.47':
+    dependencies:
+      '@hattip/adapter-node': 0.0.47
+      '@hattip/core': 0.0.47
+      '@hattip/polyfills': 0.0.47
+      '@types/aws-lambda': 8.10.143
+      aws-lambda: 1.0.7
+      lambda-stream: 0.5.0
+
   '@hattip/adapter-cloudflare-workers@0.0.46':
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
@@ -12366,6 +12430,10 @@ snapshots:
     dependencies:
       '@hattip/compose': 0.0.47
       '@hattip/core': 0.0.47
+
+  '@hattip/static@0.0.47':
+    dependencies:
+      '@hattip/headers': 0.0.47
 
   '@hattip/vite@0.0.47(vite@5.4.1(@types/node@18.19.44))':
     dependencies:
@@ -13741,17 +13809,20 @@ snapshots:
       '@types/node': 18.19.44
       zod: 3.23.8
 
-  '@ts-rest/serverless@3.50.0(@ts-rest/core@3.50.0(@types/node@18.19.44)(zod@3.23.8))(zod@3.23.8)':
+  '@ts-rest/serverless@3.50.0(@ts-rest/core@3.50.0(@types/node@18.19.44)(zod@3.23.8))(@types/aws-lambda@8.10.143)(zod@3.23.8)':
     dependencies:
       '@ts-rest/core': 3.50.0(@types/node@18.19.44)(zod@3.23.8)
       itty-router: 5.0.18
     optionalDependencies:
+      '@types/aws-lambda': 8.10.143
       zod: 3.23.8
 
   '@tybys/wasm-util@0.8.3':
     dependencies:
       tslib: 2.6.3
     optional: true
+
+  '@types/aws-lambda@8.10.143': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -14457,6 +14528,13 @@ snapshots:
       '@fastify/error': 3.4.1
       fastq: 1.17.1
 
+  aws-lambda@1.0.7:
+    dependencies:
+      aws-sdk: 2.1678.0
+      commander: 3.0.2
+      js-yaml: 3.14.1
+      watchpack: 2.4.2
+
   aws-sdk@2.1678.0:
     dependencies:
       buffer: 4.9.2
@@ -14953,6 +15031,8 @@ snapshots:
       delayed-stream: 1.0.0
 
   commander@2.20.3: {}
+
+  commander@3.0.2: {}
 
   commander@4.1.1: {}
 
@@ -17275,6 +17355,8 @@ snapshots:
 
   known-css-properties@0.30.0: {}
 
+  lambda-stream@0.5.0: {}
+
   lazystream@1.0.1:
     dependencies:
       readable-stream: 2.3.8
@@ -19007,6 +19089,8 @@ snapshots:
       ramda: 0.28.0
       semver: 7.6.3
 
+  serverless-http@3.2.0: {}
+
   serverless-s3-sync@3.3.0(serverless@3.39.0(encoding@0.1.13)):
     dependencies:
       '@auth0/s3': 1.0.0
@@ -20294,6 +20378,11 @@ snapshots:
       '@vue/shared': 3.4.38
     optionalDependencies:
       typescript: 5.5.4
+
+  watchpack@2.4.2:
+    dependencies:
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
 
   wcwidth@1.0.1:
     dependencies:

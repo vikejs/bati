@@ -49,10 +49,10 @@ const nativeNodeModules = {
 const copyPlugin = copy({
   assets: [
     {
-      from: ['./dist/**/*'],
-      to: ['dist']
+      from: ['./dist/client/**/*','!./dist/client/assets/**/*'],
+      to: ['dist/client'],
     }
   ]
 })
 
-module.exports = [nativeNodeModules /*, copyPlugin*/]
+module.exports = [nativeNodeModules , copyPlugin]

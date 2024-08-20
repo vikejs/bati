@@ -19,7 +19,7 @@ plugins:
 
 functions:
   vikeapp:
-    handler: hono-entry_aws_lambda.handler
+    handler: entry_aws_lambda.handler
     environment:
       NODE_ENV: production
     events:

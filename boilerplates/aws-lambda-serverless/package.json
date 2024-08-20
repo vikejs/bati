@@ -29,12 +29,24 @@
   ],
   "bati": {
     "if": {
-      "flag": {
-        "$all": [
-          "hono",
-          "aws-lambda-serverless"
-        ]
-      }
+      "$or": [
+        {
+          "flag": {
+            "$all": [
+              "hono",
+              "aws-lambda-serverless"
+            ]
+          }
+        },
+        {
+          "flag": {
+            "$all": [
+              "hattip",
+              "aws-lambda-serverless"
+            ]
+          }
+        }
+      ]
     }
   },
   "exports": {
