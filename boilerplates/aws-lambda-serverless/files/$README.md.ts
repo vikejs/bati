@@ -8,6 +8,7 @@ export default async function getReadme(props: TransformerProps) {
   ## AWS Lambda Serverless Framework
 
   The deployment requires a default AWS profile to be [set up](https://www.serverless.com/framework/docs/providers/aws/guide/credentials) on your local machine.
+  To stay within the limit of an AWS Lambda deployment (max. 50MB), all external dependencies are bundled with esbuild and static assets only used by the client \`dist/client/assets\` are uploaded to S3.
 
   ### Setup
 
@@ -37,7 +38,35 @@ export default async function getReadme(props: TransformerProps) {
   * CloudFront distribution for the static files and the Lambda function
   * Lambda function with the Node.js runtime and the entry file \`hono-entry_aws_lambda.ts\`
   * Default Stage: dev
+
+  ### Static Assets in Lambda
+
+  The static assets are served by the Lambda function. The path is defined in the \`hono-entry_aws_lambda.ts\` file.
   
+  If you need to access any static assets in your server code which are not public, you can use one of the following methods:
+  1) Use \`import data from './data.json'\` in the Lambda function. This will embed the data in the Lambda function.
+  2) Use \`import data from './data.docx' assert { type: 'docx' }\` in the Lambda function and add the [copy loader](https://esbuild.github.io/content-types/#copy) to \`esbuild.config.cjs\`.
+  3) Uncomment the \`copyPlugin\` in \`esbuild-plugins.cjs\`, adapt the configuration to the location of your data folder.
+     
+     **Example Code:**
+     \`\`\`typescript
+     // code snipplet from server/create-todo-handler.ts and server/data/users.bin
+     const pp = path.join(path.dirname(fileURLToPath(import.meta.url)), "data/users.bin");
+     console.log(pp);
+     const usersData = fs.readFileSync(pp, "utf-8");
+     const users = JSON.parse(usersData);
+     \`\`\`
+
+     **Example Configuration:**
+     \`\`\`js
+     const copyPlugin = copy({
+       assets: [{
+          from: ['./server/data/*'],
+          to: ['data']
+       }]
+     })
+     \`\`\`
+
   `;
 
   content.addTodo(docs);
