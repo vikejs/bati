@@ -121,7 +121,7 @@ export const rulesMessages = {
 
     return (
       <span class="inline-block">
-        <span class="font-bold">AWS Lambda Serverless</span> is not compatible with{" "}
+        <span class="font-bold">AWS Lambda / Serverless</span> is not compatible with{" "}
         <span class="font-bold">{selectedServer()}</span>.
         <ul class="list-custom list-dot">
           <li>
