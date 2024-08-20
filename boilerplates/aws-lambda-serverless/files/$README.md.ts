@@ -7,7 +7,7 @@ export default async function getReadme(props: TransformerProps) {
   const docs = `
   ## AWS Lambda Serverless Framework
 
-  The deployment requires an default AWS profile to be [set up](https://www.serverless.com/framework/docs/providers/aws/guide/credentials) on your local machine.
+  The deployment requires a default AWS profile to be [set up](https://www.serverless.com/framework/docs/providers/aws/guide/credentials) on your local machine.
 
   ### Setup
 
