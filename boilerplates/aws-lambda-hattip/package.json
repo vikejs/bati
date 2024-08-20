@@ -1,0 +1,51 @@
+{
+  "name": "@batijs/aws-lambda-hattip",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@hattip/adapter-aws-lambda": "^0.0.47",
+    "@hattip/static": "^0.0.47",
+    "@hattip/walk": "^0.0.47",
+    "@types/aws-lambda": "^8.10.143",
+    "@types/node": "^18.19.14",
+    "aws-lambda": "^1.0.7"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "hattip",
+          "aws-lambda-serverless"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./entry_aws_lambda": {
+      "types": "./dist/types/entry_aws_lambda.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "entry_aws_lambda": [
+        "./dist/types/entry_aws_lambda.d.ts"
+      ]
+    }
+  }
+}
