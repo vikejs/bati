@@ -10,6 +10,8 @@ export enum RulesMessage {
   ERROR_DATA_R_SERVER,
   // A compabible Server (or no Server) is required when using Cloudflare
   ERROR_CLOUDFLARE_R_COMPAT_SERVER,
+  // A compabible Server (or no Server) is required when using AWS Lambda Serverless
+  ERROR_AWS_LAMBDA_SERVERLESS_R_COMPAT_SERVER,
   // --- WARNING
 
   // --- INFO

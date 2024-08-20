@@ -114,6 +114,24 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_AWS_LAMBDA_SERVERLESS_R_COMPAT_SERVER]: error(() => {
+    const { selectedFeatures } = useContext(StoreContext);
+
+    const selectedServer = createMemo(() => selectedFeatures().filter((f) => f.category === "Server")?.[0].label);
+
+    return (
+      <span class="inline-block">
+        <span class="font-bold">AWS Lambda Serverless</span> is not compatible with{" "}
+        <span class="font-bold">{selectedServer()}</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>, or unselect{" "}
+            <span class="font-bold">{selectedServer()}</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: invisible(() => {
     onMount(() => {
       document
