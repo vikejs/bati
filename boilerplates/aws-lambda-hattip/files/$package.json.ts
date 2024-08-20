@@ -1,4 +1,4 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
