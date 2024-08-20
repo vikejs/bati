@@ -33,7 +33,7 @@ export default defineConfig({
         // replaces default Vike target
         destination: "ssr_",
         // already added by default Vike route
-        addRoute: false,
+        route: false,
       },
     ],
   },
