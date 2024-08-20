@@ -12,8 +12,7 @@ import { Hono } from "hono";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { handle } from "hono/aws-lambda";
 import type { LambdaEvent, LambdaContext } from "hono/aws-lambda";
-// @ts-ignore
-import app from "./hono-entry.js"; // file is provided by hono
+import app from "@batijs/hono/hono-entry"; // file is provided by hono
 
 type Bindings = {
   event: LambdaEvent;
