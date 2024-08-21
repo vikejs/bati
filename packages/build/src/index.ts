@@ -41,6 +41,8 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
     switch (ext) {
       case ".ts":
       case ".js":
+      case ".mjs":
+      case ".cjs":
       case ".tsx":
       case ".jsx":
         return formatCode(fileContent as string, {
