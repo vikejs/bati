@@ -55,7 +55,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         name: Install bun
         with:
-          bun-version: "1.1.20"
+          bun-version: "1.1.24"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -85,21 +85,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - uses: actions/cache@v4
-        name: Setup Bati cache
-        with:
-          path: ${{ runner.temp }}/bati-cache
-          key: ${{ runner.os }}-${{ matrix.node }}-bati-cache-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node }}-bati-cache-
-
-      - uses: actions/cache@v4
-        name: Setup Turborepo cache
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-${{ matrix.node }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node }}-turbo-
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v1.5
 
 #      - name: Install global dependencies
 #        if: matrix.os == 'ubuntu-latest'
