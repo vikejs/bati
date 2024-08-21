@@ -189,12 +189,12 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
   const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
   const args_2 = ["--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
-  const cacheDir = process.env.CI
-    ? join(process.env.RUNNER_TEMP || tmpdir(), "bati-cache")
-    : join(tmpdir(), "bati-cache");
-  args_2.push(`--cache-dir`);
-  args_2.push(cacheDir);
-  console.log("[turborepo] Using cache dir", cacheDir);
+  const cacheDir = process.env.CI ? false : join(tmpdir(), "bati-cache");
+  if (cacheDir) {
+    console.log("[turborepo] Using cache dir", cacheDir);
+    args_2.push(`--cache-dir`);
+    args_2.push(cacheDir);
+  }
 
   if (process.env.CI) {
     // GitHub CI seems to fail more often with default concurrency
