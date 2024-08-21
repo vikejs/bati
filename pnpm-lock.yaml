@@ -325,7 +325,7 @@ importers:
         version: 0.24.0
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
+        version: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
       tsx:
         specifier: ^4.17.0
         version: 4.17.0
@@ -860,7 +860,7 @@ importers:
         version: link:../drizzle
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
-        version: 1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1))(lucia@3.2.0)
+        version: 1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1))(lucia@3.2.0)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@11.1.2)(lucia@3.2.0)
@@ -890,7 +890,7 @@ importers:
         version: 16.4.5
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
+        version: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -1735,6 +1735,9 @@ importers:
       which:
         specifier: ^4.0.0
         version: 4.0.0
+      yaml:
+        specifier: ^2.5.0
+        version: 2.5.0
 
   packages/create-bati:
     dependencies:
@@ -13280,17 +13283,9 @@ snapshots:
   '@kikobeats/time-span@1.0.5':
     optional: true
 
-  '@kwsites/file-exists@1.1.1(supports-color@8.1.1)':
+  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1))(lucia@3.2.0)':
     dependencies:
-      debug: 4.3.6(supports-color@8.1.1)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@kwsites/promise-deferred@1.1.1': {}
-
-  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1))(lucia@3.2.0)':
-    dependencies:
-      drizzle-orm: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
+      drizzle-orm: 0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1)
       lucia: 3.2.0
 
   '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.1.2)(lucia@3.2.0)':
@@ -16310,7 +16305,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@opentelemetry/api@1.9.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/pg@8.6.1)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1):
+  drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240815.0)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.3)(better-sqlite3@11.1.2)(prisma@5.18.0)(react@18.3.1):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20240815.0
       '@opentelemetry/api': 1.9.0

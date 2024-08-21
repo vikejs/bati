@@ -3,7 +3,16 @@ import { fileURLToPath } from "node:url";
 import { loadFile, parseModule, type ProxifiedModule } from "magicast";
 import { assert } from "./assert.js";
 import { parseReadme } from "./markdown.js";
+import {
+  type Document as YAMLDocument,
+  type DocumentOptions,
+  parseDocument,
+  type ParseOptions,
+  type SchemaOptions,
+} from "yaml";
 import type { TransformerProps } from "./types.js";
+
+export type { YAMLDocument };
 
 export async function loadReadme({ readfile }: TransformerProps) {
   const content = await readfile?.();
@@ -39,4 +48,15 @@ export async function loadRelativeFileAsMagicast<Exports extends object>(
   const __dirname = dirname(__filename);
 
   return loadFile(join(__dirname, relativePath));
+}
+
+export async function loadYaml(
+  { readfile, source, target }: TransformerProps,
+  options?: ParseOptions & DocumentOptions & SchemaOptions,
+) {
+  const content = await readfile?.();
+
+  assert(typeof content === "string", `Unable to load previous YAML module ("${source}" -> "${target}")`);
+
+  return parseDocument(content, options);
 }
