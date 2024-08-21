@@ -23,5 +23,10 @@ export default async function getPackageJson(props: TransformerProps) {
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@hono/vite-dev-server", "@types/node"],
     dependencies: ["@hono/node-server", "@universal-middleware/hono", "cross-env", "hono", "tsx", "vite", "vike"],
+    ...(props.meta.BATI.has("sentry")
+      ? props.meta.BATI.has("aws-lambda-serverless")
+        ? (["@sentry/aws-serverless"] as const)
+        : (["@hono/sentry"] as const)
+      : []),
   });
 }

@@ -8,14 +8,18 @@ Notes:
 
 */
 
+import * as Sentry from "@sentry/aws-serverless";
+//# BATI.has("sentry")
+import "@batijs/aws-lambda-serverless/sentry-server.config";
+
 import { existsSync } from "node:fs";
-import type { APIGatewayProxyHandler } from "aws-lambda";
 import awsLambdaAdapter from "@hattip/adapter-aws-lambda";
 import { walk } from "@hattip/walk";
 import type { FileInfo } from "@hattip/walk";
 import { createStaticMiddleware } from "@hattip/static";
 import { createFileReader } from "@hattip/static/fs";
 import hattipHandler from "@batijs/hattip/hattip-entry"; // file is provided by hattip
+import type { Handler, APIGatewayProxyResultV2, APIGatewayProxyEventV2 } from "aws-lambda";
 
 const root = new URL("./dist/client", import.meta.url);
 const staticRootExists = existsSync(root);
@@ -26,7 +30,12 @@ const staticMiddleware = staticRootExists
     })
   : undefined;
 
-export const handler: APIGatewayProxyHandler = awsLambdaAdapter((ctx) => {
+const awsHandler = awsLambdaAdapter((ctx) => {
+  if (hattipHandler === undefined) throw new Error("hattipHandler is undefined");
   if (staticMiddleware === undefined) return hattipHandler(ctx);
   return staticMiddleware(ctx) || hattipHandler(ctx);
 });
+
+export const handler: Handler<APIGatewayProxyEventV2, APIGatewayProxyResultV2> = BATI.has("sentry")
+  ? Sentry.wrapHandler(awsHandler, { captureAllSettledReasons: true })
+  : awsHandler;

@@ -27,7 +27,35 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import vercelAdapter from "@hattip/adapter-vercel-edge";
 import { createHandler, createMiddleware } from "@universal-middleware/hattip";
 
+//# BATI.has("sentry") && BATI.has("aws-lambda-serverless")
+import * as SentryAWS from "@sentry/aws-serverless";
+import * as SentryNode from "@sentry/node";
+
+if (BATI.has("sentry") && !BATI.has("aws-lambda-serverless")) {
+  /**
+   * Sentry Configuration
+   */
+  SentryNode.init({ dsn: process.env.SENTRY_DSN });
+}
+
 const router = createRouter();
+
+if (BATI.has("sentry")) {
+  /**
+   * Sentry Error Caption route
+   */
+  router.use(async (ctx) => {
+    ctx.handleError = async (error: Error) => {
+      await (BATI.has("aws-lambda-serverless") ? SentryAWS : SentryNode).captureException(error);
+      return new Response(
+        process.env.NODE_ENV === "production" || error?.message === undefined ? "Internal Server Error" : error.message,
+        {
+          status: 500,
+        },
+      );
+    };
+  });
+}
 
 if (BATI.has("telefunc")) {
   /**

@@ -1,6 +1,7 @@
 service: ${self:custom.project}-${self:provider.stage}
 frameworkVersion: '3'
 configValidationMode: error
+useDotenv: true
 
 provider:
   name: aws
@@ -10,6 +11,7 @@ provider:
   region: us-east-1 # North Virginia
   stage: ${opt:stage, 'dev'}
   versionFunctions: false # true is required for lamda edge deployment
+  environment:  ${file(serverless-resources/environment.json)}
 
 plugins:
   - serverless-esbuild
@@ -20,8 +22,6 @@ plugins:
 functions:
   vikeapp:
     handler: entry_aws_lambda.handler
-    environment:
-      NODE_ENV: production
     events:
       - httpApi: "*"
 
@@ -33,7 +33,7 @@ custom:
       before:package:createDeploymentArtifacts: 
         - pnpm build
   esbuild:
-    config: './esbuild.config.cjs'
+    config: './serverless-resources/esbuild/esbuild.config.cjs'
 
   s3Sync:
     - bucketNameKey: WebsiteStaticBucketnameKey

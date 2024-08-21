@@ -13,6 +13,9 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@sentry/aws-serverless": "^8.26.0",
+    "@sentry/esbuild-plugin": "^2.22.2",
+    "@sentry/profiling-node": "^8.26.0",
     "@types/node": "^18.19.45",
     "esbuild-plugin-copy": "^2.1.1",
     "serverless": "^3.39.0",
@@ -50,20 +53,20 @@
     }
   },
   "exports": {
-    "./esbuild-plugins.": {
-      "types": "./dist/types/esbuild-plugins.d.cts"
+    "./serverless-resources/esbuild/esbuild-plugins.": {
+      "types": "./dist/types/serverless-resources/esbuild/esbuild-plugins.d.cts"
     },
-    "./esbuild.config.": {
-      "types": "./dist/types/esbuild.config.d.cts"
+    "./serverless-resources/esbuild/esbuild.config.": {
+      "types": "./dist/types/serverless-resources/esbuild/esbuild.config.d.cts"
     }
   },
   "typesVersions": {
     "*": {
-      "esbuild-plugins.": [
-        "./dist/types/esbuild-plugins.d.cts"
+      "serverless-resources/esbuild/esbuild-plugins.": [
+        "./dist/types/serverless-resources/esbuild/esbuild-plugins.d.cts"
       ],
-      "esbuild.config.": [
-        "./dist/types/esbuild.config.d.cts"
+      "serverless-resources/esbuild/esbuild.config.": [
+        "./dist/types/serverless-resources/esbuild/esbuild.config.d.cts"
       ]
     }
   }

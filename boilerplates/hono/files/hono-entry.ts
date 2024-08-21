@@ -26,7 +26,27 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { createHandler, createMiddleware } from "@universal-middleware/hono";
 
+//# BATI.has("sentry") && BATI.has("aws-lambda-serverless")
+import * as Sentry from "@sentry/aws-serverless";
+
+//# BATI.has("sentry") && !BATI.has("aws-lambda-serverless")
+import { sentry as sentryMiddleware } from "@hono/sentry";
+
 const app = new Hono();
+
+if (BATI.has("sentry")) {
+  /**
+   * Sentry Error Caption
+   */
+  if (BATI.has("aws-lambda-serverless")) {
+    app.onError(async (err, c) => {
+      Sentry.captureException(err);
+      return c.text(process.env.NODE_ENV === "production" ? "Internal Server Error" : err.message, 500);
+    });
+  } else {
+    app.use("*", sentryMiddleware({ dsn: process.env.SENTRY_DSN }));
+  }
+}
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
   /**

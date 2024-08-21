@@ -5,11 +5,9 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: [
-      "@hattip/adapter-aws-lambda",
-      "@hattip/static",
-      "@hattip/walk",
-      "@types/aws-lambda",
       "aws-lambda",
+      "@types/aws-lambda",
+      ...(props.meta.BATI.has("sentry") ? (["@sentry/aws-serverless"] as const) : []),
     ],
     dependencies: [],
   });

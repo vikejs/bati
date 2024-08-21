@@ -8,11 +8,17 @@ Notes:
 
 */
 
+import * as Sentry from "@sentry/aws-serverless";
+
+//# BATI.has("sentry")
+import "@batijs/aws-lambda-serverless/sentry-server.config";
+
 import { Hono } from "hono";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { handle } from "hono/aws-lambda";
 import type { LambdaEvent, LambdaContext } from "hono/aws-lambda";
 import app from "@batijs/hono/hono-entry"; // file is provided by hono
+import type { Handler, APIGatewayProxyResult } from "aws-lambda";
 
 type Bindings = {
   event: LambdaEvent;
@@ -29,5 +35,8 @@ lambdaApp.use(
 );
 
 lambdaApp.route("/", app!);
+const awsHandler = handle(lambdaApp);
 
-export const handler = handle(lambdaApp);
+export const handler: Handler<LambdaEvent, APIGatewayProxyResult> = BATI.has("sentry")
+  ? Sentry.wrapHandler(awsHandler, { captureAllSettledReasons: true })
+  : awsHandler;

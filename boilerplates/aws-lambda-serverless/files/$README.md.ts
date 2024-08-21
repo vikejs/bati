@@ -4,7 +4,8 @@ export default async function getReadme(props: TransformerProps) {
   const content = await loadReadme(props);
 
   //language=Markdown
-  const docs = `
+  const docs =
+    `
   ## AWS Lambda Serverless Framework
 
   The deployment requires a default AWS profile to be [set up](https://www.serverless.com/framework/docs/providers/aws/guide/credentials) on your local machine.
@@ -67,7 +68,19 @@ export default async function getReadme(props: TransformerProps) {
      })
      \`\`\`
 
-  `;
+  ` +
+    (props.meta.BATI.has("sentry")
+      ? `
+  ### Sentry
+
+  [Sentry is integrated](https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/esm-npm/) in the Lambda function. 
+  
+  ### Configuration
+  
+  The environment variable \`SENTRY_DSN\` and some other sentry variables must be set in\`.env\`.
+  Any further configuration can be done in the \`sentry-server.config.mjs\` file.
+`
+      : "");
 
   content.addTodo(docs);
 

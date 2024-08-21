@@ -45,6 +45,12 @@ export default async function getPackageJson(props: TransformerProps) {
       "vike",
       "@universal-middleware/hattip",
       ...(props.meta.BATI.has("vercel") ? (["@hattip/adapter-vercel-edge"] as const) : []),
+      ...(props.meta.BATI.has("sentry") && props.meta.BATI.has("aws-lambda-serverless")
+        ? (["@sentry/aws-serverless"] as const)
+        : []),
+      ...(props.meta.BATI.has("sentry") && !props.meta.BATI.has("aws-lambda-serverless")
+        ? (["@sentry/node"] as const)
+        : []),
     ],
   });
 }

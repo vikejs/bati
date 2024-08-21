@@ -1,3 +1,4 @@
+/* eslint-disable */
 const esbuildPlugins = require('./esbuild-plugins.cjs')
 
 module.exports = () => {

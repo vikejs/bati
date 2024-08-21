@@ -1,5 +1,9 @@
+/* eslint-disable */
 // @ts-ignore
 const { copy } = require('esbuild-plugin-copy')
+// @ts-ignore
+const SentrySourcemapsPlugin = require('./esbuild-sentry-plugin.cjs')
+
 // https://github.com/evanw/esbuild/issues/1051#issuecomment-806325487
 const nativeNodeModules = {
   name: 'native-node-modules',
@@ -51,8 +55,12 @@ const copyPlugin = copy({
     {
       from: ['./dist/client/**/*','!./dist/client/assets/**/*'],
       to: ['dist/client'],
+    },
+    {
+      from: 'sentry-server.config.mjs',
+      to: 'sentry-server.config.mjs',
     }
   ]
 })
 
-module.exports = [nativeNodeModules , copyPlugin]
+module.exports = [nativeNodeModules, ...(typeof SentrySourcemapsPlugin==="function"?[SentrySourcemapsPlugin]:[]) , copyPlugin]
