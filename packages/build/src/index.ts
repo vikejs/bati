@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { formatCode, transformAndFormat, type Transformer, type VikeMeta } from "@batijs/core";
+import { formatCode, transformAndFormat, type Transformer, type VikeMeta, type YAMLDocument } from "@batijs/core";
 import { mergeDts } from "./merge-dts.js";
 import { queue } from "./queue.js";
 
@@ -59,6 +59,10 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
         return fileContent as string;
       case ".json":
         return JSON.stringify(fileContent, null, 2);
+      case ".yml":
+      case ".yaml":
+        if (typeof fileContent === "string") return fileContent;
+        return (fileContent as YAMLDocument).toString();
     }
   }
   throw new Error(`Unsupported file extension ${parsed.base} (${filepath})`);
