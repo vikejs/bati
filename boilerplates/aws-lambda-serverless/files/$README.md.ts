@@ -74,6 +74,7 @@ export default async function getReadme(props: TransformerProps) {
   ### Sentry
 
   [Sentry is integrated](https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/esm-npm/) in the Lambda function. 
+  The build process will automatically upload the source maps to Sentry.
   
   ### Configuration
   
