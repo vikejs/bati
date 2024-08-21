@@ -1,6 +1,4 @@
-import { type TransformerProps } from "@batijs/core";
-
-export default async function overrideLayout(props: TransformerProps) {
+export default async function overrideLayout() {
   return `import React from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { NavLink } from '@mantine/core';

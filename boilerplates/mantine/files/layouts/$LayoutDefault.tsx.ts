@@ -1,6 +1,4 @@
-import { type TransformerProps } from "@batijs/core";
-
-export default async function overrideLayout(props: TransformerProps) {
+export default async function overrideLayout() {
   return `
 import '@mantine/core/styles.css';
 

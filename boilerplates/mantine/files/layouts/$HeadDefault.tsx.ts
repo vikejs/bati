@@ -34,7 +34,7 @@ export default function HeadDefault() {` +
         <ColorSchemeScript />
         <script
           async
-          src={\`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}\`}
+          src={\`https://www.googletagmanager.com/gtag/js?id=\${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}\`}
         ></script>
         <script
           dangerouslySetInnerHTML={{
@@ -42,7 +42,7 @@ export default function HeadDefault() {` +
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', '${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}');\`,
+          gtag('config', '\${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}');\`,
           }}
         ></script>
       </>
