@@ -27,7 +27,7 @@ Please report this issue to https://github.com/vikejs/bati`);
         if (op.kind === "file" && !op.important) return 1;
         if (op.kind === "file" && op.important) return 2;
         if (op.kind === "transform" && !op.important) return 3;
-        if (op.kind === "transform" && !op.important) return 4;
+        if (op.kind === "transform" && op.important) return 4;
         return 0;
       });
 
