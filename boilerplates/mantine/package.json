@@ -30,7 +30,12 @@
   ],
   "bati": {
     "if": {
-      "flag": "mantine"
+      "flag": {
+        "$all": [
+          "mantine",
+          "react"
+        ]
+      }
     }
   },
   "exports": {
