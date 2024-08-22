@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { parseModule, transformAndFormat, type VikeMeta } from "@batijs/core";
 
 interface Node {
@@ -10,19 +9,17 @@ interface RootNode extends Node {
 }
 
 export async function mergeDts({
-  target,
   fileContent,
+  previousContent,
   filepath,
   meta,
 }: {
-  target: string;
   filepath: string;
   fileContent: string;
+  previousContent: string;
   meta: VikeMeta;
 }) {
-  const previousCode = await readFile(target, { encoding: "utf-8" });
-
-  const previousAst = parseModule(previousCode);
+  const previousAst = parseModule(previousContent);
   const currentAst = parseModule(fileContent);
 
   // Merge imports

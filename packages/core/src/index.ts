@@ -1,4 +1,4 @@
-export { transformAndFormat } from "./parse.js";
+export { transformAndFormat, type FileContext } from "./parse.js";
 export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./magicast.js";

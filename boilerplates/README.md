@@ -1,6 +1,20 @@
 > [!TIP]
 > `BATI` is a global available during the templating phase, which is a `Set` containing all chosen _features_
 
+### Special file names
+
+#### `$.*\.ts`
+File names encapsulated between `$` and `.ts`, like `$README.md.ts`, are process through callback, which let one manipulate destination file.
+Take a look at [boilerplates/shared/files/$README.md.ts](https://github.com/vikejs/bati/blob/main/boilerplates/shared/files/%24README.md.ts) for example.
+
+#### `!.*`
+File names starting with a `!` will take precedence over any other file for the same destination.
+The priority order is as follows (from lesser to higher priority):
+- non `!` files
+- `!` files
+- `$` files
+- `!$` files
+
 ### Syntax
 
 Bati uses specific syntaxes to generate its boilerplates.
