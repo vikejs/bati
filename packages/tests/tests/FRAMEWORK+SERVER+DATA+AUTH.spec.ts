@@ -1,4 +1,6 @@
 import { describeBati, exec, npmCli } from "@batijs/tests-utils";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
 export const matrix = [
   ["solid", "react", "vue"],
@@ -39,6 +41,10 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
     },
     2 * 60 * 1000,
   );
+
+  test("include-if-imported", () => {
+    expect(existsSync(path.join(process.cwd(), "database", "sqliteDb.ts"))).toBe(!context.flags.includes("drizzle"));
+  });
 
   test("login page", async () => {
     const res = await fetch("/login");

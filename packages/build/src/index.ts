@@ -1,16 +1,17 @@
 import { existsSync } from "node:fs";
-import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, opendir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { formatCode, transformAndFormat, type Transformer, type VikeMeta, type YAMLDocument } from "@batijs/core";
-import { mergeDts } from "./merge-dts.js";
-import { queue } from "./queue.js";
+import { type VikeMeta } from "@batijs/core";
+import type { FileOperation, OperationReport } from "./operations/common.js";
+import { executeOperationFile } from "./operations/file.js";
+import { executeOperationTransform } from "./operations/transform.js";
+import { OperationsRearranger } from "./operations/rearranger.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
-const isWin = process.platform === "win32";
 
 function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
-  split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.[tj]sx?$/, "$1");
+  split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.[tj]sx?$/, "$1").replace(/^!(.*)$/, "$1");
   return split.join(path.sep).replace(source, dist);
 }
 
@@ -22,6 +23,19 @@ async function safeWriteFile(destination: string, content: string) {
   await writeFile(destination, content, { encoding: "utf-8" });
 }
 
+async function safeRmFile(destination: string) {
+  try {
+    await rm(destination, {
+      force: true,
+      maxRetries: 3,
+      recursive: false,
+      retryDelay: 150,
+    });
+  } catch {
+    console.warn(`Failed to remove unecessary file: ${destination}`);
+  }
+}
+
 export async function* walk(dir: string): AsyncGenerator<string> {
   if (!existsSync(dir)) return;
   for await (const d of await opendir(dir)) {
@@ -30,49 +44,6 @@ export async function* walk(dir: string): AsyncGenerator<string> {
       yield* walk(entry);
     } else if (d.isFile()) yield entry;
   }
-}
-
-async function transformFileAfterExec(filepath: string, fileContent: unknown): Promise<string | null> {
-  if (fileContent === undefined || fileContent === null) return null;
-  const parsed = path.parse(filepath);
-  const toTest = [parsed.base, parsed.ext, parsed.name].filter(Boolean);
-
-  for (const ext of toTest) {
-    switch (ext) {
-      case ".ts":
-      case ".js":
-      case ".tsx":
-      case ".jsx":
-        return formatCode(fileContent as string, {
-          filepath,
-        });
-      case ".env":
-      case ".env.local":
-      case ".env.development":
-      case ".env.development.local":
-      case ".env.test":
-      case ".env.test.local":
-      case ".env.production":
-      case ".env.production.local":
-      case ".html":
-      case ".md":
-        return fileContent as string;
-      case ".json":
-        return JSON.stringify(fileContent, null, 2);
-      case ".yml":
-      case ".yaml":
-        if (typeof fileContent === "string") return fileContent;
-        return (fileContent as YAMLDocument).toString();
-    }
-  }
-  throw new Error(`Unsupported file extension ${parsed.base} (${filepath})`);
-}
-
-async function importTransformer(p: string) {
-  const importFile = isWin ? "file://" + p : p;
-  const f = await import(importFile);
-
-  return f.default as Transformer;
 }
 
 function importToPotentialTargets(imp: string) {
@@ -95,12 +66,8 @@ function importToPotentialTargets(imp: string) {
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
-  const targets = new Set<string>();
   const allImports = new Set<string>();
-  const includeIfImported = new Map<string, () => Promise<void>>();
-
-  const priorityQ = queue();
-  const transformAndWriteQ = queue();
+  const filesContainingIncludeIfImported = new Set<string>();
 
   function updateAllImports(target: string, imports?: Set<string>) {
     if (!imports) return;
@@ -115,23 +82,7 @@ export default async function main(options: { source: string | string[]; dist: s
     }
   }
 
-  async function triggerPendingTargets(target: string, imports?: Set<string>) {
-    if (!imports) return;
-
-    for (const imp of imports.values()) {
-      const importTarget = path.resolve(path.dirname(target), imp);
-      const importTargets = importToPotentialTargets(importTarget);
-
-      for (const imp2 of importTargets) {
-        if (includeIfImported.has(imp2)) {
-          const fn = includeIfImported.get(imp2)!;
-          includeIfImported.delete(imp2);
-          await fn();
-          break;
-        }
-      }
-    }
-  }
+  const rearranger = new OperationsRearranger();
 
   for (const source of sources) {
     for await (const p of walk(source)) {
@@ -145,72 +96,68 @@ export default async function main(options: { source: string | string[]; dist: s
           `Typescript file needs to be compiled before it can be executed: '${p}'.
 Please report this issue to https://github.com/vikejs/bati`,
         );
-      } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.jsx?$/)) {
-        transformAndWriteQ.add(async () => {
-          const transformer = await importTransformer(p);
-
-          const rf = () => {
-            return readFile(target, { encoding: "utf-8" });
-          };
-
-          const fileContent = await transformFileAfterExec(
-            target,
-            await transformer({
-              readfile: targets.has(target) ? rf : undefined,
-              meta,
-              source,
-              target,
-            }),
-          );
-
-          if (fileContent !== null) {
-            await safeWriteFile(target, fileContent);
-            targets.add(target);
-          }
+      } else if ((parsed.name.startsWith("!$") || parsed.name.startsWith("$")) && parsed.ext.match(/\.jsx?$/)) {
+        rearranger.addFile({
+          source,
+          sourceAbsolute: p,
+          destination: target,
+          destinationAbsolute: targetAbsolute,
+          kind: "transform",
+          parsed,
+          important: parsed.name.startsWith("!"),
         });
       } else {
-        priorityQ.add(async () => {
-          const code = await readFile(p, { encoding: "utf-8" });
-          const filepath = path.relative(source, p);
-
-          const result = await transformAndFormat(code, meta, {
-            filepath,
-          });
-
-          let fileContent = result.code;
-
-          if (p.endsWith(".d.ts") && targets.has(target)) {
-            // Merging .d.ts files here
-            fileContent = await mergeDts({
-              fileContent,
-              target,
-              meta,
-              filepath,
-            });
-          }
-
-          if (fileContent) {
-            updateAllImports(targetAbsolute, result.context?.imports);
-            if (!result.context?.flags.has("include-if-imported") || allImports.has(targetAbsolute)) {
-              await safeWriteFile(target, fileContent.trimStart());
-              await triggerPendingTargets(targetAbsolute, result.context?.imports);
-            } else {
-              includeIfImported.set(targetAbsolute, () => safeWriteFile(target, fileContent.trimStart()));
-            }
-            targets.add(target);
-          }
+        rearranger.addFile({
+          source,
+          sourceAbsolute: p,
+          destination: target,
+          destinationAbsolute: targetAbsolute,
+          kind: "file",
+          parsed,
+          important: parsed.name.startsWith("!"),
         });
       }
     }
   }
 
-  await priorityQ.run();
-  await transformAndWriteQ.run();
+  let previousOp: (FileOperation & OperationReport) | undefined = undefined;
+  for (const op of rearranger.compute()) {
+    if (previousOp?.destination !== op.destination) {
+      previousOp = undefined;
+    }
+    let report: OperationReport = {};
+    if (op.kind === "file") {
+      report = await executeOperationFile(op, {
+        meta,
+        previousOperationSameDestination: previousOp,
+      });
 
-  // Ensure all pending files are copied if necessary
-  for (const target of includeIfImported.keys()) {
-    if (allImports.has(target)) {
-      await includeIfImported.get(target)!();
+      updateAllImports(op.destinationAbsolute, report.context?.imports);
+    } else if (op.kind === "transform") {
+      report = await executeOperationTransform(op, {
+        meta,
+        previousOperationSameDestination: previousOp,
+      });
+    }
+
+    if (report.content) {
+      await safeWriteFile(op.destination, report.content.trimStart());
+    }
+
+    if (report.context?.flags.has("include-if-imported")) {
+      filesContainingIncludeIfImported.add(op.destinationAbsolute);
+    }
+
+    previousOp = {
+      ...op,
+      ...report,
+    };
+  }
+
+  // Remove "include-if-imported" files if they are not imported by any other file
+  for (const target of filesContainingIncludeIfImported) {
+    if (!allImports.has(target)) {
+      await safeRmFile(target);
     }
   }
 }
