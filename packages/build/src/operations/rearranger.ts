@@ -28,7 +28,8 @@ Please report this issue to https://github.com/vikejs/bati`);
         if (op.kind === "file" && op.important) return 2;
         if (op.kind === "transform" && !op.important) return 3;
         if (op.kind === "transform" && op.important) return 4;
-        return 0;
+
+        throw new Error("Unhandled OperationsRearranger.compute orderBy case");
       });
 
       // Keep only the last occurence of { kind: "file" }, unless it's a .d.ts file
