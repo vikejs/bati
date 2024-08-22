@@ -21,7 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "esbuild-plugin-copy",
       //@ts-ignore
       ...(props.meta.BATI.has("sentry")
-        ? ["@sentry/aws-serverless", "@sentry/profiling-node", "@sentry/esbuild-plugin"]
+        ? (["@sentry/aws-serverless", "@sentry/profiling-node", "@sentry/esbuild-plugin"] as const)
         : []),
     ],
     dependencies: [],
