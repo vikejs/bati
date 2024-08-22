@@ -36,3 +36,5 @@ export async function transformAndFormat(code: string, meta: VikeMeta, options: 
     context,
   };
 }
+
+export type { FileContext };
