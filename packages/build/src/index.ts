@@ -144,6 +144,10 @@ Please report this issue to https://github.com/vikejs/bati`,
       await safeWriteFile(op.destination, report.content.trimStart());
     }
 
+    if (report.context?.flags.has("include-if-imported")) {
+      filesContainingIncludeIfImported.add(op.destinationAbsolute);
+    }
+
     previousOp = {
       ...op,
       ...report,

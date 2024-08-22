@@ -1,5 +1,4 @@
-/*# BATI include-if-imported #*/
-import { integer, primaryKey, sqliteTable, text, int } from "drizzle-orm/sqlite-core";
+import { int, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("users", {
   id: text("id").notNull().primaryKey(),
