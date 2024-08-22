@@ -57,8 +57,8 @@ const copyPlugin = copy({
       to: ['dist/client'],
     },
     {
-      from: 'sentry-server.config.mjs',
-      to: 'sentry-server.config.mjs',
+      from: 'sentry.config.server.mjs',
+      to: 'sentry.config.server.mjs',
     }
   ]
 })

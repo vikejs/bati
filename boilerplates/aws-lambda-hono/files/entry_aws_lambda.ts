@@ -11,7 +11,7 @@ Notes:
 import * as Sentry from "@sentry/aws-serverless";
 
 //# BATI.has("sentry")
-import "@batijs/aws-lambda-serverless/sentry-server.config";
+import "@batijs/aws-lambda-serverless/sentry.config.server";
 
 import { Hono } from "hono";
 import { serveStatic } from "@hono/node-server/serve-static";

@@ -5,7 +5,6 @@ export default async function getServerlessEnv(props: TransformerProps) {
   const sentryOrg = process.env.TEST_SENTRY_ORG;
   const sentryProject = process.env.TEST_SENTRY_PROJECT;
   const sentryAuthToken = process.env.TEST_SENTRY_AUTH_TOKEN;
-  const sentryDNS = process.env.TEST_SENTRY_DSN;
 
   let envContent = await props.readfile?.();
 
@@ -22,7 +21,6 @@ export default async function getServerlessEnv(props: TransformerProps) {
     sentryAuthToken ?? "",
     "Sentry Auth Token. Used for Upload of Source Maps",
   );
-  envContent = appendToEnv(envContent, "SENTRY_DSN", sentryDNS ?? "", "Sentry DNS. Used for Error Reporting");
   envContent = appendToEnv(
     envContent,
     "SENTRY_PROFILER_BINARY_PATH",

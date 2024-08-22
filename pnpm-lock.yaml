@@ -960,6 +960,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:^
         version: link:../drizzle
+      '@batijs/sentry':
+        specifier: workspace:*
+        version: link:../sentry
       '@batijs/shared-todo':
         specifier: workspace:^
         version: link:../shared-todo
@@ -972,6 +975,9 @@ importers:
       '@batijs/ts-rest':
         specifier: workspace:*
         version: link:../ts-rest
+      '@sentry/react':
+        specifier: ^8.26.0
+        version: 8.26.0(react@18.3.1)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1082,6 +1088,22 @@ importers:
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@18.19.44)
+
+  boilerplates/sentry:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@sentry/react':
+        specifier: ^8.26.0
+        version: 8.26.0(react@18.3.1)
+      '@types/node':
+        specifier: ^18.19.45
+        version: 18.19.45
 
   boilerplates/shared:
     devDependencies:
@@ -4536,6 +4558,22 @@ packages:
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
+  '@sentry-internal/browser-utils@8.26.0':
+    resolution: {integrity: sha512-O2Tj+WK33/ZVp5STnz6ZL0OO+/Idk2KqsH0ITQkQmyZ2z0kdzWOeqK7s7q3/My6rB1GfPcyqPcBBv4dVv92FYQ==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/feedback@8.26.0':
+    resolution: {integrity: sha512-hQtw1gg8n6ERK1UH47F7ZI1zOsbhu0J2VX+TrnkpaQR2FgxDW1oe9Ja6oCV4CQKuR4w+1ZI/Kj4imSt0K33kEw==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay-canvas@8.26.0':
+    resolution: {integrity: sha512-2CFQW6f9aJHIo/DqmqYa9PaYoLn1o36ywc0h8oyGrD4oPCbrnE5F++PmTdc71GBODu41HBn/yoCTLmxOD+UjpA==}
+    engines: {node: '>=14.18'}
+
+  '@sentry-internal/replay@8.26.0':
+    resolution: {integrity: sha512-JDY7W2bswlp5c3483lKP4kcb75fHNwGNfwD8x8FsY9xMjv7nxeXjLpR5cCEk1XqPq2+n6w4j7mJOXhEXGiUIKg==}
+    engines: {node: '>=14.18'}
+
   '@sentry/aws-serverless@8.26.0':
     resolution: {integrity: sha512-cu76EyFemAVGW33KFA5QaP6qQ1ArQ3++m3IhezcRITacW9T+21MjYGnsqALcjWpzcsDm1aIn57KG3xzsw3QWCw==}
     engines: {node: '>=14.18'}
@@ -4543,6 +4581,10 @@ packages:
   '@sentry/babel-plugin-component-annotate@2.22.2':
     resolution: {integrity: sha512-6kFAHGcs0npIC4HTt4ULs8uOfEucvMI7VW4hoyk17jhRaW8CbxzxfWCfIeRbDkE8pYwnARaq83tu025Hrk2zgA==}
     engines: {node: '>= 14'}
+
+  '@sentry/browser@8.26.0':
+    resolution: {integrity: sha512-e5s6eKlwLZWzTwQcBwqyAGZMMuQROW9Z677VzwkSyREWAIkKjfH2VBxHATnNGc0IVkNHjD7iH3ixo3C0rLKM3w==}
+    engines: {node: '>=14.18'}
 
   '@sentry/bundler-plugin-core@2.22.2':
     resolution: {integrity: sha512-TwEEW4FeEJ5Mamp4fGnktfVjzN77KAW0xFQsEPuxZtOAPG17zX/PGvdyRX/TE1jkZWhTzqUDIdgzqlNLjyEnUw==}
@@ -4624,6 +4666,12 @@ packages:
     resolution: {integrity: sha512-yGHFoqSKe5j9fDK9n5ntJxDyZnedwjCm6fAXwIlsLJOUBqn5g7l8V1XgBPlCJLZzOG0fbvGvSo4WyBfDoSD8vQ==}
     engines: {node: '>=14.18'}
     hasBin: true
+
+  '@sentry/react@8.26.0':
+    resolution: {integrity: sha512-dYoC0xzcqq8zmNMFoTWidhA7mVd3RDz/nAUn6C8yK/hkKA7bUknYCkhpESGLZfHaGwSKzeXRXKd/o/cgUVM9eA==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      react: ^16.14.0 || 17.x || 18.x || 19.x
 
   '@sentry/types@8.26.0':
     resolution: {integrity: sha512-zKmh6SWsJh630rpt7a9vP4Cm4m1C2gDTUqUiH565CajCL/4cePpNWYrNwalSqsOSL7B9OrczA1+n6a6XvND+ng==}
@@ -7277,6 +7325,9 @@ packages:
 
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+
+  hoist-non-react-statics@3.3.2:
+    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
   hono@4.5.6:
     resolution: {integrity: sha512-9SuUC/zLQv8YAcnIxJko0KCeLI0Q6menPsDWuJ9jaH+r8ZkVXeLqeLs1QJXCPKKbURAWj9x0SJBSFh803EnAUw==}
@@ -13997,6 +14048,32 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
+  '@sentry-internal/browser-utils@8.26.0':
+    dependencies:
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
+
+  '@sentry-internal/feedback@8.26.0':
+    dependencies:
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
+
+  '@sentry-internal/replay-canvas@8.26.0':
+    dependencies:
+      '@sentry-internal/replay': 8.26.0
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
+
+  '@sentry-internal/replay@8.26.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.26.0
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
+
   '@sentry/aws-serverless@8.26.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/instrumentation-aws-lambda': 0.43.0(@opentelemetry/api@1.9.0)
@@ -14011,6 +14088,16 @@ snapshots:
       - supports-color
 
   '@sentry/babel-plugin-component-annotate@2.22.2': {}
+
+  '@sentry/browser@8.26.0':
+    dependencies:
+      '@sentry-internal/browser-utils': 8.26.0
+      '@sentry-internal/feedback': 8.26.0
+      '@sentry-internal/replay': 8.26.0
+      '@sentry-internal/replay-canvas': 8.26.0
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
 
   '@sentry/bundler-plugin-core@2.22.2(encoding@0.1.13)':
     dependencies:
@@ -14142,6 +14229,15 @@ snapshots:
       node-abi: 3.65.0
     transitivePeerDependencies:
       - supports-color
+
+  '@sentry/react@8.26.0(react@18.3.1)':
+    dependencies:
+      '@sentry/browser': 8.26.0
+      '@sentry/core': 8.26.0
+      '@sentry/types': 8.26.0
+      '@sentry/utils': 8.26.0
+      hoist-non-react-statics: 3.3.2
+      react: 18.3.1
 
   '@sentry/types@8.26.0': {}
 
@@ -15006,7 +15102,7 @@ snapshots:
 
   '@vavite/connect@4.1.2(vite@5.4.2(@types/node@18.19.44))':
     dependencies:
-      '@types/node': 18.19.44
+      '@types/node': 18.19.45
       vite: 5.4.2(@types/node@18.19.44)
 
   '@vavite/multibuild@4.1.2(vite@5.4.2(@types/node@18.19.44))':
@@ -17695,6 +17791,10 @@ snapshots:
   hexoid@1.0.0: {}
 
   hey-listen@1.0.8: {}
+
+  hoist-non-react-statics@3.3.2:
+    dependencies:
+      react-is: 16.13.1
 
   hono@4.5.6: {}
 

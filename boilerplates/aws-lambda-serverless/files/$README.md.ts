@@ -79,7 +79,7 @@ export default async function getReadme(props: TransformerProps) {
   ### Configuration
   
   The environment variable \`SENTRY_DSN\` and some other sentry variables must be set in\`.env\`.
-  Any further configuration can be done in the \`sentry-server.config.mjs\` file.
+  Any further configuration can be done in the \`sentry.config.server.mjs\` file.
 `
       : "");
 

@@ -30,7 +30,7 @@ await describeBati(
         sentry: async () => {
           const content = await readFile(serverless_entryfile, "utf-8");
           expect(content).toContain(`import * as Sentry from "@sentry/aws-serverless"`);
-          expect(content).toContain(`import "./sentry-server.config";`);
+          expect(content).toContain(`import "./sentry.config.server";`);
         },
         _: async () => {
           const content = await readFile(serverless_entryfile, "utf-8");
