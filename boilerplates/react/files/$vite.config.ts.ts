@@ -41,7 +41,7 @@ export default async function getViteConfig(props: TransformerProps) {
         org: builders.raw("process.env.SENTRY_ORG"),
         project: builders.raw("process.env.SENTRY_PROJECT"),
         authToken: builders.raw("process.env.SENTRY_AUTH_TOKEN"),
-        sourcemaps: { disable: props.meta.BATI.has("aws-lambda-serverless") ? false : true },
+        sourcemaps: { disable: props.meta.BATI.has("aws-lambda-serverless") ? true : false },
       },
     });
 

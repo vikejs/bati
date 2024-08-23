@@ -4,8 +4,7 @@
 import * as Sentry from "@sentry/react";
 //import { createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from "react-router-dom";
 Sentry.init({
-  //@ts-ignore
-  dsn: import.meta.env.MODE === "production" ? import.meta.env.PUBLIC_ENV__SENTRY_DSN : "",
+  dsn: import.meta.env.PUBLIC_ENV__MODE === "production" ? import.meta.env.PUBLIC_ENV__SENTRY_DSN : "",
   environment: "production-frontend",
   integrations: [
     // See docs for support of different versions of variation of react router
