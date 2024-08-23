@@ -44,6 +44,9 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
 
   test("include-if-imported", () => {
     expect(existsSync(path.join(process.cwd(), "database", "sqliteDb.ts"))).toBe(!context.flags.includes("drizzle"));
+    expect(existsSync(path.join(process.cwd(), "database", "schema", "auth.ts"))).toBe(
+      context.flags.includes("drizzle"),
+    );
   });
 
   test("login page", async () => {
