@@ -17,11 +17,13 @@
     "@babel/plugin-transform-react-jsx": "^7.25.2",
     "@batijs/compile": "workspace:^",
     "@batijs/drizzle": "workspace:^",
+    "@batijs/sentry": "workspace:*",
     "@batijs/shared-todo": "workspace:^",
     "@batijs/telefunc": "workspace:^",
     "@batijs/trpc": "workspace:^",
     "@batijs/ts-rest": "workspace:*",
     "@sentry/react": "^8.26.0",
+    "@sentry/vite-plugin": "^2.22.2",
     "@types/node": "^18.19.14",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
@@ -34,8 +36,7 @@
     "vike": "^0.4.191",
     "vike-react": "^0.5.3",
     "vite": "^5.4.2",
-    "vite-plugin-compiled-react": "^1.1.3",
-    "@batijs/sentry": "workspace:*"
+    "vite-plugin-compiled-react": "^1.1.3"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -49,6 +50,9 @@
     }
   },
   "exports": {
+    "./sentry.browser.config": {
+      "types": "./dist/types/sentry.browser.config.d.ts"
+    },
     "./components/Link": {
       "types": "./dist/types/components/Link.d.ts"
     },
@@ -106,6 +110,9 @@
   },
   "typesVersions": {
     "*": {
+      "sentry.browser.config": [
+        "./dist/types/sentry.browser.config.d.ts"
+      ],
       "components/Link": [
         "./dist/types/components/Link.d.ts"
       ],

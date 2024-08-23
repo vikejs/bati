@@ -1,2 +1,2 @@
-export { loadFile, parseModule, generateCode } from "magicast";
-export { addVitePlugin } from "magicast/helpers";
+export { loadFile, parseModule, generateCode, builders } from "magicast";
+export { addVitePlugin, deepMergeObject, findVitePluginCall } from "magicast/helpers";

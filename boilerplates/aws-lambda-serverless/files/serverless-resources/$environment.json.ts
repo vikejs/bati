@@ -6,7 +6,7 @@ export default async function getServerlessEnv(props: TransformerProps) {
     ...(props.meta.BATI.has("sentry")
       ? {
           SENTRY_DSN: "${env:SENTRY_DSN }",
-          SENTRY_ENVIRONMENT: "${env:NODE_ENV}-backend-${self:provider.stage}",
+          SENTRY_ENVIRONMENT: "production-backend-${self:provider.stage}",
           SENTRY_PROFILER_BINARY_PATH: "${env:SENTRY_PROFILER_BINARY_PATH}",
         }
       : {}),

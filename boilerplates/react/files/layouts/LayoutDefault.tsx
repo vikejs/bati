@@ -1,6 +1,6 @@
 import "./style.css";
 //# BATI.has("sentry")
-import "@batijs/sentry/sentry.config.client";
+import "../sentry.browser.config";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
 import React from "react";
