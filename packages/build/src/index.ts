@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { mkdir, opendir, rm, writeFile } from "node:fs/promises";
+import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { type VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";
@@ -23,7 +23,7 @@ async function safeWriteFile(destination: string, content: string) {
   await writeFile(destination, content, { encoding: "utf-8" });
 }
 
-async function safeRmFile(destination: string) {
+async function safeRmFile(destination: string, options?: { removeEmptyDir?: boolean }) {
   try {
     await rm(destination, {
       force: true,
@@ -31,6 +31,16 @@ async function safeRmFile(destination: string) {
       recursive: false,
       retryDelay: 150,
     });
+    if (options?.removeEmptyDir) {
+      try {
+        await rmdir(path.dirname(destination), {
+          maxRetries: 3,
+          retryDelay: 150,
+        });
+      } catch {
+        // do nothing
+      }
+    }
   } catch {
     console.warn(`Failed to remove unecessary file: ${destination}`);
   }
@@ -157,7 +167,7 @@ Please report this issue to https://github.com/vikejs/bati`,
   // Remove "include-if-imported" files if they are not imported by any other file
   for (const target of filesContainingIncludeIfImported) {
     if (!allImports.has(target)) {
-      await safeRmFile(target);
+      await safeRmFile(target, { removeEmptyDir: true });
     }
   }
 }
