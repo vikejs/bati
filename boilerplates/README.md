@@ -274,8 +274,15 @@ nothing
 </tr>
 </table>
 
+> [!NOTE]
+> Using this kind of condition in a templates is **not supported!**
+> ```jsx
+> {BATI.has("feature") && <div>show me</div>}
+> ```
+
 #### Details
 
 - `BATI` is a global var available at compile time. It is also defined in typings so that it is considered valid in your IDE
 - After compilation, any unused imports are removed
 - After compilation, code is formatted with prettier
+
