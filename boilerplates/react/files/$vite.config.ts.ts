@@ -2,7 +2,7 @@ import {
   addVitePlugin,
   loadAsMagicast,
   deepMergeObject,
-  findVitePluginCall,
+  generateCode,
   builders,
   type TransformerProps,
 } from "@batijs/core";
@@ -22,36 +22,31 @@ export default async function getViteConfig(props: TransformerProps) {
   if (props.meta.BATI.has("sentry")) {
     // load app level environment variables from `.env` file
 
-    // add loadEnv to import `import { defineConfig, loadEnv } from 'vite';`
+    // add dotenv to load environment variables from `.env` file
     mod.imports.$add({
-      from: "vite",
-      imported: "loadEnv",
+      from: "dotenv",
+      imported: "config",
     });
 
-    // not implemented yet adding mode to the function call
-    // https://github.com/unjs/community/discussions/25
-    // export default ({ mode }) => {
-    // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
-
+    const e = builders.functionCall("config");
+    const c = generateCode(e).code;
+    //@ts-ignore
+    mod.$ast.body.splice(mod.$ast.body.length - 1, 0, c);
 
     addVitePlugin(mod, {
       from: "@sentry/vite-plugin",
       constructor: "sentryVitePlugin",
       imported: "sentryVitePlugin",
       options: {
-        org: "process.env.SENTRY_ORG",
-        project: "process.env.SENTRY_PROJECT",
-        authToken: "process.env.SENTRY_AUTH_TOKEN",
+        org: builders.raw("process.env.SENTRY_ORG"),
+        project: builders.raw("process.env.SENTRY_PROJECT"),
+        authToken: builders.raw("process.env.SENTRY_AUTH_TOKEN"),
+        sourcemaps: { disable: props.meta.BATI.has("aws-lambda-serverless") ? false : true },
       },
     });
 
-    // fix convert "process.env.SENTRY_ORG" to process.env.SENTRY_ORG
-    const sentryPlugin = findVitePluginCall(mod, { from: "@sentry/vite-plugin", imported: "sentryVitePlugin" });
-    sentryPlugin.$args[0].org = builders.raw("process.env.SENTRY_ORG");
-    sentryPlugin.$args[0].project = builders.raw("process.env.SENTRY_PROJECT");
-    sentryPlugin.$args[0].authToken = builders.raw("process.env.SENTRY_AUTH_TOKEN");
-
     // activate sourcemaps
+    //@ts-ignore
     deepMergeObject(mod.exports.default.$args[0], { build: { sourcemap: true } });
   }
 

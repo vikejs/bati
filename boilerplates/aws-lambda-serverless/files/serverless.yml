@@ -14,10 +14,10 @@ provider:
   environment:  ${file(serverless-resources/environment.json)}
 
 plugins:
+  - serverless-scriptable-plugin # needs to be before serverless-esbuild
   - serverless-esbuild
   - serverless-s3-sync
   - serverless-cloudfront-invalidate
-  - serverless-scriptable-plugin
 
 functions:
   vikeapp:

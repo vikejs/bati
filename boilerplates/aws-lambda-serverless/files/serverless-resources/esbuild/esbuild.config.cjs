@@ -1,7 +1,7 @@
 /* eslint-disable */
 const esbuildPlugins = require('./esbuild-plugins.cjs')
 
-module.exports = () => {
+module.exports = (/** @type {any} */ serverless) => {
   return {
     packager: 'pnpm',
     platform: 'node',
@@ -24,6 +24,6 @@ const __filename = fix_url_fileURLToPath(import.meta.url);
 const __dirname = fix_path_dirname(__filename);
 `
     },
-    plugins: esbuildPlugins
+    plugins: esbuildPlugins(serverless)
   }
 }

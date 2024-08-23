@@ -1,8 +1,4 @@
-import { type TransformerProps } from "@batijs/core";
-
-export default async function addSentryConfig(props: TransformerProps) {
-  const esbuildPlugin = props.meta.BATI.has("sentry")
-    ? `
+//# BATI include-if-imported
 import * as Sentry from "@sentry/aws-serverless";
 // import { nodeProfilingIntegration } from "@sentry/profiling-node";
 Sentry.init({
@@ -16,7 +12,3 @@ Sentry.init({
   // Set sampling rate for profiling - this is relative to tracesSampleRate
   profilesSampleRate: 1.0,
 });
-`
-    : undefined;
-  return esbuildPlugin;
-}

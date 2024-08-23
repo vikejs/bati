@@ -68,6 +68,11 @@ export default async function getReadme(props: TransformerProps) {
      })
      \`\`\`
 
+  ### Troubleshooting
+
+  * If the deployed app is not working, check the Lambda function logs \`pnpm sls logs -f vikeapp\`. 
+    * If the error is \`Cannot find server entry.\` redeploy your app and try again.
+
   ` +
     (props.meta.BATI.has("sentry")
       ? `

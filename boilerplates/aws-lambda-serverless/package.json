@@ -53,6 +53,12 @@
     }
   },
   "exports": {
+    "./sentry.config.server": {
+      "types": "./dist/types/sentry.config.server.d.ts"
+    },
+    "./serverless-resources/esbuild/esbuild-sentry-plugin.": {
+      "types": "./dist/types/serverless-resources/esbuild/esbuild-sentry-plugin.d.cts"
+    },
     "./serverless-resources/esbuild/esbuild-plugins.": {
       "types": "./dist/types/serverless-resources/esbuild/esbuild-plugins.d.cts"
     },
@@ -62,6 +68,12 @@
   },
   "typesVersions": {
     "*": {
+      "sentry.config.server": [
+        "./dist/types/sentry.config.server.d.ts"
+      ],
+      "serverless-resources/esbuild/esbuild-sentry-plugin.": [
+        "./dist/types/serverless-resources/esbuild/esbuild-sentry-plugin.d.cts"
+      ],
       "serverless-resources/esbuild/esbuild-plugins.": [
         "./dist/types/serverless-resources/esbuild/esbuild-plugins.d.cts"
       ],
