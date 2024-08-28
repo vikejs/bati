@@ -14,6 +14,8 @@ export enum RulesMessage {
   ERROR_LUCIA_R_COMPAT_DATABASE,
   // A compabible Server (or no Server) is required when using Cloudflare
   ERROR_CLOUDFLARE_R_COMPAT_SERVER,
+  // A compatible Environment is required using Sentry
+  ERROR_SENTRY_R_ENV,
   // --- WARNING
 
   // --- INFO

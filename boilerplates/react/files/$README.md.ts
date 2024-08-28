@@ -4,7 +4,8 @@ export default async function getReadme(props: TransformerProps) {
   const content = await loadReadme(props);
 
   //language=Markdown
-  const about = `
+  const about =
+    `
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
 
@@ -36,7 +37,18 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all yo
 
 ### HTML Streaming
 
-You can enable/disable [HTML streaming](https://vike.dev/streaming) for all your pages, or only for some pages while still using it for others.`;
+You can enable/disable [HTML streaming](https://vike.dev/streaming) for all your pages, or only for some pages while still using it for others.` +
+    (props.meta.BATI.has("sentry")
+      ? `
+## Sentry Browser
+
+This app is integrated with [Sentry](https://sentry.io) for error tracking. 
+
+You can find your DSN in the \`.env\` file.
+You can configure Sentry in \`sentry.browser.config.ts\` - bei default sentry is only activated in \`production\`.
+
+`
+      : "");
 
   content.addAbout(about);
 
