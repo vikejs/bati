@@ -1,0 +1,78 @@
+{
+  "name": "@batijs/sqlite",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "@types/better-sqlite3": "^7.6.11",
+    "better-sqlite3": "^11.2.1",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.19.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$not": {
+          "$in": [
+            "drizzle"
+          ]
+        },
+        "$in": [
+          "lucia-auth"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./database/sqlite/db": {
+      "types": "./dist/types/database/sqlite/db.d.ts"
+    },
+    "./database/sqlite/queries/lucia-auth": {
+      "types": "./dist/types/database/sqlite/queries/lucia-auth.d.ts"
+    },
+    "./database/sqlite/schema/lucia-auth": {
+      "types": "./dist/types/database/sqlite/schema/lucia-auth.d.ts"
+    },
+    "./database/sqlite/schema/todos": {
+      "types": "./dist/types/database/sqlite/schema/todos.d.ts"
+    },
+    "./database/sqlite/schema/all": {
+      "types": "./dist/types/database/sqlite/schema/all.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "database/sqlite/db": [
+        "./dist/types/database/sqlite/db.d.ts"
+      ],
+      "database/sqlite/queries/lucia-auth": [
+        "./dist/types/database/sqlite/queries/lucia-auth.d.ts"
+      ],
+      "database/sqlite/schema/lucia-auth": [
+        "./dist/types/database/sqlite/schema/lucia-auth.d.ts"
+      ],
+      "database/sqlite/schema/todos": [
+        "./dist/types/database/sqlite/schema/todos.d.ts"
+      ],
+      "database/sqlite/schema/all": [
+        "./dist/types/database/sqlite/schema/all.d.ts"
+      ]
+    }
+  }
+}
