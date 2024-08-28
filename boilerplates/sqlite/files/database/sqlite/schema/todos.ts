@@ -8,6 +8,6 @@ const client = db();
  * `todos` example
  */
 client.exec(`CREATE TABLE IF NOT EXISTS todos (
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     text TEXT
 )`);

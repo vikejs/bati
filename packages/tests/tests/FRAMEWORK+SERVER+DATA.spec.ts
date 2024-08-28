@@ -4,14 +4,16 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
   ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", undefined],
+  ["drizzle", "sqlite", undefined],
   "eslint",
 ] as const;
 
 export const exclude = [
-  // Testing drizzle with Solid only is enough
+  // Testing databases with Solid only is enough
   ["react", "drizzle"],
   ["vue", "drizzle"],
+  ["react", "sqlite"],
+  ["vue", "sqlite"],
   // Testing Solid with all servers, but others UIs with only Hono
   ["react", "express"],
   ["react", "h3"],
@@ -29,6 +31,8 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
       await exec(npmCli, ["run", "drizzle:generate"]);
       await exec(npmCli, ["run", "drizzle:migrate"]);
       await exec(npmCli, ["run", "drizzle:seed"]);
+    } else if (context.flags.includes("sqlite")) {
+      await exec(npmCli, ["run", "sqlite:migrate"]);
     }
   }, 70000);
 
