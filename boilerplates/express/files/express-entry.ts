@@ -1,4 +1,4 @@
-// BATI.has("auth0") || BATI.has("lucia-auth")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";

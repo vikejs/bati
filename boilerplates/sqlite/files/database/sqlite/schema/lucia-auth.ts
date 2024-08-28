@@ -1,4 +1,5 @@
 /*# BATI include-if-imported #*/
+import "dotenv/config";
 import { db } from "../db";
 
 const client = db();
