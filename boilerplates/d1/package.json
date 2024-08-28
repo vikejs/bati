@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/cloudflare",
+  "name": "@batijs/d1",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -14,11 +14,7 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@cloudflare/workers-types": "^4.20240821.1",
-    "@hattip/adapter-cloudflare-workers": "^0.0.47",
-    "@types/node": "^18.19.14",
-    "npm-run-all2": "^6.2.2",
-    "vike-cloudflare": "^0.1.0",
-    "wrangler": "^3.72.2"
+    "@types/node": "^18.19.14"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -28,19 +24,12 @@
   ],
   "bati": {
     "if": {
-      "flag": "cloudflare"
-    }
-  },
-  "exports": {
-    "./test": {
-      "types": "./dist/types/test.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "test": [
-        "./dist/types/test.d.ts"
-      ]
+      "flag": {
+        "$all": [
+          "d1",
+          "cloudflare"
+        ]
+      }
     }
   }
 }
