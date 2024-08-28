@@ -4,19 +4,21 @@ import { transform } from "./parse/linters/index.js";
 import { renderSquirrelly, tags } from "./parse/squirelly.js";
 import type { VikeMeta } from "./types.js";
 
-function guessCodeFormatters(code: string) {
+function guessCodeFormatters(code: string, filepath: string) {
   return {
     eslint:
       code.includes("BATI.has") ||
       code.includes("BATI_TEST") ||
       code.includes("/*# BATI ") ||
-      code.includes("@batijs/"),
+      code.includes("@batijs/") ||
+      filepath.endsWith(".ts") ||
+      filepath.endsWith(".tsx"),
     squirelly: code.includes(tags[0]),
   };
 }
 
 export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
-  const { eslint, squirelly } = guessCodeFormatters(code);
+  const { eslint, squirelly } = guessCodeFormatters(code, options.filepath);
   let c = code;
   let context: FileContext | undefined = undefined;
   let format = false;
