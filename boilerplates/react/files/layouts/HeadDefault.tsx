@@ -1,5 +1,7 @@
 import React from "react";
 import logoUrl from "../assets/logo.svg";
+//# BATI.has("mantine")
+import { ColorSchemeScript } from "@mantine/core";
 
 // Default <head> (can be overridden by pages)
 
@@ -10,6 +12,7 @@ export default function HeadDefault() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Demo showcasing Vike" />
         <link rel="icon" href={logoUrl} />
+        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
         {/* See https://plausible.io/docs/plausible-script */}
         {/* TODO: update data-domain */}
         <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
@@ -21,6 +24,7 @@ export default function HeadDefault() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Demo showcasing Vike" />
         <link rel="icon" href={logoUrl} />
+        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
@@ -42,6 +46,7 @@ export default function HeadDefault() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Demo showcasing Vike" />
         <link rel="icon" href={logoUrl} />
+        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
       </>
     );
   }

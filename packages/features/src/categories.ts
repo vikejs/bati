@@ -21,6 +21,12 @@ so that it doesn’t get in your way.`,
 They showcase their respective recommended usage and how they integrate with Vite and Vike.`,
   },
   {
+    label: "UI Component Libraries",
+    group: categoriesGroups.Frontend,
+    description: `These UI Component Libraries are deeply integrated with UI frameworks.
+They showcase their respective recommended usage and how they integrate with Vite and Vike.`,
+  },
+  {
     label: "Auth",
     group: categoriesGroups.Data,
     description: `Ready to use self-hosted or cloud-based Auth solutions.
