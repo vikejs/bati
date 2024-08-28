@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 import { db } from "../db";
 import { oauthAccountTable, userTable } from "../schema/lucia-auth";
 import { and, eq } from "drizzle-orm";

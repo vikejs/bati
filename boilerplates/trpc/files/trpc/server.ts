@@ -1,6 +1,5 @@
-import { db } from "@batijs/drizzle/database/drizzle/db";
-import { todoTable } from "@batijs/drizzle/database/drizzle/schema/todos";
 import { initTRPC } from "@trpc/server";
+import { insertTodo } from "@batijs/drizzle/database/drizzle/queries/todos";
 
 /**
  * Initialization of tRPC backend
@@ -28,7 +27,7 @@ export const appRouter = router({
     })
     .mutation(async (opts) => {
       if (BATI.has("drizzle")) {
-        await db().insert(todoTable).values({ text: opts.input });
+        await insertTodo(opts.input);
       } else {
         // This is where you'd persist the data
         console.log("Received new todo", { text: opts.input });
