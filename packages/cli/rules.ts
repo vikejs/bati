@@ -43,5 +43,9 @@ export const rulesMessages = {
     `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
 Choose one of them, or simply remove selected Server`,
   ),
+  [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
+    `${inverse(bold("AWS"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
+Choose one of them, or simply remove selected Server`,
+  ),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: null,
 } satisfies Record<RulesMessage, RuleMessage | null>;
