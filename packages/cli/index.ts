@@ -5,7 +5,7 @@ import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
 import { packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
-import { type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
+import { BatiSet, type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
@@ -364,7 +364,7 @@ async function run() {
 
       const hooksMap = await retrieveHooks(hooks);
       const meta: VikeMeta = {
-        BATI: new Set(flags as Flags[]),
+        BATI: new BatiSet(flags as Flags[], features),
         BATI_TEST: Boolean(process.env.BATI_TEST),
       };
 

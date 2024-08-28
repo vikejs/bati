@@ -27,16 +27,7 @@
   ],
   "bati": {
     "if": {
-      "flag": {
-        "$not": {
-          "$in": [
-            "drizzle"
-          ]
-        },
-        "$in": [
-          "lucia-auth"
-        ]
-      }
+      "flag": "sqlite"
     }
   },
   "exports": {

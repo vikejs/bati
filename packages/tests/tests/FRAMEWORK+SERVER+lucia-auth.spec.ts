@@ -6,14 +6,16 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
   "lucia-auth",
-  ["drizzle", undefined],
+  ["drizzle", "sqlite"],
   "eslint",
 ] as const;
 
 export const exclude = [
-  // Testing drizzle with React only is enough
+  // Testing databases with React only is enough
   ["solid", "drizzle"],
   ["vue", "drizzle"],
+  ["solid", "sqlite"],
+  ["vue", "sqlite"],
   // Testing React with all servers, but others UIs with only h3
   ["solid", "express"],
   ["solid", "hono"],
