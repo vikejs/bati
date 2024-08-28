@@ -8,10 +8,10 @@ import { filter, includes, requires, type Rule } from "./utils.js";
 export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
+  requires(RulesMessage.ERROR_MANTINE_R_REACT, "mantine", ["react"]),
   includes(RulesMessage.INFO_HATTIP, "hattip"),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
-  filter(RulesMessage.ERROR_MANTINE_R_REACT, (fts) => fts.has("mantine") && !fts.has("react")),
   filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {
     if (fts.has("cloudflare")) {
       if (fts.has("hono") || fts.has("hattip")) {

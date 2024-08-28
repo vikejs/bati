@@ -15,11 +15,10 @@ The following Packages are installed:
 
 If you add more packages, make sure to update the \`layouts/LayoutDefault.tsx\` file to include the required CSSs.
 
-The theme is defined in \`layouts/theme.js\`.
-
+The theme is defined in \`layouts/theme.ts\`.
 `;
 
-  content.addTodo(todo);
+  content.addAbout(todo);
 
   return content.finalize();
 }
