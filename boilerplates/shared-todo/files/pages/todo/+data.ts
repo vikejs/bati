@@ -1,7 +1,7 @@
 // https://vike.dev/data
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { todoTable } from "@batijs/drizzle/database/schema/todos";
 import { todos } from "@batijs/shared-no-db/database/todoItems";
+import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
+import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 
 export type Data = {
   todo: { text: string }[];
@@ -9,7 +9,11 @@ export type Data = {
 
 export default async function data(): Promise<Data> {
   if (BATI.has("drizzle")) {
-    const todo = drizzleDb.select().from(todoTable).all();
+    const todo = drizzleQueries.getAllTodos();
+
+    return { todo };
+  } else if (BATI.has("sqlite")) {
+    const todo = sqliteQueries.getAllTodos();
 
     return { todo };
   } else {

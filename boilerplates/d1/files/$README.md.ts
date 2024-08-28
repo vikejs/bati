@@ -6,6 +6,11 @@ export default async function getReadme(props: TransformerProps) {
   //language=Markdown
   const todo = `
 ## *Cloudflare D1*
+
+> [!IMPORTANT]
+> D1 integration is incomplete, and some files are still refering to \`better-sqlite3\`.
+> It should be fixed within a few days.
+
 ### Setup
 Create a D1 database:
 

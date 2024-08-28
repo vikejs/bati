@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -130,7 +130,7 @@ async function startServer() {
   }
 
   if (BATI.has("ts-rest")) {
-    app.all("/api/*", createHandler(tsRestHandler));
+    app.all("/api/*", createHandler(tsRestHandler)());
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {

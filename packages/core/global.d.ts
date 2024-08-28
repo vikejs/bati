@@ -1,14 +1,14 @@
-import type { Flags } from "@batijs/features";
+import type { BatiSet } from "@batijs/features";
 
 declare global {
-  const BATI: Set<Flags>;
+  const BATI: BatiSet;
   const BATI_TEST: boolean | undefined;
 
   namespace NodeJS {
     interface Global {
       // Reference our above type,
       // this allows global.debug to be used anywhere in our code.
-      BATI: Set<Flags>;
+      BATI: BatiSet;
       BATI_TEST: boolean | undefined;
     }
   }

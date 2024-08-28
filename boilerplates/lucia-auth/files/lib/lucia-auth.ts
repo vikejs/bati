@@ -2,10 +2,10 @@ import "dotenv/config";
 import { Lucia } from "lucia";
 import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
-import { sqliteDb } from "../database/sqliteDb";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { sessionTable, userTable } from "../database/schema/auth";
+import { db as drizzleDb } from "@batijs/drizzle/database/drizzle/db";
+import { sessionTable, userTable } from "@batijs/drizzle/database/drizzle/schema/lucia-auth";
+import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 
 /**
  * Polyfill needed if you're using Node.js 18 or below
@@ -26,8 +26,8 @@ if (!globalThis.crypto) {
  * @link {@see https://lucia-auth.com/database/#database-setup}
  **/
 const adapter = BATI.has("drizzle")
-  ? new DrizzleSQLiteAdapter(drizzleDb, sessionTable, userTable)
-  : new BetterSqlite3Adapter(sqliteDb, {
+  ? new DrizzleSQLiteAdapter(drizzleDb(), sessionTable, userTable)
+  : new BetterSqlite3Adapter(sqliteDb(), {
       user: "users",
       session: "sessions",
     });

@@ -1,8 +1,8 @@
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { todoTable } from "@batijs/drizzle/database/schema/todos";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import { contract } from "../ts-rest/contract";
 import { Get, UniversalHandler } from "@universal-middleware/core";
+import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
+import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 
 /**
  * ts-rest route
@@ -20,7 +20,9 @@ const router = tsr.router(contract, {
   },
   createTodo: async ({ body }) => {
     if (BATI.has("drizzle")) {
-      await drizzleDb.insert(todoTable).values({ text: body.text });
+      await drizzleQueries.insertTodo(body.text);
+    } else if (BATI.has("sqlite")) {
+      sqliteQueries.insertTodo(body.text);
     } else {
       // This is where you'd persist the data
       console.log("Received new todo", { text: body.text });

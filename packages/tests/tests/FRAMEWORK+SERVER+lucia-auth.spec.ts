@@ -6,14 +6,16 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
   "lucia-auth",
-  ["drizzle", undefined],
+  ["drizzle", "sqlite"],
   "eslint",
 ] as const;
 
 export const exclude = [
-  // Testing drizzle with React only is enough
+  // Testing databases with React only is enough
   ["solid", "drizzle"],
   ["vue", "drizzle"],
+  ["solid", "sqlite"],
+  ["vue", "sqlite"],
   // Testing React with all servers, but others UIs with only h3
   ["solid", "express"],
   ["solid", "hono"],
@@ -37,15 +39,19 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
       if (context.flags.includes("drizzle")) {
         await exec(npmCli, ["run", "drizzle:generate"]);
         await exec(npmCli, ["run", "drizzle:migrate"]);
+      } else {
+        await exec(npmCli, ["run", "sqlite:migrate"]);
       }
     },
     2 * 60 * 1000,
   );
 
   test("include-if-imported", () => {
-    expect(existsSync(path.join(process.cwd(), "database", "sqliteDb.ts"))).toBe(!context.flags.includes("drizzle"));
-    expect(existsSync(path.join(process.cwd(), "database", "schema", "auth.ts"))).toBe(
+    expect(existsSync(path.join(process.cwd(), "database", "drizzle", "schema", "lucia-auth.ts"))).toBe(
       context.flags.includes("drizzle"),
+    );
+    expect(existsSync(path.join(process.cwd(), "database", "sqlite", "schema", "lucia-auth.ts"))).toBe(
+      !context.flags.includes("drizzle"),
     );
   });
 
