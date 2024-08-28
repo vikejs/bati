@@ -126,6 +126,20 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_LUCIA_R_COMPAT_DATABASE]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">Lucia</span> requires a <span class="font-bold">Database</span>, and is currently only
+        compatible with <span class="font-bold">SQLite</span> or <span class="font-bold">Drizzle</span>
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a <span class="font-bold">SQLite</span> or <span class="font-bold">Drizzle</span>, or unselect{" "}
+            <span class="font-bold">Lucia</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: invisible(() => {
     onMount(() => {
       document
