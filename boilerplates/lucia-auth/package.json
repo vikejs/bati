@@ -14,6 +14,7 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
+    "@batijs/sqlite": "workspace:*",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@lucia-auth/adapter-sqlite": "^3.0.2",
     "@types/better-sqlite3": "^7.6.11",
@@ -41,15 +42,6 @@
     }
   },
   "exports": {
-    "./database/sqliteDb": {
-      "types": "./dist/types/database/sqliteDb.d.ts"
-    },
-    "./database/schema/auth": {
-      "types": "./dist/types/database/schema/auth.d.ts"
-    },
-    "./database/auth-actions": {
-      "types": "./dist/types/database/auth-actions.d.ts"
-    },
     "./lib/lucia-auth": {
       "types": "./dist/types/lib/lucia-auth.d.ts"
     },
@@ -62,15 +54,6 @@
   },
   "typesVersions": {
     "*": {
-      "database/sqliteDb": [
-        "./dist/types/database/sqliteDb.d.ts"
-      ],
-      "database/schema/auth": [
-        "./dist/types/database/schema/auth.d.ts"
-      ],
-      "database/auth-actions": [
-        "./dist/types/database/auth-actions.d.ts"
-      ],
       "lib/lucia-auth": [
         "./dist/types/lib/lucia-auth.d.ts"
       ],

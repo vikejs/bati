@@ -1,8 +1,8 @@
-import { drizzleDb } from "./drizzleDb";
+import { db } from "./db";
 import { todoTable } from "./schema/todos";
 
 async function seed() {
-  drizzleDb
+  db()
     .insert(todoTable)
     .values([{ text: "Buy milk" }, { text: "Buy strawberries" }])
     .run();
@@ -10,4 +10,4 @@ async function seed() {
   console.log("Seed complete!");
 }
 
-seed();
+await seed();

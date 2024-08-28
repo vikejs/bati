@@ -3,12 +3,10 @@ import { generateId, Scrypt, verifyRequestOrigin } from "lucia";
 import type { DatabaseOAuthAccount, DatabaseUser, GitHubUser } from "../lib/lucia-auth";
 import { github, lucia } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
-import { sqliteDb } from "../database/sqliteDb";
 import { generateState, OAuth2RequestError } from "arctic";
 import { parse, serialize } from "cookie";
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { oauthAccountTable, userTable } from "../database/schema/auth";
-import { getExistingAccount, getExistingUser, validateInput } from "../database/auth-actions";
+import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/lucia-auth";
+import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/lucia-auth";
 import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
 /**
@@ -108,13 +106,7 @@ export const luciaAuthSignupHandler = (() => async (request) => {
   const userId = generateId(15);
 
   try {
-    if (BATI.has("drizzle")) {
-      drizzleDb.insert(userTable).values({ id: userId, username, password: passwordHash }).run();
-    } else {
-      sqliteDb
-        .prepare("INSERT INTO users (id, username, password) VALUES(?, ?, ?)")
-        .run(userId, username, passwordHash);
-    }
+    (BATI.has("drizzle") ? drizzleQueries : sqliteQueries).signupWithCredentials(userId, username, passwordHash);
 
     const session = await lucia.createSession(userId, {});
 
@@ -165,7 +157,9 @@ export const luciaAuthLoginHandler = (() => async (request) => {
     });
   }
 
-  const existingUser = getExistingUser(username) as DatabaseUser | undefined;
+  const existingUser = (BATI.has("drizzle") ? drizzleQueries : sqliteQueries).getExistingUser(username) as
+    | DatabaseUser
+    | undefined;
   if (!existingUser) {
     return new Response(JSON.stringify({ error: { invalid: "Incorrect username or password" } }), {
       status: 422,
@@ -280,7 +274,10 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
     });
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
-    const existingAccount = getExistingAccount("github", githubUser.id) as DatabaseOAuthAccount | undefined;
+    const existingAccount = (BATI.has("drizzle") ? drizzleQueries : sqliteQueries).getExistingAccount(
+      "github",
+      githubUser.id,
+    ) as DatabaseOAuthAccount | undefined;
 
     if (existingAccount) {
       const session = await lucia.createSession(
@@ -298,19 +295,7 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
 
     const userId = generateId(15);
 
-    if (BATI.has("drizzle")) {
-      await drizzleDb.transaction(async (tx) => {
-        await tx.insert(userTable).values({ id: userId, username: githubUser.login });
-        await tx.insert(oauthAccountTable).values({ providerId: "github", providerUserId: githubUser.id, userId });
-      });
-    } else {
-      sqliteDb.transaction(() => {
-        sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
-        sqliteDb
-          .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
-          .run("github", githubUser.id, userId);
-      });
-    }
+    (BATI.has("drizzle") ? drizzleQueries : sqliteQueries).signupWithGithub(userId, githubUser.login, githubUser.id);
 
     const session = await lucia.createSession(userId, {});
 
@@ -338,3 +323,31 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
     });
   }
 }) satisfies Get<[], UniversalHandler>;
+
+export function validateInput(username: string | null, password: string | null) {
+  const error: {
+    username: string | null;
+    password: string | null;
+  } = {
+    username: null,
+    password: null,
+  };
+
+  if (!username || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
+    error.username = "Invalid username";
+  }
+  if (!password || password.length < 6 || password.length > 255) {
+    error.password = "Invalid password";
+  }
+
+  if (error.username || error.password) {
+    return {
+      error,
+      success: false,
+    };
+  }
+  return {
+    error,
+    success: true,
+  };
+}

@@ -748,6 +748,9 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
+      '@batijs/sqlite':
+        specifier: workspace:*
+        version: link:../sqlite
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
         version: 1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240821.1)(@prisma/client@5.18.0(prisma@5.18.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.4)(better-sqlite3@11.2.1)(prisma@5.18.0)(react@18.3.1))(lucia@3.2.0)
@@ -1240,6 +1243,31 @@ importers:
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))
+
+  boilerplates/sqlite:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/better-sqlite3':
+        specifier: ^7.6.11
+        version: 7.6.11
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.44
+      better-sqlite3:
+        specifier: ^11.2.1
+        version: 11.2.1
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      tsx:
+        specifier: ^4.19.0
+        version: 4.19.0
 
   boilerplates/tailwindcss:
     dependencies:

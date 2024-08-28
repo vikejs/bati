@@ -35,14 +35,20 @@
     "./drizzle.config": {
       "types": "./dist/types/drizzle.config.d.ts"
     },
-    "./database/drizzleDb": {
-      "types": "./dist/types/database/drizzleDb.d.ts"
+    "./database/drizzle/db": {
+      "types": "./dist/types/database/drizzle/db.d.ts"
     },
-    "./database/schema/todos": {
-      "types": "./dist/types/database/schema/todos.d.ts"
+    "./database/drizzle/schema/todos": {
+      "types": "./dist/types/database/drizzle/schema/todos.d.ts"
     },
-    "./database/seed": {
-      "types": "./dist/types/database/seed.d.ts"
+    "./database/drizzle/seed": {
+      "types": "./dist/types/database/drizzle/seed.d.ts"
+    },
+    "./database/drizzle/schema/lucia-auth": {
+      "types": "./dist/types/database/drizzle/schema/lucia-auth.d.ts"
+    },
+    "./database/drizzle/queries/lucia-auth": {
+      "types": "./dist/types/database/drizzle/queries/lucia-auth.d.ts"
     }
   },
   "typesVersions": {
@@ -50,14 +56,20 @@
       "drizzle.config": [
         "./dist/types/drizzle.config.d.ts"
       ],
-      "database/drizzleDb": [
-        "./dist/types/database/drizzleDb.d.ts"
+      "database/drizzle/db": [
+        "./dist/types/database/drizzle/db.d.ts"
       ],
-      "database/schema/todos": [
-        "./dist/types/database/schema/todos.d.ts"
+      "database/drizzle/schema/todos": [
+        "./dist/types/database/drizzle/schema/todos.d.ts"
       ],
-      "database/seed": [
-        "./dist/types/database/seed.d.ts"
+      "database/drizzle/seed": [
+        "./dist/types/database/drizzle/seed.d.ts"
+      ],
+      "database/drizzle/schema/lucia-auth": [
+        "./dist/types/database/drizzle/schema/lucia-auth.d.ts"
+      ],
+      "database/drizzle/queries/lucia-auth": [
+        "./dist/types/database/drizzle/queries/lucia-auth.d.ts"
       ]
     }
   }

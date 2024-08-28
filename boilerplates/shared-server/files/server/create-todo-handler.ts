@@ -1,5 +1,5 @@
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { todoTable } from "@batijs/drizzle/database/schema/todos";
+import { db } from "@batijs/drizzle/database/drizzle/db";
+import { todoTable } from "@batijs/drizzle/database/drizzle/schema/todos";
 import type { Get, UniversalHandler } from "@universal-middleware/core";
 
 export const createTodoHandler: Get<[], UniversalHandler> = () => async (request) => {
@@ -7,7 +7,7 @@ export const createTodoHandler: Get<[], UniversalHandler> = () => async (request
   const newTodo = (await request.json()) as { text: string };
 
   if (BATI.has("drizzle")) {
-    await drizzleDb.insert(todoTable).values({ text: newTodo.text });
+    await db().insert(todoTable).values({ text: newTodo.text });
   } else {
     // This is where you'd persist the data
     console.log("Received new todo", newTodo);

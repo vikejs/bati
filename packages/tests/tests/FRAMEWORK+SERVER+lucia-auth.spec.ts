@@ -37,15 +37,19 @@ await describeBati(({ test, expect, fetch, context, beforeAll }) => {
       if (context.flags.includes("drizzle")) {
         await exec(npmCli, ["run", "drizzle:generate"]);
         await exec(npmCli, ["run", "drizzle:migrate"]);
+      } else {
+        await exec(npmCli, ["run", "sqlite:migrate"]);
       }
     },
     2 * 60 * 1000,
   );
 
   test("include-if-imported", () => {
-    expect(existsSync(path.join(process.cwd(), "database", "sqliteDb.ts"))).toBe(!context.flags.includes("drizzle"));
-    expect(existsSync(path.join(process.cwd(), "database", "schema", "auth.ts"))).toBe(
+    expect(existsSync(path.join(process.cwd(), "database", "drizzle", "schema", "lucia-auth.ts"))).toBe(
       context.flags.includes("drizzle"),
+    );
+    expect(existsSync(path.join(process.cwd(), "database", "sqlite", "schema", "lucia-auth.ts"))).toBe(
+      !context.flags.includes("drizzle"),
     );
   });
 

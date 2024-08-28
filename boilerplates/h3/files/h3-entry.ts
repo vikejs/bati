@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.has("lucia-auth")
 import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
