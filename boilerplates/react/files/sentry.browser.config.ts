@@ -1,3 +1,4 @@
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 //# BATI include-if-imported
 
 //import { useEffect } from "react";
