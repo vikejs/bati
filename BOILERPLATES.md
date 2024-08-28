@@ -20,6 +20,9 @@ Each boilerplate contains at least:
 - `files` folder, which contains files that will be used by Bati CLI to scaffold a new app. This is where all code related to features must be placed.
 - `package.json`, with a special `bati` property, linking one or many _features_ (or the lack of) to the boilerplate. [More on that below](#packagejsonbati-condition).
 
+> [!NOTE]
+> Empty files will not be deployed and in the case of [precedence over any other file](https://github.com/vikejs/bati/blob/main/boilerplates/README.md#special-file-names) at the same destination the original file will be delete.
+
 ## How to keep code maintainable
 
 The most important thing is to avoid duplicating code as much as possible. And we have several tools to help us:
