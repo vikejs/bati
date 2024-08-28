@@ -18,13 +18,7 @@ export function TodoList(props: { initialTodoItems: { text: string }[] }) {
 
             // Optimistic UI update
             setTodoItems((prev) => [...prev, { text: untrack(newTodo) }]);
-            if (
-              BATI.has("express") ||
-              BATI.has("fastify") ||
-              BATI.has("h3") ||
-              BATI.has("hattip") ||
-              BATI.has("hono")
-            ) {
+            if (BATI.hasServer) {
               try {
                 if (BATI.has("telefunc")) {
                   await onNewTodo({ text: untrack(newTodo) });

@@ -16,7 +16,7 @@ export default defineConfig({
     //# BATI.has("hattip") && !BATI.has("vercel")
     hattip(),
   ],
-  //# BATI.has("vercel") && (BATI.has("express") || BATI.has("fastify") || BATI.has("hono") || BATI.has("hattip") || BATI.has("h3"))
+  //# BATI.has("vercel") && BATI.hasServer
   vercel: {
     additionalEndpoints: [
       {

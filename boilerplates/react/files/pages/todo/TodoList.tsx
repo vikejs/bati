@@ -20,13 +20,7 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
 
             // Optimistic UI update
             setTodoItems((prev) => [...prev, { text: newTodo }]);
-            if (
-              BATI.has("express") ||
-              BATI.has("fastify") ||
-              BATI.has("h3") ||
-              BATI.has("hattip") ||
-              BATI.has("hono")
-            ) {
+            if (BATI.hasServer) {
               try {
                 if (BATI.has("telefunc")) {
                   await onNewTodo({ text: newTodo });
