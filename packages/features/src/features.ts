@@ -458,6 +458,7 @@ export const features = [
         href: "https://developers.cloudflare.com/d1/get-started/",
       },
     ],
+    disabled: true,
   },
 
   // Analytics
