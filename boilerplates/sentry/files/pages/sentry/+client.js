@@ -12,11 +12,11 @@ window.onload = function () {
       if (elmSentryDSN) elmSentryDSN.hidden = true;
     }
   }
-  const elmSentryButton = document.getElementById("sentryButton");
+  const elmSentryButton = document.getElementById("errorButton");
   if (elmSentryButton)
     elmSentryButton.addEventListener("click", function () {
       // @ts-ignore
-      globalThis?.window?.Sentry?.captureMessage("This is a SENTRY Browser Test!");
+      throw new Error("This is a SENTRY Browser Test!");
     });
 };
 /*{ /if }*/
