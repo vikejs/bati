@@ -22,14 +22,11 @@
     "@batijs/trpc": "workspace:^",
     "@batijs/ts-rest": "workspace:*",
     "@mantine/core": "^7.12.1",
-    "@sentry/react": "^8.27.0",
-    "@sentry/vite-plugin": "^2.22.3",
     "@types/node": "^18.19.14",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "cross-fetch": "^4.0.0",
-    "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.10",
@@ -51,9 +48,6 @@
     }
   },
   "exports": {
-    "./sentry.browser.config": {
-      "types": "./dist/types/sentry.browser.config.d.ts"
-    },
     "./components/Link": {
       "types": "./dist/types/components/Link.d.ts"
     },
@@ -80,9 +74,6 @@
     },
     "./pages/index/+Page": {
       "types": "./dist/types/pages/index/+Page.d.ts"
-    },
-    "./pages/sentry/+Page": {
-      "types": "./dist/types/pages/sentry/+Page.d.ts"
     },
     "./pages/star-wars/types": {
       "types": "./dist/types/pages/star-wars/types.d.ts"
@@ -114,9 +105,6 @@
   },
   "typesVersions": {
     "*": {
-      "sentry.browser.config": [
-        "./dist/types/sentry.browser.config.d.ts"
-      ],
       "components/Link": [
         "./dist/types/components/Link.d.ts"
       ],
@@ -143,9 +131,6 @@
       ],
       "pages/index/+Page": [
         "./dist/types/pages/index/+Page.d.ts"
-      ],
-      "pages/sentry/+Page": [
-        "./dist/types/pages/sentry/+Page.d.ts"
       ],
       "pages/star-wars/types": [
         "./dist/types/pages/star-wars/types.d.ts"

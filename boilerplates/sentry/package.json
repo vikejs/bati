@@ -13,7 +13,19 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
-    "@types/node": "^18.19.44"
+    "@sentry/browser": "^8.27.0",
+    "@sentry/react": "^8.27.0",
+    "@sentry/solid": "^8.27.0",
+    "@sentry/vite-plugin": "^2.22.3",
+    "@sentry/vue": "^8.27.0",
+    "@types/node": "^18.19.44",
+    "dotenv": "^16.4.5",
+    "react": "^18.3.1",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "solid-js": "^1.8.21",
+    "vite": "^5.4.2",
+    "vue": "^3.4.38"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -24,6 +36,36 @@
   "bati": {
     "if": {
       "flag": "sentry"
+    }
+  },
+  "exports": {
+    "./sentry.browser.config": {
+      "types": "./dist/types/sentry.browser.config.d.ts"
+    },
+    "./pages/+client": {
+      "types": "./dist/types/pages/+client.d.ts"
+    },
+    "./pages/sentry/+Page": {
+      "types": "./dist/types/pages/sentry/+Page.d.ts"
+    },
+    "./pages/sentry/+client": {
+      "types": "./dist/types/pages/sentry/+client.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sentry.browser.config": [
+        "./dist/types/sentry.browser.config.d.ts"
+      ],
+      "pages/+client": [
+        "./dist/types/pages/+client.d.ts"
+      ],
+      "pages/sentry/+Page": [
+        "./dist/types/pages/sentry/+Page.d.ts"
+      ],
+      "pages/sentry/+client": [
+        "./dist/types/pages/sentry/+client.d.ts"
+      ]
     }
   }
 }

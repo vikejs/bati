@@ -37,7 +37,7 @@ export const rulesMessages = {
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}`,
   ),
   [RulesMessage.ERROR_SENTRY_R_ENV]: error(
-    `A supported environment ${inverse(bold("(React)"))} is required when using ${inverse(bold("Sentry"))}`,
+    `A supported environment ${inverse(bold("(React, Vue, Solid, plain Javascript)"))} is required when using ${inverse(bold("Sentry"))}`,
   ),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,

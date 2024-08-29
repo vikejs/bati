@@ -923,12 +923,6 @@ importers:
       '@mantine/core':
         specifier: ^7.12.1
         version: 7.12.1(@mantine/hooks@7.12.1(react@18.3.1))(@types/react@18.3.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@sentry/react':
-        specifier: ^8.27.0
-        version: 8.27.0(react@18.3.1)
-      '@sentry/vite-plugin':
-        specifier: ^2.22.3
-        version: 2.22.3(encoding@0.1.13)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -944,9 +938,6 @@ importers:
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1052,9 +1043,45 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@sentry/browser':
+        specifier: ^8.27.0
+        version: 8.27.0
+      '@sentry/react':
+        specifier: ^8.27.0
+        version: 8.27.0(react@18.3.1)
+      '@sentry/solid':
+        specifier: ^8.27.0
+        version: 8.27.0(solid-js@1.8.21)
+      '@sentry/vite-plugin':
+        specifier: ^2.22.3
+        version: 2.22.3(encoding@0.1.13)
+      '@sentry/vue':
+        specifier: ^8.27.0
+        version: 8.27.0(vue@3.4.38(typescript@5.5.4))
       '@types/node':
         specifier: ^18.19.44
         version: 18.19.44
+      '@types/react':
+        specifier: ^18.3.4
+        version: 18.3.4
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      solid-js:
+        specifier: ^1.8.21
+        version: 1.8.21
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))
+      vue:
+        specifier: ^3.4.38
+        version: 3.4.38(typescript@5.5.4)
 
   boilerplates/shared:
     devDependencies:
@@ -4206,49 +4233,49 @@ packages:
     resolution: {integrity: sha512-DeoUl0WffcqZZRl5Wy9aHvX4WfZbbWt0QbJ7NJrcEViq+dRAI2FQTYECFLwdZi5Gtb3oyqZICO+P7k8wDnzsjQ==}
     engines: {node: '>= 14'}
 
-  '@sentry/cli-darwin@2.34.0':
-    resolution: {integrity: sha512-mzQj58xxRej8uATdXgwHq3KZC2HhfGIyl+jVTh7nXzizOS5OsYZtShpGRxwfeC3eNZ6NqY7h0FWxJD6cUFgauA==}
+  '@sentry/cli-darwin@2.34.1':
+    resolution: {integrity: sha512-SqlCunwhweMDJNKVf3kabiN6FwpvCIffn2cjfaZD0zqZQ3M1tWMJ/kSA0TGfe7lWu9JloNmVm+ArcudGitvX3w==}
     engines: {node: '>=10'}
     os: [darwin]
 
-  '@sentry/cli-linux-arm64@2.34.0':
-    resolution: {integrity: sha512-Sgl6b2BYI0uNB9WfJLkq4UZsOAXo35uwemtrXIJOz0zc9V4QIFwvmMYXAHpNVC3Z/dSU5PaWBJHEtUKouX5mOQ==}
+  '@sentry/cli-linux-arm64@2.34.1':
+    resolution: {integrity: sha512-iSl/uNWjKbVPb6ll12SmHG9iGcC3oN8jjzdycm/mD3H/d8DLMloEiaz8lHQnsYCaPiNKwap1ThKlPvnKOU4SNg==}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux, freebsd]
 
-  '@sentry/cli-linux-arm@2.34.0':
-    resolution: {integrity: sha512-FkNc22FOKU57h+s8ZkqTz/5Y+6GrCK2fSde2dntofOPJheBBuaYz7CDq0dEM9GuBCcvogQj8sf2hMb8+gdJrgA==}
+  '@sentry/cli-linux-arm@2.34.1':
+    resolution: {integrity: sha512-CDhtFbUs16CoU10wEbxnn/pEuenFIMosTcxI7v0gWp3Wo0B2h0bOsLEk9dlT0YsqRTAldKUzef9AVX82m5Svwg==}
     engines: {node: '>=10'}
     cpu: [arm]
     os: [linux, freebsd]
 
-  '@sentry/cli-linux-i686@2.34.0':
-    resolution: {integrity: sha512-W7QNzOsbhzsRY5deRsHCqJH4C/yNxwlX6b1JqBO1s7Zb0t5KhM3fFgZJ4DmLZMOvngnJ2wSuyDQCwTNPyEWsAw==}
+  '@sentry/cli-linux-i686@2.34.1':
+    resolution: {integrity: sha512-jq5o49pgzJFv/CQtvx4FLVO1xra22gzP76FtmvPwEhZQhJT6QduW9fpnvVDnOaY8YLzC7GAeszUV6sqZ0MZUqg==}
     engines: {node: '>=10'}
     cpu: [x86, ia32]
     os: [linux, freebsd]
 
-  '@sentry/cli-linux-x64@2.34.0':
-    resolution: {integrity: sha512-EJCzldxeNsEIgf5ASj0E9/6J5SwUVgtfoiOYjhBxj2e41jEDlh6o5uMNE4H+J2GX3zPFrN3LgsZYevgPqA35Mw==}
+  '@sentry/cli-linux-x64@2.34.1':
+    resolution: {integrity: sha512-O99RAkrcMErWLPRdza6HaG7kmHCx9MYFNDX6FLrAgSP3oz+X3ral1oDTIrMs4hVbPDK287ZGAqCJtk+1iOjEBg==}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux, freebsd]
 
-  '@sentry/cli-win32-i686@2.34.0':
-    resolution: {integrity: sha512-bITy/IiT/y1MZhvKSt5UrBEDUNcOtQV20BZDyPriPijBcJ/1U69lgH3IM4bxIaTiicFnMdxbOlQhRSdm8SKURg==}
+  '@sentry/cli-win32-i686@2.34.1':
+    resolution: {integrity: sha512-yEeuneEVmExCbWlnSauhIg8wZDfKxRaou8XRfM6oPlSBu0XO5HUI3uRK5t2xT0zX8Syzh2kCZpdVE1KLavVeKA==}
     engines: {node: '>=10'}
     cpu: [x86, ia32]
     os: [win32]
 
-  '@sentry/cli-win32-x64@2.34.0':
-    resolution: {integrity: sha512-wpP/w7Fhsr7+cbCgE/OI8hSh3pqESRpcdNgtBQjMuKN2FSE1E+GHrk5GB+fKZG2OAV4IN4HxE/z3NioAJeThfQ==}
+  '@sentry/cli-win32-x64@2.34.1':
+    resolution: {integrity: sha512-mU48VpDTwRgt7/Pf3vk/P87m4kM3XEXHHHfq9EvHCTspFF6GtMfL9njZ7+5Z+7ko852JS4kpunjZtsxmoP4/zA==}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [win32]
 
-  '@sentry/cli@2.34.0':
-    resolution: {integrity: sha512-hS3MRtEOT1Y27ufBesTTg4xJx6Msf77U609ncy2u7z8uoTZgO8HNsq9DwuxitX5MTrREEJ+frCMFsYvwqkQcJw==}
+  '@sentry/cli@2.34.1':
+    resolution: {integrity: sha512-hAHvu+XH1kn1ee2NUWvuqAZenK/MrxqQzeIrIYATqF2XGjtSOr7irjAKWjd97/vXdLHA6TBnMW1wHwLcuJK2tg==}
     engines: {node: '>= 10'}
     hasBin: true
 
@@ -4262,6 +4289,16 @@ packages:
     peerDependencies:
       react: ^16.14.0 || 17.x || 18.x || 19.x
 
+  '@sentry/solid@8.27.0':
+    resolution: {integrity: sha512-T+oN7Xto2jlOgFTV/cuDdjfJSfzu/gXVCEhTsyNSIRZ1YnI4HiKl1T4JhFS2CsOheItZxWBWExxJ0qjCmBbmhA==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      '@solidjs/router': ^0.13.4
+      solid-js: ^1.8.4
+    peerDependenciesMeta:
+      '@solidjs/router':
+        optional: true
+
   '@sentry/types@8.27.0':
     resolution: {integrity: sha512-B6lrP46+m2x0lfqWc9F4VcUbN893mVGnPEd7KIMRk95mPzkFJ3sNxggTQF5/ZfNO7lDQYQb22uysB5sj/BqFiw==}
     engines: {node: '>=14.18'}
@@ -4273,6 +4310,12 @@ packages:
   '@sentry/vite-plugin@2.22.3':
     resolution: {integrity: sha512-+5bsLFRKOZzBp68XigoNE1pJ3tJ4gt2jXluApu54ui0N/yjfqGQ7LQTD7nL4tmJvB5Agwi0e7M7+fcxe9gSgBA==}
     engines: {node: '>= 14'}
+
+  '@sentry/vue@8.27.0':
+    resolution: {integrity: sha512-kCjrdKCQk9ZgE7HirVaT/hvyBhoryEHickiWQET7fzyEo6Zs7/KoFnNiXzGuZ+XJcZ8R76wlog+awBBmZBuBsQ==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      vue: 2.x || 3.x
 
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
@@ -11540,7 +11583,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.25.2
       '@sentry/babel-plugin-component-annotate': 2.22.3
-      '@sentry/cli': 2.34.0(encoding@0.1.13)
+      '@sentry/cli': 2.34.1(encoding@0.1.13)
       dotenv: 16.4.5
       find-up: 5.0.0
       glob: 9.3.5
@@ -11550,28 +11593,28 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sentry/cli-darwin@2.34.0':
+  '@sentry/cli-darwin@2.34.1':
     optional: true
 
-  '@sentry/cli-linux-arm64@2.34.0':
+  '@sentry/cli-linux-arm64@2.34.1':
     optional: true
 
-  '@sentry/cli-linux-arm@2.34.0':
+  '@sentry/cli-linux-arm@2.34.1':
     optional: true
 
-  '@sentry/cli-linux-i686@2.34.0':
+  '@sentry/cli-linux-i686@2.34.1':
     optional: true
 
-  '@sentry/cli-linux-x64@2.34.0':
+  '@sentry/cli-linux-x64@2.34.1':
     optional: true
 
-  '@sentry/cli-win32-i686@2.34.0':
+  '@sentry/cli-win32-i686@2.34.1':
     optional: true
 
-  '@sentry/cli-win32-x64@2.34.0':
+  '@sentry/cli-win32-x64@2.34.1':
     optional: true
 
-  '@sentry/cli@2.34.0(encoding@0.1.13)':
+  '@sentry/cli@2.34.1(encoding@0.1.13)':
     dependencies:
       https-proxy-agent: 5.0.1
       node-fetch: 2.7.0(encoding@0.1.13)
@@ -11579,13 +11622,13 @@ snapshots:
       proxy-from-env: 1.1.0
       which: 2.0.2
     optionalDependencies:
-      '@sentry/cli-darwin': 2.34.0
-      '@sentry/cli-linux-arm': 2.34.0
-      '@sentry/cli-linux-arm64': 2.34.0
-      '@sentry/cli-linux-i686': 2.34.0
-      '@sentry/cli-linux-x64': 2.34.0
-      '@sentry/cli-win32-i686': 2.34.0
-      '@sentry/cli-win32-x64': 2.34.0
+      '@sentry/cli-darwin': 2.34.1
+      '@sentry/cli-linux-arm': 2.34.1
+      '@sentry/cli-linux-arm64': 2.34.1
+      '@sentry/cli-linux-i686': 2.34.1
+      '@sentry/cli-linux-x64': 2.34.1
+      '@sentry/cli-win32-i686': 2.34.1
+      '@sentry/cli-win32-x64': 2.34.1
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -11604,6 +11647,14 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 18.3.1
 
+  '@sentry/solid@8.27.0(solid-js@1.8.21)':
+    dependencies:
+      '@sentry/browser': 8.27.0
+      '@sentry/core': 8.27.0
+      '@sentry/types': 8.27.0
+      '@sentry/utils': 8.27.0
+      solid-js: 1.8.21
+
   '@sentry/types@8.27.0': {}
 
   '@sentry/utils@8.27.0':
@@ -11617,6 +11668,14 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@sentry/vue@8.27.0(vue@3.4.38(typescript@5.5.4))':
+    dependencies:
+      '@sentry/browser': 8.27.0
+      '@sentry/core': 8.27.0
+      '@sentry/types': 8.27.0
+      '@sentry/utils': 8.27.0
+      vue: 3.4.38(typescript@5.5.4)
 
   '@sideway/address@4.1.5':
     dependencies:

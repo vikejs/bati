@@ -1,8 +1,6 @@
 import "./style.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
-//# BATI.has("sentry")
-import "../sentry.browser.config";
 import React from "react";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link.js";
@@ -31,7 +29,6 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
         {BATI.has("firebase-auth") || BATI.has("lucia-auth") ? <Link href="/login">Login</Link> : ""}
-        {BATI.has("sentry") ? <Link href="/sentry">Sentry / Throw Javascript Errors</Link> : ""}
       </Sidebar>
       <Content>{children}</Content>
     </div>
