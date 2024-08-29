@@ -16,21 +16,50 @@ import "../+client";
  */
 const globalWindow = globalThis?.window;
 
-window.onload = function () {
-  const options = globalWindow?.Sentry?.getClient()?.getOptions();
-  if (options) {
-    const elmSentryState = document?.getElementById("sentry_state");
-    if (elmSentryState) elmSentryState.hidden = true;
-    if (options?.dsn?.length > 1) {
-      const elmSentryDSN = document?.getElementById("sentry_dsn");
-      if (elmSentryDSN) elmSentryDSN.hidden = true;
+/**
+ * @typedef {Window} CustomWindow
+ * @property {Document} document
+ */
+
+/**
+ * @typedef {Document} CustomDocument
+ * @property {HTMLElement | null} getElementById
+ */
+
+if (typeof window !== "undefined") {
+  /**
+   * @type {CustomWindow}
+   */
+  const window = globalThis?.window;
+
+  window.onload = function () {
+    /**
+     * @type {SentryOptions | undefined}
+     */
+    const options = globalWindow?.Sentry?.getClient()?.getOptions();
+    if (options) {
+      /**
+       * @type {HTMLElement | null}
+       */
+      const elmSentryState = document?.getElementById("sentry_state");
+      if (elmSentryState) elmSentryState.hidden = true;
+      if (options?.dsn?.length > 1) {
+        /**
+         * @type {HTMLElement | null}
+         */
+        const elmSentryDSN = document?.getElementById("sentry_dsn");
+        if (elmSentryDSN) elmSentryDSN.hidden = true;
+      }
     }
-  }
-  const elmSentryButton = document?.getElementById("errorButton");
-  if (elmSentryButton)
-    elmSentryButton.addEventListener("click", function () {
-      // @ts-ignore
-      throw new Error("This is a SENTRY Browser Test!");
-    });
-};
+    /**
+     * @type {HTMLElement | null}
+     */
+    const elmSentryButton = document?.getElementById("errorButton");
+    if (elmSentryButton)
+      elmSentryButton.addEventListener("click", function () {
+        // @ts-ignore
+        throw new Error("This is a SENTRY Browser Test!");
+      });
+  };
+}
 /*{ /if }*/

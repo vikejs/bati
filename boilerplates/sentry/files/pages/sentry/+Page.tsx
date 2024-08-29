@@ -1,9 +1,11 @@
 /*{ @if (it.BATI.has("react")) }*/
 import React from "react";
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 // @ts-ignore
 import * as Sentry from "@sentry/react";
 import { useEffect } from "react";
 
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 // @ts-ignore
 export default function ReactSentryErrorPage() {
   const [sentryClientStatus, setSentryClientStatus] = React.useState({
@@ -47,11 +49,13 @@ export default function ReactSentryErrorPage() {
 }
 /*{ /if }*/
 /*{ @if (it.BATI.has("solid")) }*/
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 // @ts-ignore
 import * as Sentry from "@sentry/solid";
 import { createSignal } from "solid-js";
 import { onMount } from "solid-js";
 
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 // @ts-ignore
 export default function SolidSentryErrorPage() {
   const [sentryClientStatus, setSentryClientStatus] = createSignal({
