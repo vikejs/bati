@@ -139,6 +139,7 @@ async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build"],
         },
       },
+      daemon: false,
       remoteCache: {
         signature: false,
       },
