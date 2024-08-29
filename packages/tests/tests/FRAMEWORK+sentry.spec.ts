@@ -5,8 +5,13 @@ import path from "node:path";
 export const matrix = ["sentry", ["solid", "react", "vue", undefined] /*, "eslint"*/];
 
 await describeBati(({ test, expect, testMatch }) => {
-  test("Sentry Browser loading file present", async () => {
-    expect(existsSync(path.join(process.cwd(), "pages", "+client.ts"))).toBe(true);
+  testMatch<typeof matrix>("sentry.browser.config.ts", {
+    vue: async () => {
+      expect(existsSync(path.join(process.cwd(), "pages", "+client.ts"))).toBe(false);
+    },
+    _: async () => {
+      expect(existsSync(path.join(process.cwd(), "pages", "+client.ts"))).toBe(true);
+    },
   });
 
   test(".env exists", async () => {
@@ -43,10 +48,19 @@ await describeBati(({ test, expect, testMatch }) => {
       expect(content).toContain(`from "@sentry/solid"`);
     },
     vue: async () => {
-      const filePath = path.join(process.cwd(), "sentry.browser.config.ts");
-      expect(existsSync(filePath)).toBe(true);
-      const content = readFileSync(filePath, { encoding: "utf-8" });
-      expect(content).toContain(`from "@sentry/vue"`);
+      {
+        const filePath = path.join(process.cwd(), "sentry.browser.config.ts");
+        expect(existsSync(filePath)).toBe(true);
+        const content = readFileSync(filePath, { encoding: "utf-8" });
+        expect(content).toContain(`from "@sentry/vue"`);
+        expect(content).toContain(`sentryBrowserConfig`);
+      }
+      {
+        const filePath = path.join(process.cwd(), "layouts", "LayoutDefault.vue");
+        expect(existsSync(filePath)).toBe(true);
+        const content = readFileSync(filePath, { encoding: "utf-8" });
+        expect(content).toContain(`sentryBrowserConfig`);
+      }
     },
     _: async () => {
       const filePath = path.join(process.cwd(), "sentry.browser.config.ts");
