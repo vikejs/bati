@@ -59,9 +59,14 @@ export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename
   const linter = getLinter();
   const extractor = new Extractor(filename);
 
-  const report = linter.verifyAndFix(code, [...config, { settings: { extractor } }], {
-    filename,
-  });
+  const report = linter.verifyAndFix(
+    // Short circuit eslint standard inline rules
+    code.replaceAll("eslint-disable-next-line", "EDNL"),
+    [...config, { settings: { extractor } }],
+    {
+      filename,
+    },
+  );
 
   if (report.messages.length > 0) {
     throw new Error(
@@ -72,7 +77,8 @@ export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename
   }
 
   return {
-    code: report.output,
+    // Put back eslint standard inline rules
+    code: report.output.replaceAll("EDNL", "eslint-disable-next-line"),
     context: extractor,
   };
 }
