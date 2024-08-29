@@ -47,6 +47,8 @@ This app is integrated with [Sentry](https://sentry.io) for error tracking.
 You can find your DSN in the \`.env\` file.
 You can configure Sentry in \`sentry.browser.config.ts\` - bei default sentry is only activated in \`production\`.
 
+**Test Sentry:** http://localhost:3000/sentry
+
 `
       : "");
 
