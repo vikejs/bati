@@ -1,10 +1,16 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 
 export default function Page() {
   return (
     <>
       <h1>Sentry Browser React</h1>
-      {import.meta.env.DEV && <div style={{ color: "red" }}>Sentry is disabled in DEV-Mode!</div>}
+      {!Sentry.getClient() && (
+        <div style={{ color: "red" }}>
+          Sentry Client is not initialized! Vite Mode: {import.meta.env.PROD ? "PROD" : "DEV"}
+        </div>
+      )}
+
       <ul>
         <li>
           <button
