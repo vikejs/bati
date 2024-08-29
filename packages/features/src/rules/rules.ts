@@ -31,5 +31,6 @@ export default [
 
     return false;
   }),
+  // TODO: sqlite does not work on stackblitz either
   includes(RulesMessage.INFO_DRIZZLE_STACKBLITZ, "drizzle"),
 ] satisfies Rule[];
