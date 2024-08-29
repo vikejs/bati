@@ -13,6 +13,7 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
@@ -25,7 +26,7 @@ import type { HattipHandler } from "@hattip/core";
 import { createRouter } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import vercelAdapter from "@hattip/adapter-vercel-edge";
-import { createHandler, createMiddleware } from "@universal-middleware/hattip";
+import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hattip";
 
 const router = createRouter();
 
@@ -50,7 +51,7 @@ if (BATI.has("trpc")) {
       req: context.request,
       endpoint: "/api/trpc",
       createContext({ req }) {
-        return { req };
+        return { ...getContext(context), ...getRuntime(context), req };
       },
     });
   });
@@ -80,6 +81,7 @@ if (BATI.has("firebase-auth")) {
 }
 
 if (BATI.has("lucia-auth")) {
+  router.use(createMiddleware(luciaDbMiddleware)());
   router.use(createMiddleware(luciaCsrfMiddleware)());
   router.use(createMiddleware(luciaAuthContextMiddleware)());
   router.use(createMiddleware(luciaAuthCookieMiddleware)());

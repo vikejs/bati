@@ -23,4 +23,8 @@ export class BatiSet extends Set<Flags> {
   get hasDatabase(): boolean {
     return this.hasOneOf(this.#databases);
   }
+
+  get hasD1(): boolean {
+    return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle"));
+  }
 }

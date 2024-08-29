@@ -13,8 +13,10 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@universal-middleware/core": "^0.2.6",
     "@cloudflare/workers-types": "^4.20240821.1",
-    "@types/node": "^18.19.14"
+    "@types/node": "^18.19.14",
+    "vike": "^0.4.193"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -30,6 +32,30 @@
           "cloudflare"
         ]
       }
+    }
+  },
+  "exports": {
+    "./database/d1/helpers": {
+      "types": "./dist/types/database/d1/helpers.d.ts"
+    },
+    "./database/d1/queries/lucia-auth": {
+      "types": "./dist/types/database/d1/queries/lucia-auth.d.ts"
+    },
+    "./database/d1/queries/todos": {
+      "types": "./dist/types/database/d1/queries/todos.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "database/d1/helpers": [
+        "./dist/types/database/d1/helpers.d.ts"
+      ],
+      "database/d1/queries/lucia-auth": [
+        "./dist/types/database/d1/queries/lucia-auth.d.ts"
+      ],
+      "database/d1/queries/todos": [
+        "./dist/types/database/d1/queries/todos.d.ts"
+      ]
     }
   }
 }

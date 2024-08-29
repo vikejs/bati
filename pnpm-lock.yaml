@@ -203,6 +203,12 @@ importers:
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
+      '@universal-middleware/core':
+        specifier: ^0.2.6
+        version: 0.2.6
+      vike:
+        specifier: ^0.4.193
+        version: 0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
 
   boilerplates/drizzle:
     dependencies:
@@ -645,8 +651,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.44
       '@universal-middleware/hattip':
-        specifier: ^0.2.3
-        version: 0.2.3
+        specifier: ^0.2.4
+        version: 0.2.4
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -715,8 +721,8 @@ importers:
         specifier: ^18.19.14
         version: 18.19.44
       '@universal-middleware/hono':
-        specifier: ^0.2.4
-        version: 0.2.4
+        specifier: ^0.2.5
+        version: 0.2.5
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -748,12 +754,18 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
         version: 1.1.0(drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240821.1)(@prisma/client@5.19.0(prisma@5.19.0))(@types/better-sqlite3@7.6.11)(@types/react@18.3.4)(better-sqlite3@11.2.1)(prisma@5.19.0)(react@18.3.1))(lucia@3.2.0)
@@ -1101,6 +1113,9 @@ importers:
       '@batijs/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1135,6 +1150,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1144,9 +1162,18 @@ importers:
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
+      vike:
+        specifier: ^0.4.193
+        version: 0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
+      vike-cloudflare:
+        specifier: ^0.1.1
+        version: 0.1.1(vike@0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
 
   boilerplates/solid:
     dependencies:
@@ -1318,6 +1345,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1330,6 +1360,9 @@ importers:
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1355,6 +1388,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1367,6 +1403,9 @@ importers:
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@trpc/client':
         specifier: ^10.45.2
         version: 10.45.2(@trpc/server@10.45.2)
@@ -1389,6 +1428,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1398,6 +1440,9 @@ importers:
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@ts-rest/core':
         specifier: ^3.51.0
         version: 3.51.0(@types/node@18.19.44)(zod@3.23.8)
@@ -1719,7 +1764,7 @@ importers:
         version: 0.0.5(rollup@4.21.1)
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.3.2)(sugarss@4.0.1(postcss@8.4.41))
+        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.4.2)(sugarss@4.0.1(postcss@8.4.41))
       vue-eslint-parser:
         specifier: ^9.4.3
         version: 9.4.3(eslint@9.9.1(jiti@1.21.6))
@@ -1752,7 +1797,7 @@ importers:
         version: 8.2.4(jiti@1.21.6)(postcss@8.4.41)(tsx@4.19.0)(typescript@5.5.4)(yaml@2.5.0)
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.3.2)(sugarss@4.0.1(postcss@8.4.41))
+        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.4.2)(sugarss@4.0.1(postcss@8.4.41))
 
   packages/tests:
     devDependencies:
@@ -1779,7 +1824,7 @@ importers:
         version: 3.3.2
       happy-dom:
         specifier: ^15.3.2
-        version: 15.3.2
+        version: 15.4.2
       mri:
         specifier: ^1.2.0
         version: 1.2.0
@@ -1797,7 +1842,7 @@ importers:
         version: 5.5.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.3.2)(sugarss@4.0.1(postcss@8.4.41))
+        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.4.2)(sugarss@4.0.1(postcss@8.4.41))
 
   packages/tests-utils:
     dependencies:
@@ -1806,13 +1851,13 @@ importers:
         version: 7.1.0
       happy-dom:
         specifier: ^15.3.2
-        version: 15.3.2
+        version: 15.4.2
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.3.2)(sugarss@4.0.1(postcss@8.4.41))
+        version: 2.0.5(@types/node@18.19.44)(happy-dom@15.4.2)(sugarss@4.0.1(postcss@8.4.41))
       which:
         specifier: ^4.0.0
         version: 4.0.0
@@ -4485,11 +4530,11 @@ packages:
   '@universal-middleware/h3@0.2.1':
     resolution: {integrity: sha512-TFvzMHKrO9lVJ96Za5qOc2mKGzPf9i3izCedCHuzwhVnINCK2Vw7Zb616+8MSgur5AtkRitUXPChkU6lnuTGVw==}
 
-  '@universal-middleware/hattip@0.2.3':
-    resolution: {integrity: sha512-vji9laimgfCzjQzBysCEuY2u7c410Fd5zfTm/LkDaZaxQTb7yGKU8IpbwQ/U0ZC4jvPzSE4JmHGFL5N26SyK1g==}
+  '@universal-middleware/hattip@0.2.4':
+    resolution: {integrity: sha512-9LE3IIby9KQh8kfKY9pTgY75ehmbcupwQF78HkyfGnXUnZYzZ7tA8HQ4PrPTwPx2+Ru3PT7uZdP0QCLbtpUphw==}
 
-  '@universal-middleware/hono@0.2.4':
-    resolution: {integrity: sha512-q6C72mw5rQdPGQoDRee9mrMFkF3G1h0AB34LKzkxeBN0e6QYvPvMAbB35WTqNSzx3Sf7wKK1j9Lf3gMaFpSlEQ==}
+  '@universal-middleware/hono@0.2.5':
+    resolution: {integrity: sha512-SG4EOeyBy0GzlpbgPYq9k/7JcKf8SVxVja5ZKA3ILz8tQGA2U4wwwizrkMePMvkxSqz+p+4dlrjXQdFsXQ0lLA==}
 
   '@vavite/connect@4.1.2':
     resolution: {integrity: sha512-BeyDUMHM+OGlqrZkJaPj7JLmDzd00nmqg6baU/jgOmKKfvmtWl/Ybvss8k2G8d93jhcPjg6Bp3sbEXILLIRoSA==}
@@ -6136,8 +6181,8 @@ packages:
   h3@1.12.0:
     resolution: {integrity: sha512-Zi/CcNeWBXDrFNlV0hUBJQR9F7a96RjMeAZweW/ZWkR9fuXrMcvKnSA63f/zZ9l0GgQOZDVHGvXivNN9PWOwhA==}
 
-  happy-dom@15.3.2:
-    resolution: {integrity: sha512-kn8DBfUFETGMurtyQSDvKvMbpjJS+HrMKSAcNK3OL0Tb0t+ziY7MJzbaFJ9SI5eYWmFbl6bEruxNhCZrkphtvA==}
+  happy-dom@15.4.2:
+    resolution: {integrity: sha512-51hYdtgiPcXQ3Rqs5THI3Rj8UMH75syfIIzubXxPkn85nGdgU2Y9u57qjQS2Vu+HKsPxYr8mFgxwHjlluZNk8w==}
     engines: {node: '>=18.0.0'}
 
   has-bigints@1.0.2:
@@ -11750,11 +11795,11 @@ snapshots:
     dependencies:
       '@universal-middleware/core': 0.2.6
 
-  '@universal-middleware/hattip@0.2.3':
+  '@universal-middleware/hattip@0.2.4':
     dependencies:
       '@universal-middleware/core': 0.2.6
 
-  '@universal-middleware/hono@0.2.4':
+  '@universal-middleware/hono@0.2.5':
     dependencies:
       '@universal-middleware/core': 0.2.6
 
@@ -13969,7 +14014,7 @@ snapshots:
     transitivePeerDependencies:
       - uWebSockets.js
 
-  happy-dom@15.3.2:
+  happy-dom@15.4.2:
     dependencies:
       entities: 4.5.0
       webidl-conversions: 7.0.0
@@ -16996,7 +17041,7 @@ snapshots:
     optionalDependencies:
       vite: 5.4.2(@types/node@22.5.1)(sugarss@4.0.1(postcss@8.4.41))
 
-  vitest@2.0.5(@types/node@18.19.44)(happy-dom@15.3.2)(sugarss@4.0.1(postcss@8.4.41)):
+  vitest@2.0.5(@types/node@18.19.44)(happy-dom@15.4.2)(sugarss@4.0.1(postcss@8.4.41)):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -17019,7 +17064,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.19.44
-      happy-dom: 15.3.2
+      happy-dom: 15.4.2
     transitivePeerDependencies:
       - less
       - lightningcss

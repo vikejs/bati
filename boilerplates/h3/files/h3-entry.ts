@@ -16,6 +16,7 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
@@ -85,6 +86,7 @@ async function startServer() {
   }
 
   if (BATI.has("lucia-auth")) {
+    app.use(createMiddleware(luciaDbMiddleware)());
     app.use(createMiddleware(luciaCsrfMiddleware)());
     app.use(createMiddleware(luciaAuthContextMiddleware)());
     app.use(createMiddleware(luciaAuthCookieMiddleware)());

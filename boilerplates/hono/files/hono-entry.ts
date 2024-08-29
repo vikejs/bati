@@ -13,6 +13,7 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
@@ -24,7 +25,7 @@ import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { type FetchCreateContextFnOptions, fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { createHandler, createMiddleware } from "@universal-middleware/hono";
+import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hono";
 
 const app = new Hono();
 
@@ -48,6 +49,7 @@ if (BATI.has("firebase-auth")) {
 }
 
 if (BATI.has("lucia-auth")) {
+  app.use(createMiddleware(luciaDbMiddleware)());
   app.use(createMiddleware(luciaCsrfMiddleware)());
   app.use(createMiddleware(luciaAuthContextMiddleware)());
   app.use(createMiddleware(luciaAuthCookieMiddleware)());
@@ -71,7 +73,7 @@ if (BATI.has("trpc")) {
       req: c.req.raw,
       router: appRouter,
       createContext({ req, resHeaders }): FetchCreateContextFnOptions {
-        return { req, resHeaders };
+        return { ...getContext(c), ...getRuntime(c), req, resHeaders };
       },
     });
   });

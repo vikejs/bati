@@ -1,13 +1,13 @@
 import { db } from "../db";
 import type { Transaction } from "better-sqlite3";
 
-export function getExistingUser(username: string) {
-  return db().prepare("SELECT * FROM users WHERE username = ?").get(username);
+export function getExistingUser<T>(username: string) {
+  return db().prepare<[string], T>("SELECT * FROM users WHERE username = ?").get(username);
 }
 
-export function getExistingAccount(providerId: string, providerUserId: number) {
+export function getExistingAccount<T>(providerId: string, providerUserId: number) {
   return db()
-    .prepare("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
+    .prepare<[string, number], T>("SELECT * FROM oauth_accounts WHERE provider_id = ? AND provider_user_id = ?")
     .get(providerId, providerUserId);
 }
 
