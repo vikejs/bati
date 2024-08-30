@@ -16,7 +16,7 @@ export function visitorAsExpression(
     node.typeAnnotation.typeName.left.name === "BATI"
   ) {
     const { right } = node.typeAnnotation.typeName;
-    const start = node.expression.range[1];
+    const start = node.expression.range[1] + 1;
     const end = node.range[1];
 
     switch (right.name) {

@@ -491,6 +491,19 @@ describe("as expression", () => {
     assert.equal(renderedOutput.code.trim(), 'const a = "a";');
   });
 
+  test("BATI.Any with ()", async () => {
+    const renderedOutput = await transformAndFormat(
+      `const a = (options?.router || appRouter) as BATI.Any;`,
+      {
+        BATI: new Set(),
+        BATI_TEST: false,
+      },
+      { filepath: "test-as.ts" },
+    );
+
+    assert.equal(renderedOutput.code.trim(), "const a = options?.router || appRouter;");
+  });
+
   testIfElse(
     `const a = "a" as BATI.If<{ 'BATI.has("react")': { env: string } }>;`,
     `const a = "a" as { env: string };`,
