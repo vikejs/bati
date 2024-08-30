@@ -21,7 +21,7 @@ if (!globalThis.crypto) {
   });
 }
 
-export function initializeLucia(D1?: D1Database) {
+export function initializeLucia(_d1?: D1Database) {
   /**
    * Database setup
    *
@@ -30,7 +30,7 @@ export function initializeLucia(D1?: D1Database) {
   const adapter = BATI.has("drizzle")
     ? new DrizzleSQLiteAdapter(drizzleDb(), sessionTable, userTable)
     : BATI.hasD1
-      ? new D1Adapter(D1, {
+      ? new D1Adapter(_d1, {
           user: "users",
           session: "sessions",
         })

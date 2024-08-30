@@ -21,8 +21,8 @@ import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
  *
  * @link {@see https://universal-middleware.dev/examples/context-middleware}
  */
-export const luciaDbMiddleware = (() => async (_request, context, runtime) => {
-  const lucia = BATI.hasD1 ? initializeLucia(getDbFromRuntime(runtime)) : initializeLucia();
+export const luciaDbMiddleware = (() => async (_request, context, _runtime) => {
+  const lucia = BATI.hasD1 ? initializeLucia(getDbFromRuntime(_runtime)) : initializeLucia();
   return {
     ...context,
     lucia,
@@ -100,7 +100,7 @@ export const luciaAuthCookieMiddleware = (() => (_request, context) => {
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#register-user}
  */
-export const luciaAuthSignupHandler = (() => async (request, context, runtime) => {
+export const luciaAuthSignupHandler = (() => async (request, context, _runtime) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -134,7 +134,7 @@ export const luciaAuthSignupHandler = (() => async (request, context, runtime) =
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
       sqliteQueries.signupWithCredentials(userId, username, passwordHash);
     } else if (BATI.hasD1) {
-      await d1Queries.signupWithCredentials(getDbFromRuntime(runtime), userId, username, passwordHash);
+      await d1Queries.signupWithCredentials(getDbFromRuntime(_runtime), userId, username, passwordHash);
     }
 
     const session = await context.lucia.createSession(userId, {});
@@ -170,7 +170,7 @@ export const luciaAuthSignupHandler = (() => async (request, context, runtime) =
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#sign-in-user}
  */
-export const luciaAuthLoginHandler = (() => async (request, context, runtime) => {
+export const luciaAuthLoginHandler = (() => async (request, context, _runtime) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -191,7 +191,7 @@ export const luciaAuthLoginHandler = (() => async (request, context, runtime) =>
     : BATI.has("sqlite") && !BATI.hasD1
       ? sqliteQueries.getExistingUser<DatabaseUser>(username)
       : BATI.hasD1
-        ? await d1Queries.getExistingUser<DatabaseUser>(getDbFromRuntime(runtime), username)
+        ? await d1Queries.getExistingUser<DatabaseUser>(getDbFromRuntime(_runtime), username)
         : undefined;
 
   if (!existingUser) {
@@ -286,7 +286,7 @@ export const luciaGithubLoginHandler = (() => async () => {
  *
  * @link {@see https://lucia-auth.com/guides/oauth/basics#validate-callback}
  */
-export const luciaGithubCallbackHandler = (() => async (request, context, runtime) => {
+export const luciaGithubCallbackHandler = (() => async (request, context, _runtime) => {
   const cookies = parse(request.headers.get("cookie") ?? "");
   const params = new URL(request.url).searchParams;
   const code = params.get("code");
@@ -313,7 +313,11 @@ export const luciaGithubCallbackHandler = (() => async (request, context, runtim
       : BATI.has("sqlite") && !BATI.hasD1
         ? sqliteQueries.getExistingAccount<DatabaseOAuthAccount>("github", githubUser.id)
         : BATI.hasD1
-          ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(getDbFromRuntime(runtime), "github", githubUser.id)
+          ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(
+              getDbFromRuntime(_runtime),
+              "github",
+              githubUser.id,
+            )
           : undefined;
 
     if (existingAccount) {
@@ -337,7 +341,7 @@ export const luciaGithubCallbackHandler = (() => async (request, context, runtim
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
       sqliteQueries.signupWithGithub(userId, githubUser.login, githubUser.id);
     } else if (BATI.hasD1) {
-      await d1Queries.signupWithGithub(getDbFromRuntime(runtime), userId, githubUser.login, githubUser.id);
+      await d1Queries.signupWithGithub(getDbFromRuntime(_runtime), userId, githubUser.login, githubUser.id);
     }
 
     const session = await context.lucia.createSession(userId, {});

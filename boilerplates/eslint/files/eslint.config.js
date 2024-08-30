@@ -41,6 +41,7 @@ export default tseslint.config(
           argsIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/no-namespace": 0,
     },
   },
   //# BATI.has("vue")

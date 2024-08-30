@@ -9,7 +9,7 @@ export type Data = {
   todo: { text: string }[];
 };
 
-export default async function data(pageContext: PageContextServer): Promise<Data> {
+export default async function data(_pageContext: PageContextServer): Promise<Data> {
   if (BATI.has("drizzle")) {
     const todo = drizzleQueries.getAllTodos();
 
@@ -19,7 +19,7 @@ export default async function data(pageContext: PageContextServer): Promise<Data
 
     return { todo };
   } else if (BATI.hasD1) {
-    const todo = await d1Queries.getAllTodos(pageContext.env.DB);
+    const todo = await d1Queries.getAllTodos(_pageContext.env.DB);
 
     return { todo };
   } else {
