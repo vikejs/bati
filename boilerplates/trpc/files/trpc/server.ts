@@ -9,8 +9,12 @@ import { D1Database } from "@cloudflare/workers-types";
  * Should be done only once per backend!
  */
 const t = initTRPC
-  //# BATI.hasD1
-  .context<{ env: { DB: D1Database } }>()
+  .context<
+    BATI.If<{
+      "BATI.hasD1": { env: { DB: D1Database } };
+      _: object;
+    }>
+  >()
   .create();
 
 /**

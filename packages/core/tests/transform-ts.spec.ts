@@ -1,6 +1,7 @@
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
+import { BatiSet, features } from "@batijs/features";
 
 const ctx = { jsx: false };
 
@@ -21,7 +22,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new Set(["react"]),
+        BATI: new BatiSet(["react"], features),
         BATI_TEST: false,
       },
       { filepath: filename },
@@ -36,7 +37,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       const renderedOutput = await transformAndFormat(
         code,
         {
-          BATI: new Set(["solid"]),
+          BATI: new BatiSet(["solid"], features),
           BATI_TEST: false,
         },
         { filepath: filename },
@@ -51,7 +52,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
         BATI_TEST: true,
       },
       { filepath: filename },
@@ -367,7 +368,7 @@ test("ts: if throws", () => {
   }`,
         "test.ts",
         {
-          BATI: new Set(["react"]),
+          BATI: new BatiSet(["react"], features),
         },
       ),
     ReferenceError,
@@ -402,7 +403,7 @@ describe('rewrite "@batijs/" imports', async () => {
 
 export const test = trpc;`,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
       },
       { filepath: filename },
     );
@@ -423,7 +424,7 @@ export const test = trpc;`,
 
 export const test = 1;`,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
       },
       { filepath: filename },
     );
@@ -441,7 +442,7 @@ describe("global meta comments", async () => {
       `/*# BATI include-if-imported #*/      
 const a = 1;`,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
       },
       options,
     );
@@ -456,7 +457,7 @@ const a = 1;`,
         `/*# BATI invalid #*/      
 const a = 1;`,
         {
-          BATI: new Set(),
+          BATI: new BatiSet([], features),
         },
         options,
       ),
@@ -469,7 +470,7 @@ const a = 1;`,
         `/*# BATI include-if-imported,invalid #*/      
 const a = 1;`,
         {
-          BATI: new Set(),
+          BATI: new BatiSet([], features),
         },
         options,
       ),
@@ -482,7 +483,7 @@ describe("as expression", () => {
     const renderedOutput = await transformAndFormat(
       `const a = "a" as BATI.Any;`,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
         BATI_TEST: false,
       },
       { filepath: "test-as.ts" },
@@ -495,7 +496,7 @@ describe("as expression", () => {
     const renderedOutput = await transformAndFormat(
       `const a = (options?.router || appRouter) as BATI.Any;`,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
         BATI_TEST: false,
       },
       { filepath: "test-as.ts" },
@@ -508,6 +509,19 @@ describe("as expression", () => {
     `const a = "a" as BATI.If<{ 'BATI.has("react")': { env: string } }>;`,
     `const a = "a" as { env: string };`,
     `const a = "a";`,
+  );
+
+  testIfElse(
+    `const t = initTRPC
+.context<
+  BATI.If<{
+    'BATI.has("react")': { env: { DB: D1Database } };
+    _: object;
+  }>
+>()
+.create();`,
+    `const t = initTRPC.context<{ env: { DB: D1Database } }>().create();`,
+    `const t = initTRPC.context<object>().create();`,
   );
 });
 
