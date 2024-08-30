@@ -8,6 +8,7 @@ import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorGlobalComments } from "./visitor-global-comments.js";
 import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
+import { visitorAsExpression } from "./visitor-ts-types.js";
 
 export default function tsLinterConfig(meta: VikeMeta) {
   const plugin: ESLint.Plugin = {
@@ -42,6 +43,9 @@ export default function tsLinterConfig(meta: VikeMeta) {
             },
             JSXAttribute(node) {
               visitorStatementWithComments(context, sourceCode, node, meta);
+            },
+            TSAsExpression(node) {
+              visitorAsExpression(context, sourceCode, node, meta);
             },
           } satisfies Visitors<TSESTree.Node>;
         },

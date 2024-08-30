@@ -477,6 +477,27 @@ const a = 1;`,
   });
 });
 
+describe("as expression", () => {
+  test("BATI.Any", async () => {
+    const renderedOutput = await transformAndFormat(
+      `const a = "a" as BATI.Any;`,
+      {
+        BATI: new Set(),
+        BATI_TEST: false,
+      },
+      { filepath: "test-as.ts" },
+    );
+
+    assert.equal(renderedOutput.code.trim(), 'const a = "a";');
+  });
+
+  testIfElse(
+    `const a = "a" as BATI.If<{ 'BATI.has("react")': { env: string } }>;`,
+    `const a = "a" as { env: string };`,
+    `const a = "a";`,
+  );
+});
+
 describe("BATI_TEST", () => {
   testIfElse(
     `if (BATI_TEST) {

@@ -98,7 +98,7 @@ async function startServer() {
       trpcExpress.createExpressMiddleware({
         router: appRouter,
         createContext({ req, res }: trpcExpress.CreateExpressContextOptions) {
-          return { req, res };
+          return { req, res } as BATI.Any;
         },
       }),
     );

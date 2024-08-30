@@ -112,7 +112,7 @@ async function startServer() {
       trpcOptions: {
         router: appRouter,
         createContext({ req, res }: CreateFastifyContextOptions) {
-          return { req, res };
+          return { req, res } as BATI.Any;
         },
         onError({ path, error }) {
           // report to error monitoring

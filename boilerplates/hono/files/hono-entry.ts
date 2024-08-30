@@ -22,10 +22,11 @@ import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { type FetchCreateContextFnOptions, fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hono";
+import type { D1Database } from "@cloudflare/workers-types";
 
 const app = new Hono();
 
@@ -72,8 +73,15 @@ if (BATI.has("trpc")) {
       endpoint: "/api/trpc",
       req: c.req.raw,
       router: appRouter,
-      createContext({ req, resHeaders }): FetchCreateContextFnOptions {
-        return { ...getContext(c), ...getRuntime(c), req, resHeaders };
+      createContext({ req, resHeaders }) {
+        return {
+          ...getContext(c),
+          ...(getRuntime(c) as BATI.If<{
+            "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
+          }>),
+          req,
+          resHeaders,
+        };
       },
     });
   });

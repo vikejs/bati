@@ -113,7 +113,7 @@ async function startServer() {
           path: event.context.params!.path,
           router: appRouter,
           createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
-            return { req, res };
+            return { req, res } as BATI.Any;
           },
         }),
       ),

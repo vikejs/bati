@@ -1,8 +1,8 @@
 import type { AnyRouter } from "@trpc/server";
 import {
-  nodeHTTPRequestHandler,
   type NodeHTTPHandlerOptions,
   type NodeHTTPRequest,
+  nodeHTTPRequestHandler,
   type NodeHTTPResponse,
 } from "@trpc/server/adapters/node-http";
 import type { PluginOption } from "vite";
@@ -36,7 +36,7 @@ export default function trpc<
           req: req as TRequest,
           res: res as TResponse,
           path,
-          router: options?.router || appRouter,
+          router: (options?.router || appRouter) as BATI.Any,
           createContext: options?.createContext,
           batching: options?.batching,
           responseMeta: options?.responseMeta,
