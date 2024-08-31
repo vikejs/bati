@@ -17,10 +17,9 @@ import Content from "../components/Content.vue";
 import Link from "../components/Link.vue";
 import Logo from "../components/Logo.vue";
 import Sidebar from "../components/Sidebar.vue";
-/*{ @if (it.BATI.has("sentry")) }*/
 import { sentryBrowserConfig } from "../sentry.browser.config";
+//# BATI.has("sentry")
 sentryBrowserConfig();
-/*{ /if }*/
 </script>
 
 <style>

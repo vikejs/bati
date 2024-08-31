@@ -37,7 +37,7 @@ export default function ReactSentryErrorPage() {
       <div>
         <button
           onClick={() => {
-            throw new Error(`This is a SENTRY Browser Test! [${import.meta.env.DEV ? "DEV Mode" : "PROD Mode"}]`);
+            throw new Error(`This is a React SENTRY Browser Test! [${import.meta.env.DEV ? "DEV Mode" : "PROD Mode"}]`);
           }}
         >
           Throw Javascript Error

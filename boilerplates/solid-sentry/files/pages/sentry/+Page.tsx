@@ -41,7 +41,7 @@ export default function SolidSentryErrorPage() {
       <div>
         <button
           onClick={() => {
-            throw new Error(`This is a SENTRY Browser Test! [${import.meta.env.DEV ? "DEV Mode" : "PROD Mode"}]`);
+            throw new Error(`This is a Solid SENTRY Browser Test! [${import.meta.env.DEV ? "DEV Mode" : "PROD Mode"}]`);
           }}
         >
           Throw Javascript Error

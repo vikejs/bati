@@ -26,7 +26,7 @@ export default {
   methods: {
     throwError() {
       const mode = import.meta.env.DEV ? "DEV Mode" : "PROD Mode";
-      throw new Error(`This is a SENTRY Browser Vue Test! [${mode}]`);
+      throw new Error(`This is a Vue SENTRY Browser Vue Test! [${mode}]`);
     },
   },
 };

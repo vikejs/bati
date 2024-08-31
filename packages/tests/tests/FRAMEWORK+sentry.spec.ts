@@ -18,11 +18,17 @@ await describeBati(({ test, expect, testMatch }) => {
     const filePath = path.join(process.cwd(), ".env");
     expect(existsSync(filePath)).toBe(true);
     const content = readFileSync(filePath, { encoding: "utf-8" });
+    expect(content).toContain(`SENTRY_DSN=`);
+    expect(content).toContain(`PUBLIC_ENV__SENTRY_DSN=`);
+  });
+
+  test(".env.sentry-build-plugin exists", async () => {
+    const filePath = path.join(process.cwd(), ".env.sentry-build-plugin");
+    expect(existsSync(filePath)).toBe(true);
+    const content = readFileSync(filePath, { encoding: "utf-8" });
     expect(content).toContain(`SENTRY_ORG=`);
     expect(content).toContain(`SENTRY_PROJECT=`);
     expect(content).toContain(`SENTRY_AUTH_TOKEN=`);
-    expect(content).toContain(`SENTRY_DSN=`);
-    expect(content).toContain(`PUBLIC_ENV__SENTRY_DSN=`);
   });
 
   test("sentryVitePlugin exists", async () => {
@@ -30,7 +36,6 @@ await describeBati(({ test, expect, testMatch }) => {
     expect(existsSync(filePath)).toBe(true);
     const content = readFileSync(filePath, { encoding: "utf-8" });
     expect(content).toContain(`from "@sentry/vite-plugin"`);
-    expect(content).toContain(`from "dotenv"`);
     expect(content).toContain(`sentryVitePlugin`);
   });
 
@@ -53,7 +58,7 @@ await describeBati(({ test, expect, testMatch }) => {
         expect(existsSync(filePath)).toBe(true);
         const content = readFileSync(filePath, { encoding: "utf-8" });
         expect(content).toContain(`from "@sentry/vue"`);
-        expect(content).toContain(`sentryBrowserConfig`);
+        expect(content).toContain(`app: usePageContext().app`);
       }
       {
         const filePath = path.join(process.cwd(), "layouts", "LayoutDefault.vue");
@@ -67,6 +72,31 @@ await describeBati(({ test, expect, testMatch }) => {
       expect(existsSync(filePath)).toBe(true);
       const content = readFileSync(filePath, { encoding: "utf-8" });
       expect(content).toContain(`from "@sentry/browser"`);
+    },
+  });
+
+  testMatch<typeof matrix>("pages/sentry/+Page.<vue/tsx/js", {
+    vue: async () => {
+      const filePath = path.join(process.cwd(), "pages", "sentry", "+Page.vue");
+      expect(existsSync(filePath)).toBe(true);
+    },
+    react: async () => {
+      const filePath = path.join(process.cwd(), "pages", "sentry", "+Page.tsx");
+      expect(existsSync(filePath)).toBe(true);
+    },
+    solid: async () => {
+      const filePath = path.join(process.cwd(), "pages", "sentry", "+Page.tsx");
+      expect(existsSync(filePath)).toBe(true);
+    },
+    _: async () => {
+      {
+        const filePath = path.join(process.cwd(), "pages", "sentry", "+Page.js");
+        expect(existsSync(filePath)).toBe(true);
+      }
+      {
+        const filePath = path.join(process.cwd(), "pages", "sentry", "+client.js");
+        expect(existsSync(filePath)).toBe(true);
+      }
     },
   });
 });
