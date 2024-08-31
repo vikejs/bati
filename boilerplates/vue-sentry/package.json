@@ -1,0 +1,48 @@
+{
+  "name": "@batijs/vue-sentry",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "vite": "^5.4.2",
+    "vue": "^3.4.38"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "vue",
+          "sentry"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./fix_TS18003": {
+      "types": "./dist/types/fix_TS18003.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "fix_TS18003": [
+        "./dist/types/fix_TS18003.d.ts"
+      ]
+    }
+  }
+}

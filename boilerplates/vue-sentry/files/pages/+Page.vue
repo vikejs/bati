@@ -1,4 +1,3 @@
-/*{ @if (it.BATI.has("vue")) }*/
 <template>
   <div>
     <h1>Sentry Test Page</h1>
@@ -32,4 +31,3 @@ export default {
   },
 };
 </script>
-/*{ /if }*/

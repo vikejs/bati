@@ -18,7 +18,7 @@ export default async function getViteConfig(props: TransformerProps) {
     */
 
     // add dotenv import to load environment variables from `.env` file
-    mod.imports.$add({
+    mod.imports.$prepend({
       from: "dotenv",
       imported: "config",
     });

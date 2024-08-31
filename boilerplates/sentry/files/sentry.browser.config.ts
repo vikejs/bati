@@ -19,11 +19,10 @@ import { usePageContext } from "vike-vue/usePageContext";
 // @ts-ignore
 import * as Sentry from "@sentry/browser";
 /*{ /if}*/
-/*{ @if (it.BATI.has("vue")) }*/
+
 export const sentryBrowserConfig = () => {
-  /*{ /if}*/
   // eslint-disable-next-line
-import.meta.env.PROD === true &&
+  import.meta.env.PROD === true &&
     Sentry.init({
       /*{ @if (it.BATI.has("vue")) }*/
       // @ts-ignore
@@ -49,6 +48,4 @@ import.meta.env.PROD === true &&
   // @ts-ignore
   window.Sentry = Sentry;
   /*{ /if}*/
-  /*{ @if (it.BATI.has("vue")) }*/
 };
-/*{ /if}*/

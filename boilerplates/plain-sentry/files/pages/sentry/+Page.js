@@ -1,4 +1,3 @@
-/*{ @if (!(it.BATI.has("react") || it.BATI.has("vue") || it.BATI.has("solid"))) }*/
 export { Page };
 
 function Page() {
@@ -18,4 +17,3 @@ function Page() {
 </div>
 `;
 }
-/*{ /if }*/

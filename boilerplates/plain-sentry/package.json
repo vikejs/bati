@@ -1,0 +1,67 @@
+{
+  "name": "@batijs/plain-sentry",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/sentry": "workspace:*",
+    "@types/node": "^18.19.14",
+    "vite": "^5.4.2"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "$and": [
+        {
+          "flag": "sentry"
+        },
+        {
+          "flag": {
+            "$not": {
+              "$in": [
+                "react",
+                "vue",
+                "solid",
+                "svelte",
+                "preact",
+                "angular"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "exports": {
+    "./pages/sentry/+Page": {
+      "types": "./dist/types/pages/sentry/+Page.d.ts"
+    },
+    "./pages/sentry/+client": {
+      "types": "./dist/types/pages/sentry/+client.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/sentry/+Page": [
+        "./dist/types/pages/sentry/+Page.d.ts"
+      ],
+      "pages/sentry/+client": [
+        "./dist/types/pages/sentry/+client.d.ts"
+      ]
+    }
+  }
+}

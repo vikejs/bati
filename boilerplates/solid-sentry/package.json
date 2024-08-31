@@ -1,0 +1,49 @@
+{
+  "name": "@batijs/solid-sentry",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "solid-js": "^1.8.22",
+    "vike-solid": "^0.7.3",
+    "vite": "^5.4.2"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$all": [
+          "solid",
+          "sentry"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./pages/sentry/+Page": {
+      "types": "./dist/types/pages/sentry/+Page.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "pages/sentry/+Page": [
+        "./dist/types/pages/sentry/+Page.d.ts"
+      ]
+    }
+  }
+}
