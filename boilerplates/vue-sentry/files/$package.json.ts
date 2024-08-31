@@ -4,6 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@sentry/vite-plugin"] as const,
+    dependencies: ["@sentry/vue"] as const,
   });
 }

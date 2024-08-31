@@ -861,6 +861,9 @@ importers:
       '@batijs/sentry':
         specifier: workspace:*
         version: link:../sentry
+      '@sentry/browser':
+        specifier: ^8.27.0
+        version: 8.27.0
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1062,6 +1065,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@sentry/react':
+        specifier: ^8.27.0
+        version: 8.27.0(react@18.3.1)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1090,45 +1096,15 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
-      '@sentry/browser':
-        specifier: ^8.27.0
-        version: 8.27.0
-      '@sentry/react':
-        specifier: ^8.27.0
-        version: 8.27.0(react@18.3.1)
-      '@sentry/solid':
-        specifier: ^8.27.0
-        version: 8.27.0(solid-js@1.8.22)
       '@sentry/vite-plugin':
         specifier: ^2.22.3
         version: 2.22.3(encoding@0.1.13)
-      '@sentry/vue':
-        specifier: ^8.27.0
-        version: 8.27.0(vue@3.4.38(typescript@5.5.4))
       '@types/node':
         specifier: ^18.19.44
         version: 18.19.44
-      '@types/react':
-        specifier: ^18.3.4
-        version: 18.3.4
-      '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.0
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      solid-js:
-        specifier: ^1.8.21
-        version: 1.8.22
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))
-      vue:
-        specifier: ^3.4.38
-        version: 3.4.38(typescript@5.5.4)
 
   boilerplates/shared:
     devDependencies:
@@ -1358,6 +1334,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@sentry/solid':
+        specifier: ^8.27.0
+        version: 8.27.0(solid-js@1.8.22)
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1683,9 +1662,15 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@sentry/vue':
+        specifier: ^8.27.0
+        version: 8.27.0(vue@3.4.38(typescript@5.5.4))
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
+      vike-vue:
+        specifier: ^0.8.3
+        version: 0.8.3(vike@0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))))(vue@3.4.38(typescript@5.5.4))
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))

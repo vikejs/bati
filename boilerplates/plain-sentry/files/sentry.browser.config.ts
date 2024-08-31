@@ -1,33 +1,9 @@
-//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-//# BATI include-if-imported
-
-/*{ @if (it.BATI.has("react")) }*/
-// @ts-ignore
-import * as Sentry from "@sentry/react";
-/*{ /if}*/
-/*{ @if (it.BATI.has("solid")) }*/
-// @ts-ignore
-import * as Sentry from "@sentry/solid";
-/*{ /if}*/
-/*{ @if (it.BATI.has("vue")) }*/
-// @ts-ignore
-import * as Sentry from "@sentry/vue";
-// @ts-ignore
-import { usePageContext } from "vike-vue/usePageContext";
-/*{ /if}*/
-/*{ @if (!(it.BATI.has("react") || it.BATI.has("solid") || it.BATI.has("vue"))) }*/
-// @ts-ignore
 import * as Sentry from "@sentry/browser";
-/*{ /if}*/
 
 export const sentryBrowserConfig = () => {
   // eslint-disable-next-line
   import.meta.env.PROD === true &&
     Sentry.init({
-      /*{ @if (it.BATI.has("vue")) }*/
-      // @ts-ignore
-      app: usePageContext().app,
-      /*{ /if}*/
       dsn: import.meta.env.PUBLIC_ENV__SENTRY_DSN,
       environment: "production-frontend",
       //enabled: import.meta.env.DEV ? false : true,
@@ -44,8 +20,6 @@ export const sentryBrowserConfig = () => {
       replaysOnErrorSampleRate: 1.0,
     });
 
-  /*{ @if (!(it.BATI.has("react") || it.BATI.has("solid") || it.BATI.has("vue"))) }*/
-  // @ts-ignore
-  window.Sentry = Sentry;
-  /*{ /if}*/
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).Sentry = Sentry;
 };
