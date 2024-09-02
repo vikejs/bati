@@ -31,5 +31,12 @@ export default [
 
     return false;
   }),
+  filter(RulesMessage.ERROR_SHADCN_R_REACT, (fts) => {
+    if (fts.has("shadcn-ui")) {
+      return fts.has("vue") || fts.has("solid") || fts.has("daisyui") || fts.has("mantine");
+    }
+
+    return false;
+  }),
   includes(RulesMessage.INFO_DRIZZLE_STACKBLITZ, "drizzle"),
 ] satisfies Rule[];
