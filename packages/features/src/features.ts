@@ -166,6 +166,23 @@ export const features = [
       },
     ],
   },
+  {
+    category: "UI Component Libraries",
+    label: "shadcn/ui",
+    flag: "shadcn-ui",
+    dependsOn: ["tailwindcss", "react"],
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBjbGFzcz0iaC02IHctNiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgyNTZ2MjU2SDB6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxNiIgZD0ibTIwOCAxMjgtODAgODBtNjQtMTY4TDQwIDE5MiIvPjwvc3ZnPg==",
+    url: "https://ui.shadcn.com",
+    tagline: "Beautifully designed components that you can copy and paste into your apps.",
+    repo: "shadcn-ui/ui",
+    links: [
+      {
+        label: "Docs",
+        href: "https://ui.shadcn.com/docs",
+      },
+    ],
+  },
 
   // Auth
   {
