@@ -18,14 +18,14 @@ export const createTodoHandler: Get<
         _: object;
       }>
   >
-> = () => async (request, context, _runtime) => {
+> = () => async (request, _context, _runtime) => {
   // In a real case, user-provided data should ALWAYS be validated with tools like zod
   const newTodo = (await request.json()) as { text: string };
 
   if (BATI.has("drizzle")) {
-    await drizzleQueries.insertTodo(context.db, newTodo.text);
+    await drizzleQueries.insertTodo(_context.db, newTodo.text);
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
-    sqliteQueries.insertTodo(context.db, newTodo.text);
+    sqliteQueries.insertTodo(_context.db, newTodo.text);
   } else if (BATI.hasD1) {
     await d1Queries.insertTodo(getDbFromRuntime(_runtime), newTodo.text);
   } else {
