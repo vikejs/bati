@@ -20,14 +20,12 @@ import {
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hono";
-import type { D1Database } from "@cloudflare/workers-types";
+import { createHandler, createMiddleware } from "@universal-middleware/hono";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const app = new Hono();
 
@@ -76,23 +74,7 @@ if (BATI.has("trpc")) {
    *
    * @link {@see https://trpc.io/docs/server/adapters}
    **/
-  app.use("/api/trpc/*", (c) => {
-    return fetchRequestHandler({
-      endpoint: "/api/trpc",
-      req: c.req.raw,
-      router: appRouter,
-      createContext({ req, resHeaders }) {
-        return {
-          ...getContext(c)!,
-          ...(getRuntime(c) as BATI.If<{
-            "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
-          }>),
-          req,
-          resHeaders,
-        };
-      },
-    });
-  });
+  app.use("/api/trpc/*", createHandler(trpcHandler)("/api/trpc"));
 }
 
 if (BATI.has("telefunc")) {

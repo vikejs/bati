@@ -22,12 +22,11 @@ import {
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import * as trpcExpress from "@trpc/server/adapters/express";
-import { createHandler, createMiddleware, getContext } from "@universal-middleware/express";
+import { createHandler, createMiddleware } from "@universal-middleware/express";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import express from "express";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -99,17 +98,9 @@ async function startServer() {
     /**
      * tRPC route
      *
-     * @link {@see https://trpc.io/docs/server/adapters/express#3-use-the-express-adapter}
+     * @link {@see https://trpc.io/docs/server/adapters/fetch}
      **/
-    app.use(
-      "/api/trpc",
-      trpcExpress.createExpressMiddleware({
-        router: appRouter,
-        createContext({ req, res }: trpcExpress.CreateExpressContextOptions) {
-          return { ...getContext(req)!, req, res } as BATI.Any;
-        },
-      }),
-    );
+    app.use("/api/trpc", createHandler(trpcHandler)("/api/trpc"));
   }
 
   if (BATI.has("telefunc")) {

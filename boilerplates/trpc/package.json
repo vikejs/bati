@@ -21,6 +21,7 @@
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "@types/node": "^18.19.14",
+    "@universal-middleware/core": "^0.2.6",
     "vite": "^5.4.2"
   },
   "dependencies": {
@@ -39,6 +40,9 @@
       "trpc/server": [
         "./dist/types/trpc/server.d.ts"
       ],
+      "server/trpc-handler": [
+        "./dist/types/server/trpc-handler.d.ts"
+      ],
       "trpc/client": [
         "./dist/types/trpc/client.d.ts"
       ]
@@ -47,6 +51,9 @@
   "exports": {
     "./trpc/server": {
       "types": "./dist/types/trpc/server.d.ts"
+    },
+    "./server/trpc-handler": {
+      "types": "./dist/types/server/trpc-handler.d.ts"
     },
     "./trpc/client": {
       "types": "./dist/types/trpc/client.d.ts"
