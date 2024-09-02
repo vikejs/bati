@@ -32,13 +32,13 @@ const router = tsr
         },
       };
     },
-    createTodo: async ({ body }, ctx) => {
+    createTodo: async ({ body }, _ctx) => {
       if (BATI.has("drizzle")) {
-        await drizzleQueries.insertTodo(ctx.db, body.text);
+        await drizzleQueries.insertTodo(_ctx.db, body.text);
       } else if (BATI.has("sqlite") && !BATI.hasD1) {
-        sqliteQueries.insertTodo(ctx.db, body.text);
+        sqliteQueries.insertTodo(_ctx.db, body.text);
       } else if (BATI.hasD1) {
-        await d1Queries.insertTodo(ctx.env.DB, body.text);
+        await d1Queries.insertTodo(_ctx.env.DB, body.text);
       } else {
         // This is where you'd persist the data
         console.log("Received new todo", { text: body.text });

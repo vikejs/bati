@@ -14,7 +14,7 @@
     "publish": "pnpm run build && pnpm -r publish",
     "check-types": "turbo run check-types",
     "test": "turbo run test",
-    "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
+    "test:e2e": "turbo run test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build --no-daemon",
     "lint": "eslint ."
