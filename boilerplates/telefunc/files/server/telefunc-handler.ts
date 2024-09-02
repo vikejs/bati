@@ -1,5 +1,7 @@
 import { telefunc } from "telefunc";
 import type { Get, UniversalHandler } from "@universal-middleware/core";
+import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import type { D1Database } from "@cloudflare/workers-types";
 
 export const telefuncHandler: Get<[], UniversalHandler> = () => async (request, context, runtime) => {
@@ -8,7 +10,11 @@ export const telefuncHandler: Get<[], UniversalHandler> = () => async (request, 
     method: request.method,
     body: await request.text(),
     context: {
-      ...context,
+      ...(context as BATI.If<{
+        'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
+        'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
+        'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
+      }>),
       ...(runtime as BATI.If<{
         "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
       }>),

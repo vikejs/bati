@@ -48,6 +48,26 @@ export function visitorTypeParameterInstanciation(
   }
 }
 
+export function visitorTypeReference(
+  context: Rule.RuleContext,
+  sourceCode: SourceCode,
+  node: TSESTree.TSTypeReference,
+  meta: VikeMeta,
+) {
+  transformBatiType(
+    context,
+    sourceCode,
+    node,
+    meta,
+    () => {
+      return node.range;
+    },
+    (value) => {
+      return value;
+    },
+  );
+}
+
 export function transformBatiType(
   context: Rule.RuleContext,
   sourceCode: SourceCode,

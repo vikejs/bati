@@ -21,7 +21,9 @@ export class BatiSet extends Set<Flags> {
   }
 
   get hasDatabase(): boolean {
-    return this.hasOneOf(this.#databases);
+    // TODO replace with the following once prisma and edge are properly supported
+    // return this.hasOneOf(this.#databases);
+    return this.has("sqlite") || this.has("drizzle");
   }
 
   get hasD1(): boolean {

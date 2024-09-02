@@ -3,7 +3,7 @@ import { getAuth } from "firebase-admin/auth";
 import { firebaseAdmin } from "../libs/firebaseAdmin";
 import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
-export const firebaseAuthMiddleware = (() => async (request, context) => {
+export const firebaseAuthMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
   if (!request.headers.has("cookie")) return;
 
   const cookies = parse(request.headers.get("cookie")!);
@@ -24,7 +24,7 @@ export const firebaseAuthMiddleware = (() => async (request, context) => {
       user: null,
     };
   }
-}) satisfies Get<[], UniversalMiddleware>;
+};
 
 export const firebaseAuthLoginHandler: Get<[], UniversalHandler> = () => async (request) => {
   const body = await request.json();

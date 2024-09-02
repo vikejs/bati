@@ -25,7 +25,8 @@ import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { createHandler, createMiddleware } from "@universal-middleware/express";
+import { createHandler, createMiddleware, getContext } from "@universal-middleware/express";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +54,13 @@ async function startServer() {
       })
     ).middlewares;
     app.use(viteDevMiddleware);
+  }
+
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    app.use(createMiddleware(dbMiddleware)());
   }
 
   if (BATI.has("authjs") || BATI.has("auth0")) {
@@ -98,7 +106,7 @@ async function startServer() {
       trpcExpress.createExpressMiddleware({
         router: appRouter,
         createContext({ req, res }: trpcExpress.CreateExpressContextOptions) {
-          return { req, res } as BATI.Any;
+          return { ...getContext(req)!, req, res } as BATI.Any;
         },
       }),
     );

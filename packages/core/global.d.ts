@@ -18,8 +18,14 @@ declare global {
   namespace BATI {
     type Any = any;
 
-    type If<T extends Partial<Record<string, any>>> = UnionToIntersection<Values<T>>;
-    type IfAsUnkown<T extends Partial<Record<string, any>>> = If<T>;
+    type If<
+      T extends Partial<Record<string, any>>,
+      Mode extends "union" | "intersection" = "intersection",
+    > = Mode extends "intersection" ? UnionToIntersection<Values<T>> : Values<T>;
+    type IfAsUnkown<
+      T extends Partial<Record<string, any>>,
+      Mode extends "union" | "intersection" = "intersection",
+    > = If<T, Mode>;
   }
 }
 

@@ -31,7 +31,8 @@ import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
 import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener } from "h3";
 import serveStatic from "serve-static";
-import { createHandler, createMiddleware } from "@universal-middleware/h3";
+import { createHandler, createMiddleware, getContext } from "@universal-middleware/h3";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 
 installWhatwgNodeFetch();
 installGetSetCookie();
@@ -65,6 +66,13 @@ async function startServer() {
   }
 
   const router = createRouter();
+
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    app.use(createMiddleware(dbMiddleware)());
+  }
 
   if (BATI.has("authjs") || BATI.has("auth0")) {
     /**
@@ -113,7 +121,7 @@ async function startServer() {
           path: event.context.params!.path,
           router: appRouter,
           createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
-            return { req, res } as BATI.Any;
+            return { ...getContext(event)!, req, res } as BATI.Any;
           },
         }),
       ),

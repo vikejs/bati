@@ -30,7 +30,8 @@ import {
   type FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
-import { createHandler, createMiddleware } from "@universal-middleware/fastify";
+import { createHandler, createMiddleware, getContext } from "@universal-middleware/fastify";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -67,6 +68,13 @@ async function startServer() {
       })
     ).middlewares;
     app.use(viteDevMiddleware);
+  }
+
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    app.register(createMiddleware(dbMiddleware)());
   }
 
   if (BATI.has("authjs") || BATI.has("auth0")) {
@@ -112,7 +120,7 @@ async function startServer() {
       trpcOptions: {
         router: appRouter,
         createContext({ req, res }: CreateFastifyContextOptions) {
-          return { req, res } as BATI.Any;
+          return { ...getContext(req)!, req, res } as BATI.Any;
         },
         onError({ path, error }) {
           // report to error monitoring

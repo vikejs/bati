@@ -3,7 +3,7 @@ import { Lucia, type Register } from "lucia";
 import { BetterSqlite3Adapter, D1Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db as drizzleDb } from "@batijs/drizzle/database/drizzle/db";
+import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { sessionTable, userTable } from "@batijs/drizzle/database/drizzle/schema/lucia-auth";
 import { D1Database } from "@cloudflare/workers-types";
@@ -22,8 +22,15 @@ if (!globalThis.crypto) {
 }
 
 export function initializeLucia(
-  //# BATI.hasD1
-  d1?: D1Database,
+  db: BATI.If<
+    {
+      'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
+      'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
+      'BATI.has("drizzle")': ReturnType<typeof dbD1>;
+      "BATI.hasD1": D1Database;
+    },
+    "union"
+  >,
 ) {
   /**
    * Database setup
@@ -31,13 +38,13 @@ export function initializeLucia(
    * @link {@see https://lucia-auth.com/database/#database-setup}
    **/
   const adapter = BATI.has("drizzle")
-    ? new DrizzleSQLiteAdapter(drizzleDb(), sessionTable, userTable)
+    ? new DrizzleSQLiteAdapter(db as BATI.Any, sessionTable, userTable)
     : BATI.hasD1
-      ? new D1Adapter(d1, {
+      ? new D1Adapter(db as BATI.Any, {
           user: "users",
           session: "sessions",
         })
-      : new BetterSqlite3Adapter(sqliteDb(), {
+      : new BetterSqlite3Adapter(db as BATI.Any, {
           user: "users",
           session: "sessions",
         });
@@ -89,6 +96,11 @@ declare global {
   namespace Universal {
     interface Context {
       lucia: Register["Lucia"];
+      db: BATI.If<{
+        'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
+        'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
+        'BATI.has("drizzle")': ReturnType<typeof dbD1>;
+      }>;
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/trpc",
+  "name": "@batijs/shared-db",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -14,14 +14,10 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
-    "@batijs/d1": "workspace:*",
     "@batijs/sqlite": "workspace:*",
-    "@batijs/shared-todo": "workspace:*",
-    "@cloudflare/workers-types": "^4.20240821.1",
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
+    "@batijs/d1": "workspace:*",
     "@types/node": "^18.19.14",
-    "vite": "^5.4.2"
+    "@universal-middleware/core": "^0.2.6"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -31,25 +27,26 @@
   ],
   "bati": {
     "if": {
-      "flag": "trpc"
+      "flag": {
+        "$in": [
+          "drizzle",
+          "sqlite",
+          "edgedb",
+          "prisma"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./server/db-middleware": {
+      "types": "./dist/types/server/db-middleware.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "trpc/server": [
-        "./dist/types/trpc/server.d.ts"
-      ],
-      "trpc/client": [
-        "./dist/types/trpc/client.d.ts"
+      "server/db-middleware": [
+        "./dist/types/server/db-middleware.d.ts"
       ]
-    }
-  },
-  "exports": {
-    "./trpc/server": {
-      "types": "./dist/types/trpc/server.d.ts"
-    },
-    "./trpc/client": {
-      "types": "./dist/types/trpc/client.d.ts"
     }
   }
 }

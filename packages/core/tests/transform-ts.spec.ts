@@ -478,7 +478,7 @@ const a = 1;`,
   });
 });
 
-describe("as expression", () => {
+describe("BATI. expressions", () => {
   test("BATI.Any", async () => {
     const renderedOutput = await transformAndFormat(
       `const a = "a" as BATI.Any;`,
@@ -522,6 +522,33 @@ describe("as expression", () => {
 .create();`,
     `const t = initTRPC.context<{ env: { DB: D1Database } }>().create();`,
     `const t = initTRPC.context<object>().create();`,
+  );
+
+  testIfElse(
+    `declare global {
+  namespace Universal {
+    interface Context {
+      db: BATI.If<{
+        'BATI.has("react")': ReturnType<typeof sqliteDb>;
+        _: object;
+      }>;
+    }
+  }
+}`,
+    `declare global {
+  namespace Universal {
+    interface Context {
+      db: ReturnType<typeof sqliteDb>;
+    }
+  }
+}`,
+    `declare global {
+  namespace Universal {
+    interface Context {
+      db: object;
+    }
+  }
+}`,
   );
 });
 

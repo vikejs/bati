@@ -5,9 +5,11 @@ import { getContext } from "telefunc";
 
 export async function onNewTodo({ text }: { text: string }) {
   if (BATI.has("drizzle")) {
-    await drizzleQueries.insertTodo(text);
+    const context = getContext();
+    await drizzleQueries.insertTodo(context.db, text);
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
-    sqliteQueries.insertTodo(text);
+    const context = getContext();
+    sqliteQueries.insertTodo(context.db, text);
   } else if (BATI.hasD1) {
     const context = getContext();
     await d1Queries.insertTodo(context.env.DB, text);

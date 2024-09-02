@@ -21,13 +21,13 @@ import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
  *
  * @link {@see https://universal-middleware.dev/examples/context-middleware}
  */
-export const luciaDbMiddleware = (() => async (_request, context, _runtime) => {
-  const lucia = BATI.hasD1 ? initializeLucia(getDbFromRuntime(_runtime)) : initializeLucia();
+export const luciaDbMiddleware: Get<[], UniversalMiddleware> = () => async (_request, context, _runtime) => {
+  const lucia = BATI.hasD1 ? initializeLucia(getDbFromRuntime(_runtime)) : initializeLucia(context.db);
   return {
     ...context,
     lucia,
   };
-}) satisfies Get<[], UniversalMiddleware>;
+};
 
 /**
  * CSRF protection middleware
@@ -55,7 +55,7 @@ export const luciaCsrfMiddleware = (() => async (request) => {
  *
  * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
  */
-export const luciaAuthContextMiddleware = (() => async (request, context) => {
+export const luciaAuthContextMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
   const sessionId = context.lucia.readSessionCookie(request.headers.get("cookie") ?? "");
 
   if (!sessionId) {
@@ -74,7 +74,7 @@ export const luciaAuthContextMiddleware = (() => async (request, context) => {
       user,
     };
   }
-}) satisfies Get<[], UniversalMiddleware>;
+};
 
 /**
  * Set Set-Cookie headers if in context
@@ -130,9 +130,9 @@ export const luciaAuthSignupHandler = (() => async (request, context, _runtime) 
 
   try {
     if (BATI.has("drizzle")) {
-      drizzleQueries.signupWithCredentials(userId, username, passwordHash);
+      await drizzleQueries.signupWithCredentials(context.db, userId, username, passwordHash);
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
-      sqliteQueries.signupWithCredentials(userId, username, passwordHash);
+      sqliteQueries.signupWithCredentials(context.db, userId, username, passwordHash);
     } else if (BATI.hasD1) {
       await d1Queries.signupWithCredentials(getDbFromRuntime(_runtime), userId, username, passwordHash);
     }
@@ -187,9 +187,9 @@ export const luciaAuthLoginHandler = (() => async (request, context, _runtime) =
   }
 
   const existingUser: DatabaseUser | undefined | null = BATI.has("drizzle")
-    ? drizzleQueries.getExistingUser(username)
+    ? await drizzleQueries.getExistingUser(context.db, username)
     : BATI.has("sqlite") && !BATI.hasD1
-      ? sqliteQueries.getExistingUser<DatabaseUser>(username)
+      ? sqliteQueries.getExistingUser<DatabaseUser>(context.db, username)
       : BATI.hasD1
         ? await d1Queries.getExistingUser<DatabaseUser>(getDbFromRuntime(_runtime), username)
         : undefined;
@@ -309,9 +309,11 @@ export const luciaGithubCallbackHandler = (() => async (request, context, _runti
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
     const existingAccount: DatabaseOAuthAccount | undefined | null = BATI.has("drizzle")
-      ? (drizzleQueries.getExistingAccount("github", githubUser.id) as DatabaseOAuthAccount | undefined)
+      ? ((await drizzleQueries.getExistingAccount(context.db, "github", githubUser.id)) as
+          | DatabaseOAuthAccount
+          | undefined)
       : BATI.has("sqlite") && !BATI.hasD1
-        ? sqliteQueries.getExistingAccount<DatabaseOAuthAccount>("github", githubUser.id)
+        ? sqliteQueries.getExistingAccount<DatabaseOAuthAccount>(context.db, "github", githubUser.id)
         : BATI.hasD1
           ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(
               getDbFromRuntime(_runtime),
@@ -337,9 +339,9 @@ export const luciaGithubCallbackHandler = (() => async (request, context, _runti
     const userId = generateId(15);
 
     if (BATI.has("drizzle")) {
-      await drizzleQueries.signupWithGithub(userId, githubUser.login, githubUser.id);
+      await drizzleQueries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
-      sqliteQueries.signupWithGithub(userId, githubUser.login, githubUser.id);
+      sqliteQueries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
     } else if (BATI.hasD1) {
       await d1Queries.signupWithGithub(getDbFromRuntime(_runtime), userId, githubUser.login, githubUser.id);
     }

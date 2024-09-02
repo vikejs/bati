@@ -27,6 +27,7 @@ import { createRouter } from "@hattip/router";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import vercelAdapter from "@hattip/adapter-vercel-edge";
 import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hattip";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import type { D1Database } from "@cloudflare/workers-types";
 
 const router = createRouter();
@@ -53,7 +54,7 @@ if (BATI.has("trpc")) {
       endpoint: "/api/trpc",
       createContext({ req }) {
         return {
-          ...getContext(context),
+          ...getContext(context)!,
           ...(getRuntime(context) as BATI.If<{
             "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
           }>),
@@ -62,6 +63,13 @@ if (BATI.has("trpc")) {
       },
     });
   });
+}
+
+if (BATI.hasDatabase) {
+  /**
+   * Make database available in Context as `context.db`
+   */
+  router.use(createMiddleware(dbMiddleware)());
 }
 
 if (BATI.has("ts-rest")) {

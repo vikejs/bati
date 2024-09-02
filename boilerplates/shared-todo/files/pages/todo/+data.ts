@@ -11,11 +11,11 @@ export type Data = {
 
 export default async function data(_pageContext: PageContextServer): Promise<Data> {
   if (BATI.has("drizzle")) {
-    const todo = drizzleQueries.getAllTodos();
+    const todo = drizzleQueries.getAllTodos(_pageContext.db);
 
     return { todo };
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
-    const todo = sqliteQueries.getAllTodos();
+    const todo = sqliteQueries.getAllTodos(_pageContext.db);
 
     return { todo };
   } else if (BATI.hasD1) {

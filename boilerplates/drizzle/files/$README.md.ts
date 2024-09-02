@@ -11,15 +11,12 @@ First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create 
 \`\`\`bash
 pnpm drizzle:generate # a script that executes drizzle-kit generate.
 pnpm drizzle:migrate # a script that executes drizzle-kit migrate.
-pnpm drizzle:seed # a script that executes tsx ./database/drizzle/seed.ts.
 \`\`\`
 
 > [!NOTE]
 > The \`drizzle-kit generate\` command is used to generate SQL migration files based on your Drizzle schema.
 >
 > The \`drizzle-kit migrate\` command is used to apply the generated migrations to your database.
->
-> The \`tsx ./database/drizzle/seed.ts\` command is used to run a custom seed script to populate data to your database. 
 
 Read more on [Drizzle ORM documentation](https://orm.drizzle.team/docs/overview)
 `;

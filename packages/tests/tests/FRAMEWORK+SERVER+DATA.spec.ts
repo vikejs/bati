@@ -30,7 +30,6 @@ await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeA
     if (context.flags.includes("drizzle")) {
       await exec(npmCli, ["run", "drizzle:generate"]);
       await exec(npmCli, ["run", "drizzle:migrate"]);
-      await exec(npmCli, ["run", "drizzle:seed"]);
     } else if (context.flags.includes("sqlite")) {
       await exec(npmCli, ["run", "sqlite:migrate"]);
     }

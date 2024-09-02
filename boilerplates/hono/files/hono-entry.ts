@@ -27,8 +27,16 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { createHandler, createMiddleware, getContext, getRuntime } from "@universal-middleware/hono";
 import type { D1Database } from "@cloudflare/workers-types";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 
 const app = new Hono();
+
+if (BATI.hasDatabase) {
+  /**
+   * Make database available in Context as `context.db`
+   */
+  app.use(createMiddleware(dbMiddleware)());
+}
 
 if (BATI.has("authjs") || BATI.has("auth0")) {
   /**
@@ -75,7 +83,7 @@ if (BATI.has("trpc")) {
       router: appRouter,
       createContext({ req, resHeaders }) {
         return {
-          ...getContext(c),
+          ...getContext(c)!,
           ...(getRuntime(c) as BATI.If<{
             "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
           }>),

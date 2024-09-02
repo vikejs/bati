@@ -327,6 +327,9 @@ importers:
       '@batijs/lucia-auth':
         specifier: workspace:*
         version: link:../lucia-auth
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -406,6 +409,9 @@ importers:
       '@batijs/lucia-auth':
         specifier: workspace:*
         version: link:../lucia-auth
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -535,6 +541,9 @@ importers:
       '@batijs/lucia-auth':
         specifier: workspace:*
         version: link:../lucia-auth
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -614,6 +623,9 @@ importers:
       '@batijs/lucia-auth':
         specifier: workspace:*
         version: link:../lucia-auth
+      '@batijs/shared-db':
+        specifier: workspace:^
+        version: link:../shared-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -696,6 +708,9 @@ importers:
       '@batijs/lucia-auth':
         specifier: workspace:*
         version: link:../lucia-auth
+      '@batijs/shared-db':
+        specifier: workspace:*
+        version: link:../shared-db
       '@batijs/shared-server':
         specifier: workspace:^
         version: link:../shared-server
@@ -1079,6 +1094,31 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1(@vite-plugin-vercel/vike@9.0.1)(encoding@0.1.13)(vike@0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41))))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
 
+  boilerplates/shared-db:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@batijs/d1':
+        specifier: workspace:*
+        version: link:../d1
+      '@batijs/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
+      '@batijs/sqlite':
+        specifier: workspace:*
+        version: link:../sqlite
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.44
+      '@universal-middleware/core':
+        specifier: ^0.2.6
+        version: 0.2.6
+
   boilerplates/shared-no-db:
     dependencies:
       '@batijs/core':
@@ -1357,9 +1397,6 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-no-db':
-        specifier: workspace:*
-        version: link:../shared-no-db
       '@batijs/shared-todo':
         specifier: workspace:*
         version: link:../shared-todo
@@ -1400,9 +1437,6 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-no-db':
-        specifier: workspace:*
-        version: link:../shared-no-db
       '@batijs/shared-todo':
         specifier: workspace:*
         version: link:../shared-todo
@@ -1440,9 +1474,6 @@ importers:
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
-      '@batijs/shared-no-db':
-        specifier: workspace:*
-        version: link:../shared-no-db
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
