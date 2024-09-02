@@ -3,6 +3,7 @@ import type { Feature } from "./types.js";
 
 export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
+  // eslint-disable-next-line no-unused-private-class-members
   readonly #databases: Set<Flags>;
 
   constructor(flags: Flags[], allFeatures: ReadonlyArray<Feature>) {
