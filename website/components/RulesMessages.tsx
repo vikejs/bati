@@ -146,8 +146,7 @@ export const rulesMessages = {
         <span class="font-bold">React</span> is required with <span class="font-bold">shadcn/ui</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a <span class="font-bold">React</span> or unselect{" "}
-            <span class="font-bold">shadcn/ui</span>
+            Either pick a <span class="font-bold">React</span> or unselect <span class="font-bold">shadcn/ui</span>
           </li>
         </ul>
       </span>
