@@ -214,6 +214,22 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
+function checkFlagsExist(flags: string[]) {
+  const inValidOptions = flags.reduce((acc: string[], flag: string) => {
+    if (!Object.prototype.hasOwnProperty.call(defaultDef, flag) && !features.some((f) => f.flag === flag)) {
+      acc.push(flag);
+    }
+    return acc;
+  }, []);
+  const count = inValidOptions.length;
+  if (count) {
+    console.error(
+      `${red("⚠")} Unknown option${count > 1 ? "s" : ""} ${bold(inValidOptions.join(", "))}. Use \`--help\` to list all available options.`,
+    );
+    process.exit(5);
+  }
+}
+
 function checkRules(flags: string[]) {
   const potentialRulesMessages = execRules(flags as FeatureOrCategory[], rulesMessages);
 
@@ -340,6 +356,7 @@ async function run() {
         })
         .flat(1);
 
+      checkFlagsExist(flags);
       checkRules(flags);
 
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`

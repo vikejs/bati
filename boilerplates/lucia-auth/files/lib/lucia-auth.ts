@@ -1,11 +1,12 @@
 import "dotenv/config";
-import { Lucia } from "lucia";
-import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
+import { Lucia, type Register } from "lucia";
+import { BetterSqlite3Adapter, D1Adapter } from "@lucia-auth/adapter-sqlite";
 import { GitHub } from "arctic";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db as drizzleDb } from "@batijs/drizzle/database/drizzle/db";
-import { sessionTable, userTable } from "@batijs/drizzle/database/drizzle/schema/lucia-auth";
+import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
+import { sessionTable, userTable } from "@batijs/drizzle/database/drizzle/schema/lucia-auth";
+import { D1Database } from "@cloudflare/workers-types";
 
 /**
  * Polyfill needed if you're using Node.js 18 or below
@@ -20,40 +21,57 @@ if (!globalThis.crypto) {
   });
 }
 
-/**
- * Database setup
- *
- * @link {@see https://lucia-auth.com/database/#database-setup}
- **/
-const adapter = BATI.has("drizzle")
-  ? new DrizzleSQLiteAdapter(drizzleDb(), sessionTable, userTable)
-  : new BetterSqlite3Adapter(sqliteDb(), {
-      user: "users",
-      session: "sessions",
-    });
-
-/**
- * Initialize Lucia
- *
- * @link {@see https://lucia-auth.com/getting-started/#initialize-lucia}
- */
-export const lucia = new Lucia(adapter, {
-  /**
-   * Lucia Configuration
-   *
-   * @link {@see https://lucia-auth.com/basics/configuration}
-   */
-  sessionCookie: {
-    attributes: {
-      secure: process.env.NODE_ENV === "production",
+export function initializeLucia(
+  db: BATI.If<
+    {
+      'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
+      'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
+      'BATI.has("drizzle")': ReturnType<typeof dbD1>;
+      "BATI.hasD1": D1Database;
     },
-  },
-  getUserAttributes: (attributes) => {
-    return {
-      username: attributes.username,
-    };
-  },
-});
+    "union"
+  >,
+) {
+  /**
+   * Database setup
+   *
+   * @link {@see https://lucia-auth.com/database/#database-setup}
+   **/
+  const adapter = BATI.has("drizzle")
+    ? new DrizzleSQLiteAdapter(db as BATI.Any, sessionTable, userTable)
+    : BATI.hasD1
+      ? new D1Adapter(db as BATI.Any, {
+          user: "users",
+          session: "sessions",
+        })
+      : new BetterSqlite3Adapter(db as BATI.Any, {
+          user: "users",
+          session: "sessions",
+        });
+
+  /**
+   * Initialize Lucia
+   *
+   * @link {@see https://lucia-auth.com/getting-started/#initialize-lucia}
+   */
+  return new Lucia(adapter, {
+    /**
+     * Lucia Configuration
+     *
+     * @link {@see https://lucia-auth.com/basics/configuration}
+     */
+    sessionCookie: {
+      attributes: {
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    getUserAttributes: (attributes) => {
+      return {
+        username: attributes.username,
+      };
+    },
+  });
+}
 
 /**
  * Initialize OAuth provider
@@ -69,25 +87,43 @@ export const github = new GitHub(process.env.GITHUB_CLIENT_ID as string, process
  */
 declare module "lucia" {
   interface Register {
-    Lucia: typeof lucia;
+    Lucia: ReturnType<typeof initializeLucia>;
     DatabaseUserAttributes: Omit<DatabaseUser, "id">;
+  }
+}
+
+declare global {
+  namespace Universal {
+    interface Context {
+      lucia: Register["Lucia"];
+      db: BATI.If<{
+        'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
+        'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
+        'BATI.has("drizzle")': ReturnType<typeof dbD1>;
+        "BATI.hasD1": D1Database;
+      }>;
+    }
   }
 }
 
 export interface DatabaseUser {
   id: string;
   username: string;
-  password?: string;
+  password?: string | null;
 }
 
+//# !BATI.has("drizzle")
 export interface DatabaseOAuthAccount {
   provider_id: string;
   provider_user_id: string;
-  /*{ @if (it.BATI.has("drizzle")) }*/
-  userId: string;
-  /*{ #else }*/
   user_id: string;
-  /*{ /if }*/
+}
+
+//# BATI.has("drizzle")
+export interface DatabaseOAuthAccount {
+  providerId: string;
+  providerUserId: string;
+  userId: string;
 }
 
 export interface GitHubUser {

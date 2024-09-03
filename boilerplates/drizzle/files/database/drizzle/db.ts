@@ -1,16 +1,14 @@
 import Database from "better-sqlite3";
-import { type BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
+import { drizzle as drizzleSqlite } from "drizzle-orm/better-sqlite3";
+import { drizzle as drizzleD1 } from "drizzle-orm/d1";
 
-let singleton: BetterSQLite3Database | undefined = undefined;
+//# !BATI.hasD1
+export function dbSqlite() {
+  const sqlite = new Database(process.env.DATABASE_URL);
+  return drizzleSqlite(sqlite);
+}
 
-export function db() {
-  if (!singleton) {
-    if (!process.env.DATABASE_URL) {
-      throw new Error("Missing DATABASE_URL in .env file");
-    }
-
-    const sqlite = new Database(process.env.DATABASE_URL);
-    singleton = drizzle(sqlite);
-  }
-  return singleton;
+//# BATI.hasD1
+export function dbD1(d1: D1Database) {
+  return drizzleD1(d1);
 }

@@ -3,6 +3,7 @@ import type { Feature } from "./types.js";
 
 export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
+  // eslint-disable-next-line no-unused-private-class-members
   readonly #databases: Set<Flags>;
 
   constructor(flags: Flags[], allFeatures: ReadonlyArray<Feature>) {
@@ -21,6 +22,12 @@ export class BatiSet extends Set<Flags> {
   }
 
   get hasDatabase(): boolean {
-    return this.hasOneOf(this.#databases);
+    // TODO replace with the following once prisma and edge are properly supported
+    // return this.hasOneOf(this.#databases);
+    return this.has("sqlite") || this.has("drizzle");
+  }
+
+  get hasD1(): boolean {
+    return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle"));
   }
 }

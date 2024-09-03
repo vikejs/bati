@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "../tsconfig.base.json"
+  ],
+  "compilerOptions": {
+    "types": ["@types/node", "@batijs/core/types", "vite/client"],
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "baseUrl": "."
+  }
+}

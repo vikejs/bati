@@ -14,6 +14,8 @@ export enum RulesMessage {
   ERROR_LUCIA_R_COMPAT_DATABASE,
   // A compabible Server (or no Server) is required when using Cloudflare
   ERROR_CLOUDFLARE_R_COMPAT_SERVER,
+  // A compabible Server (or no Server) is required when using Cloudflare
+  ERROR_AWS_R_COMPAT_SERVER,
   // shadcn/ui is only compatible with React
   ERROR_SHADCN_R_REACT,
   // --- WARNING

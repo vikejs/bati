@@ -73,7 +73,8 @@ async function handleOnSubmit(action: "login" | "signup") {
       body: JSON.stringify(formData.value),
       headers: { "Content-Type": "application/json" },
     });
-    const result = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: Record<string, any> = await response.json();
     if ("error" in result) {
       console.error("A validation error has occurred :", result.error);
       error.value = { ...result.error };

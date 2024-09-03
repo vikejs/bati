@@ -3,7 +3,7 @@
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
 import react from "eslint-plugin-react/configs/recommended.js";
-import solid from "eslint-plugin-solid/dist/configs/typescript.js";
+import solid from "eslint-plugin-solid/configs/typescript";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -41,6 +41,7 @@ export default tseslint.config(
           argsIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/no-namespace": 0,
     },
   },
   //# BATI.has("vue")

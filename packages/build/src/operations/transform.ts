@@ -29,6 +29,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".env.production.local":
       case ".html":
       case ".md":
+      case ".toml":
         return fileContent as string;
       case ".json":
         return JSON.stringify(fileContent, null, 2);

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
 import type { BatiSet } from "@batijs/features";
+import type { UnionToIntersection, Values } from "./type-utils.js";
 
 declare global {
   const BATI: BatiSet;
@@ -11,6 +13,19 @@ declare global {
       BATI: BatiSet;
       BATI_TEST: boolean | undefined;
     }
+  }
+
+  namespace BATI {
+    type Any = any;
+
+    type If<
+      T extends Partial<Record<string, any>>,
+      Mode extends "union" | "intersection" = "intersection",
+    > = Mode extends "intersection" ? UnionToIntersection<Values<T>> : Values<T>;
+    type IfAsUnkown<
+      T extends Partial<Record<string, any>>,
+      Mode extends "union" | "intersection" = "intersection",
+    > = If<T, Mode>;
   }
 }
 
