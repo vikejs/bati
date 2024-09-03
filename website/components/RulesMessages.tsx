@@ -140,6 +140,14 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_SHADCN_R_REACT]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">shadcn/ui</span> is only compatible with <span class="font-bold">React</span>. No other
+        UI libraries can be combined with it!
+      </span>
+    );
+  }),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: invisible(() => {
     onMount(() => {
       document
