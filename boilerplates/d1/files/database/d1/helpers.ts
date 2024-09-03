@@ -9,9 +9,9 @@ export async function getDbFromRuntime(runtime: RuntimeAdapter): Promise<D1Datab
     return runtime.env!.DB as D1Database;
   }
 
+  // When running on node, simulate Cloudflare environment with "wrangler"
   const { getPlatformProxy } = await import("wrangler");
 
   const { env } = await getPlatformProxy();
-  return env!.DB as D1Database;
-  // throw new Error("Cloudflare runtime not found");
+  return env.DB as D1Database;
 }

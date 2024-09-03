@@ -16,6 +16,12 @@ export default defineConfig({
     //# BATI.has("hattip") && !BATI.has("vercel")
     hattip(),
   ],
+  //# BATI.hasD1
+  build: {
+    rollupOptions: {
+      external: ["wrangler"],
+    },
+  },
   //# BATI.has("vercel") && BATI.hasServer
   vercel: {
     additionalEndpoints: [
