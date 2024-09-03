@@ -167,7 +167,7 @@ export const rulesMessages = {
         )}
         <ul class="list-custom list-dot">
           <li>
-            Pick a server: <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>
+            Compatible servers: <span class="font-bold">Hono</span>, <span class="font-bold">HatTip</span>
           </li>
         </ul>
       </span>
