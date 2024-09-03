@@ -4,7 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
   setScripts(packageJson, {
-    //@ts-ignore
     test: {
       value: "vitest",
       precedence: 0,

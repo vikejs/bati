@@ -3,7 +3,7 @@ import { existsSync, readdirSync, readFileSync, rmSync } from "fs";
 import { execSync } from "node:child_process";
 import path from "path";
 
-export const matrix = ["aws", "react", ["hono", "hattip"] /*, "eslint"*/] as const;
+export const matrix = ["aws", "react", ["hono", "hattip"], "eslint"] as const;
 
 await describeBati(({ test, expect, beforeAll, testMatch }) => {
   beforeAll(

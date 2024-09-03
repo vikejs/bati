@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
@@ -90,7 +90,7 @@ describe("AWSHandler", () => {
   });
 });
 
-/* @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type JsonData = Record<string, any>;
 
 function extractRequestHandlerPath(jsonData: JsonData, targetCdkPath: string): string | null {
