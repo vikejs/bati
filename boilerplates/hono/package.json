@@ -26,6 +26,7 @@
     "@cloudflare/workers-types": "^4.20240821.1",
     "@hono/node-server": "^1.12.2",
     "@hono/vite-dev-server": "^0.15.1",
+    "@types/aws-lambda": "^8.10.145",
     "@trpc/server": "^10.45.2",
     "@types/node": "^18.19.14",
     "@universal-middleware/hono": "^0.2.5",
@@ -52,6 +53,9 @@
     "./hono-entry": {
       "types": "./dist/types/hono-entry.d.ts"
     },
+    "./entry_aws_lambda": {
+      "types": "./dist/types/entry_aws_lambda.d.ts"
+    },
     "./hono-entry.node": {
       "types": "./dist/types/hono-entry.node.d.ts"
     }
@@ -60,6 +64,9 @@
     "*": {
       "hono-entry": [
         "./dist/types/hono-entry.d.ts"
+      ],
+      "entry_aws_lambda": [
+        "./dist/types/entry_aws_lambda.d.ts"
       ],
       "hono-entry.node": [
         "./dist/types/hono-entry.node.d.ts"

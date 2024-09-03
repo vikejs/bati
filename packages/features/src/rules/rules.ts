@@ -24,6 +24,18 @@ export default [
 
     return false;
   }),
+  filter(RulesMessage.ERROR_AWS_R_COMPAT_SERVER, (fts) => {
+    if (fts.has("aws")) {
+      if (fts.has("hono") || fts.has("hattip")) {
+        return false;
+      }
+
+      // If it has any other server, return the message
+      return fts.has("Server");
+    }
+
+    return false;
+  }),
   filter(RulesMessage.ERROR_LUCIA_R_COMPAT_DATABASE, (fts) => {
     if (fts.has("lucia-auth")) {
       return !(fts.has("sqlite") || fts.has("drizzle"));
