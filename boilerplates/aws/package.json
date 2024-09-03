@@ -1,0 +1,70 @@
+{
+  "name": "@batijs/aws",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.14",
+    "@types/which": "^3.0.4",
+    "aws-cdk": "^2.154.1",
+    "aws-cdk-lib": "^2.154.1",
+    "cdk": "^2.154.1",
+    "constructs": "^10.3.0",
+    "esbuild": "^0.23.1",
+    "source-map-support": "^0.5.21",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5",
+    "which": "^4.0.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "aws"
+    }
+  },
+  "exports": {
+    "./vitest.config": {
+      "types": "./dist/types/vitest.config.d.ts"
+    },
+    "./cdk/lib/vike-stack": {
+      "types": "./dist/types/cdk/lib/vike-stack.d.ts"
+    },
+    "./cdk/bin/infrastructure": {
+      "types": "./dist/types/cdk/bin/infrastructure.d.ts"
+    },
+    "./tests/aws_handler.spec": {
+      "types": "./dist/types/tests/aws_handler.spec.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "vitest.config": [
+        "./dist/types/vitest.config.d.ts"
+      ],
+      "cdk/lib/vike-stack": [
+        "./dist/types/cdk/lib/vike-stack.d.ts"
+      ],
+      "cdk/bin/infrastructure": [
+        "./dist/types/cdk/bin/infrastructure.d.ts"
+      ],
+      "tests/aws_handler.spec": [
+        "./dist/types/tests/aws_handler.spec.d.ts"
+      ]
+    }
+  }
+}

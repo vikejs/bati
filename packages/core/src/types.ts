@@ -1,9 +1,9 @@
-import type { Flags } from "@batijs/features";
+import { BatiSet } from "@batijs/features";
 
 export type ContentGetter = () => string | Promise<string>;
 
 export interface VikeMeta {
-  BATI: Set<Flags>;
+  BATI: BatiSet;
   BATI_TEST?: boolean;
 }
 

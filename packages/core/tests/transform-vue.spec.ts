@@ -2,6 +2,7 @@ import { assert, describe, test } from "vitest";
 import { formatCode } from "../src/format.js";
 import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
+import { BatiSet, features } from "@batijs/features";
 
 function testIfElse(code: string, expectedIf: string, expectedElse: string) {
   const filename = "test.vue";
@@ -10,7 +11,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new Set(["vue"]),
+        BATI: new BatiSet(["vue"], features),
       },
       { filepath: filename },
     );
@@ -22,7 +23,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new Set(),
+        BATI: new BatiSet([], features),
       },
       { filepath: filename },
     );
@@ -152,7 +153,7 @@ import { router } from "@batijs/trpc/router";
 export const appRouter = router();
 </script>`,
       {
-        BATI: new Set(["vue"]),
+        BATI: new BatiSet(["vue"], features),
       },
       { filepath: "test.vue" },
     );
@@ -212,7 +213,7 @@ export default {
 `;
 
   const renderedOutput = transform(code, "test.vue", {
-    BATI: new Set(["vue"]),
+    BATI: new BatiSet(["vue"], features),
   });
 
   assert.equal(await formatCode(renderedOutput.code, { filepath: "test.vue" }), code);

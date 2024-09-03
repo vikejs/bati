@@ -1,0 +1,54 @@
+{
+  "name": "@batijs/shared-db",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/drizzle": "workspace:*",
+    "@batijs/sqlite": "workspace:*",
+    "@batijs/d1": "workspace:*",
+    "@batijs/d1-sqlite": "workspace:*",
+    "@types/node": "^18.19.14",
+    "@universal-middleware/core": "^0.2.6",
+    "@cloudflare/workers-types": "^4.20240821.1"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": {
+        "$in": [
+          "drizzle",
+          "sqlite",
+          "edgedb",
+          "prisma"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./server/db-middleware": {
+      "types": "./dist/types/server/db-middleware.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server/db-middleware": [
+        "./dist/types/server/db-middleware.d.ts"
+      ]
+    }
+  }
+}

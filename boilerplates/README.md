@@ -23,8 +23,8 @@ The global idea is to have templating as code, making it is easy to write and ma
 <table>
 <tr>
 <th>Snippet</th>
-<th>if true, compiles to</th>
-<th>if false, compiles to</th>
+<th>if condition 1, compiles to</th>
+<th>else/if condition 2, compiles to</th>
 </tr>
 <tr>
 <td colspan="3">
@@ -133,6 +133,68 @@ const a = 1;
 <td>
 
 nothing
+
+</td>
+</tr>
+<tr>
+<td>
+
+```ts
+// Equivalent to `as any` but in Bati's codebase only. It is dropped entirely when compiled.
+// Only use this to bypass complex type mixing, but prefer using `BATI.If<...>` instead if possible.
+const a = 'react' as BATI.Any;
+```
+
+</td>
+<td>
+
+```ts
+const a = 'react';
+```
+
+</td>
+<td>
+
+```ts
+const a = 'react';
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+```ts
+interface Context {
+  // First valid match is the one that will be applied
+  ui: BATI.If<{
+    'BATI.has("react")': "react";
+    'BATI.has("vue")': "vue";
+    'BATI.has("solid")': "solid";
+    // fallback
+    _: "other";
+  }>;
+}
+```
+
+</td>
+<td>
+For instance, if `--react` was given
+
+```ts
+interface Context {
+  ui: "react";
+}
+```
+
+</td>
+<td>
+
+```ts
+interface Context {
+  ui: "other";
+}
+```
 
 </td>
 </tr>
