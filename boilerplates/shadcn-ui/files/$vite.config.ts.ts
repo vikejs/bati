@@ -10,6 +10,7 @@ export default async function getViteConfig(props: TransformerProps) {
   return mod.generate().code.replace(`"{{PLACEHOLDER_ALIAS}}"`, replacement);
 }
 
+// @ts-ignore
 function addResolveAlias(mod, find: string, replacement: string) {
   const alias = mod.exports.default.$args[0]?.resolve?.alias ?? {};
   const warnMsg = `${yellow("WARN")}: new resolve.alias: \`"${find}":${replacement}\` replaced existing in vite.config.ts.`;
