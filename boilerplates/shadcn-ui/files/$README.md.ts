@@ -21,8 +21,11 @@ export default async function getReadme(props: TransformerProps) {
 
   ### Add Components to Your Project
 
-  **Example:** add the calendar component to your project.
-  \`pnpm shadcn add calendar\`
+  **Example:** add a component to your project.
+  \`pnpm shadcn add button\`
+
+  use the \`<Button />\` component in your project:
+  \`import { Button } from "@/components/ui/button";\`
 
   more [shadcn/ui components](https://ui.shadcn.com/docs/components/accordion)
 
