@@ -8,7 +8,6 @@ import { filter, includes, requires, type Rule } from "./utils.js";
 export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
-  requires(RulesMessage.ERROR_MANTINE_R_REACT, "mantine", ["react"]),
   includes(RulesMessage.INFO_HATTIP, "hattip"),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
@@ -43,9 +42,23 @@ export default [
 
     return false;
   }),
+  filter(RulesMessage.ERROR_MANTINE_R_REACT, (fts) => {
+    if (fts.has("mantine")) {
+      return fts.has("vue") || fts.has("solid");
+    }
+
+    return false;
+  }),
   filter(RulesMessage.ERROR_SHADCN_R_REACT, (fts) => {
     if (fts.has("shadcn-ui")) {
-      return fts.has("vue") || fts.has("solid") || fts.has("daisyui") || fts.has("mantine");
+      return fts.has("vue") || fts.has("solid");
+    }
+
+    return false;
+  }),
+  filter(RulesMessage.WARN_SHADCN_R_TAILWINDCSS, (fts) => {
+    if (fts.has("shadcn-ui")) {
+      return fts.has("daisyui") || fts.has("compiled-css");
     }
 
     return false;

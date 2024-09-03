@@ -14,6 +14,13 @@ function error(value: ValidComponent): RuleMessage {
   };
 }
 
+function warning(value: ValidComponent): RuleMessage {
+  return {
+    type: "warning",
+    value,
+  };
+}
+
 function info(value: ValidComponent): RuleMessage {
   return {
     type: "info",
@@ -166,6 +173,14 @@ export const rulesMessages = {
             Either pick a <span class="font-bold">React</span> or unselect <span class="font-bold">shadcn/ui</span>
           </li>
         </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.WARN_SHADCN_R_TAILWINDCSS]: warning(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">shadcn/ui</span> integration is tied to <span class="font-bold">TailwindCSS</span>.
+        Using another CSS library with it may have unpredictable behaviour.
       </span>
     );
   }),
