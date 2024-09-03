@@ -143,8 +143,13 @@ export const rulesMessages = {
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(() => {
     return (
       <span class="inline-block">
-        <span class="font-bold">shadcn/ui</span> is only compatible with <span class="font-bold">React</span>. No other
-        UI libraries can be combined with it!
+        <span class="font-bold">React</span> is required with <span class="font-bold">shadcn/ui</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a <span class="font-bold">React</span> or unselect{" "}
+            <span class="font-bold">shadcn/ui</span>
+          </li>
+        </ul>
       </span>
     );
   }),
