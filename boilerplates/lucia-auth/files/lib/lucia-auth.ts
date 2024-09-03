@@ -100,6 +100,7 @@ declare global {
         'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
         'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
         'BATI.has("drizzle")': ReturnType<typeof dbD1>;
+        "BATI.hasD1": D1Database;
       }>;
     }
   }

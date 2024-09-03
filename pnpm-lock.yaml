@@ -209,6 +209,31 @@ importers:
       vike:
         specifier: ^0.4.193
         version: 0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
+      wrangler:
+        specifier: ^3.72.2
+        version: 3.72.3(@cloudflare/workers-types@4.20240821.1)
+
+  boilerplates/d1-sqlite:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
+      '@types/node':
+        specifier: ^18.19.14
+        version: 18.19.44
+      '@universal-middleware/core':
+        specifier: ^0.2.6
+        version: 0.2.6
+      vike:
+        specifier: ^0.4.193
+        version: 0.4.193(react-streaming@0.3.43(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@5.4.2(@types/node@18.19.44)(sugarss@4.0.1(postcss@8.4.41)))
 
   boilerplates/drizzle:
     dependencies:
@@ -778,6 +803,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1106,12 +1134,18 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1162,6 +1196,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1174,6 +1211,9 @@ importers:
       '@batijs/sqlite':
         specifier: workspace:*
         version: link:../sqlite
+      '@cloudflare/workers-types':
+        specifier: ^4.20240821.1
+        version: 4.20240821.1
       '@types/node':
         specifier: ^18.19.14
         version: 18.19.44
@@ -1199,6 +1239,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1394,6 +1437,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1434,6 +1480,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle
@@ -1474,6 +1523,9 @@ importers:
       '@batijs/d1':
         specifier: workspace:*
         version: link:../d1
+      '@batijs/d1-sqlite':
+        specifier: workspace:*
+        version: link:../d1-sqlite
       '@batijs/drizzle':
         specifier: workspace:*
         version: link:../drizzle

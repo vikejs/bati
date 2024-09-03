@@ -12,9 +12,8 @@ import { generateState, OAuth2RequestError } from "arctic";
 import { parse, serialize } from "cookie";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/lucia-auth";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/lucia-auth";
-import * as d1Queries from "@batijs/d1/database/d1/queries/lucia-auth";
+import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/lucia-auth";
 import { type Get, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
-import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 
 /**
  * Add lucia database to the context
@@ -22,7 +21,7 @@ import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
  * @link {@see https://universal-middleware.dev/examples/context-middleware}
  */
 export const luciaDbMiddleware: Get<[], UniversalMiddleware> = () => async (_request, context, _runtime) => {
-  const lucia = BATI.hasD1 ? initializeLucia(getDbFromRuntime(_runtime)) : initializeLucia(context.db);
+  const lucia = initializeLucia(context.db);
   return {
     ...context,
     lucia,
@@ -134,7 +133,7 @@ export const luciaAuthSignupHandler = (() => async (request, context, _runtime) 
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
       sqliteQueries.signupWithCredentials(context.db, userId, username, passwordHash);
     } else if (BATI.hasD1) {
-      await d1Queries.signupWithCredentials(getDbFromRuntime(_runtime), userId, username, passwordHash);
+      await d1Queries.signupWithCredentials(context.db, userId, username, passwordHash);
     }
 
     const session = await context.lucia.createSession(userId, {});
@@ -191,7 +190,7 @@ export const luciaAuthLoginHandler = (() => async (request, context, _runtime) =
     : BATI.has("sqlite") && !BATI.hasD1
       ? sqliteQueries.getExistingUser<DatabaseUser>(context.db, username)
       : BATI.hasD1
-        ? await d1Queries.getExistingUser<DatabaseUser>(getDbFromRuntime(_runtime), username)
+        ? await d1Queries.getExistingUser<DatabaseUser>(context.db, username)
         : undefined;
 
   if (!existingUser) {
@@ -315,11 +314,7 @@ export const luciaGithubCallbackHandler = (() => async (request, context, _runti
       : BATI.has("sqlite") && !BATI.hasD1
         ? sqliteQueries.getExistingAccount<DatabaseOAuthAccount>(context.db, "github", githubUser.id)
         : BATI.hasD1
-          ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(
-              getDbFromRuntime(_runtime),
-              "github",
-              githubUser.id,
-            )
+          ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(context.db, "github", githubUser.id)
           : undefined;
 
     if (existingAccount) {
@@ -343,7 +338,7 @@ export const luciaGithubCallbackHandler = (() => async (request, context, _runti
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
       sqliteQueries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
     } else if (BATI.hasD1) {
-      await d1Queries.signupWithGithub(getDbFromRuntime(_runtime), userId, githubUser.login, githubUser.id);
+      await d1Queries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
     }
 
     const session = await context.lucia.createSession(userId, {});

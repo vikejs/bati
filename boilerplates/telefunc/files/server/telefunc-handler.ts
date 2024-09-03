@@ -14,6 +14,7 @@ export const telefuncHandler: Get<[], UniversalHandler> = () => async (request, 
         'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
         'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
         'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
+        "BATI.hasD1": { db: D1Database };
       }>),
       ...(runtime as BATI.If<{
         "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };

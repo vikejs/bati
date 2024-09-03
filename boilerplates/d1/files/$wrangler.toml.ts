@@ -15,6 +15,7 @@ binding = "DB" # Should match preview_database_id
 database_name = "YOUR_DATABASE_NAME"
 database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
 preview_database_id = "DB" # Required for Pages local development
+migrations_dir = "database/drizzle/migrations"
 `;
 
   //language=toml

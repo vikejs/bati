@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/d1",
+  "name": "@batijs/d1-sqlite",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -16,8 +16,7 @@
     "@universal-middleware/core": "^0.2.6",
     "@cloudflare/workers-types": "^4.20240821.1",
     "@types/node": "^18.19.14",
-    "vike": "^0.4.193",
-    "wrangler": "^3.72.2"
+    "vike": "^0.4.193"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -28,25 +27,28 @@
   "bati": {
     "if": {
       "flag": {
-        "$in": [
-          "drizzle",
-          "sqlite"
-        ],
         "$all": [
+          "sqlite",
           "cloudflare"
         ]
       }
     }
   },
   "exports": {
-    "./database/d1/helpers": {
-      "types": "./dist/types/database/d1/helpers.d.ts"
+    "./database/d1/queries/lucia-auth": {
+      "types": "./dist/types/database/d1/queries/lucia-auth.d.ts"
+    },
+    "./database/d1/queries/todos": {
+      "types": "./dist/types/database/d1/queries/todos.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "database/d1/helpers": [
-        "./dist/types/database/d1/helpers.d.ts"
+      "database/d1/queries/lucia-auth": [
+        "./dist/types/database/d1/queries/lucia-auth.d.ts"
+      ],
+      "database/d1/queries/todos": [
+        "./dist/types/database/d1/queries/todos.d.ts"
       ]
     }
   }
