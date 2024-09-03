@@ -1,4 +1,4 @@
-import { loadAsMagicast, type TransformerProps } from "@batijs/core";
+import { loadAsMagicast, type TransformerProps, yellow } from "@batijs/core";
 
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
@@ -34,21 +34,4 @@ function addResolveAlias(mod, find: string, replacement: string) {
   }
   if (!mod.exports.default.$args[0]?.resolve) mod.exports.default.$args[0].resolve = {};
   mod.exports.default.$args[0].resolve.alias = alias;
-}
-
-function yellow(str: string) {
-  const { env = {}, argv = [], platform = "" } = typeof process === "undefined" ? {} : process;
-
-  const isDisabled = "NO_COLOR" in env || argv.includes("--no-color");
-  const isForced = "FORCE_COLOR" in env || argv.includes("--color");
-  const isWindows = platform === "win32";
-  const isDumbTerminal = env.TERM === "dumb";
-
-  const isCompatibleTerminal = env.TERM && !isDumbTerminal;
-
-  const isCI = "CI" in env && ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
-
-  const isColorSupported = !isDisabled && (isForced || (isWindows && !isDumbTerminal) || isCompatibleTerminal || isCI);
-
-  return isColorSupported ? `\x1b[43m${str}\x1b[0m` : str;
 }
