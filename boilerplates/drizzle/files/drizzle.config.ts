@@ -9,7 +9,7 @@ if (!BATI.hasD1) {
 export default defineConfig({
   dialect: "sqlite",
   schema: "./database/drizzle/schema/*",
-  out: "./database/drizzle/migrations",
+  out: "./database/migrations",
   //# !BATI.hasD1
   dbCredentials: {
     url: process.env.DATABASE_URL!,
