@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Example of defining a schema in Drizzle ORM:

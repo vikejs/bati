@@ -77,7 +77,7 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
  * Add Auth.js session to context
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
  **/
-export const authjsSessionMiddleware = (() => async (request, context) => {
+export const authjsSessionMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
   try {
     return {
       ...context,
@@ -90,7 +90,7 @@ export const authjsSessionMiddleware = (() => async (request, context) => {
       session: null,
     };
   }
-}) satisfies Get<[], UniversalMiddleware>;
+};
 
 /**
  * Auth.js route

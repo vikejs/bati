@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname } from "node:path";
@@ -16,6 +16,7 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
@@ -30,7 +31,8 @@ import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
 import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener } from "h3";
 import serveStatic from "serve-static";
-import { createHandler, createMiddleware } from "@universal-middleware/h3";
+import { createHandler, createMiddleware, getContext } from "@universal-middleware/h3";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 
 installWhatwgNodeFetch();
 installGetSetCookie();
@@ -65,6 +67,13 @@ async function startServer() {
 
   const router = createRouter();
 
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    app.use(createMiddleware(dbMiddleware)());
+  }
+
   if (BATI.has("authjs") || BATI.has("auth0")) {
     /**
      * Append Auth.js session to context
@@ -85,6 +94,7 @@ async function startServer() {
   }
 
   if (BATI.has("lucia-auth")) {
+    app.use(createMiddleware(luciaDbMiddleware)());
     app.use(createMiddleware(luciaCsrfMiddleware)());
     app.use(createMiddleware(luciaAuthContextMiddleware)());
     app.use(createMiddleware(luciaAuthCookieMiddleware)());
@@ -111,7 +121,7 @@ async function startServer() {
           path: event.context.params!.path,
           router: appRouter,
           createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
-            return { req, res };
+            return { ...getContext(event)!, req, res } as BATI.Any;
           },
         }),
       ),

@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import {
@@ -13,21 +13,29 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import type { HattipHandler } from "@hattip/core";
 import { createRouter } from "@hattip/router";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import vercelAdapter from "@hattip/adapter-vercel-edge";
 import { createHandler, createMiddleware } from "@universal-middleware/hattip";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const router = createRouter();
+
+if (BATI.hasDatabase) {
+  /**
+   * Make database available in Context as `context.db`
+   */
+  router.use(createMiddleware(dbMiddleware)());
+}
 
 if (BATI.has("telefunc")) {
   /**
@@ -44,16 +52,7 @@ if (BATI.has("trpc")) {
    *
    * @link {@see https://trpc.io/docs/server/adapters/fetch}
    **/
-  router.use("/api/trpc/*", (context) => {
-    return fetchRequestHandler({
-      router: appRouter,
-      req: context.request,
-      endpoint: "/api/trpc",
-      createContext({ req }) {
-        return { req };
-      },
-    });
-  });
+  router.use("/api/trpc/*", createHandler(trpcHandler)("/api/trpc"));
 }
 
 if (BATI.has("ts-rest")) {
@@ -80,6 +79,7 @@ if (BATI.has("firebase-auth")) {
 }
 
 if (BATI.has("lucia-auth")) {
+  router.use(createMiddleware(luciaDbMiddleware)());
   router.use(createMiddleware(luciaCsrfMiddleware)());
   router.use(createMiddleware(luciaAuthContextMiddleware)());
   router.use(createMiddleware(luciaAuthCookieMiddleware)());

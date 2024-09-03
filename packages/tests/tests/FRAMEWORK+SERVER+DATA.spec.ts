@@ -4,14 +4,17 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
   ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", undefined],
+  ["drizzle", "sqlite", undefined],
+  ["cloudflare", undefined],
   "eslint",
 ] as const;
 
 export const exclude = [
-  // Testing drizzle with Solid only is enough
+  // Testing databases with Solid only is enough
   ["react", "drizzle"],
   ["vue", "drizzle"],
+  ["react", "sqlite"],
+  ["vue", "sqlite"],
   // Testing Solid with all servers, but others UIs with only Hono
   ["react", "express"],
   ["react", "h3"],
@@ -21,14 +24,26 @@ export const exclude = [
   ["vue", "h3"],
   ["vue", "fastify"],
   ["vue", "hattip"],
+  // Testing Cloudflare with Hono and Solid only
+  ["cloudflare", "express"],
+  ["cloudflare", "h3"],
+  ["cloudflare", "fastify"],
+  ["cloudflare", "hattip"],
+  ["cloudflare", "react"],
+  ["cloudflare", "vue"],
 ];
 
-await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
+await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeAll }) => {
   beforeAll(async () => {
     if (context.flags.includes("drizzle")) {
       await exec(npmCli, ["run", "drizzle:generate"]);
       await exec(npmCli, ["run", "drizzle:migrate"]);
-      await exec(npmCli, ["run", "drizzle:seed"]);
+    } else if (context.flags.includes("sqlite")) {
+      if (context.flags.includes("cloudflare")) {
+        await exec(npmCli, ["run", "d1:migrate"]);
+      } else {
+        await exec(npmCli, ["run", "sqlite:migrate"]);
+      }
     }
   }, 70000);
 
@@ -44,37 +59,59 @@ await describeBati(({ test, expect, fetch, testMatch, context, beforeAll }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  testMatch<typeof matrix>("onNewTodo", {
-    telefunc: async () => {
-      const res = await fetch("/_telefunc", {
-        method: "POST",
-        body: JSON.stringify({
-          file: "/pages/todo/TodoList.telefunc.ts",
-          name: "onNewTodo",
-          args: [{ text: "test" }],
-        }),
-      });
-      expect(res.status).toBe(200);
-    },
-    trpc: async () => {
-      const res = await fetch("/api/trpc/onNewTodo", {
-        method: "POST",
-        body: JSON.stringify("test"),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      expect(res.status).toBe(200);
-    },
-    _: async () => {
-      const res = await fetch("/api/todo/create", {
-        method: "POST",
-        body: JSON.stringify({ text: "test" }),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      expect(res.status).toBe(200);
-    },
+  describe("add a todo", { sequential: true }, () => {
+    const text = "__BATI_TEST_VALUE";
+
+    testMatch<typeof matrix>("post", {
+      telefunc: async () => {
+        const res = await fetch("/_telefunc", {
+          method: "POST",
+          body: JSON.stringify({
+            file: "/pages/todo/TodoList.telefunc.ts",
+            name: "onNewTodo",
+            args: [{ text }],
+          }),
+        });
+        expect(res.status).toBe(200);
+      },
+      trpc: async () => {
+        const res = await fetch("/api/trpc/onNewTodo", {
+          method: "POST",
+          body: JSON.stringify(text),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+        expect(res.status).toBe(200);
+      },
+      _: async () => {
+        const res = await fetch("/api/todo/create", {
+          method: "POST",
+          body: JSON.stringify({ text }),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+        expect(res.status).toBe(200);
+      },
+    });
+
+    testMatch<typeof matrix>("todo after post", {
+      sqlite: async () => {
+        const res = await fetch("/todo");
+        expect(res.status).toBe(200);
+        expect(await res.text()).toContain(text);
+      },
+      drizzle: async () => {
+        const res = await fetch("/todo");
+        expect(res.status).toBe(200);
+        expect(await res.text()).toContain(text);
+      },
+      _: async () => {
+        const res = await fetch("/todo");
+        expect(res.status).toBe(200);
+        expect(await res.text()).not.toContain(text);
+      },
+    });
   });
 });

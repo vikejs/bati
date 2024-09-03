@@ -14,11 +14,15 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/drizzle": "workspace:*",
-    "@batijs/shared-no-db": "workspace:*",
+    "@batijs/d1": "workspace:*",
+    "@batijs/d1-sqlite": "workspace:*",
+    "@batijs/sqlite": "workspace:*",
     "@batijs/shared-todo": "workspace:*",
+    "@cloudflare/workers-types": "^4.20240821.1",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "@types/node": "^18.19.14",
+    "@universal-middleware/core": "^0.2.6",
     "vite": "^5.4.2"
   },
   "dependencies": {
@@ -37,11 +41,11 @@
       "trpc/server": [
         "./dist/types/trpc/server.d.ts"
       ],
+      "server/trpc-handler": [
+        "./dist/types/server/trpc-handler.d.ts"
+      ],
       "trpc/client": [
         "./dist/types/trpc/client.d.ts"
-      ],
-      "trpc/vite-plugin": [
-        "./dist/types/trpc/vite-plugin.d.ts"
       ]
     }
   },
@@ -49,11 +53,11 @@
     "./trpc/server": {
       "types": "./dist/types/trpc/server.d.ts"
     },
+    "./server/trpc-handler": {
+      "types": "./dist/types/server/trpc-handler.d.ts"
+    },
     "./trpc/client": {
       "types": "./dist/types/trpc/client.d.ts"
-    },
-    "./trpc/vite-plugin": {
-      "types": "./dist/types/trpc/vite-plugin.d.ts"
     }
   }
 }

@@ -16,6 +16,7 @@
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^18.19.14",
     "better-sqlite3": "^11.2.1",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.24.1",
     "drizzle-orm": "^0.33.0",
     "tsx": "^4.18.0"
@@ -35,14 +36,20 @@
     "./drizzle.config": {
       "types": "./dist/types/drizzle.config.d.ts"
     },
-    "./database/drizzleDb": {
-      "types": "./dist/types/database/drizzleDb.d.ts"
+    "./database/drizzle/db": {
+      "types": "./dist/types/database/drizzle/db.d.ts"
     },
-    "./database/schema/todos": {
-      "types": "./dist/types/database/schema/todos.d.ts"
+    "./database/drizzle/schema/lucia-auth": {
+      "types": "./dist/types/database/drizzle/schema/lucia-auth.d.ts"
     },
-    "./database/seed": {
-      "types": "./dist/types/database/seed.d.ts"
+    "./database/drizzle/queries/lucia-auth": {
+      "types": "./dist/types/database/drizzle/queries/lucia-auth.d.ts"
+    },
+    "./database/drizzle/schema/todos": {
+      "types": "./dist/types/database/drizzle/schema/todos.d.ts"
+    },
+    "./database/drizzle/queries/todos": {
+      "types": "./dist/types/database/drizzle/queries/todos.d.ts"
     }
   },
   "typesVersions": {
@@ -50,14 +57,20 @@
       "drizzle.config": [
         "./dist/types/drizzle.config.d.ts"
       ],
-      "database/drizzleDb": [
-        "./dist/types/database/drizzleDb.d.ts"
+      "database/drizzle/db": [
+        "./dist/types/database/drizzle/db.d.ts"
       ],
-      "database/schema/todos": [
-        "./dist/types/database/schema/todos.d.ts"
+      "database/drizzle/schema/lucia-auth": [
+        "./dist/types/database/drizzle/schema/lucia-auth.d.ts"
       ],
-      "database/seed": [
-        "./dist/types/database/seed.d.ts"
+      "database/drizzle/queries/lucia-auth": [
+        "./dist/types/database/drizzle/queries/lucia-auth.d.ts"
+      ],
+      "database/drizzle/schema/todos": [
+        "./dist/types/database/drizzle/schema/todos.d.ts"
+      ],
+      "database/drizzle/queries/todos": [
+        "./dist/types/database/drizzle/queries/todos.d.ts"
       ]
     }
   }

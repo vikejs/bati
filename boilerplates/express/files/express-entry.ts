@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,17 +15,18 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { appRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import * as trpcExpress from "@trpc/server/adapters/express";
 import { createHandler, createMiddleware } from "@universal-middleware/express";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import express from "express";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -54,6 +55,13 @@ async function startServer() {
     app.use(viteDevMiddleware);
   }
 
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    app.use(createMiddleware(dbMiddleware)());
+  }
+
   if (BATI.has("authjs") || BATI.has("auth0")) {
     /**
      * Append Auth.js session to context
@@ -74,6 +82,7 @@ async function startServer() {
   }
 
   if (BATI.has("lucia-auth")) {
+    app.use(createMiddleware(luciaDbMiddleware)());
     app.use(createMiddleware(luciaCsrfMiddleware)());
     app.use(createMiddleware(luciaAuthContextMiddleware)());
     app.use(createMiddleware(luciaAuthCookieMiddleware)());
@@ -89,17 +98,9 @@ async function startServer() {
     /**
      * tRPC route
      *
-     * @link {@see https://trpc.io/docs/server/adapters/express#3-use-the-express-adapter}
+     * @link {@see https://trpc.io/docs/server/adapters/fetch}
      **/
-    app.use(
-      "/api/trpc",
-      trpcExpress.createExpressMiddleware({
-        router: appRouter,
-        createContext({ req, res }: trpcExpress.CreateExpressContextOptions) {
-          return { req, res };
-        },
-      }),
-    );
+    app.use("/api/trpc", createHandler(trpcHandler)("/api/trpc"));
   }
 
   if (BATI.has("telefunc")) {

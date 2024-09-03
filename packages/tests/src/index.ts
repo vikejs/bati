@@ -139,6 +139,7 @@ async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build"],
         },
       },
+      daemon: false,
       remoteCache: {
         signature: false,
       },
@@ -233,6 +234,8 @@ function loadDotEnvTest() {
   dotenv.config({
     path: join(root, ".env.test"),
   });
+  // For sqlite tests
+  process.env.DATABASE_URL ??= "sqlite.db";
 }
 
 function arrayIncludes(a: string[], b: string[]) {

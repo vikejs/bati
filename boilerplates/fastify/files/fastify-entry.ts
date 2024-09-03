@@ -1,4 +1,4 @@
-// BATI.has("auth0")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,21 +15,18 @@ import {
   luciaAuthLogoutHandler,
   luciaAuthSignupHandler,
   luciaCsrfMiddleware,
+  luciaDbMiddleware,
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { appRouter, type AppRouter } from "@batijs/trpc/trpc/server";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import {
-  type CreateFastifyContextOptions,
-  fastifyTRPCPlugin,
-  type FastifyTRPCPluginOptions,
-} from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
 import { createHandler, createMiddleware } from "@universal-middleware/fastify";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -68,11 +65,18 @@ async function startServer() {
     app.use(viteDevMiddleware);
   }
 
+  if (BATI.hasDatabase) {
+    /**
+     * Make database available in Context as `context.db`
+     */
+    await app.register(createMiddleware(dbMiddleware)());
+  }
+
   if (BATI.has("authjs") || BATI.has("auth0")) {
     /**
      * Append Auth.js session to context
      **/
-    app.register(createMiddleware(authjsSessionMiddleware)());
+    await app.register(createMiddleware(authjsSessionMiddleware)());
 
     /**
      * Auth.js route
@@ -88,9 +92,10 @@ async function startServer() {
   }
 
   if (BATI.has("lucia-auth")) {
-    app.register(createMiddleware(luciaCsrfMiddleware)());
-    app.register(createMiddleware(luciaAuthContextMiddleware)());
-    app.register(createMiddleware(luciaAuthCookieMiddleware)());
+    await app.register(createMiddleware(luciaDbMiddleware)());
+    await app.register(createMiddleware(luciaCsrfMiddleware)());
+    await app.register(createMiddleware(luciaAuthContextMiddleware)());
+    await app.register(createMiddleware(luciaAuthCookieMiddleware)());
 
     app.post("/api/signup", createHandler(luciaAuthSignupHandler)());
     app.post("/api/login", createHandler(luciaAuthLoginHandler)());
@@ -103,21 +108,9 @@ async function startServer() {
     /**
      * tRPC route
      *
-     * @link {@see https://trpc.io/docs/server/adapters/fastify}
+     * @link {@see https://trpc.io/docs/server/adapters/fetch}
      **/
-    await app.register(fastifyTRPCPlugin, {
-      prefix: "/api/trpc",
-      trpcOptions: {
-        router: appRouter,
-        createContext({ req, res }: CreateFastifyContextOptions) {
-          return { req, res };
-        },
-        onError({ path, error }) {
-          // report to error monitoring
-          console.error(`Error in tRPC handler on path '${path}':`, error);
-        },
-      } satisfies FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
-    });
+    app.all("/api/trpc/*", createHandler(trpcHandler)("/api/trpc"));
   }
 
   if (BATI.has("telefunc")) {
@@ -130,7 +123,7 @@ async function startServer() {
   }
 
   if (BATI.has("ts-rest")) {
-    app.all("/api/*", createHandler(tsRestHandler));
+    app.all("/api/*", createHandler(tsRestHandler)());
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {

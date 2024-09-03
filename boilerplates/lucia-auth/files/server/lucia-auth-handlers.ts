@@ -1,15 +1,32 @@
 import type { Session, User } from "lucia";
 import { generateId, Scrypt, verifyRequestOrigin } from "lucia";
-import type { DatabaseOAuthAccount, DatabaseUser, GitHubUser } from "../lib/lucia-auth";
-import { github, lucia } from "../lib/lucia-auth";
+import {
+  type DatabaseOAuthAccount,
+  type DatabaseUser,
+  github,
+  type GitHubUser,
+  initializeLucia,
+} from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
-import { sqliteDb } from "../database/sqliteDb";
 import { generateState, OAuth2RequestError } from "arctic";
 import { parse, serialize } from "cookie";
-import { drizzleDb } from "@batijs/drizzle/database/drizzleDb";
-import { oauthAccountTable, userTable } from "../database/schema/auth";
-import { getExistingAccount, getExistingUser, validateInput } from "../database/auth-actions";
-import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
+import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/lucia-auth";
+import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/lucia-auth";
+import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/lucia-auth";
+import { type Get, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
+
+/**
+ * Add lucia database to the context
+ *
+ * @link {@see https://universal-middleware.dev/examples/context-middleware}
+ */
+export const luciaDbMiddleware: Get<[], UniversalMiddleware> = () => async (_request, context, _runtime) => {
+  const lucia = initializeLucia(context.db);
+  return {
+    ...context,
+    lucia,
+  };
+};
 
 /**
  * CSRF protection middleware
@@ -37,8 +54,8 @@ export const luciaCsrfMiddleware = (() => async (request) => {
  *
  * @link {@see https://lucia-auth.com/guides/validate-session-cookies/}
  */
-export const luciaAuthContextMiddleware = (() => async (request, context) => {
-  const sessionId = lucia.readSessionCookie(request.headers.get("cookie") ?? "");
+export const luciaAuthContextMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
+  const sessionId = context.lucia.readSessionCookie(request.headers.get("cookie") ?? "");
 
   if (!sessionId) {
     return {
@@ -47,7 +64,7 @@ export const luciaAuthContextMiddleware = (() => async (request, context) => {
       user: null,
     };
   } else {
-    const { session, user } = await lucia.validateSession(sessionId);
+    const { session, user } = await context.lucia.validateSession(sessionId);
 
     return {
       ...context,
@@ -56,7 +73,7 @@ export const luciaAuthContextMiddleware = (() => async (request, context) => {
       user,
     };
   }
-}) satisfies Get<[], UniversalMiddleware>;
+};
 
 /**
  * Set Set-Cookie headers if in context
@@ -64,22 +81,25 @@ export const luciaAuthContextMiddleware = (() => async (request, context) => {
 export const luciaAuthCookieMiddleware = (() => (_request, context) => {
   return (response: Response) => {
     if (context.session?.fresh) {
-      response.headers.append("Set-Cookie", lucia.createSessionCookie(context.session.id).serialize());
+      response.headers.append("Set-Cookie", context.lucia.createSessionCookie(context.session.id).serialize());
     }
     if (context.sessionId && !context.session) {
-      response.headers.append("Set-Cookie", lucia.createBlankSessionCookie().serialize());
+      response.headers.append("Set-Cookie", context.lucia.createBlankSessionCookie().serialize());
     }
 
     return response;
   };
-}) satisfies Get<[], UniversalMiddleware<{ session?: Session | null; user?: User | null; sessionId?: string | null }>>;
+}) satisfies Get<
+  [],
+  UniversalMiddleware<Universal.Context & { session?: Session | null; user?: User | null; sessionId?: string | null }>
+>;
 
 /**
  * Register user handler
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#register-user}
  */
-export const luciaAuthSignupHandler = (() => async (request) => {
+export const luciaAuthSignupHandler = (() => async (request, context, _runtime) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -109,20 +129,20 @@ export const luciaAuthSignupHandler = (() => async (request) => {
 
   try {
     if (BATI.has("drizzle")) {
-      drizzleDb.insert(userTable).values({ id: userId, username, password: passwordHash }).run();
-    } else {
-      sqliteDb
-        .prepare("INSERT INTO users (id, username, password) VALUES(?, ?, ?)")
-        .run(userId, username, passwordHash);
+      await drizzleQueries.signupWithCredentials(context.db, userId, username, passwordHash);
+    } else if (BATI.has("sqlite") && !BATI.hasD1) {
+      sqliteQueries.signupWithCredentials(context.db, userId, username, passwordHash);
+    } else if (BATI.hasD1) {
+      await d1Queries.signupWithCredentials(context.db, userId, username, passwordHash);
     }
 
-    const session = await lucia.createSession(userId, {});
+    const session = await context.lucia.createSession(userId, {});
 
     return new Response(JSON.stringify({ status: "success" }), {
       status: 200,
       headers: {
         "content-type": "application/json",
-        "set-cookie": lucia.createSessionCookie(session.id).serialize(),
+        "set-cookie": context.lucia.createSessionCookie(session.id).serialize(),
       },
     });
   } catch (error) {
@@ -149,7 +169,7 @@ export const luciaAuthSignupHandler = (() => async (request) => {
  *
  * @link {@see https://lucia-auth.com/guides/email-and-password/basics#sign-in-user}
  */
-export const luciaAuthLoginHandler = (() => async (request) => {
+export const luciaAuthLoginHandler = (() => async (request, context, _runtime) => {
   const body = (await request.json()) as { username: string; password: string };
   const username = body.username ?? "";
   const password = body.password ?? "";
@@ -165,7 +185,14 @@ export const luciaAuthLoginHandler = (() => async (request) => {
     });
   }
 
-  const existingUser = getExistingUser(username) as DatabaseUser | undefined;
+  const existingUser: DatabaseUser | undefined | null = BATI.has("drizzle")
+    ? await drizzleQueries.getExistingUser(context.db, username)
+    : BATI.has("sqlite") && !BATI.hasD1
+      ? sqliteQueries.getExistingUser<DatabaseUser>(context.db, username)
+      : BATI.hasD1
+        ? await d1Queries.getExistingUser<DatabaseUser>(context.db, username)
+        : undefined;
+
   if (!existingUser) {
     return new Response(JSON.stringify({ error: { invalid: "Incorrect username or password" } }), {
       status: 422,
@@ -187,13 +214,13 @@ export const luciaAuthLoginHandler = (() => async (request) => {
     });
   }
 
-  const session = await lucia.createSession(existingUser.id, {});
+  const session = await context.lucia.createSession(existingUser.id, {});
 
   return new Response(JSON.stringify({ status: "success" }), {
     status: 200,
     headers: {
       "content-type": "application/json",
-      "set-cookie": lucia.createSessionCookie(session.id).serialize(),
+      "set-cookie": context.lucia.createSessionCookie(session.id).serialize(),
     },
   });
 }) satisfies Get<[], UniversalMiddleware>;
@@ -214,7 +241,7 @@ export const luciaAuthLogoutHandler = (() => async (_request, context) => {
    *
    * @link {@see https://lucia-auth.com/basics/sessions#invalidate-sessions}
    */
-  await lucia.invalidateSession(session.id);
+  await context.lucia.invalidateSession(session.id);
 
   /**
    * Delete session cookie
@@ -224,10 +251,10 @@ export const luciaAuthLogoutHandler = (() => async (_request, context) => {
   return new Response(JSON.stringify({ status: "success" }), {
     status: 200,
     headers: {
-      "set-cookie": lucia.createBlankSessionCookie().serialize(),
+      "set-cookie": context.lucia.createBlankSessionCookie().serialize(),
     },
   });
-}) satisfies Get<[], UniversalMiddleware<{ session?: Session | null }>>;
+}) satisfies Get<[], UniversalMiddleware<Universal.Context & { session?: Session | null }>>;
 
 /**
  * Github OAuth authorization handler
@@ -258,7 +285,7 @@ export const luciaGithubLoginHandler = (() => async () => {
  *
  * @link {@see https://lucia-auth.com/guides/oauth/basics#validate-callback}
  */
-export const luciaGithubCallbackHandler = (() => async (request) => {
+export const luciaGithubCallbackHandler = (() => async (request, context, _runtime) => {
   const cookies = parse(request.headers.get("cookie") ?? "");
   const params = new URL(request.url).searchParams;
   const code = params.get("code");
@@ -280,10 +307,18 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
     });
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
 
-    const existingAccount = getExistingAccount("github", githubUser.id) as DatabaseOAuthAccount | undefined;
+    const existingAccount: DatabaseOAuthAccount | undefined | null = BATI.has("drizzle")
+      ? ((await drizzleQueries.getExistingAccount(context.db, "github", githubUser.id)) as
+          | DatabaseOAuthAccount
+          | undefined)
+      : BATI.has("sqlite") && !BATI.hasD1
+        ? sqliteQueries.getExistingAccount<DatabaseOAuthAccount>(context.db, "github", githubUser.id)
+        : BATI.hasD1
+          ? await d1Queries.getExistingAccount<DatabaseOAuthAccount>(context.db, "github", githubUser.id)
+          : undefined;
 
     if (existingAccount) {
-      const session = await lucia.createSession(
+      const session = await context.lucia.createSession(
         BATI.has("drizzle") ? existingAccount.userId : existingAccount.user_id,
         {},
       );
@@ -291,7 +326,7 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
         status: 302,
         headers: {
           Location: "/",
-          "set-cookie": lucia.createSessionCookie(session.id).serialize(),
+          "set-cookie": context.lucia.createSessionCookie(session.id).serialize(),
         },
       });
     }
@@ -299,26 +334,20 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
     const userId = generateId(15);
 
     if (BATI.has("drizzle")) {
-      await drizzleDb.transaction(async (tx) => {
-        await tx.insert(userTable).values({ id: userId, username: githubUser.login });
-        await tx.insert(oauthAccountTable).values({ providerId: "github", providerUserId: githubUser.id, userId });
-      });
-    } else {
-      sqliteDb.transaction(() => {
-        sqliteDb.prepare("INSERT INTO users (id, username) VALUES (?, ?)").run(userId, githubUser.login);
-        sqliteDb
-          .prepare("INSERT INTO oauth_accounts (provider_id, provider_user_id, user_id) VALUES (?, ?, ?)")
-          .run("github", githubUser.id, userId);
-      });
+      await drizzleQueries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
+    } else if (BATI.has("sqlite") && !BATI.hasD1) {
+      sqliteQueries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
+    } else if (BATI.hasD1) {
+      await d1Queries.signupWithGithub(context.db, userId, githubUser.login, githubUser.id);
     }
 
-    const session = await lucia.createSession(userId, {});
+    const session = await context.lucia.createSession(userId, {});
 
     return new Response(null, {
       status: 302,
       headers: {
         Location: "/",
-        "set-cookie": lucia.createSessionCookie(session.id).serialize(),
+        "set-cookie": context.lucia.createSessionCookie(session.id).serialize(),
       },
     });
   } catch (error) {
@@ -338,3 +367,31 @@ export const luciaGithubCallbackHandler = (() => async (request) => {
     });
   }
 }) satisfies Get<[], UniversalHandler>;
+
+export function validateInput(username: string | null, password: string | null) {
+  const error: {
+    username: string | null;
+    password: string | null;
+  } = {
+    username: null,
+    password: null,
+  };
+
+  if (!username || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
+    error.username = "Invalid username";
+  }
+  if (!password || password.length < 6 || password.length > 255) {
+    error.password = "Invalid password";
+  }
+
+  if (error.username || error.password) {
+    return {
+      error,
+      success: false,
+    };
+  }
+  return {
+    error,
+    success: true,
+  };
+}

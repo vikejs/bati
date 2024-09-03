@@ -8,6 +8,7 @@ import type { Visitors } from "./types.js";
 import { visitorIfStatement } from "./visit-if-statement.js";
 import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
+import { visitorAsExpression, visitorTypeParameterInstanciation, visitorTypeReference } from "./visitor-ts-types.js";
 
 function getAllCommentsBefore(
   nodeOrToken: vueParseForESLint.AST.VElement | vueParseForESLint.AST.Token,
@@ -84,6 +85,15 @@ export default function vueLinterConfig(meta: VikeMeta) {
               },
               IfStatement(node) {
                 visitorIfStatement(context, sourceCode, node, meta);
+              },
+              TSAsExpression(node) {
+                visitorAsExpression(context, sourceCode, node, meta);
+              },
+              TSTypeParameterInstantiation(node) {
+                visitorTypeParameterInstanciation(context, sourceCode, node, meta);
+              },
+              TSTypeReference(node) {
+                visitorTypeReference(context, sourceCode, node, meta);
               },
             } satisfies Visitors,
           );

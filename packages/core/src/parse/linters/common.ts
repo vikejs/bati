@@ -55,13 +55,18 @@ export function getExtractor(context: Rule.RuleContext): Extractor | undefined {
   return context.settings?.extractor as Extractor;
 }
 
-export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename: string) {
+export function verifyAndFix(code: string, config: Linter.Config[], filename: string) {
   const linter = getLinter();
   const extractor = new Extractor(filename);
 
-  const report = linter.verifyAndFix(code, [...config, { settings: { extractor } }], {
-    filename,
-  });
+  const report = linter.verifyAndFix(
+    // Short circuit eslint standard inline rules
+    code.replaceAll("eslint-disable-next-line", "__BATI_EDNL"),
+    [...config, { settings: { extractor } }],
+    {
+      filename,
+    },
+  );
 
   if (report.messages.length > 0) {
     throw new Error(
@@ -72,7 +77,8 @@ export function verifyAndFix(code: string, config: Linter.FlatConfig[], filename
   }
 
   return {
-    code: report.output,
+    // Put back eslint standard inline rules
+    code: report.output.replaceAll("__BATI_EDNL", "eslint-disable-next-line"),
     context: extractor,
   };
 }
