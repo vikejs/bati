@@ -44,6 +44,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "vite",
       "vike",
       "@universal-middleware/hattip",
+      "dotenv",
       ...(props.meta.BATI.has("vercel") ? (["@hattip/adapter-vercel-edge"] as const) : []),
       ...(props.meta.BATI.has("aws")
         ? (["@types/aws-lambda", "@hattip/adapter-aws-lambda", "@hattip/static", "@hattip/walk"] as const)

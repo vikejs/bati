@@ -26,6 +26,6 @@ export enum RulesMessage {
   // --- INFO
   // HatTip is an experimental project
   INFO_HATTIP,
-  // Drizzle does not work on Stackblitz (because of better-sqlite3 dependency)
-  INFO_DRIZZLE_STACKBLITZ,
+  // Some tools do not work on Stackblitz
+  INFO_STACKBLITZ_COMPAT,
 }

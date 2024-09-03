@@ -1,5 +1,5 @@
 import { RulesMessage } from "@batijs/features/rules";
-import { createMemo, onCleanup, onMount, useContext, type ValidComponent } from "solid-js";
+import { createEffect, createMemo, on, onCleanup, onMount, useContext, type ValidComponent } from "solid-js";
 import { StoreContext } from "./Store.js";
 
 export interface RuleMessage {
@@ -193,12 +193,26 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: invisible(() => {
-    onMount(() => {
-      document
-        .querySelector("#stackblitz-cta")!
-        .setAttribute("data-tip", "The Drizzle example uses better-sqlite3, which is not supported by Stackblitz");
-    });
+  [RulesMessage.INFO_STACKBLITZ_COMPAT]: invisible(() => {
+    const { selectedFeatures } = useContext(StoreContext);
+
+    const unsupported = createMemo(() =>
+      selectedFeatures().filter((f) => f.flag === "drizzle" || f.flag === "sqlite" || f.flag === "cloudflare"),
+    );
+
+    function updateTooltip() {
+      document.querySelector("#stackblitz-cta")!.setAttribute(
+        "data-tip",
+        "Stackblitz does not support the following features: " +
+          unsupported()
+            .map((f) => f.label)
+            .join(", "),
+      );
+    }
+
+    createEffect(on(unsupported, updateTooltip));
+
+    onMount(updateTooltip);
 
     onCleanup(() => {
       document.querySelector("#stackblitz-cta")!.removeAttribute("data-tip");

@@ -63,6 +63,7 @@ export default [
 
     return false;
   }),
-  // TODO: sqlite does not work on stackblitz either
-  includes(RulesMessage.INFO_DRIZZLE_STACKBLITZ, "drizzle"),
+  filter(RulesMessage.INFO_STACKBLITZ_COMPAT, (fts) => {
+    return fts.has("drizzle") || fts.has("sqlite") || fts.has("cloudflare");
+  }),
 ] satisfies Rule[];

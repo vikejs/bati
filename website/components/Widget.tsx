@@ -110,7 +110,11 @@ export function Widget(props: { theme?: string; widget: boolean }) {
         </div>
       </div>
       <Show when={rules().size > 0}>
-        <div class="flex flex-col gap-2 leading-6 rounded-md mt-4">
+        <div
+          classList={{
+            "flex flex-col gap-2 leading-6 rounded-md mt-4": rules().invisible.length < rules().size,
+          }}
+        >
           <Messages error={rules().error} warning={rules().warning} info={rules().info} invisible={rules().invisible} />
         </div>
       </Show>

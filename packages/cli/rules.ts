@@ -62,5 +62,5 @@ Choose one of them, or simply remove selected Server`,
   [RulesMessage.WARN_SHADCN_R_TAILWINDCSS]: warning(
     `${inverse(bold("shadcn/ui"))} integration is tied to ${inverse(bold("TailwindCSS"))}. Using another CSS library with it may have unpredictable behaviour.`,
   ),
-  [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: null,
+  [RulesMessage.INFO_STACKBLITZ_COMPAT]: null,
 } satisfies Record<RulesMessage, RuleMessage | null>;
