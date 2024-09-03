@@ -49,7 +49,16 @@ export default function Presets() {
       />
       <Preset
         title="Full-stack"
-        features={["UI Framework", "Data fetching", "Auth", "Database", "CSS", "Server", "Linter"]}
+        features={[
+          "UI Framework",
+          "Data fetching",
+          "Auth",
+          "Database",
+          "CSS",
+          "UI Component Libraries",
+          "Server",
+          "Linter",
+        ]}
         description="Full-stack app with RPC (like server actions), Auth, Database and Server"
       />
       <Preset
