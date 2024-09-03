@@ -54,8 +54,7 @@ Choose one of them, or simply remove selected Server`,
     `${inverse(bold("Lucia"))} requires a ${inverse(bold("Database"))}, and is only compatible with ${inverse(bold("SQLite"))} or ${inverse(bold("Drizzle"))}`,
   ),
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
-    `${inverse(bold("AWS"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
-Choose one of them, or simply remove selected Server`,
+    `${inverse(bold("AWS"))} deployment is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}. Choose one of them`,
   ),
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(
     `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,

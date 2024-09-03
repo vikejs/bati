@@ -150,15 +150,24 @@ export const rulesMessages = {
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(() => {
     const { selectedFeatures } = useContext(StoreContext);
 
-    const selectedServer = createMemo(() => selectedFeatures().filter((f) => f.category === "Server")?.[0].label);
+    const selectedServer = createMemo(() => selectedFeatures().filter((f) => f.category === "Server")?.[0]?.label);
 
     return (
       <span class="inline-block">
-        <span class="font-bold">AWS</span> is not compatible with <span class="font-bold">{selectedServer()}</span>.
+        {selectedServer() && (
+          <>
+            <span class="font-bold">AWS</span> deployment is not compatible with{" "}
+            <span class="font-bold">{selectedServer()}</span>.
+          </>
+        )}
+        {!selectedServer() && (
+          <>
+            <span class="font-bold">AWS</span> deployment requires a compatible server.
+          </>
+        )}
         <ul class="list-custom list-dot">
           <li>
-            Either pick a <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>, or unselect{" "}
-            <span class="font-bold">{selectedServer()}</span>
+            Pick a server: <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>
           </li>
         </ul>
       </span>

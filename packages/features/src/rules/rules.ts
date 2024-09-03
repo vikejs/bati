@@ -29,8 +29,8 @@ export default [
         return false;
       }
 
-      // If it has any other server, return the message
-      return fts.has("Server");
+      // If it has any other server or none, return the message
+      return true;
     }
 
     return false;
