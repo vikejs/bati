@@ -343,18 +343,22 @@ async function run() {
 
       const sources: string[] = [];
       const hooks: string[] = [];
-      const flags = Object.entries(args)
-        .filter(([, val]) => val === true)
-        .map(([key]) => {
-          const flag: string[] = [key];
-          const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
+      const flags = [
+        ...new Set(
+          Object.entries(args)
+            .filter(([, val]) => val === true)
+            .map(([key]) => {
+              const flag: string[] = [key];
+              const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
 
-          if (dependsOn) {
-            flag.push(...dependsOn);
-          }
-          return flag;
-        })
-        .flat(1);
+              if (dependsOn) {
+                flag.push(...dependsOn);
+              }
+              return flag;
+            })
+            .flat(1),
+        ),
+      ];
 
       checkFlagsExist(flags);
       checkRules(flags);

@@ -13,6 +13,13 @@ function error(value: string): RuleMessage {
   };
 }
 
+function warning(value: string): RuleMessage {
+  return {
+    type: "warning",
+    value,
+  };
+}
+
 function info(value: string): RuleMessage {
   return {
     type: "info",
@@ -49,6 +56,12 @@ Choose one of them, or simply remove selected Server`,
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
     `${inverse(bold("AWS"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
 Choose one of them, or simply remove selected Server`,
+  ),
+  [RulesMessage.ERROR_SHADCN_R_REACT]: error(
+    `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,
+  ),
+  [RulesMessage.WARN_SHADCN_R_TAILWINDCSS]: warning(
+    `${inverse(bold("shadcn/ui"))} integration is tied to ${inverse(bold("TailwindCSS"))}. Using another CSS library with it may have unpredictable behaviour.`,
   ),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: null,
 } satisfies Record<RulesMessage, RuleMessage | null>;

@@ -152,8 +152,26 @@ export const features = [
 
   {
     category: "UI Component Libraries",
+    label: "shadcn/ui",
+    flag: "shadcn-ui",
+    dependsOn: ["tailwindcss", "react"],
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBjbGFzcz0iaC02IHctNiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgyNTZ2MjU2SDB6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxNiIgZD0ibTIwOCAxMjgtODAgODBtNjQtMTY4TDQwIDE5MiIvPjwvc3ZnPg==",
+    url: "https://ui.shadcn.com",
+    tagline: "Beautifully designed components that you can copy and paste into your apps.",
+    repo: "shadcn-ui/ui",
+    links: [
+      {
+        label: "Docs",
+        href: "https://ui.shadcn.com/docs",
+      },
+    ],
+  },
+  {
+    category: "UI Component Libraries",
     label: "Mantine",
     flag: "mantine",
+    dependsOn: ["react"],
     image:
       "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxNjMgMTYzIj48cGF0aCBmaWxsPSIjMzM5QUYwIiBkPSJNMTYyLjE2MiA4MS41YzAtNDUuMDExLTM2LjMwMS04MS41LTgxLjA4LTgxLjVDMzYuMzAxIDAgMCAzNi40ODkgMCA4MS41IDAgMTI2LjUxIDM2LjMwMSAxNjMgODEuMDgxIDE2M3M4MS4wODEtMzYuNDkgODEuMDgxLTgxLjUiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNjUuOTgzIDQzLjA0OWE2LjIzIDYuMjMgMCAwIDAtLjMzNiA2Ljg4NCA2LjEgNi4xIDAgMCAwIDEuNjE4IDEuNzg2YzkuNDQ0IDcuMDM2IDE0Ljg2NiAxNy43OTQgMTQuODY2IDI5LjUycy01LjQyMiAyMi40ODQtMTQuODY2IDI5LjUyYTYuMiA2LjIgMCAwIDAtMS42MTYgMS43ODYgNi4yIDYuMiAwIDAgMC0uNjk0IDQuNjkzIDYuMiA2LjIgMCAwIDAgMS4wMjggMi4xODYgNi4xNSA2LjE1IDAgMCAwIDYuNDU3IDIuMzE5IDYuMiA2LjIgMCAwIDAgMi4xNzctMS4wMzUgNTAgNTAgMCAwIDAgNy45NDctNy4zOWgxNy40OTNjMy40MDYgMCA2LjE3NC0yLjc3MiA2LjE3NC02LjE5NHMtMi43NjItNi4xOTQtNi4xNzQtNi4xOTRoLTkuNjU1YTQ5LjIgNDkuMiAwIDAgMCA0LjA3MS0xOS42OSA0OS4yIDQ5LjIgMCAwIDAtNC4wNy0xOS42OTJoOS42NmMzLjQwNiAwIDYuMTczLTIuNzcxIDYuMTczLTYuMTk0cy0yLjc2Mi02LjE5My02LjE3My02LjE5M0g4Mi41NzRhNTAgNTAgMCAwIDAtNy45NTItNy4zOTcgNi4xNSA2LjE1IDAgMCAwLTQuNTc4LTEuMTUzIDYuMiA2LjIgMCAwIDAtNC4wNTUgMi40Mzh6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNTYuMjM2IDc5LjM5MWE5LjMgOS4zIDAgMCAxIC42MzItMy42MDggOS4zIDkuMyAwIDAgMSAxLjk2Ny0zLjA3NyA5LjEgOS4xIDAgMCAxIDIuOTk0LTIuMDYzIDkuMDYgOS4wNiAwIDAgMSA3LjEwMyAwIDkuMTUgOS4xNSAwIDAgMSAyLjk5NSAyLjA2MyA5LjMgOS4zIDAgMCAxIDEuOTY3IDMuMDc3IDkuMzQgOS4zNCAwIDAgMS0yLjEyNSAxMC4wMDMgOS4xIDkuMSAwIDAgMS02LjM4OCAyLjYzIDkuMSA5LjEgMCAwIDEtNi4zOS0yLjYzIDkuMyA5LjMgMCAwIDEtMi43NTUtNi4zOTUiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==",
     url: "https://mantine.dev",
