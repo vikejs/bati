@@ -7,6 +7,7 @@ export const matrix = [
   ["express", "h3", "hono", "fastify", "hattip"],
   "lucia-auth",
   ["drizzle", "sqlite"],
+  ["cloudflare", undefined],
   "eslint",
 ] as const;
 
@@ -25,6 +26,13 @@ export const exclude = [
   ["vue", "hono"],
   ["vue", "fastify"],
   ["vue", "hattip"],
+  // Testing Cloudflare with Hattip and React only
+  ["cloudflare", "express"],
+  ["cloudflare", "h3"],
+  ["cloudflare", "fastify"],
+  ["cloudflare", "hono"],
+  ["cloudflare", "solid"],
+  ["cloudflare", "vue"],
 ];
 
 // How to configure your environment for testing github oauth?
@@ -33,26 +41,44 @@ export const exclude = [
 // TEST_GITHUB_CLIENT_ID=...
 // TEST_GITHUB_CLIENT_SECRET=...
 
-await describeBati(({ test, expect, fetch, context, beforeAll }) => {
+await describeBati(({ test, expect, fetch, context, beforeAll, testMatch }) => {
   beforeAll(
     async () => {
       if (context.flags.includes("drizzle")) {
         await exec(npmCli, ["run", "drizzle:generate"]);
         await exec(npmCli, ["run", "drizzle:migrate"]);
-      } else {
-        await exec(npmCli, ["run", "sqlite:migrate"]);
+      } else if (context.flags.includes("sqlite")) {
+        if (context.flags.includes("cloudflare")) {
+          await exec(npmCli, ["run", "d1:migrate"]);
+        } else {
+          await exec(npmCli, ["run", "sqlite:migrate"]);
+        }
       }
     },
     2 * 60 * 1000,
   );
 
-  test("include-if-imported", () => {
-    expect(existsSync(path.join(process.cwd(), "database", "drizzle", "schema", "lucia-auth.ts"))).toBe(
-      context.flags.includes("drizzle"),
-    );
-    expect(existsSync(path.join(process.cwd(), "database", "sqlite", "schema", "lucia-auth.ts"))).toBe(
-      !context.flags.includes("drizzle"),
-    );
+  testMatch("include-if-imported", {
+    drizzle: () => {
+      expect(existsSync(path.join(process.cwd(), "database", "drizzle", "schema", "lucia-auth.ts"))).toBe(true);
+      expect(existsSync(path.join(process.cwd(), "database", "drizzle", "queries", "lucia-auth.ts"))).toBe(true);
+      expect(existsSync(path.join(process.cwd(), "database", "d1", "queries"))).toBe(false);
+      expect(existsSync(path.join(process.cwd(), "database", "sqlite"))).toBe(false);
+    },
+    sqlite: {
+      cloudflare: () => {
+        expect(existsSync(path.join(process.cwd(), "database", "migrations", "lucia-auth.sql"))).toBe(true);
+        expect(existsSync(path.join(process.cwd(), "database", "d1", "queries", "lucia-auth.ts"))).toBe(true);
+        expect(existsSync(path.join(process.cwd(), "database", "drizzle"))).toBe(false);
+        expect(existsSync(path.join(process.cwd(), "database", "sqlite"))).toBe(false);
+      },
+      _: () => {
+        expect(existsSync(path.join(process.cwd(), "database", "sqlite", "schema", "lucia-auth.ts"))).toBe(true);
+        expect(existsSync(path.join(process.cwd(), "database", "sqlite", "queries", "lucia-auth.ts"))).toBe(true);
+        expect(existsSync(path.join(process.cwd(), "database", "drizzle"))).toBe(false);
+        expect(existsSync(path.join(process.cwd(), "database", "d1"))).toBe(false);
+      },
+    },
   });
 
   test("login page", async () => {

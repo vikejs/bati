@@ -28,7 +28,8 @@ export function Page() {
         body: JSON.stringify(untrack(formData)),
         headers: { "Content-Type": "application/json" },
       });
-      const result = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result: Record<string, any> = await response.json();
       if ("error" in result) {
         console.error("A validation error has occurred :", result.error);
         setError(result.error);

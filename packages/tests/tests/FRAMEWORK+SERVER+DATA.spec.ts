@@ -5,6 +5,7 @@ export const matrix = [
   ["express", "h3", "hono", "fastify", "hattip"],
   ["trpc", "telefunc", "ts-rest", undefined],
   ["drizzle", "sqlite", undefined],
+  ["cloudflare", undefined],
   "eslint",
 ] as const;
 
@@ -23,6 +24,13 @@ export const exclude = [
   ["vue", "h3"],
   ["vue", "fastify"],
   ["vue", "hattip"],
+  // Testing Cloudflare with Hono and Solid only
+  ["cloudflare", "express"],
+  ["cloudflare", "h3"],
+  ["cloudflare", "fastify"],
+  ["cloudflare", "hattip"],
+  ["cloudflare", "react"],
+  ["cloudflare", "vue"],
 ];
 
 await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeAll }) => {
@@ -30,9 +38,12 @@ await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeA
     if (context.flags.includes("drizzle")) {
       await exec(npmCli, ["run", "drizzle:generate"]);
       await exec(npmCli, ["run", "drizzle:migrate"]);
-      await exec(npmCli, ["run", "drizzle:seed"]);
     } else if (context.flags.includes("sqlite")) {
-      await exec(npmCli, ["run", "sqlite:migrate"]);
+      if (context.flags.includes("cloudflare")) {
+        await exec(npmCli, ["run", "d1:migrate"]);
+      } else {
+        await exec(npmCli, ["run", "sqlite:migrate"]);
+      }
     }
   }, 70000);
 

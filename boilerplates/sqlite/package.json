@@ -27,7 +27,16 @@
   ],
   "bati": {
     "if": {
-      "flag": "sqlite"
+      "flag": {
+        "$in": [
+          "sqlite"
+        ],
+        "$not": {
+          "$in": [
+            "cloudflare"
+          ]
+        }
+      }
     }
   },
   "exports": {
