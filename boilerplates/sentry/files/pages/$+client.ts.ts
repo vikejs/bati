@@ -1,11 +1,10 @@
-import { loadAsMagicast, generateCode, builders, type TransformerProps, parseModule } from "@batijs/core";
+import { builders, generateCode, loadAsMagicast, parseModule, type TransformerProps } from "@batijs/core";
 
 export default async function getViteConfig(props: TransformerProps) {
   let mod;
   try {
     mod = await loadAsMagicast(props);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_error) {
+  } catch {
     // create an empty module if the file is empty
     mod = parseModule("");
   }

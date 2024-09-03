@@ -1,11 +1,6 @@
-//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-// @ts-ignore
 import * as Sentry from "@sentry/solid";
-import { createSignal } from "solid-js";
-import { onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 
-//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-// @ts-ignore
 export default function SolidSentryErrorPage() {
   const [sentryClientStatus, setSentryClientStatus] = createSignal({
     client_not_loaded: false,

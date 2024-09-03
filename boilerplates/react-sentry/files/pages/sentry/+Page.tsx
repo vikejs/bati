@@ -1,11 +1,6 @@
-import React from "react";
-//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-// @ts-ignore
+import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
-import { useEffect } from "react";
 
-//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-// @ts-ignore
 export default function ReactSentryErrorPage() {
   const [sentryClientStatus, setSentryClientStatus] = React.useState({
     client_not_loaded: false,
