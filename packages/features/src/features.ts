@@ -116,23 +116,6 @@ export const features = [
   },
   {
     category: "CSS",
-    label: "daisyUI",
-    flag: "daisyui",
-    dependsOn: ["tailwindcss"],
-    image:
-      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzInIGhlaWdodD0nMzInIHZpZXdCb3g9JzAgMCA0MTUgNDE1JyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHg9JzgyLjUnIHk9JzI5MCcgd2lkdGg9JzI1MCcgaGVpZ2h0PScxMjUnIHJ4PSc2Mi41JyBmaWxsPScjMUFEMUE1Jz48L3JlY3Q+PGNpcmNsZSBjeD0nMjA3LjUnIGN5PScxMzUnIHI9JzEzMCcgZmlsbD0nYmxhY2snIGZpbGwtb3BhY2l0eT0nLjMnPjwvY2lyY2xlPjxjaXJjbGUgY3g9JzIwNy41JyBjeT0nMTM1JyByPScxMjUnIGZpbGw9J3doaXRlJz48L2NpcmNsZT48Y2lyY2xlIGN4PScyMDcuNScgY3k9JzEzNScgcj0nNTYnIGZpbGw9JyNGRjk5MDMnPjwvY2lyY2xlPjwvc3ZnPg==",
-    url: "https://daisyui.com",
-    tagline: "The most popular component library for Tailwind CSS",
-    repo: "saadeghi/daisyui",
-    links: [
-      {
-        label: "Docs",
-        href: "https://daisyui.com/docs/use/",
-      },
-    ],
-  },
-  {
-    category: "CSS",
     label: "Compiled",
     flag: "compiled-css",
     image:
@@ -150,6 +133,23 @@ export const features = [
 
   // UI Component Libraries
 
+  {
+    category: "UI Component Libraries",
+    label: "daisyUI",
+    flag: "daisyui",
+    dependsOn: ["tailwindcss"],
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMzInIGhlaWdodD0nMzInIHZpZXdCb3g9JzAgMCA0MTUgNDE1JyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHg9JzgyLjUnIHk9JzI5MCcgd2lkdGg9JzI1MCcgaGVpZ2h0PScxMjUnIHJ4PSc2Mi41JyBmaWxsPScjMUFEMUE1Jz48L3JlY3Q+PGNpcmNsZSBjeD0nMjA3LjUnIGN5PScxMzUnIHI9JzEzMCcgZmlsbD0nYmxhY2snIGZpbGwtb3BhY2l0eT0nLjMnPjwvY2lyY2xlPjxjaXJjbGUgY3g9JzIwNy41JyBjeT0nMTM1JyByPScxMjUnIGZpbGw9J3doaXRlJz48L2NpcmNsZT48Y2lyY2xlIGN4PScyMDcuNScgY3k9JzEzNScgcj0nNTYnIGZpbGw9JyNGRjk5MDMnPjwvY2lyY2xlPjwvc3ZnPg==",
+    url: "https://daisyui.com",
+    tagline: "The most popular component library for Tailwind CSS",
+    repo: "saadeghi/daisyui",
+    links: [
+      {
+        label: "Docs",
+        href: "https://daisyui.com/docs/use/",
+      },
+    ],
+  },
   {
     category: "UI Component Libraries",
     label: "shadcn/ui",
