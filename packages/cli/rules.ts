@@ -47,7 +47,7 @@ Choose one of them, or simply remove selected Server`,
     `${inverse(bold("Lucia"))} requires a ${inverse(bold("Database"))}, and is only compatible with ${inverse(bold("SQLite"))} or ${inverse(bold("Drizzle"))}`,
   ),
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(
-    `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}. No other UI libraries can be combined with it!`,
+    `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,
   ),
   [RulesMessage.INFO_DRIZZLE_STACKBLITZ]: null,
 } satisfies Record<RulesMessage, RuleMessage | null>;
