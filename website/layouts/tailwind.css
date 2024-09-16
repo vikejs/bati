@@ -3,217 +3,228 @@
 @tailwind utilities;
 
 @layer components {
-    :root {
-        --lm: '';
-        --lm2: '';
-    }
+  :root {
+    --lm: "";
+    --lm2: "";
+  }
 
-    .list-custom > li {
-        list-style: inside;
-    }
+  .list-custom > li {
+    list-style: inside;
+  }
 
-    .list-custom > li > * {
-        vertical-align: top;
-    }
+  .list-custom > li > * {
+    vertical-align: top;
+  }
 
-    .list-custom > li::marker {
-        content: var(--lm) var(--lm2) " ";
-    }
+  .list-custom > li::marker {
+    content: var(--lm) var(--lm2) " ";
+  }
 
-    li.list-colon::marker, .list-custom.list-colon > li::marker {
-        --lm2: ':';
-    }
+  li.list-colon::marker,
+  .list-custom.list-colon > li::marker {
+    --lm2: ":";
+  }
 
-    li.list-star::marker, .list-custom.list-star > li::marker {
-        --lm: '★';
-    }
+  li.list-star::marker,
+  .list-custom.list-star > li::marker {
+    --lm: "★";
+  }
 
-    li.list-dot::marker, .list-custom.list-dot > li::marker {
-        --lm: '•';
-    }
+  li.list-dot::marker,
+  .list-custom.list-dot > li::marker {
+    --lm: "•";
+  }
 
-    li.list-info::marker, .list-custom.list-info > li::marker {
-        --lm: '🛈';
-    }
+  li.list-info::marker,
+  .list-custom.list-info > li::marker {
+    --lm: "🛈";
+  }
 
-    li.list-warning::marker, .list-custom.list-warning > li::marker {
-        --lm: '⚠';
-    }
+  li.list-warning::marker,
+  .list-custom.list-warning > li::marker {
+    --lm: "⚠";
+  }
 
-    li.list-error::marker, .list-custom.list-error > li::marker {
-        --lm: '⮿';
-    }
+  li.list-error::marker,
+  .list-custom.list-error > li::marker {
+    --lm: "⮿";
+  }
 
-    li.list-check::marker, .list-custom.list-check > li::marker {
-        --lm: '🗸';
-    }
+  li.list-check::marker,
+  .list-custom.list-check > li::marker {
+    --lm: "🗸";
+  }
 
-    /*https://github.com/saadeghi/daisyui/blob/master/src/components/unstyled/select.css*/
-    .listbox {
-        @apply inline-flex items-center cursor-pointer relative;
-        @apply h-12 pl-4 pr-10 text-sm leading-loose min-h-12;
+  /*https://github.com/saadeghi/daisyui/blob/master/src/components/unstyled/select.css*/
+  .listbox {
+    @apply inline-flex items-center cursor-pointer relative;
+    @apply h-12 pl-4 pr-10 text-sm leading-loose min-h-12;
 
-        /* disabled */
-        /* &-disabled,
+    /* disabled */
+    /* &-disabled,
         &[disabled] {
           @apply pointer-events-none;
         } */
-        /* multiple */
-        &[multiple] {
-            @apply h-auto;
-        }
-
-        & [role=combobox] {
-            @apply flex-grow select-none appearance-none outline-none;
-        }
-
-        & [role=listbox] {
-            @apply absolute top-full left-0 w-full overflow-visible z-50;
-        }
-
-        & [role=combobox]:not([aria-expanded=true]) ~ [role=listbox] {
-            display: none;
-        }
-
-        & [role=listbox] [role=option] {
-            @apply inline-flex items-center w-full h-12 pl-4 pr-10 text-sm leading-loose min-h-12 box-border rounded-none;
-        }
+    /* multiple */
+    &[multiple] {
+      @apply h-auto;
     }
 
-    /*https://github.com/saadeghi/daisyui/blob/master/src/components/styled/select.css*/
-    .listbox {
-        @apply border-solid border-2 border-base-content border-opacity-0 bg-base-100 pr-10 font-semibold rounded-btn;
-        &-bordered {
-            @apply border-opacity-20;
-        }
-        background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
-        linear-gradient(135deg, currentColor 50%, transparent 50%);
-        background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);
-        background-size: 4px 4px, 4px 4px;
-        background-repeat: no-repeat;
-        &:focus {
-            @apply outline outline-2 outline-offset-2 outline-base-content/20;
-        }
-
-        & [role=listbox] {
-            @apply bg-base-100 shadow-md shadow-base-300 rounded;
-
-            & [role=option][aria-selected=true] {
-                @apply rounded border-solid border-2 border-base-content/20;
-            }
-
-            & [role=option][aria-disabled=true] {
-                @apply cursor-not-allowed border-base-200 bg-base-200 opacity-20;
-            }
-
-            & [role=option]:first-of-type {
-                @apply rounded-t;
-            }
-            & [role=option]:last-of-type {
-                @apply rounded-b;
-            }
-        }
-
-        &-ghost {
-            @apply bg-opacity-5;
-            &:focus {
-                @apply bg-opacity-100 text-base-content;
-            }
-        }
-        &-primary {
-            @apply border-primary/60;
-            &:focus {
-                @apply outline-primary;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-primary/60 bg-primary/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-primary/10;
-            }
-        }
-        &-secondary {
-            @apply border-secondary/60;
-            &:focus {
-                @apply outline-secondary;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-secondary/60 bg-secondary/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-secondary/10;
-            }
-        }
-        &-accent {
-            @apply border-accent/60;
-            &:focus {
-                @apply outline-accent;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-accent/60 bg-accent/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-accent/10;
-            }
-        }
-        &-info {
-            @apply border-info/60;
-            &:focus {
-                @apply outline-info;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-info/60 bg-info/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-info/10;
-            }
-        }
-        &-success {
-            @apply border-success/60;
-            &:focus {
-                @apply outline-success;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-success/60 bg-success/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-success/10;
-            }
-        }
-        &-warning {
-            @apply border-warning/60;
-            &:focus {
-                @apply outline-warning;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-warning/60 bg-warning/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-warning/10;
-            }
-        }
-        &-error {
-            @apply border-error/60;
-            &:focus {
-                @apply outline-error;
-            }
-            & [role=listbox] [role=option][aria-selected=true] {
-                @apply border-error/60 bg-error/10;
-            }
-            & [role=listbox] [role=option]:hover {
-                @apply bg-error/10;
-            }
-        }
-        &-disabled,
-        &:disabled,
-        &[disabled],
-        &[aria-disabled=true]{
-            @apply cursor-not-allowed border-base-200 bg-base-200 text-opacity-20 placeholder-base-content placeholder-opacity-20 !outline-none;
-        }
-        &-multiple,
-        &[multiple],
-        &[size]&:not([size="1"]) {
-            @apply bg-none pr-4;
-        }
+    & [role="combobox"] {
+      @apply flex-grow select-none appearance-none outline-none;
     }
+
+    & [role="listbox"] {
+      @apply absolute top-full left-0 w-full overflow-visible z-50;
+    }
+
+    & [role="combobox"]:not([aria-expanded="true"]) ~ [role="listbox"] {
+      display: none;
+    }
+
+    & [role="listbox"] [role="option"] {
+      @apply inline-flex items-center w-full h-12 pl-4 pr-10 text-sm leading-loose min-h-12 box-border rounded-none;
+    }
+  }
+
+  /*https://github.com/saadeghi/daisyui/blob/master/src/components/styled/select.css*/
+  .listbox {
+    @apply border-solid border-2 border-base-content border-opacity-0 bg-base-100 pr-10 font-semibold rounded-btn;
+    &-bordered {
+      @apply border-opacity-20;
+    }
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+      calc(100% - 20px) calc(1px + 50%),
+      calc(100% - 16px) calc(1px + 50%);
+    background-size:
+      4px 4px,
+      4px 4px;
+    background-repeat: no-repeat;
+    &:focus {
+      @apply outline outline-2 outline-offset-2 outline-base-content/20;
+    }
+
+    & [role="listbox"] {
+      @apply bg-base-100 shadow-md shadow-base-300 rounded;
+
+      & [role="option"][aria-selected="true"] {
+        @apply rounded border-solid border-2 border-base-content/20;
+      }
+
+      & [role="option"][aria-disabled="true"] {
+        @apply cursor-not-allowed border-base-200 bg-base-200 opacity-20;
+      }
+
+      & [role="option"]:first-of-type {
+        @apply rounded-t;
+      }
+      & [role="option"]:last-of-type {
+        @apply rounded-b;
+      }
+    }
+
+    &-ghost {
+      @apply bg-opacity-5;
+      &:focus {
+        @apply bg-opacity-100 text-base-content;
+      }
+    }
+    &-primary {
+      @apply border-primary/60;
+      &:focus {
+        @apply outline-primary;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-primary/60 bg-primary/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-primary/10;
+      }
+    }
+    &-secondary {
+      @apply border-secondary/60;
+      &:focus {
+        @apply outline-secondary;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-secondary/60 bg-secondary/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-secondary/10;
+      }
+    }
+    &-accent {
+      @apply border-accent/60;
+      &:focus {
+        @apply outline-accent;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-accent/60 bg-accent/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-accent/10;
+      }
+    }
+    &-info {
+      @apply border-info/60;
+      &:focus {
+        @apply outline-info;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-info/60 bg-info/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-info/10;
+      }
+    }
+    &-success {
+      @apply border-success/60;
+      &:focus {
+        @apply outline-success;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-success/60 bg-success/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-success/10;
+      }
+    }
+    &-warning {
+      @apply border-warning/60;
+      &:focus {
+        @apply outline-warning;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-warning/60 bg-warning/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-warning/10;
+      }
+    }
+    &-error {
+      @apply border-error/60;
+      &:focus {
+        @apply outline-error;
+      }
+      & [role="listbox"] [role="option"][aria-selected="true"] {
+        @apply border-error/60 bg-error/10;
+      }
+      & [role="listbox"] [role="option"]:hover {
+        @apply bg-error/10;
+      }
+    }
+    &-disabled,
+    &:disabled,
+    &[disabled],
+    &[aria-disabled="true"] {
+      @apply cursor-not-allowed border-base-200 bg-base-200 text-opacity-20 placeholder-base-content placeholder-opacity-20 !outline-none;
+    }
+    &-multiple,
+    &[multiple],
+    &[size]&:not([size="1"]) {
+      @apply bg-none pr-4;
+    }
+  }
 }
