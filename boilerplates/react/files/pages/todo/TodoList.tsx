@@ -9,8 +9,9 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
   return (
     <>
       <ul>
-        {todoItems.map((todoItem) => (
-          <li key={todoItem.text}>{todoItem.text}</li>
+        {todoItems.map((todoItem, index) => (
+          // biome-ignore lint:
+          <li key={index}>{todoItem.text}</li>
         ))}
       </ul>
       <div>
