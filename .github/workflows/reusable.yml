@@ -1,6 +1,9 @@
 on:
   workflow_call:
     inputs:
+      node:
+        required: true
+        type: string
       runs-on:
         required: true
         type: string
