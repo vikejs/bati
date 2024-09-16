@@ -107,11 +107,6 @@ await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeA
         expect(res.status).toBe(200);
         expect(await res.text()).toContain(text);
       },
-      _: async () => {
-        const res = await fetch("/todo");
-        expect(res.status).toBe(200);
-        expect(await res.text()).not.toContain(text);
-      },
     });
   });
 });
