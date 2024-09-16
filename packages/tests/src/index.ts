@@ -264,6 +264,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       flags: string[];
     }
   > = new Map();
+  const projects: string[] = [];
 
   loadDotEnvTest();
 
@@ -300,6 +301,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     promises.push(
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
+        projects.push(projectDir);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
         await Promise.all([
           ...filesP,
@@ -333,7 +335,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   if (command === "init") {
-    ci.setOutput("workdir", JSON.stringify(Array.from(matrices.keys())));
+    ci.setOutput("workdir", projects);
   } else if (command) {
     throw new Error(`Unknown command ${command}`);
   } else {
