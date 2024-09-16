@@ -1,5 +1,3 @@
-const config = {
+export const config = {
   prerender: false,
 };
-
-export default config;
