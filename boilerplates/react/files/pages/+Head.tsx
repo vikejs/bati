@@ -1,3 +1,5 @@
+// https://vike.dev/Head
+
 import React from "react";
 import logoUrl from "../assets/logo.svg";
 //# BATI.has("mantine")

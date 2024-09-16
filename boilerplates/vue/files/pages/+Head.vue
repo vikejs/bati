@@ -1,3 +1,5 @@
+<!-- https://vike.dev/Head -->
+
 <template>
   <link rel="icon" :href="logoUrl" />
 

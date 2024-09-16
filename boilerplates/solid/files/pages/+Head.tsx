@@ -1,5 +1,7 @@
 /* eslint-disable solid/no-innerhtml */
 
+// https://vike.dev/Head
+
 import logoUrl from "../assets/logo.svg";
 
 export default function HeadDefault() {
