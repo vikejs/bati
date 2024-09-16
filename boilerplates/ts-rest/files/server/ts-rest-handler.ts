@@ -1,5 +1,6 @@
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import { contract } from "../ts-rest/contract";
+// TODO: stop using universal-middleware and directly integrate server middlewares instead. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import { Get, UniversalHandler } from "@universal-middleware/core";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
 import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";

@@ -1,4 +1,5 @@
 /*# BATI include-if-imported #*/
+// TODO: stop using universal-middleware and directly integrate server middlewares instead. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import type { Get, UniversalHandler } from "@universal-middleware/core";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";

@@ -1,6 +1,7 @@
 import { parse, serialize } from "cookie";
 import { getAuth } from "firebase-admin/auth";
 import { firebaseAdmin } from "../libs/firebaseAdmin";
+// TODO: stop using universal-middleware and directly integrate server middlewares instead. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
 
 export const firebaseAuthMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
