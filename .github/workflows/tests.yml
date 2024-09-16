@@ -144,37 +144,12 @@ jobs:
         working-directory: ${{ fromJson(needs.monorepo.outputs.working-directory) }}
     name: Trigger e2e tests
 
-    runs-on: ubuntu-latest
-#    uses: ./.github/workflows/reusable.yml
-#    with:
-##      runs-on: ${{ matrix.os }}
-#      runs-on: ubuntu-latest
-##      node: ${{ matrix.node }}
-#      node: 20
-#      working-directory: ${{ matrix.working-directory }}
-
-    steps:
-      - name: Run build
-        run: turbo run build --filter=.
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Run tests
-        run: turbo run test --only --filter=.
-        working-directory: ${{ inputs.working-directory }}
-        env:
-          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
-          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
-          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
-          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
-          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
-          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
-
-      - name: Run lint
-        run: turbo run lint --only --filter=.
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Run typecheck
-        run: turbo run typecheck --only --filter=.
-        working-directory: ${{ inputs.working-directory }}
+    uses: ./.github/workflows/reusable.yml
+    with:
+#      runs-on: ${{ matrix.os }}
+      runs-on: ubuntu-latest
+#      node: ${{ matrix.node }}
+      node: 20
+      working-directory: ${{ matrix.working-directory }}
 
 
