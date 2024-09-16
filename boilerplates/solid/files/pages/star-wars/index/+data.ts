@@ -1,6 +1,5 @@
 // https://vike.dev/data
 
-import fetch from "cross-fetch";
 import type { Movie, MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;

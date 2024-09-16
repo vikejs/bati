@@ -5,6 +5,6 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["vite", "@types/react", "@types/react-dom"],
-    dependencies: ["@vitejs/plugin-react", "cross-fetch", "react", "react-dom", "vike", "vike-react"],
+    dependencies: ["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react"],
   });
 }
