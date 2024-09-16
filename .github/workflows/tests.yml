@@ -118,6 +118,13 @@ jobs:
       - name: Prepare e2e tests
         id: prepare-e2e
         run: pnpm run test:e2e init
+        env:
+          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
+          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
     outputs:
       working-directory: ${{ steps.prepare-e2e.outputs.workdir }}
@@ -137,13 +144,17 @@ jobs:
         working-directory: ${{ fromJson(needs.monorepo.outputs.working-directory) }}
     name: Trigger e2e tests
 
-    uses: ./.github/workflows/reusable.yml
-    with:
-#      runs-on: ${{ matrix.os }}
-      runs-on: ubuntu-latest
-#      node: ${{ matrix.node }}
-      node: 20
-      working-directory: ${{ matrix.working-directory }}
-    secrets: inherit
+    runs-on: ubuntu-latest
+#    uses: ./.github/workflows/reusable.yml
+#    with:
+##      runs-on: ${{ matrix.os }}
+#      runs-on: ubuntu-latest
+##      node: ${{ matrix.node }}
+#      node: 20
+#      working-directory: ${{ matrix.working-directory }}
+
+    steps:
+      - name: testing CI
+        run: echo ${{ inputs.runs-on }} ${{ matrix.working-directory }}
 
 
