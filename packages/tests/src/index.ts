@@ -13,6 +13,7 @@ import { execLocalBati } from "./exec-bati.js";
 import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";
 import type { GlobalContext } from "./types.js";
+import * as ci from "@actions/core";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -250,6 +251,7 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
 }
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
+  const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
   await initTmpDir(context);
 
@@ -313,7 +315,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   await createWorkspacePackageJson(context);
 
-  // create monorepo config  (pnpm only)
+  // create monorepo config (pnpm only)
   if (!bunExists) {
     await createPnpmWorkspaceYaml(context);
   }
@@ -330,8 +332,14 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // pnpm/bun install
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
-  // exec turbo run test lint build
-  await execTurborepo(context, args);
+  if (command === "init") {
+    ci.setOutput("workdir", JSON.stringify(Array.from(matrices.keys())));
+  } else if (command) {
+    throw new Error(`Unknown command ${command}`);
+  } else {
+    // exec turbo run test lint build
+    await execTurborepo(context, args);
+  }
 }
 
 // init context
