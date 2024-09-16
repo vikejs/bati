@@ -1,8 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": [
-    "//"
-  ],
+  "extends": ["//"],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -57,9 +55,7 @@
         "@batijs/vue-lucia-auth#build",
         "@batijs/vue-sentry#build"
       ],
-      "outputs": [
-        "dist/**"
-      ]
+      "outputs": ["dist/**"]
     },
     "check-types": {}
   }
