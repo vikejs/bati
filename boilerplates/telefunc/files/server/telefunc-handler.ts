@@ -17,7 +17,7 @@ export const telefuncHandler: Get<[], UniversalHandler> = () => async (request, 
         "BATI.hasD1": { db: D1Database };
       }>),
       ...(runtime as BATI.If<{
-        "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
+        "BATI.hasD1": { runtime: "workerd"; adapter: "cloudflare-pages"; env?: { DB: D1Database } };
       }>),
     },
   });
