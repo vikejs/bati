@@ -17,6 +17,6 @@ export async function onNewTodo({ text }: { text: string }) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
   } else {
-    todos.push({ text });
+    todos.todo.push({ text });
   }
 }
