@@ -60,7 +60,7 @@ const authjsConfig = {
 export async function getSession(req: Request, config: Omit<AuthConfig, "raw">): Promise<Session | null> {
   setEnvDefaults(process.env, config);
   const requestURL = new URL(req.url);
-  const url = createActionURL("session", requestURL.protocol, req.headers, process.env, config.basePath);
+  const url = createActionURL("session", requestURL.protocol, req.headers, process.env, config);
 
   const response = await Auth(new Request(url, { headers: { cookie: req.headers.get("cookie") ?? "" } }), config);
 

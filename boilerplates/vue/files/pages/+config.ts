@@ -11,5 +11,5 @@ export default {
   passToClient: ["user"],
   // <title>
   title: "My Vike App",
-  extends: vikeVue,
+  extends: vikeVue as typeof vikeVue,
 } satisfies Config;

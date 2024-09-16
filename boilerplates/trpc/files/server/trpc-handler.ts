@@ -12,7 +12,7 @@ export const trpcHandler = ((endpoint) => (request, context, runtime) => {
       return {
         ...(context as BATI.Any),
         ...(runtime as BATI.If<{
-          "BATI.hasD1": { runtime: "workerd"; adapter: string; env: { DB: D1Database } };
+          "BATI.hasD1": { runtime: "workerd"; adapter: "cloudflare-pages"; env?: { DB: D1Database } };
         }>),
         req,
         resHeaders,
