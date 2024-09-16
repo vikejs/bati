@@ -17,7 +17,7 @@
     "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build --no-daemon",
-    "format": "git ls-files | egrep '\\.(json|js|jsx|css|ts|tsx|vue|mjs|cjs)$' | grep --invert-match package.json | xargs pnpm exec prettier --write"
+    "format": "git ls-files | egrep '\\.(json|js|jsx|css|ts|tsx|vue|mjs|cjs)$' | grep --invert-match package.json | xargs pnpm exec prettier --write",
     "reset": "git clean -Xdf && pnpm install && pnpm run build",
     "lint": "eslint ."
   },
