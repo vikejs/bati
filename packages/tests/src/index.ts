@@ -226,7 +226,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   if (command === "list") {
     const projects = Array.from(matrices.values()).map((m) => ({
-      testFiles: m.testFiles,
+      testFiles: m.testFiles.map((f) => basename(f)),
       flags: m.flags.map((f) => `--${f}`).join(" "),
     }));
     ci.setOutput("test-matrix", projects);
