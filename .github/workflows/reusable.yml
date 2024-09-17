@@ -33,14 +33,14 @@ jobs:
       - name: Download Bati CLI
         uses: actions/download-artifact@v4
         with:
-          name: bati-cli
+          name: bati-cli-ubuntu-latest-20
           path: ./bati-cli
           merge-multiple: true
 
       - name: Download Bati tests
         uses: actions/download-artifact@v4
         with:
-          name: bati-tests
+          name: bati-tests-ubuntu-latest-20
           path: ./bati-tests
           merge-multiple: true
 
@@ -50,14 +50,14 @@ jobs:
       - name: Download tests-utils
         uses: actions/download-artifact@v4
         with:
-          name: tests-utils
+          name: tests-utils-ubuntu-latest-20
           merge-multiple: true
           path: bati-app
 
       - name: Download tests-files
         uses: actions/download-artifact@v4
         with:
-          name: tests-files
+          name: tests-files-ubuntu-latest-20
           merge-multiple: true
           path: bati-app
 

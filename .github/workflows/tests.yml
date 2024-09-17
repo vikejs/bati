@@ -121,7 +121,7 @@ jobs:
       - name: Archive Bati CLI
         uses: actions/upload-artifact@v4
         with:
-          name: bati-cli
+          name: bati-cli-${{ matrix.os }}-${{ matrix.node }}
           if-no-files-found: error
           retention-days: 1
           overwrite: true
@@ -134,7 +134,7 @@ jobs:
       - name: Archive Bati tests
         uses: actions/upload-artifact@v4
         with:
-          name: bati-tests
+          name: bati-tests-${{ matrix.os }}-${{ matrix.node }}
           if-no-files-found: error
           retention-days: 1
           overwrite: true
@@ -148,7 +148,7 @@ jobs:
       - name: Archive tests-utils
         uses: actions/upload-artifact@v4
         with:
-          name: tests-utils
+          name: tests-utils-${{ matrix.os }}-${{ matrix.node }}
           if-no-files-found: error
           retention-days: 1
           overwrite: true
@@ -158,7 +158,7 @@ jobs:
       - name: Archive tests files
         uses: actions/upload-artifact@v4
         with:
-          name: tests-files
+          name: tests-files-${{ matrix.os }}-${{ matrix.node }}
           if-no-files-found: error
           retention-days: 1
           overwrite: true
