@@ -23,6 +23,6 @@ export default async function data(_pageContext: PageContextServer): Promise<Dat
 
     return { todo };
   } else {
-    return todos;
+    return { todo: todos };
   }
 }
