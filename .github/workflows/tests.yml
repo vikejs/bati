@@ -116,7 +116,7 @@ jobs:
         run: pnpm run test
 
       - name: Deploy CLI locally
-        run: pnpm deploy --prod --filter=./packages/cli ${{ runner.temp }}/bati-cli
+        run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
 
       - name: Archive Bati CLI
         uses: actions/upload-artifact@v4
@@ -126,10 +126,10 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ${{ runner.temp }}/bati-cli
+          path: ./bati-cli
 
       - name: Deploy tests locally
-        run: pnpm deploy --prod --filter=./packages/tests ${{ runner.temp }}/bati-tests
+        run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
 
       - name: Archive Bati tests
         uses: actions/upload-artifact@v4
@@ -139,7 +139,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ${{ runner.temp }}/bati-tests
+          path: ./bati-tests
 
       - name: Pack tests-utils
         run: pnpm pack
