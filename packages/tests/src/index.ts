@@ -229,7 +229,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       testFiles: m.testFiles.map((f) => basename(f)),
       flags: m.flags.map((f) => `--${f}`).join(" "),
     }));
-    console.log("projects: ", { projects });
+    console.log("projects: ", JSON.stringify({ projects }));
     ci.setOutput("test-matrix", { projects });
     return;
   }
