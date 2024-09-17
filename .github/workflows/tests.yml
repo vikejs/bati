@@ -131,7 +131,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-cli/dist
+          path: ./bati-cli/dist/*
 
       - name: Deploy tests locally
         run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
@@ -144,7 +144,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-tests/dist
+          path: ./bati-tests/dist/*
 
       - name: Pack tests-utils
         run: pnpm pack
@@ -168,7 +168,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./packages/tests/tests
+          path: ./packages/tests/tests/*
 
       - name: List e2e tests
         id: list-e2e
@@ -195,6 +195,7 @@ jobs:
   generated:
     needs: monorepo
     strategy:
+      fail-fast: false
       matrix:
         test-matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
     name: Trigger e2e tests

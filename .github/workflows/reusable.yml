@@ -35,14 +35,12 @@ jobs:
         with:
           name: bati-cli-ubuntu-latest-20
           path: ./bati-cli
-          merge-multiple: true
 
       - name: Download Bati tests
         uses: actions/download-artifact@v4
         with:
           name: bati-tests-ubuntu-latest-20
           path: ./bati-tests
-          merge-multiple: true
 
       - name: Run Bati CLI
         run: bun ./bati-cli/index.js ${{ inputs.flags }} bati-app
