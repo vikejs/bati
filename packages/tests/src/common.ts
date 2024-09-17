@@ -52,7 +52,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ${testFiles ? JSON.stringify([testFiles.split(",")]) : '["*.spec.ts"]'},
+    include: ${testFiles ? JSON.stringify(testFiles.split(",")) : '["*.spec.ts"]'},
     testTimeout: 100000,
     environmentMatchGlobs: [
       ["**/*.dom.spec.ts", "happy-dom"],
