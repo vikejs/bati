@@ -1,3 +1,5 @@
+// Put global types here
+
 import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { D1Database } from "@cloudflare/workers-types";

@@ -15,7 +15,6 @@ export default async function getPackageJson(props: TransformerProps) {
       "@vitejs/plugin-vue",
       "@vue/compiler-sfc",
       "@vue/server-renderer",
-      "cross-fetch",
       "unplugin-vue-markdown",
       "vike-vue",
       "vike",

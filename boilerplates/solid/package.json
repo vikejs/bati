@@ -14,7 +14,6 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@types/node": "^18.19.14",
-    "cross-fetch": "^4.0.0",
     "solid-js": "^1.8.22",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.6.2",
@@ -38,11 +37,11 @@
     "./components/Link": {
       "types": "./dist/types/components/Link.d.ts"
     },
-    "./layouts/HeadDefault": {
-      "types": "./dist/types/layouts/HeadDefault.d.ts"
-    },
     "./layouts/LayoutDefault": {
       "types": "./dist/types/layouts/LayoutDefault.d.ts"
+    },
+    "./pages/+Head": {
+      "types": "./dist/types/pages/+Head.d.ts"
     },
     "./pages/+config": {
       "types": "./dist/types/pages/+config.d.ts"
@@ -71,17 +70,11 @@
     "./pages/star-wars/@id/+Page": {
       "types": "./dist/types/pages/star-wars/@id/+Page.d.ts"
     },
-    "./pages/star-wars/@id/+title": {
-      "types": "./dist/types/pages/star-wars/@id/+title.d.ts"
-    },
     "./pages/star-wars/index/+data": {
       "types": "./dist/types/pages/star-wars/index/+data.d.ts"
     },
     "./pages/star-wars/index/+Page": {
       "types": "./dist/types/pages/star-wars/index/+Page.d.ts"
-    },
-    "./pages/star-wars/index/+title": {
-      "types": "./dist/types/pages/star-wars/index/+title.d.ts"
     },
     "./pages/todo/TodoList": {
       "types": "./dist/types/pages/todo/TodoList.d.ts"
@@ -95,11 +88,11 @@
       "components/Link": [
         "./dist/types/components/Link.d.ts"
       ],
-      "layouts/HeadDefault": [
-        "./dist/types/layouts/HeadDefault.d.ts"
-      ],
       "layouts/LayoutDefault": [
         "./dist/types/layouts/LayoutDefault.d.ts"
+      ],
+      "pages/+Head": [
+        "./dist/types/pages/+Head.d.ts"
       ],
       "pages/+config": [
         "./dist/types/pages/+config.d.ts"
@@ -128,17 +121,11 @@
       "pages/star-wars/@id/+Page": [
         "./dist/types/pages/star-wars/@id/+Page.d.ts"
       ],
-      "pages/star-wars/@id/+title": [
-        "./dist/types/pages/star-wars/@id/+title.d.ts"
-      ],
       "pages/star-wars/index/+data": [
         "./dist/types/pages/star-wars/index/+data.d.ts"
       ],
       "pages/star-wars/index/+Page": [
         "./dist/types/pages/star-wars/index/+Page.d.ts"
-      ],
-      "pages/star-wars/index/+title": [
-        "./dist/types/pages/star-wars/index/+title.d.ts"
       ],
       "pages/todo/TodoList": [
         "./dist/types/pages/todo/TodoList.d.ts"
