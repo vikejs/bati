@@ -1,10 +1,10 @@
-import { basename } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
 import { runDevServer } from "./run-dev.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
+import { readFile } from "node:fs/promises";
 
 async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
   let error: unknown = undefined;
@@ -26,11 +26,13 @@ async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
 export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
   const { beforeAll, afterAll } = await import("vitest");
 
+  const bati = JSON.parse(await readFile("bati.config.json", "utf-8"));
+
   const context: GlobalContext = {
     port: 0,
     port_1: 0,
     server: undefined,
-    flags: basename(process.cwd()).split("--"),
+    flags: bati.flags,
   };
 
   beforeAll(async () => {

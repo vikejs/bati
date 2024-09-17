@@ -60,16 +60,16 @@ jobs:
           merge-multiple: true
 
       - name: Prepare Bati tests
-        run: bun ${{ runner.temp }}/bati-tests/dist/index.js prepare
+        run: bun ${{ runner.temp }}/bati-tests/dist/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
 
       - name: Install dependencies
         run: bun install
 
       - name: Run build
-        run: turbo run build
+        run: bun turbo run build
 
       - name: Run tests
-        run: turbo run test --only
+        run: bun turbo run test --only
         env:
           TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
           TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
@@ -79,7 +79,7 @@ jobs:
           TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
       - name: Run lint
-        run: turbo run lint --only
+        run: bun turbo run lint --only
 
       - name: Run typecheck
-        run: turbo run typecheck --only
+        run: bun turbo run typecheck --only

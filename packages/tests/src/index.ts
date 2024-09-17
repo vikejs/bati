@@ -1,4 +1,4 @@
-import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
@@ -14,7 +14,13 @@ import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";
 import type { GlobalContext } from "./types.js";
 import * as ci from "@actions/core";
-import { readdirSync } from "fs";
+import {
+  createBatiConfig,
+  createTurboConfig,
+  updatePackageJson,
+  updateTsconfig,
+  updateVitestConfig,
+} from "./common.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,53 +32,6 @@ interface CliOptions {
   force?: boolean;
   summarize?: boolean;
   keep?: boolean;
-}
-
-async function updatePackageJson(projectDir: string) {
-  // add vitest and lint script
-  const pkgjson = JSON.parse(await readFile(join(projectDir, "package.json"), "utf-8"));
-  pkgjson.name = basename(projectDir);
-  pkgjson.scripts ??= {};
-  pkgjson.scripts.test = "vitest run";
-  if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
-    pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
-  }
-  pkgjson.scripts.typecheck = "tsc --noEmit";
-  pkgjson.devDependencies ??= {};
-  pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
-  pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
-  pkgjson.devDependencies["happy-dom"] = packageJson.devDependencies["happy-dom"];
-  await writeFile(join(projectDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
-}
-
-async function updateTsconfig(projectDir: string) {
-  // add tsconfig exclude option
-  const tsconfig = JSON.parse(await readFile(join(projectDir, "tsconfig.json"), "utf-8"));
-  tsconfig.exclude ??= [];
-  // exclude temp vite config files
-  tsconfig.exclude.push("*.timestamp-*");
-  await writeFile(join(projectDir, "tsconfig.json"), JSON.stringify(tsconfig, undefined, 2), "utf-8");
-}
-
-function updateVitestConfig(projectDir: string) {
-  return writeFile(
-    join(projectDir, "vitest.config.ts"),
-    `/// <reference types="vitest" />
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    include: ["*.spec.ts"],
-    testTimeout: 100000,
-    environmentMatchGlobs: [
-      ["**/*.dom.spec.ts", "happy-dom"],
-      ["**/*.spec.ts", "node"],
-    ],
-  },
-});
-`,
-    "utf-8",
-  );
 }
 
 async function getPackageManagerVersion() {
@@ -120,36 +79,6 @@ function createPnpmWorkspaceYaml(context: GlobalContext) {
   );
 }
 
-async function createTurboConfig(context: GlobalContext) {
-  await writeFile(
-    join(context.tmpdir, "turbo.json"),
-    JSON.stringify({
-      $schema: "https://turbo.build/schema.json",
-      tasks: {
-        build: {
-          dependsOn: ["^build"],
-          outputs: ["dist/**"],
-        },
-        test: {
-          dependsOn: ["build"],
-          env: ["TEST_*"],
-        },
-        lint: {
-          dependsOn: ["build"],
-        },
-        typecheck: {
-          dependsOn: ["build"],
-        },
-      },
-      daemon: false,
-      remoteCache: {
-        signature: false,
-      },
-    }),
-    "utf-8",
-  );
-}
-
 async function createGitIgnore(context: GlobalContext) {
   await copyFile(join(root, ".gitignore"), join(context.tmpdir, ".gitignore"));
 }
@@ -159,13 +88,6 @@ function linkTestUtils() {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
-    stdio: ["ignore", "ignore", "inherit"],
-  });
-}
-
-function addPackedTestUtils(packedRelativePath: string) {
-  return exec(npmCli, ["add", "-D", packedRelativePath], {
-    timeout: 10 * 1000,
     stdio: ["ignore", "ignore", "inherit"],
   });
 }
@@ -258,23 +180,6 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-async function prepare() {
-  const projectDir = ".";
-  const packedTestUtils = readdirSync(projectDir).find((f) => f.startsWith("batijs-tests-utils-"));
-
-  if (!packedTestUtils) {
-    throw new Error("No packed test utils found.");
-  }
-
-  await updatePackageJson(projectDir);
-  await updateTsconfig(projectDir);
-  await updateVitestConfig(projectDir);
-  await createTurboConfig({
-    tmpdir: projectDir,
-  });
-  await addPackedTestUtils(`./${packedTestUtils}`);
-}
-
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
@@ -341,6 +246,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           updatePackageJson(projectDir),
           updateTsconfig(projectDir),
           updateVitestConfig(projectDir),
+          createBatiConfig(projectDir, flags),
         ]);
       }),
     );
@@ -373,25 +279,20 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
 const argv = process.argv.slice(2);
 const args = mri<CliOptions>(argv);
-const command: string | undefined = args._[0];
 
-if (command === "prepare") {
-  await prepare();
-} else {
-  // init context
-  const context: GlobalContext = { tmpdir: "", localRepository: false };
+// init context
+const context: GlobalContext = { tmpdir: "", localRepository: false };
 
-  try {
-    context.localRepository = await isVerdaccioRunning();
-    await main(context, args);
-  } finally {
-    if (context.tmpdir && !args.keep) {
-      // Delete all tmp dirs
-      // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
-      // which are generated in `${context.tmpdir}/.turbo/runs`
-      await spinner("Cleaning temporary folder...", () =>
-        rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
-      );
-    }
+try {
+  context.localRepository = await isVerdaccioRunning();
+  await main(context, args);
+} finally {
+  if (context.tmpdir && !args.keep) {
+    // Delete all tmp dirs
+    // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
+    // which are generated in `${context.tmpdir}/.turbo/runs`
+    await spinner("Cleaning temporary folder...", () =>
+      rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
+    );
   }
 }

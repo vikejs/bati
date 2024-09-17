@@ -45,7 +45,7 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
   const p = await prepare(options);
   const testMatch = testMatchFactory(vitest, p.context);
 
-  vitest.describe.concurrent(p.context.flags.join("--"), { retry: options?.retry }, () => {
+  vitest.describe.concurrent(p.context.flags.map((f) => `--${f}`).join(" "), { retry: options?.retry }, () => {
     fn({
       ...vitest,
       ...p,
