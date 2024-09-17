@@ -229,7 +229,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     // considers them as secrets (probably because of `TEST_FIREBASE_*` variables)
     const projects = Array.from(matrices.values()).map((m) => [
       m.flags.map((f) => `--${f}`).join(" "),
-      m.testFiles.map((f) => basename(f)),
+      m.testFiles.map((f) => basename(f)).join(","),
     ]);
     console.log("projects: ", projects);
     ci.setOutput("test-matrix", projects);
