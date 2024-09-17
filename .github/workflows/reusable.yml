@@ -84,6 +84,13 @@ jobs:
       - name: Run build
         run: bun turbo run build --no-update-notifier --framework-inference false --env-mode loose
         working-directory: bati-app
+        env:
+          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
+          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
       - name: Run tests
         run: bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose
@@ -99,7 +106,21 @@ jobs:
       - name: Run lint
         run: bun turbo run lint --only --no-update-notifier --framework-inference false --env-mode loose
         working-directory: bati-app
+        env:
+          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
+          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
       - name: Run typecheck
         run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
         working-directory: bati-app
+        env:
+          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
+          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
+          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
