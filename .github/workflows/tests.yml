@@ -195,7 +195,8 @@ jobs:
   generated:
     needs: monorepo
     strategy:
-      matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
+      matrix:
+        test-matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
     name: Trigger e2e tests
 
     uses: ./.github/workflows/reusable.yml
@@ -204,7 +205,7 @@ jobs:
       runs-on: ubuntu-latest
 #      node: ${{ matrix.node }}
       node: 20
-      flags: ${{ matrix.projects.flags }}
-      test-files: ${{ matrix.projects.testFiles }}
+      flags: ${{ matrix.test-matrix[0] }}
+      test-files: ${{ matrix.test-matrix[1] }}
 
 

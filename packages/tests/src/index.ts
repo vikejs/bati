@@ -225,12 +225,14 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   console.log(`Testing ${matrices.size} combinations`);
 
   if (command === "list") {
-    const projects = Array.from(matrices.values()).map((m) => ({
-      testFiles: m.testFiles.map((f) => basename(f)),
-      flags: m.flags.map((f) => `--${f}`).join(" "),
-    }));
-    console.log("projects: ", JSON.stringify({ projects }));
-    ci.setOutput("test-matrix", { projects });
+    // Avoid "{}" being present in the output, as GitHub CI
+    // considers them as secrets (probably because of `TEST_FIREBASE_*` variables)
+    const projects = Array.from(matrices.values()).map((m) => [
+      m.flags.map((f) => `--${f}`).join(" "),
+      m.testFiles.map((f) => basename(f)),
+    ]);
+    console.log("projects: ", projects);
+    ci.setOutput("test-matrix", projects);
     return;
   }
 
