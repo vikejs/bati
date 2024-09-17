@@ -203,10 +203,6 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     secrets: inherit
     with:
-#      runs-on: ${{ matrix.os }}
-      runs-on: ubuntu-latest
-#      node: ${{ matrix.node }}
-      node: 20
       flags: ${{ matrix.test-matrix[0] }}
       test-files: ${{ matrix.test-matrix[1] }}
 

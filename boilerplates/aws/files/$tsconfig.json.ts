@@ -8,5 +8,7 @@ export default async function getTsConfig(props: TransformerProps) {
     "vitest/globals",
     "@types/which",
   ];
+  tsConfig.exclude ??= [];
+  tsConfig.exclude.push("cdk.out");
   return tsConfig;
 }
