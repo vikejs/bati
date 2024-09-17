@@ -226,7 +226,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   if (command === "list") {
     // Avoid "{}" being present in the output, as GitHub CI
-    // considers them as secrets (probably because of `TEST_FIREBASE_*` variables)
+    // considers them as secrets (probably because of `TEST_FIREBASE_*` variables).
+    // So only use tuples/arrays, no objects.
     const projects = Array.from(matrices.values()).map((m) => [
       m.flags.map((f) => `--${f}`).join(" "),
       m.testFiles.map((f) => basename(f)).join(","),
