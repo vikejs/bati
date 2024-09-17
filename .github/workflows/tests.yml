@@ -117,6 +117,8 @@ jobs:
 
       - name: Run tests
         run: pnpm run test
+        env:
+          BUNDLE: 1
 
       - name: Deploy CLI locally
         run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
@@ -142,7 +144,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-tests
+          path: ./bati-tests/dist
 
       - name: Pack tests-utils
         run: pnpm pack

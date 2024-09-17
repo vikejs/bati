@@ -62,7 +62,7 @@ jobs:
           path: bati-app
 
       - name: Prepare Bati tests
-        run: bun ./bati-tests/dist/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
+        run: bun ./bati-tests/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
         working-directory: bati-app
 
       - name: Install dependencies
