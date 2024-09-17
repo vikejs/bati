@@ -20,6 +20,11 @@ export default async function getPackageJson(props: TransformerProps) {
       value: "run-s build deploy:cdk-deploy-all",
       precedence: 0,
     },
+    // @ts-ignore
+    "cdk:app": {
+      value: "tsx cdk/bin/infrastructure.ts",
+      precedence: 0,
+    },
   });
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
