@@ -12,8 +12,12 @@ export default async function getPackageJson(props: TransformerProps) {
       value: "cdk",
       precedence: 0,
     },
+    "deploy:cdk-deploy-all": {
+      value: "cdk deploy --all",
+      precedence: 0,
+    },
     "deploy:aws": {
-      value: "pnpm run build && cdk deploy --all",
+      value: "run-s build deploy:cdk-deploy-all",
       precedence: 0,
     },
   });
@@ -22,6 +26,7 @@ export default async function getPackageJson(props: TransformerProps) {
     devDependencies: [
       "cdk",
       "aws-cdk",
+      "npm-run-all2",
       "@types/node",
       "tsx",
       "typescript",
