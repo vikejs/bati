@@ -253,7 +253,6 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
-  await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
@@ -264,7 +263,6 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       flags: string[];
     }
   > = new Map();
-  const projects: string[] = [];
 
   loadDotEnvTest();
 
@@ -296,12 +294,19 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   console.log(`Testing ${matrices.size} combinations`);
 
+  if (command === "list") {
+    const projects = Array.from(matrices.values()).map((m) => m.flags.map((f) => `--${f}`).join(" "));
+    ci.setOutput("flags", projects);
+    return;
+  }
+
+  await initTmpDir(context);
+
   // for all matrices
   for (const { testFiles, flags } of matrices.values()) {
     promises.push(
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
-        projects.push(projectDir);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
         await Promise.all([
           ...filesP,
@@ -334,14 +339,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // pnpm/bun install
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
-  if (command === "init") {
-    ci.setOutput("workdir", projects);
-  } else if (command) {
-    throw new Error(`Unknown command ${command}`);
-  } else {
-    // exec turbo run test lint build
-    await execTurborepo(context, args);
-  }
+  // exec turbo run test lint build
+  await execTurborepo(context, args);
 }
 
 // init context
