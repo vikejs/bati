@@ -201,6 +201,7 @@ jobs:
     name: Trigger e2e tests
 
     uses: ./.github/workflows/reusable.yml
+    secrets: inherit
     with:
 #      runs-on: ${{ matrix.os }}
       runs-on: ubuntu-latest
