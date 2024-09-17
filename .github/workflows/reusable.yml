@@ -45,7 +45,7 @@ jobs:
           merge-multiple: true
 
       - name: Run Bati CLI
-        run: bun ./bati-cli/dist/index.js ${{ inputs.flags }} bati-app
+        run: bun ./bati-cli/index.js ${{ inputs.flags }} bati-app
 
       - name: Download tests-utils
         uses: actions/download-artifact@v4

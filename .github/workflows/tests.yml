@@ -53,10 +53,10 @@ jobs:
         with:
           run_install: false
 
-      - uses: oven-sh/setup-bun@v2
-        name: Install bun
-        with:
-          bun-version: "1.1.24"
+#      - uses: oven-sh/setup-bun@v2
+#        name: Install bun
+#        with:
+#          bun-version: "1.1.24"
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -75,16 +75,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - uses: actions/cache@v4
-        # REALLY slow on windows
-        if: matrix.os != 'windows-latest'
-        name: Setup bun cache
-        with:
-          path: ~/.bun/install/cache
-          # Uses pnpm hash to avoid too many cache creations
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+#      - uses: actions/cache@v4
+#        # REALLY slow on windows
+#        if: matrix.os != 'windows-latest'
+#        name: Setup bun cache
+#        with:
+#          path: ~/.bun/install/cache
+#          # Uses pnpm hash to avoid too many cache creations
+#          key: ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-bun-
 
       - name: Cache for Turbo
         uses: rharkor/caching-for-turbo@v1.5
@@ -107,8 +107,11 @@ jobs:
 
       - name: Build packages
         run: pnpm run build
+        env:
+          # self-contained Bati CLI, lighter artifact
+          BUNDLE: 1
 
-#      - name: Release in local repo
+      #      - name: Release in local repo
 #        if: matrix.os == 'ubuntu-latest'
 #        run: pnpm run release:local
 
@@ -126,7 +129,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-cli
+          path: ./bati-cli/dist
 
       - name: Deploy tests locally
         run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
