@@ -68,11 +68,11 @@ jobs:
         working-directory: bati-app
 
       - name: Run build
-        run: bun turbo run build
+        run: ./node_modules/.bin/turbo run build
         working-directory: bati-app
 
       - name: Run tests
-        run: bun turbo run test --only
+        run: ./node_modules/.bin/turbo run test --only
         working-directory: bati-app
         env:
           TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
@@ -83,9 +83,9 @@ jobs:
           TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
       - name: Run lint
-        run: bun turbo run lint --only
+        run: ./node_modules/.bin/turbo run lint --only
         working-directory: bati-app
 
       - name: Run typecheck
-        run: bun turbo run typecheck --only
+        run: ./node_modules/.bin/turbo run typecheck --only
         working-directory: bati-app
