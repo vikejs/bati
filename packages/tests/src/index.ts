@@ -14,6 +14,7 @@ import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";
 import type { GlobalContext } from "./types.js";
 import * as ci from "@actions/core";
+import { readdirSync } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -162,6 +163,13 @@ function linkTestUtils() {
   });
 }
 
+function addPackedTestUtils(packedRelativePath: string) {
+  return exec(npmCli, ["add", "-D", packedRelativePath], {
+    timeout: 10 * 1000,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
+}
+
 async function packageManagerInstall(context: GlobalContext) {
   {
     // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
@@ -250,6 +258,23 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
+async function prepare() {
+  const projectDir = ".";
+  const packedTestUtils = readdirSync(projectDir).find((f) => f.startsWith("batijs-tests-utils-"));
+
+  if (!packedTestUtils) {
+    throw new Error("No packed test utils found.");
+  }
+
+  await updatePackageJson(projectDir);
+  await updateTsconfig(projectDir);
+  await updateVitestConfig(projectDir);
+  await createTurboConfig({
+    tmpdir: projectDir,
+  });
+  await addPackedTestUtils(`./${packedTestUtils}`);
+}
+
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
@@ -295,8 +320,11 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   console.log(`Testing ${matrices.size} combinations`);
 
   if (command === "list") {
-    const projects = Array.from(matrices.values()).map((m) => m.flags.map((f) => `--${f}`).join(" "));
-    ci.setOutput("flags", projects);
+    const projects = Array.from(matrices.values()).map((m) => ({
+      testFiles: m.testFiles,
+      flags: m.flags.map((f) => `--${f}`).join(" "),
+    }));
+    ci.setOutput("test-matrix", projects);
     return;
   }
 
@@ -343,22 +371,27 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await execTurborepo(context, args);
 }
 
-// init context
-const context: GlobalContext = { tmpdir: "", localRepository: false };
-
 const argv = process.argv.slice(2);
 const args = mri<CliOptions>(argv);
+const command: string | undefined = args._[0];
 
-try {
-  context.localRepository = await isVerdaccioRunning();
-  await main(context, args);
-} finally {
-  if (context.tmpdir && !args.keep) {
-    // Delete all tmp dirs
-    // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
-    // which are generated in `${context.tmpdir}/.turbo/runs`
-    await spinner("Cleaning temporary folder...", () =>
-      rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
-    );
+if (command === "prepare") {
+  await prepare();
+} else {
+  // init context
+  const context: GlobalContext = { tmpdir: "", localRepository: false };
+
+  try {
+    context.localRepository = await isVerdaccioRunning();
+    await main(context, args);
+  } finally {
+    if (context.tmpdir && !args.keep) {
+      // Delete all tmp dirs
+      // We keep this folder on CI because it's cleared automatically, and because we want to upload the json summaries
+      // which are generated in `${context.tmpdir}/.turbo/runs`
+      await spinner("Cleaning temporary folder...", () =>
+        rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 }),
+      );
+    }
   }
 }

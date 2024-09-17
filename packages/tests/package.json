@@ -7,7 +7,8 @@
     "check-types": "tsc --noEmit",
     "start": "tsx src/index.ts",
     "test": "vitest run",
-    "test:e2e": "tsx src/index.ts"
+    "test:e2e": "tsx src/index.ts",
+    "build": "tsup"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -26,6 +27,7 @@
     "happy-dom": "^15.3.2",
     "mri": "^1.2.0",
     "p-limit": "^6.1.0",
+    "tsup": "^8.2.4",
     "tsx": "^4.17.0",
     "turbo": "2.1.1",
     "typescript": "^5.5.4",

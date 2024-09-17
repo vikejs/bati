@@ -10,6 +10,9 @@ on:
       flags:
         required: true
         type: string
+      test-files:
+        required: true
+        type: string
 jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.runs-on }}
@@ -32,6 +35,14 @@ jobs:
         with:
           name: bati-cli
           path: ${{ runner.temp }}/bati-cli
+          merge-multiple: true
+
+      - name: Download Bati tests
+        uses: actions/download-artifact@v4
+        with:
+          name: bati-cli
+          path: ${{ runner.temp }}/bati-tests
+          merge-multiple: true
 
       - name: Run Bati CLI
         run: bun ${{ runner.temp }}/bati-cli/dist/index.js ${{ inputs.flags }} --force .
@@ -40,9 +51,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tests-utils
+          merge-multiple: true
 
-      - name: Setup Bati tests
-        run: 
+      - name: Download tests-files
+        uses: actions/download-artifact@v4
+        with:
+          name: tests-files
+          merge-multiple: true
+
+      - name: Prepare Bati tests
+        run: bun ${{ runner.temp }}/bati-tests/dist/index.js prepare
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Run build
         run: turbo run build

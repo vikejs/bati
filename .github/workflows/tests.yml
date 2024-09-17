@@ -118,6 +118,29 @@ jobs:
       - name: Deploy CLI locally
         run: pnpm deploy --prod --filter=./packages/cli ${{ runner.temp }}/bati-cli
 
+      - name: Archive Bati CLI
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-cli
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ${{ runner.temp }}/bati-cli
+
+      - name: Deploy tests locally
+        run: pnpm deploy --prod --filter=./packages/tests ${{ runner.temp }}/bati-tests
+
+      - name: Archive Bati tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-tests
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ${{ runner.temp }}/bati-tests
+
       - name: Pack tests-utils
         run: pnpm pack
         working-directory: ./packages/tests-utils
@@ -132,15 +155,15 @@ jobs:
           include-hidden-files: true
           path: ./packages/tests-utils/batijs-tests-utils-*.tgz
 
-      - name: Archive Bati CLI
+      - name: Archive tests files
         uses: actions/upload-artifact@v4
         with:
-          name: bati-cli
+          name: tests-files
           if-no-files-found: error
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ${{ runner.temp }}/bati-cli
+          path: ./packages/tests/tests
 
       - name: List e2e tests
         id: list-e2e
@@ -154,7 +177,7 @@ jobs:
           TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
 
     outputs:
-      flags: ${{ steps.list-e2e.outputs.flags }}
+      test-matrix: ${{ steps.list-e2e.outputs.test-matrix }}
 
 #      - name: Archive summary
 #        if: matrix.os == 'ubuntu-latest'
@@ -168,7 +191,7 @@ jobs:
     needs: monorepo
     strategy:
       matrix:
-        flags: ${{ fromJson(needs.monorepo.outputs.flags) }}
+        test-matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
     name: Trigger e2e tests
 
     uses: ./.github/workflows/reusable.yml
@@ -177,6 +200,7 @@ jobs:
       runs-on: ubuntu-latest
 #      node: ${{ matrix.node }}
       node: 20
-      flags: ${{ matrix.flags }}
+      flags: ${{ matrix.test-matrix.flags }}
+      test-files: ${{ matrix.test-matrix.testFiles }}
 
 
