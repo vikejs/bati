@@ -229,7 +229,11 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     // considers them as secrets (probably because of `TEST_FIREBASE_*` variables).
     // So only use tuples/arrays, no objects.
     const projects = Array.from(matrices.values()).map((m) => [
+      // destination
+      m.flags.join("--"),
+      // flags
       m.flags.map((f) => `--${f}`).join(" "),
+      // test-files
       m.testFiles.map((f) => basename(f)).join(","),
     ]);
     console.log("projects: ", projects);

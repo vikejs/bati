@@ -7,6 +7,9 @@ on:
       test-files:
         required: true
         type: string
+      destination:
+        required: true
+        type: string
 jobs:
   reusable_workflow_job:
     runs-on: ${{ matrix.os }}
@@ -35,7 +38,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         name: Install bun
         with:
-          bun-version: "1.1.24"
+          bun-version: "1.1.27"
 
       - name: Download Bati CLI
         uses: actions/download-artifact@v4
@@ -49,53 +52,23 @@ jobs:
           name: bati-tests-${{ matrix.os }}-${{ matrix.node }}
           path: ./bati-tests
 
-      - name: Run Bati CLI
-        run: bun ./bati-cli/index.js ${{ inputs.flags }} bati-app
-        env:
-          BATI_TEST: true
-          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
-          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
-          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
-          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
-          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
-          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
-
       - name: Download tests-utils
         uses: actions/download-artifact@v4
         with:
           name: tests-utils-${{ matrix.os }}-${{ matrix.node }}
-          merge-multiple: true
-          path: bati-app
+          path: ./bati-tests-utils
 
       - name: Download tests-files
         uses: actions/download-artifact@v4
         with:
           name: tests-files-${{ matrix.os }}-${{ matrix.node }}
-          merge-multiple: true
-          path: bati-app
+          path: ./bati-tests-files
 
-      - name: Prepare Bati tests
-        run: bun ../bati-tests/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
-        working-directory: bati-app
-        env:
-          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
-          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
-          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
-          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
-          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
-          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
-
-      - name: Install dependencies
-        run: bun install
-        working-directory: bati-app
-
-      - name: Run build lint typecheck test
-        run: bun turbo run build lint typecheck test --no-update-notifier --framework-inference false --env-mode loose
-        working-directory: bati-app
-        env:
-          TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
-          TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
-          TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
-          TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
-          TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
-          TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
+      - name: Run all tests tests
+        uses: ./.github/actions/bati-run
+        with:
+          os: ${{ matrix.os }}
+          node: ${{ matrix.node }}
+          flags: ${{ inputs.flags }}
+          test-files: ${{ inputs.test-files }}
+          destination: ${{ inputs.destination }}
