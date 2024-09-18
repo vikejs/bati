@@ -198,9 +198,9 @@ jobs:
       fail-fast: false
       matrix:
         test-matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
-    name: Trigger e2e tests
+    name: "Trigger e2e tests: Group ${{ matrix.test-matrix[0] }}"
 
     uses: ./.github/workflows/reusable.yml
     secrets: inherit
     with:
-      entry: ${{ matrix.test-matrix }}
+      entry: ${{ matrix.test-matrix[1] }}

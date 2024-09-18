@@ -258,7 +258,10 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       projects.sort((a, b) => a[0].localeCompare(b[0]));
 
       // stringify each element so that then can be passed as `inputs` in workflow files
-      const chunks = chunkArray(projects, args.workers).map((el) => JSON.stringify(el));
+      const chunks = chunkArray(projects, args.workers)
+        .map((el) => JSON.stringify(el))
+        // index is used for workflow name
+        .map((el, index) => [index, el]);
       console.log("chunks: ", chunks);
       ci.setOutput("test-matrix", chunks);
     } else {
