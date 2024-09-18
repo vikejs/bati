@@ -1,3 +1,4 @@
+# Step 3
 on:
   workflow_call:
     inputs:
@@ -67,6 +68,7 @@ jobs:
       - name: Generate dynamic composite action
         run: node ./scripts/gen-composite-workflow-action.js '${{ inputs.entry }}'
 
+      # Step 4
       - name: Run all tests
         id: gen
         uses: ./.github/actions/bati-gen
