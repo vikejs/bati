@@ -1,13 +1,7 @@
 on:
   workflow_call:
     inputs:
-      flags:
-        required: true
-        type: string
-      test-files:
-        required: true
-        type: string
-      destination:
+      entry:
         required: true
         type: string
 jobs:
@@ -76,11 +70,16 @@ jobs:
           name: tests-files-${{ matrix.os }}-${{ matrix.node }}
           path: ./bati-tests-files
 
-      - name: Run all tests tests
-        uses: ./.github/actions/bati-run
+      - name: Generate dynamic composite action
+        run: node ./scripts/gen-composite-workflow-action.js '${{ inputs.entry }}'
+
+      - name: Run all tests
+        uses: ./.github/actions/bati-gen
         with:
           os: ${{ matrix.os }}
           node: ${{ matrix.node }}
-          flags: ${{ inputs.flags }}
-          test-files: ${{ inputs.test-files }}
-          destination: ${{ inputs.destination }}
+
+      - name: Cleanup
+        if: always() && steps.run.outcome != 'success'
+        shell: bash
+        run: rm -rf ./.github/actions/bati-gen

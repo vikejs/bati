@@ -32,6 +32,9 @@ interface CliOptions {
   force?: boolean;
   summarize?: boolean;
   keep?: boolean;
+  // number of GitHub worflows that will run in parallel.
+  // If value is 10, and 180 tests need to run, we will have 180 / 10 = 18 tests per worflow
+  workers?: number;
 }
 
 async function getPackageManagerVersion() {
@@ -180,6 +183,16 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
+function chunkArray<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = [];
+
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+
+  return result;
+}
+
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
@@ -239,8 +252,19 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           m.testFiles.map((f) => basename(f)).join(","),
         ] as const,
     );
-    console.log("projects: ", projects);
-    ci.setOutput("test-matrix", projects);
+
+    if (args.workers) {
+      // Sort so that tests will usually run in the same worker
+      projects.sort((a, b) => a[0].localeCompare(b[0]));
+
+      // stringify each element so that then can be passed as `inputs` in workflow files
+      const chunks = chunkArray(projects, args.workers).map((el) => JSON.stringify(el));
+      console.log("chunks: ", chunks);
+      ci.setOutput("test-matrix", chunks);
+    } else {
+      console.log("projects (not usuable for CI): ", projects);
+    }
+
     return;
   }
 
