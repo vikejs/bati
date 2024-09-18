@@ -9,6 +9,7 @@ on:
         type: string
       node:
         required: true
+        type: number
 jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}
