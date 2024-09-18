@@ -27,12 +27,12 @@ runs:
 
     - name: Link tests-utils
       shell: bash
-      run: ln -s ../bati-tests-utils/* .
+      run: cp -s ../bati-tests-utils/* .
       working-directory: ${{ inputs.destination }}
 
     - name: Link tests files
       shell: bash
-      run: ln -s ../bati-tests-files/* .
+      run: cp -s ../bati-tests-files/* .
       working-directory: ${{ inputs.destination }}
 
     - name: Prepare Bati tests
