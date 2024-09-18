@@ -1,0 +1,31 @@
+# Step 1
+name: Tests
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'website/**'
+  push:
+    # Ensures cache is computed on main branch so that it can be reused on all PRs
+    branches: [ "main" ]
+    paths-ignore:
+      - 'website/**'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  monorepo:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        node: [ 20 ]
+      fail-fast: false
+
+    uses: ./.github/workflows/tests-entry-os.reusable.yml
+    secrets: inherit
+    with:
+      os: ${{ matrix.os }}
+      node: ${{ matrix.node }}
+      fast: ${{ matrix.os != 'ubuntu-latest' }}

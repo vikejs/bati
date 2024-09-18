@@ -1,0 +1,67 @@
+# Step 5
+name: Execute Bati CLI and run E2E tests
+
+inputs:
+  os:
+    required: true
+    type: string
+  node:
+    required: true
+    default: 20
+  flags:
+    required: true
+    type: string
+  test-files:
+    required: true
+    type: string
+  destination:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Run Bati CLI
+      shell: bash
+      run: bun ./bati-cli/index.js ${{ inputs.flags }} ${{ inputs.destination }}
+
+    - name: Link tests-utils
+      shell: bash
+      run: cp -s ../bati-tests-utils/* .
+      working-directory: ${{ inputs.destination }}
+
+    - name: Link tests files
+      shell: bash
+      run: cp -s ../bati-tests-files/* .
+      working-directory: ${{ inputs.destination }}
+
+    - name: Prepare Bati tests
+      shell: bash
+      run: bun ../bati-tests/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
+      working-directory: ${{ inputs.destination }}
+
+    - name: Install dependencies
+      shell: bash
+      run: bun install
+      working-directory: ${{ inputs.destination }}
+
+    - name: Run build
+      shell: bash
+      run: bun turbo run build --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}
+
+    - name: Run tests
+      shell: bash
+      run: bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}
+
+    - name: Run lint
+      shell: bash
+      run: bun turbo run lint --only --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}
+
+    - name: Run typecheck
+      shell: bash
+      run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}

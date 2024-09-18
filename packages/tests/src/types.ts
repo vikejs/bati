@@ -1,4 +1,4 @@
 export interface GlobalContext {
-  localRepository: boolean;
+  localRepository?: boolean;
   tmpdir: string;
 }

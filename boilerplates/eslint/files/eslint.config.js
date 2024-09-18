@@ -17,6 +17,8 @@ export default tseslint.config(
       "**/*.ts.build-*.mjs",
       //# BATI.has("vercel")
       ".vercel/*",
+      //# BATI.has("aws")
+      "cdk.out/*",
       // JS files at the root of the project
       "*.js",
       "*.cjs",

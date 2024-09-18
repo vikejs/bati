@@ -1,4 +1,4 @@
-import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
@@ -13,6 +13,14 @@ import { execLocalBati } from "./exec-bati.js";
 import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";
 import type { GlobalContext } from "./types.js";
+import * as ci from "@actions/core";
+import {
+  createBatiConfig,
+  createTurboConfig,
+  updatePackageJson,
+  updateTsconfig,
+  updateVitestConfig,
+} from "./common.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,53 +32,9 @@ interface CliOptions {
   force?: boolean;
   summarize?: boolean;
   keep?: boolean;
-}
-
-async function updatePackageJson(projectDir: string) {
-  // add vitest and lint script
-  const pkgjson = JSON.parse(await readFile(join(projectDir, "package.json"), "utf-8"));
-  pkgjson.name = basename(projectDir);
-  pkgjson.scripts ??= {};
-  pkgjson.scripts.test = "vitest run";
-  if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
-    pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
-  }
-  pkgjson.scripts.typecheck = "tsc --noEmit";
-  pkgjson.devDependencies ??= {};
-  pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
-  pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
-  pkgjson.devDependencies["happy-dom"] = packageJson.devDependencies["happy-dom"];
-  await writeFile(join(projectDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
-}
-
-async function updateTsconfig(projectDir: string) {
-  // add tsconfig exclude option
-  const tsconfig = JSON.parse(await readFile(join(projectDir, "tsconfig.json"), "utf-8"));
-  tsconfig.exclude ??= [];
-  // exclude temp vite config files
-  tsconfig.exclude.push("*.timestamp-*");
-  await writeFile(join(projectDir, "tsconfig.json"), JSON.stringify(tsconfig, undefined, 2), "utf-8");
-}
-
-function updateVitestConfig(projectDir: string) {
-  return writeFile(
-    join(projectDir, "vitest.config.ts"),
-    `/// <reference types="vitest" />
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    include: ["*.spec.ts"],
-    testTimeout: 100000,
-    environmentMatchGlobs: [
-      ["**/*.dom.spec.ts", "happy-dom"],
-      ["**/*.spec.ts", "node"],
-    ],
-  },
-});
-`,
-    "utf-8",
-  );
+  // number of GitHub worflows that will run in parallel.
+  // If value is 10, and 180 tests need to run, we will have 180 / 10 = 18 tests per worflow
+  workers?: number;
 }
 
 async function getPackageManagerVersion() {
@@ -114,36 +78,6 @@ function createPnpmWorkspaceYaml(context: GlobalContext) {
     `packages:
   - "packages/*"
 `,
-    "utf-8",
-  );
-}
-
-async function createTurboConfig(context: GlobalContext) {
-  await writeFile(
-    join(context.tmpdir, "turbo.json"),
-    JSON.stringify({
-      $schema: "https://turbo.build/schema.json",
-      tasks: {
-        build: {
-          dependsOn: ["^build"],
-          outputs: ["dist/**"],
-        },
-        test: {
-          dependsOn: ["build"],
-          env: ["TEST_*"],
-        },
-        lint: {
-          dependsOn: ["build"],
-        },
-        typecheck: {
-          dependsOn: ["build"],
-        },
-      },
-      daemon: false,
-      remoteCache: {
-        signature: false,
-      },
-    }),
     "utf-8",
   );
 }
@@ -249,9 +183,22 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
+function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
+  if (maxChunks <= 0) throw new Error("The number of chunks must be greater than 0");
+
+  const result: T[][] = [];
+  const chunkSize = Math.ceil(arr.length / Math.min(arr.length, maxChunks));
+
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize));
+  }
+
+  return result;
+}
+
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
+  const command: string | undefined = args._[0];
   const filter = args.filter ? args.filter.split(",") : undefined;
-  await initTmpDir(context);
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
@@ -293,6 +240,42 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   console.log(`Testing ${matrices.size} combinations`);
 
+  if (command === "list") {
+    // Avoid "{}" being present in the output, as GitHub CI
+    // considers them as secrets (probably because of `TEST_FIREBASE_*` variables).
+    // So only use tuples/arrays, no objects.
+    const projects = Array.from(matrices.values()).map(
+      (m) =>
+        [
+          // destination
+          m.flags.length > 0 ? m.flags.join("--") : "empty",
+          // flags
+          m.flags.length > 0 ? m.flags.map((f) => `--${f}`).join(" ") : "empty",
+          // test-files
+          m.testFiles.map((f) => basename(f)).join(","),
+        ] as const,
+    );
+
+    if (args.workers) {
+      // Sort so that tests will usually run in the same worker
+      projects.sort((a, b) => a[0].localeCompare(b[0]));
+
+      // stringify each element so that then can be passed as `inputs` in workflow files
+      const chunks = chunkArray(projects, args.workers)
+        .map((el) => JSON.stringify(el))
+        // index is used for workflow name
+        .map((el, index) => [index, el]);
+      console.log("chunks: ", chunks);
+      ci.setOutput("test-matrix", chunks);
+    } else {
+      console.log("projects (not usuable for CI, use --workers): ", projects);
+    }
+
+    return;
+  }
+
+  await initTmpDir(context);
+
   // for all matrices
   for (const { testFiles, flags } of matrices.values()) {
     promises.push(
@@ -304,6 +287,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           updatePackageJson(projectDir),
           updateTsconfig(projectDir),
           updateVitestConfig(projectDir),
+          createBatiConfig(projectDir, flags),
         ]);
       }),
     );
@@ -313,7 +297,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   await createWorkspacePackageJson(context);
 
-  // create monorepo config  (pnpm only)
+  // create monorepo config (pnpm only)
   if (!bunExists) {
     await createPnpmWorkspaceYaml(context);
   }
@@ -334,11 +318,11 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await execTurborepo(context, args);
 }
 
-// init context
-const context: GlobalContext = { tmpdir: "", localRepository: false };
-
 const argv = process.argv.slice(2);
 const args = mri<CliOptions>(argv);
+
+// init context
+const context: GlobalContext = { tmpdir: "", localRepository: false };
 
 try {
   context.localRepository = await isVerdaccioRunning();
