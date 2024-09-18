@@ -18,7 +18,7 @@ jobs:
   monorepo:
     runs-on: ${{ matrix.os }}
 
-    # Uncomment to debug discrepancies between published package and local one
+# Debug discrepancies between published package and local one
 #    services:
 #      verdaccio:
 #        # See https://github.com/actions/runner/issues/822#issuecomment-1524826092
@@ -47,11 +47,6 @@ jobs:
         with:
           run_install: false
 
-#      - uses: oven-sh/setup-bun@v2
-#        name: Install bun
-#        with:
-#          bun-version: "1.1.24"
-
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
@@ -68,17 +63,6 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
-#      - uses: actions/cache@v4
-#        # REALLY slow on windows
-#        if: matrix.os != 'windows-latest'
-#        name: Setup bun cache
-#        with:
-#          path: ~/.bun/install/cache
-#          # Uses pnpm hash to avoid too many cache creations
-#          key: ${{ runner.os }}-bun-${{ hashFiles('**/pnpm-lock.yaml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-bun-
 
       - name: Cache for Turbo
         uses: rharkor/caching-for-turbo@v1.5
@@ -102,10 +86,10 @@ jobs:
       - name: Build packages
         run: pnpm run build
         env:
-          # self-contained Bati CLI, lighter artifact
+          # self-contained Bati CLI, smaller artifact
           BUNDLE: 1
 
-      #      - name: Release in local repo
+#      - name: Release in local repo
 #        if: matrix.os == 'ubuntu-latest'
 #        run: pnpm run release:local
 
