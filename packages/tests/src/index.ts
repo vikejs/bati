@@ -268,7 +268,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       console.log("chunks: ", chunks);
       ci.setOutput("test-matrix", chunks);
     } else {
-      console.log("projects (not usuable for CI): ", projects);
+      console.log("projects (not usuable for CI, use --workers): ", projects);
     }
 
     return;
