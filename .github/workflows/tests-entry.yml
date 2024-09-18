@@ -26,6 +26,6 @@ jobs:
     uses: ./.github/workflows/tests-entry-os.reusable.yml
     secrets: inherit
     with:
-      os: ${{ inputs.os }}
-      node: ${{ inputs.node }}
-      fast: ${{ inputs.os != 'ubuntu-latest' }}
+      os: ${{ matrix.os }}
+      node: ${{ matrix.node }}
+      fast: ${{ matrix.os != 'ubuntu-latest' }}
