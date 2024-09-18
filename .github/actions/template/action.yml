@@ -1,0 +1,23 @@
+name: Execute Bati CLI and run E2E tests
+
+inputs:
+  os:
+    required: true
+    type: string
+  node:
+    required: true
+    default: 20
+
+runs:
+  using: "composite"
+
+  steps:
+    # TODO: REPEAT
+    - name: "__DESTINATION__"
+      uses: ./.github/actions/bati-run
+      with:
+        os: ${{ inputs.os }}
+        node: ${{ inputs.node }}
+        flags: "__FLAGS__"
+        test-files: "__TEST_FILES__"
+        destination: "__DESTINATION__"
