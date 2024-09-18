@@ -74,12 +74,13 @@ jobs:
         run: node ./scripts/gen-composite-workflow-action.js '${{ inputs.entry }}'
 
       - name: Run all tests
+        id: gen
         uses: ./.github/actions/bati-gen
         with:
           os: ${{ matrix.os }}
           node: ${{ matrix.node }}
 
       - name: Cleanup
-        if: always() && steps.run.outcome != 'success'
+        if: always() && steps.gen.outcome != 'success'
         shell: bash
         run: rm -rf ./.github/actions/bati-gen
