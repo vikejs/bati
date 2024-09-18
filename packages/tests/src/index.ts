@@ -183,11 +183,14 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-function chunkArray<T>(arr: T[], size: number): T[][] {
-  const result: T[][] = [];
+function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
+  if (maxChunks <= 0) throw new Error("The number of chunks must be greater than 0");
 
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
+  const result: T[][] = [];
+  const chunkSize = Math.ceil(arr.length / Math.min(arr.length, maxChunks));
+
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize));
   }
 
   return result;
