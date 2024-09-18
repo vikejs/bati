@@ -22,6 +22,7 @@ runs:
 
   steps:
     - name: Run Bati CLI
+      shell: bash
       run: bun ./bati-cli/index.js ${{ inputs.flags }} ${{ inputs.destination }}
 
     - name: Link tests-utils
@@ -35,25 +36,31 @@ runs:
       working-directory: ${{ inputs.destination }}
 
     - name: Prepare Bati tests
+      shell: bash
       run: bun ../bati-tests/prepare.js --test-files='${{ inputs.test-files }}' ${{ inputs.flags }}
       working-directory: ${{ inputs.destination }}
 
     - name: Install dependencies
+      shell: bash
       run: bun install
       working-directory: ${{ inputs.destination }}
 
     - name: Run build
+      shell: bash
       run: bun turbo run build --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
 
     - name: Run tests
+      shell: bash
       run: bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
 
     - name: Run lint
+      shell: bash
       run: bun turbo run lint --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
 
     - name: Run typecheck
+      shell: bash
       run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
