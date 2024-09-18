@@ -206,11 +206,3 @@ jobs:
       destination: ${{ matrix.test-matrix[0] }}
       flags: ${{ matrix.test-matrix[1] }}
       test-files: ${{ matrix.test-matrix[2] }}
-    env:
-      BATI_TEST: true
-      TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
-      TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
-      TEST_FIREBASE_ACCOUNT: ${{ secrets.TEST_FIREBASE_ACCOUNT }}
-      TEST_FIREBASE_USER_UID: ${{ secrets.TEST_FIREBASE_USER_UID }}
-      TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
-      TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
