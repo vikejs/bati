@@ -6,6 +6,7 @@ export const categories = [
     label: "Frontend Framework",
     group: categoriesGroups.Frontend,
     description: `Flexible, robust, community-driven, and fast Vite-based frontend framework.`,
+    required: true,
   },
   {
     label: "UI Framework",
@@ -13,6 +14,7 @@ export const categories = [
     description: `It’s recommended to choose a frontend lib to kickstart a new Vike project,
 as they each come with a wide range of integrations. You can at any time eject and take control over integration code
 so that it doesn’t get in your way.`,
+    required: true,
   },
   {
     label: "CSS",

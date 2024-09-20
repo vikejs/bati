@@ -36,6 +36,7 @@ export const features = [
     spectrum: "beaten_path",
     tagline: "The library for web and native user interfaces",
     repo: "facebook/react",
+    selected: true,
     links: [
       {
         label: "Learn",
