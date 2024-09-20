@@ -41,11 +41,10 @@ function Preset(props: {
 export default function Presets() {
   return (
     <div class="w-full flex box-border gap-2">
-      <Preset title="Plain Vike" features={[]} description="Simple app with Plain Vike" />
       <Preset
         title="Frontend"
         features={["UI Framework", "CSS", "Linter"]}
-        description="Frontend app with a Framework and Tailwind CSS"
+        description="Frontend app with a UI Framework and Tailwind CSS"
       />
       <Preset
         title="Full-stack"
@@ -59,14 +58,19 @@ export default function Presets() {
           "Server",
           "Linter",
         ]}
-        description="Full-stack app with RPC (like server actions), Auth, Database and Server"
+        description="Full-stack app with Data Fetching, Auth, a Database and a Server"
       />
       <Preset
         title="Next.js"
-        features={["react", "Auth", "Data fetching", "Server", "vercel", "Linter"]}
-        description="Next.js like app with RPC (like server actions) and Vercel"
+        features={["react", "Auth", "Data fetching", "hono", "vercel", "Linter"]}
+        description="Next.js like app with Data Fetching, Auth, Hono and Vercel"
       />
-      <Preset title="E-commerce" features={["UI Framework"]} disabled={true} description="" />
+      <Preset
+        title="Nuxt"
+        features={["vue", "Auth", "Data fetching", "h3", "Linter"]}
+        description="Nuxt like app with Data Fetching, Auth and h3"
+      />
+      <Preset title="CMS" features={["UI Framework"]} disabled={true} description="" />
     </div>
   );
 }

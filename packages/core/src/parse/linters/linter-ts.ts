@@ -66,6 +66,9 @@ export default function tsLinterConfig(meta: VikeMeta) {
       },
       languageOptions: {
         parser: tsParseForESLint,
+        parserOptions: {
+          warnOnUnsupportedTypeScriptVersion: false,
+        },
       },
       rules: {
         "batiTs/ts": "error",

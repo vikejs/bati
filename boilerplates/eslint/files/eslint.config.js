@@ -30,6 +30,7 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
+        warnOnUnsupportedTypeScriptVersion: false,
         sourceType: "module",
         ecmaVersion: "latest",
       },

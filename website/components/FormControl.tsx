@@ -59,7 +59,12 @@ export function FormControl(props: {
 
                 return (
                   <div class="flex flex-col items-baseline">
-                    <div class="divider divider-start font-semibold">{category.label}</div>
+                    <div class="divider divider-start font-semibold">
+                      <span>{category.label}</span>
+                      <Show when={category.required}>
+                        <span class="-ml-1 text-xs opacity-60">(required)</span>
+                      </Show>
+                    </div>
                     <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (

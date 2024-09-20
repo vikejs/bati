@@ -5,7 +5,7 @@ import { IconAlembic, IconTrainTrack } from "#components/Icons";
 import { ShieldBadge } from "#components/ShieldBadge";
 import { StoreContext } from "#components/Store.js";
 import { EnrichedTooltip } from "#components/Tooltip";
-import { createMemo, createSignal, For, Match, Show, Switch, useContext, type Accessor, type JSX } from "solid-js";
+import { type Accessor, createMemo, createSignal, For, type JSX, Match, Show, Switch, useContext } from "solid-js";
 import { Motion } from "solid-motionone";
 import type { Feature } from "../types.js";
 
@@ -23,7 +23,6 @@ export default function Features() {
             <FormControl
               label={group}
               flipLabel={group}
-              //FIXME: features={fs()}
               categories={currentCategories()}
               class="w-full sm:w-auto rounded-md"
             >
@@ -46,7 +45,12 @@ function CategoryGroup(props: Category) {
 
   return (
     <>
-      <div class="divider divider-start font-semibold">{props.label}</div>
+      <div class="divider divider-start font-semibold">
+        <span>{props.label}</span>
+        <Show when={props.required}>
+          <span class="-ml-1 text-xs opacity-60">(required)</span>
+        </Show>
+      </div>
       <div class="flex flex-col lg:flex-row relative">
         <div class="basis-1/4 w-full gap-y-2">
           <For each={fs()}>

@@ -9,19 +9,19 @@ function initStore() {
   const featuresInitialState: Feature[] = features.map((f: Feature) => ({
     ...f,
     alt: f.disabled ? "Coming soon" : undefined,
-    selected: Boolean(f.readonly),
+    selected: Boolean(f.selected ?? f.readonly),
   }));
 
   const [currentFeatures, setCurrentFeatures] = createStore<Feature[]>(featuresInitialState);
 
   function selectFeature(k: CategoryLabels, flag: string, selected: boolean) {
-    const multiple = (categories as ReadonlyArray<Category>).find((c) => c.label === k)?.multiple;
+    const category = (categories as ReadonlyArray<Category>).find((c) => c.label === k);
 
-    if (!multiple) {
+    if (!category?.multiple) {
       batch(() => setCurrentFeatures((f) => f.category === k && !f.readonly, "selected", false));
     }
 
-    setCurrentFeatures((f) => f.flag === flag, "selected", selected);
+    setCurrentFeatures((f) => f.flag === flag, "selected", category?.required ?? selected);
   }
 
   const selectedFeatures = createMemo<Feature[]>(() => currentFeatures.filter((f) => f.selected));

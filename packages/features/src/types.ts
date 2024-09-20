@@ -18,6 +18,7 @@ export interface Feature<C = string> {
   invisibleCli?: boolean;
   // if true, cannot be toggled off (implies selected by default, otherwise use `disabled`)
   readonly?: boolean;
+  selected?: boolean;
 }
 
 export interface FeatureLink {
@@ -30,5 +31,6 @@ export interface Category {
   group: categoriesGroups;
   // like <select multiple/>
   multiple?: boolean;
+  required?: boolean;
   description?: string;
 }
