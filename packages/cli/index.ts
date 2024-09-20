@@ -214,6 +214,21 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
+function checkFlagsIncludesUiFramework(flags: string[]) {
+  const uiFlags: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
+  const uiFlagFound = flags.some((f) => uiFlags.includes(f));
+
+  if (!uiFlagFound) {
+    const lf = new Intl.ListFormat("en", {
+      type: "disjunction",
+    });
+    console.error(
+      `${red("⚠")} A ${yellow("UI Framework")} is required when using Bati. Choose one of ${lf.format(uiFlags.map((f) => bold(`--${f}`)))}`,
+    );
+    process.exit(5);
+  }
+}
+
 function checkFlagsExist(flags: string[]) {
   const inValidOptions = flags.reduce((acc: string[], flag: string) => {
     if (!Object.prototype.hasOwnProperty.call(defaultDef, flag) && !features.some((f) => f.flag === flag)) {
@@ -361,6 +376,7 @@ async function run() {
       ];
 
       checkFlagsExist(flags);
+      checkFlagsIncludesUiFramework(flags);
       checkRules(flags);
 
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`
