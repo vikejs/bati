@@ -1,4 +1,4 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { addDependency, loadAsJson, removeDependency, setScripts, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
@@ -34,7 +34,7 @@ export default async function getPackageJson(props: TransformerProps) {
     delete packageJson.scripts.preview;
   }
 
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+  addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
     dependencies: [
       "@hattip/core",
@@ -51,4 +51,6 @@ export default async function getPackageJson(props: TransformerProps) {
         : []),
     ],
   });
+
+  return removeDependency(packageJson, "tsx");
 }

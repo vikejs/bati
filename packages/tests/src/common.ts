@@ -90,7 +90,8 @@ export async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build"],
         },
         knip: {
-          dependsOn: ["build"],
+          // adding "test" because of possible race conditions as knip can execute some files
+          dependsOn: ["build", "test"],
         },
       },
       daemon: false,
@@ -104,9 +105,23 @@ export async function createTurboConfig(context: GlobalContext) {
 
 export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
   const ignoreDependencies = ["@batijs/tests-utils", "happy-dom"];
+  const entry: string[] = [];
+  const ignore: string[] = ["*.spec.ts"];
 
   if (flags.includes("eslint")) {
     ignoreDependencies.push("eslint");
+  }
+
+  if (flags.includes("biome")) {
+    ignoreDependencies.push("@biomejs/biome");
+  }
+
+  if (flags.includes("prettier")) {
+    ignoreDependencies.push("prettier");
+
+    if (flags.includes("eslint")) {
+      ignoreDependencies.push("eslint-config-prettier");
+    }
   }
 
   if (flags.includes("react")) {
@@ -117,8 +132,47 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     ignoreDependencies.push("@vue/.+");
   }
 
+  if (flags.includes("mantine")) {
+    ignoreDependencies.push("postcss");
+  }
+
+  // With compiled-css -> Error while parsing vite.config.ts
+  if (flags.includes("compiled-css")) {
+    ignore.push("vite.config.ts");
+    ignoreDependencies.push("@compiled/react", "@vitejs/plugin-react", "vite-plugin-compiled-react");
+  }
+
+  if (flags.includes("prisma")) {
+    ignoreDependencies.push("@prisma/client", "prisma");
+  }
+
   if (flags.includes("ts-rest")) {
     ignoreDependencies.push("zod");
+  }
+
+  if (flags.includes("hattip")) {
+    entry.push("hattip-entry.ts");
+    ignoreDependencies.push("hattip");
+    ignoreDependencies.push("@hattip/.+");
+  }
+
+  if (flags.includes("hono")) {
+    entry.push("hono-entry.node.ts", "hono-entry.ts");
+  }
+
+  if (flags.includes("cloudflare")) {
+    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "npm-run-all2");
+  }
+
+  if (flags.includes("vercel")) {
+    ignoreDependencies.push("@vite-plugin-vercel/vike");
+    ignore.push(".vercel/**");
+  }
+
+  if (flags.includes("aws")) {
+    entry.push("entry_aws_lambda.ts");
+    ignoreDependencies.push("aws-cdk", "cdk", "esbuild", "npm-run-all2");
+    ignore.push("cdk.out/**");
   }
 
   const scriptsValues = Array.from(Object.values(scripts));
@@ -136,13 +190,16 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     JSON.stringify(
       {
         $schema: "https://unpkg.com/knip@5/schema.json",
-        ignore: ["*.spec.ts"],
+        entry,
+        ignore,
         ignoreDependencies,
         rules: {
           types: "off",
           binaries: "off",
           exports: "off",
         },
+        // With compiled-css -> Error while parsing vite.config.ts
+        vite: !flags.includes("compiled-css"),
       },
       undefined,
       2,

@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 import type { D1Database } from "@cloudflare/workers-types";
 
 export function getExistingUser<T>(db: D1Database, username: string) {

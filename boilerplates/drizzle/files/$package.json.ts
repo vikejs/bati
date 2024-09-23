@@ -9,8 +9,15 @@ export default async function getPackageJson(props: TransformerProps) {
     : "drizzle-kit migrate";
   packageJson.scripts["drizzle:studio"] = "drizzle-kit studio";
 
+  if (!props.meta.BATI.hasD1) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["@types/better-sqlite3"],
+      dependencies: ["better-sqlite3"],
+    });
+  }
+
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/better-sqlite3", "tsx"],
-    dependencies: ["better-sqlite3", "drizzle-kit", "drizzle-orm", "dotenv"],
+    devDependencies: ["tsx"],
+    dependencies: ["drizzle-kit", "drizzle-orm", "dotenv"],
   });
 }

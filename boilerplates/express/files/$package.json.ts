@@ -21,10 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
   });
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: [
-      "@types/express",
-      ...(props.meta.BATI.has("firebase-auth") ? (["@types/cookie-parser"] as const) : []),
-    ],
+    devDependencies: ["@types/express"],
     dependencies: [
       "@universal-middleware/express",
       "cross-env",
@@ -32,7 +29,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "tsx",
       "vite",
       "vike",
-      ...(props.meta.BATI.has("firebase-auth") ? (["cookie-parser"] as const) : []),
+      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
     ],
   });
 }
