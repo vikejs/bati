@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
-import { cp, mkdir, readFile, stat, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { cp, mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises";
+import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { which } from "@batijs/core";
 import { bold, cyan, green, yellow } from "colorette";
@@ -111,12 +111,39 @@ function readableFileSize(size: number) {
   return size.toFixed(2) + " " + units[i];
 }
 
+export async function* yield$files(dir: string): AsyncGenerator<{ dir: string; name: string }> {
+  if (!existsSync(dir)) return;
+  for await (const d of await opendir(dir)) {
+    const entry = join(dir, d.name);
+    if (d.isDirectory()) {
+      yield* yield$files(entry);
+    } else if (d.isFile() && d.name.startsWith("$"))
+      yield {
+        dir,
+        name: d.name,
+      };
+  }
+}
+
 // TODO: assert all rules messages are implemented
 const esbuildPlugin: Plugin = {
   name: "BLP",
-  setup(build) {
+  async setup(build) {
+    const boilerplates = await boilerplateFilesToCopy();
+
+    if (process.env.BUNDLE) {
+      for (const bl of boilerplates) {
+        if (bl.source) {
+          for await (const { dir, name } of yield$files(bl.source)) {
+            (build.initialOptions.entryPoints as Record<string, string>)[
+              join("boilerplates", bl.folder, relative(bl.source, dir), parse(name).name)
+            ] = join(dir, name);
+          }
+        }
+      }
+    }
+
     build.onEnd(async () => {
-      const boilerplates = await boilerplateFilesToCopy();
       const folderCreated = new Set<string>();
 
       for (const bl of boilerplates) {
@@ -132,6 +159,12 @@ const esbuildPlugin: Plugin = {
             dereference: true,
             force: true,
             recursive: true,
+            filter(source) {
+              if (process.env.BUNDLE) {
+                return !basename(source).startsWith("$");
+              }
+              return true;
+            },
           });
         }
 
