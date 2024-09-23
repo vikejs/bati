@@ -28,14 +28,19 @@ export default async function getPackageJson(props: TransformerProps) {
 
   addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["wrangler", "npm-run-all2", "@cloudflare/workers-types"],
-    dependencies: [
-      "vike-cloudflare",
-      ...(props.meta.BATI.has("hattip") ? (["@hattip/adapter-cloudflare-workers"] as const) : []),
-    ],
+    dependencies: ["vike-cloudflare"],
   });
 
-  removeDependency(packageJson, "tsx");
-  removeDependency(packageJson, "cross-env");
+  // TODO: find a way to link "scripts" and their dependencies (like "tsx" and "cross-env")
+  //       so that when overriding a script, we can auto-detect which dependencies need to be removed
+  if (props.meta.BATI.has("hattip")) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      dependencies: ["@hattip/adapter-cloudflare-workers"],
+    });
+  } else {
+    removeDependency(packageJson, "tsx");
+    removeDependency(packageJson, "cross-env");
+  }
 
   return packageJson;
 }
