@@ -16,6 +16,7 @@ import type { GlobalContext } from "./types.js";
 import * as ci from "@actions/core";
 import {
   createBatiConfig,
+  createKnipConfig,
   createTurboConfig,
   updatePackageJson,
   updateTsconfig,
@@ -288,6 +289,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           updateTsconfig(projectDir),
           updateVitestConfig(projectDir),
           createBatiConfig(projectDir, flags),
+          createKnipConfig(projectDir),
         ]);
       }),
     );

@@ -65,3 +65,8 @@ runs:
       shell: bash
       run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
+
+    - name: Run knip
+      shell: bash
+      run: bun turbo run knip --only --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}

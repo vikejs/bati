@@ -57,6 +57,7 @@ const authjsConfig = {
 
 /**
  * Retrieve Auth.js session from Request
+ * @public
  */
 export async function getSession(req: Request, config: Omit<AuthConfig, "raw">): Promise<Session | null> {
   setEnvDefaults(process.env, config);

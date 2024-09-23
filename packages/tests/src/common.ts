@@ -14,12 +14,14 @@ export async function updatePackageJson(
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
+  pkgjson.scripts.knip = "knip";
   if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
     pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
+  pkgjson.devDependencies.knip = packageJson.devDependencies.knip;
   if (packedTestsUtils) {
     pkgjson.devDependencies["@batijs/tests-utils"] = packedTestsUtils;
   } else {
@@ -85,10 +87,28 @@ export async function createTurboConfig(context: GlobalContext) {
         typecheck: {
           dependsOn: ["build"],
         },
+        knip: {
+          dependsOn: ["build"],
+        },
       },
       daemon: false,
       remoteCache: {
         signature: false,
+      },
+    }),
+    "utf-8",
+  );
+}
+
+export async function createKnipConfig(projectDir: string) {
+  await writeFile(
+    join(projectDir, "knip.json"),
+    JSON.stringify({
+      $schema: "https://unpkg.com/knip@5/schema.json",
+      ignoreDependencies: ["@batijs/tests-utils", "eslint", "happy-dom", "react-dom", "@types/react-dom", "@vue/.+"],
+      rules: {
+        types: "off",
+        binaries: "off",
       },
     }),
     "utf-8",

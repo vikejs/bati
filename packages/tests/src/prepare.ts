@@ -1,6 +1,7 @@
 import { readdirSync } from "node:fs";
 import {
   createBatiConfig,
+  createKnipConfig,
   createTurboConfig,
   updatePackageJson,
   updateTsconfig,
@@ -23,6 +24,7 @@ async function prepare(flags: string[], testFiles: string) {
   await createTurboConfig({
     tmpdir: projectDir,
   });
+  await createKnipConfig(projectDir);
   await createBatiConfig(projectDir, flags);
 }
 
