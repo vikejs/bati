@@ -147,6 +147,7 @@ export const luciaAuthSignupHandler = (() => async (request, context, _runtime) 
       },
     });
   } catch (error) {
+    console.error(error);
     if (BATI.has("sqlite") && !BATI.hasD1) {
       if (error instanceof SqliteError && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
         return new Response(JSON.stringify({ error: { username: "Username already in use" } }), {
