@@ -147,13 +147,15 @@ export const luciaAuthSignupHandler = (() => async (request, context, _runtime) 
       },
     });
   } catch (error) {
-    if (error instanceof SqliteError && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
-      return new Response(JSON.stringify({ error: { username: "Username already in use" } }), {
-        status: 422,
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+    if (BATI.has("sqlite") && !BATI.hasD1) {
+      if (error instanceof SqliteError && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+        return new Response(JSON.stringify({ error: { username: "Username already in use" } }), {
+          status: 422,
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+      }
     }
 
     return new Response(JSON.stringify({ error: { invalid: "An unknown error has occurred" } }), {
