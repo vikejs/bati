@@ -21,16 +21,15 @@ export default async function getPackageJson(props: TransformerProps) {
   });
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/node", ...(props.meta.BATI.has("auth0") ? (["@types/express", "dotenv"] as const) : [])],
+    devDependencies: ["cross-env", "tsx", "@types/node"],
     dependencies: [
       "@fastify/middie",
       "@fastify/static",
       "@universal-middleware/fastify",
-      "cross-env",
       "fastify",
-      "tsx",
       "vike",
       "vite",
+      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
     ],
   });
 }

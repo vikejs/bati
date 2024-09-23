@@ -3,7 +3,9 @@ import esbuildBundleAllPlugin from "./esbuild-bundle-all.js";
 import { purgePolyfills } from "unplugin-purge-polyfills";
 
 export default defineConfig({
-  entry: ["index.ts"],
+  entry: {
+    index: "index.ts",
+  },
   format: ["esm"],
   outDir: "./dist",
   clean: true,

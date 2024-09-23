@@ -34,7 +34,7 @@ export default async function getPackageJson(props: TransformerProps) {
       "tsx",
       "vite",
       "vike",
-      "dotenv",
+      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
     ],
   });
 }

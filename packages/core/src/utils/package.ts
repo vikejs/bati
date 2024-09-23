@@ -76,6 +76,17 @@ export function addDependency<T extends PackageJsonDeps, U extends PackageJsonDe
   return packageJson;
 }
 
+export function removeDependency<T extends PackageJsonDeps>(packageJson: T, key: string) {
+  if (packageJson.devDependencies?.[key]) {
+    delete packageJson.devDependencies[key];
+  }
+  if (packageJson.dependencies?.[key]) {
+    delete packageJson.dependencies[key];
+  }
+
+  return packageJson;
+}
+
 const previousScripts: PackageJsonScriptOptions = {};
 
 function warnScript(key: string, old: string, nnew: string) {

@@ -1,6 +1,7 @@
 import { readdirSync } from "node:fs";
 import {
   createBatiConfig,
+  createKnipConfig,
   createTurboConfig,
   updatePackageJson,
   updateTsconfig,
@@ -17,12 +18,13 @@ async function prepare(flags: string[], testFiles: string) {
   }
 
   // @ts-ignore
-  await updatePackageJson(projectDir, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
+  const packageJson = await updatePackageJson(projectDir, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
   await updateTsconfig(projectDir);
   await updateVitestConfig(projectDir, testFiles);
   await createTurboConfig({
     tmpdir: projectDir,
   });
+  await createKnipConfig(projectDir, flags, packageJson.scripts);
   await createBatiConfig(projectDir, flags);
 }
 

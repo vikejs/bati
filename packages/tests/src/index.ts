@@ -16,6 +16,7 @@ import type { GlobalContext } from "./types.js";
 import * as ci from "@actions/core";
 import {
   createBatiConfig,
+  createKnipConfig,
   createTurboConfig,
   updatePackageJson,
   updateTsconfig,
@@ -146,7 +147,7 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push("--summarize");
   }
 
-  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck"]), ...args_2], {
+  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck", "knip"]), ...args_2], {
     timeout: 35 * 60 * 1000, // 35min
     cwd: context.tmpdir,
   });
@@ -282,12 +283,13 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
+        const packageJson = await updatePackageJson(projectDir);
         await Promise.all([
           ...filesP,
-          updatePackageJson(projectDir),
           updateTsconfig(projectDir),
           updateVitestConfig(projectDir),
           createBatiConfig(projectDir, flags),
+          createKnipConfig(projectDir, flags, packageJson.scripts),
         ]);
       }),
     );

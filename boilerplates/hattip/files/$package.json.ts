@@ -1,4 +1,4 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { addDependency, loadAsJson, removeDependency, setScripts, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
@@ -34,7 +34,7 @@ export default async function getPackageJson(props: TransformerProps) {
     delete packageJson.scripts.preview;
   }
 
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+  addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
     dependencies: [
       "@hattip/core",
@@ -44,11 +44,13 @@ export default async function getPackageJson(props: TransformerProps) {
       "vite",
       "vike",
       "@universal-middleware/hattip",
-      "dotenv",
+      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
       ...(props.meta.BATI.has("vercel") ? (["@hattip/adapter-vercel-edge"] as const) : []),
       ...(props.meta.BATI.has("aws")
         ? (["@types/aws-lambda", "@hattip/adapter-aws-lambda", "@hattip/static", "@hattip/walk"] as const)
         : []),
     ],
   });
+
+  return removeDependency(packageJson, "tsx");
 }

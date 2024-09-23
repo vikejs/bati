@@ -1,3 +1,4 @@
+/*# BATI include-if-imported #*/
 import type { Database, Transaction } from "better-sqlite3";
 
 export function getExistingUser<T>(db: Database, username: string) {
