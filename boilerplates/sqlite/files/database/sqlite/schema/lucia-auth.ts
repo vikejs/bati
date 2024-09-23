@@ -1,4 +1,4 @@
-/*# BATI include-if-imported #*/
+/*{ @if (it.BATI.has("lucia-auth")) }*/
 import "dotenv/config";
 import { db } from "../db";
 
@@ -29,3 +29,4 @@ client.exec(`CREATE TABLE IF NOT EXISTS sessions (
     user_id TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE cascade ON DELETE cascade
 )`);
+/*{ /if }*/

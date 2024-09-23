@@ -23,7 +23,7 @@ export default async function getPackageJson(props: TransformerProps) {
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
     devDependencies: [
       "@types/serve-static",
-      ...(props.meta.BATI.has("auth0") ? (["@types/express", "dotenv"] as const) : []),
+      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["@types/express", "dotenv"] as const) : []),
     ],
     dependencies: [
       "@hattip/polyfills",

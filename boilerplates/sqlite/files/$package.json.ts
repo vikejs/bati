@@ -6,7 +6,7 @@ export default async function getPackageJson(props: TransformerProps) {
   packageJson.scripts["sqlite:migrate"] = "tsx ./database/sqlite/schema/all.ts";
 
   return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["dotenv", "@types/better-sqlite3", "tsx"],
-    dependencies: ["better-sqlite3"],
+    devDependencies: ["@types/better-sqlite3", "tsx"],
+    dependencies: ["better-sqlite3", "dotenv"],
   });
 }

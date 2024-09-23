@@ -6,6 +6,7 @@ import type { FileOperation, OperationReport } from "./operations/common.js";
 import { executeOperationFile } from "./operations/file.js";
 import { executeOperationTransform } from "./operations/transform.js";
 import { OperationsRearranger } from "./operations/rearranger.js";
+import { RelationFile, RelationImport } from "./relations.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
 
@@ -56,39 +57,18 @@ export async function* walk(dir: string): AsyncGenerator<string> {
   }
 }
 
-function importToPotentialTargets(imp: string) {
-  let subject = imp;
-  const ext = path.extname(imp);
-  const targets: string[] = [];
-
-  if (ext.match(/^\.[jt]sx?$/)) {
-    subject = subject.replace(/^\.[jt]sx?$/, "");
-  }
-
-  if (!ext || subject !== imp) {
-    targets.push(...[".js", ".jsx", ".ts", ".tsx", ".cjs", ".mjs"].map((e) => `${subject}${e}`));
-  } else {
-    targets.push(imp);
-  }
-
-  return targets;
-}
-
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
-  const allImports = new Set<string>();
+  const allImports = new Map<string, string[]>();
   const filesContainingIncludeIfImported = new Set<string>();
 
-  function updateAllImports(target: string, imports?: Set<string>) {
+  function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
+    const rf = new RelationFile(target, includeIfImported);
     if (!imports) return;
 
     for (const imp of imports.values()) {
       const importTarget = path.resolve(path.dirname(target), imp);
-      const importTargets = importToPotentialTargets(importTarget);
-
-      for (const imp2 of importTargets) {
-        allImports.add(imp2);
-      }
+      new RelationImport(rf, importTarget);
     }
   }
 
@@ -142,20 +122,22 @@ Please report this issue to https://github.com/vikejs/bati`,
         previousOperationSameDestination: previousOp,
       });
 
-      updateAllImports(op.destinationAbsolute, report.context?.imports);
+      updateAllImports(
+        op.destinationAbsolute,
+        report.context?.imports,
+        Boolean(report.context?.flags.has("include-if-imported")),
+      );
     } else if (op.kind === "transform") {
       report = await executeOperationTransform(op, {
         meta,
         previousOperationSameDestination: previousOp,
       });
+
+      // TODO: also call updateAllImports. Needs to compute report.context.imports
     }
 
     if (report.content) {
       await safeWriteFile(op.destination, report.content.trimStart());
-    }
-
-    if (report.context?.flags.has("include-if-imported")) {
-      filesContainingIncludeIfImported.add(op.destinationAbsolute);
     }
 
     previousOp = {
@@ -164,10 +146,7 @@ Please report this issue to https://github.com/vikejs/bati`,
     };
   }
 
-  // Remove "include-if-imported" files if they are not imported by any other file
-  for (const target of filesContainingIncludeIfImported) {
-    if (!allImports.has(target)) {
-      await safeRmFile(target, { removeEmptyDir: true });
-    }
+  for (const target of RelationImport.computeUnimportedFiles()) {
+    await safeRmFile(target.pathAbsolute, { removeEmptyDir: true });
   }
 }
