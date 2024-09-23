@@ -104,7 +104,7 @@ export async function createTurboConfig(context: GlobalContext) {
 }
 
 export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
-  const ignoreDependencies = ["@batijs/tests-utils", "happy-dom"];
+  const ignoreDependencies = ["@batijs/tests-utils", "happy-dom", "turbo"];
   const entry: string[] = [];
   const ignore: string[] = ["*.spec.ts"];
 
