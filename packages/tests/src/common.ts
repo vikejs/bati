@@ -14,7 +14,7 @@ export async function updatePackageJson(
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
-  pkgjson.scripts.knip = "knip";
+  pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip";
   if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
     pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
   }
@@ -35,6 +35,8 @@ export async function updatePackageJson(
     pkgjson.devDependencies.turbo = packageJson.devDependencies.turbo;
   }
   await writeFile(join(projectDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
+
+  return pkgjson;
 }
 
 export async function updateTsconfig(projectDir: string) {
@@ -100,17 +102,51 @@ export async function createTurboConfig(context: GlobalContext) {
   );
 }
 
-export async function createKnipConfig(projectDir: string) {
+export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
+  const ignoreDependencies = ["@batijs/tests-utils", "happy-dom"];
+
+  if (flags.includes("eslint")) {
+    ignoreDependencies.push("eslint");
+  }
+
+  if (flags.includes("react")) {
+    ignoreDependencies.push("react-dom", "@types/react-dom");
+  }
+
+  if (flags.includes("vue")) {
+    ignoreDependencies.push("@vue/.+");
+  }
+
+  if (flags.includes("ts-rest")) {
+    ignoreDependencies.push("zod");
+  }
+
+  const scriptsValues = Array.from(Object.values(scripts));
+
+  if (scriptsValues.some((s) => s.includes("tsx "))) {
+    ignoreDependencies.push("tsx");
+  }
+
+  if (scriptsValues.some((s) => s.includes("cross-env "))) {
+    ignoreDependencies.push("cross-env");
+  }
+
   await writeFile(
     join(projectDir, "knip.json"),
-    JSON.stringify({
-      $schema: "https://unpkg.com/knip@5/schema.json",
-      ignoreDependencies: ["@batijs/tests-utils", "eslint", "happy-dom", "react-dom", "@types/react-dom", "@vue/.+"],
-      rules: {
-        types: "off",
-        binaries: "off",
+    JSON.stringify(
+      {
+        $schema: "https://unpkg.com/knip@5/schema.json",
+        ignore: ["*.spec.ts"],
+        ignoreDependencies,
+        rules: {
+          types: "off",
+          binaries: "off",
+          exports: "off",
+        },
       },
-    }),
+      undefined,
+      2,
+    ),
     "utf-8",
   );
 }

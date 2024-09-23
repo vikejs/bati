@@ -283,13 +283,13 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
+        const packageJson = await updatePackageJson(projectDir);
         await Promise.all([
           ...filesP,
-          updatePackageJson(projectDir),
           updateTsconfig(projectDir),
           updateVitestConfig(projectDir),
           createBatiConfig(projectDir, flags),
-          createKnipConfig(projectDir),
+          createKnipConfig(projectDir, flags, packageJson.scripts),
         ]);
       }),
     );
