@@ -1,12 +1,15 @@
 import { parse } from "path";
 import type { FileOperation, OperationReport } from "./common.js";
-import type { Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
+import type { StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
 import { formatCode } from "@batijs/core";
 
 const isWin = process.platform === "win32";
 
 async function transformFileAfterExec(filepath: string, fileContent: unknown): Promise<string | null> {
   if (fileContent === undefined || fileContent === null) return null;
+  if (typeof fileContent == "object" && typeof (fileContent as StringTransformer).finalize === "function") {
+    fileContent = (fileContent as StringTransformer).finalize();
+  }
   const parsed = parse(filepath);
   const toTest = [parsed.base, parsed.ext, parsed.name].filter(Boolean);
 
@@ -32,6 +35,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".toml":
         return fileContent as string;
       case ".json":
+        if (typeof fileContent === "string") return fileContent;
         return JSON.stringify(fileContent, null, 2);
       case ".yml":
       case ".yaml":

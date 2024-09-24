@@ -1,12 +1,9 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    dependencies: ["@ts-rest/core", "@ts-rest/serverless", "@universal-middleware/core"],
-    devDependencies: ["zod"],
-  });
-
-  return packageJson;
+  return packageJson
+    .addDevDependencies(["zod"])
+    .addDependencies(["@ts-rest/core", "@ts-rest/serverless", "@universal-middleware/core"]);
 }

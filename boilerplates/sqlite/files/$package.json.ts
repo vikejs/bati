@@ -1,12 +1,14 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  packageJson.scripts["sqlite:migrate"] = "tsx ./database/sqlite/schema/all.ts";
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/better-sqlite3", "tsx"],
-    dependencies: ["better-sqlite3", "dotenv"],
-  });
+  return packageJson
+    .setScript("sqlite:migrate", {
+      value: "tsx ./database/sqlite/schema/all.ts",
+      precedence: 1,
+    })
+    .addDevDependencies(["@types/better-sqlite3"])
+    .addDevDependencies(["tsx"], ["sqlite:migrate"])
+    .addDependencies(["better-sqlite3", "dotenv"]);
 }

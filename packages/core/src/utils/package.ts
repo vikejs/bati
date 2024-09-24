@@ -1,5 +1,6 @@
 import { dim, yellow } from "colorette";
 import { withIcon } from "../print.js";
+import type { StringTransformer } from "../types.js";
 
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;
@@ -11,7 +12,7 @@ export interface PackageJsonScripts {
 }
 
 export interface PackageJsonScriptOption {
-  value?: string;
+  value: string;
   /**
    * Higher values have priority
    */
@@ -19,7 +20,14 @@ export interface PackageJsonScriptOption {
   warnIfReplaced?: boolean;
 }
 
-export type PackageJsonScriptOptions = Record<string, PackageJsonScriptOption>;
+export type PackageJsonScriptOptions = Record<
+  string,
+  {
+    value?: string;
+    precedence: number;
+    warnIfReplaced?: boolean;
+  }
+>;
 
 type AllDependencies<U extends PackageJsonDeps> = keyof U["dependencies"] | keyof U["devDependencies"];
 
@@ -59,7 +67,7 @@ function warnScript(key: string, old: string, nnew: string) {
   );
 }
 
-export class PackageJsonTransformer<U extends PackageJsonDeps> {
+export class PackageJsonTransformer<U extends PackageJsonDeps> implements StringTransformer {
   protected static previousScripts: PackageJsonScriptOptions = {};
   // All dependencies listed here will never be removed
   protected static forcedDependencies: Set<string> = new Set();
@@ -77,73 +85,80 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> {
     this.pendingReplacedScripts = [];
   }
 
-  setScripts(scripts: PackageJsonScriptOptions, condition: boolean = true) {
+  setScript(name: string, args: PackageJsonScriptOption, condition: boolean = true) {
     if (!condition) {
       return this;
     }
 
-    const keys = Object.keys(scripts);
+    const prev = PackageJsonTransformer.previousScripts[name] ?? { precedence: -Infinity };
 
-    for (const key of keys) {
-      const prev = PackageJsonTransformer.previousScripts[key] ?? { precedence: -Infinity };
-      const sub = scripts[key];
+    if (args.precedence > prev.precedence) {
+      if (prev.warnIfReplaced && prev.value) {
+        warnScript(name, prev.value, args.value);
+      }
 
-      if (sub) {
-        if (sub.precedence > prev.precedence) {
-          if (prev.warnIfReplaced) {
-            warnScript(key, prev.value!, sub.value!);
-          }
-
-          this.packageJson.scripts[key] = sub.value!;
-          PackageJsonTransformer.previousScripts[key] = Object.assign({ precedence: -Infinity }, sub);
-          this.pendingReplacedScripts.push(key);
-        } else {
-          if (sub.warnIfReplaced) {
-            warnScript(key, sub.value!, prev.value!);
-          }
-        }
+      this.packageJson.scripts[name] = args.value;
+      PackageJsonTransformer.previousScripts[name] = Object.assign({ precedence: -Infinity }, args);
+      this.pendingReplacedScripts.push(name);
+    } else {
+      if (args.warnIfReplaced && prev.value) {
+        warnScript(name, args.value, prev.value);
       }
     }
 
     return this;
   }
 
-  addDependency(
-    keys: { devDependencies?: AllDependencies<U>[]; dependencies?: AllDependencies<U>[] },
-    condition: boolean = true,
-  ) {
+  removeScript(name: string, condition: boolean = true) {
     if (!condition) {
       return this;
     }
 
-    this.packageJson.devDependencies ??= {};
-    this.packageJson.dependencies ??= {};
-    const depsMap = new Map(deps(this.scopedPackageJson));
-
-    for (const [key, value] of findKey(depsMap, keys.devDependencies ?? [])) {
-      if (key in this.packageJson.dependencies) continue;
-      this.packageJson.devDependencies[key as string] = value;
-      this.pendingAddedDependencies.push(key as string);
-    }
-    for (const [key, value] of findKey(depsMap, keys.dependencies ?? [])) {
-      // dependency > devDependencies
-      if (key in this.packageJson.devDependencies) delete this.packageJson.devDependencies[key as string];
-      this.packageJson.dependencies[key as string] = value;
-      this.pendingAddedDependencies.push(key as string);
-    }
+    PackageJsonTransformer.previousScripts[name] = { precedence: -Infinity };
+    this.pendingReplacedScripts.push(name);
+    delete this.packageJson.scripts[name];
 
     return this;
   }
 
-  /**
-   * Use this method if `dependency` is ONLY used by given scripts (i.e. not used in code)
-   */
-  dependencyOnlyUsedBy(dependency: AllDependencies<U>, scripts: string[], condition: boolean = true) {
+  addDependencies(newDeps: AllDependencies<U>[], condition?: boolean): this;
+  addDependencies(newDeps: AllDependencies<U>[], onlyUsedBy?: string[], condition?: boolean): this;
+  addDependencies(newDeps: AllDependencies<U>[], onlyUsedBy?: string[] | boolean, condition?: boolean) {
+    if (typeof onlyUsedBy === "boolean") {
+      condition = onlyUsedBy;
+      onlyUsedBy = [];
+    } else if (typeof condition !== "boolean") {
+      condition = true;
+      onlyUsedBy ??= [];
+    }
+
     if (!condition) {
       return this;
     }
 
-    PackageJsonTransformer.dependenciesScriptsRelation.set(dependency, new Set(scripts));
+    this._addDependencies("dependencies", newDeps);
+    this._onlyUsedBy(newDeps, onlyUsedBy);
+
+    return this;
+  }
+
+  addDevDependencies(newDeps: AllDependencies<U>[], condition?: boolean): this;
+  addDevDependencies(newDeps: AllDependencies<U>[], onlyUsedBy?: string[], condition?: boolean): this;
+  addDevDependencies(newDeps: AllDependencies<U>[], onlyUsedBy?: string[] | boolean, condition?: boolean) {
+    if (typeof onlyUsedBy === "boolean") {
+      condition = onlyUsedBy;
+      onlyUsedBy = [];
+    } else if (typeof condition !== "boolean") {
+      condition = true;
+      onlyUsedBy ??= [];
+    }
+
+    if (!condition) {
+      return this;
+    }
+
+    this._addDependencies("devDependencies", newDeps);
+    this._onlyUsedBy(newDeps, onlyUsedBy);
 
     return this;
   }
@@ -174,11 +189,36 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> {
       }
     }
 
-    // stringify
+    return JSON.stringify(this.packageJson, undefined, 2);
+  }
+
+  private _onlyUsedBy(newDeps: AllDependencies<U>[], onlyUsedBy: string[] = []) {
+    for (const dep of newDeps) {
+      if (!PackageJsonTransformer.dependenciesScriptsRelation.has(dep)) {
+        PackageJsonTransformer.dependenciesScriptsRelation.set(dep, new Set());
+      }
+      for (const script of onlyUsedBy) {
+        PackageJsonTransformer.dependenciesScriptsRelation.get(dep)!.add(script);
+      }
+    }
+  }
+
+  private _addDependencies(pkgKey: "devDependencies" | "dependencies", newDeps: AllDependencies<U>[]) {
+    const otherKey = pkgKey === "devDependencies" ? "dependencies" : "devDependencies";
+
+    this.packageJson[pkgKey] ??= {};
+    const depsMap = new Map(deps(this.scopedPackageJson));
+
+    for (const [key, value] of findKey(depsMap, newDeps)) {
+      const other = this.packageJson[otherKey] ?? {};
+      if (key in other) continue;
+      this.packageJson[pkgKey][key as string] = value;
+      this.pendingAddedDependencies.push(key as string);
+    }
   }
 
   /**
-   * Instead of removing a previsouly added dep, use `dependencyOnlyUsedBy`
+   * Instead of removing a previously added dep, use `onlyUsedBy` parameter when adding a dependency
    */
   private removeDependency(key: string) {
     if (this.packageJson.devDependencies?.[key]) {

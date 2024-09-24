@@ -1,17 +1,11 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  if (props.meta.BATI.has("google-analytics")) {
-    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-      dependencies: ["vue-gtag"],
-    });
-  }
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["vite"],
-    dependencies: [
+  return packageJson
+    .addDevDependencies(["vite"])
+    .addDependencies([
       "@vitejs/plugin-vue",
       "@vue/compiler-sfc",
       "@vue/server-renderer",
@@ -19,6 +13,6 @@ export default async function getPackageJson(props: TransformerProps) {
       "vike-vue",
       "vike",
       "vue",
-    ],
-  });
+    ])
+    .addDependencies(["vue-gtag"], props.meta.BATI.has("google-analytics"));
 }

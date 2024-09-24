@@ -1,13 +1,17 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  packageJson.scripts["prisma:studio"] = "prisma studio";
-  packageJson.scripts["prisma:generate"] = "prisma generate";
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["prisma"],
-    dependencies: ["@prisma/client"],
-  });
+  return packageJson
+    .setScript("prisma:studio", {
+      value: "prisma studio",
+      precedence: 1,
+    })
+    .setScript("prisma:generate", {
+      value: "prisma generate",
+      precedence: 1,
+    })
+    .addDevDependencies(["prisma"])
+    .addDependencies(["@prisma/client"]);
 }

@@ -1,56 +1,30 @@
-import { addDependency, loadAsJson, removeDependency, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    dev: {
-      value: "hattip serve ./hattip-entry.ts --client",
-      precedence: 20,
-      warnIfReplaced: true,
-    },
-  });
-
-  if (props.meta.BATI.has("vercel")) {
-    setScripts(packageJson, {
-      build: {
-        value: "cross-env NODE_ENV=production vite build",
+  return (
+    packageJson
+      .setScript("dev", {
+        value: "hattip serve ./hattip-entry.ts --client",
         precedence: 20,
         warnIfReplaced: true,
-      },
-    });
-  } else {
-    setScripts(packageJson, {
-      build: {
-        value: "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
+      })
+      .setScript("build", {
+        value: props.meta.BATI.has("vercel")
+          ? "cross-env NODE_ENV=production vite build"
+          : "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
         precedence: 20,
         warnIfReplaced: true,
-      },
-    });
-  }
-
-  // Not supported yet
-  if (packageJson.scripts.preview) {
-    delete packageJson.scripts.preview;
-  }
-
-  addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@hattip/vite", "@hattip/adapter-node"],
-    dependencies: [
-      "@hattip/core",
-      "@hattip/router",
-      "cross-env",
-      "hattip",
-      "vite",
-      "vike",
-      "@universal-middleware/hattip",
-      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
-      ...(props.meta.BATI.has("vercel") ? (["@hattip/adapter-vercel-edge"] as const) : []),
-      ...(props.meta.BATI.has("aws")
-        ? (["@types/aws-lambda", "@hattip/adapter-aws-lambda", "@hattip/static", "@hattip/walk"] as const)
-        : []),
-    ],
-  });
-
-  return removeDependency(packageJson, "tsx");
+      })
+      // Not compatible with hattip
+      .removeScript("preview")
+      .addDevDependencies(["@hattip/vite", "@hattip/adapter-node"])
+      .addDependencies(["@hattip/core", "@hattip/router", "hattip", "vite", "vike", "@universal-middleware/hattip"])
+      .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
+      .addDependencies(["@hattip/adapter-vercel-edge"], props.meta.BATI.has("vercel"))
+      .addDependencies(["@hattip/adapter-aws-lambda", "@hattip/static", "@hattip/walk"], props.meta.BATI.has("aws"))
+      .addDevDependencies(["@types/aws-lambda"], props.meta.BATI.has("aws"))
+      .addDevDependencies(["cross-env"], ["build"])
+  );
 }

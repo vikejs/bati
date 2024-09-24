@@ -1,40 +1,26 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    dev: {
+  return packageJson
+    .setScript("dev", {
       value: "vite",
       precedence: 20,
       warnIfReplaced: true,
-    },
-    build: {
+    })
+    .setScript("build", {
       value: "vite build",
       precedence: 1,
       warnIfReplaced: true,
-    },
-    preview: {
+    })
+    .setScript("preview", {
       value: "cross-env NODE_ENV=production tsx ./hono-entry.node.ts",
       precedence: 20,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: [
-      "@hono/vite-dev-server",
-      "@types/node",
-      ...(props.meta.BATI.has("aws") ? (["@types/aws-lambda"] as const) : []),
-    ],
-    dependencies: [
-      "@hono/node-server",
-      "@universal-middleware/hono",
-      "cross-env",
-      "hono",
-      "tsx",
-      "vite",
-      "vike",
-      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
-    ],
-  });
+    })
+    .addDevDependencies(["@hono/vite-dev-server", "@types/node"])
+    .addDevDependencies(["@types/aws-lambda"], props.meta.BATI.has("aws"))
+    .addDependencies(["@hono/node-server", "@universal-middleware/hono", "hono", "vite", "vike"])
+    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
+    .addDevDependencies(["tsx", "cross-env"], ["preview"]);
 }

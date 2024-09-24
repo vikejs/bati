@@ -59,8 +59,6 @@ export async function* walk(dir: string): AsyncGenerator<string> {
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
-  const allImports = new Map<string, string[]>();
-  const filesContainingIncludeIfImported = new Set<string>();
 
   function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
     const rf = new RelationFile(target, includeIfImported);

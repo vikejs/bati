@@ -1,45 +1,27 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    test: {
+  packageJson
+    .setScript("test", {
       value: "vitest",
       precedence: 0,
-    },
-    "deploy:cdk": {
-      value: "cdk",
-      precedence: 0,
-    },
-    "deploy:cdk-deploy-all": {
+    })
+    .setScript("deploy:cdk-deploy-all", {
       value: "cdk deploy --all",
       precedence: 0,
-    },
-    "deploy:aws": {
+    })
+    .setScript("deploy:aws", {
       value: "run-s build deploy:cdk-deploy-all",
       precedence: 0,
-    },
-    // @ts-ignore
-    "cdk:app": {
+    })
+    .setScript("cdk:app", {
       value: "tsx cdk/bin/infrastructure.ts",
       precedence: 0,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: [
-      "cdk",
-      "aws-cdk",
-      "npm-run-all2",
-      "@types/node",
-      "tsx",
-      "typescript",
-      "esbuild",
-      "vitest",
-      "which",
-      "@types/which",
-    ],
-    dependencies: ["aws-cdk-lib", "constructs", "source-map-support"],
-  });
+    })
+    .addDependencies(["aws-cdk-lib", "constructs", "source-map-support"])
+    .addDevDependencies(["cdk", "aws-cdk", "@types/node", "typescript", "esbuild", "vitest", "which", "@types/which"])
+    .addDevDependencies(["npm-run-all2"], ["deploy:aws"])
+    .addDevDependencies(["tsx"], ["cdk:app"]);
 }
