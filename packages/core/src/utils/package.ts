@@ -8,7 +8,7 @@ export interface PackageJsonDeps {
 }
 
 export interface PackageJsonScripts {
-  scripts: Record<string, string>;
+  scripts?: Record<string, string>;
 }
 
 export interface PackageJsonScriptOption {
@@ -76,11 +76,12 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
 
   protected pendingAddedDependencies: string[];
   protected pendingReplacedScripts: string[];
+  protected packageJson: PackageJsonScripts & PackageJsonDeps;
+  protected scopedPackageJson: U;
 
-  constructor(
-    public packageJson: PackageJsonScripts & PackageJsonDeps,
-    public scopedPackageJson: U,
-  ) {
+  constructor(packageJson: PackageJsonScripts & PackageJsonDeps, scopedPackageJson: U) {
+    this.packageJson = structuredClone(packageJson);
+    this.scopedPackageJson = scopedPackageJson;
     this.pendingAddedDependencies = [];
     this.pendingReplacedScripts = [];
   }
@@ -97,6 +98,7 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
         warnScript(name, prev.value, args.value);
       }
 
+      this.packageJson.scripts ??= {};
       this.packageJson.scripts[name] = args.value;
       PackageJsonTransformer.previousScripts[name] = Object.assign({ precedence: -Infinity }, args);
       this.pendingReplacedScripts.push(name);
@@ -116,7 +118,7 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
 
     PackageJsonTransformer.previousScripts[name] = { precedence: -Infinity };
     this.pendingReplacedScripts.push(name);
-    delete this.packageJson.scripts[name];
+    delete this.packageJson.scripts![name];
 
     return this;
   }
@@ -190,6 +192,16 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
     }
 
     return JSON.stringify(this.packageJson, undefined, 2);
+  }
+
+  /**
+   * For tests purpose only
+   * @internal
+   */
+  static clear() {
+    PackageJsonTransformer.previousScripts = {};
+    PackageJsonTransformer.forcedDependencies = new Set();
+    PackageJsonTransformer.dependenciesScriptsRelation = new Map();
   }
 
   private _onlyUsedBy(newDeps: AllDependencies<U>[], onlyUsedBy: string[] = []) {
