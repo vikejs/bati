@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -24,7 +24,7 @@ GITHUB_CLIENT_SECRET=<Client Secret>
 > Logout route : \`http://localhost:3000/api/auth/logout\`.
 `;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "lucia-auth");
 
   return content.finalize();
 }

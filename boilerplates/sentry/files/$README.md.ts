@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const about =
@@ -35,7 +35,7 @@ You have to configure \`SENTRY_ORG\`, \`SENTRY_PROJECT\` and \`SENTRY_AUTH_TOKEN
 
 `;
 
-  content.addAbout(about);
+  content.addMarkdownFeature(about, "sentry");
 
   return content.finalize();
 }

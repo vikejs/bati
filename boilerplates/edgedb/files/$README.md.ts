@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -19,7 +19,7 @@ edgedb project init
 
 Then follow instructions at <https://www.edgedb.com/docs/intro/quickstart#set-up-your-schema>`;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "edgedb");
 
   return content.finalize();
 }

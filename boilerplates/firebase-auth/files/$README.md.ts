@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -25,7 +25,7 @@ const firebaseConfig = {
 - Read FirebaseUI at [firebaseui-web docs](https://github.com/firebase/firebaseui-web?tab=readme-ov-file#using-firebaseui-for-authentication)
 `;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "firebase-auth");
 
   return content.finalize();
 }

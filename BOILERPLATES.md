@@ -72,7 +72,8 @@ export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
   // Other utils like this one exist:
   // - `loadAsJson`: loads a JSON file and parses it
-  // - `loadReadme`: loads README file and provides utils to manipulate it
+  // - `loadYaml`: loads a YAML file and parses it
+  // - `loadMarkdown`: loads README or any markdown file and provides utils to manipulate it
   // - `props.readfile`: loads previous file as string if it exists
 
   // Then we edit the AST to add a vite plugin

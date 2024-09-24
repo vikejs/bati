@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -22,7 +22,7 @@ wrangler d1 create <your-db-name>
 
 Then copy the output to \`wrangler.toml\``;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "sqlite");
 
   return content.finalize();
 }

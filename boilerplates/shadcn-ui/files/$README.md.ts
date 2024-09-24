@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const about = `
@@ -31,7 +31,7 @@ export default async function getReadme(props: TransformerProps) {
 
 `;
 
-  content.addAbout(about);
+  content.addMarkdownFeature(about, "shadcn-ui");
 
   return content.finalize();
 }

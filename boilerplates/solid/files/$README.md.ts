@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const about = `
@@ -38,7 +38,7 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all yo
 
 You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pages, or only for some pages while still using it for others.`;
 
-  content.addAbout(about);
+  content.addMarkdownFeature(about, "solid");
 
   return content.finalize();
 }
