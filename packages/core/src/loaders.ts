@@ -11,6 +11,7 @@ import {
   type SchemaOptions,
 } from "yaml";
 import type { TransformerProps } from "./types.js";
+import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
 
 export type { YAMLDocument };
 
@@ -26,6 +27,17 @@ export async function loadAsJson({ readfile, source, target }: TransformerProps)
   assert(typeof content === "string", `Unable to load previous JSON module ("${source}" -> "${target}")`);
 
   return JSON.parse(content);
+}
+
+export async function loadPackageJson<U extends PackageJsonDeps>(
+  { readfile, source, target }: TransformerProps,
+  scopedPackageJson: U,
+) {
+  const content = await readfile?.();
+
+  assert(typeof content === "string", `Unable to load previous JSON module ("${source}" -> "${target}")`);
+
+  return new PackageJsonTransformer(JSON.parse(content), scopedPackageJson);
 }
 
 export async function loadAsMagicast<Exports extends object>({

@@ -15,3 +15,7 @@ export type TransformerProps = {
 };
 
 export type Transformer = (props: TransformerProps) => unknown;
+
+export interface StringTransformer {
+  finalize(): string;
+}

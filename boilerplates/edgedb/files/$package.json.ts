@@ -1,13 +1,17 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  packageJson.scripts["edgedb:generate-queries"] = "@edgedb/generate queries";
-  packageJson.scripts["edgedb:generate-edgeql-js"] = "@edgedb/generate edgeql-js";
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@edgedb/generate"],
-    dependencies: ["edgedb"],
-  });
+  return packageJson
+    .setScript("edgedb:generate-queries", {
+      value: "@edgedb/generate queries",
+      precedence: 0,
+    })
+    .setScript("edgedb:generate-edgeql-js", {
+      value: "@edgedb/generate edgeql-js",
+      precedence: 0,
+    })
+    .addDevDependencies(["@edgedb/generate"])
+    .addDependencies(["edgedb"]);
 }

@@ -1,38 +1,27 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    dev: {
+  return packageJson
+    .setScript("dev", {
       value: "tsx ./h3-entry.ts",
       precedence: 20,
       warnIfReplaced: true,
-    },
-    build: {
+    })
+    .setScript("build", {
       value: "vite build",
       precedence: 1,
       warnIfReplaced: true,
-    },
-    preview: {
+    })
+    .setScript("preview", {
       value: "cross-env NODE_ENV=production tsx ./h3-entry.ts",
       precedence: 20,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/serve-static"],
-    dependencies: [
-      "@hattip/polyfills",
-      "cross-env",
-      "h3",
-      "serve-static",
-      "tsx",
-      "vike",
-      "vite",
-      "@universal-middleware/h3",
-      ...(props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0") ? (["@auth/core"] as const) : []),
-      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
-    ],
-  });
+    })
+    .addDevDependencies(["@types/serve-static"])
+    .addDependencies(["@hattip/polyfills", "h3", "serve-static", "vike", "vite", "@universal-middleware/h3"])
+    .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
+    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
+    .addDevDependencies(["tsx"], ["dev", "preview"])
+    .addDevDependencies(["cross-env"], ["preview"]);
 }

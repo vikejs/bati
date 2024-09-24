@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";
-import * as which from "which";
+import which from "which";
 
 const bunExists = which.sync("bun", { nothrow: true }) !== null;
 const npmCli = bunExists ? "bun" : "pnpm";

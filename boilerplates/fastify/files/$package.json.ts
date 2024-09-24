@@ -1,35 +1,26 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    dev: {
+  return packageJson
+    .setScript("dev", {
       value: "tsx ./fastify-entry.ts",
       precedence: 20,
       warnIfReplaced: true,
-    },
-    build: {
+    })
+    .setScript("build", {
       value: "vite build",
       precedence: 1,
       warnIfReplaced: true,
-    },
-    preview: {
+    })
+    .setScript("preview", {
       value: "cross-env NODE_ENV=production tsx ./fastify-entry.ts",
       precedence: 20,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["cross-env", "tsx", "@types/node"],
-    dependencies: [
-      "@fastify/middie",
-      "@fastify/static",
-      "@universal-middleware/fastify",
-      "fastify",
-      "vike",
-      "vite",
-      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
-    ],
-  });
+    })
+    .addDevDependencies(["@types/node"])
+    .addDependencies(["@fastify/middie", "@fastify/static", "@universal-middleware/fastify", "fastify", "vike", "vite"])
+    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
+    .addDevDependencies(["tsx"], ["dev", "preview"])
+    .addDevDependencies(["cross-env"], ["preview"]);
 }

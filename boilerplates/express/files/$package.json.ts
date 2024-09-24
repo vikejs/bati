@@ -1,35 +1,26 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    dev: {
+  return packageJson
+    .setScript("dev", {
       value: "tsx ./express-entry.ts",
       precedence: 20,
       warnIfReplaced: true,
-    },
-    build: {
+    })
+    .setScript("build", {
       value: "vite build",
       precedence: 1,
       warnIfReplaced: true,
-    },
-    preview: {
+    })
+    .setScript("preview", {
       value: "cross-env NODE_ENV=production tsx ./express-entry.ts",
       precedence: 20,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/express"],
-    dependencies: [
-      "@universal-middleware/express",
-      "cross-env",
-      "express",
-      "tsx",
-      "vite",
-      "vike",
-      ...(props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase ? (["dotenv"] as const) : []),
-    ],
-  });
+    })
+    .addDevDependencies(["@types/express"])
+    .addDependencies(["@universal-middleware/express", "express", "vite", "vike"])
+    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
+    .addDevDependencies(["tsx"], ["dev", "preview"])
+    .addDevDependencies(["cross-env"], ["preview"]);
 }

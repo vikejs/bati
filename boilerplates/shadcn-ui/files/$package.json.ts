@@ -1,25 +1,20 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    // @ts-ignore
-    shadcn: {
-      value: "pnpm dlx shadcn@latest",
-      precedence: 20,
+  return packageJson
+    .setScript("shadcn", {
+      value: "npx shadcn@latest",
+      precedence: 1,
       warnIfReplaced: true,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    dependencies: [
+    })
+    .addDependencies([
       "tailwindcss-animate",
       "class-variance-authority",
       "clsx",
       "tailwind-merge",
       "lucide-react",
       "@radix-ui/react-icons",
-    ],
-  });
+    ]);
 }

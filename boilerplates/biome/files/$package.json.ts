@@ -1,20 +1,16 @@
-import { addDependency, loadAsJson, setScripts, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  setScripts(packageJson, {
-    lint: {
+  return packageJson
+    .setScript("lint", {
       value: "biome lint --write .",
       precedence: 0,
-    },
-    format: {
+    })
+    .setScript("format", {
       value: "biome format --write .",
       precedence: 0,
-    },
-  });
-
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@biomejs/biome"],
-  });
+    })
+    .addDevDependencies(["@biomejs/biome"]);
 }

@@ -1,10 +1,9 @@
-import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
+import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
 export default async function getPackageJson(props: TransformerProps) {
-  const packageJson = await loadAsJson(props);
+  const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["vite", "@types/react", "@types/react-dom"],
-    dependencies: ["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react"],
-  });
+  return packageJson
+    .addDevDependencies(["vite", "@types/react", "@types/react-dom"])
+    .addDependencies(["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react"]);
 }
