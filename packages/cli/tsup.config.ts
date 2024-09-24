@@ -15,5 +15,5 @@ export default defineConfig({
   banner: {
     js: "#!/usr/bin/env node",
   },
-  noExternal: process.env.BUNDLE ? ["@batijs/core", "@batijs/features"] : [],
+  noExternal: ["@batijs/core", "@batijs/features"],
 });

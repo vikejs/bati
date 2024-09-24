@@ -4,8 +4,7 @@
     "build": {
       "inputs": ["$TURBO_DEFAULT$", "files/**", "hooks/**"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "env": ["BUNDLE"]
+      "outputs": ["dist/**"]
     },
     "test": {
       "dependsOn": ["build"]

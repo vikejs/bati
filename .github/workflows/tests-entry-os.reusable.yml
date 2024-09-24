@@ -75,9 +75,6 @@ jobs:
 
       - name: Build packages
         run: pnpm run build
-        env:
-          # self-contained Bati CLI, smaller artifact
-          BUNDLE: 1
 
 #      - name: Release in local repo
 #        if: matrix.os == 'ubuntu-latest'
@@ -85,8 +82,6 @@ jobs:
 
       - name: Run tests
         run: pnpm run test
-        env:
-          BUNDLE: 1
 
       - name: Deploy CLI locally
         run: pnpm deploy --prod --filter=./packages/cli ./bati-cli

@@ -3,8 +3,8 @@ import { addDependency, loadAsJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadAsJson(props);
 
-  return addDependency(packageJson, await import("../package.json").then((x) => x.default), {
-    devDependencies: ["@types/better-sqlite3", "@types/cookie"],
+  addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+    devDependencies: ["@types/cookie"],
     dependencies: [
       "arctic",
       "cookie",
@@ -13,7 +13,16 @@ export default async function getPackageJson(props: TransformerProps) {
       "dotenv",
       ...(props.meta.BATI.has("drizzle")
         ? (["@lucia-auth/adapter-drizzle"] as const)
-        : (["better-sqlite3", "@lucia-auth/adapter-sqlite"] as const)),
+        : (["@lucia-auth/adapter-sqlite"] as const)),
     ],
   });
+
+  if (!props.meta.BATI.hasD1) {
+    addDependency(packageJson, await import("../package.json").then((x) => x.default), {
+      devDependencies: ["@types/better-sqlite3"],
+      dependencies: ["better-sqlite3"],
+    });
+  }
+
+  return packageJson;
 }
