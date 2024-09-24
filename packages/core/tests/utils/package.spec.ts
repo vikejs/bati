@@ -1,4 +1,4 @@
-import { afterAll, afterEach, assert, beforeAll, describe, test } from "vitest";
+import { afterAll, afterEach, assert, beforeAll, beforeEach, describe, test } from "vitest";
 import { PackageJsonTransformer } from "../../src/utils/package.js";
 
 describe("dependencies", () => {
@@ -144,10 +144,6 @@ describe("scripts", { sequential: true }, () => {
 });
 
 describe("scripts + dependencies", { sequential: true }, () => {
-  afterAll(() => {
-    PackageJsonTransformer.clear();
-  });
-
   let packageJson = {
     dependencies: {
       react: "^17.0.2",
@@ -158,22 +154,54 @@ describe("scripts + dependencies", { sequential: true }, () => {
       lodash: "^4.17.21",
     },
   };
-  const transformer = new PackageJsonTransformer(packageJson, scopedPackageJson);
+  let transformer = new PackageJsonTransformer(packageJson, scopedPackageJson);
+
+  afterAll(() => {
+    PackageJsonTransformer.clear();
+  });
 
   beforeAll(() => {
     transformer
-      .setScript("dev", {
-        value: "dev_script",
+      .setScript("my_script", {
+        value: "my_script",
         precedence: 1,
       })
-      .addDependencies(["lodash"], ["dev"]);
+      .setScript("my_script_2", {
+        value: "my_script_2",
+        precedence: 1,
+      })
+      .addDependencies(["lodash"], ["my_script", "my_script_2"]);
     packageJson = JSON.parse(transformer.finalize());
   });
 
-  test("remove", () => {
-    transformer.removeScript("dev");
+  afterEach(() => {
+    packageJson = JSON.parse(transformer.finalize());
+  });
+
+  beforeEach(() => {
+    transformer = new PackageJsonTransformer(packageJson, scopedPackageJson);
+  });
+
+  test("before", () => {
     const result = JSON.parse(transformer.finalize());
-    assert.equal(result.scripts.dev, undefined);
+    assert.equal(result.scripts.my_script, "my_script");
+    assert.equal(result.scripts.my_script_2, "my_script_2");
+    assert.equal(result.dependencies.lodash, "^4.17.21");
+  });
+
+  test("remove my_script", () => {
+    transformer.removeScript("my_script");
+    const result = JSON.parse(transformer.finalize());
+    assert.equal(result.scripts.my_script, undefined);
+    assert.equal(result.scripts.my_script_2, "my_script_2");
+    assert.equal(result.dependencies.lodash, "^4.17.21");
+  });
+
+  test("remove my_script_2", () => {
+    transformer.removeScript("my_script_2");
+    const result = JSON.parse(transformer.finalize());
+    assert.equal(result.scripts.my_script, undefined);
+    assert.equal(result.scripts.my_script_2, undefined);
     assert.equal(result.dependencies.lodash, undefined);
   });
 });

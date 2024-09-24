@@ -101,7 +101,9 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
       this.packageJson.scripts ??= {};
       this.packageJson.scripts[name] = args.value;
       PackageJsonTransformer.previousScripts[name] = Object.assign({ precedence: -Infinity }, args);
-      this.pendingReplacedScripts.push(name);
+      if (prev.value) {
+        this.pendingReplacedScripts.push(name);
+      }
     } else {
       if (args.warnIfReplaced && prev.value) {
         warnScript(name, args.value, prev.value);

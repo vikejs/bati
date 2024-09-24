@@ -9,6 +9,9 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
   if (fileContent === undefined || fileContent === null) return null;
   if (typeof fileContent == "object" && typeof (fileContent as StringTransformer).finalize === "function") {
     fileContent = (fileContent as StringTransformer).finalize();
+    if (typeof fileContent !== "string") {
+      throw new Error("finalize() must return a string");
+    }
   }
   const parsed = parse(filepath);
   const toTest = [parsed.base, parsed.ext, parsed.name].filter(Boolean);

@@ -3,7 +3,7 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  packageJson
+  return packageJson
     .setScript("test", {
       value: "vitest",
       precedence: 0,
@@ -21,7 +21,7 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 0,
     })
     .addDependencies(["aws-cdk-lib", "constructs", "source-map-support"])
-    .addDevDependencies(["cdk", "aws-cdk", "@types/node", "typescript", "esbuild", "vitest", "which", "@types/which"])
+    .addDevDependencies(["cdk", "aws-cdk", "@types/node", "@types/which", "typescript", "esbuild", "vitest", "which"])
     .addDevDependencies(["npm-run-all2"], ["deploy:aws"])
     .addDevDependencies(["tsx"], ["cdk:app"]);
 }
