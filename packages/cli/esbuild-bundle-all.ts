@@ -131,14 +131,12 @@ const esbuildPlugin: Plugin = {
   async setup(build) {
     const boilerplates = await boilerplateFilesToCopy();
 
-    if (process.env.BUNDLE) {
-      for (const bl of boilerplates) {
-        if (bl.source) {
-          for await (const { dir, name } of yield$files(bl.source)) {
-            (build.initialOptions.entryPoints as Record<string, string>)[
-              join("boilerplates", bl.folder, relative(bl.source, dir), parse(name).name)
-            ] = join(dir, name);
-          }
+    for (const bl of boilerplates) {
+      if (bl.source) {
+        for await (const { dir, name } of yield$files(bl.source)) {
+          (build.initialOptions.entryPoints as Record<string, string>)[
+            join("boilerplates", bl.folder, relative(bl.source, dir), parse(name).name)
+          ] = join(dir, name);
         }
       }
     }
@@ -160,10 +158,7 @@ const esbuildPlugin: Plugin = {
             force: true,
             recursive: true,
             filter(source) {
-              if (process.env.BUNDLE) {
-                return !basename(source).startsWith("$");
-              }
-              return true;
+              return !basename(source).startsWith("$");
             },
           });
         }
