@@ -7,6 +7,7 @@ import { categoryLabelOrder, features, type CategoryLabels, type Flags } from "@
 import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
 import type { classConfig, ContentChanger, MarkdownOptions, FilterObject, ZoneHandler } from "./types.js";
 import { createTOC } from "./createTOC.js";
+import type { StringTransformer } from "../types.js";
 
 export function parseMarkdown(text: string, defaults?: MarkdownOptions) {
   const markdownText = /<!--\s*bati:start\s+section="document"\s*-->/.test(text)
@@ -26,7 +27,7 @@ function getNodesFromRoot(tree: Root): Nodes[] {
   return tree.children;
 }
 
-export class MarkdownV2 {
+export class MarkdownV2 implements StringTransformer {
   private tree: Root;
   private contents: ContentChanger[] = [];
   private config: classConfig = { defaults: { filter: { section: "features" } } };

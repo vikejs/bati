@@ -106,5 +106,5 @@ Or delete the CloudFormation stack which starts with "VikeStack-<Your App Name>"
 
   content.addMarkdownFeature(todo, "aws");
 
-  return content.finalize();
+  return content;
 }

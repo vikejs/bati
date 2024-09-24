@@ -40,5 +40,5 @@ You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pa
 
   content.addMarkdownFeature(about, "solid");
 
-  return content.finalize();
+  return content;
 }

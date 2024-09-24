@@ -31,5 +31,5 @@ AUTH0_ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
 
   content.addMarkdownFeature(todo, "auth0");
 
-  return content.finalize();
+  return content;
 }

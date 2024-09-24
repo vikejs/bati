@@ -26,5 +26,5 @@ GITHUB_CLIENT_SECRET=<Client Secret>
 
   content.addMarkdownFeature(todo, "lucia-auth");
 
-  return content.finalize();
+  return content;
 }

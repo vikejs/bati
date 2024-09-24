@@ -33,5 +33,5 @@ export default async function getReadme(props: TransformerProps) {
 
   content.addMarkdownFeature(about, "shadcn-ui");
 
-  return content.finalize();
+  return content;
 }

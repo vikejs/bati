@@ -16,5 +16,5 @@ then follow instructions at <https://www.prisma.io/docs/getting-started/quicksta
 
   content.addMarkdownFeature(todo, "prisma");
 
-  return content.finalize();
+  return content;
 }

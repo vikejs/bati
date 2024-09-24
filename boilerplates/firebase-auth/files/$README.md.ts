@@ -27,5 +27,5 @@ const firebaseConfig = {
 
   content.addMarkdownFeature(todo, "firebase-auth");
 
-  return content.finalize();
+  return content;
 }

@@ -24,5 +24,5 @@ Then copy the output to \`wrangler.toml\``;
 
   content.addMarkdownFeature(todo, "sqlite");
 
-  return content.finalize();
+  return content;
 }

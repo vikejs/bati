@@ -15,5 +15,5 @@ pnpm sqlite:migrate # creates sqlite tables
 
   content.addMarkdownFeature(todo, "sqlite");
 
-  return content.finalize();
+  return content;
 }

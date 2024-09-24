@@ -37,5 +37,5 @@ You have to configure \`SENTRY_ORG\`, \`SENTRY_PROJECT\` and \`SENTRY_AUTH_TOKEN
 
   content.addMarkdownFeature(about, "sentry");
 
-  return content.finalize();
+  return content;
 }

@@ -23,5 +23,5 @@ Read more on [Drizzle ORM documentation](https://orm.drizzle.team/docs/overview)
 
   content.addMarkdownFeature(todo, "drizzle");
 
-  return content.finalize();
+  return content;
 }

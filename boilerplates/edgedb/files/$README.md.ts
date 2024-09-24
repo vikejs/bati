@@ -21,5 +21,5 @@ Then follow instructions at <https://www.edgedb.com/docs/intro/quickstart#set-up
 
   content.addMarkdownFeature(todo, "edgedb");
 
-  return content.finalize();
+  return content;
 }

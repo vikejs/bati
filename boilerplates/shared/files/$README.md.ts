@@ -40,5 +40,5 @@ ${getArgs()} ${flags}
     },
   });
 
-  return content.finalize();
+  return content;
 }

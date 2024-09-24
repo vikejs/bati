@@ -20,5 +20,5 @@ The theme is defined in \`layouts/theme.ts\`.
 
   content.addMarkdownFeature(todo, "mantine");
 
-  return content.finalize();
+  return content;
 }
