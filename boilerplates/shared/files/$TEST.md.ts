@@ -25,6 +25,15 @@ ${getArgs()} ${flags}
   content.addMarkdown("", {
     position: "after",
     filter: {
+      section: "intro",
+    },
+    wrapper: {
+      section: "TOC",
+    },
+  });
+  content.addMarkdown("", {
+    position: "after",
+    filter: {
       section: "document",
     },
     wrapper: {

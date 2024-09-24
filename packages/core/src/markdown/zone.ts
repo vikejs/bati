@@ -1,23 +1,7 @@
 import { visit } from "unist-util-visit";
 import { commentMarker, objectFilter } from "./utils.js";
 import type { Nodes, Parents } from "mdast";
-import type { Flags, CategoryLabels } from "@batijs/features";
-
-type Info = {
-  parent: Parents;
-  start: number;
-  end: number;
-};
-
-export type Sections = "document" | "intro" | "features";
-export type ZoneHandler = (start: Nodes, between: Nodes[], end: Nodes, info: Info) => Nodes[] | null | undefined | void;
-export type FilterHandler = (info: ReturnType<typeof commentMarker>) => boolean;
-export type FilterObject = {
-  section?: Sections;
-  category?: CategoryLabels;
-  flag?: Flags;
-  [key: string]: undefined | string | number | boolean;
-};
+import type { FilterHandler, FilterObject, ZoneHandler } from "./types.js";
 
 export function zone(
   node: Nodes,

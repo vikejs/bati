@@ -2,10 +2,10 @@ import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getTest(props: TransformerProps) {
   const content = await loadMarkdown(props);
-  //console.log("***sentry***", await props.readfile());
+
   const doc =
     `
-  ## Sentry Browser / Error Tracking & Performance Monitoring
+## Sentry Browser / Error Tracking & Performance Monitoring
 
 This app is integrated with [Sentry](https://sentry.io) for error tracking. 
 
@@ -33,12 +33,7 @@ You have to configure \`SENTRY_ORG\`, \`SENTRY_PROJECT\` and \`SENTRY_AUTH_TOKEN
 
 `;
 
-  content.addMarkdown(doc, {
-    wrapper: {
-      category: "Error tracking",
-      flag: "sentry",
-    },
-  });
+  content.addMarkdownFeature(doc, "sentry");
 
   return content.finalize();
 }

@@ -1,7 +1,6 @@
 import parseAttributes from "attributes-parser";
 import type { Nodes } from "mdast";
-import type { FilterObject } from "./zone.js";
-import type { WrapperObject } from "./markdown.js";
+import type { WrapperObject, FilterObject, MarkdownCommentSuffix } from "./types.js";
 
 const markerExpression = new RegExp(`(\\s*<!--(?<attributes>.*)-->\\s*)`);
 
@@ -36,7 +35,6 @@ export function objectFilter(filter: FilterObject | undefined = {}, info: Return
   }
   return true;
 }
-type MarkdownCommentSuffix = "start" | "end";
 
 export function createMarkdownComment(suffix: MarkdownCommentSuffix, options: Record<string, unknown>) {
   const { name, ...attributes } = options;

@@ -2,10 +2,9 @@ import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
   const content = await loadMarkdown(props);
-  //console.log("***aws***", await props.readfile());
-  //language=Markdown
+
   const todo = `
-## *AWS CDK Deployment*
+## AWS CDK Deployment
 
 This is a boilerplate for deploying your Vike app to AWS using the AWS Cloud Development Kit (CDK) including creating a custom domain in Route53.
 
@@ -104,12 +103,7 @@ Or delete the CloudFormation stack which starts with "VikeStack-<Your App Name>"
 
 `;
 
-  content.addMarkdown(todo, {
-    wrapper: {
-      category: "Hosting",
-      flag: "aws",
-    },
-  });
+  content.addMarkdownFeature(todo, "aws");
 
   return content.finalize();
 }

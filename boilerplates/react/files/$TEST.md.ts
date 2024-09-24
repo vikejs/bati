@@ -39,12 +39,7 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all yo
 
 You can enable/disable [HTML streaming](https://vike.dev/streaming) for all your pages, or only for some pages while still using it for others.`;
 
-  content.addMarkdown(about, {
-    wrapper: {
-      category: "Frontend Framework",
-      flag: "react",
-    },
-  });
+  content.addMarkdownFeature(about, "react");
 
   return content.finalize();
 }

@@ -1,47 +1,52 @@
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
-import { zone, type FilterHandler, type FilterObject, type ZoneHandler } from "./zone.js";
+import { zone } from "./zone.js";
 import type { Root, Nodes } from "mdast";
 import { commentMarker, wrapWithComment } from "./utils.js";
-import { categoryLabelOrder, type CategoryLabels } from "@batijs/features";
+import { categoryLabelOrder, features, type CategoryLabels, type Flags } from "@batijs/features";
 import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
+import type { classConfig, ContentChanger, MarkdownOptions, FilterObject, ZoneHandler } from "./types.js";
+import { createTOC } from "./createTOC.js";
 
-export function parseMarkdown(text: string) {
+export function parseMarkdown(text: string, defaults?: MarkdownOptions) {
   const markdownText = /<!--\s*bati:start\s+section="document"\s*-->/.test(text)
     ? text
     : `<!--bati:start section="document"-->\n${text}\n<!--bati:end section="document"-->`;
-  return new MarkdownV2(fromMarkdown(markdownText as Value));
+  return new MarkdownV2(
+    fromMarkdown(markdownText as Value),
+    defaults
+      ? {
+          defaults,
+        }
+      : undefined,
+  );
 }
 
-export type MarkdownPosition = "before" | "after" | "replace";
-
-export type WrapperObject = FilterObject & {
-  name?: string;
-};
-
-type MarkdownOptions = {
-  filter?: FilterObject | FilterHandler;
-  position?: MarkdownPosition;
-  wrapper?: WrapperObject;
-};
-
-type ContentChanger = {
-  markdown: string | ZoneHandler;
-  options: MarkdownOptions;
-};
+function getNodesFromRoot(tree: Root): Nodes[] {
+  return tree.children;
+}
 
 export class MarkdownV2 {
   private tree: Root;
   private contents: ContentChanger[] = [];
+  private config: classConfig = { defaults: { filter: { section: "features" } } };
 
-  constructor(tree: Root) {
+  constructor(tree: Root, config?: classConfig) {
     this.tree = tree;
+    if (this.config) {
+      this.config = deepMerge(this.config, config);
+    }
+  }
+
+  addMarkdownFeature(markdown: string | ZoneHandler, flag: Flags) {
+    const category = features.find((f) => f.flag === flag)!.category as CategoryLabels;
+    const options = { wrapper: { category, flag } };
+    const optionsMarkdown = deepMerge(this.config.defaults, options);
+    this.contents.push({ markdown, options: optionsMarkdown });
   }
 
   addMarkdown(markdown: string | ZoneHandler, options: MarkdownOptions = {}) {
-    const optionsMarkdown = deepMerge({ filter: { section: "features" } }, options);
-
-    this.contents.push({ markdown, options: optionsMarkdown });
+    this.contents.push({ markdown, options });
   }
 
   finalize() {
@@ -89,7 +94,7 @@ export class MarkdownV2 {
                   return [
                     start,
                     ...betweenBeforeCategory,
-                    ...wrapWithComment(fromMarkdown(markdown), options?.wrapper),
+                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
                     ...betweenAfterCategory,
                     end,
                   ] as Nodes[];
@@ -97,18 +102,22 @@ export class MarkdownV2 {
                   return [
                     start,
                     ...between,
-                    ...wrapWithComment(fromMarkdown(markdown), options?.wrapper),
+                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
                     end,
                   ] as Nodes[];
                 }
               }
               switch (position) {
                 case "replace":
-                  return [start, ...wrapWithComment([fromMarkdown(markdown)], options?.wrapper), end] as Nodes[];
+                  return [
+                    start,
+                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
+                    end,
+                  ] as Nodes[];
                 case "before":
                   return [
                     start,
-                    ...wrapWithComment(fromMarkdown(markdown as Value), options?.wrapper),
+                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown as Value)), options?.wrapper),
                     ...between,
                     end,
                   ] as Nodes[];
@@ -116,7 +125,7 @@ export class MarkdownV2 {
                   return [
                     start,
                     ...between,
-                    ...wrapWithComment(fromMarkdown(markdown), options?.wrapper),
+                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
                     end,
                   ] as Nodes[];
                 default:
@@ -126,6 +135,11 @@ export class MarkdownV2 {
 
       zone(this.tree, "bati", options?.filter, handler);
     }
+    zone(this.tree, "bati", { section: "TOC" }, (start, _between, end) => {
+      const toc = createTOC(this.tree);
+      if (!toc) return;
+      return [start, ...toc, end];
+    });
     return toMarkdown(this.tree);
   }
 }

@@ -24,7 +24,6 @@ export async function loadReadme({ readfile }: TransformerProps) {
 
 export async function loadMarkdown({ readfile }: TransformerProps) {
   const content = await readfile?.();
-
   return parseMarkdown(content ?? "");
 }
 
