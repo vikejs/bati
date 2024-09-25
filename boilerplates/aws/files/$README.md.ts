@@ -72,8 +72,9 @@ You can also access the CloudFront distribution domainname in the AWS SSM regist
 ### Stack Configuration
 
 You can configure the stack in the \`cdk/bin/infrastructure.ts\` file:
-| --- | --- | --- |
+
 | Variable | Examples | Description |
+| --- | --- | --- |
 | \`domainName: "example.com",\` | "example.com" |  |
 | \`subDomain: "www",\` |"www" | |
 | \`certificate: undefined,\` | "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012" or a certificatemanager.ICertificate | reuse an existing AWS Certificate |
