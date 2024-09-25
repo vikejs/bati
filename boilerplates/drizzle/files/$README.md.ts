@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -21,7 +21,7 @@ pnpm drizzle:migrate # a script that executes drizzle-kit migrate.
 Read more on [Drizzle ORM documentation](https://orm.drizzle.team/docs/overview)
 `;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "drizzle");
 
-  return content.finalize();
+  return content;
 }

@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -29,7 +29,7 @@ AUTH0_ISSUER_BASE_URL=https://<your-auth0-domain>.<eu>.auth0.com
 - Read more [Auth.js: Auth0 provider](https://authjs.dev/reference/core/providers/auth0)
 `;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "auth0");
 
-  return content.finalize();
+  return content;
 }

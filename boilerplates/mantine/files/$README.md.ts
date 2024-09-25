@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -18,7 +18,7 @@ If you add more packages, make sure to update the \`layouts/LayoutDefault.tsx\` 
 The theme is defined in \`layouts/theme.ts\`.
 `;
 
-  content.addAbout(todo);
+  content.addMarkdownFeature(todo, "mantine");
 
-  return content.finalize();
+  return content;
 }

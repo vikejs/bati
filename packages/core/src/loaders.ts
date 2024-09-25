@@ -11,6 +11,7 @@ import {
   type SchemaOptions,
 } from "yaml";
 import type { TransformerProps } from "./types.js";
+import { parseMarkdown } from "./markdown/markdown.js";
 import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
 
 export type { YAMLDocument };
@@ -19,6 +20,11 @@ export async function loadReadme({ readfile }: TransformerProps) {
   const content = await readfile?.();
 
   return parseReadme(content);
+}
+
+export async function loadMarkdown({ readfile }: TransformerProps) {
+  const content = await readfile?.();
+  return parseMarkdown(content ?? "");
 }
 
 export async function loadAsJson({ readfile, source, target }: TransformerProps) {

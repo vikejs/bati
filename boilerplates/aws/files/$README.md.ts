@@ -1,7 +1,7 @@
-import { loadReadme, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
-  const content = await loadReadme(props);
+  const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
@@ -72,8 +72,9 @@ You can also access the CloudFront distribution domainname in the AWS SSM regist
 ### Stack Configuration
 
 You can configure the stack in the \`cdk/bin/infrastructure.ts\` file:
-| --- | --- | --- |
+
 | Variable | Examples | Description |
+| --- | --- | --- |
 | \`domainName: "example.com",\` | "example.com" |  |
 | \`subDomain: "www",\` |"www" | |
 | \`certificate: undefined,\` | "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012" or a certificatemanager.ICertificate | reuse an existing AWS Certificate |
@@ -104,7 +105,7 @@ Or delete the CloudFormation stack which starts with "VikeStack-<Your App Name>"
 
 `;
 
-  content.addTodo(todo);
+  content.addMarkdownFeature(todo, "aws");
 
-  return content.finalize();
+  return content;
 }
