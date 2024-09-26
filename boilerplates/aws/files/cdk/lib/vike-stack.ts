@@ -112,7 +112,7 @@ export class VikeStack extends cdk.Stack {
       compress: true,
     };
 
-    const assetOrigin = new origin.S3Origin(bucket);
+    const assetOrigin = origin.S3BucketOrigin.withOriginAccessControl(bucket);
     const assetBehaviorOptions = {
       viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       compress: true,
