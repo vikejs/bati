@@ -5,7 +5,7 @@ import {
   type DatabaseUser,
   github,
   type GitHubUser,
-  initializeLucia,
+  initializeLucia
 } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { generateState, OAuth2RequestError } from "arctic";
@@ -267,7 +267,7 @@ export const luciaAuthLogoutHandler = (() => async (_request, context) => {
  */
 export const luciaGithubLoginHandler = (() => async () => {
   const state = generateState();
-  const url = await github.createAuthorizationURL(state);
+  const url = github.createAuthorizationURL(state, ["user:email"]);
 
   return new Response(null, {
     status: 302,

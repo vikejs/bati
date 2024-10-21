@@ -78,7 +78,11 @@ export function initializeLucia(
  *
  * @link {@see https://lucia-auth.com/guides/oauth/basics#initialize-oauth-provider}
  */
-export const github = new GitHub(process.env.GITHUB_CLIENT_ID as string, process.env.GITHUB_CLIENT_SECRET as string);
+export const github = new GitHub(
+  process.env.GITHUB_CLIENT_ID as string,
+  process.env.GITHUB_CLIENT_SECRET as string,
+  null,
+);
 
 /**
  * Define user attributes
