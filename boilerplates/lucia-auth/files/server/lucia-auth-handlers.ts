@@ -5,7 +5,7 @@ import {
   type DatabaseUser,
   github,
   type GitHubUser,
-  initializeLucia
+  initializeLucia,
 } from "../lib/lucia-auth";
 import { SqliteError } from "better-sqlite3";
 import { generateState, OAuth2RequestError } from "arctic";
