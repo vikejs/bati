@@ -28,7 +28,7 @@ export function getArgs() {
     case "bun":
       return "bun create bati";
     default:
-      return "npm create bati --";
+      return "npm create bati ---";
   }
 }
 
