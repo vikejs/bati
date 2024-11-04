@@ -52,7 +52,7 @@ export function updateVitestConfig(projectDir: string, testFiles?: string) {
   return writeFile(
     join(projectDir, "vitest.config.ts"),
     `/// <reference types="vitest" />
-import { defineConfig } from "vitest/config";
+import { defineConfig, type ViteUserConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
@@ -63,7 +63,7 @@ export default defineConfig({
       ["**/*.spec.ts", "node"],
     ],
   },
-});
+} as ViteUserConfig);
 `,
     "utf-8",
   );
