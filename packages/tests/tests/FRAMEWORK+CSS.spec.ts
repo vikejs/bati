@@ -12,7 +12,7 @@ await describeBati(({ test, expect, fetch, context }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  test("daiysui", async () => {
+  test("daisyui", async () => {
     const content = await readFile("tailwind.config.ts", "utf-8");
     expect(content.includes("daisyui")).toBe(context.flags.includes("daisyui"));
   });
