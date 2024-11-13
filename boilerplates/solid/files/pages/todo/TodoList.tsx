@@ -71,6 +71,7 @@ export function TodoList(props: { initialTodoItems: { text: string }[] }) {
           />
           <button
             type="submit"
+            //# BATI.has("tailwindcss") || BATI.has("panda-css")
             class={
               BATI.has("tailwindcss")
                 ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
