@@ -1,16 +1,19 @@
 import "./style.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
+//# BATI.has("panda-css")
+import "./panda.css";
 import type { JSX } from "solid-js";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link.js";
+import { css } from "../styled-system/css";
 
 export default function LayoutDefault(props: { children?: JSX.Element }) {
   return (
     <div
-      //# BATI.has("tailwindcss")
-      class="flex max-w-5xl m-auto"
-      //# !BATI.has("tailwindcss")
+      //# BATI.has("tailwindcss") || BATI.has("panda-css")
+      class={BATI.has("tailwindcss") ? "flex max-w-5xl m-auto" : css({ display: "flex", maxW: "900px", m: "auto" })}
+      //# !BATI.has("tailwindcss") && !BATI.has("panda-css")
       style={{
         display: "flex",
         "max-width": "900px",
@@ -33,9 +36,20 @@ function Sidebar(props: { children: JSX.Element }) {
   return (
     <div
       id="sidebar"
-      //# BATI.has("tailwindcss")
-      class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-      //# !BATI.has("tailwindcss")
+      //# BATI.has("tailwindcss") || BATI.has("panda-css")
+      class={
+        BATI.has("tailwindcss")
+          ? "p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
+          : css({
+              p: "20px",
+              display: "flex",
+              flexShrink: 0,
+              flexDir: "column",
+              lineHeight: "1.8em",
+              borderRight: "2px solid #eee",
+            })
+      }
+      //# !BATI.has("tailwindcss") && !BATI.has("panda-css")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -55,9 +69,9 @@ function Content(props: { children: JSX.Element }) {
     <div id="page-container">
       <div
         id="page-content"
-        //# BATI.has("tailwindcss")
-        class="p-5 pb-12 min-h-screen"
-        //# !BATI.has("tailwindcss")
+        //# BATI.has("tailwindcss") || BATI.has("panda-css")
+        class={BATI.has("tailwindcss") ? "p-5 pb-12 min-h-screen" : css({ p: "20px", pb: "50px", minH: "100vh" })}
+        //# !BATI.has("tailwindcss") && !BATI.has("panda-css")
         style={{
           padding: "20px",
           "padding-bottom": "50px",
@@ -73,9 +87,9 @@ function Content(props: { children: JSX.Element }) {
 function Logo() {
   return (
     <div
-      //# BATI.has("tailwindcss")
-      class="p-5 mb-2"
-      //# !BATI.has("tailwindcss")
+      //# BATI.has("tailwindcss") || BATI.has("panda-css")
+      class={BATI.has("tailwindcss") ? "p-5 mb-2" : css({ p: "20px", mb: "10px" })}
+      //# !BATI.has("tailwindcss") && !BATI.has("panda-css")
       style={{
         "margin-top": "20px",
         "margin-bottom": "10px",
