@@ -5,12 +5,19 @@ export default defineConfig({
   preflight: true,
 
   // Where to look for your css declarations
-  include: [
-    "./components/**/*.{js,jsx,ts,tsx}",
-    "./layouts/**/*.{js,jsx,ts,tsx}",
-    "./pages/**/*.{js,jsx,ts,tsx}",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  include: BATI.has("vue")
+    ? [
+        "./components/**/*.{js,jsx,ts,tsx,vue}",
+        "./layouts/**/*.{js,jsx,ts,tsx,vue}",
+        "./pages/**/*.{js,jsx,ts,tsx,vue}",
+        "./src/**/*.{js,jsx,ts,tsx,vue}",
+      ]
+    : [
+        "./components/**/*.{js,jsx,ts,tsx}",
+        "./layouts/**/*.{js,jsx,ts,tsx}",
+        "./pages/**/*.{js,jsx,ts,tsx}",
+        "./src/**/*.{js,jsx,ts,tsx}",
+      ],
 
   // Files to exclude
   exclude: [],
