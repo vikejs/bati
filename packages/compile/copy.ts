@@ -3,7 +3,7 @@ import * as path from "path";
 import { globby } from "globby";
 
 export async function copyFilesToDist() {
-  const files = await globby(["./files/**/!($*)", "./files/**/$$*"], {
+  const files = await globby(["./files/**/!($*)", "./files/**/$$*", "!**/styled-system"], {
     cwd: process.cwd(),
   });
 

@@ -52,7 +52,7 @@ export async function buildTypes() {
       listEmittedFiles: true,
     },
     include: ["files/**/*"],
-    exclude: ["files/**/$*"],
+    exclude: ["files/**/$*", "files/styled-system/**/*"],
   });
 
   restore();

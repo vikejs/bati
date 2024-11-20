@@ -5,6 +5,7 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "prepare": "panda codegen --silent",
     "check-types": "tsc --noEmit",
     "build": "bati-compile-boilerplate"
   },
@@ -17,6 +18,7 @@
     "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@batijs/compile": "workspace:*",
     "@mantine/core": "^7.14.1",
+    "@pandacss/dev": "^0.47.1",
     "@types/node": "^18.19.64",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

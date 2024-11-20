@@ -19,6 +19,8 @@ export default tseslint.config(
       ".vercel/*",
       //# BATI.has("aws")
       "cdk.out/*",
+      //# BATI.has("panda-css")
+      "styled-system/",
       // JS files at the root of the project
       "*.js",
       "*.cjs",

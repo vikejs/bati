@@ -1,7 +1,9 @@
 <template>
   <!-- BATI.has("tailwindcss") -->
   <h1 class="font-bold text-3xl pb-4">My Vike app</h1>
-  <!-- !BATI.has("tailwindcss") -->
+  <!-- BATI.has("panda-css") -->
+  <h1 :class="css({ font: 'bold 2em sans-serif', marginBlock: '0.67em' })">My Vike app</h1>
+  <!-- !BATI.has("tailwindcss") && !BATI.has("panda-css") -->
   <h1>My Vike app</h1>
   This page is:
   <ul>
@@ -10,9 +12,7 @@
   </ul>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Counter from "../../components/Counter.vue";
-
-const components = { Counter };
-export default { components };
+import { css } from "../../styled-system/css";
 </script>

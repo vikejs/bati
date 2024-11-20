@@ -4,14 +4,20 @@
     <div id="page-content" class="p-5 pb-12 min-h-screen">
       <slot />
     </div>
-    <!-- !BATI.has("tailwindcss") -->
+    <!-- BATI.has("panda-css") -->
+    <div id="page-content" :class="css({ p: '20px', pb: '50px', minH: '100vh' })">
+      <slot />
+    </div>
+    <!-- !BATI.has("tailwindcss") && !BATI.has("panda-css") -->
     <div id="page-content" style="padding: 20px; padding-bottom: 50px; min-height: 100vh">
       <slot />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { css } from "../styled-system/css";
+</script>
 
 <style>
 /* Page Transition Animation */
