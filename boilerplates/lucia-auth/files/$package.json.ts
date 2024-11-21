@@ -4,7 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .addDevDependencies(["@types/cookie"])
     .addDependencies(["arctic", "cookie", "lucia", "@universal-middleware/core", "dotenv"])
     .addDependencies(["@lucia-auth/adapter-drizzle"], props.meta.BATI.has("drizzle"))
     .addDependencies(["@lucia-auth/adapter-sqlite"], !props.meta.BATI.has("drizzle"))
