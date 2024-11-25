@@ -10,7 +10,7 @@ import { execRules } from "@batijs/features/rules";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
 import sift from "sift";
-import packageJson from "./package.json";
+import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, Hook } from "./types.js";
 

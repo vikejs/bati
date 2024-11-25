@@ -8,7 +8,7 @@ import { bunExists, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
-import packageJson from "../package.json";
+import packageJson from "../package.json" with { type: "json" };
 import { execLocalBati } from "./exec-bati.js";
 import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";

@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
-import packageJson from "../package.json";
+import packageJson from "../package.json" with { type: "json" };
 import type { GlobalContext } from "./types.js";
 
 export async function updatePackageJson(

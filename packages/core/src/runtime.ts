@@ -1,4 +1,4 @@
-import packageJson from "../package.json";
+import packageJson from "../package.json" with { type: "json" };
 
 export function packageManager() {
   if (!process.env.npm_config_user_agent) {
