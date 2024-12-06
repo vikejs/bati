@@ -15,4 +15,4 @@ export interface ToBeCopied extends BoilerplateDef {
   source?: string;
 }
 
-export type Hook = (meta: VikeMeta) => Promise<void> | void;
+export type Hook = (cwd: string, meta: VikeMeta) => Promise<void> | void;

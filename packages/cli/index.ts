@@ -420,7 +420,7 @@ async function run() {
       printOK(args.project, flags);
 
       for (const onafter of hooksMap.get("after") ?? []) {
-        await onafter(meta);
+        await onafter(args.project, meta);
       }
     },
   });
