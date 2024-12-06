@@ -19,7 +19,9 @@ edgedb project init
 
 Then follow instructions at <https://www.edgedb.com/docs/intro/quickstart#set-up-your-schema>`;
 
-  content.addMarkdownFeature(todo, "edgedb");
+  content.addMarkdownFeature(todo, "edgedb", {
+    position: "before",
+  });
 
   return content;
 }

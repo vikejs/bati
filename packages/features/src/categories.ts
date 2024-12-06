@@ -76,4 +76,3 @@ tailored for Vike.`,
 ] as const satisfies ReadonlyArray<Category>;
 
 export type CategoryLabels = (typeof categories)[number]["label"];
-export const categoryLabelOrder = categories.map((category) => category.label) as CategoryLabels[];

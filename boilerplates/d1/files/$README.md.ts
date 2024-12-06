@@ -24,7 +24,9 @@ Finally, update the \`d1:migrate\` script (in \`package.json\`) to replace \`YOU
 > - Only used for describing the database, and is not directly referenced in code.
 `;
 
-  content.addMarkdownFeature(todo, "sqlite");
+  content.addMarkdownFeature(todo, "sqlite", {
+    position: "before",
+  });
 
   return content;
 }

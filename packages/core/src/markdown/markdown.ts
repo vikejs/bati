@@ -1,11 +1,11 @@
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { zone } from "./zone.js";
-import type { Root, Nodes } from "mdast";
-import { commentMarker, wrapWithComment } from "./utils.js";
-import { categoryLabelOrder, features, type CategoryLabels, type Flags } from "@batijs/features";
+import type { Nodes, Root } from "mdast";
+import { wrapWithComment } from "./utils.js";
+import { type CategoryLabels, features, type Flags } from "@batijs/features";
 import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
-import type { classConfig, ContentChanger, MarkdownOptions, FilterObject, ZoneHandler } from "./types.js";
+import type { classConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
 import { createTOC } from "./createTOC.js";
 import type { StringTransformer } from "../types.js";
 
@@ -39,10 +39,10 @@ export class MarkdownV2 implements StringTransformer {
     }
   }
 
-  addMarkdownFeature(markdown: string | ZoneHandler, flag: Flags) {
+  addMarkdownFeature(markdown: string | ZoneHandler, flag: Flags, options?: MarkdownOptions) {
     const category = features.find((f) => f.flag === flag)!.category as CategoryLabels;
-    const options = { wrapper: { category, flag } };
-    const optionsMarkdown = deepMerge(this.config.defaults, options);
+    const opts: MarkdownOptions = { ...options, wrapper: { ...options?.wrapper, category, flag } };
+    const optionsMarkdown = deepMerge(this.config.defaults, opts);
     this.contents.push({ markdown, options: optionsMarkdown });
   }
 
@@ -51,6 +51,16 @@ export class MarkdownV2 implements StringTransformer {
   }
 
   finalize() {
+    this.contents.sort((a, b) => {
+      const posa = a.options.position ?? "after";
+      const posb = b.options.position ?? "after";
+
+      if (posa === posb) return 0;
+      if (posa === "replace" || posb === "replace") return 0;
+
+      return posa === "before" ? -1 : 1;
+    });
+
     for (const { markdown, options } of this.contents) {
       const handler: ZoneHandler =
         typeof markdown === "function"
@@ -58,56 +68,6 @@ export class MarkdownV2 implements StringTransformer {
           : (start, between, end, _info) => {
               const { position = "after" } = options;
 
-              // add a new feature sorted by categories in feature list
-              if (
-                ["before", "after"].includes(position) &&
-                between.length > 0 &&
-                options?.wrapper?.flag &&
-                Object.keys(options?.filter ?? {}).length === 1 &&
-                (options?.filter as FilterObject)?.section === "features"
-              ) {
-                const existingCategories = between.reduce(
-                  (pv: Record<CategoryLabels, number>, node, ci) => {
-                    const info = commentMarker(node);
-                    if (!info || info.name !== "bati" || info.suffix !== "start" || !info.parameters?.["category"])
-                      return pv;
-                    pv[info.parameters.category as CategoryLabels] = ci;
-                    return pv;
-                  },
-                  {} as Record<CategoryLabels, number>,
-                );
-
-                // find existing category which based on categoryLabelOrder after the current category
-                const category = options.wrapper.category as CategoryLabels;
-
-                let nextCategoryIndex = -1;
-                for (let index = categoryLabelOrder.indexOf(category) + 1; index < categoryLabelOrder.length; index++) {
-                  if (existingCategories?.[categoryLabelOrder[index]] !== undefined) {
-                    nextCategoryIndex = existingCategories[categoryLabelOrder[index]];
-                    break;
-                  }
-                }
-
-                if (nextCategoryIndex !== -1) {
-                  // The entry in existingCategories which is after the value in category
-                  const betweenBeforeCategory = between.slice(0, nextCategoryIndex);
-                  const betweenAfterCategory = between.slice(nextCategoryIndex);
-                  return [
-                    start,
-                    ...betweenBeforeCategory,
-                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
-                    ...betweenAfterCategory,
-                    end,
-                  ] as Nodes[];
-                } else {
-                  return [
-                    start,
-                    ...between,
-                    ...wrapWithComment(getNodesFromRoot(fromMarkdown(markdown)), options?.wrapper),
-                    end,
-                  ] as Nodes[];
-                }
-              }
               switch (position) {
                 case "replace":
                   return [
