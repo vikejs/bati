@@ -157,17 +157,17 @@ test("add feature", () => {
 
 <!--bati:start section="features"-->
 
-<!--bati:start category="UI Framework" flag="react"-->
-
-## REACT
-
-<!--bati:end category="UI Framework" flag="react"-->
-
 <!--bati:start category="Hosting" flag="aws"-->
 
 ## AWS
 
 <!--bati:end category="Hosting" flag="aws"-->
+
+<!--bati:start category="UI Framework" flag="react"-->
+
+## REACT
+
+<!--bati:end category="UI Framework" flag="react"-->
 
 <!--bati:end section="features"-->
 
@@ -187,6 +187,46 @@ test("add feature with addMarkdownFeature", () => {
 `,
   );
   content.addMarkdownFeature(`## REACT`, "react");
+
+  const result = content.finalize();
+
+  expect(result).toBe(
+    `<!--bati:start section="document"-->
+
+<!--bati:start section="features"-->
+
+<!--bati:start category="Hosting" flag="aws"-->
+
+## AWS
+
+<!--bati:end category="Hosting" flag="aws"-->
+
+<!--bati:start category="UI Framework" flag="react"-->
+
+## REACT
+
+<!--bati:end category="UI Framework" flag="react"-->
+
+<!--bati:end section="features"-->
+
+<!--bati:end section="document"-->
+`,
+  );
+});
+
+test("add feature with addMarkdownFeature (before)", () => {
+  const content = parseMarkdown(
+    `
+<!--bati:start section="features"-->
+<!--bati:start category="Hosting" flag="aws"-->
+## AWS
+<!--bati:end category="Hosting" flag="aws"-->
+<!--bati:end section="features"-->
+`,
+  );
+  content.addMarkdownFeature(`## REACT`, "react", {
+    position: "before",
+  });
 
   const result = content.finalize();
 

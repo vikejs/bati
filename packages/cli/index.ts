@@ -413,15 +413,15 @@ async function run() {
         meta,
       );
 
+      for (const onafter of hooksMap.get("after") ?? []) {
+        await onafter(args.project, meta);
+      }
+
       if (!args["skip-git"]) {
         gitInit(args.project);
       }
 
       printOK(args.project, flags);
-
-      for (const onafter of hooksMap.get("after") ?? []) {
-        await onafter(meta);
-      }
     },
   });
 
