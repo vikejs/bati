@@ -1,5 +1,5 @@
 import type { VikeMeta } from "@batijs/core";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 async function cleanupReadme(cwd: string) {
@@ -14,8 +14,13 @@ async function cleanupReadme(cwd: string) {
   );
 }
 
-function renameGitIgnore() {}
+// Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+// See: https://github.com/npm/npm/issues/1862
+async function renameGitIgnore(cwd: string) {
+  await rename(join(cwd, "gitignore"), join(cwd, ".gitignore"));
+}
 
-export default async function onafter(cwd: string, meta: VikeMeta) {
+export default async function onafter(cwd: string, _meta: VikeMeta) {
   await cleanupReadme(cwd);
+  await renameGitIgnore(cwd);
 }
