@@ -51,5 +51,20 @@ export async function mergeDts({
     filepath,
   });
 
-  return res.code;
+  return clearExports(res.code, meta);
+}
+
+export function clearExports(code: string, meta: VikeMeta) {
+  if (code.trim() === "export {};") {
+    return undefined;
+  }
+  if (meta.BATI.has("biome")) {
+    const index = code.indexOf("\nexport {};");
+    return (
+      code.slice(0, index) +
+      "\n// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module" +
+      code.slice(index)
+    );
+  }
+  return code;
 }
