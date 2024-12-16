@@ -16,11 +16,14 @@ export default defineConfig({
     //# BATI.has("hattip") && !BATI.has("vercel")
     hattip(),
   ],
-  //# BATI.hasD1
+  //# BATI.hasD1 || BATI.has("cloudflare")
   build: {
+    //# BATI.hasD1
     rollupOptions: {
       external: ["wrangler"],
     },
+    //# BATI.has("cloudflare")
+    target: "es2022",
   },
   //# BATI.has("vercel") && BATI.hasServer
   vercel: {
