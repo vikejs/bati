@@ -3,7 +3,7 @@ import type { VikeMeta } from "@batijs/core";
 import { transformAndFormat } from "@batijs/core";
 import { readFile } from "node:fs/promises";
 import { relative } from "node:path";
-import { mergeDts } from "./merge-dts.js";
+import { clearExports, mergeDts } from "./merge-dts.js";
 
 export async function executeOperationFile(
   op: FileOperation,
@@ -19,17 +19,21 @@ export async function executeOperationFile(
     filepath,
   });
 
-  let fileContent = result.code;
+  let fileContent: string | undefined = result.code;
 
-  if (op.sourceAbsolute.endsWith(".d.ts") && previousOperationSameDestination?.content) {
-    // console.log("MERGING .d.ts", op.sourceAbsolute, previousOperationSameDestination.sourceAbsolute);
-    // Merging .d.ts files here
-    fileContent = await mergeDts({
-      fileContent,
-      previousContent: previousOperationSameDestination.content,
-      meta,
-      filepath,
-    });
+  if (op.sourceAbsolute.endsWith(".d.ts")) {
+    if (previousOperationSameDestination?.content) {
+      // console.log("MERGING .d.ts", op.sourceAbsolute, previousOperationSameDestination.sourceAbsolute);
+      // Merging .d.ts files here
+      fileContent = await mergeDts({
+        fileContent,
+        previousContent: previousOperationSameDestination.content,
+        meta,
+        filepath,
+      });
+    } else {
+      fileContent = clearExports(fileContent, meta);
+    }
   }
 
   return {
