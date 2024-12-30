@@ -1,6 +1,6 @@
 import { Cli } from "./Cli";
 import Stackblitz from "./Stackblitz";
-import { createMemo, createSignal, type JSX, onMount, useContext } from "solid-js";
+import { createMemo, createSignal, type JSX, useContext } from "solid-js";
 import { StoreContext } from "#components/Store";
 import { track } from "../lib/track";
 
@@ -50,16 +50,6 @@ export default function InputGroup() {
   const persist = (packageManager: string) => {
     localStorage.setItem("packageManager", packageManager);
   };
-
-  onMount(() => {
-    const p = localStorage.getItem("packageManager");
-    if (p) {
-      const el = document.querySelector<HTMLInputElement>(`input[name="package_manager"][aria-label="${p}"]`);
-      if (el) {
-        el.checked = true;
-      }
-    }
-  });
 
   return (
     <div role="tablist" class="tabs tabs-lifted tabs-sm flex-1">
@@ -135,6 +125,17 @@ export default function InputGroup() {
       >
         {bun().join(" ")}
       </CliGroup>
+
+      {/* Immediatly update DOM on client-side rendering */}
+      <script>{`
+      const p = localStorage.getItem("packageManager");
+      if (p) {
+        const select = 'input[name="package_manager"][aria-label="' + p + '"]';
+        const el = document.querySelector(select);
+        if (el) {
+          el.checked = true;
+        }
+      }`}</script>
     </div>
   );
 }
