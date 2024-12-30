@@ -34,10 +34,10 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
+  const npm = createMemo(() => ["npm", "create", "bati", "---", ...getFlags()]);
   const pnpm = createMemo(() => ["pnpm", "create", "bati", ...getFlags()]);
   const yarn = createMemo(() => ["yarn", "dlx", "@batijs/cli", ...getFlags()]);
   const bun = createMemo(() => ["bun", "create", "bati", ...getFlags()]);
-  const npm = createMemo(() => ["npm", "create", "bati", "---", ...getFlags()]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
@@ -64,7 +64,18 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       </div>
       <div class="flex">
         <div role="tablist" class="tabs tabs-lifted tabs-sm flex-1">
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="pnpm" checked />
+          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="npm" checked />
+
+          <CliGroup
+            onMouseEnter={handleMouseEnter}
+            onClick={() => handleCopy("npm")}
+            tooltipText={tooltipText()}
+            flags={getFlags()}
+          >
+            {npm().join(" ")}
+          </CliGroup>
+
+          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="pnpm" />
 
           <CliGroup
             onMouseEnter={handleMouseEnter}
@@ -95,17 +106,6 @@ export function Widget(props: { theme?: string; widget: boolean }) {
             flags={getFlags()}
           >
             {bun().join(" ")}
-          </CliGroup>
-
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="npm" />
-
-          <CliGroup
-            onMouseEnter={handleMouseEnter}
-            onClick={() => handleCopy("npm")}
-            tooltipText={tooltipText()}
-            flags={getFlags()}
-          >
-            {npm().join(" ")}
           </CliGroup>
         </div>
       </div>
