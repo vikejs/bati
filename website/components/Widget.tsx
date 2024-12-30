@@ -5,7 +5,7 @@ import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
 import Stackblitz from "#components/Stackblitz";
 import { StoreContext } from "#components/Store.js";
-import { createMemo, createSignal, type JSX, Show, useContext } from "solid-js";
+import { createMemo, createSignal, type JSX, onMount, Show, useContext } from "solid-js";
 import { track } from "../lib/track";
 
 export function CliGroup(
@@ -51,6 +51,20 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     setTooltipText("Copied to Clipboard!");
   };
 
+  const persist = (packageManager: string) => {
+    localStorage.setItem("packageManager", packageManager);
+  };
+
+  onMount(() => {
+    const p = localStorage.getItem("packageManager");
+    if (p) {
+      const el = document.querySelector<HTMLInputElement>(`input[name="package_manager"][aria-label="${p}"]`);
+      if (el) {
+        el.checked = true;
+      }
+    }
+  });
+
   return (
     <div
       data-theme={props.theme}
@@ -64,7 +78,15 @@ export function Widget(props: { theme?: string; widget: boolean }) {
       </div>
       <div class="flex">
         <div role="tablist" class="tabs tabs-lifted tabs-sm flex-1">
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="npm" checked />
+          <input
+            type="radio"
+            name="package_manager"
+            role="tab"
+            class="tab"
+            aria-label="npm"
+            onChange={() => persist("npm")}
+            checked
+          />
 
           <CliGroup
             onMouseEnter={handleMouseEnter}
@@ -75,7 +97,14 @@ export function Widget(props: { theme?: string; widget: boolean }) {
             {npm().join(" ")}
           </CliGroup>
 
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="pnpm" />
+          <input
+            type="radio"
+            name="package_manager"
+            role="tab"
+            class="tab"
+            aria-label="pnpm"
+            onChange={() => persist("pnpm")}
+          />
 
           <CliGroup
             onMouseEnter={handleMouseEnter}
@@ -86,7 +115,14 @@ export function Widget(props: { theme?: string; widget: boolean }) {
             {pnpm().join(" ")}
           </CliGroup>
 
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="yarn" />
+          <input
+            type="radio"
+            name="package_manager"
+            role="tab"
+            class="tab"
+            aria-label="yarn"
+            onChange={() => persist("yarn")}
+          />
 
           <CliGroup
             onMouseEnter={handleMouseEnter}
@@ -97,7 +133,14 @@ export function Widget(props: { theme?: string; widget: boolean }) {
             {yarn().join(" ")}
           </CliGroup>
 
-          <input type="radio" name="package_manager" role="tab" class="tab" aria-label="bun" />
+          <input
+            type="radio"
+            name="package_manager"
+            role="tab"
+            class="tab"
+            aria-label="bun"
+            onChange={() => persist("bun")}
+          />
 
           <CliGroup
             onMouseEnter={handleMouseEnter}
