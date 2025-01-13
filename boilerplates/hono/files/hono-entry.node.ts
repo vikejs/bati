@@ -12,7 +12,7 @@ const nodeApp = new Hono();
 nodeApp.use(compress());
 
 nodeApp.use(
-  "/assets/*",
+  "/*",
   serveStatic({
     root: `./dist/client/`,
   }),
