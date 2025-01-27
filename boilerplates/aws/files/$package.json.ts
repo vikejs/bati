@@ -20,6 +20,10 @@ export default async function getPackageJson(props: TransformerProps) {
       value: "tsx cdk/bin/infrastructure.ts",
       precedence: 0,
     })
+    .setScript("cdk", {
+      value: "cdk",
+      precedence: 0,
+    })
     .addDependencies(["aws-cdk-lib", "constructs", "source-map-support"])
     .addDevDependencies(["cdk", "aws-cdk", "@types/node", "@types/which", "typescript", "esbuild", "vitest", "which"])
     .addDevDependencies(["npm-run-all2"], ["deploy:aws"])

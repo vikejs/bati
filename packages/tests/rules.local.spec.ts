@@ -53,8 +53,8 @@ function prepareAndExecute(flags: string[]) {
 
   // Common tests
 
-  test("CLI fails", () => {
-    expect(execLocalBati(context, flags, false)).rejects.toThrow();
+  test("CLI fails", async () => {
+    await expect(execLocalBati(context, flags, false)).rejects.toThrow();
   });
 
   return {

@@ -27,7 +27,6 @@ export async function updatePackageJson(
   } else {
     pkgjson.devDependencies["@batijs/tests-utils"] = "link:@batijs/tests-utils";
   }
-  pkgjson.devDependencies["happy-dom"] = packageJson.devDependencies["happy-dom"];
   if (packageManager) {
     pkgjson.packageManager = packageManager;
   }
@@ -58,10 +57,6 @@ export default defineConfig({
   test: {
     include: ${testFiles ? JSON.stringify(testFiles.split(",")) : '["*.spec.ts"]'},
     testTimeout: 100000,
-    environmentMatchGlobs: [
-      ["**/*.dom.spec.ts", "happy-dom"],
-      ["**/*.spec.ts", "node"],
-    ],
   },
 } as ViteUserConfig);
 `,
@@ -104,7 +99,7 @@ export async function createTurboConfig(context: GlobalContext) {
 }
 
 export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
-  const ignoreDependencies = ["@batijs/tests-utils", "happy-dom", "turbo"];
+  const ignoreDependencies = ["@batijs/tests-utils", "turbo"];
   const entry: string[] = [];
   const ignore: string[] = ["*.spec.ts"];
 

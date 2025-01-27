@@ -19,7 +19,7 @@ describe("AWSHandler", () => {
       /*
        * `--build "${npmCli} run build"` is required to build the project before synth
        */
-      const synthCommand = `${npmCli} run cdk --json --build "${npmCli} run build" synth`;
+      const synthCommand = `${npmCli} cdk --json --build "${npmCli} run build" synth`;
       execSync(synthCommand, {
         encoding: "utf8",
         maxBuffer: 50 * 1024 * 1024,
