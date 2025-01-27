@@ -11,7 +11,7 @@ export function CliGroup(
   } & Pick<JSX.HTMLAttributes<unknown>, "onMouseEnter" | "onClick" | "children">,
 ) {
   return (
-    <div role="tabpanel" class="tab-content w-full bg-base-100 border-base-300 rounded-md p-1.5">
+    <div role="tabpanel" class="tab-content !h-auto w-full bg-base-100 border-base-300 p-1.5">
       <div class="sm:join flex flex-row w-full rounded-md">
         <Cli onMouseEnter={props.onMouseEnter} onClick={props.onClick} tooltipText={props.tooltipText}>
           {props.children}
@@ -52,7 +52,7 @@ export default function InputGroup() {
   };
 
   return (
-    <div role="tablist" class="tabs tabs-lifted tabs-sm flex-1">
+    <div role="tablist" class="tabs tabs-lift tabs-sm flex-1">
       <input
         type="radio"
         name="package_manager"

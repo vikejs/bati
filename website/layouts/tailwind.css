@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
 
 @layer components {
   :root {
@@ -71,7 +72,7 @@
     }
 
     & [role="combobox"] {
-      @apply flex-grow select-none appearance-none outline-none;
+      @apply flex-grow select-none appearance-none outline-hidden;
     }
 
     & [role="listbox"] {
@@ -89,9 +90,9 @@
 
   /*https://github.com/saadeghi/daisyui/blob/master/src/components/styled/select.css*/
   .listbox {
-    @apply border-solid border-2 border-base-content border-opacity-0 bg-base-100 pr-10 font-semibold rounded-btn;
+    @apply border-solid border-2 border-base-content/0 bg-base-100 pr-10 font-semibold;
     &-bordered {
-      @apply border-opacity-20;
+      @apply border-base-content/20;
     }
     background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
       linear-gradient(135deg, currentColor 50%, transparent 50%);
@@ -126,9 +127,9 @@
     }
 
     &-ghost {
-      @apply bg-opacity-5;
+      @apply bg-base-100/5;
       &:focus {
-        @apply bg-opacity-100 text-base-content;
+        @apply bg-base-100/100 text-base-content;
       }
     }
     &-primary {
@@ -219,7 +220,7 @@
     &:disabled,
     &[disabled],
     &[aria-disabled="true"] {
-      @apply cursor-not-allowed border-base-200 bg-base-200 text-opacity-20 placeholder-base-content placeholder-opacity-20 !outline-none;
+      @apply cursor-not-allowed border-base-200 bg-base-200 text-base-content/20 placeholder-base-content/20 !outline-hidden;
     }
     &-multiple,
     &[multiple],

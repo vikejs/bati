@@ -1,11 +1,8 @@
 import { resolve } from "node:path";
 import autoprefixer from "autoprefixer";
-import daisyui from "daisyui";
-import tailwindcss from "tailwindcss";
-// @ts-ignore
-import tailwindcssNesting from "tailwindcss/nesting";
 import vikeSolid from "vike-solid/vite";
 import vike from "vike/plugin";
+import tailwindcss from "@tailwindcss/vite";
 import { build, defineConfig, type Plugin } from "vite";
 import solidPlugin from "vite-plugin-solid";
 
@@ -70,20 +67,6 @@ export default defineConfig(({ mode, command }) => {
           inject: false,
           plugins: [
             autoprefixer(),
-            tailwindcssNesting(),
-            tailwindcss({
-              corePlugins: {
-                preflight: false,
-              },
-              content: ["./{pages,layouts,components,src}/**/*.{html,js,jsx,ts,tsx}"],
-              theme: {
-                extend: {},
-              },
-              daisyui: {
-                themes: ["light", "dark"],
-              },
-              plugins: [daisyui],
-            }),
             {
               postcssPlugin: "fix-css-wc-scope",
               Rule(rule) {
@@ -93,7 +76,7 @@ export default defineConfig(({ mode, command }) => {
           ],
         },
       },
-      plugins: [solidPlugin(), command === "serve" ? writeToDisk() : undefined],
+      plugins: [solidPlugin(), tailwindcss(), command === "serve" ? writeToDisk() : undefined],
     };
   }
 
@@ -107,6 +90,7 @@ export default defineConfig(({ mode, command }) => {
         prerender: true,
       }),
       vikeSolid(),
+      tailwindcss(),
     ],
   };
 });

@@ -201,6 +201,7 @@ export const rulesMessages = {
     );
 
     function updateTooltip() {
+      document.querySelector("#stackblitz-cta")!.classList.add("tooltip");
       document.querySelector("#stackblitz-cta")!.setAttribute(
         "data-tip",
         "Stackblitz does not support the following features: " +
@@ -215,6 +216,7 @@ export const rulesMessages = {
     onMount(updateTooltip);
 
     onCleanup(() => {
+      document.querySelector("#stackblitz-cta")!.classList.remove("tooltip");
       document.querySelector("#stackblitz-cta")!.removeAttribute("data-tip");
     });
 

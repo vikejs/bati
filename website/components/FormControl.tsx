@@ -38,7 +38,7 @@ export function FormControl(props: {
   return (
     <>
       <div
-        class="tabs tabs-lg tabs-lifted group rounded-md shadow content-stretch items-stretch outline-offset-2 relative"
+        class="tabs tabs-lg tabs-lift group rounded-md shadow-sm content-stretch items-stretch outline-offset-2 relative"
         style={{
           // similar to rounded-md
           "--tab-radius": "0.375rem",
@@ -51,7 +51,7 @@ export function FormControl(props: {
           checked
           tabIndex={-1}
         />
-        <div class="tab-content bg-base-100 border-base-300 rounded-md px-5 h-[22rem]">
+        <div class="tab-content bg-base-100 border-base-300 rounded-md px-5 !h-[22rem]">
           <div class="">
             <For each={props.categories}>
               {(category) => {

@@ -16,7 +16,7 @@ export function Cli(
   return (
     <kbd
       role="tabpanel"
-      class="group join-item rounded-md cursor-pointer relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap leading-9 gap-2.5"
+      class="group h-10 join-item rounded-md cursor-pointer relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap leading-9 gap-2.5"
       use:copy
       onMouseEnter={props.onMouseEnter}
       onClick={props.onClick}
