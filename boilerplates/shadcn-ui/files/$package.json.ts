@@ -10,6 +10,8 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     })
     .addDependencies([
+      "postcss",
+      "autoprefixer",
       "tailwindcss-animate",
       "class-variance-authority",
       "clsx",

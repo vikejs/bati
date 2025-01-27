@@ -38,7 +38,7 @@ export function initializeLucia(
    * @link {@see https://lucia-auth.com/database/#database-setup}
    **/
   const adapter = BATI.has("drizzle")
-    ? new DrizzleSQLiteAdapter(db as BATI.Any, sessionTable, userTable)
+    ? new DrizzleSQLiteAdapter(db as BATI.Any, sessionTable as BATI.Any, userTable as BATI.Any)
     : BATI.hasD1
       ? new D1Adapter(db as BATI.Any, {
           user: "users",
