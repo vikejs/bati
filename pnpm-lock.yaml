@@ -306,8 +306,8 @@ importers:
         specifier: ^0.30.3
         version: 0.30.3
       drizzle-orm:
-        specifier: ^0.38.4
-        version: 0.38.4(@cloudflare/workers-types@4.20250124.3)(@opentelemetry/api@1.9.0)(@prisma/client@6.2.1(prisma@6.2.1))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.2.1)(react@19.0.0)
+        specifier: ^0.39.0
+        version: 0.39.0(@cloudflare/workers-types@4.20250124.3)(@opentelemetry/api@1.9.0)(@prisma/client@6.2.1(prisma@6.2.1))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.2.1)(react@19.0.0)
 
   boilerplates/edgedb:
     dependencies:
@@ -1822,8 +1822,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       knip:
-        specifier: ^5.43.3
-        version: 5.43.3(@types/node@18.19.74)(typescript@5.7.3)
+        specifier: ^5.43.5
+        version: 5.43.5(@types/node@18.19.74)(typescript@5.7.3)
       mri:
         specifier: ^1.2.0
         version: 1.2.0
@@ -5768,98 +5768,6 @@ packages:
     resolution: {integrity: sha512-kT8sgyC2hZrtOh5okhEBiwgx8jx+EjLUFoANFVVkBbxIjcb8XjaUorZ0rwCEUEd7THclI3ZARR64pmxloMW3Aw==}
     hasBin: true
 
-  drizzle-orm@0.38.4:
-    resolution: {integrity: sha512-s7/5BpLKO+WJRHspvpqTydxFob8i1vo2rEx4pY6TGY7QSMuUfWUuzaY0DIpXCkgHOo37BaFC+SJQb99dDUXT3Q==}
-    peerDependencies:
-      '@aws-sdk/client-rds-data': '>=3'
-      '@cloudflare/workers-types': '>=4'
-      '@electric-sql/pglite': '>=0.2.0'
-      '@libsql/client': '>=0.10.0'
-      '@libsql/client-wasm': '>=0.10.0'
-      '@neondatabase/serverless': '>=0.10.0'
-      '@op-engineering/op-sqlite': '>=2'
-      '@opentelemetry/api': ^1.4.1
-      '@planetscale/database': '>=1'
-      '@prisma/client': '*'
-      '@tidbcloud/serverless': '*'
-      '@types/better-sqlite3': '*'
-      '@types/pg': '*'
-      '@types/react': '>=18'
-      '@types/sql.js': '*'
-      '@vercel/postgres': '>=0.8.0'
-      '@xata.io/client': '*'
-      better-sqlite3: '>=7'
-      bun-types: '*'
-      expo-sqlite: '>=14.0.0'
-      knex: '*'
-      kysely: '*'
-      mysql2: '>=2'
-      pg: '>=8'
-      postgres: '>=3'
-      prisma: '*'
-      react: '>=18'
-      sql.js: '>=1'
-      sqlite3: '>=5'
-    peerDependenciesMeta:
-      '@aws-sdk/client-rds-data':
-        optional: true
-      '@cloudflare/workers-types':
-        optional: true
-      '@electric-sql/pglite':
-        optional: true
-      '@libsql/client':
-        optional: true
-      '@libsql/client-wasm':
-        optional: true
-      '@neondatabase/serverless':
-        optional: true
-      '@op-engineering/op-sqlite':
-        optional: true
-      '@opentelemetry/api':
-        optional: true
-      '@planetscale/database':
-        optional: true
-      '@prisma/client':
-        optional: true
-      '@tidbcloud/serverless':
-        optional: true
-      '@types/better-sqlite3':
-        optional: true
-      '@types/pg':
-        optional: true
-      '@types/react':
-        optional: true
-      '@types/sql.js':
-        optional: true
-      '@vercel/postgres':
-        optional: true
-      '@xata.io/client':
-        optional: true
-      better-sqlite3:
-        optional: true
-      bun-types:
-        optional: true
-      expo-sqlite:
-        optional: true
-      knex:
-        optional: true
-      kysely:
-        optional: true
-      mysql2:
-        optional: true
-      pg:
-        optional: true
-      postgres:
-        optional: true
-      prisma:
-        optional: true
-      react:
-        optional: true
-      sql.js:
-        optional: true
-      sqlite3:
-        optional: true
-
   drizzle-orm@0.39.0:
     resolution: {integrity: sha512-kkZwo3Jvht0fdJD/EWGx0vYcEK0xnGrlNVaY07QYluRZA9N21B9VFbY+54bnb/1xvyzcg97tE65xprSAP/fFGQ==}
     peerDependencies:
@@ -7158,8 +7066,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  knip@5.43.3:
-    resolution: {integrity: sha512-rCSc7X1jQs+ZIc08lQF3c3nS/nKzsg9UPIbY+qQUMh+FVF5ojdiT3bJNypRlSm2pMLQVeE7XWxXrtT4sdg6nfA==}
+  knip@5.43.5:
+    resolution: {integrity: sha512-B5cexyDF+me8EjmihxF3XASybB+T8HUzZBSZLNr9CGS8WrceMOR5Qa2qdBXwU0MxphAgH2nzLQcKsCuqXYOJUg==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -14261,17 +14169,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.38.4(@cloudflare/workers-types@4.20250124.3)(@opentelemetry/api@1.9.0)(@prisma/client@6.2.1(prisma@6.2.1))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.2.1)(react@19.0.0):
-    optionalDependencies:
-      '@cloudflare/workers-types': 4.20250124.3
-      '@opentelemetry/api': 1.9.0
-      '@prisma/client': 6.2.1(prisma@6.2.1)
-      '@types/better-sqlite3': 7.6.12
-      '@types/react': 19.0.8
-      better-sqlite3: 11.8.1
-      prisma: 6.2.1
-      react: 19.0.0
-
   drizzle-orm@0.39.0(@cloudflare/workers-types@4.20250124.3)(@opentelemetry/api@1.9.0)(@prisma/client@6.2.1(prisma@6.2.1))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.2.1)(react@19.0.0):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250124.3
@@ -15981,7 +15878,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  knip@5.43.3(@types/node@18.19.74)(typescript@5.7.3):
+  knip@5.43.5(@types/node@18.19.74)(typescript@5.7.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@snyk/github-codeowners': 1.1.0
