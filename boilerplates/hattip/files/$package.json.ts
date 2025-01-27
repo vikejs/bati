@@ -11,9 +11,7 @@ export default async function getPackageJson(props: TransformerProps) {
         warnIfReplaced: true,
       })
       .setScript("build", {
-        value: props.meta.BATI.has("vercel")
-          ? "cross-env NODE_ENV=production vite build"
-          : "cross-env NODE_ENV=production hattip build ./hattip-entry.ts --target es2022 --client",
+        value: "cross-env NODE_ENV=production vike build",
         precedence: 20,
         warnIfReplaced: true,
       })

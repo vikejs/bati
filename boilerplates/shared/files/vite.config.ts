@@ -14,15 +14,15 @@ export default defineConfig({
     //# BATI.has("hattip") && BATI.has("vercel")
     process.env.NODE_ENV !== "production" ? hattip() : undefined,
     //# BATI.has("hattip") && !BATI.has("vercel")
-    hattip(),
+    hattip({
+      hattipEntry: "./hattip-entry.ts",
+    }),
   ],
-  //# BATI.hasD1 || BATI.has("cloudflare")
   build: {
     //# BATI.hasD1
     rollupOptions: {
       external: ["wrangler"],
     },
-    //# BATI.has("cloudflare")
     target: "es2022",
   },
   //# BATI.has("vercel") && BATI.hasServer

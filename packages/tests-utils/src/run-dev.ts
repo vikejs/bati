@@ -4,10 +4,11 @@ import type { GlobalContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
 export async function runDevServer(context: GlobalContext) {
-  context.server = exec(npmCli, ["run", "dev", "--port", String(context.port)], {
+  context.server = exec(npmCli, ["run", "dev"], {
     env: {
       PORT: String(context.port),
       HMR_PORT: String(context.port_1),
+      VITE_CONFIG: JSON.stringify({ server: { port: context.port, strictPort: true } }),
     },
   });
 

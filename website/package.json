@@ -4,12 +4,12 @@
   "description": "BatiJS website as Web Components",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vike dev",
     "release": "bumpp && pnpm run build:widget && pnpm publish",
     "check-types": "tsc --noEmit",
-    "build:pages": "vite build --mode pages",
-    "build:widget": "vite build --mode widget",
-    "dev:widget": "vite --mode widget",
+    "build:pages": "VITE_CONFIG=\"{mode:'pages'}\" vike build",
+    "build:widget": "VITE_CONFIG=\"{mode:'widget'}\" vike build",
+    "dev:widget": "VITE_CONFIG=\"{mode:'widget'}\" vike dev",
     "test": "tsc --noEmit"
   },
   "keywords": [
@@ -37,7 +37,7 @@
     "tailwindcss": "^3.4.17",
     "tslib": "^2.8.1",
     "typescript": "^5.7.3",
-    "vike": "^0.4.219",
+    "vike": "^0.4.220",
     "vike-solid": "^0.7.8",
     "vite": "^6.0.11",
     "vite-plugin-solid": "^2.11.0"

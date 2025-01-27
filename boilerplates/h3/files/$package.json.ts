@@ -10,7 +10,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     })
     .setScript("build", {
-      value: "vite build",
+      value: "vike build",
       precedence: 1,
       warnIfReplaced: true,
     })

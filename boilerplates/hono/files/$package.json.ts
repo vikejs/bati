@@ -5,12 +5,12 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("dev", {
-      value: "vite",
+      value: "vike dev",
       precedence: 20,
       warnIfReplaced: true,
     })
     .setScript("build", {
-      value: "vite build",
+      value: "vike build",
       precedence: 1,
       warnIfReplaced: true,
     })
