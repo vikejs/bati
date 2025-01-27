@@ -127,6 +127,14 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     ignoreDependencies.push("@vue/.+");
   }
 
+  if (flags.includes("tailwindcss")) {
+    ignoreDependencies.push("tailwindcss");
+  }
+
+  if (flags.includes("daisyui")) {
+    ignoreDependencies.push("tailwindcss", "daisyui");
+  }
+
   if (flags.includes("mantine")) {
     ignoreDependencies.push("postcss");
   }

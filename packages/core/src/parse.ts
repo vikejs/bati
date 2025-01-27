@@ -7,12 +7,13 @@ import type { VikeMeta } from "./types.js";
 function guessCodeFormatters(code: string, filepath: string) {
   return {
     eslint:
-      code.includes("BATI.has") ||
-      code.includes("BATI_TEST") ||
-      code.includes("/*# BATI ") ||
-      code.includes("@batijs/") ||
-      filepath.endsWith(".ts") ||
-      filepath.endsWith(".tsx"),
+      (code.includes("BATI.has") ||
+        code.includes("BATI_TEST") ||
+        code.includes("/*# BATI ") ||
+        code.includes("@batijs/") ||
+        filepath.endsWith(".ts") ||
+        filepath.endsWith(".tsx")) &&
+      !filepath.endsWith(".css"),
     squirelly: code.includes(tags[0]),
   };
 }

@@ -77,7 +77,7 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
             //# BATI.has("tailwindcss") || BATI.has("panda-css")
             className={
               BATI.has("tailwindcss")
-                ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
+                ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
                 : css({
                     color: "white",
                     bg: { base: "teal.700", _hover: "teal.800" },

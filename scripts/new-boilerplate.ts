@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineCommand, runMain } from "citty";
-import sharedPackageJson from "../boilerplates/shared/package.json";
+import sharedPackageJson from "../boilerplates/shared/package.json" with { type: "json" };
 import { listBoilerplates } from "./helpers/boilerplates.js";
 
 const __filename = fileURLToPath(import.meta.url);

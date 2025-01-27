@@ -14,7 +14,7 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
 
   testMatch<typeof matrix>("config exists", {
     daisyui: async () => {
-      const content = await readFile("tailwind.config.ts", "utf-8");
+      const content = await readFile("layouts/tailwind.css", "utf-8");
       expect(content.includes("daisyui")).toBe(context.flags.includes("daisyui"));
     },
     "panda-css": async () => {
