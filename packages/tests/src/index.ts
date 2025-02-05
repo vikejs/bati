@@ -4,7 +4,7 @@ import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as process from "process";
-import { bunExists, exec, npmCli, zx } from "@batijs/tests-utils";
+import { exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
@@ -66,7 +66,7 @@ async function createWorkspacePackageJson(context: GlobalContext) {
       devDependencies: {
         turbo: packageJson.devDependencies.turbo,
       },
-      ...(bunExists ? { workspaces: ["packages/*"] } : {}),
+      ...(npmCli === "bun" ? { workspaces: ["packages/*"] } : {}),
       packageManager: `${npmCli}@${version}`,
     }),
     "utf-8",
@@ -88,7 +88,7 @@ async function createGitIgnore(context: GlobalContext) {
 }
 
 function linkTestUtils() {
-  return exec(npmCli, bunExists ? ["link"] : ["link", "--global"], {
+  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
@@ -109,7 +109,7 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 
-  if (!bunExists) {
+  if (npmCli !== "bun") {
     // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
     const child = exec(npmCli, ["link", "--global", "@batijs/tests-utils"], {
       timeout: 60000,
@@ -122,7 +122,7 @@ async function packageManagerInstall(context: GlobalContext) {
 }
 async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const steps = args.steps ? args.steps.split(",") : undefined;
-  const args_1 = [bunExists ? "x" : "exec", "turbo", "run"];
+  const args_1 = [npmCli === "bun" ? "x" : "exec", "turbo", "run"];
   const args_2 = ["--no-update-notifier", "--framework-inference", "false", "--env-mode", "loose"];
 
   const cacheDir = process.env.CI ? false : join(tmpdir(), "bati-cache");
@@ -300,7 +300,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   await createWorkspacePackageJson(context);
 
   // create monorepo config (pnpm only)
-  if (!bunExists) {
+  if (npmCli === "pnpm") {
     await createPnpmWorkspaceYaml(context);
   }
 
