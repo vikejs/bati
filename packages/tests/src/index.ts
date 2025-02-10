@@ -88,11 +88,10 @@ async function createGitIgnore(context: GlobalContext) {
 }
 
 function linkTestUtils() {
-  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--global"], {
+  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--loglevel", "error", "--global"], {
     // pnpm link --global takes some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
-    stdio: ["ignore", "ignore", "inherit"],
   });
 }
 
