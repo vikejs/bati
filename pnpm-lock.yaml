@@ -163,7 +163,7 @@ importers:
         version: 5.7.3
       vitest:
         specifier: ^3.0.5
-        version: 3.0.5(@types/debug@4.1.12)(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 3.0.5(@types/debug@4.1.12)(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       which:
         specifier: ^5.0.0
         version: 5.0.0
@@ -207,7 +207,7 @@ importers:
         version: 7.0.2
       vike-cloudflare:
         specifier: ^0.1.7
-        version: 0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       wrangler:
         specifier: ^3.107.3
         version: 3.107.3(@cloudflare/workers-types@4.20250204.0)
@@ -229,10 +229,10 @@ importers:
         version: 18.19.75
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-compiled-react:
         specifier: ^1.1.3
-        version: 1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/d1:
     dependencies:
@@ -254,7 +254,7 @@ importers:
         version: 0.4.0(@cloudflare/workers-types@4.20250204.0)(@hattip/core@0.0.49)(fastify@5.2.1)(h3@1.15.0)(hono@4.7.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       wrangler:
         specifier: ^3.107.3
         version: 3.107.3(@cloudflare/workers-types@4.20250204.0)
@@ -279,7 +279,7 @@ importers:
         version: 0.4.0(@cloudflare/workers-types@4.20250204.0)(@hattip/core@0.0.49)(fastify@5.2.1)(h3@1.15.0)(hono@4.7.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/drizzle:
     dependencies:
@@ -307,7 +307,7 @@ importers:
         version: 0.30.4
       drizzle-orm:
         specifier: ^0.39.2
-        version: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0)
+        version: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0)
 
   boilerplates/edgedb:
     dependencies:
@@ -409,16 +409,16 @@ importers:
         version: 4.21.2
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/fastify:
     dependencies:
@@ -461,16 +461,16 @@ importers:
         version: 5.2.1
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/firebase-auth:
     dependencies:
@@ -504,10 +504,10 @@ importers:
         version: 6.1.0(firebase@11.3.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/google-analytics:
     dependencies:
@@ -566,16 +566,16 @@ importers:
         version: 1.16.2
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/hattip:
     dependencies:
@@ -612,7 +612,7 @@ importers:
         version: 0.0.49
       '@hattip/vite':
         specifier: ^0.0.49
-        version: 0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       '@hattip/walk':
         specifier: ^0.0.49
         version: 0.0.49
@@ -639,13 +639,13 @@ importers:
         version: 0.0.33
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/hono:
     dependencies:
@@ -691,16 +691,16 @@ importers:
         version: 4.7.0
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/lucia-auth:
     dependencies:
@@ -716,7 +716,7 @@ importers:
         version: 4.20250204.0
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
-        version: 1.1.0(drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0))(lucia@3.2.2)
+        version: 1.1.0(drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0))(lucia@3.2.2)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@11.8.1)(lucia@3.2.2)
@@ -743,16 +743,16 @@ importers:
         version: 16.4.7
       drizzle-orm:
         specifier: ^0.39.2
-        version: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0)
+        version: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0)
       lucia:
         specifier: ^3.2.2
         version: 3.2.2
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/mantine:
     dependencies:
@@ -798,7 +798,7 @@ importers:
         version: 0.5.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-compiled-react:
         specifier: ^1.1.3
         version: 1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
@@ -895,7 +895,7 @@ importers:
         version: 19.0.3(@types/react@19.0.8)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -910,16 +910,16 @@ importers:
         version: 5.7.3
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vike-react:
         specifier: ^0.5.12
-        version: 0.5.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.5.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-compiled-react:
         specifier: ^1.1.3
-        version: 1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/react-firebase-auth:
     dependencies:
@@ -953,10 +953,10 @@ importers:
         version: 19.0.0(react@19.0.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/react-lucia-auth:
     dependencies:
@@ -984,10 +984,10 @@ importers:
         version: 19.0.0(react@19.0.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/react-sentry:
     dependencies:
@@ -1018,7 +1018,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/sentry:
     dependencies:
@@ -1037,7 +1037,7 @@ importers:
         version: 18.19.75
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/shadcn-ui:
     dependencies:
@@ -1086,19 +1086,19 @@ importers:
         version: link:../../packages/compile
       '@hattip/vite':
         specifier: ^0.0.49
-        version: 0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       '@types/node':
         specifier: ^18.19.75
         version: 18.19.75
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-vercel:
         specifier: ^9.0.4
-        version: 9.0.4(@vite-plugin-vercel/vike@9.0.3)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 9.0.4(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/shared-db:
     dependencies:
@@ -1148,10 +1148,10 @@ importers:
         version: 0.4.0(@cloudflare/workers-types@4.20250204.0)(@hattip/core@0.0.49)(fastify@5.2.1)(h3@1.15.0)(hono@4.7.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/shared-todo:
     dependencies:
@@ -1170,10 +1170,10 @@ importers:
         version: 18.19.75
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vike-cloudflare:
         specifier: ^0.1.7
-        version: 0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/solid:
     dependencies:
@@ -1201,16 +1201,16 @@ importers:
         version: 5.7.3
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vike-solid:
         specifier: ^0.7.8
-        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-solid:
         specifier: ^2.11.1
-        version: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/solid-firebase-auth:
     dependencies:
@@ -1235,10 +1235,10 @@ importers:
         version: 1.9.4
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/solid-lucia-auth:
     dependencies:
@@ -1257,10 +1257,10 @@ importers:
         version: 1.9.4
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/solid-sentry:
     dependencies:
@@ -1282,10 +1282,10 @@ importers:
         version: 1.9.4
       vike-solid:
         specifier: ^0.7.8
-        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/sqlite:
     dependencies:
@@ -1338,10 +1338,10 @@ importers:
         version: 4.0.5
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/telefunc:
     dependencies:
@@ -1363,13 +1363,13 @@ importers:
         version: 0.4.0(@cloudflare/workers-types@4.20250204.0)(@hattip/core@0.0.49)(fastify@5.2.1)(h3@1.15.0)(hono@4.7.0)
       telefunc:
         specifier: ^0.1.85
-        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47)
+        version: 0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/trpc:
     dependencies:
@@ -1397,7 +1397,7 @@ importers:
         version: 0.4.0(@cloudflare/workers-types@4.20250204.0)(@hattip/core@0.0.49)(fastify@5.2.1)(h3@1.15.0)(hono@4.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   boilerplates/ts-rest:
     dependencies:
@@ -1440,17 +1440,17 @@ importers:
         specifier: ^18.19.75
         version: 18.19.75
       '@vite-plugin-vercel/vike':
-        specifier: ^9.0.3
-        version: 9.0.3(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        specifier: ^9.0.4
+        version: 9.0.4(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-vercel:
         specifier: ^9.0.4
-        version: 9.0.4(@vite-plugin-vercel/vike@9.0.3)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 9.0.4(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   boilerplates/vue:
     dependencies:
@@ -1469,7 +1469,7 @@ importers:
         version: 18.19.75
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
-        version: 5.2.1(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
+        version: 5.2.1(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
       '@vue/compiler-sfc':
         specifier: ^3.5.13
         version: 3.5.13
@@ -1484,16 +1484,16 @@ importers:
         version: 5.7.3
       unplugin-vue-markdown:
         specifier: ^28.3.0
-        version: 28.3.0(rollup@4.34.6)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 28.3.0(rollup@4.34.6)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vike-vue:
         specifier: ^0.8.6
-        version: 0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
+        version: 0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -1521,10 +1521,10 @@ importers:
         version: 6.1.0(firebase@11.3.0)
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -1543,10 +1543,10 @@ importers:
         version: 18.19.75
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -1568,10 +1568,10 @@ importers:
         version: 18.19.75
       vike-vue:
         specifier: ^0.8.6
-        version: 0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
+        version: 0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -1651,7 +1651,7 @@ importers:
         version: 0.0.7(rollup@4.34.6)
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   packages/compile:
     dependencies:
@@ -1902,7 +1902,7 @@ importers:
         version: 1.11.0
       '@tailwindcss/vite':
         specifier: ^4.0.5
-        version: 4.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 4.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       babel-preset-solid:
         specifier: ^1.9.3
         version: 1.9.3(@babel/core@7.26.8)
@@ -1938,16 +1938,16 @@ importers:
         version: 5.7.3
       vike:
         specifier: ^0.4.221
-        version: 0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vike-solid:
         specifier: ^0.7.8
-        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+        version: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-plugin-solid:
         specifier: ^2.11.1
-        version: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+        version: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
 packages:
 
@@ -5034,8 +5034,8 @@ packages:
   '@vercel/routing-utils@3.1.0':
     resolution: {integrity: sha512-Ci5xTjVTJY/JLZXpCXpLehMft97i9fH34nu9PGav6DtwkVUF6TOPX86U0W0niQjMZ5n6/ZP0BwcJK2LOozKaGw==}
 
-  '@vite-plugin-vercel/vike@9.0.3':
-    resolution: {integrity: sha512-3AhNh7BsWgwpKh/4Hf++2qYab/Guqkbq/A2hd/dSXCxETCrUr36glzgKRyHO2pn/mgNncjxTfKsn+SJQhJqJpw==}
+  '@vite-plugin-vercel/vike@9.0.4':
+    resolution: {integrity: sha512-S89jncczIEGLrOzL9y3oxU4tKxcy4ox4D/nIp9i+v613zQsIy9LAMAzQSqZzIlswiH7Q2qMl+rW/RQtHKw7amQ==}
     peerDependencies:
       vike: ^0.4.183
       vite: ^4.4 || ^5.0.2 || ^6
@@ -11741,17 +11741,17 @@ snapshots:
     dependencies:
       '@hattip/headers': 0.0.49
 
-  '@hattip/vite@0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@hattip/vite@0.0.49(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@hattip/adapter-node': 0.0.49
-      '@vavite/connect': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
-      '@vavite/multibuild': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
-      '@vavite/node-loader': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      '@vavite/connect': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
+      '@vavite/multibuild': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
+      '@vavite/node-loader': 5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
       cac: 6.7.14
       import-meta-resolve: 4.1.0
       picocolors: 1.1.1
       resolve.exports: 2.0.3
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   '@hattip/walk@0.0.49':
     dependencies:
@@ -12125,9 +12125,9 @@ snapshots:
   '@kikobeats/time-span@1.0.5':
     optional: true
 
-  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0))(lucia@3.2.2)':
+  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0))(lucia@3.2.2)':
     dependencies:
-      drizzle-orm: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0)
+      drizzle-orm: 0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0)
       lucia: 3.2.2
 
   '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.8.1)(lucia@3.2.2)':
@@ -12890,13 +12890,13 @@ snapshots:
       tailwindcss: 4.0.5
       vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
-  '@tailwindcss/vite@4.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@tailwindcss/vite@4.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@tailwindcss/node': 4.0.5
       '@tailwindcss/oxide': 4.0.5
       lightningcss: 1.29.1
       tailwindcss: 4.0.5
-      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   '@tokenizer/token@0.3.0':
     optional: true
@@ -13287,21 +13287,21 @@ snapshots:
       - h3
       - hono
 
-  '@vavite/connect@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@vavite/connect@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@types/node': 18.19.75
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
-  '@vavite/multibuild@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@vavite/multibuild@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@types/node': 18.19.75
       cac: 6.7.14
       picocolors: 1.1.1
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
-  '@vavite/node-loader@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@vavite/node-loader@5.1.0(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   '@vercel/build-utils@8.8.0': {}
 
@@ -13330,14 +13330,14 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vite-plugin-vercel/vike@9.0.3(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@vite-plugin-vercel/vike@9.0.4(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@brillout/libassert': 0.5.8
       nanoid: 5.0.9
       qs: 6.14.0
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite-plugin-vercel: 9.0.4(@vite-plugin-vercel/vike@9.0.3)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite-plugin-vercel: 9.0.4(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
 
   '@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
@@ -13350,20 +13350,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
+  '@vitejs/plugin-vue@5.2.1(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))':
     dependencies:
-      '@babel/core': 7.26.8
-      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.8)
-      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.8)
-      '@types/babel__core': 7.20.5
-      react-refresh: 0.14.2
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vitejs/plugin-vue@5.2.1(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))':
-    dependencies:
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue: 3.5.13(typescript@5.7.3)
 
   '@vitest/expect@3.0.5':
@@ -13380,14 +13369,6 @@ snapshots:
       magic-string: 0.30.17
     optionalDependencies:
       vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
-
-  '@vitest/mocker@3.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))':
-    dependencies:
-      '@vitest/spy': 3.0.5
-      estree-walker: 3.0.3
-      magic-string: 0.30.17
-    optionalDependencies:
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
 
   '@vitest/pretty-format@3.0.5':
     dependencies:
@@ -14406,7 +14387,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(react@19.0.0):
+  drizzle-orm@0.39.2(@cloudflare/workers-types@4.20250204.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3))(@types/better-sqlite3@7.6.12)(@types/react@19.0.8)(better-sqlite3@11.8.1)(prisma@6.3.1(typescript@5.7.3))(react@19.0.0):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250204.0
       '@opentelemetry/api': 1.9.0
@@ -14414,6 +14395,7 @@ snapshots:
       '@types/better-sqlite3': 7.6.12
       '@types/react': 19.0.8
       better-sqlite3: 11.8.1
+      prisma: 6.3.1(typescript@5.7.3)
       react: 19.0.0
 
   dunder-proto@1.0.1:
@@ -18410,7 +18392,7 @@ snapshots:
       - supports-color
     optional: true
 
-  telefunc@0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47):
+  telefunc@0.1.85(@babel/core@7.26.8)(@babel/parser@7.26.8)(@babel/types@7.26.8)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.15
@@ -18422,6 +18404,7 @@ snapshots:
       '@babel/core': 7.26.8
       '@babel/parser': 7.26.8
       '@babel/types': 7.26.8
+      react: 19.0.0
       react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   text-decoder@1.2.3:
@@ -18774,7 +18757,7 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  unplugin-vue-markdown@28.3.0(rollup@4.34.6)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  unplugin-vue-markdown@28.3.0(rollup@4.34.6)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       '@mdit-vue/plugin-component': 2.1.3
       '@mdit-vue/plugin-frontmatter': 2.1.3
@@ -18784,7 +18767,7 @@ snapshots:
       markdown-it: 14.1.0
       markdown-it-async: 2.0.0
       unplugin: 2.1.2
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - rollup
 
@@ -18910,10 +18893,10 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vike-cloudflare@0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vike-cloudflare@0.1.7(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
     optionalDependencies:
       '@hattip/adapter-cloudflare-workers': 0.0.49
 
@@ -18924,38 +18907,31 @@ snapshots:
       react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
-  vike-react@0.5.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
-    dependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-
-  vike-solid@0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vike-solid@0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       isbot-fast: 1.2.0
       solid-js: 1.9.4
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite-plugin-solid: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite-plugin-solid: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-solid@0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vike-solid@0.7.8(solid-js@1.9.4)(vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       isbot-fast: 1.2.0
       solid-js: 1.9.4
-      vike: 0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite-plugin-solid: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      vike: 0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vite-plugin-solid: 2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-vue@0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3)):
+  vike-vue@0.8.6(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3)):
     dependencies:
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vue: 3.5.13(typescript@5.7.3)
 
   vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0):
@@ -18989,7 +18965,7 @@ snapshots:
       - tsx
       - yaml
 
-  vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
+  vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.15
@@ -19004,100 +18980,7 @@ snapshots:
       json5: 2.2.3
       semver: 7.7.1
       source-map-support: 0.5.21
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-    optionalDependencies:
-      react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
-
-  vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      '@brillout/import': 0.2.3
-      '@brillout/json-serializer': 0.5.15
-      '@brillout/picocolors': 1.0.15
-      '@brillout/require-shim': 0.1.2
-      '@brillout/vite-plugin-server-entry': 0.6.0
-      acorn: 8.14.0
-      cac: 6.7.14
-      es-module-lexer: 1.6.0
-      esbuild: 0.24.2
-      fast-glob: 3.3.3
-      json5: 2.2.3
-      semver: 7.7.1
-      source-map-support: 0.5.21
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
-    optionalDependencies:
-      react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
-
-  vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      '@brillout/import': 0.2.3
-      '@brillout/json-serializer': 0.5.15
-      '@brillout/picocolors': 1.0.15
-      '@brillout/require-shim': 0.1.2
-      '@brillout/vite-plugin-server-entry': 0.6.0
-      acorn: 8.14.0
-      cac: 6.7.14
-      es-module-lexer: 1.6.0
-      esbuild: 0.24.2
-      fast-glob: 3.3.3
-      json5: 2.2.3
-      semver: 7.7.1
-      source-map-support: 0.5.21
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-    optionalDependencies:
-      react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
-
-  vike@0.4.221(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      '@brillout/import': 0.2.3
-      '@brillout/json-serializer': 0.5.15
-      '@brillout/picocolors': 1.0.15
-      '@brillout/require-shim': 0.1.2
-      '@brillout/vite-plugin-server-entry': 0.6.0
-      acorn: 8.14.0
-      cac: 6.7.14
-      es-module-lexer: 1.6.0
-      esbuild: 0.24.2
-      fast-glob: 3.3.3
-      json5: 2.2.3
-      semver: 7.7.1
-      source-map-support: 0.5.21
-      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
     optionalDependencies:
       react-streaming: 0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
@@ -19134,27 +19017,6 @@ snapshots:
       - tsx
       - yaml
 
-  vite-node@3.0.5(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      cac: 6.7.14
-      debug: 4.4.0
-      es-module-lexer: 1.6.0
-      pathe: 2.0.2
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
   vite-plugin-compiled-react@1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       '@babel/types': 7.26.8
@@ -19167,19 +19029,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-compiled-react@1.1.3(@compiled/react@0.18.1(react@19.0.0))(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
-    dependencies:
-      '@babel/types': 7.26.8
-      '@compiled/babel-plugin': 0.26.3
-      '@compiled/babel-plugin-strip-runtime': 0.25.0
-      '@compiled/react': 0.18.1(react@19.0.0)
-      '@vitejs/plugin-react': 4.3.4(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
-      babel-plugin-module-resolver: 5.0.2
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  vite-plugin-solid@2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vite-plugin-solid@2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       '@babel/core': 7.26.8
       '@types/babel__core': 7.20.5
@@ -19187,12 +19037,12 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.4
       solid-refresh: 0.6.3(solid-js@1.9.4)
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vitefu: 1.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vitefu: 1.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vite-plugin-solid@2.11.1(solid-js@1.9.4)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       '@babel/core': 7.26.8
       '@types/babel__core': 7.20.5
@@ -19200,12 +19050,12 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.4
       solid-refresh: 0.6.3(solid-js@1.9.4)
-      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vitefu: 1.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
+      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
+      vitefu: 1.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@9.0.4(@vite-plugin-vercel/vike@9.0.3)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vite-plugin-vercel@9.0.4(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.34.6)(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.3
@@ -19215,11 +19065,11 @@ snapshots:
       esbuild: 0.24.2
       fast-glob: 3.3.3
       magicast: 0.3.5
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       zod: 3.24.1
     optionalDependencies:
-      '@vite-plugin-vercel/vike': 9.0.3(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
-      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      '@vite-plugin-vercel/vike': 9.0.4(vike@0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))(vite-plugin-vercel@9.0.4)(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0))
+      vike: 0.4.221(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(react-streaming@0.3.47(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - encoding
       - rollup
@@ -19239,21 +19089,7 @@ snapshots:
       tsx: 4.19.2
       yaml: 2.7.0
 
-  vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      esbuild: 0.24.2
-      postcss: 8.5.1
-      rollup: 4.34.6
-    optionalDependencies:
-      '@types/node': 18.19.75
-      fsevents: 2.3.3
-      jiti: 2.4.2
-      lightningcss: 1.29.1
-      sugarss: 4.0.1(postcss@8.5.1)
-      tsx: 4.19.2
-      yaml: 2.7.0
-
-  vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
+  vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.1
@@ -19267,13 +19103,13 @@ snapshots:
       tsx: 4.19.2
       yaml: 2.7.0
 
-  vitefu@1.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vitefu@1.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     optionalDependencies:
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
-  vitefu@1.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)):
+  vitefu@1.0.5(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)):
     optionalDependencies:
-      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
 
   vitest@3.0.5(@types/debug@4.1.12)(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
@@ -19296,45 +19132,6 @@ snapshots:
       tinyrainbow: 2.0.0
       vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
       vite-node: 3.0.5(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1(postcss@8.5.1))(tsx@4.19.2)(yaml@2.7.0)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@types/debug': 4.1.12
-      '@types/node': 18.19.75
-    transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
-  vitest@3.0.5(@types/debug@4.1.12)(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0):
-    dependencies:
-      '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(vite@6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0))
-      '@vitest/pretty-format': 3.0.5
-      '@vitest/runner': 3.0.5
-      '@vitest/snapshot': 3.0.5
-      '@vitest/spy': 3.0.5
-      '@vitest/utils': 3.0.5
-      chai: 5.1.2
-      debug: 4.4.0
-      expect-type: 1.1.0
-      magic-string: 0.30.17
-      pathe: 2.0.2
-      std-env: 3.8.0
-      tinybench: 2.9.0
-      tinyexec: 0.3.2
-      tinypool: 1.0.2
-      tinyrainbow: 2.0.0
-      vite: 6.1.0(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
-      vite-node: 3.0.5(@types/node@18.19.75)(jiti@2.4.2)(lightningcss@1.29.1)(sugarss@4.0.1)(tsx@4.19.2)(yaml@2.7.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
