@@ -7,6 +7,7 @@ export const onCreateApp: OnCreateAppSync = (pageContext): ReturnType<OnCreateAp
 
   // See https://matteo-gabriele.gitbook.io/vue-gtag/
   app.use(VueGtag, {
+    customResourceURL: "https://www.googletagmanager.com/gtag/js",
     config: {
       id: import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS,
     },

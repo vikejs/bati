@@ -1,6 +1,6 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
-import { ESLint, Linter } from "eslint";
+import { ESLint, Linter, type SourceCode } from "eslint";
 import solid from "eslint-plugin-solid/configs/recommended";
 import type { VikeMeta } from "../../types.js";
 import type { Visitors } from "./types.js";
@@ -17,7 +17,7 @@ export default function tsLinterConfig(meta: VikeMeta) {
         meta: { fixable: "code" },
         // @ts-ignore
         create(context) {
-          const sourceCode = context.sourceCode;
+          const sourceCode = context.sourceCode as SourceCode;
 
           return {
             Program(node) {
