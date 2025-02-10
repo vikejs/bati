@@ -1,5 +1,5 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
-import { ESLint, Linter } from "eslint";
+import { ESLint, Linter, SourceCode } from "eslint";
 import type * as ESTree from "estree";
 import * as vueParseForESLint from "vue-eslint-parser";
 import type { VikeMeta } from "../../types.js";
@@ -32,7 +32,7 @@ export default function vueLinterConfig(meta: VikeMeta) {
       vue: {
         meta: { fixable: "code" },
         create(context) {
-          const sourceCode = context.sourceCode;
+          const sourceCode = context.sourceCode as SourceCode;
           const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore();
           return sourceCode.parserServices.defineTemplateBodyVisitor(
             // template

@@ -10,7 +10,8 @@ export default defineConfig({
   outDir: "./dist",
   clean: true,
   bundle: true,
-  esbuildPlugins: [esbuildBundleAllPlugin, purgePolyfills.esbuild({})],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  esbuildPlugins: [esbuildBundleAllPlugin, purgePolyfills.esbuild({}) as any],
   platform: "node",
   banner: {
     js: "#!/usr/bin/env node",
