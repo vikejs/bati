@@ -8,7 +8,6 @@ export const sentryBrowserConfig = () => {
       environment: "production-frontend",
       //enabled: import.meta.env.DEV ? false : true,
       integrations: [Sentry.replayIntegration()],
-      autoSessionTracking: globalThis?.window?.document ? true : false, // disable autoSessionTracking in SSR
       // Set tracesSampleRate to 1.0 to capture 100%
       // of transactions for tracing.
       tracesSampleRate: 1.0,

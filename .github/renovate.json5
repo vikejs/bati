@@ -1,29 +1,55 @@
 {
   // Inspired by https://github.com/vitejs/vite/blob/main/.github/renovate.json5
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "schedule:weekly", "group:allNonMajor"],
-  "labels": ["dependencies"],
+  "extends": [
+    // config:recommended without excluding folders
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers",
+    "group:monorepos",
+    "group:recommended",
+    "replacements:all",
+    "workarounds:all",
+
+    "schedule:weekly",
+    "group:allNonMajor"
+  ],
+  "labels": [
+    "dependencies"
+  ],
   "rangeStrategy": "bump",
-  "assignees": ["@magne4000"],
+  "assignees": [
+    "@magne4000"
+  ],
   "ignoreDeps": [
     // manually bumping
     "node",
     "@types/node",
     "pnpm"
   ],
-  "postUpdateOptions": ["pnpmDedupe"],
+  "postUpdateOptions": [
+    "pnpmDedupe"
+  ],
   "packageRules": [
     {
-      "matchPackageNames": ["vite-plugin-vercel", "@vite-plugin-vercel/vike"],
+      "matchPackageNames": [
+        "vite-plugin-vercel",
+        "@vite-plugin-vercel/vike"
+      ],
       "description": "vite-plugin-vercel monorepo"
     },
     {
-      "matchPackageNames": ["fastify", "/^@fastify/"],
+      "matchPackageNames": [
+        "fastify",
+        "/^@fastify/"
+      ],
       "description": "fastify monorepo"
     },
     {
-      "matchPackageNames": ["universal-middleware", "/^@universal-middleware/"],
+      "matchPackageNames": [
+        "universal-middleware",
+        "/^@universal-middleware/"
+      ],
       "description": "universal-middleware monorepo"
-    }
+    },
   ]
 }

@@ -1,6 +1,6 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
-import { ESLint, Linter, type SourceCode } from "eslint";
+import { ESLint, Linter, type Rule, type SourceCode } from "eslint";
 import solid from "eslint-plugin-solid/configs/recommended";
 import type { VikeMeta } from "../../types.js";
 import type { Visitors } from "./types.js";
@@ -21,37 +21,37 @@ export default function tsLinterConfig(meta: VikeMeta) {
 
           return {
             Program(node) {
-              visitorGlobalComments(context, sourceCode, node);
+              visitorGlobalComments(context as Rule.RuleContext, sourceCode, node);
             },
             ImportDeclaration(node) {
-              visitorImportStatement(context, node);
+              visitorImportStatement(context as Rule.RuleContext, node);
             },
             ":expression"(node) {
-              visitorStatementWithComments(context, sourceCode, node, meta);
+              visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);
             },
             ":statement"(node) {
-              visitorStatementWithComments(context, sourceCode, node, meta);
+              visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);
             },
             SpreadElement(node) {
-              visitorStatementWithComments(context, sourceCode, node, meta);
+              visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);
             },
             ConditionalExpression(node) {
-              visitorIfStatement(context, sourceCode, node, meta);
+              visitorIfStatement(context as Rule.RuleContext, sourceCode, node, meta);
             },
             IfStatement(node) {
-              visitorIfStatement(context, sourceCode, node, meta);
+              visitorIfStatement(context as Rule.RuleContext, sourceCode, node, meta);
             },
             JSXAttribute(node) {
-              visitorStatementWithComments(context, sourceCode, node, meta);
+              visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);
             },
             TSAsExpression(node) {
-              visitorAsExpression(context, sourceCode, node, meta);
+              visitorAsExpression(context as Rule.RuleContext, sourceCode, node, meta);
             },
             TSTypeParameterInstantiation(node) {
-              visitorTypeParameterInstanciation(context, sourceCode, node, meta);
+              visitorTypeParameterInstanciation(context as Rule.RuleContext, sourceCode, node, meta);
             },
             TSTypeReference(node) {
-              visitorTypeReference(context, sourceCode, node, meta);
+              visitorTypeReference(context as Rule.RuleContext, sourceCode, node, meta);
             },
           } satisfies Visitors<TSESTree.Node>;
         },
