@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vike dev",
-    "release": "bumpp && pnpm run build:widget && pnpm publish",
+    "dev:widget": "vite dev --mode widget",
+    "build:pages": "vike build",
+    "build:widget": "vite build --mode widget",
+    "preview:widget": "http-server .",
     "check-types": "tsc --noEmit",
-    "build:pages": "VITE_CONFIG=\"{mode:'pages'}\" vike build",
-    "build:widget": "VITE_CONFIG=\"{mode:'widget'}\" vike build",
-    "dev:widget": "VITE_CONFIG=\"{mode:'widget'}\" vike dev",
-    "test": "tsc --noEmit"
+    "test": "tsc --noEmit",
+    "release": "bumpp && pnpm run build:widget && pnpm publish"
   },
   "keywords": [
     "bati",
@@ -30,6 +31,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^5.0.0-beta.8",
     "esbuild": "^0.25.0",
+    "http-server": "^14.1.1",
     "solid-element": "^1.9.1",
     "solid-js": "^1.9.4",
     "solid-motionone": "^1.0.3",

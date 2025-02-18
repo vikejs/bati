@@ -1,9 +1,10 @@
-import { StoreProvider } from "#components/Store";
 import { Widget } from "#components/Widget";
-import css from "#layouts/web-component.css?inline";
+import css from "#layouts/tailwind.css?inline";
+
+import { StoreProvider } from "#components/Store";
 import type { JSX } from "solid-js";
 
-function LayoutDefault(props: { children?: JSX.Element }) {
+function LayoutWidget(props: { children?: JSX.Element }) {
   return (
     <StoreProvider>
       <style>{css}</style>
@@ -14,8 +15,8 @@ function LayoutDefault(props: { children?: JSX.Element }) {
 
 export default function AppWidget(props: { theme?: string }) {
   return (
-    <LayoutDefault>
+    <LayoutWidget>
       <Widget widget={true} theme={props.theme} />
-    </LayoutDefault>
+    </LayoutWidget>
   );
 }

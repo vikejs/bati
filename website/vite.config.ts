@@ -1,10 +1,9 @@
 import { resolve } from "node:path";
-import autoprefixer from "autoprefixer";
 import vikeSolid from "vike-solid/vite";
+import viteSolidPlugin from "vite-plugin-solid";
 import vike from "vike/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { build, defineConfig, type Plugin } from "vite";
-import solidPlugin from "vite-plugin-solid";
 
 const writeToDisk: () => Plugin = () => {
   let building = false;
@@ -36,23 +35,19 @@ export default defineConfig(({ mode, command }) => {
     "#layouts": resolve(__dirname, "layouts"),
   };
 
-  if (mode === "widget") {
+  if (mode === "widget" || process.env.BUILD_MODE === "widget") {
     return {
       resolve: {
         alias,
       },
       build: {
         lib: {
-          entry: "pages/index/Index.element.ts",
+          entry: "widget/web-component.index.ts",
           formats: ["es"],
           fileName: "full",
         },
+        cssTarget: ["es2022"],
         outDir: "dist/elements",
-        rollupOptions: {
-          output: {
-            manualChunks: undefined,
-          },
-        },
       },
       server: {
         watch: {
@@ -65,18 +60,10 @@ export default defineConfig(({ mode, command }) => {
       css: {
         postcss: {
           inject: false,
-          plugins: [
-            autoprefixer(),
-            {
-              postcssPlugin: "fix-css-wc-scope",
-              Rule(rule) {
-                rule.selector = rule.selector.replaceAll(":root", ".bati-widget");
-              },
-            },
-          ],
+          plugins: [],
         },
       },
-      plugins: [solidPlugin(), tailwindcss(), command === "serve" ? writeToDisk() : undefined],
+      plugins: [viteSolidPlugin(), tailwindcss(), command === "serve" ? writeToDisk() : undefined],
     };
   }
 
@@ -85,12 +72,9 @@ export default defineConfig(({ mode, command }) => {
     resolve: {
       alias,
     },
-    plugins: [
-      vike({
-        prerender: true,
-      }),
-      vikeSolid(),
-      tailwindcss(),
-    ],
+    build: {
+      cssTarget: ["es2022"],
+    },
+    plugins: [vike(), vikeSolid(), tailwindcss()],
   };
 });
