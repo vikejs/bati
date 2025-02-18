@@ -11,7 +11,7 @@
     "preview:widget": "http-server .",
     "check-types": "tsc --noEmit",
     "test": "tsc --noEmit",
-    "release": "bumpp && pnpm run build:widget && pnpm publish"
+    "release": "bumpp --no-tag && pnpm run build:widget && pnpm publish"
   },
   "keywords": [
     "bati",
