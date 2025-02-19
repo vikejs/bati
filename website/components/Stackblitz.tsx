@@ -25,8 +25,10 @@ export default function Stackblitz(props: { class?: string; flags: string[] }) {
   // tooltip and data-tip are dynamically added in JS
   return (
     <button
-      id="stackblitz-cta"
-      class={clsx("tooltip-bottom tooltip-warning left-[1px] btn btn-sm hover:btn-ghost group h-auto", props.class)}
+      class={clsx(
+        "tooltip-bottom tooltip-warning left-[1px] btn btn-sm hover:btn-ghost group h-auto stackblitz-cta",
+        props.class,
+      )}
       onclick={() =>
         openProject({
           title: "Bati project",

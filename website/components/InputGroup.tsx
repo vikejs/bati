@@ -3,6 +3,7 @@ import Stackblitz from "./Stackblitz";
 import { createMemo, createSignal, type JSX, useContext } from "solid-js";
 import { StoreContext } from "#components/Store";
 import { track } from "../lib/track";
+import { isServer } from "solid-js/web";
 
 export function CliGroup(
   props: {
@@ -51,6 +52,10 @@ export default function InputGroup() {
     localStorage.setItem("packageManager", packageManager);
   };
 
+  // Works as expected only for SPA or Web Component
+  // For SSR, the <script> tag below ensures proper rendering on client side
+  const initialInputValue = isServer ? "npm" : localStorage.getItem("packageManager");
+
   return (
     <div role="tablist" class="tabs tabs-lift tabs-sm flex-1">
       <input
@@ -60,7 +65,7 @@ export default function InputGroup() {
         class="tab"
         aria-label="npm"
         onChange={() => persist("npm")}
-        checked
+        checked={initialInputValue === "npm"}
       />
 
       <CliGroup
@@ -79,6 +84,7 @@ export default function InputGroup() {
         class="tab"
         aria-label="pnpm"
         onChange={() => persist("pnpm")}
+        checked={initialInputValue === "pnpm"}
       />
 
       <CliGroup
@@ -97,6 +103,7 @@ export default function InputGroup() {
         class="tab"
         aria-label="yarn"
         onChange={() => persist("yarn")}
+        checked={initialInputValue === "yarn"}
       />
 
       <CliGroup
@@ -115,6 +122,7 @@ export default function InputGroup() {
         class="tab"
         aria-label="bun"
         onChange={() => persist("bun")}
+        checked={initialInputValue === "bun"}
       />
 
       <CliGroup

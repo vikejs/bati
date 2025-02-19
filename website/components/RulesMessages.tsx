@@ -1,6 +1,7 @@
 import { RulesMessage } from "@batijs/features/rules";
 import { createEffect, createMemo, on, onCleanup, onMount, useContext, type ValidComponent } from "solid-js";
 import { StoreContext } from "./Store.js";
+import { useRootContext } from "#components/RootContext";
 
 export interface RuleMessage {
   type: "info" | "warning" | "error" | "invisible";
@@ -193,7 +194,8 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.INFO_STACKBLITZ_COMPAT]: invisible(() => {
+  [RulesMessage.INFO_STACKBLITZ_COMPAT]: invisible(function () {
+    const root = useRootContext();
     const { selectedFeatures } = useContext(StoreContext);
 
     const unsupported = createMemo(() =>
@@ -201,14 +203,18 @@ export const rulesMessages = {
     );
 
     function updateTooltip() {
-      document.querySelector("#stackblitz-cta")!.classList.add("tooltip");
-      document.querySelector("#stackblitz-cta")!.setAttribute(
-        "data-tip",
-        "Stackblitz does not support the following features: " +
-          unsupported()
-            .map((f) => f.label)
-            .join(", "),
-      );
+      root?.()
+        ?.querySelectorAll(".stackblitz-cta")
+        .forEach((elt) => {
+          elt.classList.add("tooltip");
+          elt.setAttribute(
+            "data-tip",
+            "Stackblitz does not support the following features: " +
+              unsupported()
+                .map((f) => f.label)
+                .join(", "),
+          );
+        });
     }
 
     createEffect(on(unsupported, updateTooltip));
@@ -216,8 +222,12 @@ export const rulesMessages = {
     onMount(updateTooltip);
 
     onCleanup(() => {
-      document.querySelector("#stackblitz-cta")!.classList.remove("tooltip");
-      document.querySelector("#stackblitz-cta")!.removeAttribute("data-tip");
+      root?.()
+        ?.querySelectorAll(".stackblitz-cta")
+        .forEach((elt) => {
+          elt.classList.remove("tooltip");
+          elt.removeAttribute("data-tip");
+        });
     });
 
     return <></>;
