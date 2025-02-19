@@ -31,10 +31,10 @@ export default function InputGroup() {
     return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
-  const npm = createMemo(() => ["npm", "create", "bati", "---", ...getFlags()]);
-  const pnpm = createMemo(() => ["pnpm", "create", "bati", ...getFlags()]);
-  const yarn = createMemo(() => ["yarn", "dlx", "@batijs/cli", ...getFlags()]);
-  const bun = createMemo(() => ["bun", "create", "bati", ...getFlags()]);
+  const npm = createMemo(() => ["npm", "create", "vike@latest", "---", ...getFlags()]);
+  const pnpm = createMemo(() => ["pnpm", "create", "vike@latest", ...getFlags()]);
+  const yarn = createMemo(() => ["yarn", "create", "vike@latest", ...getFlags()]);
+  const bun = createMemo(() => ["bun", "create", "vike@latest", ...getFlags()]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
