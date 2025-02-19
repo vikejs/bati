@@ -1,0 +1,49 @@
+name: Deploy widget
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - run: pnpm install
+
+      - name: Build packages
+        run: pnpm run build
+
+      - run: pnpm run build:widget
+        working-directory: website
+
+      - name: Configure git before publish
+        run: |
+          git config --global user.name "Joël Charles"
+          git config --global user.email "joel.charles91@gmail.com"
+
+      - name: Set publishing config
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: pnpm run release:ci
+        working-directory: website
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
