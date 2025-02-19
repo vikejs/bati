@@ -31,12 +31,12 @@ export default function Stackblitz(props: { class?: string; flags: string[] }) {
       )}
       onclick={() =>
         openProject({
-          title: "Bati project",
-          description: "Project generated with Bati",
+          title: "Vike project",
+          description: "Project generated with Vike's scaffolder",
           template: "node",
           files: {
             ".stackblitzrc": STACKBLITZ_RC(props.flags),
-            "README.md": `Waiting for Bati CLI to finish. This file will automatically refresh when the project is ready`,
+            "README.md": `Waiting for CLI to finish. This file will automatically refresh when the project is ready`,
           },
         })
       }
