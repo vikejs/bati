@@ -3,12 +3,13 @@ import { execSync } from "node:child_process";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
+import { select } from "@inquirer/prompts";
 import exec, { walk } from "@batijs/build";
 import { packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
-import { blueBright, bold, cyan, gray, green, red, yellow } from "colorette";
+import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
 import sift from "sift";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
@@ -214,18 +215,52 @@ async function checkArguments(args: ParsedArgs<Args>) {
   }
 }
 
-function checkFlagsIncludesUiFramework(flags: string[]) {
+const choices = [
+  {
+    label: "React",
+    value: "react",
+    labelColor: cyan,
+  },
+  {
+    label: "Vue",
+    value: "vue",
+    labelColor: green,
+  },
+  {
+    label: "SolidJS",
+    value: "solid",
+    labelColor: blue,
+  },
+];
+
+function colorFirstLetter(choice: (typeof choices)[number]) {
+  return choice.labelColor(choice.label[0]) + choice.label.substring(1);
+}
+
+async function checkFlagsIncludesUiFramework(flags: string[]) {
   const uiFlags: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
   const uiFlagFound = flags.some((f) => uiFlags.includes(f));
 
   if (!uiFlagFound) {
-    const lf = new Intl.ListFormat("en", {
-      type: "disjunction",
-    });
-    console.error(
-      `${red("⚠")} A ${yellow("UI Framework")} is required when using Bati. Choose one of ${lf.format(uiFlags.map((f) => bold(`--${f}`)))}`,
+    console.warn(
+      `${yellow("🛈 You are scaffolding a barebone app.")} Go to ${underline("https://vike.dev/new")} to scaffold a full-fledged app with tools such as Tailwind, authentication, RPC, database, deployment, ...\n`,
     );
-    process.exit(5);
+    const ui = await select({
+      theme: {
+        style: {
+          highlight(t: string) {
+            const found = choices.find((c) => t.includes(colorFirstLetter(c)));
+            return (found?.labelColor ?? cyan)(t);
+          },
+        },
+      },
+      message: "Select a framework:",
+      choices: choices.map((c) => ({
+        name: colorFirstLetter(c),
+        value: c.value,
+      })),
+    });
+    flags.unshift(ui);
   }
 }
 
@@ -376,7 +411,7 @@ async function run() {
       ];
 
       checkFlagsExist(flags);
-      checkFlagsIncludesUiFramework(flags);
+      await checkFlagsIncludesUiFramework(flags);
       checkRules(flags);
 
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`

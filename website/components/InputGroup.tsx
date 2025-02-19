@@ -54,7 +54,7 @@ export default function InputGroup() {
 
   // Works as expected only for SPA or Web Component
   // For SSR, the <script> tag below ensures proper rendering on client side
-  const initialInputValue = isServer ? "npm" : localStorage.getItem("packageManager");
+  const initialInputValue = isServer ? "npm" : localStorage.getItem("packageManager") || "npm";
 
   return (
     <div role="tablist" class="tabs tabs-lift tabs-sm flex-1">
