@@ -4,11 +4,16 @@ permissions:
   contents: write
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    # The current workflow will only run after Publish or Deploy, because we cannot concurrently push to git
+    workflows: [Publish packages to npmjs on PR merge, Deploy pages]
+    types:
+      - completed
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-widget:
+    # Only run if the parent workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     runs-on: ubuntu-latest
 
