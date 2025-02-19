@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 const STACKBLITZ_RC = (args: string[]) => `{
   "installDependencies": false,
-  "startCommand": "pnpm create bati ${args.join(" ")} --force . && pnpm i && pnpm run dev",
+  "startCommand": "pnpm create vike@latest ${args.join(" ")} --force . && pnpm i && pnpm run dev",
   "env": {
     "NODE_ENV": "development"
   }

@@ -22,13 +22,13 @@ export function getArgs() {
 
   switch (pm) {
     case "pnpm":
-      return "pnpm create bati";
+      return "pnpm create vike@latest";
     case "yarn":
-      return "yarn dlx @batijs/cli";
+      return "yarn create vike@latest";
     case "bun":
-      return "bun create bati";
+      return "bun create vike@latest";
     default:
-      return "npm create bati ---";
+      return "npm create vike@latest ---";
   }
 }
 
