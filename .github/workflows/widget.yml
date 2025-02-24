@@ -50,7 +50,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: pnpm run release-wdget:ci
+      - run: pnpm run release-widget:ci
         working-directory: website
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
