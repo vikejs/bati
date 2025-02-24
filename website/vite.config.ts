@@ -46,6 +46,9 @@ export default defineConfig(({ mode, command }) => {
           formats: ["es"],
           fileName: "full",
         },
+        // does not minify whitespaces when using the 'es' format in lib mode,
+        // as it removes pure annotations and breaks tree-shaking.
+        minify: true,
         cssTarget: ["es2022"],
         outDir: "dist/elements",
       },
