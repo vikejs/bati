@@ -328,8 +328,8 @@ importers:
         specifier: ^2.0.20
         version: 2.0.20
       edgedb:
-        specifier: ^1.5.12
-        version: 1.5.12
+        specifier: ^2.0.1
+        version: 2.0.1
 
   boilerplates/eslint:
     dependencies:
@@ -6034,8 +6034,8 @@ packages:
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
 
-  edgedb@1.5.12:
-    resolution: {integrity: sha512-IZHCAyKmdSpLqGuM2oSrw0037Qr8Y0S5KoJYArsc5KYJCv10ScU7Uyr/b7pOd2UYWx8DBFSyTmMweIgFRVOdCQ==}
+  edgedb@2.0.1:
+    resolution: {integrity: sha512-B/ErKdy+0iBlVjwXLZLOup+UEWL7sGPdae0WrKSpCgkQVQQlkrkM/Q/6/Jvd+CKHVPVa2jA90Rg2CcILwebVQg==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
@@ -14553,13 +14553,9 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  edgedb@1.5.12:
+  edgedb@2.0.1:
     dependencies:
-      debug: 4.4.0
-      env-paths: 3.0.0
-      semver: 7.7.1
-      shell-quote: 1.8.2
-      which: 4.0.0
+      gel: 2.0.0
     transitivePeerDependencies:
       - supports-color
 
