@@ -109,9 +109,11 @@ Please report this issue to https://github.com/vikejs/bati`,
   }
 
   let previousOp: (FileOperation & OperationReport) | undefined = undefined;
+  let previousOpContent: string | undefined = undefined;
   for (const op of rearranger.compute()) {
     if (previousOp?.destination !== op.destination) {
       previousOp = undefined;
+      previousOpContent = undefined;
     }
     let report: OperationReport = {};
     if (op.kind === "file") {
@@ -138,9 +140,11 @@ Please report this issue to https://github.com/vikejs/bati`,
       await safeWriteFile(op.destination, report.content.trimStart());
     }
 
+    previousOpContent = report.content ?? previousOpContent;
     previousOp = {
       ...op,
       ...report,
+      content: previousOpContent,
     };
   }
 
