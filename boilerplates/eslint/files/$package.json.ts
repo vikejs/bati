@@ -8,9 +8,9 @@ export default async function getPackageJson(props: TransformerProps) {
       value: "eslint .",
       precedence: 0,
     })
-    .addDevDependencies(["eslint", "@eslint/js", "typescript-eslint"])
+    .addDevDependencies(["eslint", "@eslint/js", "typescript-eslint", "globals"])
     .addDevDependencies(["eslint-plugin-prettier", "eslint-config-prettier"], props.meta.BATI.has("prettier"))
-    .addDevDependencies(["eslint-plugin-react", "globals"], props.meta.BATI.has("react"))
     .addDevDependencies(["eslint-plugin-vue", "vue-eslint-parser"], props.meta.BATI.has("vue"))
-    .addDevDependencies(["eslint-plugin-solid", "globals"], props.meta.BATI.has("solid"));
+    .addDevDependencies(["eslint-plugin-react"], props.meta.BATI.has("react"))
+    .addDevDependencies(["eslint-plugin-solid"], props.meta.BATI.has("solid"));
 }

@@ -1,7 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 import type { Rule, SourceCode } from "eslint";
 import type * as ESTree from "estree";
-import type AST from "vue-eslint-parser/ast";
+import type { AST } from "vue-eslint-parser";
 import type { VikeMeta } from "../../types.js";
 import { evalCondition, extractBatiCondition } from "../eval.js";
 

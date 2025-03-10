@@ -101,6 +101,12 @@ export default tseslint.config(
       "vue/max-attributes-per-line": "off",
       "vue/html-self-closing": "off",
     },
+    languageOptions: {
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+      },
+    },
   },
   //# BATI.has("compiled-css")
   {

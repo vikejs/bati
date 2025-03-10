@@ -1,7 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
 import type * as ESTree from "estree";
-import type AST from "vue-eslint-parser/ast";
+import type { AST } from "vue-eslint-parser";
 import { relative } from "../../relative.js";
 import { getExtractor } from "./common.js";
 

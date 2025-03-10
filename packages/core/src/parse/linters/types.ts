@@ -1,6 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 import type * as ESTree from "estree";
-import type AST from "vue-eslint-parser/ast";
+import type { AST } from "vue-eslint-parser";
 
 export type Node = (AST.ESLintNode & TSESTree.Node) | AST.VNode | TSESTree.Node;
 

@@ -21,6 +21,7 @@ export default tseslint.config(
       "**/.DS_Store",
       "**/styled-system/*",
       "**/files/styled-system/*",
+      "scripts/gen-composite-workflow-action.js",
       "pnpm-lock.yaml",
     ],
   },
@@ -43,6 +44,8 @@ export default tseslint.config(
       },
       globals: {
         BATI: false,
+        ...globals.serviceworker,
+        ...globals.browser,
       },
     },
   },
