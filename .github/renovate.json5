@@ -24,7 +24,9 @@
     // manually bumping
     "node",
     "@types/node",
-    "pnpm"
+    "pnpm",
+    // starting from 2.0.2, vue-gtag is not packaged correctly
+    "vue-gtag"
   ],
   "postUpdateOptions": [
     "pnpmDedupe"
@@ -50,11 +52,6 @@
         "/^@universal-middleware/"
       ],
       "description": "universal-middleware monorepo"
-    },
-    // vue-gtag 2.0.2 and 2.1.0 are not packaged correctly
-    {
-      "matchPackageNames": ["vue-gtag"],
-      "allowedVersions": "!/2\.1\.0|2\.0\.2/",
     }
   ]
 }
