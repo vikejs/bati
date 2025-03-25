@@ -10,13 +10,11 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     })
     .addDependencies([
-      "postcss",
-      "autoprefixer",
-      "tailwindcss-animate",
       "class-variance-authority",
       "clsx",
       "tailwind-merge",
       "lucide-react",
       "@radix-ui/react-icons",
+      "tw-animate-css",
     ]);
 }
