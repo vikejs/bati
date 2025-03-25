@@ -11,6 +11,8 @@ export const matrix = [
   "eslint",
 ] as const;
 
+export const exclude = [["hattip", "firebase-auth"]];
+
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace
 // Then, for firebase, generate a service account json file, and put in .env.test like so
@@ -42,8 +44,7 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
     },
   });
 
-  // FIXME: test fails after hattip upgrade, not sure why
-  if (context.flags.includes("firebase-auth") && !context.flags.includes("hattip")) {
+  if (context.flags.includes("firebase-auth")) {
     const firebaseClientConfig = process.env.TEST_FIREBASE_CLIENT_CONFIG
       ? JSON.parse(process.env.TEST_FIREBASE_CLIENT_CONFIG)
       : undefined;
