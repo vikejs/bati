@@ -13,7 +13,7 @@ import { parse, serialize } from "cookie";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/lucia-auth";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/lucia-auth";
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/lucia-auth";
-// TODO: stop using universal-middleware and directly integrate server middlewares instead. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
+// TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import { type Get, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
 /**

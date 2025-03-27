@@ -1,5 +1,5 @@
 import { telefunc } from "telefunc";
-// TODO: stop using universal-middleware and directly integrate server middlewares instead. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
+// TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import type { Get, UniversalHandler } from "@universal-middleware/core";
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
