@@ -452,7 +452,7 @@ const a = 1;`,
   });
 
   test("invalid flags", async () => {
-    expect(
+    await expect(
       transformAndFormat(
         `/*# BATI invalid #*/      
 const a = 1;`,
@@ -465,7 +465,7 @@ const a = 1;`,
   });
 
   test("mix valid and invalid flags", async () => {
-    expect(
+    await expect(
       transformAndFormat(
         `/*# BATI include-if-imported,invalid #*/      
 const a = 1;`,
