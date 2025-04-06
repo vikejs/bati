@@ -16,7 +16,7 @@ test("requires - simple", () => {
 
   expect(simpleRequires(prepare(["authjs"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(simpleRequires(prepare(["firebase-auth"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(simpleRequires(prepare(["Auth", "edgedb", "telefunc"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
+  expect(simpleRequires(prepare(["Auth", "authjs", "telefunc"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
 });
 
 test("requires - extended", () => {
@@ -26,7 +26,7 @@ test("requires - extended", () => {
   expect(extendedRequires(prepare(["plausible.io"]))).toBeFalsy();
   expect(extendedRequires(prepare(["Auth", "hattip"]))).toBeFalsy();
   expect(extendedRequires(prepare(["Auth", "Server"]))).toBeFalsy();
-  expect(extendedRequires(prepare(["Auth", "edgedb", "telefunc"]))).toBeFalsy();
+  expect(extendedRequires(prepare(["Auth", "authjs", "telefunc"]))).toBeFalsy();
   expect(extendedRequires(prepare(["Auth", "Server", "solid"]))).toBeFalsy();
 
   expect(extendedRequires(prepare(["authjs", "Server", "solid"]))).toBeFalsy();

@@ -478,27 +478,6 @@ export const features = [
       },
     ],
   },
-  {
-    category: "Database",
-    label: "EdgeDB",
-    flag: "edgedb",
-    image:
-      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyLjIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgNTEyIDIzMi43MjciPjxwYXRoIGZpbGw9IiM0RDRENEQiIGQ9Ik00MzMuNjY3IDExNS4yMzhjMCAzNS4zMzMtMTQuMTY3IDQxLjY2Ni0zMC4wMDIgNDEuNjY2SDM3MFY3My41NzFoMzMuNjY2YzE1LjgzNSAwIDMwLjAwMiA2LjMzNCAzMC4wMDIgNDEuNjY3Wm0tMTcuMTY3LjAwNGMwLTI0LjY2Ny03LjUtMjUuODMzLTE4LjMzMy0yNS44MzNoLTEwLjQ5OXY1MS42NjZoMTAuNWMxMC44MzMgMCAxOC4zMzItMS4xNjcgMTguMzMyLTI1LjgzM1ptLTE3OC4zMzYgNDEuNjYyVjczLjU3MWg1My4wMDF2MTUuODM0aC0zNS4zMzR2MTdoMjYuNjY2djE1LjY2NmgtMjYuNjY2djE5aDM1LjMzNHYxNS44MzNoLTUzWk0zMjAgMjMyLjcyN2gxNy40NTVWMEgzMjB2MjMyLjcyN1pNNDY4Ljk5NSAxMTkuOTF2MjEuMTY2aDE0LjY2OGM5LjE2NiAwIDExLjUtNiAxMS41LTEwLjVjMC0zLjUtMS42NjgtMTAuNjY2LTE0LjE2OC0xMC42NjZoLTEyWm0wLTMwLjUwMnYxNS44MzNoMTJjNi44MzMgMCAxMC44MzMtMyAxMC44MzMtOHMtNC03LjgzMy0xMC44MzMtNy44MzNoLTEyWk00NTEuMzM0IDczLjU3aDMzLjk5OGMxNy44MzYgMCAyMy4xNjggMTIuNSAyMy4xNjggMjEuNWMwIDguMzM0LTUuMzMyIDE0LjMzNC05IDE2YzEwLjY2NyA1LjE2NyAxMi41IDE1LjY2NyAxMi41IDIxYzAgNy0zLjUgMjQuODMzLTI2LjY2OCAyNC44MzNoLTMzLjk5OFY3My41NzFabS0zMTQuNjY1IDQxLjY2N2MwIDM1LjMzMy0xNC4xNjcgNDEuNjY2LTMwIDQxLjY2Nkg3My4wMDJWNzMuNTcxaDMzLjY2N2MxNS44MzMgMCAzMCA2LjMzNCAzMCA0MS42NjdabTUxLjk5NyAyNi41MDdjOSAwIDEzLjY2Ni0zIDE1LjMzMy01di05LjE2NmgtMTQuMzM0di0xNC4zMzRoMjguNXYzMy4xNjdjLTIuNSAzLjgzMy0xNi4xNjYgMTEuMzMzLTI4LjY2NiAxMS4zMzNjLTIwLjUgMC0zNy44MzMtOC0zNy44MzMtNDMuMzMzczE3LjUtNDEuNjY2IDMzLjMzMy00MS42NjZjMjQuODMzIDAgMzEgMTMgMzMgMjQuNWwtMTQuNjY3IDMuMzMzYy0uODMzLTUuMzM0LTUuNS0xMi0xNi4xNjYtMTJjLTEwLjgzNCAwLTE4LjMzNCAxLjE2Ni0xOC4zMzQgMjUuODMzYzAgMjQuNjY3IDcuODM0IDI3LjMzMyAxOS44MzQgMjcuMzMzWk0xMTkuNSAxMTUuMjQyYzAtMjQuNjY3LTcuNS0yNS44MzMtMTguMzMzLTI1LjgzM2gtMTAuNXY1MS42NjZoMTAuNWMxMC44MzMgMCAxOC4zMzMtMS4xNjcgMTguMzMzLTI1LjgzM1pNMCAxNTYuOTA0VjczLjU3MWg1M3YxNS44MzRIMTcuNjY3djE3aDI2LjY2NnYxNS42NjZIMTcuNjY3djE5SDUzdjE1LjgzM0gwWiIvPjwvc3ZnPg==",
-    url: "https://www.edgedb.com",
-    spectrum: "bleeding_edge",
-    tagline: "A graph-like schema with a relational core",
-    repo: "edgedb/edgedb",
-    links: [
-      {
-        label: "Getting started",
-        href: "https://www.edgedb.com/docs/intro/quickstart",
-      },
-      {
-        label: "Docs",
-        href: "https://www.edgedb.com/docs",
-      },
-    ],
-  },
 
   // Analytics
   {
