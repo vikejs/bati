@@ -7,10 +7,7 @@ import { hattip } from "@hattip/vite";
 
 export default defineConfig({
   plugins: [
-    vike({
-      //# BATI.has("vercel")
-      prerender: true,
-    }),
+    vike(),
     //# BATI.has("hattip") && BATI.has("vercel")
     process.env.NODE_ENV !== "production" ? hattip() : undefined,
     //# BATI.has("hattip") && !BATI.has("vercel")
