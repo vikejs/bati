@@ -3,7 +3,6 @@ import "./style.css";
 import "./tailwind.css";
 //# BATI.has("panda-css")
 import "./panda.css";
-import React from "react";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link.js";
 import { css } from "../styled-system/css";

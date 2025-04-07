@@ -1,8 +1,6 @@
-// @ts-nocheck
-
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
-import react from "eslint-plugin-react/configs/recommended.js";
+import react from "eslint-plugin-react";
 import solid from "eslint-plugin-solid/configs/typescript";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
@@ -78,9 +76,9 @@ export default tseslint.config(
       "boilerplates/react/**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}",
       "boilerplates/react-*/**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}",
     ],
-    ...react,
+    ...react.configs.flat.recommended,
     languageOptions: {
-      ...react.languageOptions,
+      ...react.configs.flat.recommended.languageOptions,
       globals: {
         ...globals.serviceworker,
         ...globals.browser,
@@ -93,6 +91,7 @@ export default tseslint.config(
       },
     },
   },
+  react.configs.flat["jsx-runtime"],
   {
     files: ["boilerplates/react/**/*.tsx", "boilerplates/react-*/**/*.tsx"],
     rules: {

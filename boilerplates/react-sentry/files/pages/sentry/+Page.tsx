@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/react";
 
 export default function ReactSentryErrorPage() {
-  const [sentryClientStatus, setSentryClientStatus] = React.useState({
+  const [sentryClientStatus, setSentryClientStatus] = useState({
     client_not_loaded: false,
     enabled: true,
     dsn_missing: false,

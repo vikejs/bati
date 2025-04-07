@@ -1,8 +1,6 @@
-// @ts-nocheck
-
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
-import react from "eslint-plugin-react/configs/recommended.js";
+import react from "eslint-plugin-react";
 import solid from "eslint-plugin-solid/configs/typescript";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
@@ -64,9 +62,9 @@ export default tseslint.config(
   //# BATI.has("react")
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
-    ...react,
+    ...react.configs.flat.recommended,
     languageOptions: {
-      ...react.languageOptions,
+      ...react.configs.flat.recommended.languageOptions,
       globals: {
         ...globals.serviceworker,
         ...globals.browser,
@@ -79,6 +77,8 @@ export default tseslint.config(
       },
     },
   },
+  //# BATI.has("react")
+  react.configs.flat["jsx-runtime"],
   //# BATI.has("solid")
   {
     files: ["**/*.{ts,tsx,js,jsx}"],

@@ -2,7 +2,7 @@ import "firebaseui/dist/firebaseui.css";
 import { startFirebaseUI } from "@batijs/firebase-auth/libs/firebaseUI";
 import { getAuth, type UserCredential } from "firebase/auth";
 import * as firebaseui from "firebaseui";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { reload } from "vike/client/router";
 
 export default Page;
