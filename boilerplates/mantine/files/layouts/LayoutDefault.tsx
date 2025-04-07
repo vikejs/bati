@@ -1,5 +1,4 @@
 import "@mantine/core/styles.css";
-import React from "react";
 import { AppShell, Burger, Group, Image, MantineProvider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import theme from "./theme.js";

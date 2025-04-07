@@ -89,12 +89,12 @@ describe("ts: if-elseif-else block", () => {
     `if (BATI.has("react")) {
     content = { ...content, jsx: "react" };
   } else if (BATI.has("solid")) {
-    content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };
   } else {
     console.log("NOTHING TO DO");
   }`,
     `content = { ...content, jsx: "react" };`,
-    `content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`,
+    `content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };`,
     `console.log("NOTHING TO DO");`,
   );
 });
@@ -104,11 +104,11 @@ describe("ts: if-elseif-else statement", () => {
     `if (BATI.has("react"))
     content = { ...content, jsx: "react" };
   else if (BATI.has("solid"))
-    content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };
+    content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };
   else
     console.log("NOTHING TO DO");`,
     `content = { ...content, jsx: "react" };`,
-    `content = { ...content, jsx: "preserve", jsxImportSource: "solid-js" };`,
+    `content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };`,
     `console.log("NOTHING TO DO");`,
   );
 });

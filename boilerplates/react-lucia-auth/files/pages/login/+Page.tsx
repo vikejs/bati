@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import { navigate } from "vike/client/router";
 
 type ValidationError = { username: string | null; password: string | null; invalid?: string };

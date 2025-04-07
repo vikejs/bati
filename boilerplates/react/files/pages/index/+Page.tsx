@@ -1,4 +1,3 @@
-import React from "react";
 import { Counter } from "./Counter.js";
 import { css } from "../../styled-system/css";
 

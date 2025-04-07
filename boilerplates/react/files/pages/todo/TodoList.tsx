@@ -2,7 +2,7 @@ import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { css } from "../../styled-system/css";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function TodoList({ initialTodoItems }: { initialTodoItems: { text: string }[] }) {
   const [todoItems, setTodoItems] = useState(initialTodoItems);
