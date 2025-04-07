@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
 import react from "eslint-plugin-react";
