@@ -306,31 +306,6 @@ importers:
         specifier: ^0.41.0
         version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
 
-  boilerplates/edgedb:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@edgedb/generate':
-        specifier: ^0.6.1
-        version: 0.6.1(gel@2.0.2)
-      '@prisma/client':
-        specifier: ^6.5.0
-        version: 6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3)
-      '@types/node':
-        specifier: ^18.19.86
-        version: 18.19.86
-      colorette:
-        specifier: ^2.0.20
-        version: 2.0.20
-      edgedb:
-        specifier: ^1.5.12
-        version: 1.5.12
-
   boilerplates/eslint:
     dependencies:
       '@batijs/core':
@@ -2292,10 +2267,6 @@ packages:
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
 
-  '@edgedb/generate@0.6.1':
-    resolution: {integrity: sha512-nsxeWg7siK6Gzl7ic4BTVv/oLsuhDzgxbnbSOXx5M56JNai7CLMljn8nbkez7B03tCF1+LHZodWHPxGh1LoUPA==}
-    hasBin: true
-
   '@emnapi/runtime@1.4.0':
     resolution: {integrity: sha512-64WYIf4UYcdLnbKn/umDlNjQDSS8AgZrI/R9+x5ilkUVFxXcA1Ebl+gQLc/6mERA4407Xof0R7wEyEuj091CVw==}
 
@@ -3220,13 +3191,6 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@gel/generate@0.6.2':
-    resolution: {integrity: sha512-Ew+lDLPi1wRyH7XhmUzDAYDGQ4Eu8pgP5DoIvCKPbc/uQYc2zIrTkaxGzoPN5MV+TwqgUNOvthW/38vzP0+/GA==}
-    engines: {node: '>= 18.0.0'}
-    hasBin: true
-    peerDependencies:
-      gel: ^2.0.1
-
   '@ghostery/adblocker-content@2.5.0':
     resolution: {integrity: sha512-Gn9fslZdacx1m1e3/2LSUPWagLObYmIDbkgvZTtgqT/OHc17VbM71AxWEjtC/xzo5K4PI25958PjvidoEH7ufw==}
 
@@ -3352,9 +3316,6 @@ packages:
   '@humanwhocodes/retry@0.4.2':
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
-
-  '@iarna/toml@2.2.5':
-    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -5770,11 +5731,6 @@ packages:
 
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
-
-  edgedb@1.5.12:
-    resolution: {integrity: sha512-IZHCAyKmdSpLqGuM2oSrw0037Qr8Y0S5KoJYArsc5KYJCv10ScU7Uyr/b7pOd2UYWx8DBFSyTmMweIgFRVOdCQ==}
-    engines: {node: '>= 18.0.0'}
-    hasBin: true
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -10368,13 +10324,6 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
-  '@edgedb/generate@0.6.1(gel@2.0.2)':
-    dependencies:
-      '@gel/generate': 0.6.2(gel@2.0.2)
-    transitivePeerDependencies:
-      - gel
-      - supports-color
-
   '@emnapi/runtime@1.4.0':
     dependencies:
       tslib: 2.8.1
@@ -11168,14 +11117,6 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@gel/generate@0.6.2(gel@2.0.2)':
-    dependencies:
-      '@iarna/toml': 2.2.5
-      debug: 4.4.0
-      gel: 2.0.2
-    transitivePeerDependencies:
-      - supports-color
-
   '@ghostery/adblocker-content@2.5.0':
     dependencies:
       '@ghostery/adblocker-extended-selectors': 2.5.0
@@ -11359,8 +11300,6 @@ snapshots:
   '@humanwhocodes/retry@0.3.1': {}
 
   '@humanwhocodes/retry@0.4.2': {}
-
-  '@iarna/toml@2.2.5': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -14124,16 +14063,6 @@ snapshots:
   ecdsa-sig-formatter@1.0.11:
     dependencies:
       safe-buffer: 5.2.1
-
-  edgedb@1.5.12:
-    dependencies:
-      debug: 4.4.0
-      env-paths: 3.0.0
-      semver: 7.7.1
-      shell-quote: 1.8.2
-      which: 4.0.0
-    transitivePeerDependencies:
-      - supports-color
 
   ee-first@1.1.1: {}
 
