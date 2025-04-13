@@ -304,7 +304,7 @@ importers:
         version: 0.30.6
       drizzle-orm:
         specifier: ^0.41.0
-        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3))
 
   boilerplates/eslint:
     dependencies:
@@ -674,6 +674,31 @@ importers:
         specifier: ^6.2.5
         version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
+  boilerplates/kysely:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: link:../../packages/compile
+      '@types/better-sqlite3':
+        specifier: ^7.6.13
+        version: 7.6.13
+      '@types/node':
+        specifier: ^18.19.86
+        version: 18.19.86
+      better-sqlite3:
+        specifier: ^11.9.1
+        version: 11.9.1
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
+      kysely:
+        specifier: ^0.28.0
+        version: 0.28.0
+
   boilerplates/lucia-auth:
     dependencies:
       '@batijs/core':
@@ -688,7 +713,7 @@ importers:
         version: 4.20250406.0
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
-        version: 1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)
+        version: 1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@11.9.1)(lucia@3.2.2)
@@ -715,7 +740,7 @@ importers:
         version: 16.4.7
       drizzle-orm:
         specifier: ^0.41.0
-        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3))
       lucia:
         specifier: ^3.2.2
         version: 3.2.2
@@ -6933,6 +6958,10 @@ packages:
   known-css-properties@0.30.0:
     resolution: {integrity: sha512-VSWXYUnsPu9+WYKkfmJyLKtIvaRJi1kXUqVmBACORXZQxT5oZDsoZ2vQP+bQFDnWtpI/4eq3MLoRMjI2fnLzTQ==}
 
+  kysely@0.28.0:
+    resolution: {integrity: sha512-hq8VcLy57Ww7oPTTVEOrT9ml+g8ehbbmEUkHmW4Xtubu+NHdKZi6SH6egmD4cjDhn3b/0s0h/6AjdPayOTJhNw==}
+    engines: {node: '>=18.0.0'}
+
   lambda-stream@0.5.0:
     resolution: {integrity: sha512-AaMXqUM+GcJ2OpNF2LI78jzbZ84rSckH+uKfstMQFqXDn+ZBLIkJgkUk+L0fuCGzw+LP5VToUxJKDfAbtLXSGw==}
 
@@ -11755,9 +11784,9 @@ snapshots:
   '@kikobeats/time-span@1.0.5':
     optional: true
 
-  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)':
+  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)':
     dependencies:
-      drizzle-orm: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+      drizzle-orm: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3))
       lucia: 3.2.2
 
   '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.9.1)(lucia@3.2.2)':
@@ -14028,7 +14057,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)):
+  drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(kysely@0.28.0)(prisma@6.5.0(typescript@5.8.3)):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250406.0
       '@opentelemetry/api': 1.9.0
@@ -14036,6 +14065,7 @@ snapshots:
       '@types/better-sqlite3': 7.6.13
       better-sqlite3: 11.9.1
       gel: 2.0.2
+      kysely: 0.28.0
       prisma: 6.5.0(typescript@5.8.3)
 
   dunder-proto@1.0.1:
@@ -15722,6 +15752,8 @@ snapshots:
       zod-validation-error: 3.4.0(zod@3.24.2)
 
   known-css-properties@0.30.0: {}
+
+  kysely@0.28.0: {}
 
   lambda-stream@0.5.0: {}
 
