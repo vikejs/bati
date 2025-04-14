@@ -26,11 +26,11 @@ importers:
   .:
     optionalDependencies:
       browserless:
-        specifier: ^10.7.5
-        version: 10.7.5(puppeteer@24.6.0(typescript@5.8.3))
+        specifier: ^10.7.9
+        version: 10.7.9(puppeteer@24.6.1(typescript@5.8.3))
       puppeteer:
-        specifier: ^24.6.0
-        version: 24.6.0(typescript@5.8.3)
+        specifier: ^24.6.1
+        version: 24.6.1(typescript@5.8.3)
     devDependencies:
       '@eslint/js':
         specifier: ^9.24.0
@@ -45,11 +45,11 @@ importers:
         specifier: ^9.24.0
         version: 9.24.0(jiti@2.4.2)
       eslint-config-prettier:
-        specifier: ^10.1.1
-        version: 10.1.1(eslint@9.24.0(jiti@2.4.2))
+        specifier: ^10.1.2
+        version: 10.1.2(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: ^5.2.6
-        version: 5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.1(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
+        version: 5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-react:
         specifier: ^7.37.5
         version: 7.37.5(eslint@9.24.0(jiti@2.4.2))
@@ -78,8 +78,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       typescript-eslint:
-        specifier: ^8.29.0
-        version: 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+        specifier: ^8.29.1
+        version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       vue-eslint-parser:
         specifier: ^10.1.3
         version: 10.1.3(eslint@9.24.0(jiti@2.4.2))
@@ -113,8 +113,8 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
 
   boilerplates/aws:
     dependencies:
@@ -135,8 +135,8 @@ importers:
         specifier: ^2.1007.0
         version: 2.1007.0
       aws-cdk-lib:
-        specifier: ^2.188.0
-        version: 2.188.0(constructs@10.4.2)
+        specifier: ^2.189.0
+        version: 2.189.0(constructs@10.4.2)
       cdk:
         specifier: ^2.1007.0
         version: 2.1007.0
@@ -191,8 +191,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@hattip/adapter-cloudflare-workers':
         specifier: ^0.0.49
         version: 0.0.49
@@ -204,10 +204,10 @@ importers:
         version: 7.0.2
       vike-cloudflare:
         specifier: ^0.1.7
-        version: 0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       wrangler:
-        specifier: ^4.7.2
-        version: 4.7.2(@cloudflare/workers-types@4.20250406.0)
+        specifier: ^4.10.0
+        version: 4.10.0(@cloudflare/workers-types@4.20250414.0)
 
   boilerplates/compiled:
     dependencies:
@@ -225,11 +225,11 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-compiled-react:
-        specifier: ^1.2.0
-        version: 1.2.0(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        specifier: ^1.3.1
+        version: 1.3.1(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/d1:
     dependencies:
@@ -241,20 +241,20 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       vike:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       wrangler:
-        specifier: ^4.7.2
-        version: 4.7.2(@cloudflare/workers-types@4.20250406.0)
+        specifier: ^4.10.0
+        version: 4.10.0(@cloudflare/workers-types@4.20250414.0)
 
   boilerplates/d1-sqlite:
     dependencies:
@@ -266,14 +266,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       vike:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
@@ -297,14 +297,14 @@ importers:
         specifier: ^11.9.1
         version: 11.9.1
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       drizzle-kit:
         specifier: ^0.30.6
         version: 0.30.6
       drizzle-orm:
         specifier: ^0.41.0
-        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+        version: 0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3))
 
   boilerplates/eslint:
     dependencies:
@@ -322,11 +322,11 @@ importers:
         specifier: ^9.24.0
         version: 9.24.0(jiti@2.4.2)
       eslint-config-prettier:
-        specifier: ^10.1.1
-        version: 10.1.1(eslint@9.24.0(jiti@2.4.2))
+        specifier: ^10.1.2
+        version: 10.1.2(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: ^5.2.6
-        version: 5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.1(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
+        version: 5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-react:
         specifier: ^7.37.5
         version: 7.37.5(eslint@9.24.0(jiti@2.4.2))
@@ -340,8 +340,8 @@ importers:
         specifier: ^16.0.0
         version: 16.0.0
       typescript-eslint:
-        specifier: ^8.29.0
-        version: 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+        specifier: ^8.29.1
+        version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       vue-eslint-parser:
         specifier: ^10.1.3
         version: 10.1.3(eslint@9.24.0(jiti@2.4.2))
@@ -359,8 +359,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -368,14 +368,14 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/express':
-        specifier: ^0.4.12
-        version: 0.4.12(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       express:
         specifier: ^4.21.2
         version: 4.21.2
@@ -389,8 +389,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/fastify:
     dependencies:
@@ -411,8 +411,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -420,17 +420,17 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/fastify':
-        specifier: ^0.5.14
-        version: 0.5.14(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.5.16
+        version: 0.5.16(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       fastify:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.0
       telefunc:
         specifier: ^0.2.3
         version: 0.2.3(@babel/core@7.26.10)(@babel/parser@7.27.0)(@babel/types@7.27.0)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
@@ -441,8 +441,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/firebase-auth:
     dependencies:
@@ -457,14 +457,14 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       firebase:
         specifier: ^11.6.0
         version: 11.6.0
@@ -478,8 +478,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/google-analytics:
     dependencies:
@@ -510,8 +510,8 @@ importers:
         specifier: ^0.0.49
         version: 0.0.49
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -522,14 +522,14 @@ importers:
         specifier: ^1.15.7
         version: 1.15.7
       '@universal-middleware/h3':
-        specifier: ^0.4.8
-        version: 0.4.8(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.9
+        version: 0.4.9(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       h3:
         specifier: ~1.15.1
         version: 1.15.1
@@ -546,8 +546,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/hattip:
     dependencies:
@@ -562,8 +562,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@hattip/adapter-aws-lambda':
         specifier: ^0.0.49
         version: 0.0.49
@@ -584,28 +584,28 @@ importers:
         version: 0.0.49
       '@hattip/vite':
         specifier: ^0.0.49
-        version: 0.0.49(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.0.49(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       '@hattip/walk':
         specifier: ^0.0.49
         version: 0.0.49
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/aws-lambda':
-        specifier: ^8.10.148
-        version: 8.10.148
+        specifier: ^8.10.149
+        version: 8.10.149
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/hattip':
-        specifier: ^0.4.7
-        version: 0.4.7(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.8
+        version: 0.4.8(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       hattip:
         specifier: ^0.0.33
         version: 0.0.33
@@ -616,8 +616,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/hono:
     dependencies:
@@ -632,35 +632,35 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@hono/node-server':
-        specifier: ^1.14.0
-        version: 1.14.0(hono@4.7.5)
+        specifier: ^1.14.1
+        version: 1.14.1(hono@4.7.6)
       '@hono/vite-dev-server':
         specifier: ^0.19.0
-        version: 0.19.0(hono@4.7.5)(miniflare@4.20250404.0)(wrangler@4.7.2(@cloudflare/workers-types@4.20250406.0))
+        version: 0.19.0(hono@4.7.6)(miniflare@4.20250409.0)(wrangler@4.10.0(@cloudflare/workers-types@4.20250414.0))
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/aws-lambda':
-        specifier: ^8.10.148
-        version: 8.10.148
+        specifier: ^8.10.149
+        version: 8.10.149
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/hono':
-        specifier: ^0.4.8
-        version: 0.4.8(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.9
+        version: 0.4.9(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       hono:
-        specifier: ^4.7.5
-        version: 4.7.5
+        specifier: ^4.7.6
+        version: 4.7.6
       telefunc:
         specifier: ^0.2.3
         version: 0.2.3(@babel/core@7.26.10)(@babel/parser@7.27.0)(@babel/types@7.27.0)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
@@ -671,8 +671,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/lucia-auth:
     dependencies:
@@ -684,11 +684,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.1.0
-        version: 1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)
+        version: 1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3)))(lucia@3.2.2)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@11.9.1)(lucia@3.2.2)
@@ -699,8 +699,8 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       arctic:
         specifier: ^3.6.0
         version: 3.6.0
@@ -711,11 +711,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       drizzle-orm:
         specifier: ^0.41.0
-        version: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+        version: 0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3))
       lucia:
         specifier: ^3.2.2
         version: 3.2.2
@@ -723,8 +723,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/mantine:
     dependencies:
@@ -736,20 +736,20 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@mantine/core':
-        specifier: ^7.17.3
-        version: 7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^7.17.4
+        version: 7.17.4(@mantine/hooks@7.17.4(react@19.1.0))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@mantine/hooks':
-        specifier: ^7.17.3
-        version: 7.17.3(react@19.1.0)
+        specifier: ^7.17.4
+        version: 7.17.4(react@19.1.0)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@types/react':
-        specifier: ^19.1.0
-        version: 19.1.0
-      '@types/react-dom':
         specifier: ^19.1.1
-        version: 19.1.1(@types/react@19.1.0)
+        version: 19.1.1
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.1)
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -769,11 +769,11 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-compiled-react:
-        specifier: ^1.2.0
-        version: 1.2.0(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        specifier: ^1.3.1
+        version: 1.3.1(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/panda-css:
     dependencies:
@@ -820,8 +820,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@prisma/client':
-        specifier: ^6.5.0
-        version: 6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3)
+        specifier: ^6.6.0
+        version: 6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -829,8 +829,8 @@ importers:
         specifier: ^2.0.20
         version: 2.0.20
       prisma:
-        specifier: ^6.5.0
-        version: 6.5.0(typescript@5.8.3)
+        specifier: ^6.6.0
+        version: 6.6.0(typescript@5.8.3)
 
   boilerplates/react:
     dependencies:
@@ -851,8 +851,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@mantine/core':
-        specifier: ^7.17.3
-        version: 7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^7.17.4
+        version: 7.17.4(@mantine/hooks@7.17.4(react@19.1.0))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@pandacss/dev':
         specifier: ^0.53.3
         version: 0.53.3(typescript@5.8.3)
@@ -860,14 +860,14 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@types/react':
-        specifier: ^19.1.0
-        version: 19.1.0
-      '@types/react-dom':
         specifier: ^19.1.1
-        version: 19.1.1(@types/react@19.1.0)
+        version: 19.1.1
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.1)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -887,11 +887,11 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-compiled-react:
-        specifier: ^1.2.0
-        version: 1.2.0(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        specifier: ^1.3.1
+        version: 1.3.1(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/react-firebase-auth:
     dependencies:
@@ -906,11 +906,11 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@types/react':
-        specifier: ^19.1.0
-        version: 19.1.0
-      '@types/react-dom':
         specifier: ^19.1.1
-        version: 19.1.1(@types/react@19.1.0)
+        version: 19.1.1
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.1)
       firebase:
         specifier: ^11.6.0
         version: 11.6.0
@@ -927,8 +927,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/react-lucia-auth:
     dependencies:
@@ -943,11 +943,11 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       '@types/react':
-        specifier: ^19.1.0
-        version: 19.1.0
-      '@types/react-dom':
         specifier: ^19.1.1
-        version: 19.1.1(@types/react@19.1.0)
+        version: 19.1.1
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.1)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -958,8 +958,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/react-sentry:
     dependencies:
@@ -971,17 +971,17 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@sentry/react':
-        specifier: ^9.11.0
-        version: 9.11.0(react@19.1.0)
+        specifier: ^9.12.0
+        version: 9.12.0(react@19.1.0)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@types/react':
-        specifier: ^19.1.0
-        version: 19.1.0
-      '@types/react-dom':
         specifier: ^19.1.1
-        version: 19.1.1(@types/react@19.1.0)
+        version: 19.1.1
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.1)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -989,8 +989,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/sentry:
     dependencies:
@@ -1008,8 +1008,8 @@ importers:
         specifier: ^18.19.86
         version: 18.19.86
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/shadcn-ui:
     dependencies:
@@ -1036,11 +1036,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.487.0
-        version: 0.487.0(react@19.1.0)
+        specifier: ^0.488.0
+        version: 0.488.0(react@19.1.0)
       tailwind-merge:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^3.2.0
+        version: 3.2.0
       tailwindcss:
         specifier: ^4.1.3
         version: 4.1.3
@@ -1055,7 +1055,7 @@ importers:
         version: link:../../packages/compile
       '@hattip/vite':
         specifier: ^0.0.49
-        version: 0.0.49(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.0.49(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -1063,11 +1063,11 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-vercel:
         specifier: ^9.0.5
-        version: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/shared-db:
     dependencies:
@@ -1079,14 +1079,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
 
   boilerplates/shared-no-db:
     dependencies:
@@ -1107,20 +1107,20 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       vike:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/shared-todo:
     dependencies:
@@ -1132,8 +1132,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -1142,7 +1142,7 @@ importers:
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vike-cloudflare:
         specifier: ^0.1.7
-        version: 0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/solid:
     dependencies:
@@ -1173,13 +1173,13 @@ importers:
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vike-solid:
         specifier: ^0.7.9
-        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-solid:
         specifier: ^2.11.6
-        version: 2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/solid-firebase-auth:
     dependencies:
@@ -1206,8 +1206,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/solid-lucia-auth:
     dependencies:
@@ -1228,8 +1228,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/solid-sentry:
     dependencies:
@@ -1241,8 +1241,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@sentry/solid':
-        specifier: ^9.11.0
-        version: 9.11.0(solid-js@1.9.5)
+        specifier: ^9.12.0
+        version: 9.12.0(solid-js@1.9.5)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -1251,10 +1251,10 @@ importers:
         version: 1.9.5
       vike-solid:
         specifier: ^0.7.9
-        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/sqlite:
     dependencies:
@@ -1275,8 +1275,8 @@ importers:
         specifier: ^11.9.1
         version: 11.9.1
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       tsx:
         specifier: ^4.19.3
         version: 4.19.3
@@ -1292,7 +1292,7 @@ importers:
         version: link:../../packages/compile
       '@tailwindcss/vite':
         specifier: ^4.1.3
-        version: 4.1.3(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 4.1.3(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -1300,8 +1300,8 @@ importers:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
       daisyui:
-        specifier: ^5.0.12
-        version: 5.0.12
+        specifier: ^5.0.19
+        version: 5.0.19
       tailwindcss:
         specifier: ^4.1.3
         version: 4.1.3
@@ -1309,8 +1309,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/telefunc:
     dependencies:
@@ -1322,14 +1322,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       telefunc:
         specifier: ^0.2.3
         version: 0.2.3(@babel/core@7.26.10)(@babel/parser@7.27.0)(@babel/types@7.27.0)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
@@ -1337,8 +1337,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/trpc:
     dependencies:
@@ -1350,23 +1350,23 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@trpc/client':
-        specifier: ^11.0.2
-        version: 11.0.2(@trpc/server@11.0.2(typescript@5.8.3))(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(@trpc/server@11.1.0(typescript@5.8.3))(typescript@5.8.3)
       '@trpc/server':
-        specifier: ^11.0.2
-        version: 11.0.2(typescript@5.8.3)
+        specifier: ^11.1.0
+        version: 11.1.0(typescript@5.8.3)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   boilerplates/ts-rest:
     dependencies:
@@ -1378,20 +1378,20 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@cloudflare/workers-types':
-        specifier: ^4.20250406.0
-        version: 4.20250406.0
+        specifier: ^4.20250414.0
+        version: 4.20250414.0
       '@ts-rest/core':
         specifier: ^3.52.1
         version: 3.52.1(@types/node@18.19.86)(zod@3.24.2)
       '@ts-rest/serverless':
         specifier: ^3.52.1
-        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@18.19.86)(zod@3.24.2))(@types/aws-lambda@8.10.148)(zod@3.24.2)
+        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@18.19.86)(zod@3.24.2))(@types/aws-lambda@8.10.149)(zod@3.24.2)
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
       '@universal-middleware/core':
-        specifier: ^0.4.6
-        version: 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+        specifier: ^0.4.7
+        version: 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -1410,16 +1410,16 @@ importers:
         version: 18.19.86
       '@vite-plugin-vercel/vike':
         specifier: ^9.0.4
-        version: 9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vike:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-vercel:
         specifier: ^9.0.5
-        version: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
   boilerplates/vue:
     dependencies:
@@ -1438,7 +1438,7 @@ importers:
         version: 18.19.86
       '@vitejs/plugin-vue':
         specifier: ^5.2.3
-        version: 5.2.3(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
+        version: 5.2.3(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       '@vue/compiler-sfc':
         specifier: ^3.5.13
         version: 3.5.13
@@ -1453,7 +1453,7 @@ importers:
         version: 5.8.3
       unplugin-vue-markdown:
         specifier: ^28.3.1
-        version: 28.3.1(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 28.3.1(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vike:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
@@ -1461,8 +1461,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1492,8 +1492,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1514,8 +1514,8 @@ importers:
         specifier: ^0.4.228
         version: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1530,8 +1530,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compile
       '@sentry/vue':
-        specifier: ^9.11.0
-        version: 9.11.0(vue@3.5.13(typescript@5.8.3))
+        specifier: ^9.12.0
+        version: 9.12.0(vue@3.5.13(typescript@5.8.3))
       '@types/node':
         specifier: ^18.19.86
         version: 18.19.86
@@ -1539,8 +1539,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1622,8 +1622,8 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7(rollup@4.39.0)
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   packages/compile:
     dependencies:
@@ -1668,11 +1668,11 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@typescript-eslint/parser':
-        specifier: ^8.29.0
-        version: 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+        specifier: ^8.29.1
+        version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/utils':
-        specifier: ^8.29.0
-        version: 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+        specifier: ^8.29.1
+        version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       attributes-parser:
         specifier: ^2.2.3
         version: 2.2.3
@@ -1788,14 +1788,14 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+        specifier: ^16.5.0
+        version: 16.5.0
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
       knip:
-        specifier: ^5.47.0
-        version: 5.47.0(@types/node@18.19.86)(typescript@5.8.3)
+        specifier: ^5.50.3
+        version: 5.50.3(@types/node@18.19.86)(typescript@5.8.3)
       mri:
         specifier: ^1.2.0
         version: 1.2.0
@@ -1833,8 +1833,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       zx:
-        specifier: ^8.5.0
-        version: 8.5.0
+        specifier: ^8.5.2
+        version: 8.5.2
     devDependencies:
       '@types/node':
         specifier: ^18.19.86
@@ -1874,7 +1874,7 @@ importers:
         version: 1.11.0
       '@tailwindcss/vite':
         specifier: ^4.1.3
-        version: 4.1.3(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 4.1.3(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       babel-preset-solid:
         specifier: ^1.9.5
         version: 1.9.5(@babel/core@7.26.10)
@@ -1885,8 +1885,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       daisyui:
-        specifier: ^5.0.12
-        version: 5.0.12
+        specifier: ^5.0.19
+        version: 5.0.19
       esbuild:
         specifier: ^0.25.2
         version: 0.25.2
@@ -1916,13 +1916,13 @@ importers:
         version: 0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vike-solid:
         specifier: ^0.7.9
-        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vite:
-        specifier: ^6.2.5
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+        specifier: ^6.2.6
+        version: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-solid:
         specifier: ^2.11.6
-        version: 2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+        version: 2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
 packages:
 
@@ -2163,16 +2163,16 @@ packages:
     resolution: {integrity: sha512-F3vdR/rwI//aSxrCCJhAsJr9iOi+tQbIaKYBU9FFhydIuVbwvrjvDt/vwJDyk1uIdRbQTRy5QiKt/QO8S9I7Pw==}
     engines: {node: '>= 12'}
 
-  '@browserless/goto@10.7.3':
-    resolution: {integrity: sha512-/oOMM/107jlHhrWaaQaILiHX2yLdWAIlpJOA6+j9+uDJHlgX9iUbqCllEI5qnjzGllQMZ34an8SvAs3KsmPi4w==}
+  '@browserless/goto@10.7.6':
+    resolution: {integrity: sha512-zJnMD9t5CTJOohAPbUwRhm6sZDlZ3l2rrlPyToFLuiGErsoRdZTrAUGv8Hxl7xsTnQTUZWx0s9DKRMqlvpHGzA==}
     engines: {node: '>= 12'}
 
-  '@browserless/pdf@10.7.3':
-    resolution: {integrity: sha512-iahTwC3B9lUxuMVKCsGdtTjHxAYStuKbDweXiDSKj5h+ggBfCiD9lJTpWDZ0/avIgTT/gaRbTInZu7wMl2hjkA==}
+  '@browserless/pdf@10.7.6':
+    resolution: {integrity: sha512-4WILYnFHHUjSQYkr5WpbxPhPWef6X17bC81pjFjPkcny1C3+uF27WWKiaeKpKXcSjmidiUAF9k9lP5/gOL//DA==}
     engines: {node: '>= 12'}
 
-  '@browserless/screenshot@10.7.5':
-    resolution: {integrity: sha512-bGRdXiV64n6hJ7hlBWqO1yXAz/FBuTbyHU7r2lOBx3AtcTttg818um/d8NwAWoza2nvYf6QNJ8m7gm/kxzR+OQ==}
+  '@browserless/screenshot@10.7.9':
+    resolution: {integrity: sha512-E1pSUmlzosEVkybymKDMOg3yNg5MF3Y2fQ7t5fgo7hFlON/2gH+yIY4OW615ZzliWd06xavnEcU7Kw+kcF64MA==}
     engines: {node: '>= 12'}
 
   '@clack/core@0.4.1':
@@ -2198,38 +2198,38 @@ packages:
       workerd:
         optional: true
 
-  '@cloudflare/workerd-darwin-64@1.20250404.0':
-    resolution: {integrity: sha512-+z67wjimn7pZDJI5Ibt2TtNxreFJdFPd5dBMmQqtIfkwrlIsL4PkjHYdiffO7guFP9UygomThuKUaBOU4JA15Q==}
+  '@cloudflare/workerd-darwin-64@1.20250409.0':
+    resolution: {integrity: sha512-smA9yq77xsdQ1NMLhFz3JZxMHGd01lg0bE+X3dTFmIUs+hHskJ+HJ/IkMFInkCCeEFlUkoL4yO7ilaU/fin/xA==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-arm64@1.20250404.0':
-    resolution: {integrity: sha512-MxFuWqR5bMcc92khreSlYOJxr0OIlJxABdrWQsaogWsxI6p7Df9gV1T36pqg+ERa9fVhkkGERkalt9DJYyYicA==}
+  '@cloudflare/workerd-darwin-arm64@1.20250409.0':
+    resolution: {integrity: sha512-oLVcf+Y5Qun8JHcy1VcR/YnbA5U2ne0czh3XNhDqdHZFK8+vKeC7MnVPX+kEqQA3+uLcMM1/FsIDU1U4Na0h1g==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
 
-  '@cloudflare/workerd-linux-64@1.20250404.0':
-    resolution: {integrity: sha512-f4rNJ45376vGB6WHmxxiZ50nmxMws337EvWthhNAZTyeoTYmJUbZjjWCaHR8clWXN8LLK1Tu1bkjsih730X41g==}
+  '@cloudflare/workerd-linux-64@1.20250409.0':
+    resolution: {integrity: sha512-D31B4kdC3a0RD5yfpdIa89//kGHbYsYihZmejm1k4S4NHOho3MUDHAEh4aHtafQNXbZdydGHlSyiVYjTdQ9ILQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-arm64@1.20250404.0':
-    resolution: {integrity: sha512-UW54a/vZG6W1oiA9PUSatQ0LLWrxnwAX7rN/bCFLiT6n51PP8KgpM1LzrIvQM80WjH/ufqopZJe/TSgrrSss6Q==}
+  '@cloudflare/workerd-linux-arm64@1.20250409.0':
+    resolution: {integrity: sha512-Sr59P0TREayil5OQ7kcbjuIn6L6OTSRLI91LKu0D8vi1hss2q9FUwBcwxg0+Yd/x+ty/x7IISiAK5QBkAMeITQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
 
-  '@cloudflare/workerd-windows-64@1.20250404.0':
-    resolution: {integrity: sha512-AJJP8vjJ6ioBzqUxVyByv5tE74z5LZ7G5To7w7dtYjWvKZzFo39bZZwGCGryHmH4yaOylXubFv72YVH8+Y4GSQ==}
+  '@cloudflare/workerd-windows-64@1.20250409.0':
+    resolution: {integrity: sha512-dK9I8zBX5rR7MtaaP2AhICQTEw3PVzHcsltN8o46w7JsbYlMvFOj27FfYH5dhs3IahgmIfw2e572QXW2o/dbpg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20250406.0':
-    resolution: {integrity: sha512-E42GP9oZFNOoykucfN9H9qaG3IeID6VMHc2zGjVuDYT2G55uESe56tstuGFYYwjMm36QeNob+ZryyiE92idFYA==}
+  '@cloudflare/workers-types@4.20250414.0':
+    resolution: {integrity: sha512-ZHl8LiyUMWiIxYqpasen8Lc75Ef+0afqL26TEd95eRIi5kgkEbjDJ7uIUnpxMoZTRI0J8Hy5YEPtt4nFXt+TpA==}
 
   '@compiled/babel-plugin-strip-runtime@0.37.1':
     resolution: {integrity: sha512-GESC3QXGhLd5ULzAre8NvbFmrICqD/lUX4VBse00VZmSeMDgbMMetPwFn9mfPdwiUj9tLXNTVswJzyT3OWYwtA==}
@@ -3278,8 +3278,8 @@ packages:
     resolution: {integrity: sha512-AgJgKLooZyQnzMfoFg5Mo/aHM+HGBC9ExpXIjNqGimYTRgNbL/K7X5EM1kR2JY90BNKk9lo6Usq1T/nWFdT7TQ==}
     hasBin: true
 
-  '@hono/node-server@1.14.0':
-    resolution: {integrity: sha512-YUCxJwgHRKSqjrdTk9e4VMGKN27MK5r4+MGPyZTgKH+IYbK+KtYbHeOcPGJ91KGGD6RIQiz2dAHxvjauNhOS8g==}
+  '@hono/node-server@1.14.1':
+    resolution: {integrity: sha512-vmbuM+HPinjWzPe7FFPWMMQMsbKE9gDPhaH0FFdqbGpkT5lp++tcWDTxwBl5EgS5y6JVgIaCdjeHRfQ4XRBRjQ==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -3323,8 +3323,20 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@img/sharp-darwin-arm64@0.34.1':
+    resolution: {integrity: sha512-pn44xgBtgpEbZsu+lWf2KNb6OAf70X68k+yk69Ic2Xz11zHR/w24/U49XT7AeRwJ0Px+mhALhU5LPci1Aymk7A==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [darwin]
+
   '@img/sharp-darwin-x64@0.33.5':
     resolution: {integrity: sha512-fyHac4jIc1ANYGRDxtiqelIbdWkIuQaI84Mv45KvGRRxSAa7o7d1ZKAOBaYbnepLC1WqxfpimdeWfvqqSGwR2Q==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@img/sharp-darwin-x64@0.34.1':
+    resolution: {integrity: sha512-VfuYgG2r8BpYiOUN+BfYeFo69nP/MIwAtSJ7/Zpxc5QF3KS22z8Pvg3FkrSFJBPNQ7mmcUcYQFBmEQp7eu1F8Q==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [darwin]
@@ -3334,8 +3346,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@img/sharp-libvips-darwin-arm64@1.1.0':
+    resolution: {integrity: sha512-HZ/JUmPwrJSoM4DIQPv/BfNh9yrOA8tlBbqbLz4JZ5uew2+o22Ik+tHQJcih7QJuSa0zo5coHTfD5J8inqj9DA==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@img/sharp-libvips-darwin-x64@1.0.4':
     resolution: {integrity: sha512-xnGR8YuZYfJGmWPvmlunFaWJsb9T/AO2ykoP3Fz/0X5XV2aoYBPkX6xqCQvUTKKiLddarLaxpzNe+b1hjeWHAQ==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@img/sharp-libvips-darwin-x64@1.1.0':
+    resolution: {integrity: sha512-Xzc2ToEmHN+hfvsl9wja0RlnXEgpKNmftriQp6XzY/RaSfwD9th+MSh0WQKzUreLKKINb3afirxW7A0fz2YWuQ==}
     cpu: [x64]
     os: [darwin]
 
@@ -3344,13 +3366,33 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@img/sharp-libvips-linux-arm64@1.1.0':
+    resolution: {integrity: sha512-IVfGJa7gjChDET1dK9SekxFFdflarnUB8PwW8aGwEoF3oAsSDuNUTYS+SKDOyOJxQyDC1aPFMuRYLoDInyV9Ew==}
+    cpu: [arm64]
+    os: [linux]
+
   '@img/sharp-libvips-linux-arm@1.0.5':
     resolution: {integrity: sha512-gvcC4ACAOPRNATg/ov8/MnbxFDJqf/pDePbBnuBDcjsI8PssmjoKMAz4LtLaVi+OnSb5FK/yIOamqDwGmXW32g==}
     cpu: [arm]
     os: [linux]
 
+  '@img/sharp-libvips-linux-arm@1.1.0':
+    resolution: {integrity: sha512-s8BAd0lwUIvYCJyRdFqvsj+BJIpDBSxs6ivrOPm/R7piTs5UIwY5OjXrP2bqXC9/moGsyRa37eYWYCOGVXxVrA==}
+    cpu: [arm]
+    os: [linux]
+
+  '@img/sharp-libvips-linux-ppc64@1.1.0':
+    resolution: {integrity: sha512-tiXxFZFbhnkWE2LA8oQj7KYR+bWBkiV2nilRldT7bqoEZ4HiDOcePr9wVDAZPi/Id5fT1oY9iGnDq20cwUz8lQ==}
+    cpu: [ppc64]
+    os: [linux]
+
   '@img/sharp-libvips-linux-s390x@1.0.4':
     resolution: {integrity: sha512-u7Wz6ntiSSgGSGcjZ55im6uvTrOxSIS8/dgoVMoiGE9I6JAfU50yH5BoDlYA1tcuGS7g/QNtetJnxA6QEsCVTA==}
+    cpu: [s390x]
+    os: [linux]
+
+  '@img/sharp-libvips-linux-s390x@1.1.0':
+    resolution: {integrity: sha512-xukSwvhguw7COyzvmjydRb3x/09+21HykyapcZchiCUkTThEQEOMtBj9UhkaBRLuBrgLFzQ2wbxdeCCJW/jgJA==}
     cpu: [s390x]
     os: [linux]
 
@@ -3359,8 +3401,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@img/sharp-libvips-linux-x64@1.1.0':
+    resolution: {integrity: sha512-yRj2+reB8iMg9W5sULM3S74jVS7zqSzHG3Ol/twnAAkAhnGQnpjj6e4ayUz7V+FpKypwgs82xbRdYtchTTUB+Q==}
+    cpu: [x64]
+    os: [linux]
+
   '@img/sharp-libvips-linuxmusl-arm64@1.0.4':
     resolution: {integrity: sha512-9Ti+BbTYDcsbp4wfYib8Ctm1ilkugkA/uscUn6UXK1ldpC1JjiXbLfFZtRlBhjPZ5o1NCLiDbg8fhUPKStHoTA==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@img/sharp-libvips-linuxmusl-arm64@1.1.0':
+    resolution: {integrity: sha512-jYZdG+whg0MDK+q2COKbYidaqW/WTz0cc1E+tMAusiDygrM4ypmSCjOJPmFTvHHJ8j/6cAGyeDWZOsK06tP33w==}
     cpu: [arm64]
     os: [linux]
 
@@ -3369,8 +3421,19 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@img/sharp-libvips-linuxmusl-x64@1.1.0':
+    resolution: {integrity: sha512-wK7SBdwrAiycjXdkPnGCPLjYb9lD4l6Ze2gSdAGVZrEL05AOUJESWU2lhlC+Ffn5/G+VKuSm6zzbQSzFX/P65A==}
+    cpu: [x64]
+    os: [linux]
+
   '@img/sharp-linux-arm64@0.33.5':
     resolution: {integrity: sha512-JMVv+AMRyGOHtO1RFBiJy/MBsgz0x4AWrT6QoEVVTyh1E39TrCUpTRI7mx9VksGX4awWASxqCYLCV4wBZHAYxA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@img/sharp-linux-arm64@0.34.1':
+    resolution: {integrity: sha512-kX2c+vbvaXC6vly1RDf/IWNXxrlxLNpBVWkdpRq5Ka7OOKj6nr66etKy2IENf6FtOgklkg9ZdGpEu9kwdlcwOQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
@@ -3381,8 +3444,20 @@ packages:
     cpu: [arm]
     os: [linux]
 
+  '@img/sharp-linux-arm@0.34.1':
+    resolution: {integrity: sha512-anKiszvACti2sGy9CirTlNyk7BjjZPiML1jt2ZkTdcvpLU1YH6CXwRAZCA2UmRXnhiIftXQ7+Oh62Ji25W72jA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm]
+    os: [linux]
+
   '@img/sharp-linux-s390x@0.33.5':
     resolution: {integrity: sha512-y/5PCd+mP4CA/sPDKl2961b+C9d+vPAveS33s6Z3zfASk2j5upL6fXVPZi7ztePZ5CuH+1kW8JtvxgbuXHRa4Q==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [s390x]
+    os: [linux]
+
+  '@img/sharp-linux-s390x@0.34.1':
+    resolution: {integrity: sha512-7s0KX2tI9mZI2buRipKIw2X1ufdTeaRgwmRabt5bi9chYfhur+/C1OXg3TKg/eag1W+6CCWLVmSauV1owmRPxA==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [s390x]
     os: [linux]
@@ -3393,8 +3468,20 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@img/sharp-linux-x64@0.34.1':
+    resolution: {integrity: sha512-wExv7SH9nmoBW3Wr2gvQopX1k8q2g5V5Iag8Zk6AVENsjwd+3adjwxtp3Dcu2QhOXr8W9NusBU6XcQUohBZ5MA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [linux]
+
   '@img/sharp-linuxmusl-arm64@0.33.5':
     resolution: {integrity: sha512-XrHMZwGQGvJg2V/oRSUfSAfjfPxO+4DkiRh6p2AFjLQztWUuY/o8Mq0eMQVIY7HJ1CDQUJlxGGZRw1a5bqmd1g==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@img/sharp-linuxmusl-arm64@0.34.1':
+    resolution: {integrity: sha512-DfvyxzHxw4WGdPiTF0SOHnm11Xv4aQexvqhRDAoD00MzHekAj9a/jADXeXYCDFH/DzYruwHbXU7uz+H+nWmSOQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
@@ -3405,8 +3492,19 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@img/sharp-linuxmusl-x64@0.34.1':
+    resolution: {integrity: sha512-pax/kTR407vNb9qaSIiWVnQplPcGU8LRIJpDT5o8PdAx5aAA7AS3X9PS8Isw1/WfqgQorPotjrZL3Pqh6C5EBg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [linux]
+
   '@img/sharp-wasm32@0.33.5':
     resolution: {integrity: sha512-ykUW4LVGaMcU9lu9thv85CbRMAwfeadCJHRsg2GmeRa/cJxsVY9Rbd57JcMxBkKHag5U/x7TSBpScF4U8ElVzg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [wasm32]
+
+  '@img/sharp-wasm32@0.34.1':
+    resolution: {integrity: sha512-YDybQnYrLQfEpzGOQe7OKcyLUCML4YOXl428gOOzBgN6Gw0rv8dpsJ7PqTHxBnXnwXr8S1mYFSLSa727tpz0xg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [wasm32]
 
@@ -3416,8 +3514,20 @@ packages:
     cpu: [ia32]
     os: [win32]
 
+  '@img/sharp-win32-ia32@0.34.1':
+    resolution: {integrity: sha512-WKf/NAZITnonBf3U1LfdjoMgNO5JYRSlhovhRhMxXVdvWYveM4kM3L8m35onYIdh75cOMCo1BexgVQcCDzyoWw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [ia32]
+    os: [win32]
+
   '@img/sharp-win32-x64@0.33.5':
     resolution: {integrity: sha512-MpY/o8/8kj+EcnxwvrP4aTJSWw/aZ7JIGR4aBeZkZw5B7/Jn+tY9/VNwtcoGmdT7GfggGIU4kygOMSbYnOrAbg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [win32]
+
+  '@img/sharp-win32-x64@0.34.1':
+    resolution: {integrity: sha512-hw1iIAHpNE8q3uMIRCgGOeDoz9KtFNarFLQclLxr/LK1VBkj8nby18RjFvr6aP7USRYAjTZW6yisnBWMX571Tw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [win32]
@@ -3720,15 +3830,15 @@ packages:
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
 
-  '@mantine/core@7.17.3':
-    resolution: {integrity: sha512-N/AfV5eMnfEMx9WzI7AU5pNFBEzAfT/KtE2XDKS+0ht6RifUmolIxyIvoGMYz2yUEsCBMJZqmBq33Rabf5W7Ug==}
+  '@mantine/core@7.17.4':
+    resolution: {integrity: sha512-Ea4M/98jxgIWCuxCdM0YIotVYjfLTGQsfIA6zDg0LsClgjo/ZLnnh4zbi+bLNgM+GGjP4ju7gv4MZvaTKuLO8g==}
     peerDependencies:
-      '@mantine/hooks': 7.17.3
+      '@mantine/hooks': 7.17.4
       react: ^18.x || ^19.x
       react-dom: ^18.x || ^19.x
 
-  '@mantine/hooks@7.17.3':
-    resolution: {integrity: sha512-6o65Rbfl8jd1C1nF9icvungqL0qZViEOmrZgkyKXxBYkC3x91fz4zftwQgNjt1tZHWDNO6Bo4GpRjJyAdwl48g==}
+  '@mantine/hooks@7.17.4':
+    resolution: {integrity: sha512-PBcJxDAfGm8k1/JJmaDcxzRVQ3JSE1iXGktbgGz+qEOJmCxwbbAYe+CtGFFgi1xX2bPZ+7dtRr/+XFhnKtt/aw==}
     peerDependencies:
       react: ^18.x || ^19.x
 
@@ -3776,25 +3886,13 @@ packages:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
 
-  '@nodelib/fs.scandir@4.0.1':
-    resolution: {integrity: sha512-vAkI715yhnmiPupY+dq+xenu5Tdf2TBQ66jLvBIcCddtz+5Q8LbMKaf9CIJJreez8fQ8fgaY+RaywQx8RJIWpw==}
-    engines: {node: '>=18.18.0'}
-
   '@nodelib/fs.stat@2.0.5':
     resolution: {integrity: sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==}
     engines: {node: '>= 8'}
 
-  '@nodelib/fs.stat@4.0.0':
-    resolution: {integrity: sha512-ctr6bByzksKRCV0bavi8WoQevU6plSp2IkllIsEqaiKe2mwNNnaluhnRhcsgGZHrrHk57B3lf95MkLMO3STYcg==}
-    engines: {node: '>=18.18.0'}
-
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
-
-  '@nodelib/fs.walk@3.0.1':
-    resolution: {integrity: sha512-nIh/M6Kh3ZtOmlY00DaUYB4xeeV6F3/ts1l29iwl3/cfyY/OuCfUx+v08zgx8TKPTifXRcjjqVQ4KB2zOYSbyw==}
-    engines: {node: '>=18.18.0'}
 
   '@nolyfill/array-includes@1.0.44':
     resolution: {integrity: sha512-IVEqpEgFbLaU0hUoMwJYXNSdi6lq+FxHdxd8xTKDLxh8k6u5YNGz4Bo6bT46l7p0x8PbJmHViBtngqhvE528fA==}
@@ -3950,8 +4048,8 @@ packages:
   '@polka/url@1.0.0-next.28':
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
 
-  '@prisma/client@6.5.0':
-    resolution: {integrity: sha512-M6w1Ql/BeiGoZmhMdAZUXHu5sz5HubyVcKukbLs3l0ELcQb8hTUJxtGEChhv4SVJ0QJlwtLnwOLgIRQhpsm9dw==}
+  '@prisma/client@6.6.0':
+    resolution: {integrity: sha512-vfp73YT/BHsWWOAuthKQ/1lBgESSqYqAWZEYyTdGXyFAHpmewwWL2Iz6ErIzkj4aHbuc6/cGSsE6ZY+pBO04Cg==}
     engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
@@ -3962,23 +4060,23 @@ packages:
       typescript:
         optional: true
 
-  '@prisma/config@6.5.0':
-    resolution: {integrity: sha512-sOH/2Go9Zer67DNFLZk6pYOHj+rumSb0VILgltkoxOjYnlLqUpHPAN826vnx8HigqnOCxj9LRhT6U7uLiIIWgw==}
+  '@prisma/config@6.6.0':
+    resolution: {integrity: sha512-d8FlXRHsx72RbN8nA2QCRORNv5AcUnPXgtPvwhXmYkQSMF/j9cKaJg+9VcUzBRXGy9QBckNzEQDEJZdEOZ+ubA==}
 
-  '@prisma/debug@6.5.0':
-    resolution: {integrity: sha512-fc/nusYBlJMzDmDepdUtH9aBsJrda2JNErP9AzuHbgUEQY0/9zQYZdNlXmKoIWENtio+qarPNe/+DQtrX5kMcQ==}
+  '@prisma/debug@6.6.0':
+    resolution: {integrity: sha512-DL6n4IKlW5k2LEXzpN60SQ1kP/F6fqaCgU/McgaYsxSf43GZ8lwtmXLke9efS+L1uGmrhtBUP4npV/QKF8s2ZQ==}
 
-  '@prisma/engines-version@6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60':
-    resolution: {integrity: sha512-iK3EmiVGFDCmXjSpdsKGNqy9hOdLnvYBrJB61far/oP03hlIxrb04OWmDjNTwtmZ3UZdA5MCvI+f+3k2jPTflQ==}
+  '@prisma/engines-version@6.6.0-53.f676762280b54cd07c770017ed3711ddde35f37a':
+    resolution: {integrity: sha512-JzRaQ5Em1fuEcbR3nUsMNYaIYrOT1iMheenjCvzZblJcjv/3JIuxXN7RCNT5i6lRkLodW5ojCGhR7n5yvnNKrw==}
 
-  '@prisma/engines@6.5.0':
-    resolution: {integrity: sha512-FVPQYHgOllJklN9DUyujXvh3hFJCY0NX86sDmBErLvoZjy2OXGiZ5FNf3J/C4/RZZmCypZBYpBKEhx7b7rEsdw==}
+  '@prisma/engines@6.6.0':
+    resolution: {integrity: sha512-nC0IV4NHh7500cozD1fBoTwTD1ydJERndreIjpZr/S3mno3P6tm8qnXmIND5SwUkibNeSJMpgl4gAnlqJ/gVlg==}
 
-  '@prisma/fetch-engine@6.5.0':
-    resolution: {integrity: sha512-3LhYA+FXP6pqY8FLHCjewyE8pGXXJ7BxZw2rhPq+CZAhvflVzq4K8Qly3OrmOkn6wGlz79nyLQdknyCG2HBTuA==}
+  '@prisma/fetch-engine@6.6.0':
+    resolution: {integrity: sha512-Ohfo8gKp05LFLZaBlPUApM0M7k43a0jmo86YY35u1/4t+vuQH9mRGU7jGwVzGFY3v+9edeb/cowb1oG4buM1yw==}
 
-  '@prisma/get-platform@6.5.0':
-    resolution: {integrity: sha512-xYcvyJwNMg2eDptBYFqFLUCfgi+wZLcj6HDMsj0Qw0irvauG4IKmkbywnqwok0B+k+W+p+jThM2DKTSmoPCkzw==}
+  '@prisma/get-platform@6.6.0':
+    resolution: {integrity: sha512-3qCwmnT4Jh5WCGUrkWcc6VZaw0JY7eWN175/pcb5Z6FiLZZ3ygY93UX0WuV41bG51a6JN/oBH0uywJ90Y+V5eA==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -4010,8 +4108,8 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
-  '@puppeteer/browsers@2.9.0':
-    resolution: {integrity: sha512-8+xM+cFydYET4X/5/3yZMHs7sjS6c9I6H5I3xJdb6cinzxWUT/I2QVw4avxCQ8QDndwdHkG/FiSZIrCjAbaKvQ==}
+  '@puppeteer/browsers@2.10.0':
+    resolution: {integrity: sha512-HdHF4rny4JCvIcm7V1dpvpctIGqM3/Me255CB44vW7hDG1zYMmcBMjpNqZEDxdCfXGLkx5kP0+Jz5DUS+ukqtA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4150,28 +4248,28 @@ packages:
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
-  '@sentry-internal/browser-utils@9.11.0':
-    resolution: {integrity: sha512-XS71kRf7lw5St/Jc9G2Viy1cKgqGoPHqUAykXEtFt38JVXdf1TY/dSbKv/PAgNqMvC1xvdTsN0HF/81o7DNUEA==}
+  '@sentry-internal/browser-utils@9.12.0':
+    resolution: {integrity: sha512-GXuDEG2Ix8DmVtTkjsItWdusk2CvJ6EPWKYVqFKifxt+IAT3ZbhGZd99Rg3wdRmt9xhCNuS4QrDzDTPMPgfdCw==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/feedback@9.11.0':
-    resolution: {integrity: sha512-50KiRmrF1Ldr+KoRawqcCYVk7TAVP8K/I81Jk9YWwlp1+Pu1ArpYDmTNCLXTgoyiyO38aHefKGZJX6AKFuSsUQ==}
+  '@sentry-internal/feedback@9.12.0':
+    resolution: {integrity: sha512-3+UxoT97QIXNSUQS4ATL1FFws0RkUb6PeaQN8CPndI6mFlqTW5tuVVLNg9Eo1seNg7R/dfk6WHCWrYN1NbFFKQ==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay-canvas@9.11.0':
-    resolution: {integrity: sha512-ZcRg8TWfF0ucjK2i+4TY/blRNJ7YKrgMpx19pFj6eCOJ1K8geSkAFPIfDHcQEwIU1ZTN+HiCwx0JvTI9YZxjfg==}
+  '@sentry-internal/replay-canvas@9.12.0':
+    resolution: {integrity: sha512-p8LuKZgWT/CoQBbDOXkSGjWWnc8WsnAayWgna8M/ZFWNITCNEM2rCuqZOyWOElIlrni+M7qoEA3jS7MZe8Ejxw==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay@9.11.0':
-    resolution: {integrity: sha512-0k24h58O/2VQw1dwT/zQiWvUzLNQxpxbrVN/MYPT7czSEhI+1bX8fxMHXZORl2JqhetImMXzxH3XkuHQPEqQMg==}
+  '@sentry-internal/replay@9.12.0':
+    resolution: {integrity: sha512-njEQosFeO/UX+gG+DMRANkPUuz6OIJLb+A1GVylhq9adUgFQydQ9Ay3v7/x1gMhdfHVP6Jeb27qkti0BWYbzBQ==}
     engines: {node: '>=18'}
 
   '@sentry/babel-plugin-component-annotate@3.3.1':
     resolution: {integrity: sha512-5GOxGT7lZN+I8A7Vp0rWY+726FDKEw8HnFiebe51rQrMbfGfCu2Aw9uSM0nT9OG6xhV6WvGccIcCszTPs4fUZQ==}
     engines: {node: '>= 14'}
 
-  '@sentry/browser@9.11.0':
-    resolution: {integrity: sha512-DSDj8wQJoiLqqOcntl+7phjd8l8KN9A0vaV7mZNHWbrHU3MVwXqTyLyERRLC6wi0t7F5kqczqa3xLmKjK/fMZg==}
+  '@sentry/browser@9.12.0':
+    resolution: {integrity: sha512-4xQYoZqi+VVhNvlhWiwRd57+SMr3Og4sLjuayAA+zIp1Wx/bDcIld697cugLwml/BR+mVJI2eokkgh1CBl6zag==}
     engines: {node: '>=18'}
 
   '@sentry/bundler-plugin-core@3.3.1':
@@ -4224,18 +4322,18 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
-  '@sentry/core@9.11.0':
-    resolution: {integrity: sha512-qfb4ahGZubbrNh1MnbEqyHFp87rIwQIZapyQLCaYpudXrP1biEpLOV3mMDvDJWCdX460hoOwQ3SkwipV3We/7w==}
+  '@sentry/core@9.12.0':
+    resolution: {integrity: sha512-jOqQK/90uzHmsBvkPTj/DAEFvA5poX4ZRyC7LE1zjg4F5jdOp3+M4W3qCy0CkSTu88Zu5VWBoppCU2Bs34XEqg==}
     engines: {node: '>=18'}
 
-  '@sentry/react@9.11.0':
-    resolution: {integrity: sha512-sH/3KnDsLxBFRoxPyIpab7OewkfStdZQQwgpfv8R0yDKpGg4lU7KdTccryFvWL123UpHC7ydPWjdcfC8YV/EPQ==}
+  '@sentry/react@9.12.0':
+    resolution: {integrity: sha512-5JTSPFEo3FC64DKky615YgF5ql0OePX7fhK/ZM3AFr2KPLiDteU8xkQqqDI5qk4zR4dnCxdGis6y/hXujALCOQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^16.14.0 || 17.x || 18.x || 19.x
 
-  '@sentry/solid@9.11.0':
-    resolution: {integrity: sha512-1KkSuiTGRtpST3EPRGzuvFBqeL+12aGU9LdqLJ19iHXm537n4PLaBNGSN5Ywr3YToUL/kzWFB60Xxjy7ZSo+Uw==}
+  '@sentry/solid@9.12.0':
+    resolution: {integrity: sha512-A2XApbQ9iefXr1N16st265LRmNrEvyrzvvxkbp+ysMK0y7B7IwYfLd7az5UkcEjM4rTtOhqz9SJXeQ+nx5vg4Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@solidjs/router': ^0.13.4
@@ -4248,8 +4346,8 @@ packages:
     resolution: {integrity: sha512-eIIIHqVOTO0m7+3aTg//gVi11XNpKi4G0xA45hjz46UmRiToVfqgBH7Dsn1qRrDxa7YPYCdREQkyGEINlElT2A==}
     engines: {node: '>= 14'}
 
-  '@sentry/vue@9.11.0':
-    resolution: {integrity: sha512-ta43z7Ai7/TACitXtzdkDEkMMQvk0bkKgEs7cj7CBBNoZdt61oFrLh073W9mpQqvDNGVbLR+6MBKcsvwoo64fg==}
+  '@sentry/vue@9.12.0':
+    resolution: {integrity: sha512-9/k6Jo1/nCJzj5qUNhQzzMCfBGT613CTrI2AauECyf44kkSE1FllvbCwT/V4eUMd+IiEL9qzqMLGTVwYUynxHw==}
     engines: {node: '>=18'}
     peerDependencies:
       pinia: 2.x || 3.x
@@ -4269,11 +4367,6 @@ packages:
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
-
-  '@snyk/github-codeowners@1.1.0':
-    resolution: {integrity: sha512-lGFf08pbkEac0NYgVf4hdANpAgApRjNByLXB+WBip3qj1iendOIyAwP2GKkKbQMNVy2r1xxDf0ssfWscoiC+Vw==}
-    engines: {node: '>=8.10'}
-    hasBin: true
 
   '@solid-primitives/props@3.2.0':
     resolution: {integrity: sha512-vEg5yERdXftJz2+A6B0IMYTrPL9SE2DPmpURV/nZyqQ+PXziF02V4b4SDr6JX3jNJxBlY6c17LqwYEw+bIfGRg==}
@@ -4395,14 +4488,14 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.2':
-    resolution: {integrity: sha512-GlPEedbMTerkUfAJBsrwU6dg8N65lt3LBwrCoqR3MTZ64lRU/DQqyLjzpz5nRkEN0x4S2JmX0hASV9vc2KlSHA==}
+  '@trpc/client@11.1.0':
+    resolution: {integrity: sha512-Q3pL4p7AddxI/ZJTEFo1utKSdasDFjZPECIPsKDkthEt52k530JkYVltTdLkYFKrNWXKKBo8MN7NwchelczoRw==}
     peerDependencies:
-      '@trpc/server': 11.0.2
+      '@trpc/server': 11.1.0
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.0.2':
-    resolution: {integrity: sha512-PIcm8UWFyE0AnIYjxsyc1zfVa6X10m9Opm1SJ2ou9Vu8dlXO6rMtmafLUXJsMeQk/3ecxObFtEiZIX8TvB3eCg==}
+  '@trpc/server@11.1.0':
+    resolution: {integrity: sha512-uAJ7ikejeujVkf53XFJ/0W8nr7bDjul+Szk5Rsepq97Hb/WS1RkRXdyX4KqAyCE9b1vDFCJVJwSxiIZdRtbTZQ==}
     peerDependencies:
       typescript: '>=5.7.2'
 
@@ -4445,8 +4538,8 @@ packages:
       zod:
         optional: true
 
-  '@types/aws-lambda@8.10.148':
-    resolution: {integrity: sha512-JL+2cfkY9ODQeE06hOxSFNkafjNk4JRBgY837kpoq1GHDttq2U3BA9IzKOWxS4DLjKoymGB4i9uBrlCkjUl1yg==}
+  '@types/aws-lambda@8.10.149':
+    resolution: {integrity: sha512-NXSZIhfJjnXqJgtS7IwutqIF/SOy1Wz5Px4gUY1RWITp3AYTyuJS4xaXr/bIJY1v15XMzrJ5soGnPM+7uigZjA==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -4544,13 +4637,13 @@ packages:
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
-  '@types/react-dom@19.1.1':
-    resolution: {integrity: sha512-jFf/woGTVTjUJsl2O7hcopJ1r0upqoq/vIOoCj0yLh3RIXxWcljlpuZ+vEBRXsymD1jhfeJrlyTy/S1UW+4y1w==}
+  '@types/react-dom@19.1.2':
+    resolution: {integrity: sha512-XGJkWF41Qq305SKWEILa1O8vzhb3aOo3ogBlSmiqNko/WmRb6QIaweuZCXjKygVDXpzXb5wyxKTSOsmkuqj+Qw==}
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.1.0':
-    resolution: {integrity: sha512-UaicktuQI+9UKyA4njtDOGBD/67t8YEBt2xdfqu8+gP9hqPUPsiXlNPcpS2gVdjmis5GKPG3fCxbQLVgxsQZ8w==}
+  '@types/react@19.1.1':
+    resolution: {integrity: sha512-ePapxDL7qrgqSF67s0h9m412d9DbXyC1n59O2st+9rjuuamWsZuD2w55rqY12CbzsZ7uVXb5Nw0gEp9Z8MMutQ==}
 
   '@types/request@2.48.12':
     resolution: {integrity: sha512-G3sY+NpsA9jnwm0ixhAFQSJ3Q9JkpLZpJbI3GMv0mIAT0y3mRabYeINzal5WOChIiaTEGQYlHOKgkaM9EisWHw==}
@@ -4585,58 +4678,58 @@ packages:
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
 
-  '@typescript-eslint/eslint-plugin@8.29.0':
-    resolution: {integrity: sha512-PAIpk/U7NIS6H7TEtN45SPGLQaHNgB7wSjsQV/8+KYokAb2T/gloOA/Bee2yd4/yKVhPKe5LlaUGhAZk5zmSaQ==}
+  '@typescript-eslint/eslint-plugin@8.29.1':
+    resolution: {integrity: sha512-ba0rr4Wfvg23vERs3eB+P3lfj2E+2g3lhWcCVukUuhtcdUx5lSIFZlGFEBHKr+3zizDa/TvZTptdNHVZWAkSBg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       '@typescript-eslint/parser': ^8.0.0 || ^8.0.0-alpha.0
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
 
-  '@typescript-eslint/parser@8.29.0':
-    resolution: {integrity: sha512-8C0+jlNJOwQso2GapCVWWfW/rzaq7Lbme+vGUFKE31djwNncIpgXD7Cd4weEsDdkoZDjH0lwwr3QDQFuyrMg9g==}
+  '@typescript-eslint/parser@8.29.1':
+    resolution: {integrity: sha512-zczrHVEqEaTwh12gWBIJWj8nx+ayDcCJs06yoNMY0kwjMWDM6+kppljY+BxWI06d2Ja+h4+WdufDcwMnnMEWmg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
 
-  '@typescript-eslint/scope-manager@8.29.0':
-    resolution: {integrity: sha512-aO1PVsq7Gm+tcghabUpzEnVSFMCU4/nYIgC2GOatJcllvWfnhrgW0ZEbnTxm36QsikmCN1K/6ZgM7fok2I7xNw==}
+  '@typescript-eslint/scope-manager@8.29.1':
+    resolution: {integrity: sha512-2nggXGX5F3YrsGN08pw4XpMLO1Rgtnn4AzTegC2MDesv6q3QaTU5yU7IbS1tf1IwCR0Hv/1EFygLn9ms6LIpDA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/type-utils@8.29.0':
-    resolution: {integrity: sha512-ahaWQ42JAOx+NKEf5++WC/ua17q5l+j1GFrbbpVKzFL/tKVc0aYY8rVSYUpUvt2hUP1YBr7mwXzx+E/DfUWI9Q==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <5.9.0'
-
-  '@typescript-eslint/types@8.29.0':
-    resolution: {integrity: sha512-wcJL/+cOXV+RE3gjCyl/V2G877+2faqvlgtso/ZRbTCnZazh0gXhe+7gbAnfubzN2bNsBtZjDvlh7ero8uIbzg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/typescript-estree@8.29.0':
-    resolution: {integrity: sha512-yOfen3jE9ISZR/hHpU/bmNvTtBW1NjRbkSFdZOksL1N+ybPEE7UVGMwqvS6CP022Rp00Sb0tdiIkhSCe6NI8ow==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <5.9.0'
-
-  '@typescript-eslint/utils@8.29.0':
-    resolution: {integrity: sha512-gX/A0Mz9Bskm8avSWFcK0gP7cZpbY4AIo6B0hWYFCaIsz750oaiWR4Jr2CI+PQhfW1CpcQr9OlfPS+kMFegjXA==}
+  '@typescript-eslint/type-utils@8.29.1':
+    resolution: {integrity: sha512-DkDUSDwZVCYN71xA4wzySqqcZsHKic53A4BLqmrWFFpOpNSoxX233lwGu/2135ymTCR04PoKiEEEvN1gFYg4Tw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
 
-  '@typescript-eslint/visitor-keys@8.29.0':
-    resolution: {integrity: sha512-Sne/pVz8ryR03NFK21VpN88dZ2FdQXOlq3VIklbrTYEt8yXtRFr9tvUhqvCeKjqYk5FSim37sHbooT6vzBTZcg==}
+  '@typescript-eslint/types@8.29.1':
+    resolution: {integrity: sha512-VT7T1PuJF1hpYC3AGm2rCgJBjHL3nc+A/bhOp9sGMKfi5v0WufsX/sHCFBfNTx2F+zA6qBc/PD0/kLRLjdt8mQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript-eslint/typescript-estree@8.29.1':
+    resolution: {integrity: sha512-l1enRoSaUkQxOQnbi0KPUtqeZkSiFlqrx9/3ns2rEDhGKfTa+88RmXqedC1zmVTOWrLc2e6DEJrTA51C9iLH5g==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      typescript: '>=4.8.4 <5.9.0'
+
+  '@typescript-eslint/utils@8.29.1':
+    resolution: {integrity: sha512-QAkFEbytSaB8wnmB+DflhUPz6CLbFWE2SnSCrRMEa+KnXIzDYbpsn++1HGvnfAsUY44doDXmvRkO5shlM/3UfA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+      typescript: '>=4.8.4 <5.9.0'
+
+  '@typescript-eslint/visitor-keys@8.29.1':
+    resolution: {integrity: sha512-RGLh5CRaUEf02viP5c1Vh1cMGffQscyHe7HPAzGpfmfflFg1wUz2rYxd+OZqwpeypYvZ8UxSxuIpF++fmOzEcg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
-  '@universal-middleware/core@0.4.6':
-    resolution: {integrity: sha512-TEe6WFEfLLKUUpaF/3NHVwf2lhqvHtIeaA2TcjTW8/O+Q2uugpe79D/1U/ulDknDwG4vgUrKgLaxuDQy/bELXg==}
+  '@universal-middleware/core@0.4.7':
+    resolution: {integrity: sha512-Q+ZwiQAm/yZVmtJCZx6U4yLQF10AQ9URcCGxcIdUgLoEOHAg+uADcxAliKfJv463kVECnLI2ZamsRDDOSjc36A==}
     peerDependencies:
       '@cloudflare/workers-types': ^4.20250327.0
       '@hattip/core': ^0.0.49
@@ -4661,20 +4754,20 @@ packages:
       hono:
         optional: true
 
-  '@universal-middleware/express@0.4.12':
-    resolution: {integrity: sha512-CiRwat1JRRrL3Adi7Xla4Eq6XVHOvFKzTyYqe9Q4aOXeeTtt+1kMzt9vCbwzAq9y4tIWSaN7+JkKIulmPTD01A==}
+  '@universal-middleware/express@0.4.14':
+    resolution: {integrity: sha512-uFM/1qq3ZRAcslyxFuj5ApfBrolAkM/8HGhtrXNSqnJncIM4nDyFh6aDHUzfalerB8G3DgE+esKRF9Ue+Hhqbw==}
 
-  '@universal-middleware/fastify@0.5.14':
-    resolution: {integrity: sha512-vitj7DUL1v/xfH+Lhbct/qSMVm1HABxgs/+4Z8kxzlehs1lJyOIC6e32UoAdWY1YD1SD+ksg1VYpuXp1+4KgOA==}
+  '@universal-middleware/fastify@0.5.16':
+    resolution: {integrity: sha512-wm81fwvWxpeYTY9AUFQvvBMwjLaB8Dt6g/Q6PNIFJhE4XSYmK3/airL7+YF9po/7Wua3J/p8xzdcvNJ/AmUMiw==}
 
-  '@universal-middleware/h3@0.4.8':
-    resolution: {integrity: sha512-yscEFz3MGI1zpYMGmHo+QLhdiLyTZ7dLFQIeiYOgSNyZv5/MdX7nXkXJvafjNnCrXgXZwJ1Xvi7arSOpBWfvcQ==}
+  '@universal-middleware/h3@0.4.9':
+    resolution: {integrity: sha512-AC/Biq8iBYg5PH0BcchGmGeOksLa6IBPh9m3bH5GPk/MAjsiJI6B1hjWKV0Q+Hnf/yIzoWVq1RqNHo/z06zniQ==}
 
-  '@universal-middleware/hattip@0.4.7':
-    resolution: {integrity: sha512-ENqCj5ckYI6mRJqYi1mkd1bbeu2vtkGJcGJ+EmparBRcq24MJd18oNKn7F2+47GACOQgae/NwrtDRUyi+XFx2A==}
+  '@universal-middleware/hattip@0.4.8':
+    resolution: {integrity: sha512-+U1fvAYnvRtnHhMb4Ww6k1sP08zthY07PtUM4HQnQtCTFc1wc56GzAug2n1JgOkjj7onPmSokoA/ikUPq6rK9g==}
 
-  '@universal-middleware/hono@0.4.8':
-    resolution: {integrity: sha512-txBMdtakdRHEBC1OoOMqFxTwj0d/drN1AOYOlncy+Wj0ZuLMonh9Avv5XkpJned9jePwl8v6lDZjFTr40YnMWA==}
+  '@universal-middleware/hono@0.4.9':
+    resolution: {integrity: sha512-zxIB4DNEa/ycFzEKKTz/N5L6CNDj4k1OIRmf58UNHyEZFYsPhnwd0UFExzg51IGSav22tb4azDvHT1oPbmr87Q==}
 
   '@vavite/connect@5.1.0':
     resolution: {integrity: sha512-45FfwXeMUU4SOIZNAerRwoW1agE2l2cd614Pxk0DE+YZN5xhKym/z9oGB0ueuxtFM4IhuhITUgkHZG7MOm/hlg==}
@@ -4989,8 +5082,8 @@ packages:
     resolution: {integrity: sha512-zJAaP9zxTcvTHRlejau3ZOY4V7SRpiByf3/dxx2uyKxxor19tpmpV2QRsTKikckwhaPmr2dVpxxMr7jOCYVp5g==}
     engines: {node: '>=6.0.0'}
 
-  aws-cdk-lib@2.188.0:
-    resolution: {integrity: sha512-RiAkyKHUYcpI59IXP6VP1NvO0Ph5vlqIsrz6YE8KPuGfQ0LuE5ob4Ta2ibVs/fvaGyJIZkEPw54hDrytVWrk3g==}
+  aws-cdk-lib@2.189.0:
+    resolution: {integrity: sha512-B5Uha7uRntOAyuKfU0eFtxij3ZVTzGAbetw5qaXlURa68wsWpKlU72/OyKugB6JYkhjCZkSTVVBxd1pVTosxEw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       constructs: ^10.0.0
@@ -5085,6 +5178,7 @@ packages:
 
   bignumber.js@9.2.0:
     resolution: {integrity: sha512-JocpCSOixzy5XFJi2ub6IMmV/G9i8Lrm2lZvwBv9xPdglmZM0ufDVBbjbrfU/zuLvBfD7Bv2eYxz9i+OHTgkew==}
+    deprecated: pkg version number incorrect
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -5119,8 +5213,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  browserless@10.7.5:
-    resolution: {integrity: sha512-UyyAeND8WFVdMM/X4C+N99X5RvN+gS2ZkTuKUTedgFpuSimuE07t3eVp6zPOwibwWDWDe2lvNL0lhJh3PYswCw==}
+  browserless@10.7.9:
+    resolution: {integrity: sha512-NPgVgZeA4QngJDzmomUs7ATm7f7AwyGiA+R1Va34EfMLqfOMOOQoBOX6rCKeVnQ6SMpsEqtvK+naC9OzwHncuw==}
     engines: {node: '>= 12'}
 
   browserslist@4.23.3:
@@ -5468,8 +5562,8 @@ packages:
     resolution: {integrity: sha512-MOqHvMWF9/9MX6nza0KgvFH4HpMU0EF5uUDXqX/BtxtU8NfB0QzRtJ8Oe/6SuS4kbhyzVJwjd97EA4PKrzJ8bw==}
     engines: {node: '>=0.12'}
 
-  daisyui@5.0.12:
-    resolution: {integrity: sha512-01DU0eYBcHgPtuf5fxcrkGkIN6/Uyaqmkle5Yo3ZyW9YVAu036ALZbjv2KH5euvUbeQ4r9q3gAarGcf7Tywhng==}
+  daisyui@5.0.19:
+    resolution: {integrity: sha512-vuxloVgdmTnGpA6CFnQyLkXuqPmusHgYZ0L5Qg1pQzAYPUMc0HM2S3brnu7xRnAUq7ZMAqyoV78Fvht7nY2svg==}
 
   data-uri-to-buffer@2.0.2:
     resolution: {integrity: sha512-ND9qDTLc6diwj+Xe5cdAgVTbLVdXbtxTJRXRhli8Mowuaan+0EJOtdqJ0QCHNSSPyoXGx9HX2/VMnKeC34AChA==}
@@ -5619,8 +5713,8 @@ packages:
   domutils@2.8.0:
     resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
 
-  dotenv@16.4.7:
-    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+  dotenv@16.5.0:
+    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
     engines: {node: '>=12'}
 
   drizzle-kit@0.30.6:
@@ -5873,8 +5967,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-prettier@10.1.1:
-    resolution: {integrity: sha512-4EQQr6wXwS+ZJSzaR5ZCrYgLxqvUjdXctaEtBqHcbkW944B1NQyO4qpdHQbXBONfwxXdkAY81HH4+LUfrg+zPw==}
+  eslint-config-prettier@10.1.2:
+    resolution: {integrity: sha512-Epgp/EofAUeEpIdZkW60MHKvPyru1ruQJxPL+WIycnaPApuseK0Zpkrh/FwL9oIpQvIhJwV7ptOy0DWUjTlCiA==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -6094,8 +6188,8 @@ packages:
     resolution: {integrity: sha512-2qfoaQ3BQDhZ1gtbkKZd6n0kKxJISJGM6u/skD9ljdWItAscjXrtZ1lnjr7PavmXX9j4EyCPmBDiIsLn07d5vA==}
     engines: {node: '>= 10'}
 
-  fastify@5.2.2:
-    resolution: {integrity: sha512-22T/PnhquWozuFXg3Ish4md5ipsF1Nx1mJ9ulLdZPXSk14WFj/wMlyNB/yll9sQOojKRgOIxT2inK3Xpjg5hyw==}
+  fastify@5.3.0:
+    resolution: {integrity: sha512-vDpCJa4KRkHrdDMpDNtyPaIDi/ptCwoJ0M8RiefuIMvyXTgG63xYGe9DYYiCpydjh0ETIaLoSyKBNKkh7ew1eA==}
 
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
@@ -6458,8 +6552,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.7.5:
-    resolution: {integrity: sha512-fDOK5W2C1vZACsgLONigdZTRZxuBqFtcKh7bUQ5cVSbwI2RWjloJDcgFOVzbQrlI6pCmhlTsVYZ7zpLj4m4qMQ==}
+  hono@4.7.6:
+    resolution: {integrity: sha512-564rVzELU+9BRqqx5k8sT2NFwGD3I3Vifdb6P7CmM6FiarOSY+fDC+6B+k9wcCb86ReoayteZP2ki0cRLN1jbw==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -6922,8 +7016,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  knip@5.47.0:
-    resolution: {integrity: sha512-ikjijudvI81Iv49YJqgujJlGSXnCTFBTU9/NwHqW9wLA31IslEs+6npRL1TAdvT7Q+5mOOh6c8xrIwGd9sV+IQ==}
+  knip@5.50.3:
+    resolution: {integrity: sha512-0A4G7UPucGTCpNh5vHSfL0+tVQIuKfJKdg8sAq6EC3COKbAchEbM+TeN4w32OrnJW9CesHs71lqftlggMVfW2A==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -7182,8 +7276,8 @@ packages:
   lucia@3.2.2:
     resolution: {integrity: sha512-P1FlFBGCMPMXu+EGdVD9W4Mjm0DqsusmKgO7Xc33mI5X1bklmsQb0hfzPhXomQr9waWIBDsiOjvr1e6BTaUqpA==}
 
-  lucide-react@0.487.0:
-    resolution: {integrity: sha512-aKqhOQ+YmFnwq8dWgGjOuLc8V1R9/c/yOd+zDY4+ohsR2Jo05lSGc3WsstYPIzcTpeosN7LoCkLReUUITvaIvw==}
+  lucide-react@0.488.0:
+    resolution: {integrity: sha512-ronlL0MyKut4CEzBY/ai2ZpKPxyWO4jUqdAkm2GNK5Zn3Rj+swDz+3lvyAUXN0PNqPKIX6XM9Xadwz/skLs/pQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -7378,8 +7472,8 @@ packages:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
     engines: {node: '>=10'}
 
-  miniflare@4.20250404.0:
-    resolution: {integrity: sha512-OeNnXrOdgSoN5iDA+u1Ue3etOyPY89BJFFizMgGEPJvGTYL+kZhKqeBKeZiZIS7xjjlrfXNqleYGnCyomQ1pDQ==}
+  miniflare@4.20250409.0:
+    resolution: {integrity: sha512-Hu02dYZvFR+MyrI57O6rSrOUTofcO9EIvcodgq2SAHzAeWSJw2E0oq9lylOrcckFwPMcwxUAb/cQN1LIoCyySw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -8240,8 +8334,8 @@ packages:
   prism-themes@1.9.0:
     resolution: {integrity: sha512-tX2AYsehKDw1EORwBps+WhBFKc2kxfoFpQAjxBndbZKr4fRmMkv47XN0BghC/K1qwodB1otbe4oF23vUTFDokw==}
 
-  prisma@6.5.0:
-    resolution: {integrity: sha512-yUGXmWqv5F4PByMSNbYFxke/WbnyTLjnJ5bKr8fLkcnY7U5rU9rUTh/+Fja+gOrRxEgtCbCtca94IeITj4j/pg==}
+  prisma@6.6.0:
+    resolution: {integrity: sha512-SYCUykz+1cnl6Ugd8VUvtTQq5+j1Q7C0CtzKPjQ8JyA2ALh0EEJkMCS+KgdnvKW1lrxjtjCyJSHOOT236mENYg==}
     engines: {node: '>=18.18'}
     hasBin: true
     peerDependencies:
@@ -8256,6 +8350,9 @@ packages:
 
   process-warning@4.0.1:
     resolution: {integrity: sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q==}
+
+  process-warning@5.0.0:
+    resolution: {integrity: sha512-a39t9ApHNx2L4+HBnQKqxxHNs1r7KF+Intd8Q/g1bUh6q0WIp9voPXJ/x0j+ZL45KF1pJd9+q2jLIRMfvEshkA==}
 
   process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
@@ -8309,12 +8406,12 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  puppeteer-core@24.6.0:
-    resolution: {integrity: sha512-Cukxysy12m0v350bhl/Gzof0XQYmtON9l2VvGp3D4BOQZVgyf+y5wIpcjDZQ/896Okoi95dKRGRV8E6a7SYAQQ==}
+  puppeteer-core@24.6.1:
+    resolution: {integrity: sha512-sMCxsY+OPWO2fecBrhIeCeJbWWXJ6UaN997sTid6whY0YT9XM0RnxEwLeUibluIS5/fRmuxe1efjb5RMBsky7g==}
     engines: {node: '>=18'}
 
-  puppeteer@24.6.0:
-    resolution: {integrity: sha512-wYTB8WkzAr7acrlsp+0at1PZjOJPOxe6dDWKOG/kaX4Zjck9RXCFx3CtsxsAGzPn/Yv6AzgJC/CW1P5l+qxsqw==}
+  puppeteer@24.6.1:
+    resolution: {integrity: sha512-/4ocGfu8LNvDbWUqJZV2VmwEWpbOdJa69y2Jivd213tV0ekAtUh/bgT1hhW63SDN/CtrEucOPwoomZ+9M+eBEg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -8423,8 +8520,8 @@ packages:
       '@types/react':
         optional: true
 
-  react-textarea-autosize@8.5.6:
-    resolution: {integrity: sha512-aT3ioKXMa8f6zHYGebhbdMD2L00tKeRX1zuVuDx9YQK/JLLRSaSxq3ugECEmUB9z2kvk6bFSIoRHLkkUv0RJiw==}
+  react-textarea-autosize@8.5.9:
+    resolution: {integrity: sha512-U1DGlIQN5AwgjTyOEnI1oCcMuEr1pv1qOtklB2l4nyMGbHzWrI0eFsYK0zos2YWqAolJyG0IWJaqWmWj5ETh0A==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -8607,8 +8704,8 @@ packages:
   secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
 
-  secure-json-parse@3.0.2:
-    resolution: {integrity: sha512-H6nS2o8bWfpFEV6U38sOSjS7bTbdgbCGU9wEM6W14P5H0QOsz94KCusifV44GpHDTu2nqZbuDNhTzu+mjDSw1w==}
+  secure-json-parse@4.0.0:
+    resolution: {integrity: sha512-dxtLJO6sc35jWidmLxo7ij+Eg48PM/kleBsxpC8QJE0qJICe+KawkDQmvCMZUr9u7WKVHgMW6vy3fQ7zMiFZMA==}
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -8672,6 +8769,10 @@ packages:
 
   sharp@0.33.5:
     resolution: {integrity: sha512-haPVm1EkS9pgvHrQ/F3Xy+hgcuMV0Wm9vfIBSiwZ05k+xgb0PkBQpGsAA/oWdDobNaZTH5ppvHtzCFbnSEwHVw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+
+  sharp@0.34.1:
+    resolution: {integrity: sha512-1j0w61+eVxu7DawFJtnfYcvSv6qPFvfTaqzTQ2BLknVhHTwGS8sc63ZBF4rzkWMBVKybo4S5OBtDdZahh2A1xg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
 
   shebang-command@2.0.0:
@@ -8917,9 +9018,6 @@ packages:
     peerDependencies:
       postcss: ^8.3.3
 
-  summary@2.1.0:
-    resolution: {integrity: sha512-nMIjMrd5Z2nuB2RZCKJfFMjgS3fygbeyGk9PxPPaJR1RIcyN9yn4A63Isovzm3ZtQuEkLBVgMdPup8UeLH7aQw==}
-
   superlock@1.2.2:
     resolution: {integrity: sha512-LpxqMtk4zV5R8AiHDGKbzqgdYNJ8w79mIwNdMzYmu2JZIEu+3LtrgtJmgA0aXtqFYI8j51SjTKTY6Q+OoWvOww==}
     engines: {node: '>= 14'}
@@ -8952,8 +9050,8 @@ packages:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
 
-  tailwind-merge@3.1.0:
-    resolution: {integrity: sha512-aV27Oj8B7U/tAOMhJsSGdWqelfmudnGMdXIlMnk1JfsjwSjts6o8HyfN7SFH3EztzH4YH8kk6GbLTHzITJO39Q==}
+  tailwind-merge@3.2.0:
+    resolution: {integrity: sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA==}
 
   tailwindcss@4.1.3:
     resolution: {integrity: sha512-2Q+rw9vy1WFXu5cIxlvsabCwhU2qUwodGq03ODhLJ0jW4ek5BUtoCsnLB0qG+m8AHgEsSJcJGDSDe06FXlP74g==}
@@ -9293,8 +9391,8 @@ packages:
   typed-query-selector@2.12.0:
     resolution: {integrity: sha512-SbklCd1F0EiZOyPiW192rrHZzZ5sBijB6xM+cpmrwDqObvdtunOHHIk9fCGsoK5JVIYXoyEp4iEdE3upFH3PAg==}
 
-  typescript-eslint@8.29.0:
-    resolution: {integrity: sha512-ep9rVd9B4kQsZ7ZnWCVxUE/xDLUUUsRzE0poAeNu+4CkFErLfuvPt/qtm2EpnSyfvsR0S6QzDFSrPCFBwf64fg==}
+  typescript-eslint@8.29.1:
+    resolution: {integrity: sha512-f8cDkvndhbQMPcysk6CUSGBWV+g1utqdn71P5YKwMumVMOG/5k7cHq0KyG4O52nB0oKS4aN2Tp5+wB4APJGC+w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
@@ -9550,8 +9648,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-plugin-compiled-react@1.2.0:
-    resolution: {integrity: sha512-07atbs3j0AFVexYN9POnxSE+o2mLMSmg0bMV1E5rP/9MS5Asn01JbnqdKC5JUBAiTlRZlYLxv5TlBIltplVUew==}
+  vite-plugin-compiled-react@1.3.1:
+    resolution: {integrity: sha512-RewxZHCMTnxC1Zi1UPMSTh0JSEqFAkVYaalkpmfecefv62VfJ3zq+NTiRuQOzsRGBfWQlKdgdvsDgkZMxVJokQ==}
     peerDependencies:
       '@compiled/react': '*'
       '@vitejs/plugin-react': '*'
@@ -9579,8 +9677,8 @@ packages:
       vike:
         optional: true
 
-  vite@6.2.5:
-    resolution: {integrity: sha512-j023J/hCAa4pRIUH6J9HemwYfjB5llR2Ps0CWeikOtdR8+pAURAk0DoJC5/mm9kd+UgdnIy7d6HE4EAvlYhPhA==}
+  vite@6.2.6:
+    resolution: {integrity: sha512-9xpjNl3kR4rVDZgPNdTL0/c6ao4km69a/2ihNQbcANz8RuCOK3hQBmLSJf3bRKVQjVMda+YvizNE8AwvogcPbw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -9770,17 +9868,17 @@ packages:
     resolution: {integrity: sha512-JNjcULU2e4KJwUNv6CHgI46UvDGitb6dGryHajXTDiLgg1/RiGoPSDw4kZfYnwGtEXf2ZMeIewDQgFGzkCB2Sg==}
     engines: {node: '>=12.17'}
 
-  workerd@1.20250404.0:
-    resolution: {integrity: sha512-dvXsRdy49/vd4nPENpTDFjbPvR3XdPa8lJrxcnDKL1XtoioYXflq3ys8ljuu+X71ojqAAjnQj62AzrmmKM095g==}
+  workerd@1.20250409.0:
+    resolution: {integrity: sha512-hqjX9swiHvrkOI3jlH9lrZsZRRv9lddUwcMe8Ua76jnyQz+brybWznNjHu8U5oswwcrFwvky1A4CcLjcLY31gQ==}
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.7.2:
-    resolution: {integrity: sha512-fK9h7PL8wrrdSLCFXVDotoSHOebRmdNdB4VRkUDWOIyiP0Dx54TBfXTt3bXB98EYx7VT+vj6CNVnEC8gSCxt0w==}
+  wrangler@4.10.0:
+    resolution: {integrity: sha512-fTE4hZ79msEUt8+HEjl/8Q72haCyzPLu4PgrU3L81ysmjrMEdiYfUPqnvCkBUVtJvrDNdctTEimkufT1Y0ipNg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20250404.0
+      '@cloudflare/workers-types': ^4.20250409.0
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
@@ -9907,8 +10005,8 @@ packages:
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
-  zx@8.5.0:
-    resolution: {integrity: sha512-XS5/oKOQxKNfG2sVO6TQQjZF5RqWGE5QGSUOCZZVTnvYr3RDBTdbX3IFmV9CrnycCAQWcY0hAD3DDUa4RJE4+w==}
+  zx@8.5.2:
+    resolution: {integrity: sha512-eIxjTkCtlzvDNRhw3RD1gGBPA4nxOTn6PafpKl+MW4eE2jR/u/R6mqq7oyUCXwarM5DSP96kWtq6XkrL2kSFrg==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -10167,10 +10265,10 @@ snapshots:
       - supports-color
     optional: true
 
-  '@browserless/goto@10.7.3(puppeteer@24.6.0(typescript@5.8.3))':
+  '@browserless/goto@10.7.6(puppeteer@24.6.1(typescript@5.8.3))':
     dependencies:
       '@browserless/devices': 10.7.0
-      '@ghostery/adblocker-puppeteer': 2.5.0(puppeteer@24.6.0(typescript@5.8.3))
+      '@ghostery/adblocker-puppeteer': 2.5.0(puppeteer@24.6.1(typescript@5.8.3))
       '@kikobeats/time-span': 1.0.5
       debug-logfmt: 1.2.3
       got: 11.8.6
@@ -10185,17 +10283,17 @@ snapshots:
       - supports-color
     optional: true
 
-  '@browserless/pdf@10.7.3(puppeteer@24.6.0(typescript@5.8.3))':
+  '@browserless/pdf@10.7.6(puppeteer@24.6.1(typescript@5.8.3))':
     dependencies:
-      '@browserless/goto': 10.7.3(puppeteer@24.6.0(typescript@5.8.3))
+      '@browserless/goto': 10.7.6(puppeteer@24.6.1(typescript@5.8.3))
     transitivePeerDependencies:
       - puppeteer
       - supports-color
     optional: true
 
-  '@browserless/screenshot@10.7.5(puppeteer@24.6.0(typescript@5.8.3))':
+  '@browserless/screenshot@10.7.9(puppeteer@24.6.1(typescript@5.8.3))':
     dependencies:
-      '@browserless/goto': 10.7.3(puppeteer@24.6.0(typescript@5.8.3))
+      '@browserless/goto': 10.7.6(puppeteer@24.6.1(typescript@5.8.3))
       '@kikobeats/time-span': 1.0.5
       debug-logfmt: 1.2.3
       got: 11.8.6
@@ -10207,7 +10305,7 @@ snapshots:
       p-reflect: 2.1.0
       pretty-ms: 7.0.1
       prism-themes: 1.9.0
-      sharp: 0.33.5
+      sharp: 0.34.1
       svg-gradient: 1.0.3
     transitivePeerDependencies:
       - puppeteer
@@ -10233,28 +10331,28 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@cloudflare/unenv-preset@2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250404.0)':
+  '@cloudflare/unenv-preset@2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250409.0)':
     dependencies:
       unenv: 2.0.0-rc.15
     optionalDependencies:
-      workerd: 1.20250404.0
+      workerd: 1.20250409.0
 
-  '@cloudflare/workerd-darwin-64@1.20250404.0':
+  '@cloudflare/workerd-darwin-64@1.20250409.0':
     optional: true
 
-  '@cloudflare/workerd-darwin-arm64@1.20250404.0':
+  '@cloudflare/workerd-darwin-arm64@1.20250409.0':
     optional: true
 
-  '@cloudflare/workerd-linux-64@1.20250404.0':
+  '@cloudflare/workerd-linux-64@1.20250409.0':
     optional: true
 
-  '@cloudflare/workerd-linux-arm64@1.20250404.0':
+  '@cloudflare/workerd-linux-arm64@1.20250409.0':
     optional: true
 
-  '@cloudflare/workerd-windows-64@1.20250404.0':
+  '@cloudflare/workerd-windows-64@1.20250409.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20250406.0': {}
+  '@cloudflare/workers-types@4.20250414.0': {}
 
   '@compiled/babel-plugin-strip-runtime@0.37.1':
     dependencies:
@@ -11125,11 +11223,11 @@ snapshots:
   '@ghostery/adblocker-extended-selectors@2.5.0':
     optional: true
 
-  '@ghostery/adblocker-puppeteer@2.5.0(puppeteer@24.6.0(typescript@5.8.3))':
+  '@ghostery/adblocker-puppeteer@2.5.0(puppeteer@24.6.1(typescript@5.8.3))':
     dependencies:
       '@ghostery/adblocker': 2.5.0
       '@ghostery/adblocker-content': 2.5.0
-      puppeteer: 24.6.0(typescript@5.8.3)
+      puppeteer: 24.6.1(typescript@5.8.3)
       tldts-experimental: 6.1.85
     optional: true
 
@@ -11212,14 +11310,14 @@ snapshots:
       '@hattip/adapter-node': 0.0.49
       '@hattip/core': 0.0.49
       '@hattip/polyfills': 0.0.49
-      '@types/aws-lambda': 8.10.148
+      '@types/aws-lambda': 8.10.149
       aws-lambda: 1.0.7
       lambda-stream: 0.5.0
 
   '@hattip/adapter-cloudflare-workers@0.0.49':
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
-      '@cloudflare/workers-types': 4.20250406.0
+      '@cloudflare/workers-types': 4.20250414.0
       '@hattip/core': 0.0.49
 
   '@hattip/adapter-node@0.0.49':
@@ -11257,17 +11355,17 @@ snapshots:
     dependencies:
       '@hattip/headers': 0.0.49
 
-  '@hattip/vite@0.0.49(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@hattip/vite@0.0.49(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@hattip/adapter-node': 0.0.49
-      '@vavite/connect': 5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
-      '@vavite/multibuild': 5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
-      '@vavite/node-loader': 5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vavite/connect': 5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vavite/multibuild': 5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vavite/node-loader': 5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       cac: 6.7.14
       import-meta-resolve: 4.1.0
       picocolors: 1.1.1
       resolve.exports: 2.0.3
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   '@hattip/walk@0.0.49':
     dependencies:
@@ -11275,18 +11373,18 @@ snapshots:
       cac: 6.7.14
       mime-types: 2.1.35
 
-  '@hono/node-server@1.14.0(hono@4.7.5)':
+  '@hono/node-server@1.14.1(hono@4.7.6)':
     dependencies:
-      hono: 4.7.5
+      hono: 4.7.6
 
-  '@hono/vite-dev-server@0.19.0(hono@4.7.5)(miniflare@4.20250404.0)(wrangler@4.7.2(@cloudflare/workers-types@4.20250406.0))':
+  '@hono/vite-dev-server@0.19.0(hono@4.7.6)(miniflare@4.20250409.0)(wrangler@4.10.0(@cloudflare/workers-types@4.20250414.0))':
     dependencies:
-      '@hono/node-server': 1.14.0(hono@4.7.5)
-      hono: 4.7.5
+      '@hono/node-server': 1.14.1(hono@4.7.6)
+      hono: 4.7.6
       minimatch: 9.0.5
     optionalDependencies:
-      miniflare: 4.20250404.0
-      wrangler: 4.7.2(@cloudflare/workers-types@4.20250406.0)
+      miniflare: 4.20250409.0
+      wrangler: 4.10.0(@cloudflare/workers-types@4.20250414.0)
 
   '@humanfs/core@0.19.1': {}
 
@@ -11306,33 +11404,70 @@ snapshots:
       '@img/sharp-libvips-darwin-arm64': 1.0.4
     optional: true
 
+  '@img/sharp-darwin-arm64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-darwin-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-darwin-x64': 1.0.4
     optional: true
 
+  '@img/sharp-darwin-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-x64': 1.1.0
+    optional: true
+
   '@img/sharp-libvips-darwin-arm64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-darwin-arm64@1.1.0':
     optional: true
 
   '@img/sharp-libvips-darwin-x64@1.0.4':
     optional: true
 
+  '@img/sharp-libvips-darwin-x64@1.1.0':
+    optional: true
+
   '@img/sharp-libvips-linux-arm64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-linux-arm64@1.1.0':
     optional: true
 
   '@img/sharp-libvips-linux-arm@1.0.5':
     optional: true
 
+  '@img/sharp-libvips-linux-arm@1.1.0':
+    optional: true
+
+  '@img/sharp-libvips-linux-ppc64@1.1.0':
+    optional: true
+
   '@img/sharp-libvips-linux-s390x@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-linux-s390x@1.1.0':
     optional: true
 
   '@img/sharp-libvips-linux-x64@1.0.4':
     optional: true
 
+  '@img/sharp-libvips-linux-x64@1.1.0':
+    optional: true
+
   '@img/sharp-libvips-linuxmusl-arm64@1.0.4':
     optional: true
 
+  '@img/sharp-libvips-linuxmusl-arm64@1.1.0':
+    optional: true
+
   '@img/sharp-libvips-linuxmusl-x64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-linuxmusl-x64@1.1.0':
     optional: true
 
   '@img/sharp-linux-arm64@0.33.5':
@@ -11340,9 +11475,19 @@ snapshots:
       '@img/sharp-libvips-linux-arm64': 1.0.4
     optional: true
 
+  '@img/sharp-linux-arm64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-linux-arm@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linux-arm': 1.0.5
+    optional: true
+
+  '@img/sharp-linux-arm@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm': 1.1.0
     optional: true
 
   '@img/sharp-linux-s390x@0.33.5':
@@ -11350,9 +11495,19 @@ snapshots:
       '@img/sharp-libvips-linux-s390x': 1.0.4
     optional: true
 
+  '@img/sharp-linux-s390x@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-s390x': 1.1.0
+    optional: true
+
   '@img/sharp-linux-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linux-x64': 1.0.4
+    optional: true
+
+  '@img/sharp-linux-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-x64': 1.1.0
     optional: true
 
   '@img/sharp-linuxmusl-arm64@0.33.5':
@@ -11360,9 +11515,19 @@ snapshots:
       '@img/sharp-libvips-linuxmusl-arm64': 1.0.4
     optional: true
 
+  '@img/sharp-linuxmusl-arm64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linuxmusl-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-linuxmusl-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linuxmusl-x64': 1.0.4
+    optional: true
+
+  '@img/sharp-linuxmusl-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linuxmusl-x64': 1.1.0
     optional: true
 
   '@img/sharp-wasm32@0.33.5':
@@ -11370,10 +11535,21 @@ snapshots:
       '@emnapi/runtime': 1.4.0
     optional: true
 
+  '@img/sharp-wasm32@0.34.1':
+    dependencies:
+      '@emnapi/runtime': 1.4.0
+    optional: true
+
   '@img/sharp-win32-ia32@0.33.5':
     optional: true
 
+  '@img/sharp-win32-ia32@0.34.1':
+    optional: true
+
   '@img/sharp-win32-x64@0.33.5':
+    optional: true
+
+  '@img/sharp-win32-x64@0.34.1':
     optional: true
 
   '@inquirer/checkbox@4.1.5(@types/node@18.19.86)':
@@ -11755,9 +11931,9 @@ snapshots:
   '@kikobeats/time-span@1.0.5':
     optional: true
 
-  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)))(lucia@3.2.2)':
+  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3)))(lucia@3.2.2)':
     dependencies:
-      drizzle-orm: 0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3))
+      drizzle-orm: 0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3))
       lucia: 3.2.2
 
   '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.9.1)(lucia@3.2.2)':
@@ -11768,21 +11944,21 @@ snapshots:
 
   '@lukeed/ms@2.0.2': {}
 
-  '@mantine/core@7.17.3(@mantine/hooks@7.17.3(react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@mantine/core@7.17.4(@mantine/hooks@7.17.4(react@19.1.0))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@floating-ui/react': 0.26.28(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@mantine/hooks': 7.17.3(react@19.1.0)
+      '@mantine/hooks': 7.17.4(react@19.1.0)
       clsx: 2.1.1
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       react-number-format: 5.4.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react-remove-scroll: 2.6.3(@types/react@19.1.0)(react@19.1.0)
-      react-textarea-autosize: 8.5.6(@types/react@19.1.0)(react@19.1.0)
+      react-remove-scroll: 2.6.3(@types/react@19.1.1)(react@19.1.0)
+      react-textarea-autosize: 8.5.9(@types/react@19.1.1)(react@19.1.0)
       type-fest: 4.39.1
     transitivePeerDependencies:
       - '@types/react'
 
-  '@mantine/hooks@7.17.3(react@19.1.0)':
+  '@mantine/hooks@7.17.4(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
@@ -11863,23 +12039,11 @@ snapshots:
       '@nodelib/fs.stat': 2.0.5
       run-parallel: 1.2.0
 
-  '@nodelib/fs.scandir@4.0.1':
-    dependencies:
-      '@nodelib/fs.stat': 4.0.0
-      run-parallel: 1.2.0
-
   '@nodelib/fs.stat@2.0.5': {}
-
-  '@nodelib/fs.stat@4.0.0': {}
 
   '@nodelib/fs.walk@1.2.8':
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.19.1
-
-  '@nodelib/fs.walk@3.0.1':
-    dependencies:
-      '@nodelib/fs.scandir': 4.0.1
       fastq: 1.19.1
 
   '@nolyfill/array-includes@1.0.44':
@@ -12152,38 +12316,38 @@ snapshots:
 
   '@polka/url@1.0.0-next.28': {}
 
-  '@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3)':
+  '@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3)':
     optionalDependencies:
-      prisma: 6.5.0(typescript@5.8.3)
+      prisma: 6.6.0(typescript@5.8.3)
       typescript: 5.8.3
 
-  '@prisma/config@6.5.0':
+  '@prisma/config@6.6.0':
     dependencies:
       esbuild: 0.25.2
       esbuild-register: 3.6.0(esbuild@0.25.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/debug@6.5.0': {}
+  '@prisma/debug@6.6.0': {}
 
-  '@prisma/engines-version@6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60': {}
+  '@prisma/engines-version@6.6.0-53.f676762280b54cd07c770017ed3711ddde35f37a': {}
 
-  '@prisma/engines@6.5.0':
+  '@prisma/engines@6.6.0':
     dependencies:
-      '@prisma/debug': 6.5.0
-      '@prisma/engines-version': 6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60
-      '@prisma/fetch-engine': 6.5.0
-      '@prisma/get-platform': 6.5.0
+      '@prisma/debug': 6.6.0
+      '@prisma/engines-version': 6.6.0-53.f676762280b54cd07c770017ed3711ddde35f37a
+      '@prisma/fetch-engine': 6.6.0
+      '@prisma/get-platform': 6.6.0
 
-  '@prisma/fetch-engine@6.5.0':
+  '@prisma/fetch-engine@6.6.0':
     dependencies:
-      '@prisma/debug': 6.5.0
-      '@prisma/engines-version': 6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60
-      '@prisma/get-platform': 6.5.0
+      '@prisma/debug': 6.6.0
+      '@prisma/engines-version': 6.6.0-53.f676762280b54cd07c770017ed3711ddde35f37a
+      '@prisma/get-platform': 6.6.0
 
-  '@prisma/get-platform@6.5.0':
+  '@prisma/get-platform@6.6.0':
     dependencies:
-      '@prisma/debug': 6.5.0
+      '@prisma/debug': 6.6.0
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -12208,7 +12372,7 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@puppeteer/browsers@2.9.0':
+  '@puppeteer/browsers@2.10.0':
     dependencies:
       debug: 4.4.0
       extract-zip: 2.0.1
@@ -12319,40 +12483,40 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
-  '@sentry-internal/browser-utils@9.11.0':
+  '@sentry-internal/browser-utils@9.12.0':
     dependencies:
-      '@sentry/core': 9.11.0
+      '@sentry/core': 9.12.0
 
-  '@sentry-internal/feedback@9.11.0':
+  '@sentry-internal/feedback@9.12.0':
     dependencies:
-      '@sentry/core': 9.11.0
+      '@sentry/core': 9.12.0
 
-  '@sentry-internal/replay-canvas@9.11.0':
+  '@sentry-internal/replay-canvas@9.12.0':
     dependencies:
-      '@sentry-internal/replay': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry-internal/replay': 9.12.0
+      '@sentry/core': 9.12.0
 
-  '@sentry-internal/replay@9.11.0':
+  '@sentry-internal/replay@9.12.0':
     dependencies:
-      '@sentry-internal/browser-utils': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry-internal/browser-utils': 9.12.0
+      '@sentry/core': 9.12.0
 
   '@sentry/babel-plugin-component-annotate@3.3.1': {}
 
-  '@sentry/browser@9.11.0':
+  '@sentry/browser@9.12.0':
     dependencies:
-      '@sentry-internal/browser-utils': 9.11.0
-      '@sentry-internal/feedback': 9.11.0
-      '@sentry-internal/replay': 9.11.0
-      '@sentry-internal/replay-canvas': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry-internal/browser-utils': 9.12.0
+      '@sentry-internal/feedback': 9.12.0
+      '@sentry-internal/replay': 9.12.0
+      '@sentry-internal/replay-canvas': 9.12.0
+      '@sentry/core': 9.12.0
 
   '@sentry/bundler-plugin-core@3.3.1(encoding@0.1.13)':
     dependencies:
       '@babel/core': 7.26.10
       '@sentry/babel-plugin-component-annotate': 3.3.1
       '@sentry/cli': 2.42.2(encoding@0.1.13)
-      dotenv: 16.4.7
+      dotenv: 16.5.0
       find-up: 5.0.0
       glob: 9.3.5
       magic-string: 0.30.8
@@ -12401,19 +12565,19 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sentry/core@9.11.0': {}
+  '@sentry/core@9.12.0': {}
 
-  '@sentry/react@9.11.0(react@19.1.0)':
+  '@sentry/react@9.12.0(react@19.1.0)':
     dependencies:
-      '@sentry/browser': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry/browser': 9.12.0
+      '@sentry/core': 9.12.0
       hoist-non-react-statics: 3.3.2
       react: 19.1.0
 
-  '@sentry/solid@9.11.0(solid-js@1.9.5)':
+  '@sentry/solid@9.12.0(solid-js@1.9.5)':
     dependencies:
-      '@sentry/browser': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry/browser': 9.12.0
+      '@sentry/core': 9.12.0
       solid-js: 1.9.5
 
   '@sentry/vite-plugin@3.3.1(encoding@0.1.13)':
@@ -12424,10 +12588,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sentry/vue@9.11.0(vue@3.5.13(typescript@5.8.3))':
+  '@sentry/vue@9.12.0(vue@3.5.13(typescript@5.8.3))':
     dependencies:
-      '@sentry/browser': 9.11.0
-      '@sentry/core': 9.11.0
+      '@sentry/browser': 9.12.0
+      '@sentry/core': 9.12.0
       vue: 3.5.13(typescript@5.8.3)
 
   '@sindresorhus/is@4.6.0':
@@ -12436,12 +12600,6 @@ snapshots:
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
-
-  '@snyk/github-codeowners@1.1.0':
-    dependencies:
-      commander: 4.1.1
-      ignore: 5.3.2
-      p-map: 4.0.0
 
   '@solid-primitives/props@3.2.0(solid-js@1.9.5)':
     dependencies:
@@ -12526,19 +12684,19 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.3
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.3
 
-  '@tailwindcss/vite@4.1.3(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@tailwindcss/vite@4.1.3(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@tailwindcss/node': 4.1.3
       '@tailwindcss/oxide': 4.1.3
       tailwindcss: 4.1.3
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
-  '@tailwindcss/vite@4.1.3(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@tailwindcss/vite@4.1.3(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@tailwindcss/node': 4.1.3
       '@tailwindcss/oxide': 4.1.3
       tailwindcss: 4.1.3
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   '@tokenizer/token@0.3.0':
     optional: true
@@ -12549,12 +12707,12 @@ snapshots:
   '@tootallnate/quickjs-emscripten@0.23.0':
     optional: true
 
-  '@trpc/client@11.0.2(@trpc/server@11.0.2(typescript@5.8.3))(typescript@5.8.3)':
+  '@trpc/client@11.1.0(@trpc/server@11.1.0(typescript@5.8.3))(typescript@5.8.3)':
     dependencies:
-      '@trpc/server': 11.0.2(typescript@5.8.3)
+      '@trpc/server': 11.1.0(typescript@5.8.3)
       typescript: 5.8.3
 
-  '@trpc/server@11.0.2(typescript@5.8.3)':
+  '@trpc/server@11.1.0(typescript@5.8.3)':
     dependencies:
       typescript: 5.8.3
 
@@ -12578,15 +12736,15 @@ snapshots:
       '@types/node': 18.19.86
       zod: 3.24.2
 
-  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@18.19.86)(zod@3.24.2))(@types/aws-lambda@8.10.148)(zod@3.24.2)':
+  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@18.19.86)(zod@3.24.2))(@types/aws-lambda@8.10.149)(zod@3.24.2)':
     dependencies:
       '@ts-rest/core': 3.52.1(@types/node@18.19.86)(zod@3.24.2)
       itty-router: 5.0.18
     optionalDependencies:
-      '@types/aws-lambda': 8.10.148
+      '@types/aws-lambda': 8.10.149
       zod: 3.24.2
 
-  '@types/aws-lambda@8.10.148': {}
+  '@types/aws-lambda@8.10.149': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -12712,11 +12870,11 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@19.1.1(@types/react@19.1.0)':
+  '@types/react-dom@19.1.2(@types/react@19.1.1)':
     dependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  '@types/react@19.1.0':
+  '@types/react@19.1.1':
     dependencies:
       csstype: 3.1.3
 
@@ -12763,14 +12921,14 @@ snapshots:
       '@types/node': 18.19.86
     optional: true
 
-  '@typescript-eslint/eslint-plugin@8.29.0(@typescript-eslint/parser@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
+  '@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/scope-manager': 8.29.0
-      '@typescript-eslint/type-utils': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/visitor-keys': 8.29.0
+      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/scope-manager': 8.29.1
+      '@typescript-eslint/type-utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/visitor-keys': 8.29.1
       eslint: 9.24.0(jiti@2.4.2)
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -12780,27 +12938,27 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
+  '@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/scope-manager': 8.29.0
-      '@typescript-eslint/types': 8.29.0
-      '@typescript-eslint/typescript-estree': 8.29.0(typescript@5.8.3)
-      '@typescript-eslint/visitor-keys': 8.29.0
+      '@typescript-eslint/scope-manager': 8.29.1
+      '@typescript-eslint/types': 8.29.1
+      '@typescript-eslint/typescript-estree': 8.29.1(typescript@5.8.3)
+      '@typescript-eslint/visitor-keys': 8.29.1
       debug: 4.4.0
       eslint: 9.24.0(jiti@2.4.2)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/scope-manager@8.29.0':
+  '@typescript-eslint/scope-manager@8.29.1':
     dependencies:
-      '@typescript-eslint/types': 8.29.0
-      '@typescript-eslint/visitor-keys': 8.29.0
+      '@typescript-eslint/types': 8.29.1
+      '@typescript-eslint/visitor-keys': 8.29.1
 
-  '@typescript-eslint/type-utils@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
+  '@typescript-eslint/type-utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/typescript-estree': 8.29.0(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/typescript-estree': 8.29.1(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       debug: 4.4.0
       eslint: 9.24.0(jiti@2.4.2)
       ts-api-utils: 2.1.0(typescript@5.8.3)
@@ -12808,12 +12966,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/types@8.29.0': {}
+  '@typescript-eslint/types@8.29.1': {}
 
-  '@typescript-eslint/typescript-estree@8.29.0(typescript@5.8.3)':
+  '@typescript-eslint/typescript-estree@8.29.1(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/types': 8.29.0
-      '@typescript-eslint/visitor-keys': 8.29.0
+      '@typescript-eslint/types': 8.29.1
+      '@typescript-eslint/visitor-keys': 8.29.1
       debug: 4.4.0
       fast-glob: 3.3.3
       is-glob: 4.0.3
@@ -12824,38 +12982,38 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
+  '@typescript-eslint/utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.5.1(eslint@9.24.0(jiti@2.4.2))
-      '@typescript-eslint/scope-manager': 8.29.0
-      '@typescript-eslint/types': 8.29.0
-      '@typescript-eslint/typescript-estree': 8.29.0(typescript@5.8.3)
+      '@typescript-eslint/scope-manager': 8.29.1
+      '@typescript-eslint/types': 8.29.1
+      '@typescript-eslint/typescript-estree': 8.29.1(typescript@5.8.3)
       eslint: 9.24.0(jiti@2.4.2)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/visitor-keys@8.29.0':
+  '@typescript-eslint/visitor-keys@8.29.1':
     dependencies:
-      '@typescript-eslint/types': 8.29.0
+      '@typescript-eslint/types': 8.29.1
       eslint-visitor-keys: 4.2.0
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@universal-middleware/core@0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/core@0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
       regexparam: 3.0.0
       tough-cookie: 5.1.2
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250406.0
+      '@cloudflare/workers-types': 4.20250414.0
       '@hattip/core': 0.0.49
-      fastify: 5.2.2
+      fastify: 5.3.0
       h3: 1.15.1
-      hono: 4.7.5
+      hono: 4.7.6
 
-  '@universal-middleware/express@0.4.12(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/express@0.4.14(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
-      '@universal-middleware/core': 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -12865,10 +13023,10 @@ snapshots:
       - h3
       - hono
 
-  '@universal-middleware/fastify@0.5.14(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/fastify@0.5.16(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
-      '@universal-middleware/core': 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
-      '@universal-middleware/express': 0.4.12(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
+      '@universal-middleware/express': 0.4.14(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
       fastify-raw-body: 5.0.0
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -12879,9 +13037,9 @@ snapshots:
       - h3
       - hono
 
-  '@universal-middleware/h3@0.4.8(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/h3@0.4.9(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
-      '@universal-middleware/core': 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -12891,9 +13049,9 @@ snapshots:
       - h3
       - hono
 
-  '@universal-middleware/hattip@0.4.7(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/hattip@0.4.8(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
-      '@universal-middleware/core': 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -12903,9 +13061,9 @@ snapshots:
       - h3
       - hono
 
-  '@universal-middleware/hono@0.4.8(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)':
+  '@universal-middleware/hono@0.4.9(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)':
     dependencies:
-      '@universal-middleware/core': 0.4.6(@cloudflare/workers-types@4.20250406.0)(@hattip/core@0.0.49)(fastify@5.2.2)(h3@1.15.1)(hono@4.7.5)
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250414.0)(@hattip/core@0.0.49)(fastify@5.3.0)(h3@1.15.1)(hono@4.7.6)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -12915,21 +13073,21 @@ snapshots:
       - h3
       - hono
 
-  '@vavite/connect@5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vavite/connect@5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@types/node': 18.19.86
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
-  '@vavite/multibuild@5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vavite/multibuild@5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@types/node': 18.19.86
       cac: 6.7.14
       picocolors: 1.1.1
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
-  '@vavite/node-loader@5.1.0(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vavite/node-loader@5.1.0(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   '@vercel/build-utils@8.8.0': {}
 
@@ -12958,29 +13116,29 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vite-plugin-vercel/vike@9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vite-plugin-vercel/vike@9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@brillout/libassert': 0.5.8
       nanoid: 5.1.5
       qs: 6.14.0
       vike: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite-plugin-vercel: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite-plugin-vercel: 9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
 
-  '@vitejs/plugin-react@4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vitejs/plugin-react@4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.10)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.2.3(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
+  '@vitejs/plugin-vue@5.2.3(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
     dependencies:
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vue: 3.5.13(typescript@5.8.3)
 
   '@vitest/expect@3.1.1':
@@ -12990,13 +13148,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.1.1(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
+  '@vitest/mocker@3.1.1(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@vitest/spy': 3.1.1
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   '@vitest/pretty-format@3.1.1':
     dependencies:
@@ -13164,6 +13322,7 @@ snapshots:
     dependencies:
       clean-stack: 2.2.0
       indent-string: 4.0.0
+    optional: true
 
   ajv-formats@3.0.1:
     dependencies:
@@ -13300,7 +13459,7 @@ snapshots:
   await-to-js@3.0.0:
     optional: true
 
-  aws-cdk-lib@2.188.0(constructs@10.4.2):
+  aws-cdk-lib@2.189.0(constructs@10.4.2):
     dependencies:
       '@aws-cdk/asset-awscli-v1': 2.2.230
       '@aws-cdk/asset-node-proxy-agent-v6': 2.1.0
@@ -13450,12 +13609,12 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  browserless@10.7.5(puppeteer@24.6.0(typescript@5.8.3)):
+  browserless@10.7.9(puppeteer@24.6.1(typescript@5.8.3)):
     dependencies:
       '@browserless/errors': 10.7.1
-      '@browserless/goto': 10.7.3(puppeteer@24.6.0(typescript@5.8.3))
-      '@browserless/pdf': 10.7.3(puppeteer@24.6.0(typescript@5.8.3))
-      '@browserless/screenshot': 10.7.5(puppeteer@24.6.0(typescript@5.8.3))
+      '@browserless/goto': 10.7.6(puppeteer@24.6.1(typescript@5.8.3))
+      '@browserless/pdf': 10.7.6(puppeteer@24.6.1(typescript@5.8.3))
+      '@browserless/screenshot': 10.7.9(puppeteer@24.6.1(typescript@5.8.3))
       debug-logfmt: 1.2.3
       kill-process-group: 1.0.11
       p-reflect: 2.1.0
@@ -13543,7 +13702,7 @@ snapshots:
       chokidar: 4.0.3
       confbox: 0.2.2
       defu: 6.1.4
-      dotenv: 16.4.7
+      dotenv: 16.5.0
       exsolve: 1.0.4
       giget: 2.0.0
       jiti: 2.4.2
@@ -13678,7 +13837,8 @@ snapshots:
     dependencies:
       clsx: 2.1.1
 
-  clean-stack@2.2.0: {}
+  clean-stack@2.2.0:
+    optional: true
 
   cli-width@4.1.0: {}
 
@@ -13869,7 +14029,7 @@ snapshots:
       type: 2.7.3
     optional: true
 
-  daisyui@5.0.12: {}
+  daisyui@5.0.19: {}
 
   data-uri-to-buffer@2.0.2: {}
 
@@ -14016,7 +14176,7 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 4.3.1
 
-  dotenv@16.4.7: {}
+  dotenv@16.5.0: {}
 
   drizzle-kit@0.30.6:
     dependencies:
@@ -14028,15 +14188,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250406.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.5.0(typescript@5.8.3)):
+  drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250414.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.9.1)(gel@2.0.2)(prisma@6.6.0(typescript@5.8.3)):
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250406.0
+      '@cloudflare/workers-types': 4.20250414.0
       '@opentelemetry/api': 1.9.0
-      '@prisma/client': 6.5.0(prisma@6.5.0(typescript@5.8.3))(typescript@5.8.3)
+      '@prisma/client': 6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3)
       '@types/better-sqlite3': 7.6.13
       better-sqlite3: 11.9.1
       gel: 2.0.2
-      prisma: 6.5.0(typescript@5.8.3)
+      prisma: 6.6.0(typescript@5.8.3)
 
   dunder-proto@1.0.1:
     dependencies:
@@ -14354,11 +14514,11 @@ snapshots:
       source-map: 0.6.1
     optional: true
 
-  eslint-config-prettier@10.1.1(eslint@9.24.0(jiti@2.4.2)):
+  eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.24.0(jiti@2.4.2)
 
-  eslint-plugin-prettier@5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.1(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3):
+  eslint-plugin-prettier@5.2.6(@types/eslint@9.6.1)(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3):
     dependencies:
       eslint: 9.24.0(jiti@2.4.2)
       prettier: 3.5.3
@@ -14366,7 +14526,7 @@ snapshots:
       synckit: 0.11.2
     optionalDependencies:
       '@types/eslint': 9.6.1
-      eslint-config-prettier: 10.1.1(eslint@9.24.0(jiti@2.4.2))
+      eslint-config-prettier: 10.1.2(eslint@9.24.0(jiti@2.4.2))
 
   eslint-plugin-react@7.37.5(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
@@ -14392,7 +14552,7 @@ snapshots:
 
   eslint-plugin-solid@0.14.5(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3):
     dependencies:
-      '@typescript-eslint/utils': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       eslint: 9.24.0(jiti@2.4.2)
       estraverse: 5.3.0
       is-html: 2.0.0
@@ -14666,7 +14826,7 @@ snapshots:
       raw-body: 3.0.0
       secure-json-parse: 2.7.0
 
-  fastify@5.2.2:
+  fastify@5.3.0:
     dependencies:
       '@fastify/ajv-compiler': 4.0.2
       '@fastify/error': 4.1.0
@@ -14678,9 +14838,9 @@ snapshots:
       find-my-way: 9.3.0
       light-my-request: 6.6.0
       pino: 9.6.0
-      process-warning: 4.0.1
+      process-warning: 5.0.0
       rfdc: 1.4.1
-      secure-json-parse: 3.0.2
+      secure-json-parse: 4.0.0
       semver: 7.7.1
       toad-cache: 3.7.0
 
@@ -15191,7 +15351,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.7.5: {}
+  hono@4.7.6: {}
 
   hookable@5.5.3: {}
 
@@ -15320,7 +15480,8 @@ snapshots:
 
   imurmurhash@0.1.4: {}
 
-  indent-string@4.0.0: {}
+  indent-string@4.0.0:
+    optional: true
 
   inflight@1.0.6:
     dependencies:
@@ -15700,10 +15861,9 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  knip@5.47.0(@types/node@18.19.86)(typescript@5.8.3):
+  knip@5.50.3(@types/node@18.19.86)(typescript@5.8.3):
     dependencies:
-      '@nodelib/fs.walk': 3.0.1
-      '@snyk/github-codeowners': 1.1.0
+      '@nodelib/fs.walk': 1.2.8
       '@types/node': 18.19.86
       easy-table: 1.2.0
       enhanced-resolve: 5.18.1
@@ -15716,7 +15876,6 @@ snapshots:
       pretty-ms: 9.2.0
       smol-toml: 1.3.1
       strip-json-comments: 5.0.1
-      summary: 2.1.0
       typescript: 5.8.3
       zod: 3.24.2
       zod-validation-error: 3.4.0(zod@3.24.2)
@@ -15918,7 +16077,7 @@ snapshots:
       '@oslojs/crypto': 1.0.1
       '@oslojs/encoding': 1.1.0
 
-  lucide-react@0.487.0(react@19.1.0):
+  lucide-react@0.488.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
@@ -16221,7 +16380,7 @@ snapshots:
 
   mimic-response@3.1.0: {}
 
-  miniflare@4.20250404.0:
+  miniflare@4.20250409.0:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.14.0
@@ -16230,7 +16389,7 @@ snapshots:
       glob-to-regexp: 0.4.1
       stoppable: 1.1.0
       undici: 5.29.0
-      workerd: 1.20250404.0
+      workerd: 1.20250409.0
       ws: 8.18.0
       youch: 3.3.4
       zod: 3.22.3
@@ -16540,6 +16699,7 @@ snapshots:
   p-map@4.0.0:
     dependencies:
       aggregate-error: 3.1.0
+    optional: true
 
   p-reflect@2.1.0:
     optional: true
@@ -17038,10 +17198,10 @@ snapshots:
   prism-themes@1.9.0:
     optional: true
 
-  prisma@6.5.0(typescript@5.8.3):
+  prisma@6.6.0(typescript@5.8.3):
     dependencies:
-      '@prisma/config': 6.5.0
-      '@prisma/engines': 6.5.0
+      '@prisma/config': 6.6.0
+      '@prisma/engines': 6.6.0
     optionalDependencies:
       fsevents: 2.3.3
       typescript: 5.8.3
@@ -17052,6 +17212,8 @@ snapshots:
     optional: true
 
   process-warning@4.0.1: {}
+
+  process-warning@5.0.0: {}
 
   process@0.11.10:
     optional: true
@@ -17125,9 +17287,9 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@24.6.0:
+  puppeteer-core@24.6.1:
     dependencies:
-      '@puppeteer/browsers': 2.9.0
+      '@puppeteer/browsers': 2.10.0
       chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
       debug: 4.4.0
       devtools-protocol: 0.0.1425554
@@ -17140,13 +17302,13 @@ snapshots:
       - utf-8-validate
     optional: true
 
-  puppeteer@24.6.0(typescript@5.8.3):
+  puppeteer@24.6.1(typescript@5.8.3):
     dependencies:
-      '@puppeteer/browsers': 2.9.0
+      '@puppeteer/browsers': 2.10.0
       chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
       cosmiconfig: 9.0.0(typescript@5.8.3)
       devtools-protocol: 0.0.1425554
-      puppeteer-core: 24.6.0
+      puppeteer-core: 24.6.1
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-buffer
@@ -17228,24 +17390,24 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-remove-scroll-bar@2.3.8(@types/react@19.1.0)(react@19.1.0):
+  react-remove-scroll-bar@2.3.8(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
-      react-style-singleton: 2.2.3(@types/react@19.1.0)(react@19.1.0)
+      react-style-singleton: 2.2.3(@types/react@19.1.1)(react@19.1.0)
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  react-remove-scroll@2.6.3(@types/react@19.1.0)(react@19.1.0):
+  react-remove-scroll@2.6.3(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
-      react-remove-scroll-bar: 2.3.8(@types/react@19.1.0)(react@19.1.0)
-      react-style-singleton: 2.2.3(@types/react@19.1.0)(react@19.1.0)
+      react-remove-scroll-bar: 2.3.8(@types/react@19.1.1)(react@19.1.0)
+      react-style-singleton: 2.2.3(@types/react@19.1.1)(react@19.1.0)
       tslib: 2.8.1
-      use-callback-ref: 1.3.3(@types/react@19.1.0)(react@19.1.0)
-      use-sidecar: 1.1.3(@types/react@19.1.0)(react@19.1.0)
+      use-callback-ref: 1.3.3(@types/react@19.1.1)(react@19.1.0)
+      use-sidecar: 1.1.3(@types/react@19.1.1)(react@19.1.0)
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
   react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
@@ -17256,20 +17418,20 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  react-style-singleton@2.2.3(@types/react@19.1.0)(react@19.1.0):
+  react-style-singleton@2.2.3(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       get-nonce: 1.0.1
       react: 19.1.0
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  react-textarea-autosize@8.5.6(@types/react@19.1.0)(react@19.1.0):
+  react-textarea-autosize@8.5.9(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.0
       react: 19.1.0
-      use-composed-ref: 1.4.0(@types/react@19.1.0)(react@19.1.0)
-      use-latest: 1.3.0(@types/react@19.1.0)(react@19.1.0)
+      use-composed-ref: 1.4.0(@types/react@19.1.1)(react@19.1.0)
+      use-latest: 1.3.0(@types/react@19.1.1)(react@19.1.0)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -17480,7 +17642,7 @@ snapshots:
 
   secure-json-parse@2.7.0: {}
 
-  secure-json-parse@3.0.2: {}
+  secure-json-parse@4.0.0: {}
 
   semver@6.3.1: {}
 
@@ -17603,6 +17765,34 @@ snapshots:
       '@img/sharp-wasm32': 0.33.5
       '@img/sharp-win32-ia32': 0.33.5
       '@img/sharp-win32-x64': 0.33.5
+    optional: true
+
+  sharp@0.34.1:
+    dependencies:
+      color: 4.2.3
+      detect-libc: 2.0.3
+      semver: 7.7.1
+    optionalDependencies:
+      '@img/sharp-darwin-arm64': 0.34.1
+      '@img/sharp-darwin-x64': 0.34.1
+      '@img/sharp-libvips-darwin-arm64': 1.1.0
+      '@img/sharp-libvips-darwin-x64': 1.1.0
+      '@img/sharp-libvips-linux-arm': 1.1.0
+      '@img/sharp-libvips-linux-arm64': 1.1.0
+      '@img/sharp-libvips-linux-ppc64': 1.1.0
+      '@img/sharp-libvips-linux-s390x': 1.1.0
+      '@img/sharp-libvips-linux-x64': 1.1.0
+      '@img/sharp-libvips-linuxmusl-arm64': 1.1.0
+      '@img/sharp-libvips-linuxmusl-x64': 1.1.0
+      '@img/sharp-linux-arm': 0.34.1
+      '@img/sharp-linux-arm64': 0.34.1
+      '@img/sharp-linux-s390x': 0.34.1
+      '@img/sharp-linux-x64': 0.34.1
+      '@img/sharp-linuxmusl-arm64': 0.34.1
+      '@img/sharp-linuxmusl-x64': 0.34.1
+      '@img/sharp-wasm32': 0.34.1
+      '@img/sharp-win32-ia32': 0.34.1
+      '@img/sharp-win32-x64': 0.34.1
     optional: true
 
   shebang-command@2.0.0:
@@ -17865,8 +18055,6 @@ snapshots:
     dependencies:
       postcss: 8.5.3
 
-  summary@2.1.0: {}
-
   superlock@1.2.2:
     optional: true
 
@@ -17906,7 +18094,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwind-merge@3.1.0: {}
+  tailwind-merge@3.2.0: {}
 
   tailwindcss@4.1.3: {}
 
@@ -18265,11 +18453,11 @@ snapshots:
   typed-query-selector@2.12.0:
     optional: true
 
-  typescript-eslint@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3):
+  typescript-eslint@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.29.0(@typescript-eslint/parser@8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/parser': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/eslint-plugin': 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       eslint: 9.24.0(jiti@2.4.2)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -18362,7 +18550,7 @@ snapshots:
       pathe: 2.0.3
       picomatch: 4.0.2
 
-  unplugin-vue-markdown@28.3.1(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  unplugin-vue-markdown@28.3.1(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       '@mdit-vue/plugin-component': 2.1.3
       '@mdit-vue/plugin-frontmatter': 2.1.3
@@ -18372,7 +18560,7 @@ snapshots:
       markdown-it-async: 2.2.0
       unplugin: 2.2.2
       unplugin-utils: 0.2.4
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   unplugin@1.0.1:
     dependencies:
@@ -18433,39 +18621,39 @@ snapshots:
 
   urlpattern-polyfill@10.0.0: {}
 
-  use-callback-ref@1.3.3(@types/react@19.1.0)(react@19.1.0):
+  use-callback-ref@1.3.3(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  use-composed-ref@1.4.0(@types/react@19.1.0)(react@19.1.0):
+  use-composed-ref@1.4.0(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  use-isomorphic-layout-effect@1.2.0(@types/react@19.1.0)(react@19.1.0):
+  use-isomorphic-layout-effect@1.2.0(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  use-latest@1.3.0(@types/react@19.1.0)(react@19.1.0):
+  use-latest@1.3.0(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       react: 19.1.0
-      use-isomorphic-layout-effect: 1.2.0(@types/react@19.1.0)(react@19.1.0)
+      use-isomorphic-layout-effect: 1.2.0(@types/react@19.1.1)(react@19.1.0)
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
-  use-sidecar@1.1.3(@types/react@19.1.0)(react@19.1.0):
+  use-sidecar@1.1.3(@types/react@19.1.1)(react@19.1.0):
     dependencies:
       detect-node-es: 1.1.0
       react: 19.1.0
       tslib: 2.8.1
     optionalDependencies:
-      '@types/react': 19.1.0
+      '@types/react': 19.1.1
 
   utif2@4.1.0:
     dependencies:
@@ -18498,10 +18686,10 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vike-cloudflare@0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vike-cloudflare@0.1.7(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       vike: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     optionalDependencies:
       '@hattip/adapter-cloudflare-workers': 0.0.49
 
@@ -18512,24 +18700,24 @@ snapshots:
       react-streaming: 0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       vike: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
-  vike-solid@0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vike-solid@0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       isbot-fast: 1.2.0
       solid-js: 1.9.5
       vike: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite-plugin-solid: 2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite-plugin-solid: 2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
 
-  vike-solid@0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vike-solid@0.7.9(solid-js@1.9.5)(vike@0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       isbot-fast: 1.2.0
       solid-js: 1.9.5
       vike: 0.4.228(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vite-plugin-solid: 2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      vite: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite-plugin-solid: 2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - supports-color
@@ -18557,7 +18745,7 @@ snapshots:
       sirv: 3.0.1
       source-map-support: 0.5.21
       tinyglobby: 0.2.12
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     optionalDependencies:
       react-streaming: 0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
@@ -18591,7 +18779,7 @@ snapshots:
       sirv: 3.0.1
       source-map-support: 0.5.21
       tinyglobby: 0.2.12
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     optionalDependencies:
       react-streaming: 0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
@@ -18613,7 +18801,7 @@ snapshots:
       debug: 4.4.0
       es-module-lexer: 1.6.0
       pathe: 2.0.3
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -18628,19 +18816,19 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-compiled-react@1.2.0(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vite-plugin-compiled-react@1.3.1(@compiled/react@0.18.3(react@19.1.0))(@vitejs/plugin-react@4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       '@babel/types': 7.27.0
       '@compiled/babel-plugin': 0.37.1
       '@compiled/babel-plugin-strip-runtime': 0.37.1
       '@compiled/react': 0.18.3(react@19.1.0)
-      '@vitejs/plugin-react': 4.3.4(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vitejs/plugin-react': 4.3.4(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       babel-plugin-module-resolver: 5.0.2
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vite-plugin-solid@2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       '@babel/core': 7.26.10
       '@types/babel__core': 7.20.5
@@ -18648,12 +18836,12 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.5
       solid-refresh: 0.6.3(solid-js@1.9.5)
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vitefu: 1.0.6(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vitefu: 1.0.6(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.6(solid-js@1.9.5)(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vite-plugin-solid@2.11.6(solid-js@1.9.5)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       '@babel/core': 7.26.10
       '@types/babel__core': 7.20.5
@@ -18661,12 +18849,12 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.5
       solid-refresh: 0.6.3(solid-js@1.9.5)
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
-      vitefu: 1.0.6(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      vite: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vitefu: 1.0.6(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vite-plugin-vercel@9.0.5(@vite-plugin-vercel/vike@9.0.4)(encoding@0.1.13)(rollup@4.39.0)(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.3
@@ -18676,17 +18864,17 @@ snapshots:
       esbuild: 0.24.2
       fast-glob: 3.3.3
       magicast: 0.3.5
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       zod: 3.24.2
     optionalDependencies:
-      '@vite-plugin-vercel/vike': 9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vite-plugin-vercel/vike': 9.0.4(vike@0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))(vite-plugin-vercel@9.0.5)(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       vike: 0.4.228(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - encoding
       - rollup
       - supports-color
 
-  vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1):
+  vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1):
     dependencies:
       esbuild: 0.25.2
       postcss: 8.5.3
@@ -18700,7 +18888,7 @@ snapshots:
       tsx: 4.19.3
       yaml: 2.7.1
 
-  vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1):
+  vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1):
     dependencies:
       esbuild: 0.25.2
       postcss: 8.5.3
@@ -18714,18 +18902,18 @@ snapshots:
       tsx: 4.19.3
       yaml: 2.7.1
 
-  vitefu@1.0.6(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vitefu@1.0.6(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     optionalDependencies:
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
-  vitefu@1.0.6(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
+  vitefu@1.0.6(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)):
     optionalDependencies:
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
 
   vitest@3.1.1(@types/debug@4.1.12)(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1):
     dependencies:
       '@vitest/expect': 3.1.1
-      '@vitest/mocker': 3.1.1(vite@6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
+      '@vitest/mocker': 3.1.1(vite@6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1))
       '@vitest/pretty-format': 3.1.1
       '@vitest/runner': 3.1.1
       '@vitest/snapshot': 3.1.1
@@ -18741,7 +18929,7 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.0.2
       tinyrainbow: 2.0.0
-      vite: 6.2.5(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.2.6(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       vite-node: 3.1.1(@types/node@18.19.86)(jiti@2.4.2)(lightningcss@1.29.2)(sugarss@4.0.1(postcss@8.5.3))(tsx@4.19.3)(yaml@2.7.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
@@ -18900,26 +19088,26 @@ snapshots:
 
   wordwrapjs@5.1.0: {}
 
-  workerd@1.20250404.0:
+  workerd@1.20250409.0:
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20250404.0
-      '@cloudflare/workerd-darwin-arm64': 1.20250404.0
-      '@cloudflare/workerd-linux-64': 1.20250404.0
-      '@cloudflare/workerd-linux-arm64': 1.20250404.0
-      '@cloudflare/workerd-windows-64': 1.20250404.0
+      '@cloudflare/workerd-darwin-64': 1.20250409.0
+      '@cloudflare/workerd-darwin-arm64': 1.20250409.0
+      '@cloudflare/workerd-linux-64': 1.20250409.0
+      '@cloudflare/workerd-linux-arm64': 1.20250409.0
+      '@cloudflare/workerd-windows-64': 1.20250409.0
 
-  wrangler@4.7.2(@cloudflare/workers-types@4.20250406.0):
+  wrangler@4.10.0(@cloudflare/workers-types@4.20250414.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
-      '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250404.0)
+      '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250409.0)
       blake3-wasm: 2.1.5
       esbuild: 0.24.2
-      miniflare: 4.20250404.0
+      miniflare: 4.20250409.0
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.15
-      workerd: 1.20250404.0
+      workerd: 1.20250409.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250406.0
+      '@cloudflare/workers-types': 4.20250414.0
       fsevents: 2.3.3
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -19021,4 +19209,4 @@ snapshots:
 
   zwitch@2.0.4: {}
 
-  zx@8.5.0: {}
+  zx@8.5.2: {}
