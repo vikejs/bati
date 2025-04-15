@@ -7,6 +7,10 @@ export default async function getReadme(props: TransformerProps) {
   const todo = `
 ## *Kysely*
 
+First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
+\`\`\`bash
+pnpm kysely:migrate # creates kysely tables
+\`\`\`
 `;
 
   content.addMarkdownFeature(todo, "kysely");

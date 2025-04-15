@@ -9,5 +9,5 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 20,
     })
     .addDependencies(["dotenv", "better-sqlite3", "kysely"])
-    .addDevDependencies(["@types/better-sqlite3"]);
+    .addDevDependencies(["@types/better-sqlite3", "tsx"]);
 }
