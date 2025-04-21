@@ -4,7 +4,7 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify", "hattip"],
   ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", "sqlite", undefined],
+  ["drizzle", "sqlite", "kysely", undefined],
   ["cloudflare", undefined],
   "eslint",
 ] as const;
@@ -15,6 +15,8 @@ export const exclude = [
   ["vue", "drizzle"],
   ["react", "sqlite"],
   ["vue", "sqlite"],
+  ["react", "kysely"],
+  ["vue", "kysely"],
   // Testing Solid with all servers, but others UIs with only Hono
   ["react", "express"],
   ["react", "h3"],
@@ -44,6 +46,8 @@ await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeA
       } else {
         await exec(npmCli, ["run", "sqlite:migrate"]);
       }
+    } else if (context.flags.includes("kysely")) {
+      await exec(npmCli, ["run", "kysely:migrate"]);
     }
   }, 70000);
 
@@ -103,6 +107,11 @@ await describeBati(({ test, describe, expect, fetch, testMatch, context, beforeA
         expect(await res.text()).toContain(text);
       },
       drizzle: async () => {
+        const res = await fetch("/todo");
+        expect(res.status).toBe(200);
+        expect(await res.text()).toContain(text);
+      },
+      kysely: async () => {
         const res = await fetch("/todo");
         expect(res.status).toBe(200);
         expect(await res.text()).toContain(text);
