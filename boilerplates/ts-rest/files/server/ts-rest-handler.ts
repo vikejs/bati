@@ -8,6 +8,8 @@ import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { D1Database } from "@cloudflare/workers-types";
+import { dbKysely } from "@batijs/kysely/database/kysely/db";
+import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
 
 /**
  * ts-rest route
@@ -20,6 +22,7 @@ const router = tsr
       'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
       'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
+      'BATI.has("kysely")': { db: typeof dbKysely };
       "BATI.hasD1": { db: D1Database };
       _: object;
     }>
@@ -40,6 +43,8 @@ const router = tsr
         sqliteQueries.insertTodo(_ctx.db, body.text);
       } else if (BATI.hasD1) {
         await d1Queries.insertTodo(_ctx.db, body.text);
+      } else if (BATI.has("kysely")) {
+        await kyselyQueries.insertTodo(_ctx.db, body.text);
       } else {
         // This is where you'd persist the data
         console.log("Received new todo", { text: body.text });

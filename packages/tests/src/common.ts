@@ -184,6 +184,10 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     ignoreDependencies.push("postcss");
   }
 
+  if (flags.includes("kysely")) {
+    entry.push("database/kysely/migrations/*.ts");
+  }
+
   const scriptsValues = Array.from(Object.values(scripts));
 
   if (scriptsValues.some((s) => s.includes("tsx "))) {
