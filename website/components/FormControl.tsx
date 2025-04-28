@@ -110,6 +110,7 @@ export function FormControl(props: {
             </For>
           </div>
         </div>
+        {/* Temporary disable
         <button
           onclick={showModal}
           class="btn btn-md btn-primary btn-outline absolute right-4 bottom-4 gap-0 px-3 transition-all"
@@ -126,6 +127,7 @@ export function FormControl(props: {
           </svg>
           <span class="overflow-hidden text-nowrap w-0 group-hover:w-24 transition-all">Detailed view</span>
         </button>
+        */}
       </div>
       <dialog ref={setModalRef} class="modal" inert onClose={toggleInert}>
         <div class="modal-box w-11/12 max-w-5xl">
