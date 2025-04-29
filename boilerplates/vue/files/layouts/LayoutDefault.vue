@@ -25,11 +25,6 @@ sentryBrowserConfig();
 </script>
 
 <style>
-/*{ @if (it.BATI.has("tailwindcss")) }*/
-/* see https://stackoverflow.com/questions/55206901/how-to-import-css-files-in-vue-3-child-components */
-@import "./tailwind.css";
-/*{ /if }*/
-
 body {
   margin: 0;
   font-family: sans-serif;
