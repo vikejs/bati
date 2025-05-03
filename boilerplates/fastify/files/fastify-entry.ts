@@ -27,6 +27,7 @@ import Fastify from "fastify";
 import { createHandler, createMiddleware } from "@universal-middleware/fastify";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
+import { createDevMiddleware } from "vike";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -55,13 +56,14 @@ async function startServer() {
     // Instantiate Vite's development server and integrate its middleware to our server.
     // ⚠️ We should instantiate it *only* in development. (It isn't needed in production
     // and would unnecessarily bloat our server in production.)
-    const vite = await import("vite");
     const viteDevMiddleware = (
-      await vite.createServer({
+      await createDevMiddleware({
         root,
-        server: { middlewareMode: true, hmr: { port: hmrPort } },
+        viteConfig: {
+          server: { hmr: { port: hmrPort } },
+        },
       })
-    ).middlewares;
+    ).devMiddleware;
     app.use(viteDevMiddleware);
   }
 

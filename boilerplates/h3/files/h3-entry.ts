@@ -33,6 +33,7 @@ import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListen
 import serveStatic from "serve-static";
 import { createHandler, createMiddleware, getContext } from "@universal-middleware/h3";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
+import { createDevMiddleware } from "vike";
 
 installWhatwgNodeFetch();
 installGetSetCookie();
@@ -55,13 +56,14 @@ async function startServer() {
     // Instantiate Vite's development server and integrate its middleware to our server.
     // ⚠️ We should instantiate it *only* in development. (It isn't needed in production
     // and would unnecessarily bloat our server in production.)
-    const vite = await import("vite");
     const viteDevMiddleware = (
-      await vite.createServer({
+      await createDevMiddleware({
         root,
-        server: { middlewareMode: true, hmr: { port: hmrPort } },
+        viteConfig: {
+          server: { hmr: { port: hmrPort } },
+        },
       })
-    ).middlewares;
+    ).devMiddleware;
     app.use(fromNodeMiddleware(viteDevMiddleware));
   }
 
