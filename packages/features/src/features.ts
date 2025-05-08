@@ -525,7 +525,7 @@ export const features = [
       },
       {
         label: "Vike integration",
-        href: "https://vike.dev/cloudflare-pages#full-stack",
+        href: "https://vike.dev/cloudflare",
       },
       {
         label: "vike-cloudflare",
