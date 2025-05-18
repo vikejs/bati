@@ -71,7 +71,7 @@ if (BATI.has("lucia-auth")) {
 
 if (BATI.has("better-auth")) {
   /**
-   * Auth route
+   * Better-Auth route
    **/
   app.on(["POST", "GET"], "/api/auth/**", createHandler(betterAuthHandler)());
 }

@@ -19,6 +19,7 @@ import {
   luciaGithubCallbackHandler,
   luciaGithubLoginHandler,
 } from "@batijs/lucia-auth/server/lucia-auth-handlers";
+import { betterAuthHandler } from "@batijs/better-auth/server/better-auth-handler";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -104,6 +105,13 @@ async function startServer() {
     app.post("/api/logout", createHandler(luciaAuthLogoutHandler)());
     app.get("/api/login/github", createHandler(luciaGithubLoginHandler)());
     app.get("/api/login/github/callback", createHandler(luciaGithubCallbackHandler)());
+  }
+
+  if (BATI.has("better-auth")) {
+    /**
+     * Better-Auth route
+     **/
+    app.all("/api/auth/**", createHandler(betterAuthHandler)());
   }
 
   if (BATI.has("trpc")) {
