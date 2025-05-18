@@ -27,5 +27,17 @@
     "if": {
       "flag": "better-auth"
     }
+  },
+  "exports": {
+    "./server/better-auth-handler": {
+      "types": "./dist/types/server/better-auth-handler.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server/better-auth-handler": [
+        "./dist/types/server/better-auth-handler.d.ts"
+      ]
+    }
   }
 }
