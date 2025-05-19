@@ -284,6 +284,26 @@ export const features = [
       },
     ],
   },
+  {
+    category: "Auth",
+    label: "Better Auth",
+    flag: "better-auth",
+    image:
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAADISURBVDhPvVIxCoRAEMssV4gPEKy09AOW/sW3WFv6A9/jC2zEQtwXiKDmijsHXa65W7jAFMlmAmFWSBIeMK7wLbwD5KwwTRPWdYWIIE1TNYzjiH3frzsIggBxHL8I38jznABojDklkmQURQRwm6Io9N27wsMVSKKua+VlWeI4Dlhr0bbtzQt8qOCOtZYk2XXdnyqICKqqUt40DUhinuebT+FW+PsV9CMNw4BlWSAiyLJMDX3fY9u26w7CMESSJMA14Fd4V/AOeAKo0LCvEZX+IgAAAABJRU5ErkJggg==",
+    url: "https://www.better-auth.com",
+    spectrum: "bleeding_edge",
+    tagline: "The most comprehensive authentication framework for TypeScript",
+    links: [
+      {
+        label: "Getting started",
+        href: "https://www.better-auth.com/docs/installation",
+      },
+      {
+        label: "API reference",
+        href: "https://www.better-auth.com/docs/basic-usage",
+      },
+    ],
+  },
 
   // RPC
   {

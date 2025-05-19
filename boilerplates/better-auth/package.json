@@ -1,0 +1,43 @@
+{
+  "name": "@batijs/better-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "better-auth": "^1.2.8",
+    "@batijs/compile": "workspace:*",
+    "@types/node": "^18.19.87"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*",
+    "@types/node": "^18.19.87"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bati": {
+    "if": {
+      "flag": "better-auth"
+    }
+  },
+  "exports": {
+    "./server/better-auth-handler": {
+      "types": "./dist/types/server/better-auth-handler.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server/better-auth-handler": [
+        "./dist/types/server/better-auth-handler.d.ts"
+      ]
+    }
+  }
+}
