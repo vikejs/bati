@@ -175,6 +175,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   if (flags.includes("aws")) {
     entry.push("entry_aws_lambda.ts");
     entry.push("cdk/lib/vike-stack.ts");
+    entry.push("tests/aws_handler.spec.ts");
     ignoreDependencies.push("aws-cdk", "cdk", "esbuild", "npm-run-all2");
     ignore.push("cdk.out/**");
   }
