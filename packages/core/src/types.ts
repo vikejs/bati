@@ -12,9 +12,15 @@ export type TransformerProps = {
   target: string;
   source: string;
   meta: VikeMeta;
+  packageJson: PackageJson;
 };
 
 export type Transformer = (props: TransformerProps) => unknown;
+
+export interface PackageJson {
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+}
 
 export interface StringTransformer {
   finalize(): string;

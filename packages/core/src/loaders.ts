@@ -70,11 +70,14 @@ export async function loadRelativeFileAsMagicast<Exports extends object>(
 
 export async function loadYaml(
   { readfile, source, target }: TransformerProps,
-  options?: ParseOptions & DocumentOptions & SchemaOptions,
+  options?: ParseOptions & DocumentOptions & SchemaOptions & { fallbackEmpty?: boolean },
 ) {
   const content = await readfile?.();
 
-  assert(typeof content === "string", `Unable to load previous YAML module ("${source}" -> "${target}")`);
+  assert(
+    typeof content === "string" || options?.fallbackEmpty,
+    `Unable to load previous YAML module ("${source}" -> "${target}")`,
+  );
 
-  return parseDocument(content, options);
+  return parseDocument(content ?? "", options);
 }
