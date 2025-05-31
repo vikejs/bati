@@ -1,6 +1,14 @@
 import { loadYaml, type TransformerProps } from "@batijs/core";
 
-const dependenciesApproveBuild = ["@biomejs/biome", "@sentry/cli", "@tailwindcss/oxide", "better-sqlite3", "esbuild"];
+const dependenciesApproveBuild = [
+  "@biomejs/biome",
+  "@sentry/cli",
+  "@tailwindcss/oxide",
+  "better-sqlite3",
+  "esbuild",
+  "sharp",
+  "workerd",
+];
 
 function intersect<T>(a: T[], b: T[]) {
   return a.filter((x) => b.includes(x));

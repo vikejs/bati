@@ -111,7 +111,10 @@ Please report this issue to https://github.com/vikejs/bati`,
   let previousOp: (FileOperation & OperationReport) | undefined = undefined;
   let previousOpContent: string | undefined = undefined;
   let packageJson: PackageJson = {};
-  const packageJsonDistAbsolute = path.join(options.dist, "package.json");
+  const packageJsonDistAbsolute = path.join(
+    path.isAbsolute(options.dist) ? options.dist : path.resolve(options.dist),
+    "package.json",
+  );
   for (const op of rearranger.compute()) {
     if (previousOp?.destination !== op.destination) {
       previousOp = undefined;
