@@ -1,6 +1,6 @@
 import { parse } from "path";
 import type { FileOperation, OperationReport } from "./common.js";
-import type { StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
+import type { PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
 import { formatCode } from "@batijs/core";
 
 const isWin = process.platform === "win32";
@@ -61,7 +61,8 @@ export async function executeOperationTransform(
   {
     meta,
     previousOperationSameDestination,
-  }: { meta: VikeMeta; previousOperationSameDestination?: FileOperation & OperationReport },
+    packageJson,
+  }: { meta: VikeMeta; previousOperationSameDestination?: FileOperation & OperationReport; packageJson: PackageJson },
 ): Promise<OperationReport> {
   const transformer = await importTransformer(op.sourceAbsolute);
 
@@ -74,6 +75,7 @@ export async function executeOperationTransform(
       meta,
       source: op.source,
       target: op.destination,
+      packageJson,
     }),
   );
 

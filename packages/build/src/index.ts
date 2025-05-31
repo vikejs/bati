@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { type VikeMeta } from "@batijs/core";
+import { type PackageJson, type VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";
 import { executeOperationFile } from "./operations/file.js";
 import { executeOperationTransform } from "./operations/transform.js";
@@ -110,6 +110,11 @@ Please report this issue to https://github.com/vikejs/bati`,
 
   let previousOp: (FileOperation & OperationReport) | undefined = undefined;
   let previousOpContent: string | undefined = undefined;
+  let packageJson: PackageJson = {};
+  const packageJsonDistAbsolute = path.join(
+    path.isAbsolute(options.dist) ? options.dist : path.resolve(options.dist),
+    "package.json",
+  );
   for (const op of rearranger.compute()) {
     if (previousOp?.destination !== op.destination) {
       previousOp = undefined;
@@ -131,6 +136,7 @@ Please report this issue to https://github.com/vikejs/bati`,
       report = await executeOperationTransform(op, {
         meta,
         previousOperationSameDestination: previousOp,
+        packageJson,
       });
 
       // TODO: also call updateAllImports. Needs to compute report.context.imports
@@ -138,6 +144,10 @@ Please report this issue to https://github.com/vikejs/bati`,
 
     if (report.content) {
       await safeWriteFile(op.destination, report.content.trimStart());
+
+      if (op.destinationAbsolute === packageJsonDistAbsolute) {
+        packageJson = JSON.parse(report.content);
+      }
     }
 
     previousOpContent = report.content ?? previousOpContent;

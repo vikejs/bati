@@ -337,10 +337,12 @@ async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
 
 function testFlags(flags: string[], bl: BoilerplateDef) {
   if (bl.config.if) {
-    return (sift as unknown as typeof sift.default)(bl.config.if)(flags.map((f) => ({ flag: f })));
+    return (sift as unknown as typeof sift.default)(bl.config.if)(
+      flags.map((f) => ({ flag: f, packageManager: pm?.name })),
+    );
   }
 
-  // No condition means always
+  // No condition means always true
   return true;
 }
 
