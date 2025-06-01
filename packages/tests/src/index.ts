@@ -18,10 +18,12 @@ import {
   createBatiConfig,
   createKnipConfig,
   createTurboConfig,
+  extractPnpmOnlyBuiltDependencies,
   updatePackageJson,
   updateTsconfig,
   updateVitestConfig,
 } from "./common.js";
+import { Document } from "yaml";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -73,14 +75,13 @@ async function createWorkspacePackageJson(context: GlobalContext) {
   );
 }
 
-function createPnpmWorkspaceYaml(context: GlobalContext) {
-  return writeFile(
-    join(context.tmpdir, "pnpm-workspace.yaml"),
-    `packages:
-  - "packages/*"
-`,
-    "utf-8",
-  );
+function createPnpmWorkspaceYaml(context: GlobalContext, onlyBuiltDependencies: Set<string>) {
+  const doc = new Document();
+  doc.set("packages", ["packages/*"]);
+  if (onlyBuiltDependencies.size > 0) {
+    doc.set("onlyBuiltDependencies", [...onlyBuiltDependencies]);
+  }
+  return writeFile(join(context.tmpdir, "pnpm-workspace.yaml"), doc.toString(), "utf-8");
 }
 
 async function createGitIgnore(context: GlobalContext) {
@@ -88,8 +89,8 @@ async function createGitIgnore(context: GlobalContext) {
 }
 
 function linkTestUtils() {
-  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--loglevel", "error", "--global"], {
-    // pnpm link --global takes some time
+  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--loglevel", "error"], {
+    // pnpm link can take some time
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
   });
@@ -110,7 +111,7 @@ async function packageManagerInstall(context: GlobalContext) {
 
   if (npmCli !== "bun") {
     // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
-    const child = exec(npmCli, ["link", "--global", "@batijs/tests-utils"], {
+    const child = exec(npmCli, ["link", "@batijs/tests-utils"], {
       timeout: 60000,
       cwd: context.tmpdir,
       stdio: ["ignore", "ignore", "inherit"],
@@ -119,6 +120,16 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 }
+
+async function pnpmRebuild(projectDirs: string[]) {
+  for (const projectDir of projectDirs) {
+    await exec(npmCli, ["rebuild"], {
+      timeout: 60 * 1000, // 1min
+      cwd: projectDir,
+    });
+  }
+}
+
 async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const steps = args.steps ? args.steps.split(",") : undefined;
   const args_1 = [npmCli === "bun" ? "x" : "exec", "turbo", "run"];
@@ -275,6 +286,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   }
 
   await initTmpDir(context);
+  const onlyBuiltDependencies = new Set<string>();
+  const pnpmRebuildProjectDirs: string[] = [];
 
   // for all matrices
   for (const { testFiles, flags } of matrices.values()) {
@@ -290,6 +303,10 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           createBatiConfig(projectDir, flags),
           createKnipConfig(projectDir, flags, packageJson.scripts),
         ]);
+        const localBuildDeps = await extractPnpmOnlyBuiltDependencies(projectDir, onlyBuiltDependencies);
+        if (localBuildDeps?.includes("better-sqlite3")) {
+          pnpmRebuildProjectDirs.push(projectDir);
+        }
       }),
     );
   }
@@ -300,7 +317,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   // create monorepo config (pnpm only)
   if (npmCli === "pnpm") {
-    await createPnpmWorkspaceYaml(context);
+    await createPnpmWorkspaceYaml(context, onlyBuiltDependencies);
   }
 
   // create .gitignore file, used by turborepo cache hash computation
@@ -314,6 +331,11 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   // pnpm/bun install
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
+
+  // better-sqlite3 needs to be rebuilt sometimes
+  if (npmCli === "pnpm") {
+    await pnpmRebuild(pnpmRebuildProjectDirs);
+  }
 
   // exec turbo run test lint build
   await execTurborepo(context, args);

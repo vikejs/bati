@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 import packageJson from "../package.json" with { type: "json" };
 import type { GlobalContext } from "./types.js";
+import { isNode, parseDocument } from "yaml";
 
 export async function updatePackageJson(
   projectDir: string,
@@ -226,4 +227,19 @@ export async function createBatiConfig(projectDir: string, flags: string[]) {
     }),
     "utf-8",
   );
+}
+
+export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyBuiltDependencies: Set<string>) {
+  try {
+    const content = await readFile(join(projectDir, "pnpm-workspace.yaml"), "utf-8");
+    const pnpmWorkspace = parseDocument(content);
+    const node = pnpmWorkspace.get("onlyBuiltDependencies");
+    if (isNode(node)) {
+      const arr: string[] = node.toJSON();
+      arr.forEach((dep: string) => onlyBuiltDependencies.add(dep));
+      return arr;
+    }
+  } catch {
+    // noop
+  }
 }
