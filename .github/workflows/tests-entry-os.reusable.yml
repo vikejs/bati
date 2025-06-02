@@ -91,7 +91,7 @@ jobs:
         run: pnpm run test
 
       - name: Deploy CLI locally
-        run: pnpm deploy --legacy --prod --filter=./packages/cli ./bati-cli
+        run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
 
       - name: Archive Bati CLI
         uses: actions/upload-artifact@v4
@@ -104,7 +104,7 @@ jobs:
           path: ./bati-cli/dist/*
 
       - name: Deploy tests locally
-        run: pnpm deploy --legacy --prod --filter=./packages/tests ./bati-tests
+        run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
 
       - name: Archive Bati tests
         uses: actions/upload-artifact@v4
