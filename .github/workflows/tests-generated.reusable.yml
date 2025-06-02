@@ -23,6 +23,8 @@ jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}
 
+    name: E2E (group ${{ inputs.group }})
+
     env:
       BATI_TEST: true
       TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
