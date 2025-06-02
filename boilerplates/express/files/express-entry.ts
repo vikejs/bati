@@ -74,7 +74,7 @@ async function startServer() {
      * Auth.js route
      * @link {@see https://authjs.dev/getting-started/installation}
      **/
-    app.all("/api/auth/*", createHandler(authjsHandler)());
+    app.all("/api/auth/*auth", createHandler(authjsHandler)());
   }
 
   if (BATI.has("firebase-auth")) {
@@ -115,7 +115,7 @@ async function startServer() {
   }
 
   if (BATI.has("ts-rest")) {
-    app.all("/api/*", createHandler(tsRestHandler)());
+    app.all("/api/*api", createHandler(tsRestHandler)());
   }
 
   if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {
@@ -127,7 +127,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*", createHandler(vikeHandler)());
+  app.all("*vike", createHandler(vikeHandler)());
 
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
