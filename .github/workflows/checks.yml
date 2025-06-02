@@ -6,6 +6,10 @@ on:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
     branches: [ "main" ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-and-check-types:
     runs-on: ubuntu-latest

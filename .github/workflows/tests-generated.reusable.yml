@@ -11,6 +11,11 @@ on:
       node:
         required: true
         type: number
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}

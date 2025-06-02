@@ -10,6 +10,11 @@ on:
         type: number
       fast:
         type: boolean
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   monorepo:
     runs-on: ${{ inputs.os }}

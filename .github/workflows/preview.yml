@@ -1,5 +1,5 @@
 name: Deploy PR previews
-concurrency: preview-${{ github.ref }}
+
 on:
   pull_request:
     types:
@@ -8,6 +8,11 @@ on:
       - synchronize
     paths:
       - 'website/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy-preview:
     # If it's a PR from within the same repo, deploy to a preview page
