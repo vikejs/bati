@@ -54,4 +54,10 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
       testMatch,
     } as unknown as TestContext);
   });
+
+  if (isWin) {
+    vitest.afterAll(() => {
+      setTimeout(() => process.exit(0), 100);
+    });
+  }
 }
