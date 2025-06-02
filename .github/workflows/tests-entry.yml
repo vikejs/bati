@@ -19,9 +19,7 @@ jobs:
   monorepo:
     strategy:
       matrix:
-#        FIXME Windows tests are not terminating, and GH CI terminates them after many hours
-        os: [ ubuntu-latest, macos-latest ]
-#        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
         node: [ 20 ]
       fail-fast: false
 
