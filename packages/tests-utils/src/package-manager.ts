@@ -1,4 +1,5 @@
 import which from "which";
 
-export const bunExists = which.sync("bun", { nothrow: true }) !== null;
+const isWin = process.platform === "win32";
+export const bunExists = isWin ? false : which.sync("bun", { nothrow: true }) !== null;
 export const npmCli = bunExists && !process.env.FORCE_PNPM ? "bun" : "pnpm";
