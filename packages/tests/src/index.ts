@@ -109,7 +109,10 @@ async function packageManagerInstall(context: GlobalContext) {
     await child;
   }
 
-  if (npmCli !== "bun") {
+  if (npmCli === "bun") {
+    // Circumvent https://github.com/aws/aws-cdk/issues/33270
+    await writeFile(join(context.tmpdir, "bun.lockb"), "", "utf-8");
+  } else {
     // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
     const child = exec(npmCli, ["link", "@batijs/tests-utils"], {
       timeout: 60000,
