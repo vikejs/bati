@@ -4,6 +4,8 @@ import packageJson from "../package.json" with { type: "json" };
 import type { GlobalContext } from "./types.js";
 import { isNode, parseDocument } from "yaml";
 
+const isWin = process.platform === "win32";
+
 export async function updatePackageJson(
   projectDir: string,
   packedTestsUtils?: string,
@@ -22,6 +24,10 @@ export async function updatePackageJson(
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
+  // Bun + Windows compat fix
+  if (isWin) {
+    pkgjson.devDependencies["vitest-in-process-pool"] = packageJson.devDependencies["vitest-in-process-pool"];
+  }
   pkgjson.devDependencies.knip = packageJson.devDependencies.knip;
   if (packedTestsUtils) {
     pkgjson.devDependencies["@batijs/tests-utils"] = packedTestsUtils;
@@ -58,6 +64,7 @@ export default defineConfig({
   test: {
     include: ${testFiles ? JSON.stringify(testFiles.split(",")) : '["*.spec.ts"]'},
     testTimeout: 100000,
+    pool: ${JSON.stringify(isWin ? "vitest-in-process-pool" : "forks")},
   },
 } as ViteUserConfig);
 `,
