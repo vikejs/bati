@@ -127,7 +127,7 @@ async function startServer() {
    *
    * @link {@see https://vike.dev}
    **/
-  app.all("*vike", createHandler(vikeHandler)());
+  app.all("{*vike}", createHandler(vikeHandler)());
 
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
