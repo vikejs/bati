@@ -1,6 +1,5 @@
-import { existsSync } from "node:fs";
-import { copy } from "fs-extra";
-import { mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises";
+import { existsSync, constants } from "node:fs";
+import { cp, mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { which } from "@batijs/core";
@@ -154,12 +153,14 @@ const esbuildPlugin: Plugin = {
         }
 
         if (bl.source) {
-          await copy(bl.source, dest, {
-            overwrite: true,
+          await cp(bl.source, dest, {
             dereference: true,
+            force: true,
+            recursive: true,
             filter(source) {
               return !basename(source).startsWith("$");
-            }
+            },
+            mode: constants.COPYFILE_FICLONE
           });
         }
 
