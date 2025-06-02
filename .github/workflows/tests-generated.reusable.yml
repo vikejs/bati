@@ -82,8 +82,3 @@ jobs:
         with:
           os: ${{ inputs.os }}
           node: ${{ inputs.node }}
-
-#      - name: Cleanup
-#        if: always() && steps.gen.outcome != 'success'
-#        shell: bash
-#        run: rm -rf ./.github/actions/bati-gen
