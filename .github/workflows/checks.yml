@@ -12,13 +12,14 @@ concurrency:
 
 jobs:
   lint-and-check-types:
-    name: Lint & Typecheck
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node: ["18", "20"]
       fail-fast: false
+
+    name: Lint & Typecheck - node@${{ matrix.node }}
 
     steps:
       - name: Checkout
