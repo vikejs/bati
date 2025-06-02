@@ -2,8 +2,6 @@ import type { TestOptions } from "vitest";
 import { prepare } from "./prepare.js";
 import type { FlagMatrix, GlobalContext, PrepareOptions, TestContext, TestMatch, TestMatches } from "./types.js";
 
-const isWin = process.platform === "win32";
-
 function* yieldMatchValue<T extends FlagMatrix>(
   fnOrMatch: TestMatch | TestMatches<T>,
   flags: string[],
@@ -54,10 +52,4 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
       testMatch,
     } as unknown as TestContext);
   });
-
-  if (isWin) {
-    vitest.afterAll(() => {
-      setTimeout(() => process.exit(0), 100);
-    });
-  }
 }

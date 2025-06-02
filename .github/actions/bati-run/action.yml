@@ -53,7 +53,8 @@ runs:
 
     - name: Run tests
       shell: bash
-      run: bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose
+      # Bun hangs on Windows
+      run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose' }}
       working-directory: ${{ inputs.destination }}
 
     - name: Run lint
