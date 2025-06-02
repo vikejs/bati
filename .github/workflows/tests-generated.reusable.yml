@@ -23,7 +23,7 @@ jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}
 
-    name: E2E (group ${{ inputs.group }})
+    name: E2E
 
     env:
       BATI_TEST: true
