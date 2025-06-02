@@ -55,7 +55,7 @@ jobs:
             ${{ inputs.os }}-pnpm-store-
 
       - name: Cache for Turbo
-        uses: rharkor/caching-for-turbo@v1.6
+        uses: rharkor/caching-for-turbo@v1.8
 
 #      - name: Install global dependencies
 #        if: matrix.os == 'ubuntu-latest'
