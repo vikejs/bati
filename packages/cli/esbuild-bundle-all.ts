@@ -1,4 +1,4 @@
-import { existsSync, constants } from "node:fs";
+import { existsSync } from "node:fs";
 import { cp, mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -160,7 +160,6 @@ const esbuildPlugin: Plugin = {
             filter(source) {
               return !basename(source).startsWith("$");
             },
-            mode: constants.COPYFILE_FICLONE
           });
         }
 
