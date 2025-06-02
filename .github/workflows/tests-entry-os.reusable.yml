@@ -10,9 +10,16 @@ on:
         type: number
       fast:
         type: boolean
+
+concurrency:
+  group: tests-entry-os-${{ inputs.os }}-${{ inputs.node }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  monorepo:
+  suite:
     runs-on: ${{ inputs.os }}
+
+    name: Run
 
 # Debug discrepancies between published package and local one
 #    services:
@@ -84,7 +91,7 @@ jobs:
         run: pnpm run test
 
       - name: Deploy CLI locally
-        run: pnpm deploy --legacy --prod --filter=./packages/cli ./bati-cli
+        run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
 
       - name: Archive Bati CLI
         uses: actions/upload-artifact@v4
@@ -97,7 +104,7 @@ jobs:
           path: ./bati-cli/dist/*
 
       - name: Deploy tests locally
-        run: pnpm deploy --legacy --prod --filter=./packages/tests ./bati-tests
+        run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
 
       - name: Archive Bati tests
         uses: actions/upload-artifact@v4
@@ -147,16 +154,17 @@ jobs:
       test-matrix: ${{ steps.list-e2e.outputs.test-matrix }}
 
   generated:
-    needs: monorepo
+    needs: suite
     strategy:
       fail-fast: false
       matrix:
-        test-matrix: ${{ fromJson(needs.monorepo.outputs.test-matrix) }}
-    name: "Trigger e2e tests: Group ${{ matrix.test-matrix[0] }}"
+        test-matrix: ${{ fromJson(needs.suite.outputs.test-matrix) }}
+    name: "e2e (${{ matrix.test-matrix[0] }})"
 
     uses: ./.github/workflows/tests-generated.reusable.yml
     secrets: inherit
     with:
+      group: ${{ matrix.test-matrix[0] }}
       entry: ${{ matrix.test-matrix[1] }}
       os: ${{ inputs.os }}
       node: ${{ inputs.node }}

@@ -2,18 +2,28 @@
 on:
   workflow_call:
     inputs:
-      entry:
-        required: true
-        type: string
       os:
         required: true
         type: string
       node:
         required: true
         type: number
+      group:
+        required: true
+        type: number
+      entry:
+        required: true
+        type: string
+
+concurrency:
+  group: tests-generated-${{ inputs.os }}-${{ inputs.node }}-${{ inputs.group }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}
+
+    name: group ${{ inputs.group }}
 
     env:
       BATI_TEST: true
@@ -38,7 +48,13 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         name: Install bun
         with:
-          bun-version: "1.1.43"
+          bun-version: "1.2.15"
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
 
       - name: Download Bati CLI
         uses: actions/download-artifact@v4

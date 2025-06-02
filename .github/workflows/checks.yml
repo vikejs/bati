@@ -6,6 +6,10 @@ on:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
     branches: [ "main" ]
 
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-and-check-types:
     runs-on: ubuntu-latest
@@ -14,6 +18,8 @@ jobs:
       matrix:
         node: ["18", "20"]
       fail-fast: false
+
+    name: Lint & Typecheck - node@${{ matrix.node }}
 
     steps:
       - name: Checkout
