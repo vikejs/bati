@@ -12,7 +12,7 @@ on:
       - 'website/**'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: tests-entry-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -2,18 +2,18 @@
 on:
   workflow_call:
     inputs:
-      entry:
-        required: true
-        type: string
       os:
         required: true
         type: string
       node:
         required: true
         type: number
+      entry:
+        required: true
+        type: string
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: tests-generated-${{ inputs.os }}-${{ inputs.node }}-${{ inputs.entry }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

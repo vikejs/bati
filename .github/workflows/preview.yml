@@ -10,7 +10,7 @@ on:
       - 'website/**'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: preview-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

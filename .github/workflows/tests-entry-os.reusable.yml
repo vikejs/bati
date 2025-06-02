@@ -12,7 +12,7 @@ on:
         type: boolean
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: tests-entry-os-${{ inputs.os }}-${{ inputs.node }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
