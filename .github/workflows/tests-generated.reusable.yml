@@ -12,10 +12,6 @@ on:
         required: true
         type: string
 
-concurrency:
-  group: tests-generated-${{ inputs.os }}-${{ inputs.node }}-${{ inputs.entry }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   reusable_workflow_job:
     runs-on: ${{ inputs.os }}

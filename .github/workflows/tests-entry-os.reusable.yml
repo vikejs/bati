@@ -11,12 +11,8 @@ on:
       fast:
         type: boolean
 
-concurrency:
-  group: tests-entry-os-${{ inputs.os }}-${{ inputs.node }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  monorepo:
+  suite:
     runs-on: ${{ inputs.os }}
 
 # Debug discrepancies between published package and local one
@@ -152,7 +148,7 @@ jobs:
       test-matrix: ${{ steps.list-e2e.outputs.test-matrix }}
 
   generated:
-    needs: monorepo
+    needs: suite
     strategy:
       fail-fast: false
       matrix:
