@@ -50,6 +50,12 @@ jobs:
         with:
           bun-version: "1.2.15"
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
       - name: Download Bati CLI
         uses: actions/download-artifact@v4
         with:
