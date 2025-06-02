@@ -8,12 +8,15 @@ on:
       node:
         required: true
         type: number
+      group:
+        required: true
+        type: number
       entry:
         required: true
         type: string
 
 concurrency:
-  group: tests-generated-${{ inputs.os }}-${{ inputs.node }}-${{ inputs.entry }}-${{ github.ref }}
+  group: tests-generated-${{ inputs.os }}-${{ inputs.node }}-${{ inputs.group }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

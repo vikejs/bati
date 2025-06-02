@@ -164,6 +164,7 @@ jobs:
     uses: ./.github/workflows/tests-generated.reusable.yml
     secrets: inherit
     with:
+      group: ${{ matrix.test-matrix[0] }}
       entry: ${{ matrix.test-matrix[1] }}
       os: ${{ inputs.os }}
       node: ${{ inputs.node }}
