@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest run",
     "test:ci": "vitest run",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "turbo run build",
     "build": "tsup",
     "watch": "tsup --watch"
   },
