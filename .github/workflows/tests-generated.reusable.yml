@@ -34,8 +34,6 @@ jobs:
 
       - name: Cache for Turbo
         uses: rharkor/caching-for-turbo@v1.8
-        with:
-          max-age: 2w
 
       - uses: oven-sh/setup-bun@v2
         name: Install bun
