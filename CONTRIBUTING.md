@@ -75,8 +75,8 @@ pnpm run test-e2e --filter solid,authjs
 > [!NOTE]
 > These requirements are only needed for developing the source code of Bati. `@bati/cli` itself can be used with Windows and with any package manager.
 
-- Node.js `>=18.0.0`
-- pnpm `9.4.0`
+- Node.js `>=20.0.0`
+- pnpm `>=10.11.1`
 - Unix (Linux or macOS)
 
 > [!NOTE]
