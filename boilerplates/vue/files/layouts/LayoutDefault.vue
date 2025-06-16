@@ -11,8 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-//# BATI.has("panda-css")
-import "./panda.css";
 import Content from "../components/Content.vue";
 import Link from "../components/Link.vue";
 import Logo from "../components/Logo.vue";
