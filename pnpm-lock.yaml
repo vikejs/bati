@@ -658,58 +658,6 @@ importers:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
 
-  boilerplates/lucia-auth:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@cloudflare/workers-types':
-        specifier: ^4.20250614.0
-        version: 4.20250614.0
-      '@lucia-auth/adapter-drizzle':
-        specifier: ^1.1.0
-        version: 1.1.0(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250614.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)(prisma@6.9.0(typescript@5.8.3)))(lucia@3.2.2)
-      '@lucia-auth/adapter-sqlite':
-        specifier: ^3.0.2
-        version: 3.0.2(better-sqlite3@11.10.0)(lucia@3.2.2)
-      '@types/better-sqlite3':
-        specifier: ^7.6.13
-        version: 7.6.13
-      '@types/node':
-        specifier: ^18.19.111
-        version: 18.19.111
-      '@universal-middleware/core':
-        specifier: ^0.4.8
-        version: 0.4.8(@cloudflare/workers-types@4.20250614.0)(@hattip/core@0.0.49)(fastify@5.4.0)(h3@1.15.3)(hono@4.7.11)
-      arctic:
-        specifier: ^3.7.0
-        version: 3.7.0
-      better-sqlite3:
-        specifier: ^11.10.0
-        version: 11.10.0
-      cookie:
-        specifier: ^1.0.2
-        version: 1.0.2
-      dotenv:
-        specifier: ^16.5.0
-        version: 16.5.0
-      drizzle-orm:
-        specifier: ^0.44.2
-        version: 0.44.2(@cloudflare/workers-types@4.20250614.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)(prisma@6.9.0(typescript@5.8.3))
-      lucia:
-        specifier: ^3.2.2
-        version: 3.2.2
-      vike:
-        specifier: ^0.4.231
-        version: 0.4.231(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-      vite:
-        specifier: ^6.3.5
-        version: 6.3.5(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-
   boilerplates/mantine:
     dependencies:
       '@batijs/core':
@@ -914,37 +862,6 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@11.9.1)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      vike:
-        specifier: ^0.4.231
-        version: 0.4.231(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-      vite:
-        specifier: ^6.3.5
-        version: 6.3.5(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-
-  boilerplates/react-lucia-auth:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@types/node':
-        specifier: ^18.19.111
-        version: 18.19.111
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -1196,28 +1113,6 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@11.9.1)
-      solid-js:
-        specifier: ^1.9.7
-        version: 1.9.7
-      vike:
-        specifier: ^0.4.231
-        version: 0.4.231(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-      vite:
-        specifier: ^6.3.5
-        version: 6.3.5(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-
-  boilerplates/solid-lucia-auth:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@types/node':
-        specifier: ^18.19.111
-        version: 18.19.111
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
@@ -1488,28 +1383,6 @@ importers:
       firebaseui:
         specifier: ^6.1.0
         version: 6.1.0(firebase@11.9.1)
-      vike:
-        specifier: ^0.4.231
-        version: 0.4.231(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-      vite:
-        specifier: ^6.3.5
-        version: 6.3.5(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
-      vue:
-        specifier: ^3.5.16
-        version: 3.5.16(typescript@5.8.3)
-
-  boilerplates/vue-lucia-auth:
-    dependencies:
-      '@batijs/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-    devDependencies:
-      '@batijs/compile':
-        specifier: workspace:*
-        version: link:../../packages/compile
-      '@types/node':
-        specifier: ^18.19.111
-        version: 18.19.111
       vike:
         specifier: ^0.4.231
         version: 0.4.231(@types/node@18.19.111)(jiti@2.4.2)(lightningcss@1.30.1)(react-streaming@0.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sugarss@4.0.1(postcss@8.5.5))(tsx@4.20.3)(yaml@2.8.0)
@@ -3847,26 +3720,6 @@ packages:
     resolution: {integrity: sha512-txRAdmi35N1wnsLS1AO5mTlbY5Cv5/61WXqek2y3L9Q7u4mgdUVq819so5xe753hL5gYeLzlWoJ/VJfXg9nx8g==}
     engines: {node: '>= 18'}
 
-  '@lucia-auth/adapter-drizzle@1.1.0':
-    resolution: {integrity: sha512-iCTnZWvfI5lLZOdUHZYiXA1jaspIFEeo2extLxQ3DjP3uOVys7IPwBi7zezLIRu9dhro4H4Kji+7gSYyjcef2A==}
-    deprecated: This package has been deprecated. Please see https://lucia-auth.com/lucia-v3/migrate.
-    peerDependencies:
-      drizzle-orm: '>= 0.29 <1'
-      lucia: 3.x
-
-  '@lucia-auth/adapter-sqlite@3.0.2':
-    resolution: {integrity: sha512-UlXpF+2UoFEdm1AsriJii5BOARwqko6SX29rQ8T8Za7rnjj9KLXLaRVQUgBhGmggAyvzCtguJ2+XOZDsfWm6Sw==}
-    deprecated: This package has been deprecated. Please see https://lucia-auth.com/lucia-v3/migrate.
-    peerDependencies:
-      '@libsql/client': ^0.3.0
-      better-sqlite3: 8.x - 11.x
-      lucia: 3.x
-    peerDependenciesMeta:
-      '@libsql/client':
-        optional: true
-      better-sqlite3:
-        optional: true
-
   '@lukeed/ms@2.0.2':
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
@@ -3949,24 +3802,6 @@ packages:
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
-
-  '@oslojs/asn1@1.0.0':
-    resolution: {integrity: sha512-zw/wn0sj0j0QKbIXfIlnEcTviaCzYOY3V5rAyjR6YtOByFtJiT574+8p9Wlach0lZH9fddD4yb9laEAIl4vXQA==}
-
-  '@oslojs/binary@1.0.0':
-    resolution: {integrity: sha512-9RCU6OwXU6p67H4NODbuxv2S3eenuQ4/WFLrsq+K/k682xrznH5EVWA7N4VFk9VYVcbFtKqur5YQQZc0ySGhsQ==}
-
-  '@oslojs/crypto@1.0.1':
-    resolution: {integrity: sha512-7n08G8nWjAr/Yu3vu9zzrd0L9XnrJfpMioQcvCMxBIiF5orECHe5/3J0jmXRVvgfqMm/+4oxlQ+Sq39COYLcNQ==}
-
-  '@oslojs/encoding@0.4.1':
-    resolution: {integrity: sha512-hkjo6MuIK/kQR5CrGNdAPZhS01ZCXuWDRJ187zh6qqF2+yMHZpD9fAYpX8q2bOO6Ryhl3XpCT6kUX76N8hhm4Q==}
-
-  '@oslojs/encoding@1.1.0':
-    resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
-
-  '@oslojs/jwt@0.2.0':
-    resolution: {integrity: sha512-bLE7BtHrURedCn4Mco3ma9L4Y1GR2SMBuIvjWr7rmQ4/W/4Jy70TIAgZ+0nIlk0xHz1vNP8x8DCns45Sb2XRbg==}
 
   '@oxc-resolver/binding-darwin-arm64@11.2.0':
     resolution: {integrity: sha512-ruKLkS+Dm/YIJaUhzEB7zPI+jh3EXxu0QnNV8I7t9jf0lpD2VnltuyRbhrbJEkksklZj//xCMyFFsILGjiU2Mg==}
@@ -5083,9 +4918,6 @@ packages:
   anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
-
-  arctic@3.7.0:
-    resolution: {integrity: sha512-ZMQ+f6VazDgUJOd+qNV+H7GohNSYal1mVjm5kEaZfE2Ifb7Ss70w+Q7xpJC87qZDkMZIXYf0pTIYZA0OPasSbw==}
 
   argparse@1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
@@ -7360,10 +7192,6 @@ packages:
 
   lru-queue@0.1.0:
     resolution: {integrity: sha512-BpdYkt9EvGl8OfWHDQPISVpcl5xZthb+XPsbELj5AQXxIC8IriDZIQYjBJPEm5rS420sjZ0TLEzRcq5KdBhYrQ==}
-
-  lucia@3.2.2:
-    resolution: {integrity: sha512-P1FlFBGCMPMXu+EGdVD9W4Mjm0DqsusmKgO7Xc33mI5X1bklmsQb0hfzPhXomQr9waWIBDsiOjvr1e6BTaUqpA==}
-    deprecated: This package has been deprecated. Please see https://lucia-auth.com/lucia-v3/migrate.
 
   lucide-react@0.515.0:
     resolution: {integrity: sha512-Sy7bY0MeicRm2pzrnoHm2h6C1iVoeHyBU2fjdQDsXGP51fhkhau1/ZV/dzrcxEmAKsxYb6bGaIsMnGHuQ5s0dw==}
@@ -12039,17 +11867,6 @@ snapshots:
   '@kikobeats/time-span@1.0.5':
     optional: true
 
-  '@lucia-auth/adapter-drizzle@1.1.0(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250614.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)(prisma@6.9.0(typescript@5.8.3)))(lucia@3.2.2)':
-    dependencies:
-      drizzle-orm: 0.44.2(@cloudflare/workers-types@4.20250614.0)(@opentelemetry/api@1.9.0)(@prisma/client@6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3))(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)(prisma@6.9.0(typescript@5.8.3))
-      lucia: 3.2.2
-
-  '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.10.0)(lucia@3.2.2)':
-    dependencies:
-      lucia: 3.2.2
-    optionalDependencies:
-      better-sqlite3: 11.10.0
-
   '@lukeed/ms@2.0.2': {}
 
   '@mantine/core@8.1.0(@mantine/hooks@8.1.0(react@19.1.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
@@ -12179,25 +11996,6 @@ snapshots:
 
   '@opentelemetry/api@1.9.0':
     optional: true
-
-  '@oslojs/asn1@1.0.0':
-    dependencies:
-      '@oslojs/binary': 1.0.0
-
-  '@oslojs/binary@1.0.0': {}
-
-  '@oslojs/crypto@1.0.1':
-    dependencies:
-      '@oslojs/asn1': 1.0.0
-      '@oslojs/binary': 1.0.0
-
-  '@oslojs/encoding@0.4.1': {}
-
-  '@oslojs/encoding@1.1.0': {}
-
-  '@oslojs/jwt@0.2.0':
-    dependencies:
-      '@oslojs/encoding': 0.4.1
 
   '@oxc-resolver/binding-darwin-arm64@11.2.0':
     optional: true
@@ -13515,12 +13313,6 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
-
-  arctic@3.7.0:
-    dependencies:
-      '@oslojs/crypto': 1.0.1
-      '@oslojs/encoding': 1.1.0
-      '@oslojs/jwt': 0.2.0
 
   argparse@1.0.10:
     dependencies:
@@ -16247,11 +16039,6 @@ snapshots:
     dependencies:
       es5-ext: 0.10.64
     optional: true
-
-  lucia@3.2.2:
-    dependencies:
-      '@oslojs/crypto': 1.0.1
-      '@oslojs/encoding': 1.1.0
 
   lucide-react@0.515.0(react@19.1.0):
     dependencies:

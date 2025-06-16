@@ -264,26 +264,6 @@ export const features = [
       },
     ],
   },
-  {
-    category: "Auth",
-    label: "Lucia",
-    flag: "lucia-auth",
-    image:
-      "data:image/svg+xml;base64,PHN2ZyBpZD0nV2Fyc3R3YV8xJyBkYXRhLW5hbWU9J1dhcnN0d2EgMScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB4bWxuczp4bGluaz0naHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluaycgdmlld0JveD0nMCAwIDIwMDAgMjAwMCc+PHBhdGggZmlsbD0nIzVmNTdmZicgZD0nbTE2NDcuNjYsMTY3My4zNkwxMDAwLDcyLjczLDM1Mi4zNCwxNjczLjM2bC0xMDIuNzQsMjUzLjkxaDE1MDAuOGwtMTAyLjc0LTI1My45MVptLTY0Ny42Ni01NDlsLTQ0Mi44Miw1NDUuMzksOTkuNTUtMjQ2LjA0LDM0My4yNy04NDguMzUsMzQzLjI2LDg0OC4zNSw5OS41NSwyNDYuMDQtNDQyLjgxLTU0NS4zOVonIC8+PC9zdmc+",
-    url: "https://lucia-auth.com",
-    spectrum: "bleeding_edge",
-    tagline: "Lucia is an auth library for your server that abstracts away the complexity of handling sessions",
-    links: [
-      {
-        label: "Getting started",
-        href: "https://lucia-auth.com/getting-started/",
-      },
-      {
-        label: "API reference",
-        href: "https://lucia-auth.com/reference/main/",
-      },
-    ],
-  },
 
   // RPC
   {
