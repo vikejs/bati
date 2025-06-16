@@ -53,7 +53,7 @@ function prepareAndExecute(flags: string[]) {
 
   // Common tests
 
-  test("CLI fails", async () => {
+  test(`CLI fails: ${flags.join(",")}`, async () => {
     await expect(execLocalBati(context, flags, false)).rejects.toThrow("Process exited with code 5");
   });
 

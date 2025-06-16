@@ -26,7 +26,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
   } else {
     await exec(
       bunExists ? "bun" : "node",
-      [join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
+      [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
       {
         timeout: 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
