@@ -1,11 +1,6 @@
 // BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
-import {
-  firebaseAuthLoginHandler,
-  firebaseAuthLogoutHandler,
-  firebaseAuthMiddleware,
-} from "@batijs/firebase-auth/server/firebase-auth-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -59,12 +54,6 @@ if (BATI.has("authjs") || BATI.has("auth0")) {
    * @link {@see https://authjs.dev/getting-started/installation}
    **/
   router.use("/api/auth/*", createHandler(authjsHandler)());
-}
-
-if (BATI.has("firebase-auth")) {
-  router.use(createMiddleware(firebaseAuthMiddleware)());
-  router.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler)());
-  router.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler)());
 }
 
 if (!BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")) {

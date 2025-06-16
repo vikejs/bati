@@ -9,7 +9,7 @@ Each boilerplate may be related to one or multiple _features_.
 > On the CLI, each flag (i.e. `--solid`) enables the given feature.
 
 Some features are well contained in a dedicated boilerplate ([Cloudflare](https://github.com/vikejs/bati/tree/main/boilerplates/cloudflare)),
-some others are [split](https://github.com/vikejs/bati/tree/main/boilerplates/firebase-auth) [into](https://github.com/vikejs/bati/tree/main/boilerplates/react-firebase-auth) [several](https://github.com/vikejs/bati/tree/main/boilerplates/solid-firebase-auth) [ones](https://github.com/vikejs/bati/tree/main/boilerplates/vue-firebase-auth).
+some others are split into several ones.
 
 ## Anatomy of a boilerplate
 

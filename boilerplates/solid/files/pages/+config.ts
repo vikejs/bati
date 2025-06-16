@@ -13,7 +13,7 @@ export default {
   title: "My Vike App",
   description: "Demo showcasing Vike",
 
-  //# BATI.has("auth0") || BATI.has("firebase-auth") || BATI.has("authjs")
+  //# BATI.has("auth0") || BATI.has("authjs")
   passToClient: ["user"],
   extends: vikeSolid,
 } satisfies Config;

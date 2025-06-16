@@ -9,13 +9,10 @@ test("requires - simple", () => {
   expect(simpleRequires(prepare(["plausible.io"]))).toBeFalsy();
   expect(simpleRequires(prepare(["authjs", "hattip"]))).toBeFalsy();
   expect(simpleRequires(prepare(["authjs", "Server"]))).toBeFalsy();
-  expect(simpleRequires(prepare(["firebase-auth", "hattip"]))).toBeFalsy();
-  expect(simpleRequires(prepare(["firebase-auth", "Server"]))).toBeFalsy();
   expect(simpleRequires(prepare(["Auth", "hattip"]))).toBeFalsy();
   expect(simpleRequires(prepare(["Auth", "Server"]))).toBeFalsy();
 
   expect(simpleRequires(prepare(["authjs"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(simpleRequires(prepare(["firebase-auth"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(simpleRequires(prepare(["Auth", "authjs", "telefunc"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
 });
 
@@ -30,16 +27,10 @@ test("requires - extended", () => {
   expect(extendedRequires(prepare(["Auth", "Server", "solid"]))).toBeFalsy();
 
   expect(extendedRequires(prepare(["authjs", "Server", "solid"]))).toBeFalsy();
-  expect(extendedRequires(prepare(["firebase-auth", "Server", "solid"]))).toBeFalsy();
 
   expect(extendedRequires(prepare(["authjs"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(extendedRequires(prepare(["authjs", "hattip"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
   expect(extendedRequires(prepare(["authjs", "hattip", "UI Framework"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(extendedRequires(prepare(["firebase-auth"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(extendedRequires(prepare(["firebase-auth", "hattip"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
-  expect(extendedRequires(prepare(["firebase-auth", "hattip", "UI Framework"]))).toEqual(
-    RulesMessage.ERROR_AUTH_R_SERVER,
-  );
 });
 
 test("exclusive", () => {
@@ -49,8 +40,6 @@ test("exclusive", () => {
   expect(simpleExclusive(prepare(["plausible.io"]))).toBeFalsy();
   expect(simpleExclusive(prepare(["authjs", "hattip"]))).toBeFalsy();
   expect(simpleExclusive(prepare(["authjs", "Server"]))).toBeFalsy();
-  expect(simpleExclusive(prepare(["firebase-auth", "hattip"]))).toBeFalsy();
-  expect(simpleExclusive(prepare(["firebase-auth", "Server"]))).toBeFalsy();
   expect(simpleExclusive(prepare(["Server", "Analytics"]))).toBeFalsy();
 
   expect(simpleExclusive(prepare(["Server", "plausible.io"]))).toEqual(RulesMessage.ERROR_AUTH_R_SERVER);
