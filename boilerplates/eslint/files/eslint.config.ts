@@ -4,7 +4,7 @@ import react from "eslint-plugin-react";
 import solid from "eslint-plugin-solid/configs/typescript";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import tseslint, { type ConfigArray } from "typescript-eslint";
 import vueParser from "vue-eslint-parser";
 
 export default tseslint.config(
@@ -76,9 +76,9 @@ export default tseslint.config(
         version: "detect",
       },
     },
-  },
+  } as ConfigArray[number],
   //# BATI.has("react")
-  react.configs.flat["jsx-runtime"],
+  react.configs.flat["jsx-runtime"] as ConfigArray[number],
   //# BATI.has("solid")
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
@@ -92,7 +92,7 @@ export default tseslint.config(
     },
   },
   //# BATI.has("vue")
-  ...pluginVue.configs["flat/recommended"],
+  ...(pluginVue.configs["flat/recommended"] as ConfigArray),
   //# BATI.has("vue")
   {
     rules: {
@@ -120,5 +120,5 @@ export default tseslint.config(
     },
   },
   //# BATI.has("prettier")
-  prettier,
+  prettier as ConfigArray[number],
 );

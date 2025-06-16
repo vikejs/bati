@@ -144,11 +144,11 @@ const esbuildPlugin: Plugin = {
     build.onEnd(async (output) => {
       // Fixes some interop issue with one package related to typescript-eslint
       for (const outfile of output.outputFiles ?? []) {
-        if (outfile.text.includes("cSr.parse")) {
-          outfile.contents = new TextEncoder().encode(outfile.text.replace("cSr.parse", "cSr.default.parse"));
+        if (outfile.text.includes("fSr.parse")) {
+          outfile.contents = new TextEncoder().encode(outfile.text.replace("fSr.parse", "fSr.default.parse"));
         }
-        if (outfile.text.includes("cSr.matches")) {
-          outfile.contents = new TextEncoder().encode(outfile.text.replace("cSr.matches", "cSr.default.matches"));
+        if (outfile.text.includes("fSr.matches")) {
+          outfile.contents = new TextEncoder().encode(outfile.text.replace("fSr.matches", "fSr.default.matches"));
         }
       }
       const folderCreated = new Set<string>();
