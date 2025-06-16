@@ -353,17 +353,6 @@ export const features = [
       },
     ],
   },
-  {
-    category: "Server",
-    label: "HatTip",
-    flag: "hattip",
-    image:
-      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSIwIDAgMjYzIDIyOCIgc3R5bGU9ImZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoyOyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZyBpZD0iSGF0VGlwTG9nbyIgdHJhbnNmb3JtPSJtYXRyaXgoMSwgMCwgMCwgMSwgMC43MTcxMDUsIDcuODg4MTU4KSI+CiAgICA8cGF0aCBkPSJNMzQuNjMsMTYyLjMxMWMtMCwwIC0xMi4xNjEsLTYxLjc4IC0xMi42NzksLTgxLjAxOGMwLC0wIDEuODkyLC01My4zNDIgNzUuMDU3LC02OC41OGMwLDAgNzkuMTcxLC0zMC4wNzYgMTA1LjUzOCwyNC4zMzZjMCwtMCAyMy4wNDMsNTcuMzIzIDI1LjM0LDc2Ljg5Yy0wLC0wIC01NC40NywzOS4wNzMgLTE5MS44MjEsNTQuMzY3bC0xLjQzNSwtNS45OTVaIiBzdHlsZT0iZmlsbDojMjMzNjNmO2ZpbGwtcnVsZTpub256ZXJvOyIvPgogICAgPHBhdGggZD0iTTM5LjI3NywxODEuNjkybC0zLjIxMiwtMTMuMzg2YzAsMCAxMjEuOTM0LC0xMS4yMzUgMTkxLjgyMSwtNTQuMzY3bDMuODg3LDE2LjIwNGMtMCwwIC04OS4xLDU5LjYzNyAtMTkyLjQ5Niw1MS41NDlaIiBzdHlsZT0iZmlsbDojMDRiNTc4O2ZpbGwtcnVsZTpub256ZXJvOyIvPgogICAgPHBhdGggZD0iTTMzLjg1MiwxNTguMDI0bDUuNDI1LDIzLjY2OGMtMCwtMCA4OS4wNTksMTEuMTM3IDE5Mi40OTYsLTUxLjU0OWwtMy44ODcsLTE2LjIwNGwyNC44ODksLTEyLjAwNmMwLDAgNy4yMzEsLTMuOTczIDQuNTI0LDcuNDgxYy0wLC0wIDEuNjM5LDU3Ljk1MyAtMTMwLjI1MSw4Ny4zMTRjLTEyNi43NTQsMjguMjE4IC0xMzEuMzg1LC0zMi41NzUgLTExNy4wOTQsLTM1LjYxM2wyMy44OTgsLTMuMDkxWiIgc3R5bGU9ImZpbGw6IzIzMzY0MDtmaWxsLXJ1bGU6bm9uemVybzsiLz4KICA8L2c+Cjwvc3ZnPg==",
-    url: "https://github.com/hattipjs/hattip",
-    spectrum: "bleeding_edge",
-    tagline: "Like Express, but for the future",
-    repo: "hattipjs/hattip",
-  },
 
   // Database
   {

@@ -196,16 +196,16 @@ describe("ts: comment in array", () => {
     `export default defineConfig({
   plugins: [
     //# BATI.has("react")
-    process.env.NODE_ENV !== "production" ? hattip() : undefined,
+    process.env.NODE_ENV !== "production" ? hono() : undefined,
     //# !BATI.has("react")
-    hattip(),
+    hono(),
   ],
 });`,
     `export default defineConfig({
-  plugins: [process.env.NODE_ENV !== "production" ? hattip() : undefined],
+  plugins: [process.env.NODE_ENV !== "production" ? hono() : undefined],
 });`,
     `export default defineConfig({
-  plugins: [hattip()],
+  plugins: [hono()],
 });`,
   );
 });

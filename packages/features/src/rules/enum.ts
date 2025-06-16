@@ -22,8 +22,6 @@ export enum RulesMessage {
   WARN_SHADCN_R_TAILWINDCSS,
 
   // --- INFO
-  // HatTip is an experimental project
-  INFO_HATTIP,
   // Some tools do not work on Stackblitz
   INFO_STACKBLITZ_COMPAT,
 }

@@ -5,11 +5,11 @@ export default async function getViteConfig(props: TransformerProps) {
 
   let options: Parameters<typeof addVitePlugin>[1]["options"] = undefined;
 
-  if (props.meta.BATI.has("hattip") || props.meta.BATI.has("hono")) {
+  if (props.meta.BATI.has("hono")) {
     options = {
       server: {
-        kind: props.meta.BATI.has("hono") ? "hono" : "hattip",
-        entry: props.meta.BATI.has("hono") ? "hono-entry.ts" : "hattip-entry.ts",
+        kind: "hono",
+        entry: "hono-entry.ts",
       },
     };
   }

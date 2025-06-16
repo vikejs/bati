@@ -27,6 +27,5 @@ export default async function getPackageJson(props: TransformerProps) {
     .addDevDependencies(["@cloudflare/workers-types"])
     .addDependencies(["vike-cloudflare"])
     .addDevDependencies(["wrangler"], ["preview:wrangler", "deploy:wrangler", "preview", "deploy"])
-    .addDevDependencies(["npm-run-all2"], ["preview", "deploy"])
-    .addDependencies(["@hattip/adapter-cloudflare-workers"], props.meta.BATI.has("hattip"));
+    .addDevDependencies(["npm-run-all2"], ["preview", "deploy"]);
 }

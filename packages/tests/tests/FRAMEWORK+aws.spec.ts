@@ -3,7 +3,7 @@ import { existsSync, readdirSync, readFileSync, rmSync } from "fs";
 import { execSync } from "node:child_process";
 import path from "path";
 
-export const matrix = ["aws", "react", ["hono", "hattip"], "eslint"] as const;
+export const matrix = ["aws", "react", "hono", "eslint"] as const;
 
 await describeBati(
   ({ test, expect, beforeAll, testMatch }) => {
@@ -34,12 +34,6 @@ await describeBati(
         expect(existsSync(awsEntryGHandlerFile)).toBe(true);
         const content = readFileSync(awsEntryGHandlerFile, { encoding: "utf-8" });
         expect(content).toContain(`from "hono/aws-lambda"`);
-      },
-      hattip: async () => {
-        const awsEntryGHandlerFile = path.join(process.cwd(), "entry_aws_lambda.ts");
-        expect(existsSync(awsEntryGHandlerFile)).toBe(true);
-        const content = readFileSync(awsEntryGHandlerFile, { encoding: "utf-8" });
-        expect(content).toContain(`from "@hattip/adapter-aws-lambda"`);
       },
     });
 

@@ -2,7 +2,7 @@ import { describeBati, exec, npmCli } from "@batijs/tests-utils";
 
 export const matrix = [
   ["solid", "react", "vue"],
-  ["express", "h3", "hono", "fastify", "hattip"],
+  ["express", "h3", "hono", "fastify"],
   ["trpc", "telefunc", "ts-rest", undefined],
   ["drizzle", "sqlite", undefined],
   ["cloudflare", undefined],
@@ -19,16 +19,13 @@ export const exclude = [
   ["react", "express"],
   ["react", "h3"],
   ["react", "fastify"],
-  ["react", "hattip"],
   ["vue", "express"],
   ["vue", "h3"],
   ["vue", "fastify"],
-  ["vue", "hattip"],
   // Testing Cloudflare with Hono and Solid only
   ["cloudflare", "express"],
   ["cloudflare", "h3"],
   ["cloudflare", "fastify"],
-  ["cloudflare", "hattip"],
   ["cloudflare", "react"],
   ["cloudflare", "vue"],
 ];

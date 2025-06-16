@@ -4,7 +4,7 @@ import path from "node:path";
 import * as process from "process";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["cloudflare", "react", ["hono", "hattip", undefined], "eslint"] as const;
+export const matrix = ["cloudflare", "react", ["hono", undefined], "eslint"] as const;
 
 await describeBati(
   ({ test, testMatch, expect }) => {
@@ -20,12 +20,6 @@ await describeBati(
       hono: async () => {
         const content = await readFile(worker_filepath, "utf-8");
         expect(content).toContain(`import { Hono } from "hono"`);
-      },
-      hattip: async () => {
-        const content = await readFile(worker_filepath, "utf-8");
-        expect(content).toContain(
-          `import cloudflareWorkersAdapter from "@hattip/adapter-cloudflare-workers/no-static"`,
-        );
       },
       _: async () => {
         const content = await readFile(worker_filepath, "utf-8");

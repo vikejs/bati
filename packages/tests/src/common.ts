@@ -154,12 +154,6 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     ignoreDependencies.push("zod");
   }
 
-  if (flags.includes("hattip")) {
-    entry.push("hattip-entry.ts");
-    ignoreDependencies.push("hattip");
-    ignoreDependencies.push("@hattip/.+");
-  }
-
   if (flags.includes("hono")) {
     entry.push("hono-entry.node.ts", "hono-entry.ts");
   }

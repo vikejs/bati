@@ -39,7 +39,6 @@ export const rulesMessages = {
   [RulesMessage.ERROR_MANTINE_R_REACT]: error(
     `${inverse(bold("React"))} is required when using ${inverse(bold("Mantine"))}`,
   ),
-  [RulesMessage.INFO_HATTIP]: info(`${inverse(bold("HatTip"))} is an experimental project`),
   [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}`,
   ),
@@ -47,11 +46,11 @@ export const rulesMessages = {
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,
   ),
   [RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER]: error(
-    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}.
-Choose one of them, or simply remove selected Server`,
+    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))}.
+Choose Hono or remove selected Server`,
   ),
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
-    `${inverse(bold("AWS"))} deployment is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("HatTip"))}. Please pick one`,
+    `${inverse(bold("AWS"))} deployment is only compatible with ${inverse(bold("Hono"))}`,
   ),
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(
     `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,

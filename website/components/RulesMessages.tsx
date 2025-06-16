@@ -80,14 +80,6 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.INFO_HATTIP]: info(() => {
-    return (
-      <span class="inline-block">
-        <span class="font-bold">HatTip</span> is an experimental project. Prefer{" "}
-        <span class="font-bold">(Hono / Express.js / H3 / Fastify)</span> for production use
-      </span>
-    );
-  }),
   [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(() => {
     return (
       <span class="inline-block">
@@ -127,7 +119,7 @@ export const rulesMessages = {
         <span class="font-bold">{selectedServer()}</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a <span class="font-bold">Hono</span> or <span class="font-bold">HatTip</span>, or unselect{" "}
+            Either pick a <span class="font-bold">Hono</span>, or unselect{" "}
             <span class="font-bold">{selectedServer()}</span>
           </li>
         </ul>
@@ -154,7 +146,7 @@ export const rulesMessages = {
         )}
         <ul class="list-custom list-dot">
           <li>
-            Compatible servers: <span class="font-bold">Hono</span>, <span class="font-bold">HatTip</span>
+            Compatible servers: <span class="font-bold">Hono</span>
           </li>
         </ul>
       </span>
