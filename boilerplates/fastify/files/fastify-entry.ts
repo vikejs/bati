@@ -8,17 +8,6 @@ import {
   firebaseAuthLogoutHandler,
   firebaseAuthMiddleware,
 } from "@batijs/firebase-auth/server/firebase-auth-middleware";
-import {
-  luciaAuthContextMiddleware,
-  luciaAuthCookieMiddleware,
-  luciaAuthLoginHandler,
-  luciaAuthLogoutHandler,
-  luciaAuthSignupHandler,
-  luciaCsrfMiddleware,
-  luciaDbMiddleware,
-  luciaGithubCallbackHandler,
-  luciaGithubLoginHandler,
-} from "@batijs/lucia-auth/server/lucia-auth-handlers";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -91,19 +80,6 @@ async function startServer() {
     app.register(createMiddleware(firebaseAuthMiddleware)());
     app.post("/api/sessionLogin", createHandler(firebaseAuthLoginHandler)());
     app.post("/api/sessionLogout", createHandler(firebaseAuthLogoutHandler)());
-  }
-
-  if (BATI.has("lucia-auth")) {
-    await app.register(createMiddleware(luciaDbMiddleware)());
-    await app.register(createMiddleware(luciaCsrfMiddleware)());
-    await app.register(createMiddleware(luciaAuthContextMiddleware)());
-    await app.register(createMiddleware(luciaAuthCookieMiddleware)());
-
-    app.post("/api/signup", createHandler(luciaAuthSignupHandler)());
-    app.post("/api/login", createHandler(luciaAuthLoginHandler)());
-    app.post("/api/logout", createHandler(luciaAuthLogoutHandler)());
-    app.get("/api/login/github", createHandler(luciaGithubLoginHandler)());
-    app.get("/api/login/github/callback", createHandler(luciaGithubCallbackHandler)());
   }
 
   if (BATI.has("trpc")) {
