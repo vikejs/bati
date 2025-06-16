@@ -5,7 +5,6 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepare": "panda codegen --silent",
     "check-types": "tsc --noEmit",
     "build": "bati-compile-boilerplate"
   },
@@ -14,7 +13,6 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
-    "@pandacss/dev": "^0.54.0",
     "@types/node": "^18.19.111",
     "solid-js": "^1.9.7",
     "tailwindcss": "^4.1.10",

@@ -17,8 +17,6 @@ export default tseslint.config(
       "**/dist/*",
       "**/node_modules/*",
       "**/.DS_Store",
-      "**/styled-system/*",
-      "**/files/styled-system/*",
       "scripts/gen-composite-workflow-action.js",
       "pnpm-lock.yaml",
     ],

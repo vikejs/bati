@@ -181,11 +181,6 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     ignore.push("cdk.out/**");
   }
 
-  if (flags.includes("panda-css")) {
-    entry.push("panda.config.ts");
-    ignoreDependencies.push("postcss");
-  }
-
   const scriptsValues = Array.from(Object.values(scripts));
 
   if (scriptsValues.some((s) => s.includes("tsx "))) {
