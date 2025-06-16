@@ -32,12 +32,13 @@
     "@batijs/core": "workspace:*",
     "@batijs/features": "workspace:*"
   },
-  "bin": "./dist/index.js",
+  "bin": "./cli.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./cli.js"
   },
   "files": [
     "dist/",
+    "cli.js",
     "dist/boilerplates/@batijs/shared/files/.gitignore"
   ]
 }
