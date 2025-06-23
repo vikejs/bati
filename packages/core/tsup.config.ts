@@ -7,7 +7,7 @@ const eslintFixPlugin: Plugin = {
   name: "eslint-fix-plugin",
   setup(build) {
     // eslint ESM is not properly built
-    build.onLoad({ filter: /eslint[/\\]lib[/\\]linter[/\\]node-event-generator\.js$/ }, async (args) => {
+    build.onLoad({ filter: /eslint[/\\]lib[/\\]linter[/\\]esquery\.js$/ }, async (args) => {
       const source = await readFile(args.path, "utf8");
 
       const contents = source
@@ -39,10 +39,10 @@ export default defineConfig({
     options.mainFields = ["module", "main"];
   },
   banner: {
-    js: `import { createRequire } from 'module';
+    js: `import { createRequire as BATI_core_createRequire } from 'module';
 import { fileURLToPath as BATI_fileURLToPath } from "node:url";
 import { dirname as BATI_dirname } from "node:path";
-const require = createRequire(import.meta.url);
+const require = BATI_core_createRequire(import.meta.url);
 
 const __filename = BATI_fileURLToPath(import.meta.url);
 const __dirname = BATI_dirname(__filename);
