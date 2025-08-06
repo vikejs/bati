@@ -56,25 +56,25 @@ jobs:
           run_install: false
 
       - name: Download Bati CLI
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: bati-cli-${{ inputs.os }}-${{ inputs.node }}
           path: ./bati-cli
 
       - name: Download Bati tests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: bati-tests-${{ inputs.os }}-${{ inputs.node }}
           path: ./bati-tests
 
       - name: Download tests-utils
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: tests-utils-${{ inputs.os }}-${{ inputs.node }}
           path: ./bati-tests-utils
 
       - name: Download tests-files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: tests-files-${{ inputs.os }}-${{ inputs.node }}
           path: ./bati-tests-files
