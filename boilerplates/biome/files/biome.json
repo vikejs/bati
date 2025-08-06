@@ -1,7 +1,8 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
+  "formatter": {
+    "indentWidth": 2,
+    "indentStyle": "space"
   },
   "linter": {
     "enabled": true,
@@ -9,7 +10,20 @@
       "recommended": true
     }
   },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "files": {
-    "ignore": ["dist/**", "*.js", "*.cjs", "*.mjs", "*.spec.ts"]
+    "includes": ["!dist/**", "!*.js", "!*.cjs", "!*.mjs", "!*.spec.ts"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }
