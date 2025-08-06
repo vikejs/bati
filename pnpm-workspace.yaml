@@ -2,3 +2,41 @@ packages:
   - "packages/*"
   - "boilerplates/*"
   - "website"
+
+# Auto install peers should be false to avoid downloading
+# extraneous deps. If the installation fails, try first to explicitly add
+# the missing deps in your package. Set it to true as a last resort
+# (when the problem comes from upstream dependencies). The best is false.
+autoInstallPeers: false
+packageManagerStrictVersion: false
+linkWorkspacePackages: true
+# By default, starting from pnpm v10, we only deploy from workspaces that have "inject-workspace-packages=true"
+injectWorkspacePackages: true
+
+# allows using `@batijs/*` package across the whole project without manually adding them as `devDependencies`,
+# reducing the burden of importing across boilerplates
+shamefullyHoist: true
+hoistPattern:
+  - "@batijs/*"
+  - "!@batijs/compile"
+  - "!@batijs/core"
+  - "!@batijs/build"
+  - "!@batijs/features"
+
+onlyBuiltDependencies:
+  - "@biomejs/biome"
+  - "@browserless/goto"
+  - "@prisma/client"
+  - "@prisma/engines"
+  - "@sentry/cli"
+  - "@tailwindcss/oxide"
+  - "aws-sdk"
+  - "better-sqlite3"
+  - "es5-ext"
+  - "esbuild"
+  - "prisma"
+  - "protobufjs"
+  - "puppeteer"
+  - "re2"
+  - "sharp"
+  - "workerd"
