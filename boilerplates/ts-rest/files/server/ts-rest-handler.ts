@@ -62,5 +62,6 @@ export const tsRestHandler: Get<[], UniversalHandler> = () => async (request, ct
     platformContext: {
       ...ctx,
       ...runtime,
-    },
+      // biome-ignore lint/suspicious/noExplicitAny: avoid type inference
+    } as any,
   });
