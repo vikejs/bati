@@ -43,7 +43,17 @@ export default async function getBiomeJson(props: TransformerProps) {
       },
     },
     files: {
-      includes: ["!dist/**", "!*.js", "!*.cjs", "!*.mjs", "!*.spec.ts"],
+      includes: [
+        "**",
+        "!*.cjs",
+        "!*.js",
+        "!*.mjs",
+        "!*.spec.ts",
+        "!**/*.ts.build-*.mjs",
+        "!dist/*",
+        "!node_modules/*",
+        "!**/.DS_Store",
+      ],
     },
     vcs: {
       enabled: true,
