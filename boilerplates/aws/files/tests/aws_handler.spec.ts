@@ -89,7 +89,8 @@ describe("AWSHandler", () => {
   });
 });
 
-type JsonData = Record<string, unknown>;
+// biome-ignore lint/suspicious/noExplicitAny: type
+type JsonData = Record<string, any>;
 
 function extractRequestHandlerPath(jsonData: JsonData, targetCdkPath: string): string | null {
   let assetPath: string | null = null;
