@@ -4,7 +4,7 @@ import { isServer } from "solid-js/web";
 export const RootContext = createContext<Accessor<Document | ShadowRoot | undefined>>();
 
 export function RootProvider(props: { children: JSX.Element }) {
-  let elementRef: Element | undefined;
+  let elementRef: HTMLDivElement | undefined;
 
   // Get the root once mounted
   onMount(() => {

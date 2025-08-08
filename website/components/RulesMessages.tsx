@@ -209,6 +209,7 @@ export const rulesMessages = {
         });
     });
 
-    return;
+    // biome-ignore lint/complexity/noUselessFragments: Valid TS
+    return <></>;
   }),
 } satisfies Record<RulesMessage, RuleMessage>;

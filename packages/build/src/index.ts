@@ -43,7 +43,7 @@ async function safeRmFile(destination: string, options?: { removeEmptyDir?: bool
       }
     }
   } catch {
-    console.warn(`Failed to remove unecessary file: ${destination}`);
+    console.warn(`Failed to remove unnecessary file: ${destination}`);
   }
 }
 
