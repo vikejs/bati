@@ -8,6 +8,7 @@ export default async function getBiomeJson(props: TransformerProps) {
     additionalLinter.domains = {
       vue: "recommended",
     };
+    // See https://biomejs.dev/internals/language-support/#html-super-languages-support
     additionalLinter.rules = {
       style: {
         useConst: "off",

@@ -21,7 +21,7 @@ export async function updatePackageJson(
     pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
   }
   if (flags.includes("biome")) {
-    pkgjson.scripts["lint:biome"] = "biome lint";
+    pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
