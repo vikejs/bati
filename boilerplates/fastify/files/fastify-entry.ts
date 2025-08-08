@@ -3,14 +3,14 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
-import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import Fastify from "fastify";
-import { createHandler, createMiddleware } from "@universal-middleware/fastify";
-import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
+import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
+import { createHandler, createMiddleware } from "@universal-middleware/fastify";
+import Fastify from "fastify";
 import { createDevMiddleware } from "vike";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,7 +25,7 @@ async function startServer() {
   // Avoid pre-parsing body, otherwise it will cause issue with universal handlers
   // This will probably change in the future though, you can follow https://github.com/magne4000/universal-middleware for updates
   app.removeAllContentTypeParsers();
-  app.addContentTypeParser("*", function (_request, _payload, done) {
+  app.addContentTypeParser("*", (_request, _payload, done) => {
     done(null, "");
   });
 

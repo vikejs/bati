@@ -1,8 +1,8 @@
 // https://vike.dev/Head
 
-import logoUrl from "../assets/logo.svg";
 //# BATI.has("mantine")
 import { ColorSchemeScript } from "@mantine/core";
+import logoUrl from "../assets/logo.svg";
 
 export default function HeadDefault() {
   if (BATI.has("plausible.io")) {
@@ -25,6 +25,7 @@ export default function HeadDefault() {
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
         ></script>
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: GTM
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

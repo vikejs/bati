@@ -1,13 +1,13 @@
-import { existsSync, rmSync } from "node:fs";
 import { execSync } from "node:child_process";
+import { existsSync, rmSync } from "node:fs";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
-import { select } from "@inquirer/prompts";
 import exec, { walk } from "@batijs/build";
 import { packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
-import { BatiSet, type CategoryLabels, cliFlags, type Feature, features, type Flags } from "@batijs/features";
+import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
+import { select } from "@inquirer/prompts";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
 import sift from "sift";
@@ -74,7 +74,7 @@ function printOK(dist: string, flags: string[]): void {
     console.log(list3(green(feature.label)));
   }
 
-  console.log("\n" + bold(arrow0("Ready to start your app:")));
+  console.log(`\n${bold(arrow0("Ready to start your app:"))}`);
   console.log(cmd3(`cd ${dist}`));
 
   switch (pm?.name) {
@@ -101,7 +101,7 @@ function printOK(dist: string, flags: string[]): void {
   }
 
   console.log(
-    "\n" + bold(book0("Be sure to check the ") + cyan("README.md") + " file for remaining steps and documentation."),
+    `\n${bold(`${book0("Be sure to check the ") + cyan("README.md")} file for remaining steps and documentation.`)}`,
   );
 }
 
@@ -116,7 +116,7 @@ const defaultDef = {
     description: "If true, does no check if target directory already exists",
     required: false,
   },
-  ["skip-git"]: {
+  "skip-git": {
     type: "boolean",
     description: "If true, does not execute `git init`",
     required: false,
@@ -187,9 +187,7 @@ async function checkArguments(args: ParsedArgs<Args>) {
       await access(args.project, constants.W_OK);
     } catch {
       console.error(
-        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow(
-          "Aborting",
-        )}.`,
+        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow("Aborting")}.`,
       );
       process.exit(3);
     }
@@ -266,7 +264,7 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
 
 function checkFlagsExist(flags: string[]) {
   const inValidOptions = flags.reduce((acc: string[], flag: string) => {
-    if (!Object.prototype.hasOwnProperty.call(defaultDef, flag) && !features.some((f) => f.flag === flag)) {
+    if (!Object.hasOwn(defaultDef, flag) && !features.some((f) => f.flag === flag)) {
       acc.push(flag);
     }
     return acc;
@@ -318,7 +316,7 @@ async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
   for (const hook of hooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
-      const importFile = isWin ? "file://" + file : file;
+      const importFile = isWin ? `file://${file}` : file;
 
       switch (parsed.name) {
         case "after":
@@ -399,7 +397,7 @@ async function run() {
         ...new Set(
           Object.entries(args)
             .filter(([, val]) => val === true)
-            .map(([key]) => {
+            .flatMap(([key]) => {
               const flag: string[] = [key];
               const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
 
@@ -407,8 +405,7 @@ async function run() {
                 flag.push(...dependsOn);
               }
               return flag;
-            })
-            .flat(1),
+            }),
         ),
       ];
 

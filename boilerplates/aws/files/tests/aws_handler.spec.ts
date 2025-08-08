@@ -1,8 +1,7 @@
-import { beforeAll, describe, expect, it } from "vitest";
-
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";
+import { beforeAll, describe, expect, it } from "vitest";
 import which from "which";
 
 const bunExists = which.sync("bun", { nothrow: true }) !== null;
@@ -90,8 +89,7 @@ describe("AWSHandler", () => {
   });
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type JsonData = Record<string, any>;
+type JsonData = Record<string, unknown>;
 
 function extractRequestHandlerPath(jsonData: JsonData, targetCdkPath: string): string | null {
   let assetPath: string | null = null;

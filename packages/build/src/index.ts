@@ -1,11 +1,11 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { type PackageJson, type VikeMeta } from "@batijs/core";
+import type { PackageJson, VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";
 import { executeOperationFile } from "./operations/file.js";
-import { executeOperationTransform } from "./operations/transform.js";
 import { OperationsRearranger } from "./operations/rearranger.js";
+import { executeOperationTransform } from "./operations/transform.js";
 import { RelationFile, RelationImport } from "./relations.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
@@ -78,7 +78,7 @@ export default async function main(options: { source: string | string[]; dist: s
       const targetAbsolute = path.isAbsolute(target) ? target : path.resolve(target);
       const parsed = path.parse(p);
       if (parsed.name.match(reIgnoreFile)) {
-        continue;
+        // continue
       } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
@@ -108,8 +108,8 @@ Please report this issue to https://github.com/vikejs/bati`,
     }
   }
 
-  let previousOp: (FileOperation & OperationReport) | undefined = undefined;
-  let previousOpContent: string | undefined = undefined;
+  let previousOp: (FileOperation & OperationReport) | undefined;
+  let previousOpContent: string | undefined;
   let packageJson: PackageJson = {};
   const packageJsonDistAbsolute = path.join(
     path.isAbsolute(options.dist) ? options.dist : path.resolve(options.dist),

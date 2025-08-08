@@ -1,4 +1,4 @@
-import { BatiSet } from "@batijs/features";
+import type { BatiSet } from "@batijs/features";
 
 export type ContentGetter = () => string | Promise<string>;
 

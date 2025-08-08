@@ -108,7 +108,7 @@ function readableFileSize(size: number) {
     size /= 1024;
     ++i;
   }
-  return size.toFixed(2) + " " + units[i];
+  return `${size.toFixed(2)} ${units[i]}`;
 }
 
 export async function* yield$files(dir: string): AsyncGenerator<{ dir: string; name: string }> {

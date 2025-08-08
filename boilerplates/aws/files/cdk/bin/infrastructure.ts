@@ -76,7 +76,7 @@ function loadCertificate(stack: cdk.Stack, stackConfig: CustomStackProps): certi
     return undefined;
   }
 
-  const siteDomainName = `${(subDomain?.length ?? 0 > 0) ? `${subDomain}.` : ""}${domainName}`;
+  const siteDomainName = `${(subDomain?.length ?? 0) > 0 ? `${subDomain}.` : ""}${domainName}`;
   return new certificatemanager.Certificate(stack, "Certificate", {
     domainName: siteDomainName,
     //subjectAlternativeNames: props.domainAliases,

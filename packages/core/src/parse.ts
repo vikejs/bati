@@ -21,7 +21,7 @@ function guessCodeFormatters(code: string, filepath: string) {
 export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
   const { eslint, squirelly } = guessCodeFormatters(code, options.filepath);
   let c = code;
-  let context: FileContext | undefined = undefined;
+  let context: FileContext | undefined ;
   let format = false;
   if (squirelly) {
     c = renderSquirrelly(c, meta);

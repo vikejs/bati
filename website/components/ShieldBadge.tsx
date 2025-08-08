@@ -17,7 +17,7 @@ async function getShieldJson(repo: string) {
 
 export function ShieldBadge(props: { repo?: string }) {
   if (!props.repo) {
-    return <></>;
+    return;
   }
 
   const [data, { refetch }] = createResource(props.repo, getShieldJson, {

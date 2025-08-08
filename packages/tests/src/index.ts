@@ -2,18 +2,16 @@ import { copyFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
+import * as process from "node:process";
 import { fileURLToPath } from "node:url";
-import * as process from "process";
+import * as ci from "@actions/core";
 import { exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
+
+import { Document } from "yaml";
 import packageJson from "../package.json" with { type: "json" };
-import { execLocalBati } from "./exec-bati.js";
-import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
-import { initTmpDir } from "./tmp.js";
-import type { GlobalContext } from "./types.js";
-import * as ci from "@actions/core";
 import {
   createBatiConfig,
   createKnipConfig,
@@ -23,7 +21,10 @@ import {
   updateTsconfig,
   updateVitestConfig,
 } from "./common.js";
-import { Document } from "yaml";
+import { execLocalBati } from "./exec-bati.js";
+import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
+import { initTmpDir } from "./tmp.js";
+import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,7 +49,7 @@ async function getPackageManagerVersion() {
 
   let version = "";
 
-  process.stdout!.on("data", function (data) {
+  process.stdout!.on("data", (data) => {
     version += data.toString();
   });
 

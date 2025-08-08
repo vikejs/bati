@@ -1,8 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": [
-    "./node_modules/@vikejs/biome-config/config.json"
-  ],
+  "extends": ["./node_modules/@vikejs/biome-config/config.json"],
   "files": {
     "includes": [
       "**",
@@ -16,12 +14,29 @@
       "!boilerplates/biome/files/biome.json"
     ]
   },
+  "linter": {
+    "rules": {
+      "style": {
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
   "overrides": [
     {
       "includes": ["**/*.vue"],
       "linter": {
         "domains": {
           "vue": "recommended"
+        },
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
         }
       }
     },

@@ -3,7 +3,7 @@ import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/co
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);
 
-  let options: Parameters<typeof addVitePlugin>[1]["options"] = undefined;
+  let options: Parameters<typeof addVitePlugin>[1]["options"];
 
   if (props.meta.BATI.has("hono")) {
     options = {

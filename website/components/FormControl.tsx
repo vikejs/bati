@@ -1,8 +1,8 @@
 import type { Category, CategoryLabels } from "@batijs/features";
+import { createMemo, createSignal, For, type JSX, Show, untrack, useContext } from "solid-js";
 import Messages from "#components/Messages";
 import { StoreContext } from "#components/Store";
 import { EnrichedTooltip } from "#components/Tooltip";
-import { createMemo, createSignal, For, type JSX, Show, untrack, useContext } from "solid-js";
 
 export function FormControl(props: {
   children: JSX.Element;
@@ -27,13 +27,13 @@ export function FormControl(props: {
     }
   }
 
-  function showModal() {
-    const ref = untrack(modalRef);
-    if (!ref) return;
-
-    ref.showModal();
-    toggleInert();
-  }
+  // function showModal() {
+  //   const ref = untrack(modalRef);
+  //   if (!ref) return;
+  //
+  //   ref.showModal();
+  //   toggleInert();
+  // }
 
   return (
     <>
@@ -96,7 +96,7 @@ export function FormControl(props: {
                               }}
                             >
                               <Show when={feature.image}>
-                                <img class="w-4 h-4" src={feature.image} />
+                                <img class="w-4 h-4" src={feature.image} alt={feature.label} />
                               </Show>
                               {feature.label}
                             </button>
@@ -144,12 +144,14 @@ export function FormControl(props: {
           <div>{props.children}</div>
           <div class="modal-action">
             <form method="dialog">
-              <button class="btn">Close</button>
+              <button type="submit" class="btn">
+                Close
+              </button>
             </form>
           </div>
         </div>
         <form method="dialog" class="modal-backdrop">
-          <button>close</button>
+          <button type="submit">close</button>
         </form>
       </dialog>
     </>

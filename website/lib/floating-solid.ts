@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/suspicious/noConfusingVoidType: extracted from lib */
 import {
-  computePosition,
   type ComputePositionConfig,
   type ComputePositionReturn,
+  computePosition,
   type ReferenceElement,
   type Strategy,
 } from "@floating-ui/dom";
@@ -140,9 +141,9 @@ export function useFloating<R extends ReferenceElement, F extends HTMLElement>(
 
       return {
         position: d.strategy,
-        top: d.y ? d.y + "px" : (0 as const),
-        left: d.x ? d.x + "px" : (0 as const),
-        [offsetMap[placement]]: offset ? offset + "px" : 0,
+        top: d.y ? `${d.y}px` : (0 as const),
+        left: d.x ? `${d.x}px` : (0 as const),
+        [offsetMap[placement]]: offset ? `${offset}px` : 0,
       };
     },
     update,

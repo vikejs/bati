@@ -1,7 +1,7 @@
-import { describeBati, npmCli } from "@batijs/tests-utils";
-import { existsSync, readdirSync, readFileSync, rmSync } from "fs";
 import { execSync } from "node:child_process";
-import path from "path";
+import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import path from "node:path";
+import { describeBati, npmCli } from "@batijs/tests-utils";
 
 export const matrix = ["aws", "react", "hono", "eslint"] as const;
 
@@ -99,7 +99,7 @@ await describeBati(
   },
 );
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+// biome-ignore lint/suspicious/noExplicitAny: any
 type JsonData = Record<string, any>;
 
 function extractRequestHandlerPath(jsonData: JsonData, targetCdkPath: string) {

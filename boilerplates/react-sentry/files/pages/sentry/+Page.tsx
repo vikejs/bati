@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/react";
+import { useEffect, useState } from "react";
 
 export default function ReactSentryErrorPage() {
   const [sentryClientStatus, setSentryClientStatus] = useState({
@@ -12,7 +12,7 @@ export default function ReactSentryErrorPage() {
     setSentryClientStatus({
       client_not_loaded: !options,
       dsn_missing: (options?.dsn?.length ?? 0) < 2,
-      enabled: (options?.enabled ?? true) !== false,
+      enabled: options?.enabled ?? true,
     });
     console.log("Sentry DSN: ", options?.dsn);
   }, []);
@@ -31,6 +31,7 @@ export default function ReactSentryErrorPage() {
       )}
       <div>
         <button
+          type="button"
           onClick={() => {
             throw new Error(`This is a React SENTRY Browser Test! [${import.meta.env.DEV ? "DEV Mode" : "PROD Mode"}]`);
           }}

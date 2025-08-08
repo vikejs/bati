@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
+/** biome-ignore-all lint/suspicious/noExplicitAny: type definitions */
 import type { BatiSet } from "@batijs/features";
 import type { UnionToIntersection, Values } from "./type-utils.js";
 
@@ -22,13 +23,9 @@ declare global {
       T extends Partial<Record<string, any>>,
       Mode extends "union" | "intersection" = "intersection",
     > = Mode extends "intersection" ? UnionToIntersection<Values<T>> : Values<T>;
-    type IfAsUnkown<
+    type IfAsUnknown<
       T extends Partial<Record<string, any>>,
       Mode extends "union" | "intersection" = "intersection",
     > = If<T, Mode>;
   }
 }
-
-// By using export {}, we mark the file as an external module.
-// When augmenting the global scope, you are required to make the file as a module
-export {};

@@ -1,8 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
+import { isNode, parseDocument } from "yaml";
 import packageJson from "../package.json" with { type: "json" };
 import type { GlobalContext } from "./types.js";
-import { isNode, parseDocument } from "yaml";
 
 export async function updatePackageJson(
   projectDir: string,
@@ -16,7 +16,7 @@ export async function updatePackageJson(
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
   pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip";
-  if (pkgjson.scripts.lint && pkgjson.scripts.lint.includes("eslint")) {
+  if (pkgjson.scripts.lint?.includes("eslint")) {
     pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";

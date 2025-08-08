@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/** biome-ignore-all lint/suspicious/noExplicitAny: port */
 // Adapted from https://github.com/sweepline/eslint-plugin-unused-imports
 
 import tslint from "@typescript-eslint/eslint-plugin";
@@ -13,7 +13,7 @@ const makePredicate = (isImport: boolean, addFixer: any) => (problem: any, conte
     // typescript-eslint >= 7.8 sets a range instead of a node
     context.sourceCode.getNodeByRangeIndex(context.sourceCode.getIndexFromLoc(problem.loc.start));
   return parent
-    ? /^Import(|Default|Namespace)Specifier$/.test(parent.type) == isImport &&
+    ? /^Import(|Default|Namespace)Specifier$/.test(parent.type) === isImport &&
         Object.assign(problem, addFixer?.(parent, context))
     : problem; // If parent is null just let the composed rule handle it
 };
@@ -74,7 +74,7 @@ export default function pluginRemoveUnusedImports() {
 
   const plugin: ESLint.Plugin = {
     rules: {
-      ["unused-imports"]: ruleComposer.filterReports(rule, unusedImportsPredicate),
+      "unused-imports": ruleComposer.filterReports(rule, unusedImportsPredicate),
     },
   };
 

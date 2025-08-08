@@ -7,7 +7,7 @@ import type { GlobalContext, PrepareOptions } from "./types.js";
 import { readFile } from "node:fs/promises";
 
 async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
-  let error: unknown = undefined;
+  let error: unknown ;
   try {
     return await task();
   } catch (e) {

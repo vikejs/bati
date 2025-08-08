@@ -15,11 +15,11 @@ export function visitorStatementWithComments(
 
   if (comments.length > 0) {
     const comment = comments[0];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: any
     if ((comment as any).handled) {
       return;
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: any
       (comment as any).handled = true;
     }
 
@@ -29,8 +29,8 @@ export function visitorStatementWithComments(
 
     const testVal = evalCondition(condition, meta);
 
-    let start: number | undefined = undefined;
-    let end: number | undefined = undefined;
+    let start: number | undefined;
+    let end: number | undefined;
 
     const removeCommentsOnly = comments.length > 1 && testVal === "remove-comments-only";
 

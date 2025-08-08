@@ -1,6 +1,6 @@
-import { D1Database } from "@cloudflare/workers-types";
-import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
-import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
+import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
+import type { D1Database } from "@cloudflare/workers-types";
 
 //# BATI.hasDatabase
 declare module "telefunc" {
@@ -16,5 +16,3 @@ declare module "telefunc" {
     }
   }
 }
-
-export {};

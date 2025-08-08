@@ -7,6 +7,5 @@ export default defineConfig({
   format: "esm",
   dts: true,
   outDir: "./dist",
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  esbuildPlugins: [purgePolyfills.esbuild({}) as any],
+  esbuildPlugins: [purgePolyfills.esbuild({})],
 });
