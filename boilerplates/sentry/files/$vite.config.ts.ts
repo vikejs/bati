@@ -1,4 +1,4 @@
-import { addVitePlugin, loadAsMagicast, deepMergeObject, type TransformerProps } from "@batijs/core";
+import { addVitePlugin, deepMergeObject, loadAsMagicast, type TransformerProps } from "@batijs/core";
 
 export default async function getViteConfig(props: TransformerProps) {
   const mod = await loadAsMagicast(props);

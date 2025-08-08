@@ -1,8 +1,8 @@
-import type { FileOperation, OperationReport } from "./common.js";
-import type { VikeMeta } from "@batijs/core";
-import { transformAndFormat } from "@batijs/core";
 import { readFile } from "node:fs/promises";
 import { relative } from "node:path";
+import type { VikeMeta } from "@batijs/core";
+import { transformAndFormat } from "@batijs/core";
+import type { FileOperation, OperationReport } from "./common.js";
 import { clearExports, mergeDts } from "./merge-dts.js";
 
 export async function executeOperationFile(

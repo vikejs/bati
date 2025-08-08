@@ -1,8 +1,8 @@
 import { mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { GlobalContext } from "./types.js";
 import process from "node:process";
+import type { GlobalContext } from "./types.js";
 
 export async function initTmpDir(context: GlobalContext) {
   // turborepo hash seems to include cwd(), so always use the same temp folder

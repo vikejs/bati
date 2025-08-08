@@ -1,17 +1,17 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadFile, parseModule, type ProxifiedModule } from "magicast";
-import { assert } from "./assert.js";
-import { parseReadme } from "./markdown.js";
+import { loadFile, type ProxifiedModule, parseModule } from "magicast";
 import {
-  type Document as YAMLDocument,
   type DocumentOptions,
-  parseDocument,
   type ParseOptions,
+  parseDocument,
   type SchemaOptions,
+  type Document as YAMLDocument,
 } from "yaml";
-import type { TransformerProps } from "./types.js";
+import { assert } from "./assert.js";
 import { parseMarkdown } from "./markdown/markdown.js";
+import { parseReadme } from "./markdown.js";
+import type { TransformerProps } from "./types.js";
 import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
 
 export type { YAMLDocument };

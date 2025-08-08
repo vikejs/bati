@@ -1,15 +1,15 @@
 // BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
+import { createHandler, createMiddleware } from "@universal-middleware/hono";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { createHandler, createMiddleware } from "@universal-middleware/hono";
-import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
-import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 
 const app = new Hono();
 

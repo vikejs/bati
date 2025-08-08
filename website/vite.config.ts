@@ -1,9 +1,9 @@
 import { resolve } from "node:path";
-import vikeSolid from "vike-solid/vite";
-import viteSolidPlugin from "vite-plugin-solid";
-import vike from "vike/plugin";
 import tailwindcss from "@tailwindcss/vite";
+import vike from "vike/plugin";
+import vikeSolid from "vike-solid/vite";
 import { build, defineConfig, type Plugin } from "vite";
+import viteSolidPlugin from "vite-plugin-solid";
 
 const writeToDisk: () => Plugin = () => {
   let building = false;

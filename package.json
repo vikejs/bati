@@ -18,8 +18,8 @@
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build --no-daemon",
     "lint": "biome lint",
-    "format": "biome format",
-    "check": "biome check",
+    "format": "biome format --write",
+    "check": "biome check --write",
     "reset": "git clean -Xdf && pnpm install && pnpm run build"
   },
   "keywords": [],

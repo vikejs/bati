@@ -27,9 +27,7 @@ export default function SolidSentryErrorPage() {
         <p style={{ color: "red" }}>
           <b>Sentry Config Error:</b> {sentryClientStatus().client_not_loaded ? "Client not loaded!" : ""}{" "}
           {!sentryClientStatus().client_not_loaded && sentryClientStatus().dsn_missing ? "DSN is missing! " : ""}
-          {!sentryClientStatus().client_not_loaded && !sentryClientStatus().enabled
-            ? "Client is not enabled! "
-            : ""}{" "}
+          {!sentryClientStatus().client_not_loaded && !sentryClientStatus().enabled ? "Client is not enabled! " : ""}{" "}
           Vite Mode: {import.meta.env.PROD ? "PROD" : "DEV"}
         </p>
       )}

@@ -1,13 +1,13 @@
+import { readFile } from "node:fs/promises";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
 import { runDevServer } from "./run-dev.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
-import { readFile } from "node:fs/promises";
 
 async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
-  let error: unknown ;
+  let error: unknown;
   try {
     return await task();
   } catch (e) {

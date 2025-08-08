@@ -1,6 +1,6 @@
 import { RulesMessage } from "./enum.js";
 import rules from "./rules.js";
-import { prepare, type FeatureOrCategory } from "./utils.js";
+import { type FeatureOrCategory, prepare } from "./utils.js";
 
 export { rules, RulesMessage };
 

@@ -1,5 +1,5 @@
-import type { Root, Nodes } from "mdast";
-import { text, heading } from "mdast-builder";
+import type { Nodes, Root } from "mdast";
+import { heading, text } from "mdast-builder";
 import { toc } from "mdast-util-toc";
 
 const tocHeading = "Contents";

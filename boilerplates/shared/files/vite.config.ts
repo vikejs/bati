@@ -1,8 +1,9 @@
 //# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
 /// <reference types="vite-plugin-vercel/types" />
 /// <reference types="@batijs/core/types" />
-import { defineConfig } from "vite";
+
 import vike from "vike/plugin";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [vike()],

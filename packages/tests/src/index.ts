@@ -267,7 +267,9 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           // flags
           m.flags.length > 0 ? m.flags.map((f) => `--${f}`).join(" ") : "empty",
           // test-files
-          m.testFiles.map((f) => basename(f)).join(","),
+          m.testFiles
+            .map((f) => basename(f))
+            .join(","),
         ] as const,
     );
 

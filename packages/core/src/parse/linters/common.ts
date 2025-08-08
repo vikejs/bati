@@ -1,6 +1,6 @@
 import { Linter, type Rule } from "eslint";
-import { getBatiImportMatch } from "./visitor-imports.js";
 import { relative } from "../../relative.js";
+import { getBatiImportMatch } from "./visitor-imports.js";
 
 export type AllowedContextFlags = "include-if-imported";
 

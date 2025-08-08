@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from "../assets/logo.svg";
 //# BATI.has("tailwindcss")
 import * as tailwindCss from "@batijs/tailwindcss/layouts/tailwind.css";
+import logoUrl from "../assets/logo.svg";
 </script>
