@@ -99,6 +99,7 @@ await describeBati(
   },
 );
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 // biome-ignore lint/suspicious/noExplicitAny: any
 type JsonData = Record<string, any>;
 
