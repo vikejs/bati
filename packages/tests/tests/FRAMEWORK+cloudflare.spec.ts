@@ -4,7 +4,7 @@ import path from "node:path";
 import * as process from "node:process";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["cloudflare", "react", ["hono", undefined], "eslint"] as const;
+export const matrix = ["cloudflare", "react", ["hono", undefined], "eslint", "biome"] as const;
 
 await describeBati(
   ({ test, testMatch, expect }) => {

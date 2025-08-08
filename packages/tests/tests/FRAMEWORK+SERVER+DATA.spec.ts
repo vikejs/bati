@@ -7,6 +7,7 @@ export const matrix = [
   ["drizzle", "sqlite", undefined],
   ["cloudflare", undefined],
   "eslint",
+  "biome",
 ] as const;
 
 export const exclude = [

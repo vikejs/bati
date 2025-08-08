@@ -161,10 +161,14 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push("--summarize");
   }
 
-  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck", "knip"]), ...args_2], {
-    timeout: 35 * 60 * 1000, // 35min
-    cwd: context.tmpdir,
-  });
+  await exec(
+    npmCli,
+    [...args_1, ...(steps ?? ["build", "test", "lint", "lint:biome", "typecheck", "knip"]), ...args_2],
+    {
+      timeout: 35 * 60 * 1000, // 35min
+      cwd: context.tmpdir,
+    },
+  );
 }
 
 function isVerdaccioRunning() {
@@ -285,7 +289,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       console.log("chunks: ", chunks);
       ci.setOutput("test-matrix", chunks);
     } else {
-      console.log("projects (not usuable for CI, use --workers): ", projects);
+      console.log("projects (unusable by CI, use --workers): ", projects);
     }
 
     return;
@@ -301,7 +305,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
-        const packageJson = await updatePackageJson(projectDir);
+        const packageJson = await updatePackageJson(projectDir, flags);
         await Promise.all([
           ...filesP,
           updateTsconfig(projectDir),

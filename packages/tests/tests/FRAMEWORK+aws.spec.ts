@@ -4,7 +4,7 @@ import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";
 import { describeBati, npmCli } from "@batijs/tests-utils";
 
-export const matrix = ["aws", "react", "hono", "eslint"] as const;
+export const matrix = ["aws", "react", "hono", "eslint", "biome"] as const;
 
 await describeBati(
   ({ test, expect, beforeAll, testMatch }) => {

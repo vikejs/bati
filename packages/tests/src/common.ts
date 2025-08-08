@@ -6,6 +6,7 @@ import type { GlobalContext } from "./types.js";
 
 export async function updatePackageJson(
   projectDir: string,
+  flags: string[],
   packedTestsUtils?: string,
   packageManager?: string,
   addTurbo?: boolean,
@@ -18,6 +19,9 @@ export async function updatePackageJson(
   pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip";
   if (pkgjson.scripts.lint?.includes("eslint")) {
     pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
+  }
+  if (flags.includes("biome")) {
+    pkgjson.scripts["lint:biome"] = "biome lint";
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
@@ -80,6 +84,9 @@ export async function createTurboConfig(context: GlobalContext) {
           env: ["TEST_*"],
         },
         lint: {
+          dependsOn: ["build"],
+        },
+        "lint:biome": {
           dependsOn: ["build"],
         },
         typecheck: {
