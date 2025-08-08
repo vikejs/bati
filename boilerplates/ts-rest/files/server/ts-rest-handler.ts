@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/** biome-ignore-all lint/suspicious/noExplicitAny: avoid platformContext type inference */
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
@@ -63,6 +63,6 @@ export const tsRestHandler: Get<[], UniversalHandler> = () => async (request, ct
     platformContext: {
       ...ctx,
       ...runtime,
-      // biome-ignore lint/suspicious/noExplicitAny: avoid type inference
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
   });
