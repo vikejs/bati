@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";
@@ -99,7 +100,6 @@ await describeBati(
   },
 );
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 // biome-ignore lint/suspicious/noExplicitAny: any
 type JsonData = Record<string, any>;
 
