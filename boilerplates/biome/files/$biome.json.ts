@@ -1,11 +1,22 @@
 import type { TransformerProps } from "@batijs/core";
 
 export default async function getBiomeJson(props: TransformerProps) {
-  const additionalLinter: { domains?: Record<string, string> } = {};
+  // biome-ignore lint/suspicious/noExplicitAny: any
+  const additionalLinter: { domains?: Record<string, string>; rules?: Record<string, any> } = {};
 
   if (props.meta.BATI.has("vue")) {
     additionalLinter.domains = {
       vue: "recommended",
+    };
+    additionalLinter.rules = {
+      style: {
+        useConst: "off",
+        useImportType: "off",
+      },
+      correctness: {
+        noUnusedVariables: "off",
+        noUnusedImports: "off",
+      },
     };
   }
 
