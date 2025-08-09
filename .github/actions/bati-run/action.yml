@@ -62,6 +62,11 @@ runs:
       run: bun turbo run lint --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
 
+    - name: Run lint:biome
+      shell: bash
+      run: bun turbo run lint:biome --only --no-update-notifier --framework-inference false --env-mode loose
+      working-directory: ${{ inputs.destination }}
+
     - name: Run typecheck
       shell: bash
       run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
