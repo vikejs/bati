@@ -13,6 +13,7 @@ export default defineConfig({
   out: "./database/migrations",
   //# !BATI.hasD1
   dbCredentials: {
+    // biome-ignore lint/style/noNonNullAssertion: exists
     url: process.env.DATABASE_URL!,
   },
 });
