@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: JsonData */
+/** biome-ignore-all lint/style/noNonNullAssertion: test file */
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";

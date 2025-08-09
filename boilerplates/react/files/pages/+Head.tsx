@@ -37,11 +37,15 @@ export default function HeadDefault() {
       </>
     );
   } else {
-    return (
-      <>
-        <link rel="icon" href={logoUrl} />
-        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
-      </>
-    );
+    if (BATI.has("mantine")) {
+      return (
+        <>
+          <link rel="icon" href={logoUrl} />
+          {BATI.has("mantine") ? <ColorSchemeScript /> : null}
+        </>
+      );
+    } else {
+      return <link rel="icon" href={logoUrl} />;
+    }
   }
 }

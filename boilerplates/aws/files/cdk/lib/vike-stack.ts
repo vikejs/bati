@@ -158,7 +158,7 @@ export class VikeStack extends cdk.Stack {
     // Store the CloudFront URL in an SSM parameter
     new ssm.StringParameter(this, "DistributionUrlParameter", {
       parameterName: this.distributionUrlParameterName,
-      stringValue: siteDomainName ? siteDomainName! : distribution.distributionDomainName,
+      stringValue: siteDomainName ?? distribution.distributionDomainName,
       tier: ssm.ParameterTier.STANDARD,
     });
 

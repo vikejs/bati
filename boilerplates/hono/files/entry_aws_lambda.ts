@@ -30,7 +30,7 @@ lambdaApp.use(
   }),
 );
 
-lambdaApp.route("/", app!);
+lambdaApp.route("/", app as Hono);
 const awsHandler = handle(lambdaApp);
 
 export const handler: Handler<LambdaEvent, APIGatewayProxyResult> = awsHandler;
