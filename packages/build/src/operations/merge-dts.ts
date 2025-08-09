@@ -62,7 +62,7 @@ export function clearExports(code: string, meta: VikeMeta) {
     const index = code.indexOf("\nexport {};");
     const foundImport = code.match(/^import .* from /gm);
 
-    if (index === -1 && !foundImport) {
+    if (index !== -1 && !foundImport) {
       return (
         code.slice(0, index) +
         "\n// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module" +
