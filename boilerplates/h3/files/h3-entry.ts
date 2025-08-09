@@ -85,10 +85,11 @@ async function startServer() {
         nodeHTTPRequestHandler({
           req: event.node.req,
           res: event.node.res,
+          // biome-ignore lint/style/noNonNullAssertion: param exists
           path: event.context.params!.path,
           router: appRouter,
           createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
-            return { ...getContext(event)!, req, res } as BATI.Any;
+            return { ...getContext(event), req, res } as BATI.Any;
           },
         }),
       ),
