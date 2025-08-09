@@ -20,7 +20,7 @@ nodeApp.use(
   }),
 );
 
-nodeApp.route("/", app!);
+nodeApp.route("/", app as Hono);
 
 const port = envs.PORT ? parseInt(envs.PORT, 10) : 3000;
 

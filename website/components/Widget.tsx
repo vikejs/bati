@@ -1,11 +1,11 @@
+import { Show, useContext } from "solid-js";
 import Description from "#components/Description.js";
 import Features from "#components/Features.js";
+import InputGroup from "#components/InputGroup";
 import Messages from "#components/Messages.js";
 import Presets from "#components/Presets.js";
-import { StoreContext } from "#components/Store.js";
-import { Show, useContext } from "solid-js";
-import InputGroup from "#components/InputGroup";
 import { RootProvider } from "#components/RootContext";
+import { StoreContext } from "#components/Store.js";
 
 export function Widget(props: { theme?: string; widget: boolean }) {
   const { rules } = useContext(StoreContext);

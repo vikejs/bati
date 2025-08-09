@@ -1,7 +1,7 @@
-import { autoUpdate, flip, offset, size, type Placement, type ReferenceElement } from "@floating-ui/dom";
+import { autoUpdate, flip, offset, type Placement, type ReferenceElement, size } from "@floating-ui/dom";
 import type { Side } from "@floating-ui/utils";
 import clsx from "clsx";
-import { createEffect, createMemo, createSignal, onMount, Show, type JSX } from "solid-js";
+import { createEffect, createMemo, createSignal, type JSX, onMount, Show } from "solid-js";
 import { useFloating } from "../lib/floating-solid.js";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {

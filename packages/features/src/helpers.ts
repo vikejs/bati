@@ -1,9 +1,9 @@
-import { type Flags } from "./features.js";
+import type { Flags } from "./features.js";
 import type { Feature } from "./types.js";
 
 export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
-  // eslint-disable-next-line no-unused-private-class-members
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: used
   readonly #databases: Set<Flags>;
 
   constructor(flags: Flags[], allFeatures: ReadonlyArray<Feature>) {

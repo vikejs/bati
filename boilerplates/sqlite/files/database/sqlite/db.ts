@@ -1,7 +1,7 @@
 /*# BATI include-if-imported #*/
 import sqlite, { type Database } from "better-sqlite3";
 
-let singleton: Database | undefined = undefined;
+let singleton: Database | undefined;
 
 export function db(): Database {
   if (!singleton) {

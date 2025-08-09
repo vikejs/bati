@@ -1,4 +1,4 @@
-import { categoriesGroups } from "./groups.js";
+import type { categoriesGroups } from "./groups.js";
 
 export interface Feature<C = string> {
   label: string;

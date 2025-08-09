@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-import * as path from "path";
-import * as process from "process";
+import * as path from "node:path";
+import * as process from "node:process";
 import tsc from "tsc-prog";
 
 // Inspired by https://github.com/nodejs/node/issues/8033#issuecomment-388323687
@@ -77,7 +77,7 @@ export async function buildTypes() {
 
   if (emitSkipped) process.exit(1);
 
-  if (emittedFiles && emittedFiles.length) {
+  if (emittedFiles?.length) {
     const distTypes = path.join(process.cwd(), "dist", "types");
     const relFiles = emittedFiles.map((f) => path.relative(distTypes, f).replace(/\\/g, "/"));
 

@@ -6,6 +6,7 @@ import type { RuntimeAdapter } from "@universal-middleware/core";
  */
 export async function getDbFromRuntime(runtime: RuntimeAdapter): Promise<D1Database> {
   if (runtime.runtime === "workerd") {
+    // biome-ignore lint/style/noNonNullAssertion: always exists
     return runtime.env!.DB as D1Database;
   }
 

@@ -5,6 +5,7 @@ export const matrix = [
   ["express", "h3", "hono", "fastify"],
   ["authjs", ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : [])],
   "eslint",
+  "biome",
 ] as const;
 
 // How to configure your environment for testing auth?

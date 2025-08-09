@@ -25,7 +25,7 @@ async function createPackageJson(name: string) {
   const dest = join(__boilerplates, name, "package.json");
 
   const json = {
-    name: "@batijs/" + name,
+    name: `@batijs/${name}`,
     private: true,
     version: "0.0.1",
     description: "",

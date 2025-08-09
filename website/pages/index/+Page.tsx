@@ -16,7 +16,7 @@ export default function Page() {
         </div>
       </div>
       <div class="fixed top-0 right-0">
-        <a href="https://github.com/vikejs/bati" class="group" title="Github" target="_blank">
+        <a href="https://github.com/vikejs/bati" class="group" title="Github" target="_blank" rel="noopener">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"
@@ -24,6 +24,7 @@ export default function Page() {
             viewBox="0 0 250 250"
             class="fill-base-100 transition-all group-hover:scale-110"
           >
+            <title>GitHub logo</title>
             <path d="M0 0l115 115h15l12 27 108 108V0z" class="fill-neutral-800 dark:fill-neutral-200" />
             <path
               class="octo-arm"
@@ -39,7 +40,7 @@ export default function Page() {
       </div>
       <footer class="footer footer-center p-4 bg-base-200 text-base-content">
         <div class="flex">
-          <a href="https://www.flaticon.com/free-icons/wall" target="_blank" title="wall icons">
+          <a href="https://www.flaticon.com/free-icons/wall" target="_blank" title="wall icons" rel="noopener">
             Wall icons created by Freepik - Flaticon
           </a>
         </div>

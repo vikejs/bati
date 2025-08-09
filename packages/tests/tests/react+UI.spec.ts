@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", ["compiled-css", "mantine"], "eslint"] as const;
+export const matrix = ["react", ["compiled-css", "mantine"], "eslint", "biome"] as const;
 
 await describeBati(({ test, expect, fetch, testMatch }) => {
   test("home", async () => {

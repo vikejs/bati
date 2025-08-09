@@ -1,5 +1,5 @@
-import vikeVue from "vike-vue/config";
 import type { Config } from "vike/types";
+import vikeVue from "vike-vue/config";
 import Layout from "../layouts/LayoutDefault.vue";
 
 // Default config (can be overridden by pages)

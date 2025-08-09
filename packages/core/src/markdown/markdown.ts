@@ -1,13 +1,13 @@
+import { type CategoryLabels, type Flags, features } from "@batijs/features";
+import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
+import type { Nodes, Root } from "mdast";
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
-import { zone } from "./zone.js";
-import type { Nodes, Root } from "mdast";
-import { wrapWithComment } from "./utils.js";
-import { type CategoryLabels, features, type Flags } from "@batijs/features";
-import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
-import type { classConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
-import { createTOC } from "./createTOC.js";
 import type { StringTransformer } from "../types.js";
+import { createTOC } from "./createTOC.js";
+import type { ContentChanger, classConfig, MarkdownOptions, ZoneHandler } from "./types.js";
+import { wrapWithComment } from "./utils.js";
+import { zone } from "./zone.js";
 
 export function parseMarkdown(text: string, defaults?: MarkdownOptions) {
   const markdownText = /<!--\s*bati:start\s+section="document"\s*-->/.test(text)

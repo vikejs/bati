@@ -1,12 +1,12 @@
-import { categories, categoriesGroups, type Category, type CategoryLabels, type FeatureLink } from "@batijs/features";
+import { type Category, type CategoryLabels, categories, categoriesGroups, type FeatureLink } from "@batijs/features";
 import type { VirtualElement } from "@floating-ui/dom";
+import { type Accessor, createMemo, createSignal, For, type JSX, Match, Show, Switch, useContext } from "solid-js";
+import { Motion } from "solid-motionone";
 import { FormControl } from "#components/FormControl.js";
 import { IconAlembic, IconTrainTrack } from "#components/Icons";
 import { ShieldBadge } from "#components/ShieldBadge";
 import { StoreContext } from "#components/Store.js";
 import { EnrichedTooltip } from "#components/Tooltip";
-import { type Accessor, createMemo, createSignal, For, type JSX, Match, Show, Switch, useContext } from "solid-js";
-import { Motion } from "solid-motionone";
 import type { Feature } from "../types.js";
 
 export default function Features() {

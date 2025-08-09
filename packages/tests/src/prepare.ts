@@ -1,4 +1,5 @@
 import { readdirSync } from "node:fs";
+import mri from "mri";
 import {
   createBatiConfig,
   createKnipConfig,
@@ -7,7 +8,6 @@ import {
   updateTsconfig,
   updateVitestConfig,
 } from "./common.js";
-import mri from "mri";
 
 async function prepare(flags: string[], testFiles: string) {
   const projectDir = ".";
@@ -18,7 +18,7 @@ async function prepare(flags: string[], testFiles: string) {
   }
 
   // @ts-ignore
-  const packageJson = await updatePackageJson(projectDir, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
+  const packageJson = await updatePackageJson(projectDir, flags, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
   await updateTsconfig(projectDir);
   await updateVitestConfig(projectDir, testFiles);
   await createTurboConfig({

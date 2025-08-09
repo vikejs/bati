@@ -1,4 +1,4 @@
-import { D1Database } from "@cloudflare/workers-types";
+import type { D1Database } from "@cloudflare/workers-types";
 
 // Cloudflare typings
 interface Env {
@@ -12,5 +12,3 @@ declare global {
     }
   }
 }
-
-export {};

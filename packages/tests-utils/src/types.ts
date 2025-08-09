@@ -1,4 +1,6 @@
-import type { ChildProcess } from "child_process";
+/** biome-ignore-all lint/suspicious/noExplicitAny: types */
+/** biome-ignore-all lint/suspicious/noConfusingVoidType: types */
+import type { ChildProcess } from "node:child_process";
 import type { RequestInit, Response } from "node-fetch";
 import type { TestOptions } from "vitest";
 

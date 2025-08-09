@@ -1,4 +1,4 @@
-import type { Flags, CategoryLabels } from "@batijs/features";
+import type { CategoryLabels, Flags } from "@batijs/features";
 import type { Nodes, Parents } from "mdast";
 import type { commentMarker } from "./utils.js";
 
@@ -39,4 +39,5 @@ export type Info = {
 };
 
 // zone.ts
+// biome-ignore lint/suspicious/noConfusingVoidType: accept void
 export type ZoneHandler = (start: Nodes, between: Nodes[], end: Nodes, info: Info) => Nodes[] | null | undefined | void;

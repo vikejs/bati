@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import type { JSX } from "solid-js";
 import { copy } from "#components/Copy.js";
 import { flip } from "#components/Flip.js";
-import type { JSX } from "solid-js";
 
 // avoid removing import when trying to optimize them
 // https://github.com/solidjs/solid/discussions/845
@@ -14,6 +15,7 @@ export function Cli(
   } & Pick<JSX.HTMLAttributes<unknown>, "onMouseEnter" | "onClick" | "children">,
 ) {
   return (
+    // biome-ignore lint/a11y/noInteractiveElementToNoninteractiveRole: ignored
     <kbd
       role="tabpanel"
       class="group h-10 join-item rounded-md cursor-pointer relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap leading-9 gap-2.5"
@@ -22,6 +24,7 @@ export function Cli(
       onClick={props.onClick}
       data-tip={props.tooltipText}
     >
+      {/** biome-ignore lint/a11y/noSvgWithoutTitle: ignored */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

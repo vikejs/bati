@@ -1,5 +1,5 @@
-import type { FileOperation } from "./common.js";
 import { orderBy } from "../utils.js";
+import type { FileOperation } from "./common.js";
 
 export class OperationsRearranger {
   private files: Map<string, FileOperation[]>;

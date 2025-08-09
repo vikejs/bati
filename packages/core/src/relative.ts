@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 
 export function relative(a: string, b: string): string {
   const x = a.replace(/[\\/]+/g, "/");
@@ -6,5 +6,5 @@ export function relative(a: string, b: string): string {
 
   const rel = path.posix.relative(path.dirname(x), y);
 
-  return rel.startsWith("../") ? rel : "./" + rel;
+  return rel.startsWith("../") ? rel : `./${rel}`;
 }

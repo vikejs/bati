@@ -9,12 +9,12 @@ Notes:
 
 */
 
-import { Hono } from "hono";
-import { serveStatic } from "@hono/node-server/serve-static";
-import { handle } from "hono/aws-lambda";
-import type { LambdaEvent, LambdaContext } from "hono/aws-lambda";
 import app from "@batijs/hono/hono-entry"; // file is provided by hono
-import type { Handler, APIGatewayProxyResult } from "aws-lambda";
+import { serveStatic } from "@hono/node-server/serve-static";
+import type { APIGatewayProxyResult, Handler } from "aws-lambda";
+import { Hono } from "hono";
+import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
+import { handle } from "hono/aws-lambda";
 
 type Bindings = {
   event: LambdaEvent;
@@ -30,7 +30,7 @@ lambdaApp.use(
   }),
 );
 
-lambdaApp.route("/", app!);
+lambdaApp.route("/", app as Hono);
 const awsHandler = handle(lambdaApp);
 
 export const handler: Handler<LambdaEvent, APIGatewayProxyResult> = awsHandler;

@@ -1,6 +1,6 @@
-import faviconUrl from "#assets/logo.svg";
-import vikeSolid from "vike-solid/config";
 import type { Config } from "vike/types";
+import vikeSolid from "vike-solid/config";
+import faviconUrl from "#assets/logo.svg";
 
 export default {
   prerender: true,

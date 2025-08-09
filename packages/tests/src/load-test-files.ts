@@ -23,7 +23,7 @@ export function assert(condition: unknown, message: string): asserts condition {
 
 export async function loadTestFileMatrix(filepath: string) {
   const defaultErrorMessage = `\`matrix\` export in "${filepath}" must be of type \`(string | string[])[]\``;
-  const importFile = isWin ? "file://" + filepath : filepath;
+  const importFile = isWin ? `file://${filepath}` : filepath;
   const f = await import(importFile);
 
   const matrix: unknown = f.matrix;

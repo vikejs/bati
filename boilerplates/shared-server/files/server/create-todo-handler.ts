@@ -1,12 +1,13 @@
 /*# BATI include-if-imported #*/
 // TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
-import type { Get, UniversalHandler } from "@universal-middleware/core";
-import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
-import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
+
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
+import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { D1Database } from "@cloudflare/workers-types";
+import type { Get, UniversalHandler } from "@universal-middleware/core";
 
 export const createTodoHandler: Get<
   [],

@@ -6,7 +6,12 @@ export function waitForLocalhost({
   path,
   useGet,
   timeout,
-}: { port?: number; path?: string; useGet?: boolean; timeout?: number } = {}) {
+}: {
+  port?: number;
+  path?: string;
+  useGet?: boolean;
+  timeout?: number;
+} = {}) {
   return new Promise((resolve, reject) => {
     const startedAt = Date.now();
     const retry = () => {

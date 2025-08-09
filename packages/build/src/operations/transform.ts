@@ -1,13 +1,13 @@
-import { parse } from "path";
-import type { FileOperation, OperationReport } from "./common.js";
+import { parse } from "node:path";
 import type { PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
 import { formatCode } from "@batijs/core";
+import type { FileOperation, OperationReport } from "./common.js";
 
 const isWin = process.platform === "win32";
 
 async function transformFileAfterExec(filepath: string, fileContent: unknown): Promise<string | null> {
   if (fileContent === undefined || fileContent === null) return null;
-  if (typeof fileContent == "object" && typeof (fileContent as StringTransformer).finalize === "function") {
+  if (typeof fileContent === "object" && typeof (fileContent as StringTransformer).finalize === "function") {
     fileContent = (fileContent as StringTransformer).finalize();
     if (typeof fileContent !== "string") {
       throw new Error("finalize() must return a string");
@@ -50,7 +50,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
 }
 
 async function importTransformer(p: string) {
-  const importFile = isWin ? "file://" + p : p;
+  const importFile = isWin ? `file://${p}` : p;
   const f = await import(importFile);
 
   return f.default as Transformer;

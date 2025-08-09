@@ -1,8 +1,8 @@
 import parseAttributes from "attributes-parser";
 import type { Nodes } from "mdast";
-import type { WrapperObject, FilterObject, MarkdownCommentSuffix } from "./types.js";
+import type { FilterObject, MarkdownCommentSuffix, WrapperObject } from "./types.js";
 
-const markerExpression = new RegExp(`(\\s*<!--(?<attributes>.*)-->\\s*)`);
+const markerExpression = /(\s*<!--(?<attributes>.*)-->\s*)/;
 
 /**
  * Parse a comment marker.

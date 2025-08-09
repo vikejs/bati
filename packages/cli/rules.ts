@@ -20,6 +20,7 @@ function warning(value: string): RuleMessage {
   };
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: unused for now
 function info(value: string): RuleMessage {
   return {
     type: "info",

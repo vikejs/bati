@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 import "source-map-support/register";
-import { Construct } from "constructs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as cdk from "aws-cdk-lib";
-import * as ssm from "aws-cdk-lib/aws-ssm";
-import * as s3 from "aws-cdk-lib/aws-s3";
-import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as logs from "aws-cdk-lib/aws-logs";
-import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
-import * as nodejs from "aws-cdk-lib/aws-lambda-nodejs";
-import * as origin from "aws-cdk-lib/aws-cloudfront-origins";
 import * as api from "aws-cdk-lib/aws-apigatewayv2";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
+import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
+import * as origin from "aws-cdk-lib/aws-cloudfront-origins";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as nodejs from "aws-cdk-lib/aws-lambda-nodejs";
+import * as logs from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
-import { existsSync } from "node:fs";
+import * as s3 from "aws-cdk-lib/aws-s3";
+import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
+import * as ssm from "aws-cdk-lib/aws-ssm";
+import type { Construct } from "constructs";
 import type { CustomStackProps } from "../bin/infrastructure";
 
 type VikeStackProps = cdk.StackProps & {
@@ -42,7 +42,7 @@ export class VikeStack extends cdk.Stack {
     const subDomain = props.customStackProps?.subDomain;
     const domainName = props.customStackProps?.domainName;
     const siteDomainName = domainName
-      ? `${(subDomain?.length ?? 0 > 0) ? `${subDomain}.` : ""}${domainName}`
+      ? `${(subDomain?.length ?? 0) > 0 ? `${subDomain}.` : ""}${domainName}`
       : undefined;
 
     const bucket = new s3.Bucket(this, "StaticAssetsBucket", {
@@ -158,7 +158,7 @@ export class VikeStack extends cdk.Stack {
     // Store the CloudFront URL in an SSM parameter
     new ssm.StringParameter(this, "DistributionUrlParameter", {
       parameterName: this.distributionUrlParameterName,
-      stringValue: siteDomainName ? siteDomainName! : distribution.distributionDomainName,
+      stringValue: siteDomainName ?? distribution.distributionDomainName,
       tier: ssm.ParameterTier.STANDARD,
     });
 

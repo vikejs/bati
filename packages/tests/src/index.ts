@@ -2,18 +2,16 @@ import { copyFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
+import * as process from "node:process";
 import { fileURLToPath } from "node:url";
-import * as process from "process";
+import * as ci from "@actions/core";
 import { exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
+
+import { Document } from "yaml";
 import packageJson from "../package.json" with { type: "json" };
-import { execLocalBati } from "./exec-bati.js";
-import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
-import { initTmpDir } from "./tmp.js";
-import type { GlobalContext } from "./types.js";
-import * as ci from "@actions/core";
 import {
   createBatiConfig,
   createKnipConfig,
@@ -23,7 +21,10 @@ import {
   updateTsconfig,
   updateVitestConfig,
 } from "./common.js";
-import { Document } from "yaml";
+import { execLocalBati } from "./exec-bati.js";
+import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
+import { initTmpDir } from "./tmp.js";
+import type { GlobalContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,7 +49,7 @@ async function getPackageManagerVersion() {
 
   let version = "";
 
-  process.stdout!.on("data", function (data) {
+  process.stdout!.on("data", (data) => {
     version += data.toString();
   });
 
@@ -160,10 +161,14 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push("--summarize");
   }
 
-  await exec(npmCli, [...args_1, ...(steps ?? ["build", "test", "lint", "typecheck", "knip"]), ...args_2], {
-    timeout: 35 * 60 * 1000, // 35min
-    cwd: context.tmpdir,
-  });
+  await exec(
+    npmCli,
+    [...args_1, ...(steps ?? ["build", "test", "lint", "lint:biome", "typecheck", "knip"]), ...args_2],
+    {
+      timeout: 35 * 60 * 1000, // 35min
+      cwd: context.tmpdir,
+    },
+  );
 }
 
 function isVerdaccioRunning() {
@@ -266,7 +271,9 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
           // flags
           m.flags.length > 0 ? m.flags.map((f) => `--${f}`).join(" ") : "empty",
           // test-files
-          m.testFiles.map((f) => basename(f)).join(","),
+          m.testFiles
+            .map((f) => basename(f))
+            .join(","),
         ] as const,
     );
 
@@ -282,7 +289,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       console.log("chunks: ", chunks);
       ci.setOutput("test-matrix", chunks);
     } else {
-      console.log("projects (not usuable for CI, use --workers): ", projects);
+      console.log("projects (unusable by CI, use --workers): ", projects);
     }
 
     return;
@@ -298,7 +305,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
-        const packageJson = await updatePackageJson(projectDir);
+        const packageJson = await updatePackageJson(projectDir, flags);
         await Promise.all([
           ...filesP,
           updateTsconfig(projectDir),

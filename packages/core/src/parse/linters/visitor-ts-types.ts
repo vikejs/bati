@@ -1,5 +1,5 @@
-import { type Rule, type SourceCode } from "eslint";
-import { TSESTree } from "@typescript-eslint/utils";
+import type { TSESTree } from "@typescript-eslint/utils";
+import type { Rule, SourceCode } from "eslint";
 import type { VikeMeta } from "../../types.js";
 import { evalCondition } from "../eval.js";
 
@@ -21,7 +21,7 @@ export function visitorAsExpression(
       return [start, end];
     },
     (value, right) => {
-      return right.name === "IfAsUnkown" ? ` as unknown as ${value}` : ` as ${value}`;
+      return right.name === "IfAsUnknown" ? ` as unknown as ${value}` : ` as ${value}`;
     },
   );
 }
@@ -88,7 +88,7 @@ export function transformBatiType(
     switch (right.name) {
       case "Any":
         context.report({
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: type mismatch
           node: node as any,
           message: "bati/as-expression-any",
           *fix(fixer) {
@@ -97,18 +97,18 @@ export function transformBatiType(
         });
         break;
       case "If":
-      case "IfAsUnkown":
+      case "IfAsUnknown":
         if (
           node.typeArguments?.type === "TSTypeParameterInstantiation" &&
           node.typeArguments.params[0].type === "TSTypeLiteral"
         ) {
           const members = node.typeArguments.params[0].members;
           context.report({
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: type mismatch
             node: node as any,
             message: "bati/as-expression-if",
             *fix(fixer) {
-              let fallback: string | undefined = undefined;
+              let fallback: string | undefined;
               let replaced = false;
               for (const member of members) {
                 if (

@@ -1,6 +1,6 @@
-import type { VikeMeta } from "@batijs/core";
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import type { VikeMeta } from "@batijs/core";
 
 async function cleanupReadme(cwd: string) {
   const content = await readFile(join(cwd, "README.md"), "utf8");

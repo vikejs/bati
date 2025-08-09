@@ -1,7 +1,7 @@
 import { RulesMessage } from "@batijs/features/rules";
 import { createEffect, createMemo, on, onCleanup, onMount, useContext, type ValidComponent } from "solid-js";
-import { StoreContext } from "./Store.js";
 import { useRootContext } from "#components/RootContext";
+import { StoreContext } from "./Store.js";
 
 export interface RuleMessage {
   type: "info" | "warning" | "error" | "invisible";
@@ -22,6 +22,7 @@ function warning(value: ValidComponent): RuleMessage {
   };
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: unused for now
 function info(value: ValidComponent): RuleMessage {
   return {
     type: "info",
@@ -45,7 +46,7 @@ export const rulesMessages = {
     return (
       <span class="inline-block">
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Auth</span>. Check{" "}
-        <a class="link" href="https://vike.dev/integration#server-side-tools" target="_blank">
+        <a class="link" href="https://vike.dev/integration#server-side-tools" target="_blank" rel="noopener">
           Vike documentation.
         </a>
         <ul class="list-custom list-dot">
@@ -172,7 +173,7 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.INFO_STACKBLITZ_COMPAT]: invisible(function () {
+  [RulesMessage.INFO_STACKBLITZ_COMPAT]: invisible(() => {
     const root = useRootContext();
     const { selectedFeatures } = useContext(StoreContext);
 
@@ -208,6 +209,7 @@ export const rulesMessages = {
         });
     });
 
+    // biome-ignore lint/complexity/noUselessFragments: Valid TS
     return <></>;
   }),
 } satisfies Record<RulesMessage, RuleMessage>;

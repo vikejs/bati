@@ -1,7 +1,7 @@
 import { builders, generateCode, loadAsMagicast, parseModule, type TransformerProps } from "@batijs/core";
 
 export default async function getViteConfig(props: TransformerProps) {
-  let mod;
+  let mod: Awaited<ReturnType<typeof loadAsMagicast>>;
   try {
     mod = await loadAsMagicast(props);
   } catch {

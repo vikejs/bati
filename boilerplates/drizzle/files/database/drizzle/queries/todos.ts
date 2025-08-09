@@ -1,6 +1,7 @@
 /*# BATI include-if-imported #*/
+
+import type { dbD1, dbSqlite } from "../db";
 import { todoTable } from "../schema/todos";
-import { dbD1, type dbSqlite } from "../db";
 
 export function insertTodo(
   db: BATI.If<{

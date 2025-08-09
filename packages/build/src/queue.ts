@@ -9,6 +9,7 @@ export function queue() {
     },
     async run() {
       let task: Task | undefined;
+      // biome-ignore lint/suspicious/noAssignInExpressions: ignored
       while ((task = tasks.shift())) {
         await task();
       }

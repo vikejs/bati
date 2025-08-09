@@ -1,4 +1,4 @@
-import { ChildProcess, spawn, type SpawnOptions } from "child_process";
+import { type ChildProcess, type SpawnOptions, spawn } from "node:child_process";
 import { kill } from "zx";
 
 interface ExecuteCommandOptions extends SpawnOptions {

@@ -1,10 +1,10 @@
 import "@mantine/core/styles.css";
-import { AppShell, Burger, Group, Image, MantineProvider } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import theme from "./theme.js";
 
 import logoUrl from "@batijs/react/assets/logo.svg";
+import { AppShell, Burger, Group, Image, MantineProvider } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { Link } from "../components/Link";
+import theme from "./theme.js";
 
 export default function LayoutDefault({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();

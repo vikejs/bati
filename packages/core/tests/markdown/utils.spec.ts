@@ -1,7 +1,5 @@
 import { expect, test } from "vitest";
-
-import { commentMarker } from "../../src/markdown/utils.js";
-import { createMarkdownComment } from "../../src/markdown/utils.js";
+import { commentMarker, createMarkdownComment } from "../../src/markdown/utils.js";
 
 test.each([
   [

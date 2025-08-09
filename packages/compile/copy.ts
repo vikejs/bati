@@ -1,5 +1,5 @@
 import { copyFile, mkdir } from "node:fs/promises";
-import * as path from "path";
+import * as path from "node:path";
 import { globby } from "globby";
 
 export async function copyFilesToDist() {

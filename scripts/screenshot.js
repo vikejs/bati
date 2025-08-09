@@ -1,6 +1,7 @@
 // @ts-ignore
-import createBrowser from "browserless";
+
 import { writeFile } from "node:fs/promises";
+import createBrowser from "browserless";
 
 const browser = createBrowser();
 

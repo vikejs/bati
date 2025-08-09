@@ -7,6 +7,7 @@ export function IconInfo(props: { class?: string }) {
 export function IconTrainTrack(props: { class?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" class={clsx("fill-current", props.class)} viewBox="0 0 64 64">
+      <title>Train track icon</title>
       <path
         fill="#86613e"
         d="M63.45 53.623c0 .672-1.126 1.217-2.51 1.217H2.5c-1.385 0-2.508-.545-2.508-1.217l3.154-8.34c0-.672 1.121-1.217 2.505-1.217h52.13c1.385 0 2.508.545 2.508 1.217l3.155 8.34M55.26 36.35c0 .497-.836.904-1.863.904h-43.35c-1.029 0-1.861-.407-1.861-.904l2.34-6.186c0-.499.833-.902 1.859-.902h38.671c1.029 0 1.861.403 1.861.902l2.341 6.186m-5.297-13.3c0 .385-.646.7-1.44.7H14.933c-.792 0-1.44-.315-1.44-.7l1.813-4.794c0-.387.645-.698 1.442-.698h29.961c.794 0 1.44.312 1.44.698l1.812 4.794m-4.481-9.421c0 .29-.486.525-1.089.525H19.063c-.603 0-1.089-.235-1.089-.525l1.369-3.615c0-.293.487-.529 1.085-.529h22.6c.6 0 1.089.235 1.089.529l1.363 3.615"
@@ -38,6 +39,7 @@ export function IconTrainTrack(props: { class?: string }) {
 export function IconAlembic(props: { class?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" class={clsx("fill-current", props.class)} viewBox="0 0 36 36">
+      <title>Alembic icon</title>
       <path fill="#67757F" d="M16 34.375a1 1 0 1 1-2 0V26a1 1 0 1 1 2 0v8.375z" />
       <circle cx="15.41" cy="15.625" r="13.873" fill="#E1E8ED" />
       <path fill="#50A5E6" d="M3.592 16.139c.232 6.334 5.427 11.402 11.818 11.402s11.586-5.068 11.818-11.402H3.592z" />

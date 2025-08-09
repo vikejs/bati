@@ -1,7 +1,7 @@
-import { visit } from "unist-util-visit";
-import { commentMarker, objectFilter } from "./utils.js";
 import type { Nodes, Parents } from "mdast";
+import { visit } from "unist-util-visit";
 import type { FilterHandler, FilterObject, ZoneHandler } from "./types.js";
+import { commentMarker, objectFilter } from "./utils.js";
 
 export function zone(
   node: Nodes,
@@ -15,7 +15,7 @@ export function zone(
 
   let scope: Parents | undefined;
 
-  visit(node, function (node: Nodes, index: number | undefined, parent: Parents | undefined) {
+  visit(node, (node: Nodes, index: number | undefined, parent: Parents | undefined) => {
     const info = commentMarker(node);
 
     const type = (info?.suffix ?? "").toLowerCase();

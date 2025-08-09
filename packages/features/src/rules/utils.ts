@@ -1,6 +1,6 @@
 // The role of this file is to describe rules for packages which may conflict with one another
 import type { CategoryLabels } from "../categories.js";
-import { features, flags, type Flags } from "../features.js";
+import { type Flags, features, flags } from "../features.js";
 import type { RulesMessage } from "./enum.js";
 
 export type FeatureOrCategory = Flags | CategoryLabels;

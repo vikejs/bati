@@ -4,6 +4,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -13,10 +14,9 @@ import installCrypto from "@hattip/polyfills/crypto";
 import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
 import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { type NodeHTTPCreateContextFnOptions, nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
+import { createHandler, createMiddleware, getContext } from "@universal-middleware/h3";
 import { createApp, createRouter, eventHandler, fromNodeMiddleware, toNodeListener } from "h3";
 import serveStatic from "serve-static";
-import { createHandler, createMiddleware, getContext } from "@universal-middleware/h3";
-import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createDevMiddleware } from "vike";
 
 installWhatwgNodeFetch();
@@ -85,10 +85,11 @@ async function startServer() {
         nodeHTTPRequestHandler({
           req: event.node.req,
           res: event.node.res,
+          // biome-ignore lint/style/noNonNullAssertion: param exists
           path: event.context.params!.path,
           router: appRouter,
           createContext({ req, res }: NodeHTTPCreateContextFnOptions<IncomingMessage, ServerResponse>) {
-            return { ...getContext(event)!, req, res } as BATI.Any;
+            return { ...getContext(event), req, res } as BATI.Any;
           },
         }),
       ),

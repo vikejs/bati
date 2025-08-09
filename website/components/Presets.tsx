@@ -1,7 +1,7 @@
 import type { CategoryLabels, Flags } from "@batijs/features";
-import { StoreContext } from "#components/Store.js";
 import clsx from "clsx";
 import { useContext } from "solid-js";
+import { StoreContext } from "#components/Store.js";
 import { EnrichedTooltip } from "./Tooltip.js";
 
 function Preset(props: {

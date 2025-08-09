@@ -1,9 +1,10 @@
 /*# BATI include-if-imported #*/
-import type { Get, UniversalMiddleware } from "@universal-middleware/core";
+
+import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
-import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
-import { D1Database } from "@cloudflare/workers-types";
+import type { D1Database } from "@cloudflare/workers-types";
+import type { Get, UniversalMiddleware } from "@universal-middleware/core";
 
 //# BATI.hasDatabase
 declare global {
