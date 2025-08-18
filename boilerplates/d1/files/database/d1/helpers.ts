@@ -10,9 +10,12 @@ export async function getDbFromRuntime(runtime: RuntimeAdapter): Promise<D1Datab
     return runtime.env!.DB as D1Database;
   }
 
-  // When running on node, simulate Cloudflare environment with "wrangler"
-  const { getPlatformProxy } = await import("wrangler");
+  if (process.env.NODE_ENV !== "production") {
+    // When running on node, simulate Cloudflare environment with "wrangler"
+    const { getPlatformProxy } = await import("wrangler");
+    const { env } = await getPlatformProxy();
+    return env.DB as D1Database;
+  }
 
-  const { env } = await getPlatformProxy();
-  return env.DB as D1Database;
+  throw new Error("Database not available in production build");
 }
