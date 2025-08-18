@@ -57,9 +57,9 @@ runs:
       run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose' }}
       working-directory: ${{ inputs.destination }}
 
-    - name: Run lint
+    - name: Run lint:eslint
       shell: bash
-      run: bun turbo run lint --only --no-update-notifier --framework-inference false --env-mode loose
+      run: bun turbo run lint:eslint --only --no-update-notifier --framework-inference false --env-mode loose
       working-directory: ${{ inputs.destination }}
 
     - name: Run lint:biome

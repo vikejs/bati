@@ -35,7 +35,6 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
 
 function Sidebar({ children }: { children: React.ReactNode }) {
   return (
-    // biome-ignore lint/correctness/useUniqueElementIds: static id
     <div
       id="sidebar"
       //# BATI.has("tailwindcss")
@@ -66,9 +65,7 @@ function Sidebar({ children }: { children: React.ReactNode }) {
 
 function Content({ children }: { children: React.ReactNode }) {
   return (
-    // biome-ignore lint/correctness/useUniqueElementIds: static id
     <div id="page-container">
-      {/** biome-ignore lint/correctness/useUniqueElementIds: static id */}
       <div
         id="page-content"
         //# BATI.has("tailwindcss")

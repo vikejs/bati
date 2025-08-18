@@ -1,15 +1,14 @@
 import * as Sentry from "@sentry/vue";
-import { usePageContext } from "vike-vue/usePageContext";
+import { getCurrentInstance } from "vue";
 
 export const sentryBrowserConfig = () => {
   // eslint-disable-next-line
   import.meta.env.PROD === true &&
     Sentry.init({
-      // @ts-expect-error
-      app: usePageContext().app,
+      app: getCurrentInstance()?.appContext.app,
       dsn: import.meta.env.PUBLIC_ENV__SENTRY_DSN,
       environment: "production-frontend",
-      //enabled: import.meta.env.DEV ? false : true,
+      // enabled: import.meta.env.DEV ? false : true,
       integrations: [Sentry.replayIntegration()],
       // Set tracesSampleRate to 1.0 to capture 100%
       // of transactions for tracing.
