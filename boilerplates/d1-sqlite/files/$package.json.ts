@@ -9,7 +9,7 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 0,
     })
     .setScript("d1:deploy", {
-      value: "wrangler d1 migrations apply bati-repro --remote",
+      value: "wrangler d1 migrations apply YOUR_DATABASE_NAME --remote",
       precedence: 0,
     });
 }
