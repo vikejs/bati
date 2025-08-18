@@ -1,8 +1,8 @@
+import { BatiSet, features } from "@batijs/features";
 import { assert, describe, test } from "vitest";
 import { formatCode } from "../src/format.js";
 import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
-import { BatiSet, features } from "@batijs/features";
 
 function testIfElse(code: string, expectedIf: string, expectedElse: string) {
   const filename = "test.vue";

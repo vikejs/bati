@@ -26,8 +26,7 @@ export default defineConfig({
   outDir: "./dist",
   dts: true,
   bundle: true,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({}) as any],
+  esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({})],
   minify: true,
   // metafile: true,
 

@@ -1,0 +1,53 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["./node_modules/@vikejs/biome-config/config.json"],
+  "files": {
+    "includes": [
+      "**",
+      "!**/*.cjs",
+      "!**/*.ts.build-*.mjs",
+      "!**/dist/*",
+      "!**/node_modules/*",
+      "!**/.DS_Store",
+      "!scripts/gen-composite-workflow-action.js",
+      "!pnpm-lock.yaml",
+      "!boilerplates/biome/files/biome.json"
+    ]
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.vue"],
+      "linter": {
+        "domains": {
+          "vue": "recommended"
+        },
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["boilerplates/react", "boilerplates/react-*"],
+      "linter": {
+        "domains": {
+          "react": "recommended"
+        }
+      }
+    },
+    {
+      "includes": ["boilerplates/solid", "boilerplates/solid-*"],
+      "linter": {
+        "domains": {
+          "solid": "recommended"
+        }
+      }
+    }
+  ]
+}

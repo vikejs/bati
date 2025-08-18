@@ -1,6 +1,6 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
 import type { TSESTree } from "@typescript-eslint/utils";
-import { ESLint, Linter, type Rule, type SourceCode } from "eslint";
+import type { ESLint, Linter, Rule, SourceCode } from "eslint";
 import solid from "eslint-plugin-solid/configs/recommended";
 import type { VikeMeta } from "../../types.js";
 import type { Visitors } from "./types.js";

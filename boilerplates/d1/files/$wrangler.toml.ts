@@ -1,4 +1,4 @@
-import { type TransformerProps } from "@batijs/core";
+import type { TransformerProps } from "@batijs/core";
 
 export default async function getToml(props: TransformerProps) {
   const content = await props.readfile?.();

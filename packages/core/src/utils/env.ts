@@ -3,12 +3,12 @@ export function appendToEnv(envContent: string | undefined | null, key: string, 
   if (envContent.endsWith("\n\n")) {
     // do nothing
   } else if (envContent.endsWith("\n")) {
-    envContent = envContent + "\n";
+    envContent = `${envContent}\n`;
   } else if (envContent) {
-    envContent = envContent + "\n\n";
+    envContent = `${envContent}\n\n`;
   }
 
-  const prefixedComment = comment ? comment.replace(/^(.+)/gm, "# $1") + "\n" : "";
+  const prefixedComment = comment ? `${comment.replace(/^(.+)/gm, "# $1")}\n` : "";
   const newConf = `${key}=${formatValue(value)}\n`;
 
   return envContent + prefixedComment + newConf;

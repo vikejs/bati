@@ -1,8 +1,8 @@
-import { expect, test } from "vitest";
+import type { RootContent } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
+import { expect, test } from "vitest";
 import { createTOC } from "../../src/markdown/createTOC.js";
-import type { RootContent } from "mdast";
 
 const markdownTree = fromMarkdown(`
 # 001 h1

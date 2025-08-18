@@ -3,14 +3,14 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { vikeHandler } from "@batijs/shared-server/server/vike-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
+import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { createHandler, createMiddleware } from "@universal-middleware/express";
-import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import express from "express";
-import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { createDevMiddleware } from "vike";
 
 const __filename = fileURLToPath(import.meta.url);

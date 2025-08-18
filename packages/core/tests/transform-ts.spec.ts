@@ -1,7 +1,7 @@
+import { BatiSet, features } from "@batijs/features";
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { transformAndFormat } from "../src/index.js";
 import { transform } from "../src/parse/linters/index.js";
-import { BatiSet, features } from "@batijs/features";
 
 const ctx = { jsx: false };
 

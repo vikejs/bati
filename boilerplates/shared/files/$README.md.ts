@@ -9,7 +9,7 @@ export default async function getReadme(props: TransformerProps) {
   const v = getVersion();
 
   //language=Markdown
-  const intro = `Generated with [vike.dev/new](https://vike.dev/new) ${`(${markdown.link("https://www.npmjs.com/package/create-vike/v/" + v.version, "version " + v.semver.at(-1))})`} using this command:
+  const intro = `Generated with [vike.dev/new](https://vike.dev/new) ${`(${markdown.link(`https://www.npmjs.com/package/create-vike/v/${v.version}`, `version ${v.semver.at(-1)}`)})`} using this command:
 
 \`\`\`sh
 ${getArgs()} ${flags}

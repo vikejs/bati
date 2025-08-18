@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/** biome-ignore-all lint/suspicious/noExplicitAny: lib */
 
 /**
  * @see {@link https://developer.chrome.com/docs/web-platform/view-transitions}

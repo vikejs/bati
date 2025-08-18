@@ -1,8 +1,8 @@
 // https://vike.dev/data
 
 import type { PageContextServer } from "vike/types";
-import type { MovieDetails } from "../types.js";
 import { useConfig } from "vike-react/useConfig";
+import type { MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 

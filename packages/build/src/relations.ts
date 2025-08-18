@@ -33,6 +33,8 @@ export class RelationImport {
         return RelationFile.allPathAbsolute.get(target);
       }
     }
+
+    return undefined;
   }
 
   static computeUnimportedFiles(): RelationFile[] {

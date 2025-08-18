@@ -1,8 +1,7 @@
+import type { JSX } from "solid-js";
+import { StoreProvider } from "#components/Store";
 import { Widget } from "#components/Widget";
 import css from "#layouts/tailwind.css?inline";
-
-import { StoreProvider } from "#components/Store";
-import type { JSX } from "solid-js";
 
 function LayoutWidget(props: { children?: JSX.Element }) {
   return (

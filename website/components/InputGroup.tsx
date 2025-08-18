@@ -1,9 +1,9 @@
-import { Cli } from "./Cli";
-import Stackblitz from "./Stackblitz";
 import { createMemo, createSignal, type JSX, useContext } from "solid-js";
+import { isServer } from "solid-js/web";
 import { StoreContext } from "#components/Store";
 import { track } from "../lib/track";
-import { isServer } from "solid-js/web";
+import { Cli } from "./Cli";
+import Stackblitz from "./Stackblitz";
 
 export function CliGroup(
   props: {

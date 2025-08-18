@@ -50,7 +50,7 @@ function parseReadme(text: string | undefined) {
       continue;
     }
 
-    contents[cursor] += line + "\n";
+    contents[cursor] += `${line}\n`;
   }
 
   return new Readme(contents);
@@ -83,11 +83,11 @@ class Readme {
       const content = this.contents[i].trim();
 
       if (header && content) {
-        ret += header + "\n";
+        ret += `${header}\n`;
       }
 
       if (content) {
-        ret += content + "\n\n";
+        ret += `${content}\n\n`;
       }
     }
 

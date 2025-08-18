@@ -10,7 +10,7 @@ export function formatCode(code: string, options: { filepath: string }): Promise
     plugins: [
       prettierPluginBabel,
       prettierPluginTs,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: type mismatch
       prettierPluginEstree as any,
       prettierPluginHtml,
       prettierPluginCss,

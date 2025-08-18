@@ -1,10 +1,10 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import * as process from "process";
+import * as process from "node:process";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", "vercel", "express", "eslint"];
+export const matrix = ["react", "vercel", "express", "eslint", "biome"];
 
 await describeBati(
   ({ test, expect }) => {

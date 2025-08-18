@@ -1,5 +1,5 @@
 import { RulesMessage } from "./enum.js";
-import { filter, requires, type Rule } from "./utils.js";
+import { filter, type Rule, requires } from "./utils.js";
 
 // Defines all rules such as
 // - conflicts between packages

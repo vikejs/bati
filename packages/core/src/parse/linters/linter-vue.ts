@@ -1,5 +1,5 @@
 import * as tsParseForESLint from "@typescript-eslint/parser";
-import { ESLint, Linter, type Rule, type SourceCode } from "eslint";
+import type { ESLint, Linter, Rule, SourceCode } from "eslint";
 import type * as ESTree from "estree";
 import * as vueParseForESLint from "vue-eslint-parser";
 import type { VikeMeta } from "../../types.js";
@@ -12,7 +12,7 @@ import { visitorAsExpression, visitorTypeParameterInstanciation, visitorTypeRefe
 
 function getAllCommentsBefore(
   nodeOrToken: vueParseForESLint.AST.VElement | vueParseForESLint.AST.Token,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: ?
   tokenStore: any,
 ): vueParseForESLint.AST.Token[] {
   const elementBefore = tokenStore.getTokenBefore("startTag" in nodeOrToken ? nodeOrToken.startTag : nodeOrToken, {
@@ -54,7 +54,7 @@ export default function vueLinterConfig(meta: VikeMeta) {
                   const testVal = evalCondition(condition, meta);
 
                   context.report({
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: mismatch
                     node: node as any,
                     message: "bati/vue-velement",
                     *fix(fixer) {

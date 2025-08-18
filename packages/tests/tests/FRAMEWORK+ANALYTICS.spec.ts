@@ -1,6 +1,11 @@
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], ["plausible.io", "google-analytics", undefined], "eslint"] as const;
+export const matrix = [
+  ["solid", "react", "vue"],
+  ["plausible.io", "google-analytics", undefined],
+  "eslint",
+  "biome",
+] as const;
 
 await describeBati(({ expect, fetch, testMatch }) => {
   testMatch<typeof matrix>("home", {

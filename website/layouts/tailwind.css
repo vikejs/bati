@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
+  /* biome-ignore lint/correctness/noUnknownProperty: tailwind */
   themes:
     light --default,
     dark --prefersdark;
@@ -264,7 +265,7 @@
 
     & -multiple,
     &[multiple],
-    &[size]&:not([size="1"]) {
+    &[size]:not([size="1"]) {
       @apply bg-none pr-4;
     }
   }

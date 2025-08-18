@@ -1,4 +1,4 @@
-import { categories, type Category, type CategoryLabels, features, type Flags } from "@batijs/features";
+import { type Category, type CategoryLabels, categories, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { batch, createContext, createMemo, type JSX } from "solid-js";
 import { createStore } from "solid-js/store";
