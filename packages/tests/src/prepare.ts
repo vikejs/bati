@@ -17,7 +17,7 @@ async function prepare(flags: string[], testFiles: string) {
     throw new Error("No packed test utils found.");
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   const packageJson = await updatePackageJson(projectDir, flags, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
   await updateTsconfig(projectDir);
   await updateVitestConfig(projectDir, testFiles);

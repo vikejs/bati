@@ -10,7 +10,6 @@ function overrideStderr() {
   let activeIntercept = false;
   let taskOutput: string = "";
 
-  // @ts-ignore
   process.stderr.write = (chunk) => {
     if (activeIntercept && typeof chunk === "string") {
       taskOutput += chunk;
@@ -64,14 +63,18 @@ export async function buildTypes() {
     .filter((l) => !l.includes("TS18003"));
 
   if (errors.length) {
-    errors.forEach((l) => console.error(l));
+    errors.forEach((l) => {
+      console.error(l);
+    });
     return process.exit(1);
   }
 
   const { diagnostics, emitSkipped, emittedFiles } = program.emit();
 
   if (diagnostics.length) {
-    diagnostics.forEach((d) => console.error(`${d.file}:${d.start} ${d.messageText}`));
+    diagnostics.forEach((d) => {
+      console.error(`${d.file}:${d.start} ${d.messageText}`);
+    });
     return process.exit(1);
   }
 

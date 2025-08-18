@@ -58,7 +58,7 @@ await describeBati(({ test, expect, testMatch }) => {
         expect(existsSync(filePath)).toBe(true);
         const content = readFileSync(filePath, { encoding: "utf-8" });
         expect(content).toContain(`from "@sentry/vue"`);
-        expect(content).toContain(`app: usePageContext().app`);
+        expect(content).toContain(`app: getCurrentInstance()`);
       }
       {
         const filePath = path.join(process.cwd(), "layouts", "LayoutDefault.vue");

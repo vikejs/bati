@@ -1,5 +1,3 @@
-// @ts-ignore
-
 import { writeFile } from "node:fs/promises";
 import createBrowser from "browserless";
 

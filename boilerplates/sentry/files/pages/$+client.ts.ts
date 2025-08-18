@@ -19,7 +19,7 @@ export default async function getViteConfig(props: TransformerProps) {
     // add `sentryBrowserConfig()` function call to initialize Sentry to the end of the file
     const e = builders.functionCall("sentryBrowserConfig");
     const c = generateCode(e).code;
-    //@ts-ignore
+    //@ts-expect-error
     mod.$ast.body.splice(mod.$ast.body.length - 1, 0, c);
   }
   return mod.generate().code;

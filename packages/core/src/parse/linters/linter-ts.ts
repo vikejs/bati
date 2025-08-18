@@ -15,7 +15,6 @@ export default function tsLinterConfig(meta: VikeMeta) {
     rules: {
       ts: {
         meta: { fixable: "code" },
-        // @ts-ignore
         create(context) {
           const sourceCode = context.sourceCode as SourceCode;
 
@@ -23,6 +22,7 @@ export default function tsLinterConfig(meta: VikeMeta) {
             Program(node) {
               visitorGlobalComments(context as Rule.RuleContext, sourceCode, node);
             },
+
             ImportDeclaration(node) {
               visitorImportStatement(context as Rule.RuleContext, node);
             },
@@ -78,7 +78,7 @@ export default function tsLinterConfig(meta: VikeMeta) {
   ];
 
   if (meta.BATI.has("solid")) {
-    // @ts-ignore
+    // @ts-expect-error
     config.push({
       files: ["**/*.{ts,tsx}"],
       ...solid,

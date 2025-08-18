@@ -3,6 +3,8 @@ import type { TransformerProps } from "@batijs/core";
 export default async function getBiomeJson(props: TransformerProps) {
   // biome-ignore lint/suspicious/noExplicitAny: any
   const additionalLinter: { domains?: Record<string, string>; rules?: Record<string, any> } = {};
+  // biome-ignore lint/suspicious/noExplicitAny: any
+  const additionalConfig: { overrides?: any[] } = {};
 
   if (props.meta.BATI.has("vue")) {
     additionalLinter.domains = {
@@ -31,6 +33,20 @@ export default async function getBiomeJson(props: TransformerProps) {
     additionalLinter.domains = {
       solid: "recommended",
     };
+  }
+
+  if (props.meta.BATI.has("tailwindcss") || props.meta.BATI.has("shadcn-ui")) {
+    additionalConfig.overrides ??= [];
+    additionalConfig.overrides.push({
+      includes: ["**/*.css"],
+      linter: {
+        rules: {
+          suspicious: {
+            noUnknownAtRules: "off",
+          },
+        },
+      },
+    });
   }
 
   return {
@@ -72,5 +88,6 @@ export default async function getBiomeJson(props: TransformerProps) {
       clientKind: "git",
       useIgnoreFile: true,
     },
+    ...additionalConfig,
   };
 }

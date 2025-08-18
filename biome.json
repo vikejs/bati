@@ -16,36 +16,26 @@
   },
   "overrides": [
     {
-      "includes": ["**/*.vue"],
+      "includes": ["packages/**/*.ts", "website/**/*.ts", "website/**/*.tsx"],
       "linter": {
-        "domains": {
-          "vue": "recommended"
-        },
         "rules": {
           "style": {
-            "useConst": "off",
-            "useImportType": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off",
-            "noUnusedImports": "off"
+            "noNonNullAssertion": "off"
           }
         }
       }
     },
     {
-      "includes": ["boilerplates/react", "boilerplates/react-*"],
+      "includes": [
+        "website/**/*.css",
+        "boilerplates/tailwindcss/**/*.css",
+        "boilerplates/shadcn-ui/**/*.css"
+      ],
       "linter": {
-        "domains": {
-          "react": "recommended"
-        }
-      }
-    },
-    {
-      "includes": ["boilerplates/solid", "boilerplates/solid-*"],
-      "linter": {
-        "domains": {
-          "solid": "recommended"
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
+          }
         }
       }
     }

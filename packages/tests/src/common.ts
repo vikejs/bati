@@ -17,8 +17,8 @@ export async function updatePackageJson(
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
   pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip";
-  if (pkgjson.scripts.lint?.includes("eslint")) {
-    pkgjson.scripts.lint = pkgjson.scripts.lint.replace("eslint ", "eslint --max-warnings=0 ");
+  if (flags.includes("eslint")) {
+    pkgjson.scripts["lint:eslint"] = "eslint --max-warnings 0 .";
   }
   if (flags.includes("biome")) {
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
@@ -83,7 +83,7 @@ export async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build"],
           env: ["TEST_*"],
         },
-        lint: {
+        "lint:eslint": {
           dependsOn: ["build"],
         },
         "lint:biome": {
@@ -232,7 +232,9 @@ export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyB
     const node = pnpmWorkspace.get("onlyBuiltDependencies");
     if (isNode(node)) {
       const arr: string[] = node.toJSON();
-      arr.forEach((dep: string) => onlyBuiltDependencies.add(dep));
+      arr.forEach((dep: string) => {
+        onlyBuiltDependencies.add(dep);
+      });
       return arr;
     }
   } catch {
