@@ -20,7 +20,7 @@ export default async function getPackageJson(props: TransformerProps) {
       warnIfReplaced: true,
     })
     .setScript("deploy", {
-      value: "run-s build deploy:wrangler",
+      value: props.meta.BATI.hasD1 ? "run-s build d1:deploy deploy:wrangler" : "run-s build deploy:wrangler",
       precedence: 40,
       warnIfReplaced: true,
     })
