@@ -5,7 +5,7 @@ export const sentryBrowserConfig = () => {
   // eslint-disable-next-line
   import.meta.env.PROD === true &&
     Sentry.init({
-      // @ts-ignore
+      // @ts-expect-error
       app: usePageContext().app,
       dsn: import.meta.env.PUBLIC_ENV__SENTRY_DSN,
       environment: "production-frontend",

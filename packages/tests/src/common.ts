@@ -232,7 +232,9 @@ export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyB
     const node = pnpmWorkspace.get("onlyBuiltDependencies");
     if (isNode(node)) {
       const arr: string[] = node.toJSON();
-      arr.forEach((dep: string) => onlyBuiltDependencies.add(dep));
+      arr.forEach((dep: string) => {
+        onlyBuiltDependencies.add(dep);
+      });
       return arr;
     }
   } catch {

@@ -48,6 +48,30 @@
           "solid": "recommended"
         }
       }
+    },
+    {
+      "includes": ["packages/**/*.ts", "website/**/*.ts", "website/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "website/**/*.css",
+        "boilerplates/tailwindcss/**/*.css",
+        "boilerplates/shadcn-ui/**/*.css"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
+          }
+        }
+      }
     }
   ]
 }

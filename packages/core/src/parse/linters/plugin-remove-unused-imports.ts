@@ -3,7 +3,7 @@
 
 import tslint from "@typescript-eslint/eslint-plugin";
 import type { ESLint, Linter } from "eslint";
-// @ts-ignore
+// @ts-expect-error
 import ruleComposer from "eslint-rule-composer";
 import { getExtractor } from "./common.js";
 

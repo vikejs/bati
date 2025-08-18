@@ -13,7 +13,7 @@ export default async function getViteConfig(props: TransformerProps) {
   });
 
   // activate sourcemaps
-  //@ts-ignore
+  //@ts-expect-error
   deepMergeObject(mod.exports.default.$args[0], { build: { sourcemap: true } });
 
   return mod.generate().code;
