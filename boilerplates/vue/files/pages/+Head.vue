@@ -2,8 +2,6 @@
 
 <template>
   <link rel="icon" :href="logoUrl" />
-  <!-- BATI.has("tailwindcss") -->
-  <link rel="stylesheet" :href="tailwindCss" />
 
   <!-- BATI.has("plausible.io") -->
   <!-- See https://plausible.io/docs/plausible-script -->
@@ -13,6 +11,6 @@
 
 <script setup lang="ts">
 //# BATI.has("tailwindcss")
-import * as tailwindCss from "@batijs/tailwindcss/layouts/tailwind.css";
+import "@batijs/tailwindcss/layouts/tailwind.css";
 import logoUrl from "../assets/logo.svg";
 </script>
