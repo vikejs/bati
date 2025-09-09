@@ -7,7 +7,7 @@ import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { D1Database } from "@cloudflare/workers-types";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 // TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/vike-server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
-import type { Get, UniversalHandler } from "@universal-middleware/core";
+import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { contract } from "../ts-rest/contract";
 
 /**
@@ -54,15 +54,23 @@ const router = tsr
     },
   });
 
-export const tsRestHandler: Get<[], UniversalHandler> = () => async (request, ctx, runtime) =>
-  fetchRequestHandler({
-    request: new Request(request.url, request),
-    contract,
-    router,
-    options: {},
-    platformContext: {
-      ...ctx,
-      ...runtime,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any,
-  });
+export const tsRestHandler: UniversalHandler = enhance(
+  async (request, ctx, runtime) =>
+    fetchRequestHandler({
+      request: new Request(request.url, request),
+      contract,
+      router,
+      options: {},
+      platformContext: {
+        ...ctx,
+        ...runtime,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
+    }),
+  {
+    name: "my-app:ts-rest-handler",
+    path: `/api/**`,
+    method: ["GET", "POST"],
+    immutable: false,
+  },
+);

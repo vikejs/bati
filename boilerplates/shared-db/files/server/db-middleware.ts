@@ -4,7 +4,7 @@ import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import type { D1Database } from "@cloudflare/workers-types";
-import type { Get, UniversalMiddleware } from "@universal-middleware/core";
+import { enhance, type UniversalMiddleware } from "@universal-middleware/core";
 
 //# BATI.hasDatabase
 declare global {
@@ -21,18 +21,24 @@ declare global {
 }
 
 // Add `db` to the Context
-export const dbMiddleware: Get<[], UniversalMiddleware> = () => async (_request, context, _runtime) => {
-  const db =
-    BATI.has("sqlite") && !BATI.hasD1
-      ? sqliteDb()
-      : BATI.has("drizzle") && !BATI.hasD1
-        ? dbSqlite()
-        : BATI.has("drizzle")
-          ? dbD1(await getDbFromRuntime(_runtime))
-          : await getDbFromRuntime(_runtime);
+export const dbMiddleware: UniversalMiddleware = enhance(
+  async (_request, context, _runtime) => {
+    const db =
+      BATI.has("sqlite") && !BATI.hasD1
+        ? sqliteDb()
+        : BATI.has("drizzle") && !BATI.hasD1
+          ? dbSqlite()
+          : BATI.has("drizzle")
+            ? dbD1(await getDbFromRuntime(_runtime))
+            : await getDbFromRuntime(_runtime);
 
-  return {
-    ...context,
-    db: db as BATI.Any,
-  };
-};
+    return {
+      ...context,
+      db: db as BATI.Any,
+    };
+  },
+  {
+    name: "my-app:db-middleware",
+    immutable: false,
+  },
+);

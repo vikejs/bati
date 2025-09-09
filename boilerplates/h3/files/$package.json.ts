@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("dev", {
-      value: "tsx ./h3-entry.ts",
+      value: "vike dev",
       precedence: 20,
       warnIfReplaced: true,
     })
@@ -18,10 +18,8 @@ export default async function getPackageJson(props: TransformerProps) {
       value: "cross-env NODE_ENV=production tsx ./h3-entry.ts",
       precedence: 20,
     })
-    .addDevDependencies(["@types/serve-static"])
-    .addDependencies(["@hattip/polyfills", "h3", "serve-static", "vike", "vite", "@universal-middleware/h3"])
+    .addDependencies(["@hattip/polyfills", "h3", "vike", "vite", "@photonjs/h3", "@universal-middleware/core"])
     .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
     .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
-    .addDevDependencies(["tsx"], ["dev", "preview"])
     .addDevDependencies(["cross-env"], ["preview"]);
 }

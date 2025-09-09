@@ -111,6 +111,10 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   const entry: string[] = [];
   const ignore: string[] = ["*.spec.ts"];
 
+  function addPhotonConfig() {
+    entry.push("+photon.ts");
+  }
+
   if (flags.includes("eslint")) {
     ignoreDependencies.push("eslint");
   }
@@ -163,6 +167,11 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
 
   if (flags.includes("hono")) {
     entry.push("hono-entry.node.ts", "hono-entry.ts");
+    addPhotonConfig();
+  }
+
+  if (flags.includes("h3")) {
+    addPhotonConfig();
   }
 
   if (flags.includes("cloudflare")) {

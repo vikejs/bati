@@ -32,6 +32,6 @@ await describeBati(({ test, expect, fetch }) => {
     const res = await fetch("/_telefunc", {
       method: "post",
     });
-    expect(await res.text()).toContain('{"is404":true}');
+    expect(res.status).toBe(404);
   });
 });

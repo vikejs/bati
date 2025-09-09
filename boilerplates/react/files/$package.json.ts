@@ -5,5 +5,5 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .addDevDependencies(["vite", "@types/react", "@types/react-dom"])
-    .addDependencies(["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react"]);
+    .addDependencies(["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react", "vike-photon"]);
 }

@@ -3,7 +3,7 @@ import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
 // TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/vike-server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
-import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
+import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
 const env: Record<string, string | undefined> =
   typeof process?.env !== "undefined"
@@ -78,25 +78,39 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
  * Add Auth.js session to context
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
  **/
-export const authjsSessionMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
-  try {
-    return {
-      ...context,
-      session: await getSession(request, authjsConfig),
-    };
-  } catch (error) {
-    console.debug("authjsSessionMiddleware:", error);
-    return {
-      ...context,
-      session: null,
-    };
-  }
-};
+export const authjsSessionMiddleware: UniversalMiddleware = enhance(
+  async (request, context) => {
+    try {
+      return {
+        ...context,
+        session: await getSession(request, authjsConfig),
+      };
+    } catch (error) {
+      console.debug("authjsSessionMiddleware:", error);
+      return {
+        ...context,
+        session: null,
+      };
+    }
+  },
+  {
+    name: "my-app:authjs-middleware",
+    immutable: false,
+  },
+);
 
 /**
  * Auth.js route
  * @link {@see https://authjs.dev/getting-started/installation}
  **/
-export const authjsHandler = (() => async (request) => {
-  return Auth(request, authjsConfig);
-}) satisfies Get<[], UniversalHandler>;
+export const authjsHandler = enhance(
+  async (request) => {
+    return Auth(request, authjsConfig);
+  },
+  {
+    name: "my-app:authjs-handler",
+    path: "/api/auth/**",
+    method: ["GET", "POST"],
+    immutable: false,
+  },
+) satisfies UniversalHandler;
