@@ -11,7 +11,7 @@ import { Hono } from "hono";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default await startServer();
+export default startServer();
 
 async function startServer() {
   const app = new Hono();

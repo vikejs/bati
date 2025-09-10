@@ -315,6 +315,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
+      '@photonjs/express':
+        specifier: ^0.0.8
+        version: 0.0.8(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
       '@trpc/server':
         specifier: ^11.5.1
         version: 11.5.1(typescript@5.9.2)
@@ -324,12 +327,6 @@ importers:
       '@types/node':
         specifier: ^20.19.9
         version: 20.19.9
-      '@universal-middleware/express':
-        specifier: ^0.4.19
-        version: 0.4.19(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
-      cross-env:
-        specifier: ^10.0.0
-        version: 10.0.0
       dotenv:
         specifier: ^17.2.2
         version: 17.2.2
@@ -339,9 +336,6 @@ importers:
       telefunc:
         specifier: ^0.2.12
         version: 0.2.12(@babel/core@7.28.4)(@babel/parser@7.28.4)(@babel/types@7.28.4)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
-      tsx:
-        specifier: ^4.20.5
-        version: 4.20.5
       vike:
         specifier: ^0.4.239
         version: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -444,9 +438,6 @@ importers:
       '@universal-middleware/core':
         specifier: ^0.4.10
         version: 0.4.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
-      cross-env:
-        specifier: ^10.0.0
-        version: 10.0.0
       dotenv:
         specifier: ^17.2.2
         version: 17.2.2
@@ -456,9 +447,6 @@ importers:
       telefunc:
         specifier: ^0.2.12
         version: 0.2.12(@babel/core@7.28.4)(@babel/parser@7.28.4)(@babel/types@7.28.4)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
-      tsx:
-        specifier: ^4.20.5
-        version: 4.20.5
       vike:
         specifier: ^0.4.239
         version: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -496,9 +484,6 @@ importers:
       '@types/node':
         specifier: ^20.19.9
         version: 20.19.9
-      cross-env:
-        specifier: ^10.0.0
-        version: 10.0.0
       dotenv:
         specifier: ^17.2.2
         version: 17.2.2
@@ -508,9 +493,6 @@ importers:
       telefunc:
         specifier: ^0.2.12
         version: 0.2.12(@babel/core@7.28.4)(@babel/parser@7.28.4)(@babel/types@7.28.4)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
-      tsx:
-        specifier: ^4.20.5
-        version: 4.20.5
       vike:
         specifier: ^0.4.239
         version: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -3392,6 +3374,14 @@ packages:
 
   '@photonjs/core@0.0.11':
     resolution: {integrity: sha512-Hxr6Vqwg7BprP57B3Oknrj3kgzZYJ0+1SKRDS7dVs+Y1o5cwHmGYX/yz99yYbtDo9hUIi/NygRj52UlifBCx4w==}
+    peerDependencies:
+      vite: '>=7.1'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
+  '@photonjs/express@0.0.8':
+    resolution: {integrity: sha512-0L+vH/US8xaOUuGezCGlqtOlEQSkJ8jqqWCWKzZ79NISifizVOE/QX4mKczxFABT5btLCbHNQjA5hP8cyRNlxg==}
     peerDependencies:
       vite: '>=7.1'
     peerDependenciesMeta:
@@ -10577,6 +10567,22 @@ snapshots:
       estree-walker: 3.0.3
       ts-deepmerge: 7.0.3
       zod: 3.25.76
+    optionalDependencies:
+      vite: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - '@hattip/core'
+      - '@webroute/route'
+      - elysia
+      - fastify
+      - h3
+      - hono
+      - srvx
+
+  '@photonjs/express@0.0.8(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))':
+    dependencies:
+      '@photonjs/core': 0.0.11(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
     optionalDependencies:
       vite: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
     transitivePeerDependencies:
