@@ -41,20 +41,14 @@
     }
   },
   "exports": {
-    "./+photon": {
-      "types": "./dist/types/+photon.d.ts"
-    },
-    "./server/h3-entry": {
-      "types": "./dist/types/server/h3-entry.d.ts"
+    "./server/entry": {
+      "types": "./dist/types/server/entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "+photon": [
-        "./dist/types/+photon.d.ts"
-      ],
-      "server/h3-entry": [
-        "./dist/types/server/h3-entry.d.ts"
+      "server/entry": [
+        "./dist/types/server/entry.d.ts"
       ]
     }
   }

@@ -1,4 +1,5 @@
 import type { Config } from "vike/types";
+import vikePhoton from "vike-photon/config";
 import vikeSolid from "vike-solid/config";
 import Layout from "../layouts/LayoutDefault.js";
 
@@ -15,5 +16,9 @@ export default {
 
   //# BATI.has("auth0") || BATI.has("authjs")
   passToClient: ["user"],
-  extends: vikeSolid,
+  extends: [
+    vikeSolid,
+    //# BATI.hasPhoton
+    vikePhoton,
+  ],
 } satisfies Config;

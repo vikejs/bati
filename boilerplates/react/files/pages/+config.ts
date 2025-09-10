@@ -18,7 +18,7 @@ export default {
   passToClient: ["user"],
   extends: [
     vikeReact,
-    //# BATI.has("h3")
+    //# BATI.hasPhoton
     vikePhoton,
   ],
 } satisfies Config;
