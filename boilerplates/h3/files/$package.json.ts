@@ -4,22 +4,7 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .setScript("dev", {
-      value: "vike dev",
-      precedence: 20,
-      warnIfReplaced: true,
-    })
-    .setScript("build", {
-      value: "vike build",
-      precedence: 1,
-      warnIfReplaced: true,
-    })
-    .setScript("prod", {
-      value: "vike build && cross-env NODE_ENV=production node ./dist/server/index.mjs",
-      precedence: 20,
-    })
     .addDependencies(["@hattip/polyfills", "h3", "vike", "vite", "@photonjs/h3", "@universal-middleware/core"])
     .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
-    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
-    .addDevDependencies(["cross-env"], ["prod"]);
+    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
 }
