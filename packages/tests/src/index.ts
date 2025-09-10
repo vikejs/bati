@@ -192,6 +192,7 @@ function loadDotEnvTest() {
 }
 
 function arrayIncludes(a: string[], b: string[]) {
+  if (a.length === 0) throw new Error("arrayIncludes first parameter should not be an empty array");
   return a.every((element) => b.includes(element));
 }
 
@@ -242,7 +243,10 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
-      if (testFile.exclude?.some((x) => arrayIncludes(x, flags)) || (exclude && arrayIncludes(exclude, flags))) {
+      if (
+        testFile.exclude?.some((x) => arrayIncludes(x, flags)) ||
+        (exclude && exclude.length > 0 && arrayIncludes(exclude, flags))
+      ) {
         continue;
       }
       if (filter && !arrayIncludes(filter, flags)) {

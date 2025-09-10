@@ -13,7 +13,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 export default startServer();
 
-async function startServer() {
+function startServer() {
   const app = express();
 
   apply(app, [

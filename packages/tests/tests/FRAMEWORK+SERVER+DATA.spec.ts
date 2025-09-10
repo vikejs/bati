@@ -23,9 +23,8 @@ export const exclude = [
   ["vue", "express"],
   ["vue", "h3"],
   ["vue", "fastify"],
-  // Testing Cloudflare with Hono and Solid only
+  // Testing Cloudflare with [Hono, h3] and Solid only
   ["cloudflare", "express"],
-  ["cloudflare", "h3"],
   ["cloudflare", "fastify"],
   ["cloudflare", "react"],
   ["cloudflare", "vue"],
