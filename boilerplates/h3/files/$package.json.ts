@@ -14,12 +14,12 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 1,
       warnIfReplaced: true,
     })
-    .setScript("preview", {
-      value: "cross-env NODE_ENV=production tsx ./h3-entry.ts",
+    .setScript("prod", {
+      value: "vike build && cross-env NODE_ENV=production node ./dist/server/index.mjs",
       precedence: 20,
     })
     .addDependencies(["@hattip/polyfills", "h3", "vike", "vite", "@photonjs/h3", "@universal-middleware/core"])
     .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
     .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase)
-    .addDevDependencies(["cross-env"], ["preview"]);
+    .addDevDependencies(["cross-env"], ["prod"]);
 }

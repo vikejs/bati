@@ -1,5 +1,4 @@
 /*# BATI include-if-imported #*/
-// TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/vike-server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";

@@ -6,7 +6,6 @@ import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { D1Database } from "@cloudflare/workers-types";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
-// TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/vike-server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { contract } from "../ts-rest/contract";
 
