@@ -13,7 +13,6 @@ const matrix = combinate([
 
 matrix.push(["react", "cloudflare", "express"]);
 matrix.push(["solid", "cloudflare", "fastify"]);
-matrix.push(["vue", "cloudflare", "h3"]);
 
 function prepareAndExecute(flags: string[]) {
   const context = {
