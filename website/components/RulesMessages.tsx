@@ -120,7 +120,7 @@ export const rulesMessages = {
         <span class="font-bold">{selectedServer()}</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a <span class="font-bold">Hono</span>, or unselect{" "}
+            Either pick <span class="font-bold">Hono</span>, <span class="font-bold">H3</span>, or unselect{" "}
             <span class="font-bold">{selectedServer()}</span>
           </li>
         </ul>
