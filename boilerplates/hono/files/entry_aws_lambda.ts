@@ -9,7 +9,8 @@ Notes:
 
 */
 
-import app from "@batijs/hono/server/entry"; // file is provided by hono
+// @ts-expect-error loading file compiled by Vite
+import app from "./dist/server/index.mjs";
 import type { APIGatewayProxyResult, Handler } from "aws-lambda";
 import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";

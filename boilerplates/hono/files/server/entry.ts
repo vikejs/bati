@@ -8,6 +8,7 @@ import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { apply, serve } from "@photonjs/hono";
 import { Hono } from "hono";
+import { getMiddlewares } from "vike-photon/universal-middlewares";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
@@ -17,6 +18,13 @@ function startServer() {
   const app = new Hono();
 
   apply(app, [
+    //# BATI.has("aws")
+    ...getMiddlewares({
+      static: {
+        // We need to override static root config when deploying to AWS
+        root: `${process.cwd()}/dist/client`,
+      },
+    }),
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
