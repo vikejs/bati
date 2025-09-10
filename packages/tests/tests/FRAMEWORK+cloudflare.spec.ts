@@ -1,33 +1,38 @@
-import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import * as process from "node:process";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["cloudflare", "react", ["hono", undefined], "eslint", "biome"] as const;
+export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint", "biome"] as const;
 
+// dev
+await describeBati(({ test, expect, fetch }) => {
+  test("home", async () => {
+    const res = await fetch("/");
+    expect(res.status).toBe(200);
+    expect(await res.text()).not.toContain('{"is404":true}');
+  });
+});
+
+// preview
 await describeBati(
-  ({ test, testMatch, expect }) => {
-    const worker_filepath = path.join(process.cwd(), "dist", "cloudflare", "server", "cloudflare-worker.mjs");
-
-    test("cloudflare files are present", async () => {
-      expect(existsSync(path.join(process.cwd(), "dist", "cloudflare", "_worker.js"))).toBe(true);
-      expect(existsSync(path.join(process.cwd(), "dist", "cloudflare", "_routes.json"))).toBe(true);
-      expect(existsSync(worker_filepath)).toBe(true);
-    });
-
-    testMatch<typeof matrix>("cloudflare-worker.mjs", {
-      hono: async () => {
-        const content = await readFile(worker_filepath, "utf-8");
-        expect(content).toContain(`import { Hono } from "hono"`);
-      },
-      _: async () => {
-        const content = await readFile(worker_filepath, "utf-8");
-        expect(content).toContain(`import { renderPage } from "vike/server"`);
-      },
+  ({ test, expect, fetch }) => {
+    test("home", async () => {
+      const res = await fetch("/");
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
     });
   },
   {
-    mode: "build",
+    mode: "prod",
+  },
+);
+
+// deploy
+await describeBati(
+  ({ test, expect, exec, npmCli }) => {
+    test("deploy --dry-run", async () => {
+      await expect(exec(npmCli, ["run", "deploy", "--dry-run"])).resolves.not.toThrow();
+    });
+  },
+  {
+    mode: "none",
   },
 );

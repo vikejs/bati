@@ -3,11 +3,10 @@ import { npmCli } from "./package-manager.js";
 import type { GlobalContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
-export async function runDevServer(context: GlobalContext) {
-  context.server = exec(npmCli, ["run", "dev", "--port", String(context.port)], {
+export async function runProd(context: GlobalContext) {
+  context.server = exec(npmCli, ["run", "prod", "--port", String(context.port)], {
     env: {
       PORT: String(context.port),
-      VITE_CONFIG: JSON.stringify({ server: { port: context.port, strictPort: true } }),
     },
   });
 

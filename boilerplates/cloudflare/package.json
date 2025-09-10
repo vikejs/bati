@@ -14,9 +14,9 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@cloudflare/workers-types": "^4.20250906.0",
+    "@photonjs/cloudflare": "^0.0.10",
     "@types/node": "^20.19.9",
-    "npm-run-all2": "^8.0.4",
-    "vike-cloudflare": "^0.1.7",
+    "cross-env": "^10.0.0",
     "wrangler": "^4.34.0"
   },
   "dependencies": {
@@ -32,14 +32,20 @@
     "enforce": "post"
   },
   "exports": {
-    "./test": {
-      "types": "./dist/types/test.d.ts"
+    "./+cloudflare": {
+      "types": "./dist/types/+cloudflare.d.ts"
+    },
+    "./cloudflare-entry": {
+      "types": "./dist/types/cloudflare-entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "test": [
-        "./dist/types/test.d.ts"
+      "+cloudflare": [
+        "./dist/types/+cloudflare.d.ts"
+      ],
+      "cloudflare-entry": [
+        "./dist/types/cloudflare-entry.d.ts"
       ]
     }
   }

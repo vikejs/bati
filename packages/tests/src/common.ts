@@ -107,7 +107,7 @@ export async function createTurboConfig(context: GlobalContext) {
 }
 
 export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
-  const ignoreDependencies = ["@batijs/tests-utils", "turbo"];
+  const ignoreDependencies = ["@batijs/tests-utils", "turbo", "photon"];
   const entry: string[] = [];
   const ignore: string[] = ["*.spec.ts"];
 
@@ -183,7 +183,8 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("cloudflare")) {
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "npm-run-all2");
+    entry.push("+cloudflare.ts", "cloudflare-entry.ts");
+    ignoreDependencies.push("@cloudflare/workers-types", "wrangler");
   }
 
   if (flags.includes("vercel")) {
