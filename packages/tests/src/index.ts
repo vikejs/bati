@@ -217,7 +217,12 @@ function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
-  const filter = args.filter ? args.filter.split(",") : undefined;
+  let filter = args.filter ? args.filter.split(",") : undefined;
+  const exclude = filter ? filter.filter((f) => f.startsWith("!")).map((f) => f.slice(1)) : undefined;
+
+  if (filter) {
+    filter = filter.filter((f) => !f.startsWith("!"));
+  }
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
@@ -237,7 +242,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
-      if (testFile.exclude?.some((x) => arrayIncludes(x, flags))) {
+      if (testFile.exclude?.some((x) => arrayIncludes(x, flags)) || (exclude && arrayIncludes(exclude, flags))) {
         continue;
       }
       if (filter && !arrayIncludes(filter, flags)) {
