@@ -20,9 +20,5 @@ export default {
     vikeVue,
     //# BATI.hasPhoton
     vikePhoton,
-  ] as [
-    typeof vikeVue,
-    //# BATI.hasPhoton
-    typeof vikePhoton,
-  ],
+  ] as BATI.Any,
 } satisfies Config;
