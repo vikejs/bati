@@ -6,15 +6,16 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import installCrypto from "@hattip/polyfills/crypto";
-import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
-import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
+// import installCrypto from "@hattip/polyfills/crypto";
+// import installGetSetCookie from "@hattip/polyfills/get-set-cookie";
+// import installWhatwgNodeFetch from "@hattip/polyfills/whatwg-node";
 import { apply, serve } from "@photonjs/h3";
 import { createApp } from "h3";
 
-installWhatwgNodeFetch();
-installGetSetCookie();
-installCrypto();
+// TODO cleanup
+// installWhatwgNodeFetch();
+// installGetSetCookie();
+// installCrypto();
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
