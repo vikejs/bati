@@ -15,7 +15,7 @@ wrangler d1 create <your-db-name>
 
 Then, copy the output to \`wrangler.toml\`.
 
-Finally, update the \`d1:migrate\` script (in \`package.json\`) to replace \`YOUR_DATABASE_NAME\`, and execute it.
+Finally, update the \`${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migrate\` script (in \`package.json\`) to replace \`YOUR_DATABASE_NAME\`, and execute it.
 
 > [!NOTE]
 > For reference, a good database name is:
