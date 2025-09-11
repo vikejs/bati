@@ -1,26 +1,19 @@
+//# BATI.has("cloudflare")
+/// <reference types="@cloudflare/workers-types" />
+import { env as cloudflareEnv } from "cloudflare:workers";
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
 import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
-const env: Record<string, string | undefined> =
-  typeof process?.env !== "undefined"
+const env: Record<string, string | undefined> = BATI.has("cloudflare")
+  ? (cloudflareEnv as Record<string, string | undefined>)
+  : typeof process?.env !== "undefined"
     ? process.env
     : import.meta && "env" in import.meta
       ? (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env
       : {};
-
-if (!globalThis.crypto) {
-  /**
-   * Polyfill needed if Auth.js code runs on node18
-   */
-  Object.defineProperty(globalThis, "crypto", {
-    value: await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto),
-    writable: false,
-    configurable: true,
-  });
-}
 
 const authjsConfig = {
   basePath: "/api/auth",
@@ -69,8 +62,8 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
   const data = await response.json();
 
   if (!data || !Object.keys(data).length) return null;
-  if (status === 200) return data;
-  throw new Error(data.message);
+  if (status === 200) return data as Session;
+  throw new Error(typeof data === "object" && "message" in data ? (data.message as string) : undefined);
 }
 
 /**

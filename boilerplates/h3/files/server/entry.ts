@@ -1,4 +1,4 @@
-// BATI.has("auth0") || BATI.hasDatabase
+// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";

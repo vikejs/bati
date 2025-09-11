@@ -38,27 +38,29 @@ export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
     flags: bati.flags,
   };
 
-  beforeAll(async () => {
-    if (mode === "dev") {
-      await initPort(context);
-      await runDevServer(context);
-    } else if (mode === "prod") {
-      await initPort(context);
-      await runProd(context);
-    } else if (mode === "build") {
-      await retryX(() => runBuild(context), retry);
-    }
-  }, 120000);
+  function hooks() {
+    beforeAll(async () => {
+      if (mode === "dev") {
+        await initPort(context);
+        await runDevServer(context);
+      } else if (mode === "prod") {
+        await initPort(context);
+        await runProd(context);
+      } else if (mode === "build") {
+        await retryX(() => runBuild(context), retry);
+      }
+    }, 120000);
 
-  // Cleanup tests:
-  // - Close the dev server
-  // - Remove temp dir
-  afterAll(async () => {
-    const pid = context.server?.pid;
-    if (typeof pid === "number") {
-      await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
-    }
-  }, 20000);
+    // Cleanup tests:
+    // - Close the dev server
+    // - Remove temp dir
+    afterAll(async () => {
+      const pid = context.server?.pid;
+      if (typeof pid === "number") {
+        await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+      }
+    }, 20000);
+  }
 
   return {
     fetch(path: string, init?: RequestInit) {
@@ -68,5 +70,6 @@ export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
     exec,
     npmCli,
     context,
+    hooks,
   };
 }

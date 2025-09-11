@@ -184,7 +184,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
 
   if (flags.includes("cloudflare")) {
     entry.push("+photon.ts", "+cloudflare.ts", "cloudflare-entry.ts");
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler");
+    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare");
   }
 
   if (flags.includes("vercel")) {
@@ -198,6 +198,10 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     entry.push("tests/aws_handler.spec.ts");
     ignoreDependencies.push("aws-cdk", "cdk", "esbuild", "npm-run-all2");
     ignore.push("cdk.out/**");
+  }
+
+  if (flags.includes("auth0") || flags.includes("authjs")) {
+    entry.push("server/authjs-handler.ts");
   }
 
   const scriptsValues = Array.from(Object.values(scripts));

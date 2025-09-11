@@ -7,5 +7,8 @@ export default async function getPackageJson(props: TransformerProps) {
     .addDevDependencies(["@types/node"])
     .addDevDependencies(["@types/aws-lambda", "vike-photon"], props.meta.BATI.has("aws"))
     .addDependencies(["@photonjs/hono", "hono", "vite", "vike"])
-    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
+    .addDependencies(
+      ["dotenv"],
+      (props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase) && !props.meta.BATI.has("cloudflare"),
+    );
 }
