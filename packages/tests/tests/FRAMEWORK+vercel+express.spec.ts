@@ -1,28 +1,29 @@
-import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import * as process from "node:process";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", "vercel", "express", "eslint", "biome"];
+export const matrix = ["react", "vercel", ["hono", "h3", "express", "fastify", undefined], "eslint", "biome"];
 
-await describeBati(
-  ({ test, expect }) => {
-    test("express dev script prevails", async () => {
-      const json = JSON.parse(await readFile(path.join(process.cwd(), "package.json"), "utf-8"));
-
-      expect(json.scripts.dev).toContain("tsx ./express-entry.ts");
-    });
-
-    test("vercel files are present", async () => {
-      expect(existsSync(path.join(process.cwd(), ".vercel", "output", "config.json"))).toBe(true);
-      expect(
-        existsSync(path.join(process.cwd(), ".vercel", "output", "functions", "ssr_.func", ".vc-config.json")),
-      ).toBe(true);
-    });
-  },
-  {
-    mode: "build",
-    retry: 3,
-  },
-);
+await describeMultipleBati([
+  // dev
+  () =>
+    describeBati(({ test, expect, fetch }) => {
+      test("home", async () => {
+        const res = await fetch("/");
+        expect(res.status).toBe(200);
+        expect(await res.text()).not.toContain('{"is404":true}');
+      });
+    }),
+  // preview
+  () =>
+    describeBati(
+      ({ test, expect, fetch }) => {
+        test("home", async () => {
+          const res = await fetch("/");
+          expect(res.status).toBe(200);
+          expect(await res.text()).not.toContain('{"is404":true}');
+        });
+      },
+      {
+        mode: "prod",
+      },
+    ),
+]);

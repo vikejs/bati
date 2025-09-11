@@ -661,6 +661,9 @@ importers:
       vike-react:
         specifier: ^0.6.5
         version: 0.6.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      vike-vercel:
+        specifier: ^1.0.0-beta.0
+        version: 1.0.0-beta.0(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@photonjs/cloudflare@0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(crossws@0.3.5)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(workerd@1.20250906.0)(wrangler@4.34.0(@cloudflare/workers-types@4.20250906.0)))(@types/node@20.19.9)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(encoding@0.1.13)(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(rollup@4.43.0)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(yaml@2.8.1)
       vite:
         specifier: ^7.1.4
         version: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -1068,6 +1071,9 @@ importers:
       vike:
         specifier: ^0.4.239
         version: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
+      vike-vercel:
+        specifier: ^1.0.0-beta.0
+        version: 1.0.0-beta.0(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@photonjs/cloudflare@0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(crossws@0.3.5)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(workerd@1.20250906.0)(wrangler@4.34.0(@cloudflare/workers-types@4.20250906.0)))(@types/node@20.19.9)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(encoding@0.1.13)(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(rollup@4.43.0)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(yaml@2.8.1)
       vite:
         specifier: ^7.1.4
         version: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -3164,9 +3170,17 @@ packages:
     resolution: {integrity: sha512-jtEZKczWTueJYHjGpxU3KJQ08Gsrf4r6Q2GjmPp/RGk5leeYAA1eyDADSAF+KVCsQ6EwZd/FMcOFCoMhtqdCtQ==}
     engines: {node: '>=14.18.0'}
 
+  '@manypkg/find-root@3.1.0':
+    resolution: {integrity: sha512-BcSqCyKhBVZ5YkSzOiheMCV41kqAFptW6xGqYSTjkVTl9XQpr+pqHhwgGCOHQtjDCv7Is6EFyA14Sm5GVbVABA==}
+    engines: {node: '>=20.0.0'}
+
   '@manypkg/tools@1.1.2':
     resolution: {integrity: sha512-3lBouSuF7CqlseLB+FKES0K4FQ02JrbEoRtJhxnsyB1s5v4AP03gsoohN8jp7DcOImhaR9scYdztq3/sLfk/qQ==}
     engines: {node: '>=14.18.0'}
+
+  '@manypkg/tools@2.1.0':
+    resolution: {integrity: sha512-0FOIepYR4ugPYaHwK7hDeHDkfPOBVvayt9QpvRbi2LT/h2b0GaE/gM9Gag7fsnyYyNaTZ2IGyOuVg07IYepvYQ==}
+    engines: {node: '>=20.0.0'}
 
   '@mapbox/node-pre-gyp@2.0.0':
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
@@ -4147,6 +4161,38 @@ packages:
   '@universal-middleware/srvx@0.1.0':
     resolution: {integrity: sha512-9LiPniDaBwHl/V+B6ct4ldBWIAQ/fKGLBBKd/6QaJiZqWQNDPekcfNvR4HjyxX8k8XbFfW3FpPJge4QysRGrig==}
 
+  '@universal-middleware/vercel@0.4.22':
+    resolution: {integrity: sha512-HlRIYiTScgMjofAsqEIl8U8VS+rgzx/ZfRUQOzIOI1yoz/lRS8BYnMYzfqa4ccDBx7DsezqQpLvSoRbrXT5glg==}
+    peerDependencies:
+      '@hattip/core': ^0.0.49
+      '@universal-middleware/h3': ^0.4.12
+      elysia: ^1.3.20
+      express: ^5.1.0
+      fastify: ^5.5.0
+      h3: ^1.15.4
+      hono: ^4.9.4
+      srvx: ^0.8.7
+    peerDependenciesMeta:
+      '@hattip/core':
+        optional: true
+      '@universal-middleware/h3':
+        optional: true
+      elysia:
+        optional: true
+      express:
+        optional: true
+      fastify:
+        optional: true
+      h3:
+        optional: true
+      hono:
+        optional: true
+      srvx:
+        optional: true
+
+  '@vercel/build-utils@12.1.0':
+    resolution: {integrity: sha512-yqpAh2KHm9iWUXo/aRWiLIxi8dMAwFtse2iZsg2QNEMs9W20va6L8PMFvdAa5MX9pgRwc38gbjD3V7drxSwq4g==}
+
   '@vercel/build-utils@8.8.0':
     resolution: {integrity: sha512-4jkeJ/Xr0epojgfiyQufB8vC0ubE9SCfA9I2BGcOIKcf65C25juSvuYwaLixnjZXHUTO4Y9W7fdgiLUk55MgbA==}
 
@@ -4155,13 +4201,24 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
+  '@vercel/nft@0.30.1':
+    resolution: {integrity: sha512-2mgJZv4AYBFkD/nJ4QmiX5Ymxi+AisPLPcS/KPXVqniyQNqKXX+wjieAbDXQP3HcogfEbpHoRMs49Cd4pfkk8g==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   '@vercel/routing-utils@3.1.0':
     resolution: {integrity: sha512-Ci5xTjVTJY/JLZXpCXpLehMft97i9fH34nu9PGav6DtwkVUF6TOPX86U0W0niQjMZ5n6/ZP0BwcJK2LOozKaGw==}
+
+  '@vercel/routing-utils@5.1.1':
+    resolution: {integrity: sha512-EyOik06V2fPXAbKY087BM7DMOQOJK+9mubwwox1TkDi21tMeJcMYwsXwepm6ZmyZ5u0j1TpJW172fP4MbzaCcg==}
 
   '@vikejs/biome-config@2.0.1':
     resolution: {integrity: sha512-kqVIZSWS7WCwTJYSzPnrhq3k+OdsOD67BM+lYtOaxkmoMfmtjz00ckGvFO8PxF8GJGeKTu7S/+pL6YmxC/Ht3Q==}
     peerDependencies:
       '@biomejs/biome': ^2.1.3
+
+  '@vite-plugin-vercel/schemas@1.0.0':
+    resolution: {integrity: sha512-iUEJwHmAD4wFem5iI1Jmtcj4CO49PVBBUGDA8R8yWKC72/n1FLiQ6AgaetLqFTTT7KCbA32o9T6P3XJow4vCsg==}
 
   '@vite-plugin-vercel/vike@9.0.6':
     resolution: {integrity: sha512-TpubM4R3QM1MTcaSO7XFVYb6VT+UGc+zdhoNvN51e+0daYNUKXDBDCpANsiSJ71q6RZgFbrfcqauFOOT8w/Dvw==}
@@ -4750,6 +4807,9 @@ packages:
   content-type@1.0.5:
     resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
     engines: {node: '>= 0.6'}
+
+  convert-route@0.1.1:
+    resolution: {integrity: sha512-ubQE0pdEKa+qqcgsBDiMUf+GmCnhp5cBVzU+37OErIJWVneJv/AaXqZYGJUV/dTu66PXbeI27O96xX97lfZhFQ==}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -6876,6 +6936,9 @@ packages:
     resolution: {integrity: sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ==}
     engines: {node: '>=16'}
 
+  path-to-regexp@8.3.0:
+    resolution: {integrity: sha512-7jdwVIRtsP8MYpdXSwOS0YdD0Du+qOoF/AEPIt88PcCFrZCzx41oxku1jD88hZBwbNUIEfpqvuhjFaMAqMTWnA==}
+
   path-type@6.0.0:
     resolution: {integrity: sha512-Vj7sf++t5pBD637NSfkxpHSMfWaeig5+DKWLhcqIYx6mWQz5hdJTGDVMQiJcw1ZYkhs7AazKDGpRVji1LJCZUQ==}
     engines: {node: '>=18'}
@@ -7838,6 +7901,10 @@ packages:
     resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
     engines: {node: '>=12'}
 
+  strip-ansi@7.1.2:
+    resolution: {integrity: sha512-gmBGslpoQJtgnMAvOVqGZpEz9dyoKTCzy2nfz/n8aIFhN/jCE/rCmcxabB6jOOHV+0WNnylOxaxBQPSvcWklhA==}
+    engines: {node: '>=12'}
+
   strip-bom-string@1.0.0:
     resolution: {integrity: sha512-uCC2VHvQRYu+lMh4My/sFNmF2klFymLX1wHJeXnbEJERpV/ZsVuonzerjfrGpIGF7LBVa1O7i9kjiWvJiFck8g==}
     engines: {node: '>=0.10.0'}
@@ -8418,6 +8485,12 @@ packages:
       vike: '>=0.4.195'
       vite: '>=5.0.0'
 
+  vike-vercel@1.0.0-beta.0:
+    resolution: {integrity: sha512-6hFVLVmnm/86hJk2pEUWRhmhm8iV+4MESqrKaSHa43zTkAVsz2nEQxUFrmmKtKSdGkhPmDYR+X2I0JapXWNOeg==}
+    engines: {node: '>=20.19.0 || >=22.12.0'}
+    peerDependencies:
+      vite: '>=7.1'
+
   vike-vue@0.9.2:
     resolution: {integrity: sha512-vZ3ctG/ZfjdYa+N+JYki79qxWu+MUcAQ83z2cahVPP2cAW/nQsY8chZQepQod0kKI3aS6/0oetxQl6zN5U6qhw==}
     peerDependencies:
@@ -8456,6 +8529,11 @@ packages:
       '@testing-library/jest-dom':
         optional: true
 
+  vite-plugin-vercel@10.0.0-beta.0:
+    resolution: {integrity: sha512-PiOUWbXRUSqfAhl/J+rsXSSQCsvzIjEbt3WW+uhm99pnhRkJNN3BjrsErT5WV04F3G9jGoVT6z4MYLR10ZsqDw==}
+    peerDependencies:
+      vite: '>=7.1'
+
   vite-plugin-vercel@9.0.7:
     resolution: {integrity: sha512-W390luPuPlWIIcRJn7sGcwYlDCQ78oBYsMUZn/Q2B3J6ywYZw57kBPRc8gH7Zxh4iVc07i5A/B4rCFoev5Qfsg==}
     peerDependencies:
@@ -8467,6 +8545,11 @@ packages:
         optional: true
       vike:
         optional: true
+
+  vite-plugin-wasm@3.5.0:
+    resolution: {integrity: sha512-X5VWgCnqiQEGb+omhlBVsvTfxikKtoOgAzQ95+BZ8gQ+VfMHIjSHr0wyvXFQCa0eKQ0fKyaL0kWcEnYqBac4lQ==}
+    peerDependencies:
+      vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
 
   vite@7.1.4:
     resolution: {integrity: sha512-X5QFK4SGynAeeIt+A7ZWnApdUyHYm+pzv/8/A57LqSGcI88U6R6ipOs3uCesdc6yl7nl+zNO0t8LmqAdXcQihw==}
@@ -8777,6 +8860,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.1.8:
+    resolution: {integrity: sha512-5R1P+WwQqmmMIEACyzSvo4JXHY5WiAFHRMg+zBZKgKS+Q1viRa0C1hmUKtHltoIFKtIdki3pRxkmpP74jnNYHQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -10276,11 +10362,21 @@ snapshots:
     dependencies:
       '@manypkg/tools': 1.1.2
 
+  '@manypkg/find-root@3.1.0':
+    dependencies:
+      '@manypkg/tools': 2.1.0
+
   '@manypkg/tools@1.1.2':
     dependencies:
       fast-glob: 3.3.3
       jju: 1.4.0
       js-yaml: 4.1.0
+
+  '@manypkg/tools@2.1.0':
+    dependencies:
+      jju: 1.4.0
+      js-yaml: 4.1.0
+      tinyglobby: 0.2.14
 
   '@mapbox/node-pre-gyp@2.0.0(encoding@0.1.13)':
     dependencies:
@@ -11370,6 +11466,23 @@ snapshots:
       - hono
       - srvx
 
+  '@universal-middleware/vercel@0.4.22(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)':
+    dependencies:
+      '@universal-middleware/core': 0.4.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
+      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
+    optionalDependencies:
+      '@hattip/core': 0.0.49
+      '@universal-middleware/h3': 0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
+      express: 5.1.0
+      fastify: 5.6.0
+      h3: 1.15.4
+      hono: 4.9.6
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - '@webroute/route'
+
+  '@vercel/build-utils@12.1.0': {}
+
   '@vercel/build-utils@8.8.0': {}
 
   '@vercel/nft@0.27.10(encoding@0.1.13)(rollup@4.43.0)':
@@ -11391,15 +11504,45 @@ snapshots:
       - rollup
       - supports-color
 
+  '@vercel/nft@0.30.1(encoding@0.1.13)(rollup@4.43.0)':
+    dependencies:
+      '@mapbox/node-pre-gyp': 2.0.0(encoding@0.1.13)
+      '@rollup/pluginutils': 5.1.4(rollup@4.43.0)
+      acorn: 8.15.0
+      acorn-import-attributes: 1.9.5(acorn@8.15.0)
+      async-sema: 3.1.1
+      bindings: 1.5.0
+      estree-walker: 2.0.2
+      glob: 10.4.5
+      graceful-fs: 4.2.11
+      node-gyp-build: 4.8.4
+      picomatch: 4.0.3
+      resolve-from: 5.0.0
+    transitivePeerDependencies:
+      - encoding
+      - rollup
+      - supports-color
+
   '@vercel/routing-utils@3.1.0':
     dependencies:
       path-to-regexp: 6.1.0
     optionalDependencies:
       ajv: 6.12.6
 
+  '@vercel/routing-utils@5.1.1':
+    dependencies:
+      path-to-regexp: 6.1.0
+      path-to-regexp-updated: path-to-regexp@6.3.0
+    optionalDependencies:
+      ajv: 6.12.6
+
   '@vikejs/biome-config@2.0.1(@biomejs/biome@2.2.3)':
     dependencies:
       '@biomejs/biome': 2.2.3
+
+  '@vite-plugin-vercel/schemas@1.0.0':
+    dependencies:
+      zod: 4.1.8
 
   '@vite-plugin-vercel/vike@9.0.6(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(vite-plugin-vercel@9.0.7)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))':
     dependencies:
@@ -12113,6 +12256,8 @@ snapshots:
       safe-buffer: 5.2.1
 
   content-type@1.0.5: {}
+
+  convert-route@0.1.1: {}
 
   convert-source-map@2.0.0: {}
 
@@ -14652,6 +14797,8 @@ snapshots:
 
   path-to-regexp@8.2.0: {}
 
+  path-to-regexp@8.3.0: {}
+
   path-type@6.0.0: {}
 
   pathe@2.0.3: {}
@@ -15767,6 +15914,10 @@ snapshots:
     dependencies:
       ansi-regex: 6.1.0
 
+  strip-ansi@7.1.2:
+    dependencies:
+      ansi-regex: 6.1.0
+
   strip-bom-string@1.0.0: {}
 
   strip-final-newline@4.0.0: {}
@@ -16398,6 +16549,43 @@ snapshots:
       - '@testing-library/jest-dom'
       - supports-color
 
+  vike-vercel@1.0.0-beta.0(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@photonjs/cloudflare@0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(crossws@0.3.5)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(workerd@1.20250906.0)(wrangler@4.34.0(@cloudflare/workers-types@4.20250906.0)))(@types/node@20.19.9)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(encoding@0.1.13)(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(rollup@4.43.0)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(yaml@2.8.1):
+    dependencies:
+      '@brillout/libassert': 0.5.8
+      '@photonjs/core': 0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      '@photonjs/runtime': 0.0.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      vike: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
+      vike-photon: 0.1.2(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@photonjs/cloudflare@0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(crossws@0.3.5)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(workerd@1.20250906.0)(wrangler@4.34.0(@cloudflare/workers-types@4.20250906.0)))(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      vite: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
+      vite-plugin-vercel: 10.0.0-beta.0(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(encoding@0.1.13)(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(rollup@4.43.0)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - '@hattip/core'
+      - '@photonjs/cloudflare'
+      - '@types/node'
+      - '@universal-middleware/h3'
+      - '@webroute/route'
+      - elysia
+      - encoding
+      - express
+      - fastify
+      - h3
+      - hono
+      - jiti
+      - less
+      - lightningcss
+      - react-streaming
+      - rollup
+      - sass
+      - sass-embedded
+      - srvx
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   vike-vue@0.9.2(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2)):
     dependencies:
       vike: 0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
@@ -16483,6 +16671,41 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  vite-plugin-vercel@10.0.0-beta.0(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(encoding@0.1.13)(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(rollup@4.43.0)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)):
+    dependencies:
+      '@brillout/libassert': 0.5.8
+      '@manypkg/find-root': 3.1.0
+      '@photonjs/core': 0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      '@photonjs/runtime': 0.0.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+      '@universal-middleware/core': 0.4.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
+      '@universal-middleware/vercel': 0.4.22(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6))(express@5.1.0)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
+      '@vercel/build-utils': 12.1.0
+      '@vercel/nft': 0.30.1(encoding@0.1.13)(rollup@4.43.0)
+      '@vercel/routing-utils': 5.1.1
+      '@vite-plugin-vercel/schemas': 1.0.0
+      convert-route: 0.1.1
+      esbuild: 0.25.9
+      fast-glob: 3.3.3
+      magicast: 0.3.5
+      path-to-regexp: 8.3.0
+      strip-ansi: 7.1.2
+      vite: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
+      vite-plugin-wasm: 3.5.0(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - '@hattip/core'
+      - '@universal-middleware/h3'
+      - '@webroute/route'
+      - elysia
+      - encoding
+      - express
+      - fastify
+      - h3
+      - hono
+      - rollup
+      - srvx
+      - supports-color
+
   vite-plugin-vercel@9.0.7(@vite-plugin-vercel/vike@9.0.6)(encoding@0.1.13)(rollup@4.43.0)(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)):
     dependencies:
       '@brillout/libassert': 0.5.8
@@ -16502,6 +16725,10 @@ snapshots:
       - encoding
       - rollup
       - supports-color
+
+  vite-plugin-wasm@3.5.0(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)):
+    dependencies:
+      vite: 7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1)
 
   vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1):
     dependencies:
@@ -16812,6 +17039,8 @@ snapshots:
   zod@3.22.3: {}
 
   zod@3.25.76: {}
+
+  zod@4.1.8: {}
 
   zwitch@2.0.4: {}
 
