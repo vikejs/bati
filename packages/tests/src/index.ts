@@ -191,7 +191,7 @@ function loadDotEnvTest() {
   process.env.DATABASE_URL ??= "sqlite.db";
 }
 
-function arrayIncludes(a: string[], b: string[]) {
+function areAllElementsOfAIncludedInB(a: string[], b: string[]) {
   if (a.length === 0) throw new Error("arrayIncludes first parameter should not be an empty array");
   return a.every((element) => b.includes(element));
 }
@@ -244,12 +244,13 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
       if (
-        testFile.exclude?.some((x) => arrayIncludes(x, flags)) ||
-        (exclude && exclude.length > 0 && arrayIncludes(exclude, flags))
+        testFile.exclude?.some((x) => areAllElementsOfAIncludedInB(x, flags)) ||
+        // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
+        (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element)))
       ) {
         continue;
       }
-      if (filter && !arrayIncludes(filter, flags)) {
+      if (filter && filter.length > 0 && !areAllElementsOfAIncludedInB(filter, flags)) {
         continue;
       }
 

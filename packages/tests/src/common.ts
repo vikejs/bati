@@ -183,7 +183,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("cloudflare")) {
-    entry.push("+cloudflare.ts", "cloudflare-entry.ts");
+    entry.push("+photon.ts", "+cloudflare.ts", "cloudflare-entry.ts");
     ignoreDependencies.push("@cloudflare/workers-types", "wrangler");
   }
 

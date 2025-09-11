@@ -159,9 +159,6 @@ importers:
       '@types/node':
         specifier: ^20.19.9
         version: 20.19.9
-      cross-env:
-        specifier: ^10.0.0
-        version: 10.0.0
       wrangler:
         specifier: ^4.34.0
         version: 4.34.0(@cloudflare/workers-types@4.20250906.0)
@@ -411,9 +408,6 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: link:../../packages/compile
-      '@hattip/polyfills':
-        specifier: ^0.0.49
-        version: 0.0.49
       '@photonjs/h3':
         specifier: ^0.0.11
         version: 0.0.11(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
@@ -555,9 +549,6 @@ importers:
       '@types/node':
         specifier: ^20.19.9
         version: 20.19.9
-      cross-env:
-        specifier: ^10.0.0
-        version: 10.0.0
       vike-photon:
         specifier: ^0.1.2
         version: 0.1.2(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(@photonjs/cloudflare@0.0.13(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(crossws@0.3.5)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(workerd@1.20250906.0)(wrangler@4.34.0(@cloudflare/workers-types@4.20250906.0)))(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)(vike@0.4.239(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(react-streaming@0.4.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))(vite@7.1.4(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(tsx@4.20.5)(yaml@2.8.1))
@@ -1926,9 +1917,6 @@ packages:
   '@emotion/memoize@0.9.0':
     resolution: {integrity: sha512-30FAj7/EoJ5mwVPOWhAyCX+FPfMDrVecJAM+Iw9NRoSl4BBAQeqj4cApHHUXOVvIPgLVDsCFoz/hGD+5QQD1GQ==}
 
-  '@epic-web/invariant@1.0.0':
-    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
-
   '@esbuild-kit/core-utils@3.3.2':
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
     deprecated: 'Merged into tsx: https://tsx.is'
@@ -2629,9 +2617,6 @@ packages:
   '@hattip/core@0.0.49':
     resolution: {integrity: sha512-3/ZJtC17cv8m6Sph8+nw4exUp9yhEf2Shi7HK6AHSUSBtaaQXZ9rJBVxTfZj3PGNOR/P49UBXOym/52WYKFTJQ==}
 
-  '@hattip/polyfills@0.0.49':
-    resolution: {integrity: sha512-5g7W5s6Gq+HDxwULGFQ861yAnEx3yd9V8GDwS96HBZ1nM1u93vN+KTuwXvNsV7Z3FJmCrD/pgU8WakvchclYuA==}
-
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -3155,9 +3140,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@kamilkisiela/fast-url-parser@1.1.4':
-    resolution: {integrity: sha512-gbkePEBupNydxCelHCESvFSFM8XPh1Zs/OAVRW/rKpEqPAl5PbOM90Si8mv9bvnR53uPD2s/FiRxdvSejpRJew==}
 
   '@kikobeats/time-span@1.0.8':
     resolution: {integrity: sha512-Nfuj9Kqa8Rezx9WVWX+I7vJcne6OI2gN+G+BqTN6owRVJKFB0N5bZJSvxjJ6iF+nli6sVft2N/GQzg9E6P91Wg==}
@@ -4256,14 +4238,6 @@ packages:
   '@vue/shared@3.5.21':
     resolution: {integrity: sha512-+2k1EQpnYuVuu3N7atWyG3/xoFWIVJZq4Mz8XNOdScFI0etES75fbny/oU4lKWk/577P1zmg0ioYvpGEDZ3DLw==}
 
-  '@whatwg-node/fetch@0.9.23':
-    resolution: {integrity: sha512-7xlqWel9JsmxahJnYVUj/LLxWcnA93DR4c9xlw3U814jWTiYalryiH1qToik1hOxweKKRLi4haXHM5ycRksPBA==}
-    engines: {node: '>=18.0.0'}
-
-  '@whatwg-node/node-fetch@0.6.0':
-    resolution: {integrity: sha512-tcZAhrpx6oVlkEsRngeTEEE7I5/QdLjeEz4IlekabGaESP7+Dkm/6a9KcF1KdCBB7mO9PXtBkwCuTCt8+UPg8Q==}
-    engines: {node: '>=18.0.0'}
-
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -4590,10 +4564,6 @@ packages:
     peerDependencies:
       esbuild: '>=0.18'
 
-  busboy@1.6.0:
-    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
-    engines: {node: '>=10.16.0'}
-
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
@@ -4808,11 +4778,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  cross-env@10.0.0:
-    resolution: {integrity: sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==}
-    engines: {node: '>=20'}
-    hasBin: true
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -7829,10 +7794,6 @@ packages:
     resolution: {integrity: sha512-KXDYZ9dszj6bzvnEMRYvxgeTHU74QBFL54XKtP3nyMuJ81CFYtABZ3bAzL2EdFUaEwJOBOgENyFj3R7oTzDyyw==}
     engines: {node: '>=4', npm: '>=6'}
 
-  streamsearch@1.1.0:
-    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
-    engines: {node: '>=10.0.0'}
-
   streamx@2.22.1:
     resolution: {integrity: sha512-znKXEBxfatz2GBNK02kRnCXjV+AA4kjZIUxeWSr3UGirZMJfTE9uiwKHobnbgxWyL/JWro8tTq+vOqAK1/qbSA==}
 
@@ -8361,9 +8322,6 @@ packages:
     peerDependenciesMeta:
       re2:
         optional: true
-
-  urlpattern-polyfill@10.1.0:
-    resolution: {integrity: sha512-IGjKp/o0NL3Bso1PymYURCJxMPNAf/ILOpendP9f5B6e1rTJgdgiOvgfoT8VxCAdY+Wisb9uhGaJJf3yZ2V9nw==}
 
   use-callback-ref@1.3.3:
     resolution: {integrity: sha512-jQL3lRnocaFtu3V00JToYz/4QkNWswxijDaCVNZRiRTO3HQDLsdu1ZtmIUvV4yPp+rvWm5j0y0TG/S61cuijTg==}
@@ -9293,8 +9251,6 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@epic-web/invariant@1.0.0': {}
-
   '@esbuild-kit/core-utils@3.3.2':
     dependencies:
       esbuild: 0.18.20
@@ -9732,13 +9688,8 @@ snapshots:
       '@hattip/core': 0.0.49
     optional: true
 
-  '@hattip/core@0.0.49': {}
-
-  '@hattip/polyfills@0.0.49':
-    dependencies:
-      '@hattip/core': 0.0.49
-      '@whatwg-node/fetch': 0.9.23
-      node-fetch-native: 1.6.6
+  '@hattip/core@0.0.49':
+    optional: true
 
   '@humanfs/core@0.19.1': {}
 
@@ -10296,8 +10247,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@kamilkisiela/fast-url-parser@1.1.4': {}
 
   '@kikobeats/time-span@1.0.8':
     optional: true
@@ -11572,18 +11521,6 @@ snapshots:
 
   '@vue/shared@3.5.21': {}
 
-  '@whatwg-node/fetch@0.9.23':
-    dependencies:
-      '@whatwg-node/node-fetch': 0.6.0
-      urlpattern-polyfill: 10.1.0
-
-  '@whatwg-node/node-fetch@0.6.0':
-    dependencies:
-      '@kamilkisiela/fast-url-parser': 1.1.4
-      busboy: 1.6.0
-      fast-querystring: 1.1.2
-      tslib: 2.8.1
-
   abbrev@3.0.1: {}
 
   abort-controller@3.0.0:
@@ -11958,10 +11895,6 @@ snapshots:
       esbuild: 0.25.9
       load-tsconfig: 0.2.5
 
-  busboy@1.6.0:
-    dependencies:
-      streamsearch: 1.1.0
-
   bytes@3.1.2: {}
 
   c12@3.1.0(magicast@0.3.5):
@@ -12199,11 +12132,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.2
     optional: true
-
-  cross-env@10.0.0:
-    dependencies:
-      '@epic-web/invariant': 1.0.0
-      cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
     dependencies:
@@ -15760,8 +15688,6 @@ snapshots:
 
   stoppable@1.1.0: {}
 
-  streamsearch@1.1.0: {}
-
   streamx@2.22.1:
     dependencies:
       fast-fifo: 1.3.2
@@ -16374,8 +16300,6 @@ snapshots:
     optionalDependencies:
       re2: 1.22.1
     optional: true
-
-  urlpattern-polyfill@10.1.0: {}
 
   use-callback-ref@1.3.3(@types/react@19.1.12)(react@19.1.1):
     dependencies:
