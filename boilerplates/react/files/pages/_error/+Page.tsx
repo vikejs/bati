@@ -5,7 +5,7 @@ export default function Page() {
   if (is404) {
     return (
       <>
-        <h1>404 Page Not Found</h1>
+        <h1>Page Not Found</h1>
         <p>This page could not be found.</p>
       </>
     );
