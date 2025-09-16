@@ -146,11 +146,10 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push(cacheDir);
   }
 
-  if (process.env.CI) {
-    // GitHub CI seems to fail more often with default concurrency
-    args_2.push("--concurrency");
-    args_2.push("3");
-  }
+  // GitHub CI seems to fail more often with default concurrency
+  // Also local tests with @cloudflare/vite-plugin can easily crash because of memory overflow without it
+  args_2.push("--concurrency");
+  args_2.push("3");
 
   if (args.force) {
     args_2.push("--force");

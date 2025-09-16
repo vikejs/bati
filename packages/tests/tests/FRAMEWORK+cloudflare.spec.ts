@@ -5,13 +5,18 @@ export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint
 await describeMultipleBati([
   // dev
   () =>
-    describeBati(({ test, expect, fetch }) => {
-      test("home", async () => {
-        const res = await fetch("/");
-        expect(res.status).toBe(200);
-        expect(await res.text()).not.toContain('{"is404":true}');
-      });
-    }),
+    describeBati(
+      ({ test, expect, fetch }) => {
+        test("home", async () => {
+          const res = await fetch("/");
+          expect(res.status).toBe(200);
+          expect(await res.text()).not.toContain('{"is404":true}');
+        });
+      },
+      {
+        retry: 3,
+      },
+    ),
   // preview
   () =>
     describeBati(
@@ -24,6 +29,7 @@ await describeMultipleBati([
       },
       {
         mode: "prod",
+        retry: 3,
       },
     ),
   // deploy
@@ -36,6 +42,7 @@ await describeMultipleBati([
       },
       {
         mode: "none",
+        retry: 3,
       },
     ),
 ]);
