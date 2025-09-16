@@ -1,7 +1,6 @@
 import type { Config } from "vike/types";
 import vikePhoton from "vike-photon/config";
 import vikeReact from "vike-react/config";
-import vikeVercel from "vike-vercel/config";
 import Layout from "../layouts/LayoutDefault.js";
 
 // Default config (can be overridden by pages)
@@ -19,9 +18,7 @@ export default {
   passToClient: ["user"],
   extends: [
     vikeReact,
-    //# BATI.hasPhoton && !BATI.has("vercel")
+    //# BATI.hasPhoton
     vikePhoton,
-    //# BATI.has("vercel")
-    vikeVercel,
   ],
 } satisfies Config;

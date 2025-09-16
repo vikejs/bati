@@ -31,18 +31,12 @@
     "enforce": "post"
   },
   "exports": {
-    "./+cloudflare": {
-      "types": "./dist/types/+cloudflare.d.ts"
-    },
     "./cloudflare-entry": {
       "types": "./dist/types/cloudflare-entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "+cloudflare": [
-        "./dist/types/+cloudflare.d.ts"
-      ],
       "cloudflare-entry": [
         "./dist/types/cloudflare-entry.d.ts"
       ]

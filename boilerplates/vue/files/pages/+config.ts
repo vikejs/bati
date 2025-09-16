@@ -1,6 +1,5 @@
 import type { Config } from "vike/types";
 import vikePhoton from "vike-photon/config";
-import vikeVercel from "vike-vercel/config";
 import vikeVue from "vike-vue/config";
 import Layout from "../layouts/LayoutDefault.vue";
 
@@ -19,9 +18,7 @@ export default {
   passToClient: ["user"],
   extends: [
     vikeVue,
-    //# BATI.hasPhoton && !BATI.has("vercel")
+    //# BATI.hasPhoton
     vikePhoton,
-    //# BATI.has("vercel")
-    vikeVercel,
   ] as BATI.Any,
 } satisfies Config;
