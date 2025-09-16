@@ -183,12 +183,12 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("cloudflare")) {
-    entry.push("+photon.ts", "+cloudflare.ts", "cloudflare-entry.ts");
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare");
+    entry.push("+photon.ts", "cloudflare-entry.ts");
+    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare", "@photonjs/cloudflare");
   }
 
   if (flags.includes("vercel")) {
-    ignoreDependencies.push("@vite-plugin-vercel/vike");
+    ignoreDependencies.push("vite-plugin-vercel", "@photonjs/vercel");
     ignore.push(".vercel/**");
   }
 

@@ -33,11 +33,17 @@ export function exec(
 ): Promise<void> & ChildProcess {
   const { timeout, ...restOptions } = options;
 
+  const envs = { ...process.env };
+  delete envs.NODE_ENV;
+  delete envs.TEST;
+  delete envs.VITEST;
+  delete envs.VITEST_MODE;
+
   const childProcess = spawn(command, args, {
     stdio: ["ignore", "inherit", "inherit"],
     ...restOptions,
     env: {
-      ...process.env,
+      ...envs,
       ...restOptions?.env,
     },
   });

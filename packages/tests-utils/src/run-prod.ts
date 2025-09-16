@@ -8,6 +8,7 @@ export async function runProd(context: GlobalContext) {
   context.server = exec(npmCli, cmd, {
     env: {
       PORT: String(context.port),
+      NODE_ENV: "production",
     },
   });
 
