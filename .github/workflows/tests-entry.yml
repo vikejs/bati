@@ -4,30 +4,243 @@ name: Tests
 on:
   pull_request:
     paths-ignore:
-      - 'website/**'
+      - "website/**"
   push:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
-      - 'website/**'
+      - "website/**"
 
 concurrency:
   group: tests-entry-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: 20
+  BUN_VERSION: "1.2.22"
+
 jobs:
-  suite:
+  init:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        node: [ 20 ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
 
-    name: ${{ matrix.os }} - node@${{ matrix.node }}
+    name: ${{ matrix.os }} - node@${{ env.NODE_VERSION }}
 
-    uses: ./.github/workflows/tests-entry-os.reusable.yml
-    secrets: inherit
-    with:
-      os: ${{ matrix.os }}
-      node: ${{ matrix.node }}
-      fast: ${{ matrix.os != 'ubuntu-latest' }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ matrix.os }}-pnpm-store-
+
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v1.8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Deploy CLI locally
+        run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
+
+      - name: Archive Bati CLI
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-cli-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./bati-cli/dist/*
+
+      - name: Deploy tests locally
+        run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
+
+      - name: Archive Bati tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-tests-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./bati-tests/dist/*
+
+      - name: Pack tests-utils
+        run: pnpm pack
+        working-directory: ./packages/tests-utils
+
+      - name: Archive tests-utils
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-utils-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./packages/tests-utils/batijs-tests-utils-*.tgz
+
+      - name: Archive tests files
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-files-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./packages/tests/tests/*
+
+  test:
+    needs: init
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        # pnpm run test:e2e workflow-write
+        destination:
+          - GEN
+        # pnpm run test:e2e workflow-write
+        include:
+          - os: windows-latest
+            destination: react--hono--cloudflare--authjs
+          - os: macos-latest
+            destination: react--hono--cloudflare--authjs
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    name: Run
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v1.8
+
+      - uses: oven-sh/setup-bun@v2
+        name: Install bun
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Download Bati CLI
+        uses: actions/download-artifact@v5
+        with:
+          name: bati-cli-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-cli
+
+      - name: Download Bati tests
+        uses: actions/download-artifact@v5
+        with:
+          name: bati-tests-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests
+
+      - name: Download tests-utils
+        uses: actions/download-artifact@v5
+        with:
+          name: tests-utils-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests-utils
+
+      - name: Download tests-files
+        uses: actions/download-artifact@v5
+        with:
+          name: tests-files-${{ matrix.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests-files
+
+      - name: Run Bati CLI
+        shell: bash
+        run: bun ./bati-cli/index.js ${{ matrix.flags }} ${{ matrix.destination }}
+
+      - name: Link tests-utils
+        shell: bash
+        run: cp -s ../bati-tests-utils/* .
+        working-directory: ${{ matrix.destination }}
+
+      - name: Link tests files
+        shell: bash
+        run: cp -s ../bati-tests-files/* .
+        working-directory: ${{ matrix.destination }}
+
+      - name: Prepare Bati tests
+        shell: bash
+        run: bun ../bati-tests/prepare.js --test-files='${{ matrix.test-files }}' ${{ matrix.flags }}
+        working-directory: ${{ matrix.destination }}
+
+      - name: Install dependencies
+        shell: bash
+        run: bun install
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run build
+        shell: bash
+        run: bun turbo run build --no-update-notifier --framework-inference false --env-mode loose
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run tests
+        shell: bash
+        # Bun hangs on Windows
+        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only --no-update-notifier --framework-inference false --env-mode loose' }}
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run lint:eslint
+        shell: bash
+        run: bun turbo run lint:eslint --only --no-update-notifier --framework-inference false --env-mode loose
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run lint:biome
+        shell: bash
+        run: bun turbo run lint:biome --only --no-update-notifier --framework-inference false --env-mode loose
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run typecheck
+        shell: bash
+        run: bun turbo run typecheck --only --no-update-notifier --framework-inference false --env-mode loose
+        working-directory: ${{ matrix.destination }}
+
+      - name: Run knip
+        shell: bash
+        run: bun turbo run knip --only --no-update-notifier --framework-inference false --env-mode loose
+        working-directory: ${{ matrix.destination }}

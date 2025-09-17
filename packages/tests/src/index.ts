@@ -1,4 +1,4 @@
-import { copyFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, rm, writeFile, readFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
 
-import { Document } from "yaml";
+import { Document, parseDocument, YAMLMap, YAMLSeq } from "yaml";
 import packageJson from "../package.json" with { type: "json" };
 import {
   createBatiConfig,
@@ -268,38 +268,39 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   console.log(`Testing ${matrices.size} combinations`);
 
-  if (command === "list") {
-    // Avoid "{}" being present in the output, as GitHub CI
-    // considers them as secrets (probably because of multiline variables).
-    // So only use tuples/arrays, no objects.
-    const projects = Array.from(matrices.values()).map(
-      (m) =>
-        [
-          // destination
-          m.flags.length > 0 ? m.flags.join("--") : "empty",
-          // flags
-          m.flags.length > 0 ? m.flags.map((f) => `--${f}`).join(" ") : "empty",
-          // test-files
-          m.testFiles
-            .map((f) => basename(f))
-            .join(","),
-        ] as const,
-    );
+  if (command === "workflow-write") {
+    const doc = parseDocument(await readFile("../../.github/workflows/tests-entry.yml", "utf-8"));
 
-    if (args.workers) {
-      // Sort so that tests will usually run in the same worker
-      projects.sort((a, b) => a[0].localeCompare(b[0]));
+    const nodeDestination = new YAMLSeq();
+    const nodeInclude = new YAMLSeq();
 
-      // stringify each element so that then can be passed as `inputs` in workflow files
-      const chunks = chunkArray(projects, args.workers)
-        .map((el) => JSON.stringify(el))
-        // index is used for workflow name
-        .map((el, index) => [index, el]);
-      console.log("chunks: ", chunks);
-      ci.setOutput("test-matrix", chunks);
-    } else {
-      console.log("projects (unusable by CI, use --workers): ", projects);
+    // Append one include rule for Win and for Mac
+    const includeWin = new YAMLMap<string, string>();
+    includeWin.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
+    includeWin.add({ key: "os", value: "windows-latest" });
+    nodeInclude.add(includeWin);
+    const includeMac = new YAMLMap<string, string>();
+    includeMac.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
+    includeMac.add({ key: "os", value: "macos-latest" });
+    nodeInclude.add(includeMac);
+
+    for (const matrix of matrices.values()) {
+      const destination = matrix.flags.length > 0 ? matrix.flags.join("--") : "empty";
+      const flags = matrix.flags.length > 0 ? matrix.flags.map((f) => `--${f}`).join(" ") : "empty";
+      const testFiles = matrix.testFiles.map((f) => basename(f)).join(",");
+
+      nodeDestination.add(destination);
+      const incl = new YAMLMap<string, string>();
+      incl.add({ key: "destination", value: destination });
+      incl.add({ key: "flags", value: flags });
+      incl.add({ key: "test-files", value: testFiles });
+      nodeInclude.add(incl);
     }
+
+    doc.setIn(["jobs", "test", "strategy", "matrix", "destination"], nodeDestination);
+    doc.setIn(["jobs", "test", "strategy", "matrix", "include"], nodeInclude);
+
+    await writeFile("../../.github/workflows/tests-entry.yml", String(doc));
 
     return;
   }
