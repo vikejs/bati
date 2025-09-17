@@ -41,6 +41,7 @@ function startServer() {
     // Telefunc route. See https://telefunc.com
     telefuncHandler,
     //# BATI.has("ts-rest")
+    // ts-rest route. See https://ts-rest.com
     tsRestHandler,
     //# !BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")
     createTodoHandler,
