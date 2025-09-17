@@ -287,7 +287,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       nodeInclude.add(incl);
     }
 
-    if (nodeDestination.items.length >= 254) {
+    if (nodeDestination.items.length >= 240) {
       throw new Error("Matrix size exceeded");
     }
 
