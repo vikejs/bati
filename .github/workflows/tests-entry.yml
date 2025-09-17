@@ -6,7 +6,7 @@ on:
       - "website/**"
   push:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
       - "website/**"
 
@@ -40,7 +40,7 @@ jobs:
       os: windows-latest
       destination: react--hono--authjs--eslint--biome
       flags: --react --hono --authjs --eslint --biome
-      test-files: FRAMEWORK + SERVER + AUTH.spec.ts
+      test-files: FRAMEWORK+SERVER+AUTH.spec.ts
 
   # Fast MacOS tests
   init-macos:
@@ -62,7 +62,7 @@ jobs:
       os: macos-latest
       destination: react--hono--authjs--eslint--biome
       flags: --react --hono --authjs --eslint --biome
-      test-files: FRAMEWORK + SERVER + AUTH.spec.ts
+      test-files: FRAMEWORK+SERVER+AUTH.spec.ts
 
   # Full Ubuntu tests
   init-ubuntu:
