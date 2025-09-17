@@ -6,7 +6,7 @@ on:
       - "website/**"
   push:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
-    branches: ["main"]
+    branches: [ "main" ]
     paths-ignore:
       - "website/**"
 
@@ -22,7 +22,7 @@ jobs:
   init:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     name: ${{ matrix.os }}
@@ -127,7 +127,7 @@ jobs:
     needs: init
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ ubuntu-latest ]
         # pnpm run test:e2e workflow-write
         destination:
           - solid--plausible.io--eslint--biome
@@ -273,10 +273,6 @@ jobs:
           - react--mantine--eslint--biome
         # pnpm run test:e2e workflow-write
         include:
-          - destination: react--hono--authjs--eslint--biome
-            os: windows-latest
-          - destination: react--hono--authjs--eslint--biome
-            os: macos-latest
           - destination: solid--plausible.io--eslint--biome
             flags: --solid --plausible.io --eslint --biome
             test-files: FRAMEWORK+ANALYTICS.spec.ts
@@ -700,6 +696,14 @@ jobs:
           - destination: react--mantine--eslint--biome
             flags: --react --mantine --eslint --biome
             test-files: react+UI.spec.ts
+          - destination: react--hono--authjs--eslint--biome
+            os: windows-latest
+            flags: --react --hono --authjs --eslint --biome
+            test-files: FRAMEWORK + SERVER + AUTH.spec.ts
+          - destination: react--hono--authjs--eslint--biome
+            os: macos-latest
+            flags: --react --hono --authjs --eslint --biome
+            test-files: FRAMEWORK + SERVER + AUTH.spec.ts
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -775,7 +779,8 @@ jobs:
 
       - name: Prepare Bati tests
         shell: bash
-        run: bun ../bati-tests/prepare.js --test-files='${{ matrix.test-files }}' ${{ matrix.flags }}
+        run: bun ../bati-tests/prepare.js --test-files='${{ matrix.test-files }}' ${{
+          matrix.flags }}
         working-directory: ${{ matrix.destination }}
 
       - name: Install dependencies
@@ -785,44 +790,37 @@ jobs:
 
       - name: Run build
         shell: bash
-        run:
-          bun turbo run build --no-update-notifier --framework-inference false
+        run: bun turbo run build --no-update-notifier --framework-inference false
           --env-mode loose
         working-directory: ${{ matrix.destination }}
 
       - name: Run tests
         shell: bash
         # Bun hangs on Windows
-        run:
-          ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only
+        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only
           --no-update-notifier --framework-inference false --env-mode loose' }}
         working-directory: ${{ matrix.destination }}
 
-
       - name: Run lint:eslint
         shell: bash
-        run:
-          bun turbo run lint:eslint --only --no-update-notifier --framework-inference
+        run: bun turbo run lint:eslint --only --no-update-notifier --framework-inference
           false --env-mode loose
         working-directory: ${{ matrix.destination }}
 
       - name: Run lint:biome
         shell: bash
-        run:
-          bun turbo run lint:biome --only --no-update-notifier --framework-inference
+        run: bun turbo run lint:biome --only --no-update-notifier --framework-inference
           false --env-mode loose
         working-directory: ${{ matrix.destination }}
 
       - name: Run typecheck
         shell: bash
-        run:
-          bun turbo run typecheck --only --no-update-notifier --framework-inference
+        run: bun turbo run typecheck --only --no-update-notifier --framework-inference
           false --env-mode loose
         working-directory: ${{ matrix.destination }}
 
       - name: Run knip
         shell: bash
-        run:
-          bun turbo run knip --only --no-update-notifier --framework-inference false
+        run: bun turbo run knip --only --no-update-notifier --framework-inference false
           --env-mode loose
         working-directory: ${{ matrix.destination }}

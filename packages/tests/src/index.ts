@@ -297,8 +297,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     const includeMac = new YAMLMap<string, string>();
     includeMac.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
     includeMac.add({ key: "os", value: "macos-latest" });
-    includeWin.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
-    includeWin.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
+    includeMac.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
+    includeMac.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
     nodeInclude.add(includeMac);
 
     if (nodeDestination.items.length >= 254) {
