@@ -1,0 +1,113 @@
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+
+concurrency:
+  group: tests-entry-os-${{ inputs.os }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  suite:
+    runs-on: ${{ inputs.os }}
+
+    name: ${{ inputs.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: mkdir temp folder
+        run: mkdir -p ${{ runner.temp }}/bati-cache
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ inputs.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ inputs.os }}-pnpm-store-
+
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v1.8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Deploy CLI locally
+        run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
+
+      - name: Archive Bati CLI
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-cli-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./bati-cli/dist/*
+
+      - name: Deploy tests locally
+        run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
+
+      - name: Archive Bati tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: bati-tests-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./bati-tests/dist/*
+
+      - name: Pack tests-utils
+        run: pnpm pack
+        working-directory: ./packages/tests-utils
+
+      - name: Archive tests-utils
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-utils-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./packages/tests-utils/batijs-tests-utils-*.tgz
+
+      - name: Archive tests files
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-files-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+          include-hidden-files: true
+          path: ./packages/tests/tests/*
