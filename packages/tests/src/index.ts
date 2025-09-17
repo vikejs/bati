@@ -287,26 +287,12 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       nodeInclude.add(incl);
     }
 
-    // Append one include rule for Win and for Mac
-    const includeWin = new YAMLMap<string, string>();
-    includeWin.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
-    includeWin.add({ key: "os", value: "windows-latest" });
-    includeWin.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
-    includeWin.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
-    nodeInclude.add(includeWin);
-    const includeMac = new YAMLMap<string, string>();
-    includeMac.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
-    includeMac.add({ key: "os", value: "macos-latest" });
-    includeMac.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
-    includeMac.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
-    nodeInclude.add(includeMac);
-
     if (nodeDestination.items.length >= 254) {
       throw new Error("Matrix size exceeded");
     }
 
-    doc.setIn(["jobs", "test", "strategy", "matrix", "destination"], nodeDestination);
-    doc.setIn(["jobs", "test", "strategy", "matrix", "include"], nodeInclude);
+    doc.setIn(["jobs", "tests-ubuntu", "strategy", "matrix", "destination"], nodeDestination);
+    doc.setIn(["jobs", "tests-ubuntu", "strategy", "matrix", "include"], nodeInclude);
 
     await writeFile("../../.github/workflows/tests-entry.yml", String(doc));
 
