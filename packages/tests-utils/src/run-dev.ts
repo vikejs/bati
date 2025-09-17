@@ -4,17 +4,22 @@ import type { GlobalContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
 export async function runDevServer(context: GlobalContext) {
-  context.server = exec(npmCli, ["run", "dev", "--port", String(context.port)], {
+  const cmd = ["run", "dev", "--port", String(context.port)];
+  context.server = exec(npmCli, cmd, {
     env: {
       PORT: String(context.port),
-      HMR_PORT: String(context.port_1),
       VITE_CONFIG: JSON.stringify({ server: { port: context.port, strictPort: true } }),
     },
   });
 
   const res = await Promise.race([
     // wait for port
-    waitForLocalhost({ port: context.port, useGet: true, timeout: process.env.CI ? 20000 : 5000 }),
+    waitForLocalhost({
+      port: context.port,
+      useGet: true,
+      timeout: process.env.CI ? 30000 : 15000,
+      debug: cmd.join(" "),
+    }),
     // or for server to crash
     context.server,
   ]);

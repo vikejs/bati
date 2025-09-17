@@ -1,4 +1,5 @@
 import type { Config } from "vike/types";
+import vikePhoton from "vike-photon/config";
 import vikeVue from "vike-vue/config";
 import Layout from "../layouts/LayoutDefault.vue";
 
@@ -15,5 +16,9 @@ export default {
 
   //# BATI.has("auth0") || BATI.has("authjs")
   passToClient: ["user"],
-  extends: vikeVue as typeof vikeVue,
+  extends: [
+    vikeVue,
+    //# BATI.hasPhoton
+    vikePhoton,
+  ] as BATI.Any,
 } satisfies Config;

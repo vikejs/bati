@@ -1,4 +1,4 @@
-import { copyFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, rm, writeFile, readFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
 
-import { Document } from "yaml";
+import { Document, parseDocument, YAMLMap, YAMLSeq } from "yaml";
 import packageJson from "../package.json" with { type: "json" };
 import {
   createBatiConfig,
@@ -100,7 +100,7 @@ function linkTestUtils() {
 async function packageManagerInstall(context: GlobalContext) {
   {
     // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
-    const child = exec(npmCli, ["install", "--prefer-offline"], {
+    const child = exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
       // really slow on Windows CI
       timeout: 5 * 60 * 1000,
       cwd: context.tmpdir,
@@ -146,11 +146,10 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     args_2.push(cacheDir);
   }
 
-  if (process.env.CI) {
-    // GitHub CI seems to fail more often with default concurrency
-    args_2.push("--concurrency");
-    args_2.push("3");
-  }
+  // GitHub CI seems to fail more often with default concurrency
+  // Also local tests with @cloudflare/vite-plugin can easily crash because of memory overflow without it
+  args_2.push("--concurrency");
+  args_2.push("3");
 
   if (args.force) {
     args_2.push("--force");
@@ -191,7 +190,8 @@ function loadDotEnvTest() {
   process.env.DATABASE_URL ??= "sqlite.db";
 }
 
-function arrayIncludes(a: string[], b: string[]) {
+function areAllElementsOfAIncludedInB(a: string[], b: string[]) {
+  if (a.length === 0) throw new Error("arrayIncludes first parameter should not be an empty array");
   return a.every((element) => b.includes(element));
 }
 
@@ -217,7 +217,12 @@ function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
-  const filter = args.filter ? args.filter.split(",") : undefined;
+  let filter = args.filter ? args.filter.split(",") : undefined;
+  const exclude = filter ? filter.filter((f) => f.startsWith("!")).map((f) => f.slice(1)) : undefined;
+
+  if (filter) {
+    filter = filter.filter((f) => !f.startsWith("!"));
+  }
 
   const limit = pLimit(cpus().length);
   const promises: Promise<unknown>[] = [];
@@ -237,10 +242,14 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
-      if (testFile.exclude?.some((x) => arrayIncludes(x, flags))) {
+      if (
+        testFile.exclude?.some((x) => areAllElementsOfAIncludedInB(x, flags)) ||
+        // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
+        (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element)))
+      ) {
         continue;
       }
-      if (filter && !arrayIncludes(filter, flags)) {
+      if (filter && filter.length > 0 && !areAllElementsOfAIncludedInB(filter, flags)) {
         continue;
       }
 
@@ -259,38 +268,34 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   console.log(`Testing ${matrices.size} combinations`);
 
-  if (command === "list") {
-    // Avoid "{}" being present in the output, as GitHub CI
-    // considers them as secrets (probably because of multiline variables).
-    // So only use tuples/arrays, no objects.
-    const projects = Array.from(matrices.values()).map(
-      (m) =>
-        [
-          // destination
-          m.flags.length > 0 ? m.flags.join("--") : "empty",
-          // flags
-          m.flags.length > 0 ? m.flags.map((f) => `--${f}`).join(" ") : "empty",
-          // test-files
-          m.testFiles
-            .map((f) => basename(f))
-            .join(","),
-        ] as const,
-    );
+  if (command === "workflow-write") {
+    const doc = parseDocument(await readFile("../../.github/workflows/tests-entry.yml", "utf-8"));
 
-    if (args.workers) {
-      // Sort so that tests will usually run in the same worker
-      projects.sort((a, b) => a[0].localeCompare(b[0]));
+    const nodeDestination = new YAMLSeq();
+    const nodeInclude = new YAMLSeq();
 
-      // stringify each element so that then can be passed as `inputs` in workflow files
-      const chunks = chunkArray(projects, args.workers)
-        .map((el) => JSON.stringify(el))
-        // index is used for workflow name
-        .map((el, index) => [index, el]);
-      console.log("chunks: ", chunks);
-      ci.setOutput("test-matrix", chunks);
-    } else {
-      console.log("projects (unusable by CI, use --workers): ", projects);
+    for (const matrix of matrices.values()) {
+      const destination = matrix.flags.length > 0 ? matrix.flags.join("--") : "empty";
+      const flags = matrix.flags.length > 0 ? matrix.flags.map((f) => `--${f}`).join(" ") : "empty";
+      const testFiles = matrix.testFiles.map((f) => basename(f)).join(",");
+
+      nodeDestination.add(destination);
+      const incl = new YAMLMap<string, string>();
+      incl.add({ key: "destination", value: destination });
+      incl.add({ key: "flags", value: flags });
+      incl.add({ key: "test-files", value: testFiles });
+      nodeInclude.add(incl);
     }
+
+    // Hard limit is at 256, but we have other jobs running outside of this matrix
+    if (nodeDestination.items.length >= 240) {
+      throw new Error("Matrix size exceeded");
+    }
+
+    doc.setIn(["jobs", "tests-ubuntu", "strategy", "matrix", "destination"], nodeDestination);
+    doc.setIn(["jobs", "tests-ubuntu", "strategy", "matrix", "include"], nodeInclude);
+
+    await writeFile("../../.github/workflows/tests-entry.yml", String(doc));
 
     return;
   }

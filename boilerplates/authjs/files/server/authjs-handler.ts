@@ -1,31 +1,24 @@
+//# BATI.has("cloudflare")
+/// <reference types="@cloudflare/workers-types" />
+import { env as cloudflareEnv } from "cloudflare:workers";
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
-// TODO: stop using universal-middleware and directly integrate server middlewares instead and/or use vike-server https://vike.dev/vike-server. (Bati generates boilerplates that use universal-middleware https://github.com/magne4000/universal-middleware to make Bati's internal logic easier. This is temporary and will be removed soon.)
-import type { Get, UniversalHandler, UniversalMiddleware } from "@universal-middleware/core";
+import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
-const env: Record<string, string | undefined> =
-  typeof process?.env !== "undefined"
+//# BATI.has("auth0")
+const env: Record<string, string | undefined> = BATI.has("cloudflare")
+  ? (cloudflareEnv as Record<string, string | undefined>)
+  : typeof process?.env !== "undefined"
     ? process.env
     : import.meta && "env" in import.meta
       ? (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env
       : {};
 
-if (!globalThis.crypto) {
-  /**
-   * Polyfill needed if Auth.js code runs on node18
-   */
-  Object.defineProperty(globalThis, "crypto", {
-    value: await import("node:crypto").then((crypto) => crypto.webcrypto as Crypto),
-    writable: false,
-    configurable: true,
-  });
-}
-
 const authjsConfig = {
   basePath: "/api/auth",
-  trustHost: Boolean(env.AUTH_TRUST_HOST ?? env.VERCEL ?? env.NODE_ENV !== "production"),
+  trustHost: true,
   // TODO: Replace secret {@see https://authjs.dev/reference/core#secret}
   secret: "MY_SECRET",
   providers: [
@@ -70,33 +63,47 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
   const data = await response.json();
 
   if (!data || !Object.keys(data).length) return null;
-  if (status === 200) return data;
-  throw new Error(data.message);
+  if (status === 200) return data as Session;
+  throw new Error(typeof data === "object" && "message" in data ? (data.message as string) : undefined);
 }
 
 /**
  * Add Auth.js session to context
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
  **/
-export const authjsSessionMiddleware: Get<[], UniversalMiddleware> = () => async (request, context) => {
-  try {
-    return {
-      ...context,
-      session: await getSession(request, authjsConfig),
-    };
-  } catch (error) {
-    console.debug("authjsSessionMiddleware:", error);
-    return {
-      ...context,
-      session: null,
-    };
-  }
-};
+export const authjsSessionMiddleware: UniversalMiddleware = enhance(
+  async (request, context) => {
+    try {
+      return {
+        ...context,
+        session: await getSession(request, authjsConfig),
+      };
+    } catch (error) {
+      console.debug("authjsSessionMiddleware:", error);
+      return {
+        ...context,
+        session: null,
+      };
+    }
+  },
+  {
+    name: "my-app:authjs-middleware",
+    immutable: false,
+  },
+);
 
 /**
  * Auth.js route
  * @link {@see https://authjs.dev/getting-started/installation}
  **/
-export const authjsHandler = (() => async (request) => {
-  return Auth(request, authjsConfig);
-}) satisfies Get<[], UniversalHandler>;
+export const authjsHandler = enhance(
+  async (request) => {
+    return Auth(request, authjsConfig);
+  },
+  {
+    name: "my-app:authjs-handler",
+    path: "/api/auth/**",
+    method: ["GET", "POST"],
+    immutable: false,
+  },
+) satisfies UniversalHandler;

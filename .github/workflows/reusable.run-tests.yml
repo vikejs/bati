@@ -1,0 +1,151 @@
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      destination:
+        required: true
+        type: string
+      flags:
+        required: true
+        type: string
+      test-files:
+        required: true
+        type: string
+
+concurrency:
+  group: tests-generated-${{ inputs.os }}-${{ inputs.destination }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ${{ inputs.os }}
+
+    name: Run ${{ inputs.flags }}
+
+    env:
+      BATI_TEST: true
+      TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+      TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+      TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+      TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v1.8
+
+      - uses: oven-sh/setup-bun@v2
+        name: Install bun
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Download Bati CLI
+        uses: actions/download-artifact@v5
+        with:
+          name: bati-cli-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-cli
+
+      - name: Download Bati tests
+        uses: actions/download-artifact@v5
+        with:
+          name: bati-tests-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests
+
+      - name: Download tests-utils
+        uses: actions/download-artifact@v5
+        with:
+          name: tests-utils-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests-utils
+
+      - name: Download tests-files
+        uses: actions/download-artifact@v5
+        with:
+          name: tests-files-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          path: ./bati-tests-files
+
+      - name: Run Bati CLI
+        shell: bash
+        run: bun ./bati-cli/index.js ${{ inputs.flags }} ${{ inputs.destination }}
+
+      - name: Link tests-utils
+        shell: bash
+        run: cp -s ../bati-tests-utils/* .
+        working-directory: ${{ inputs.destination }}
+
+      - name: Link tests files
+        shell: bash
+        run: cp -s ../bati-tests-files/* .
+        working-directory: ${{ inputs.destination }}
+
+      - name: Prepare Bati tests
+        shell: bash
+        run:
+          bun ../bati-tests/prepare.js --test-files='${{ inputs.test-files }}' ${{
+          inputs.flags }}
+        working-directory: ${{ inputs.destination }}
+
+      - name: Install dependencies
+        shell: bash
+        run: bun install
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run build
+        shell: bash
+        run:
+          bun turbo run build --no-update-notifier --framework-inference false
+          --env-mode loose
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run tests
+        shell: bash
+        # Bun hangs on Windows
+        run:
+          ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only
+          --no-update-notifier --framework-inference false --env-mode loose' }}
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run lint:eslint
+        shell: bash
+        run:
+          bun turbo run lint:eslint --only --no-update-notifier --framework-inference
+          false --env-mode loose
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run lint:biome
+        shell: bash
+        run:
+          bun turbo run lint:biome --only --no-update-notifier --framework-inference
+          false --env-mode loose
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run typecheck
+        shell: bash
+        run:
+          bun turbo run typecheck --only --no-update-notifier --framework-inference
+          false --env-mode loose
+        working-directory: ${{ inputs.destination }}
+
+      - name: Run knip
+        shell: bash
+        run:
+          bun turbo run knip --only --no-update-notifier --framework-inference false
+          --env-mode loose
+        working-directory: ${{ inputs.destination }}

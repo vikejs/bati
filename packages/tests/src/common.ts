@@ -107,9 +107,14 @@ export async function createTurboConfig(context: GlobalContext) {
 }
 
 export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
-  const ignoreDependencies = ["@batijs/tests-utils", "turbo"];
+  const ignoreDependencies = ["@batijs/tests-utils", "turbo", "photon"];
   const entry: string[] = [];
   const ignore: string[] = ["*.spec.ts"];
+
+  function addPhotonConfig() {
+    entry.push("server/entry.ts");
+    entry.push("+photon.ts");
+  }
 
   if (flags.includes("eslint")) {
     ignoreDependencies.push("eslint");
@@ -162,15 +167,28 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("hono")) {
-    entry.push("hono-entry.node.ts", "hono-entry.ts");
+    addPhotonConfig();
+  }
+
+  if (flags.includes("h3")) {
+    addPhotonConfig();
+  }
+
+  if (flags.includes("express")) {
+    addPhotonConfig();
+  }
+
+  if (flags.includes("fastify")) {
+    addPhotonConfig();
   }
 
   if (flags.includes("cloudflare")) {
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "npm-run-all2");
+    entry.push("+photon.ts", "cloudflare-entry.ts");
+    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare", "@photonjs/cloudflare");
   }
 
   if (flags.includes("vercel")) {
-    ignoreDependencies.push("@vite-plugin-vercel/vike");
+    ignoreDependencies.push("vite-plugin-vercel", "@photonjs/vercel");
     ignore.push(".vercel/**");
   }
 
@@ -180,6 +198,10 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
     entry.push("tests/aws_handler.spec.ts");
     ignoreDependencies.push("aws-cdk", "cdk", "esbuild", "npm-run-all2");
     ignore.push("cdk.out/**");
+  }
+
+  if (flags.includes("auth0") || flags.includes("authjs")) {
+    entry.push("server/authjs-handler.ts");
   }
 
   const scriptsValues = Array.from(Object.values(scripts));

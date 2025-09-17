@@ -3,6 +3,7 @@
 import type { ChildProcess } from "node:child_process";
 import type { RequestInit, Response } from "node-fetch";
 import type { TestOptions } from "vitest";
+import type { exec } from "./exec.js";
 
 export interface GlobalContext {
   port: number;
@@ -12,7 +13,7 @@ export interface GlobalContext {
 }
 
 export interface PrepareOptions {
-  mode?: "dev" | "build" | "none";
+  mode?: "dev" | "build" | "prod" | "none";
   retry?: number;
 }
 
@@ -34,5 +35,7 @@ export type TestMatches<T extends FlagMatrix> = {
 export type TestContext = typeof import("vitest") & {
   fetch: Fetch;
   context: GlobalContext;
+  exec: typeof exec;
+  npmCli: string;
   testMatch: <T extends FlagMatrix>(name: string, matches: TestMatches<T>) => Promise<unknown> | void;
 };

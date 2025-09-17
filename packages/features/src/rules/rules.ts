@@ -12,7 +12,7 @@ export default [
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
   filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {
     if (fts.has("cloudflare")) {
-      if (fts.has("hono")) {
+      if (fts.has("hono") || fts.has("h3")) {
         return false;
       }
 

@@ -47,8 +47,8 @@ export const rulesMessages = {
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,
   ),
   [RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER]: error(
-    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))}.
-Choose Hono or remove selected Server`,
+    `${inverse(bold("Cloudflare"))} is only compatible with ${inverse(bold("Hono"))} or ${inverse(bold("H3"))}.
+Choose one of them or remove selected Server`,
   ),
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
     `${inverse(bold("AWS"))} deployment is only compatible with ${inverse(bold("Hono"))}`,
