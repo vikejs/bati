@@ -25,7 +25,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
 
-    name: ${{ matrix.os }} - node@${{ env.NODE_VERSION }}
+    name: ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
 
