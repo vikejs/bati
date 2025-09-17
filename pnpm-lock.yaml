@@ -1047,10 +1047,10 @@ importers:
         version: 4.20250906.0
       '@ts-rest/core':
         specifier: ^3.52.1
-        version: 3.52.1(@types/node@20.19.9)(zod@3.25.76)
+        version: 3.52.1(@types/node@20.19.9)(zod@4.1.9)
       '@ts-rest/serverless':
         specifier: ^3.52.1
-        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@3.25.76))(@types/aws-lambda@8.10.152)(zod@3.25.76)
+        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@4.1.9))(@types/aws-lambda@8.10.152)(zod@4.1.9)
       '@types/node':
         specifier: ^20.19.9
         version: 20.19.9
@@ -1058,8 +1058,8 @@ importers:
         specifier: ^0.4.10
         version: 0.4.10(@cloudflare/workers-types@4.20250906.0)(@hattip/core@0.0.49)(fastify@5.6.0)(h3@1.15.4)(hono@4.9.6)
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.9
+        version: 4.1.9
 
   boilerplates/vercel:
     dependencies:
@@ -8699,6 +8699,9 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.1.9:
+    resolution: {integrity: sha512-HI32jTq0AUAC125z30E8bQNz0RQ+9Uc+4J7V97gLYjZVKRjeydPgGt6dvQzFrav7MYOUGFqqOGiHpA/fdbd0cQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -10793,18 +10796,18 @@ snapshots:
       minimatch: 10.0.3
       path-browserify: 1.0.1
 
-  '@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@3.25.76)':
+  '@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@4.1.9)':
     optionalDependencies:
       '@types/node': 20.19.9
-      zod: 3.25.76
+      zod: 4.1.9
 
-  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@3.25.76))(@types/aws-lambda@8.10.152)(zod@3.25.76)':
+  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.9)(zod@4.1.9))(@types/aws-lambda@8.10.152)(zod@4.1.9)':
     dependencies:
-      '@ts-rest/core': 3.52.1(@types/node@20.19.9)(zod@3.25.76)
+      '@ts-rest/core': 3.52.1(@types/node@20.19.9)(zod@4.1.9)
       itty-router: 5.0.18
     optionalDependencies:
       '@types/aws-lambda': 8.10.152
-      zod: 3.25.76
+      zod: 4.1.9
 
   '@tybys/wasm-util@0.10.0':
     dependencies:
@@ -16538,6 +16541,8 @@ snapshots:
   zod@3.22.3: {}
 
   zod@3.25.76: {}
+
+  zod@4.1.9: {}
 
   zwitch@2.0.4: {}
 
