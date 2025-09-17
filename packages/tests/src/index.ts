@@ -100,7 +100,7 @@ function linkTestUtils() {
 async function packageManagerInstall(context: GlobalContext) {
   {
     // we use --prefer-offline in order to hit turborepo cache more often (as there is no bun/pnpm lock file)
-    const child = exec(npmCli, ["install", "--prefer-offline"], {
+    const child = exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
       // really slow on Windows CI
       timeout: 5 * 60 * 1000,
       cwd: context.tmpdir,

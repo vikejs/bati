@@ -7,6 +7,7 @@ import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
 import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
+//# BATI.has("auth0")
 const env: Record<string, string | undefined> = BATI.has("cloudflare")
   ? (cloudflareEnv as Record<string, string | undefined>)
   : typeof process?.env !== "undefined"
@@ -17,7 +18,7 @@ const env: Record<string, string | undefined> = BATI.has("cloudflare")
 
 const authjsConfig = {
   basePath: "/api/auth",
-  trustHost: Boolean(env.AUTH_TRUST_HOST ?? env.VERCEL ?? env.NODE_ENV !== "production"),
+  trustHost: true,
   // TODO: Replace secret {@see https://authjs.dev/reference/core#secret}
   secret: "MY_SECRET",
   providers: [
