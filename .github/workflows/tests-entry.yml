@@ -704,7 +704,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    name: Run
+    name: Run ${{ matrix.flags }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
