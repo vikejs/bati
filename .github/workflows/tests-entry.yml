@@ -704,6 +704,13 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      BATI_TEST: true
+      TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+      TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
+      TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
+      TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
+
     name: Run ${{ matrix.flags }}
     steps:
       - name: Checkout
@@ -790,6 +797,7 @@ jobs:
           ${{ runner.os == 'Windows' && 'npm run test' || 'bun turbo run test --only
           --no-update-notifier --framework-inference false --env-mode loose' }}
         working-directory: ${{ matrix.destination }}
+
 
       - name: Run lint:eslint
         shell: bash
