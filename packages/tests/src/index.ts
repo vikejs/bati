@@ -274,16 +274,6 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
     const nodeDestination = new YAMLSeq();
     const nodeInclude = new YAMLSeq();
 
-    // Append one include rule for Win and for Mac
-    const includeWin = new YAMLMap<string, string>();
-    includeWin.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
-    includeWin.add({ key: "os", value: "windows-latest" });
-    nodeInclude.add(includeWin);
-    const includeMac = new YAMLMap<string, string>();
-    includeMac.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
-    includeMac.add({ key: "os", value: "macos-latest" });
-    nodeInclude.add(includeMac);
-
     for (const matrix of matrices.values()) {
       const destination = matrix.flags.length > 0 ? matrix.flags.join("--") : "empty";
       const flags = matrix.flags.length > 0 ? matrix.flags.map((f) => `--${f}`).join(" ") : "empty";
@@ -296,6 +286,20 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       incl.add({ key: "test-files", value: testFiles });
       nodeInclude.add(incl);
     }
+
+    // Append one include rule for Win and for Mac
+    const includeWin = new YAMLMap<string, string>();
+    includeWin.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
+    includeWin.add({ key: "os", value: "windows-latest" });
+    includeWin.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
+    includeWin.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
+    nodeInclude.add(includeWin);
+    const includeMac = new YAMLMap<string, string>();
+    includeMac.add({ key: "destination", value: "react--hono--authjs--eslint--biome" });
+    includeMac.add({ key: "os", value: "macos-latest" });
+    includeWin.add({ key: "flags", value: "--react --hono --authjs --eslint --biome" });
+    includeWin.add({ key: "test-files", value: "FRAMEWORK + SERVER + AUTH.spec.ts" });
+    nodeInclude.add(includeMac);
 
     if (nodeDestination.items.length >= 254) {
       throw new Error("Matrix size exceeded");
