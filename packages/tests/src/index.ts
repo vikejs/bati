@@ -287,6 +287,7 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
       nodeInclude.add(incl);
     }
 
+    // Hard limit is at 256, but we have other jobs running outside of this matrix
     if (nodeDestination.items.length >= 240) {
       throw new Error("Matrix size exceeded");
     }
