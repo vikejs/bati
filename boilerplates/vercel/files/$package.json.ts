@@ -5,9 +5,9 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("prod", {
-      value: "vike build && vite preview",
+      value: "vike build && node dist/server/index.mjs",
       precedence: 25,
       warnIfReplaced: true,
     })
-    .addDependencies(["vite-plugin-vercel"]);
+    .addDependencies(["@photonjs/vercel"]);
 }

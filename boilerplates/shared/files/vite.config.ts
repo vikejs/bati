@@ -1,5 +1,5 @@
 //# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
-/// <reference types="vite-plugin-vercel/types" />
+/// <reference types="@photonjs/vercel/types" />
 /// <reference types="@batijs/core/types" />
 
 import vike from "vike/plugin";
