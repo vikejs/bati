@@ -51,7 +51,7 @@ export function FormControl(props: {
           checked
           tabIndex={-1}
         />
-        <div class="tab-content bg-base-100 border-base-300 rounded-md px-5 !h-[22rem]">
+        <div class="tab-content bg-base-100 border-base-300 rounded-md px-5 pb-5">
           <div class="">
             <For each={props.categories}>
               {(category) => {
