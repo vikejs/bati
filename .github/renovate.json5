@@ -24,21 +24,12 @@
     // manually bumping
     "node",
     "@types/node",
-    "pnpm",
-    // FIXME remove once Bati integreates vike-server
-    "vike-cloudflare"
+    "pnpm"
   ],
   "postUpdateOptions": [
     "pnpmDedupe"
   ],
   "packageRules": [
-    {
-      "matchPackageNames": [
-        "vite-plugin-vercel",
-        "@vite-plugin-vercel/vike"
-      ],
-      "description": "vite-plugin-vercel monorepo"
-    },
     {
       "matchPackageNames": [
         "fastify",

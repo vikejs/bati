@@ -14,7 +14,7 @@
     "publish": "pnpm run build && pnpm -r publish",
     "check-types": "turbo run check-types",
     "test": "turbo run test",
-    "test:e2e": "pnpm --filter \"@batijs/tests\" test:e2e",
+    "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run build --no-daemon && pnpm run format",
     "lint": "biome lint",
@@ -28,17 +28,17 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.3",
     "@vikejs/biome-config": "^2.0.1",
-    "bumpp": "^10.2.3",
+    "bumpp": "^10.3.1",
     "citty": "^0.1.6",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "rimraf": "^6.0.1",
-    "tsx": "^4.20.5",
-    "turbo": "^2.5.6",
-    "typescript": "^5.9.2"
+    "tsx": "^4.20.6",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
   },
   "optionalDependencies": {
-    "browserless": "^10.8.0",
-    "puppeteer": "^24.19.0"
+    "browserless": "^10.9.7",
+    "puppeteer": "^24.25.0"
   },
   "engines": {
     "node": ">=20"

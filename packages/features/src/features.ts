@@ -462,10 +462,6 @@ export const features = [
         label: "Vike integration",
         href: "https://vike.dev/cloudflare",
       },
-      {
-        label: "vike-cloudflare",
-        href: "https://github.com/vikejs/vike-cloudflare",
-      },
     ],
   },
   {

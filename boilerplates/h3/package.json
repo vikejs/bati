@@ -12,22 +12,19 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@auth/core": "^0.40.0",
+    "@auth/core": "^0.41.0",
     "@batijs/compile": "workspace:*",
-    "@hattip/polyfills": "^0.0.49",
-    "@trpc/server": "^11.5.1",
+    "@photonjs/h3": "^0.1.0",
+    "@trpc/server": "^11.6.0",
     "@types/express": "^5.0.3",
-    "@types/node": "^20.19.9",
-    "@types/serve-static": "^1.15.8",
-    "@universal-middleware/h3": "^0.4.12",
-    "cross-env": "^10.0.0",
-    "dotenv": "^17.2.2",
+    "@types/node": "^20.19.21",
+    "@universal-middleware/core": "^0.4.11",
+    "dotenv": "^17.2.3",
     "h3": "~1.15.4",
-    "serve-static": "^2.2.0",
-    "telefunc": "^0.2.12",
-    "tsx": "^4.20.5",
-    "vike": "^0.4.239",
-    "vite": "^7.1.4"
+    "telefunc": "^0.2.15",
+    "vike": "^0.4.242",
+    "vike-photon": "^0.1.10",
+    "vite": "^7.1.10"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -41,14 +38,14 @@
     }
   },
   "exports": {
-    "./h3-entry": {
-      "types": "./dist/types/h3-entry.d.ts"
+    "./server/entry": {
+      "types": "./dist/types/server/entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "h3-entry": [
-        "./dist/types/h3-entry.d.ts"
+      "server/entry": [
+        "./dist/types/server/entry.d.ts"
       ]
     }
   }

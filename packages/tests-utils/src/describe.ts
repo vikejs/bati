@@ -1,4 +1,4 @@
-import type { TestOptions } from "vitest";
+import type { TestOptions, SuiteFactory } from "vitest";
 import { prepare } from "./prepare.js";
 import type { FlagMatrix, GlobalContext, PrepareOptions, TestContext, TestMatch, TestMatches } from "./types.js";
 
@@ -38,6 +38,19 @@ function testMatchFactory(vitest: typeof import("vitest"), context: GlobalContex
   };
 }
 
+export async function describeMultipleBati(fns: (() => Promise<unknown>)[]) {
+  if (process.env.NODE_ENV !== "test") return;
+
+  const vitest = await import("vitest");
+
+  vitest.describe.sequential("Setup multiple Bati tests", async () => {
+    let i = 0;
+    for (const fn of fns) {
+      vitest.describe(`Setup ${++i}`, {}, fn as SuiteFactory);
+    }
+  });
+}
+
 export async function describeBati(fn: (props: TestContext) => void, options?: PrepareOptions) {
   if (process.env.NODE_ENV !== "test") return;
 
@@ -45,7 +58,11 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
   const p = await prepare(options);
   const testMatch = testMatchFactory(vitest, p.context);
 
-  vitest.describe.concurrent(p.context.flags.map((f) => `--${f}`).join(" "), { retry: options?.retry }, () => {
+  const name = p.context.flags.map((f) => `--${f}`).join(" ");
+
+  vitest.describe.concurrent(name, { retry: options?.retry }, () => {
+    p.hooks();
+
     fn({
       ...vitest,
       ...p,

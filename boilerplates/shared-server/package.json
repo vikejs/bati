@@ -14,11 +14,11 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
-    "@cloudflare/workers-types": "^4.20250906.0",
-    "@types/node": "^20.19.9",
-    "@universal-middleware/core": "^0.4.10",
-    "vike": "^0.4.239",
-    "vite": "^7.1.4"
+    "@cloudflare/workers-types": "^4.20251011.0",
+    "@types/node": "^20.19.21",
+    "@universal-middleware/core": "^0.4.11",
+    "vike": "^0.4.242",
+    "vite": "^7.1.10"
   },
   "files": [
     "dist/"
@@ -38,18 +38,12 @@
   "exports": {
     "./server/create-todo-handler": {
       "types": "./dist/types/server/create-todo-handler.d.ts"
-    },
-    "./server/vike-handler": {
-      "types": "./dist/types/server/vike-handler.d.ts"
     }
   },
   "typesVersions": {
     "*": {
       "server/create-todo-handler": [
         "./dist/types/server/create-todo-handler.d.ts"
-      ],
-      "server/vike-handler": [
-        "./dist/types/server/vike-handler.d.ts"
       ]
     }
   }

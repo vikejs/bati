@@ -30,4 +30,8 @@ export class BatiSet extends Set<Flags> {
   get hasD1(): boolean {
     return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle"));
   }
+
+  get hasPhoton(): boolean {
+    return this.has("cloudflare") || this.has("vercel") || this.hasOneOf(this.#servers);
+  }
 }

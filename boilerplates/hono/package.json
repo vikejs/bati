@@ -12,22 +12,19 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@auth/core": "^0.40.0",
+    "@auth/core": "^0.41.0",
     "@batijs/compile": "workspace:*",
-    "@cloudflare/workers-types": "^4.20250906.0",
-    "@hono/node-server": "^1.19.1",
-    "@hono/vite-dev-server": "^0.20.1",
-    "@trpc/server": "^11.5.1",
-    "@types/aws-lambda": "^8.10.152",
-    "@types/node": "^20.19.9",
-    "@universal-middleware/hono": "^0.4.16",
-    "cross-env": "^10.0.0",
-    "dotenv": "^17.2.2",
-    "hono": "^4.9.6",
-    "telefunc": "^0.2.12",
-    "tsx": "^4.20.5",
-    "vike": "^0.4.239",
-    "vite": "^7.1.4"
+    "@cloudflare/workers-types": "^4.20251011.0",
+    "@photonjs/hono": "^0.1.0",
+    "@trpc/server": "^11.6.0",
+    "@types/aws-lambda": "^8.10.155",
+    "@types/node": "^20.19.21",
+    "dotenv": "^17.2.3",
+    "hono": "^4.9.12",
+    "telefunc": "^0.2.15",
+    "vike": "^0.4.242",
+    "vike-photon": "^0.1.10",
+    "vite": "^7.1.10"
   },
   "dependencies": {
     "@batijs/core": "workspace:*"
@@ -41,26 +38,20 @@
     }
   },
   "exports": {
-    "./hono-entry": {
-      "types": "./dist/types/hono-entry.d.ts"
-    },
     "./entry_aws_lambda": {
       "types": "./dist/types/entry_aws_lambda.d.ts"
     },
-    "./hono-entry.node": {
-      "types": "./dist/types/hono-entry.node.d.ts"
+    "./server/entry": {
+      "types": "./dist/types/server/entry.d.ts"
     }
   },
   "typesVersions": {
     "*": {
-      "hono-entry": [
-        "./dist/types/hono-entry.d.ts"
-      ],
       "entry_aws_lambda": [
         "./dist/types/entry_aws_lambda.d.ts"
       ],
-      "hono-entry.node": [
-        "./dist/types/hono-entry.node.d.ts"
+      "server/entry": [
+        "./dist/types/server/entry.d.ts"
       ]
     }
   }
