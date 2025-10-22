@@ -68,7 +68,10 @@ const unusedImportsPredicate = makePredicate(true, (parent: any, context: any) =
   },
 }));
 
-export default function pluginRemoveUnusedImports() {
+export default function pluginRemoveUnusedImports(): {
+  plugin: ESLint.Plugin;
+  config: Linter.Config[];
+} {
   const rule = tslint.rules["no-unused-vars"];
   rule.meta.fixable = "code";
 
