@@ -10,7 +10,10 @@ import { visitorImportStatement } from "./visitor-imports.js";
 import { visitorStatementWithComments } from "./visitor-statement-with-comments.js";
 import { visitorAsExpression, visitorTypeParameterInstanciation, visitorTypeReference } from "./visitor-ts-types.js";
 
-export default function tsLinterConfig(meta: VikeMeta) {
+export default function tsLinterConfig(meta: VikeMeta): {
+  plugin: ESLint.Plugin;
+  config: Linter.Config[];
+} {
   const plugin: ESLint.Plugin = {
     rules: {
       ts: {

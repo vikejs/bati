@@ -26,7 +26,10 @@ function getAllCommentsBefore(
   return [];
 }
 
-export default function vueLinterConfig(meta: VikeMeta) {
+export default function vueLinterConfig(meta: VikeMeta): {
+  plugin: ESLint.Plugin;
+  config: Linter.Config[];
+} {
   const plugin: ESLint.Plugin = {
     rules: {
       vue: {
