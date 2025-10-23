@@ -113,7 +113,6 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
 
   function addPhotonConfig() {
     entry.push("server/entry.ts");
-    entry.push("+photon.ts");
   }
 
   if (flags.includes("eslint")) {
@@ -183,7 +182,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("cloudflare")) {
-    entry.push("+photon.ts", "cloudflare-entry.ts");
+    entry.push("cloudflare-entry.ts");
     ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare", "@photonjs/cloudflare");
   }
 
