@@ -1,10 +1,9 @@
-import { copyFile, rm, writeFile, readFile } from "node:fs/promises";
+import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import * as process from "node:process";
 import { fileURLToPath } from "node:url";
-import * as ci from "@actions/core";
 import { exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
@@ -202,6 +201,7 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: util
 function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
   if (maxChunks <= 0) throw new Error("The number of chunks must be greater than 0");
 
