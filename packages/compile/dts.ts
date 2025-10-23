@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import * as path from "node:path";
 import * as process from "node:process";
 import tsc from "tsc-prog";
+import * as ts from "typescript";
 
 // Inspired by https://github.com/nodejs/node/issues/8033#issuecomment-388323687
 function overrideStderr() {
@@ -73,7 +74,13 @@ export async function buildTypes() {
 
   if (diagnostics.length) {
     diagnostics.forEach((d) => {
-      console.error(`${d.file}:${d.start} ${d.messageText}`);
+      if (d.file) {
+        const { line, character } = ts.getLineAndCharacterOfPosition(d.file, d.start!);
+        const message = ts.flattenDiagnosticMessageText(d.messageText, "\n");
+        console.log(`${d.file.fileName} (${line + 1},${character + 1}): ${message}`);
+      } else {
+        console.log(ts.flattenDiagnosticMessageText(d.messageText, "\n"));
+      }
     });
     return process.exit(1);
   }

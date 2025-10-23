@@ -20,5 +20,11 @@ export default {
     vikeVue,
     //# BATI.hasPhoton
     vikePhoton,
-  ] as BATI.Any,
-} satisfies Config;
+  ],
+
+  //# BATI.hasServer
+  // https://vike.dev/vike-photon
+  photon: {
+    server: "../server/entry.ts",
+  },
+} as Config;
