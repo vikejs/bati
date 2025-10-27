@@ -140,9 +140,6 @@ importers:
       '@biomejs/biome':
         specifier: 2.3.1
         version: 2.3.1
-      '@biomejs/js-api':
-        specifier: ^4.0.0
-        version: 4.0.0(@biomejs/wasm-nodejs@2.3.1)
       '@biomejs/wasm-nodejs':
         specifier: ^2.3.1
         version: 2.3.1
@@ -1729,20 +1726,6 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
-
-  '@biomejs/js-api@4.0.0':
-    resolution: {integrity: sha512-EOArR/6drRzM1/hwOIz1pZw90FL31Ud4Y7hEHGWVtMNmAwS9SrwZ8hMENGlLVXCeGW/kL46p8kX7eO6x9Nmezg==}
-    peerDependencies:
-      '@biomejs/wasm-bundler': ^2.3.0
-      '@biomejs/wasm-nodejs': ^2.3.0
-      '@biomejs/wasm-web': ^2.3.0
-    peerDependenciesMeta:
-      '@biomejs/wasm-bundler':
-        optional: true
-      '@biomejs/wasm-nodejs':
-        optional: true
-      '@biomejs/wasm-web':
-        optional: true
 
   '@biomejs/wasm-nodejs@2.3.1':
     resolution: {integrity: sha512-P9XIcIr8yAkCAMBVGlorpDDJ0AaUNwvn7NGlXAicySC8lqmWRzwJYTweGhOopoxrbdYm10ov3WsXQ5VScSKSbQ==}
@@ -8751,10 +8734,6 @@ snapshots:
 
   '@biomejs/cli-win32-x64@2.3.1':
     optional: true
-
-  '@biomejs/js-api@4.0.0(@biomejs/wasm-nodejs@2.3.1)':
-    optionalDependencies:
-      '@biomejs/wasm-nodejs': 2.3.1
 
   '@biomejs/wasm-nodejs@2.3.1': {}
 
