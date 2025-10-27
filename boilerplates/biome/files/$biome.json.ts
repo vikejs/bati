@@ -1,10 +1,9 @@
 import type { TransformerProps } from "@batijs/core";
+import type { Configuration, LinterConfiguration } from "@biomejs/wasm-nodejs";
 
 export default async function getBiomeJson(props: TransformerProps) {
-  // biome-ignore lint/suspicious/noExplicitAny: any
-  const additionalLinter: { domains?: Record<string, string>; rules?: Record<string, any> } = {};
-  // biome-ignore lint/suspicious/noExplicitAny: any
-  const additionalConfig: { overrides?: any[] } = {};
+  const additionalLinter: Omit<LinterConfiguration, "enabled"> = {};
+  const additionalConfig: Omit<Configuration, "vcs" | "files" | "assist" | "linter" | "formatter"> = {};
 
   if (props.meta.BATI.has("vue")) {
     additionalLinter.domains = {
@@ -35,6 +34,12 @@ export default async function getBiomeJson(props: TransformerProps) {
     };
   }
 
+  if (props.meta.BATI.has("tailwindcss")) {
+    additionalConfig.css ??= {};
+    additionalConfig.css.parser ??= {};
+    additionalConfig.css.parser.tailwindDirectives = true;
+  }
+
   if (props.meta.BATI.has("tailwindcss") || props.meta.BATI.has("shadcn-ui")) {
     additionalConfig.overrides ??= [];
     additionalConfig.overrides.push({
@@ -59,6 +64,7 @@ export default async function getBiomeJson(props: TransformerProps) {
       enabled: true,
       rules: {
         recommended: true,
+        ...additionalLinter.rules,
       },
       ...additionalLinter,
     },
