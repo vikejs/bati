@@ -2,7 +2,7 @@ import type { TransformerProps } from "@batijs/core";
 import type { Configuration, LinterConfiguration } from "@biomejs/wasm-nodejs";
 
 export default async function getBiomeJson(props: TransformerProps) {
-  const additionalLinter: Omit<LinterConfiguration, "enabled" | "rules"> = {};
+  const additionalLinter: Omit<LinterConfiguration, "enabled"> = {};
   const additionalConfig: Omit<Configuration, "vcs" | "files" | "assist" | "linter" | "formatter"> = {};
 
   if (props.meta.BATI.has("vue")) {
@@ -64,6 +64,7 @@ export default async function getBiomeJson(props: TransformerProps) {
       enabled: true,
       rules: {
         recommended: true,
+        ...additionalLinter.rules,
       },
       ...additionalLinter,
     },
