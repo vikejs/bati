@@ -1033,10 +1033,10 @@ importers:
         version: 4.20251014.0
       '@ts-rest/core':
         specifier: ^3.52.1
-        version: 3.52.1(@types/node@20.19.22)(zod@3.25.76)
+        version: 3.52.1(@types/node@20.19.22)(zod@4.1.12)
       '@ts-rest/serverless':
         specifier: ^3.52.1
-        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@3.25.76))(@types/aws-lambda@8.10.157)(zod@3.25.76)
+        version: 3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@4.1.12))(@types/aws-lambda@8.10.157)(zod@4.1.12)
       '@types/node':
         specifier: ^20.19.21
         version: 20.19.22
@@ -1044,8 +1044,8 @@ importers:
         specifier: ^0.4.13
         version: 0.4.13(@cloudflare/workers-types@4.20251014.0)(@types/express@5.0.5)(fastify@5.6.1)(h3@1.15.4)(hono@4.10.4)
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
 
   boilerplates/vercel:
     dependencies:
@@ -10660,18 +10660,18 @@ snapshots:
       minimatch: 10.0.3
       path-browserify: 1.0.1
 
-  '@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@3.25.76)':
+  '@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@4.1.12)':
     optionalDependencies:
       '@types/node': 20.19.22
-      zod: 3.25.76
+      zod: 4.1.12
 
-  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@3.25.76))(@types/aws-lambda@8.10.157)(zod@3.25.76)':
+  '@ts-rest/serverless@3.52.1(@ts-rest/core@3.52.1(@types/node@20.19.22)(zod@4.1.12))(@types/aws-lambda@8.10.157)(zod@4.1.12)':
     dependencies:
-      '@ts-rest/core': 3.52.1(@types/node@20.19.22)(zod@3.25.76)
+      '@ts-rest/core': 3.52.1(@types/node@20.19.22)(zod@4.1.12)
       itty-router: 5.0.22
     optionalDependencies:
       '@types/aws-lambda': 8.10.157
-      zod: 3.25.76
+      zod: 4.1.12
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
@@ -16305,7 +16305,8 @@ snapshots:
 
   zod@3.22.3: {}
 
-  zod@3.25.76: {}
+  zod@3.25.76:
+    optional: true
 
   zod@4.1.12: {}
 
