@@ -62,8 +62,8 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
-function checkRemainingSteps(flags: string[], projectPath: string): boolean {
-  const readmePath = join(projectPath, "README.md");
+function checkRemainingSteps(flags: string[], dist: string): boolean {
+  const readmePath = join(dist, "README.md");
   assert(existsSync(readmePath));
   const readmeContent = readFileSync(readmePath, "utf-8");
   const readmeHasTodo = readmeContent.includes("TODO");
@@ -119,11 +119,7 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  // Validate and get whether there are additional setup steps
-  assert(typeof dist === "string" && dist.length > 0);
-  const hasRemainingSteps = checkRemainingSteps(flags, dist);
-
-  if (hasRemainingSteps) {
+  if (checkRemainingSteps(flags, dist)) {
     console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
   }
 
