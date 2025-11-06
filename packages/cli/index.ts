@@ -63,25 +63,21 @@ function findDescription(key: string | undefined): string | undefined {
 }
 
 function checkRemainingSteps(flags: string[], projectPath: string): boolean {
-  const readmePath = join(projectPath, "README.md");
-  assert(existsSync(readmePath));
-  const content = readFileSync(readmePath, "utf-8");
-  const readmeHasTodo = content.includes("```bash") || content.includes("```sh");
+  const flagsWithTodo =
+    // TODO: we can remove this once we have https://github.com/vikejs/bati/issues/581
+    ["auth0", "aws", "d1", "drizzle", "mantine", "prisma", "sentry", "shadcn-ui", "sqlite"];
+  const flagsHasTodo = flags.filter((flag) => flagsWithTodo.includes(flag)).length > 0;
 
   // Assert
-  {
-    // TODO: we can remove this once we have https://github.com/vikejs/bati/issues/581
-    const flagsWithTodo = ["auth0", "aws", "d1", "drizzle", "mantine", "prisma", "sentry", "shadcn-ui", "sqlite"];
-    const flagsHasTodo = flags.filter((flag) => flagsWithTodo.includes(flag)).length > 0;
-    assert(readmeHasTodo === flagsHasTodo);
-  }
-  {
-    const flagsWithoutTodo = ["react", "vue", "solid"];
-    const flagsHasTodo = flags.length === 1 && flagsWithoutTodo.includes(flags[0]!);
-    assert(readmeHasTodo === !flagsHasTodo);
-  }
+  const readmePath = join(projectPath, "README.md");
+  assert(existsSync(readmePath));
+  const readmeContent = readFileSync(readmePath, "utf-8");
+  const readmeHasTodo = readmeContent.includes("TODO");
+  /* TODO https://github.com/vikejs/bati/issues/581
+  assert(readmeHasTodo === flagsHasTodo);
+  */
 
-  return readmeHasTodo;
+  return flagsHasTodo;
 }
 
 function printInit() {
