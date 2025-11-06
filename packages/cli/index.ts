@@ -65,6 +65,28 @@ function findDescription(key: string | undefined): string | undefined {
 function printInit() {
   console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
 }
+
+/**
+ * Determines if any of the selected flags correspond to features that require additional setup steps
+ * by checking if they have $README.md.ts files (which contain setup instructions).
+ * Excludes framework-only README files that contain only informational content.
+ */
+function hasAdditionalSetupSteps(flags: string[]): boolean {
+  const boilerplatesDirectory = boilerplatesDir();
+
+  // Framework features have README files but they're just informational, not setup steps
+  const frameworkFeatures = ['react', 'vue', 'solid'];
+
+  return flags.some(flag => {
+    if (frameworkFeatures.includes(flag)) {
+      return false;
+    }
+
+    const readmePath = join(boilerplatesDirectory, flag, 'files', '$README.md.ts');
+    return existsSync(readmePath);
+  });
+}
+
 function printOK(dist: string, flags: string[]): void {
   const indent = 1;
   const list = withIcon("-", gray, indent);
@@ -104,8 +126,12 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  // TODO: show this log if there are remaining steps
-  console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
+  // Show README message only if there are features that require additional setup steps
+  const hasRemainingSteps = hasAdditionalSetupSteps(flags);
+
+  if (hasRemainingSteps) {
+    console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
+  }
 
   console.log("\nHappy coding! 🚀\n");
 }
