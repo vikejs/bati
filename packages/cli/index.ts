@@ -75,8 +75,8 @@ function checkRemainingSteps(flags: string[], projectPath: string): boolean {
     assert(readmeHasTodo === flagsHasTodo);
   }
   {
-    const flagsNoTodo = ["react", "vue", "solid"];
-    const flagsHasTodo = flags.length === 1 && flagsNoTodo.includes(flags[0]!);
+    const flagsWithoutTodo = ["react", "vue", "solid"];
+    const flagsHasTodo = flags.length === 1 && flagsWithoutTodo.includes(flags[0]!);
     assert(readmeHasTodo === !flagsHasTodo);
   }
 
