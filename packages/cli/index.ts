@@ -24,6 +24,28 @@ const pm = packageManager();
 
 type FeatureOrCategory = Flags | CategoryLabels;
 
+/**
+ * Determines if any of the selected flags correspond to features that require additional setup steps
+ * documented in the README.md file after project creation.
+ *
+ * Features that require setup steps:
+ * - auth0: Requires Auth0 account setup and environment variables
+ * - aws: Requires AWS CDK configuration and deployment setup
+ * - d1: Requires Cloudflare D1 database creation and configuration
+ * - drizzle: Requires database URL configuration and migration execution
+ * - mantine: Requires CSS imports and theme configuration
+ * - prisma: Requires prisma init and schema configuration
+ * - sentry: Requires Sentry account setup and environment variables
+ * - shadcn-ui: Requires component installation and configuration
+ * - sqlite: Requires database URL configuration and migration execution
+ */
+function hasAdditionalSetupSteps(flags: string[]): boolean {
+  const featuresWithSetupSteps = [
+    'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
+  ];
+  return flags.some(flag => featuresWithSetupSteps.includes(flag));
+}
+
 function boilerplatesDir() {
   if (existsSync(join(__dirname, "boilerplates", "boilerplates.json"))) {
     return join(__dirname, "boilerplates");
