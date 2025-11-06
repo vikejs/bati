@@ -83,78 +83,18 @@ function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
   }
 }
 
-/**
- * Detects if a boilerplate has setup steps by analyzing its $README.md.ts file
- */
-async function hasSetupSteps(boilerplatePath: string): Promise<boolean> {
-  // The boilerplatePath points to the dist directory, but we need the source directory
-  // Convert from /path/to/boilerplates/name/dist to /path/to/boilerplates/name
-  const sourcePath = boilerplatePath.replace(/\/dist$/, '');
-  const readmePath = join(sourcePath, "files", "$README.md.ts");
-
-  if (!existsSync(readmePath)) {
-    return false;
-  }
-
-  try {
-    const content = await readFile(readmePath, "utf-8");
-
-    // Look for setup-related keywords that indicate additional steps are required
-    const setupKeywords = [
-      /setup/i,
-      /configure/i,
-      /create.*database/i,
-      /environment.*variable/i,
-      /\.env/i,
-      /account.*setup/i,
-      /follow.*instruction/i,
-      /run.*command/i,
-      /execute.*script/i,
-      /migration/i,
-      /init/i,
-      /install.*component/i,
-      /add.*component/i,
-      /update.*file/i,
-      /copy.*output/i,
-    ];
-
-    // Exclude framework-specific README files that only contain informational content
-    const frameworkKeywords = [
-      /This app is ready to start/i,
-      /powered by.*Vike.*and/i,
-      /Such.*files are.*the interface/i,
-    ];
-
-    // If it contains framework keywords, it's likely just informational
-    if (frameworkKeywords.some(keyword => keyword.test(content))) {
-      return false;
-    }
-
-    // Check if it contains setup-related keywords
-    return setupKeywords.some(keyword => keyword.test(content));
-  } catch {
-    return false;
-  }
-}
-
-async function formatCopiedToDef(boilerplates: ToBeCopied[]): Promise<BoilerplateDef[]> {
-  const results = await Promise.all(
-    boilerplates.map(async (bl) => ({
-      config: bl.config,
-      folder: bl.folder,
-      subfolders: bl.subfolders,
-      hasSetupSteps: bl.source ? await hasSetupSteps(bl.source) : false,
-    }))
-  );
-
-  return results;
+function formatCopiedToDef(boilerplates: ToBeCopied[]): BoilerplateDef[] {
+  return boilerplates.map((bl) => ({
+    config: bl.config,
+    folder: bl.folder,
+    subfolders: bl.subfolders,
+  }));
 }
 
 async function createBoilerplatesJson(boilerplates: ToBeCopied[]) {
   const f = join(__dirname, "dist", "boilerplates", "boilerplates.json");
-  const formattedBoilerplates = await formatCopiedToDef(boilerplates);
 
-  await writeFile(f, JSON.stringify(formattedBoilerplates, undefined, 2), {
+  await writeFile(f, JSON.stringify(formatCopiedToDef(boilerplates), undefined, 2), {
     encoding: "utf-8",
   });
 
