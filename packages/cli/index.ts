@@ -71,12 +71,9 @@ function checkRemainingSteps(flags: string[], projectPath: string): boolean {
   // Assert
   {
     const flagsAllWithTodo = ["auth0", "aws", "d1", "drizzle", "mantine", "prisma", "sentry", "shadcn-ui", "sqlite"];
-    const flagsWithTodo = flags.filter((flag) => flagsAllWithTodo.includes(flag));
-    const flagsHasTodo = flagsWithTodo.length > 0;
+    const flagsHasTodo = flags.filter((flag) => flagsAllWithTodo.includes(flag)).length > 0;
     assert(readmeHasTodo === flagsHasTodo);
   }
-
-  // Assert
   {
     const flagsNoTodo = ["react", "vue", "solid"];
     const flagsHasTodo = flags.length === 1 && flagsNoTodo.includes(flags[0]!);
