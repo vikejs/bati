@@ -501,6 +501,6 @@ run()
 
 function assert(condition: boolean): asserts condition {
   if (!condition) {
-    throw new Error(`You stumbled upon an internal bug in the scaffolder. Reach out on GitHub.`);
+    throw new Error("You hit a scaffolder bug — reach out on GitHub.");
   }
 }
