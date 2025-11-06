@@ -124,7 +124,7 @@ function printOK(dist: string, flags: string[]): void {
   const hasRemainingSteps = checkRemainingSteps(flags, dist);
 
   if (hasRemainingSteps) {
-    console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
+    console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
   }
 
   console.log("\nHappy coding! 🚀\n");
