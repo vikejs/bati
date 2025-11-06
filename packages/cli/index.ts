@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { existsSync, rmSync } from "node:fs";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -62,6 +62,20 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
+function hasRemainingSteps(flags: string[], dist: string): boolean {
+  const readmePath = join(dist, "README.md");
+  assert(existsSync(readmePath));
+  const readmeContent = readFileSync(readmePath, "utf-8");
+  const readmeHasTodo = readmeContent.includes("TODO");
+  // return readmeHasTodo
+
+  // TODO: remove this in favor of `return readmeHasTodo` above.
+  // https://github.com/vikejs/bati/issues/581
+  const flagsWithoutRemainingSteps = ["react", "vue", "solid"];
+  const noRemaingSteps = flags.length === 1 && flagsWithoutRemainingSteps.includes(flags[0]!);
+  return !noRemaingSteps;
+}
+
 function printInit() {
   console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
 }
@@ -104,8 +118,9 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  // TODO: show this log if there are remaining steps
-  console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
+  if (hasRemainingSteps(flags, dist)) {
+    console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
+  }
 
   console.log("\nHappy coding! 🚀\n");
 }
@@ -478,3 +493,9 @@ run()
     console.error(e);
     process.exit(1);
   });
+
+function assert(condition: boolean): asserts condition {
+  if (!condition) {
+    throw new Error("You hit a scaffolder bug — reach out on GitHub");
+  }
+}
