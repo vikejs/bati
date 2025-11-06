@@ -62,15 +62,7 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
-function printInit() {
-  console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
-}
-/**
- * Validates that our knownSetupFeatures list is complete by checking the actual generated README.md
- * for setup instructions (indicated by shell code blocks).
- * Returns true if there are additional setup steps needed.
- */
-function validateKnownSetupFeatures(flags: string[], projectPath: string): boolean {
+function checkRemainingSteps(flags: string[], projectPath: string): boolean {
   const knownSetupFeatures = [
     'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
   ];
@@ -83,15 +75,19 @@ function validateKnownSetupFeatures(flags: string[], projectPath: string): boole
 
   const content = readFileSync(readmePath, 'utf-8');
 
-  if (content.includes('```bash') || content.includes('```sh')) {
-    const unknownFlags = flags.filter(flag =>
-      !knownSetupFeatures.includes(flag) && !noTodo.includes(flag)
-    );
+  const unknownFlags = flags.filter(flag =>
+    !knownSetupFeatures.includes(flag) && !noTodo.includes(flag)
+  );
+  const val = unknownFlags.length > 0
 
-    if (unknownFlags.length > 0) {
+
+  if (content.includes('```bash') || content.includes('```sh')) {
+    // TODO: less verbose
+    if (val) {
       assert(false);
     }
   } else {
+    // TODO: this assert() is useless.. assert val
     assert(true);
   }
 
@@ -99,6 +95,10 @@ function validateKnownSetupFeatures(flags: string[], projectPath: string): boole
   return flags.some(flag => knownSetupFeatures.includes(flag));
 }
 
+
+function printInit() {
+  console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
+}
 function printOK(dist: string, flags: string[]): void {
   const indent = 1;
   const list = withIcon("-", gray, indent);
@@ -140,7 +140,7 @@ function printOK(dist: string, flags: string[]): void {
 
   // Validate and get whether there are additional setup steps
   assert(typeof dist === 'string' && dist.length > 0);
-  const hasRemainingSteps = validateKnownSetupFeatures(flags, dist);
+  const hasRemainingSteps = checkRemainingSteps(flags, dist);
 
   if (hasRemainingSteps) {
     console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
