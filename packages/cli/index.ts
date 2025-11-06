@@ -15,6 +15,8 @@ import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, Hook } from "./types.js";
 
+printInit();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isWin = process.platform === "win32";
@@ -60,21 +62,23 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
+function printInit() {
+  console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
+}
 function printOK(dist: string, flags: string[]): void {
-  const arrow0 = withIcon("→", blueBright);
-  const book0 = withIcon("📚", blueBright);
-  const list3 = withIcon("-", undefined, 3);
-  const cmd3 = withIcon("$", gray, 3);
-  console.log(bold(`${green("✓")} Project created at ${cyan(dist)} with:`));
-  console.log(list3(green("Vike")));
+  const indent = 1;
+  const list3 = withIcon("-", gray, indent);
+  const cmd3 = withIcon("$", gray, indent);
+  console.log(`${green(`${bold("✓")} Project created: ${bold(dist)}`)}`);
+  console.log(list3("Vike"));
   for (const key of flags) {
     const feature = features.find((f) => f.flag === key);
     if (!feature || !feature.label) continue;
 
-    console.log(list3(green(feature.label)));
+    console.log(list3(feature.label));
   }
 
-  console.log(`\n${bold(arrow0("Ready to start your app:"))}`);
+  console.log(`\n${bold("Next steps:")}`);
   console.log(cmd3(`cd ${dist}`));
 
   switch (pm?.name) {
@@ -100,9 +104,10 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  console.log(
-    `\n${bold(`${book0("Be sure to check the ") + cyan("README.md")} file for remaining steps and documentation.`)}`,
-  );
+  // TODO: show this log if there are remaining steps
+  console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
+
+  console.log("\nHappy coding! 🚀\n");
 }
 
 const defaultDef = {
