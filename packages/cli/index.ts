@@ -67,11 +67,10 @@ function checkRemainingSteps(flags: string[], dist: string): boolean {
   assert(existsSync(readmePath));
   const readmeContent = readFileSync(readmePath, "utf-8");
   const readmeHasTodo = readmeContent.includes("TODO");
-  /* TODO https://github.com/vikejs/bati/issues/581
-  return readmeHasTodo
-  */
+  // return readmeHasTodo
 
-  // TODO: remove this in favor of `return readmeHasTodo`, see above
+  // TODO: remove this in favor of `return readmeHasTodo` above.
+  // https://github.com/vikejs/bati/issues/581
   const flagsWithoutTodo = ["react", "vue", "solid"];
   const flagsHasTodo = flags.length === 1 && flagsWithoutTodo.includes(flags[0]!);
   return !flagsHasTodo;
