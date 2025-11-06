@@ -67,39 +67,39 @@ function printInit() {
 }
 function printOK(dist: string, flags: string[]): void {
   const indent = 1;
-  const list3 = withIcon("-", gray, indent);
-  const cmd3 = withIcon("$", gray, indent);
+  const list = withIcon("-", gray, indent);
+  const cmd = withIcon("$", gray, indent);
   console.log(`${green(`${bold("✓")} Project created: ${bold(dist)}`)}`);
-  console.log(list3("Vike"));
+  console.log(list("Vike"));
   for (const key of flags) {
     const feature = features.find((f) => f.flag === key);
     if (!feature || !feature.label) continue;
 
-    console.log(list3(feature.label));
+    console.log(list(feature.label));
   }
 
   console.log(`\n${bold("Next steps:")}`);
-  console.log(cmd3(`cd ${dist}`));
+  console.log(cmd(`cd ${dist}`));
 
   switch (pm?.name) {
     case "bun": {
-      console.log(cmd3("bun install"));
-      console.log(cmd3("bun run dev"));
+      console.log(cmd("bun install"));
+      console.log(cmd("bun run dev"));
       break;
     }
     case "yarn": {
-      console.log(cmd3("yarn install"));
-      console.log(cmd3("yarn run dev"));
+      console.log(cmd("yarn install"));
+      console.log(cmd("yarn run dev"));
       break;
     }
     case "npm": {
-      console.log(cmd3("npm install"));
-      console.log(cmd3("npm run dev"));
+      console.log(cmd("npm install"));
+      console.log(cmd("npm run dev"));
       break;
     }
     default: {
-      console.log(cmd3("pnpm install"));
-      console.log(cmd3("pnpm run dev"));
+      console.log(cmd("pnpm install"));
+      console.log(cmd("pnpm run dev"));
       break;
     }
   }
