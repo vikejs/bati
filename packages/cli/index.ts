@@ -133,7 +133,7 @@ function printOK(dist: string, flags: string[]): void {
     console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
   }
 
-  console.log("\nHappy coding! 🚀\n");
+  console.log('\nHappy coding! 🚀\n');
 }
 
 const defaultDef = {
