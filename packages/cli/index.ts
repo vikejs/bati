@@ -70,6 +70,7 @@ function checkRemainingSteps(flags: string[], projectPath: string): boolean {
 
   // Assert
   {
+    // TODO: we can remove this once we have https://github.com/vikejs/bati/issues/581
     const flagsWithTodo = ["auth0", "aws", "d1", "drizzle", "mantine", "prisma", "sentry", "shadcn-ui", "sqlite"];
     const flagsHasTodo = flags.filter((flag) => flagsWithTodo.includes(flag)).length > 0;
     assert(readmeHasTodo === flagsHasTodo);
