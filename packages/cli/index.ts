@@ -62,7 +62,7 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
-function checkRemainingSteps(flags: string[], dist: string): boolean {
+function hasRemainingSteps(flags: string[], dist: string): boolean {
   const readmePath = join(dist, "README.md");
   assert(existsSync(readmePath));
   const readmeContent = readFileSync(readmePath, "utf-8");
@@ -71,9 +71,9 @@ function checkRemainingSteps(flags: string[], dist: string): boolean {
 
   // TODO: remove this in favor of `return readmeHasTodo` above.
   // https://github.com/vikejs/bati/issues/581
-  const flagsWithoutTodo = ["react", "vue", "solid"];
-  const flagsHasTodo = flags.length === 1 && flagsWithoutTodo.includes(flags[0]!);
-  return !flagsHasTodo;
+  const flagsWithoutRemainingSteps = ["react", "vue", "solid"];
+  const noRemaingSteps = flags.length === 1 && flagsWithoutRemainingSteps.includes(flags[0]!);
+  return !noRemaingSteps;
 }
 
 function printInit() {
@@ -118,7 +118,7 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  if (checkRemainingSteps(flags, dist)) {
+  if (hasRemainingSteps(flags, dist)) {
     console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
   }
 
@@ -496,6 +496,6 @@ run()
 
 function assert(condition: boolean): asserts condition {
   if (!condition) {
-    throw new Error("You hit a scaffolder bug — reach out on GitHub.");
+    throw new Error("You hit a scaffolder bug — reach out on GitHub");
   }
 }
