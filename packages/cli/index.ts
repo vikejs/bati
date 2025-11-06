@@ -24,27 +24,6 @@ const pm = packageManager();
 
 type FeatureOrCategory = Flags | CategoryLabels;
 
-/**
- * Determines if any of the selected flags correspond to features that require additional setup steps
- * by checking if they have $README.md.ts files (which contain setup instructions).
- * Excludes framework-only README files that contain only informational content.
- */
-function hasAdditionalSetupSteps(flags: string[]): boolean {
-  const boilerplatesDirectory = boilerplatesDir();
-
-  // Framework features have README files but they're just informational, not setup steps
-  const frameworkFeatures = ['react', 'vue', 'solid'];
-
-  return flags.some(flag => {
-    if (frameworkFeatures.includes(flag)) {
-      return false;
-    }
-
-    const readmePath = join(boilerplatesDirectory, flag, 'files', '$README.md.ts');
-    return existsSync(readmePath);
-  });
-}
-
 function boilerplatesDir() {
   if (existsSync(join(__dirname, "boilerplates", "boilerplates.json"))) {
     return join(__dirname, "boilerplates");
