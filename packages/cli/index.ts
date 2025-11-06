@@ -76,41 +76,40 @@ function hasAdditionalSetupSteps(flags: string[]): boolean {
   ];
 
   // Safety assertion: check for features that might need setup steps but aren't in our list
-  if (process.env.NODE_ENV !== 'production') {
-    validateKnownSetupFeatures(flags, knownSetupFeatures);
-  }
+  // Note: This validation happens after project generation when README.md exists
+  // We'll call it from printOK where we have access to the project path
 
   return flags.some(flag => knownSetupFeatures.includes(flag));
 }
 
 /**
- * Validates that our knownSetupFeatures list is complete by checking for README files
- * that contain setup instructions (indicated by shell code blocks).
+ * Validates that our knownSetupFeatures list is complete by checking the actual generated README.md
+ * for setup instructions (indicated by shell code blocks).
  */
-function validateKnownSetupFeatures(flags: string[], knownSetupFeatures: string[]): void {
-  const boilerplatesDirectory = boilerplatesDir();
-  const frameworkFeatures = ['react', 'vue', 'solid']; // These have README but no setup steps
+function validateKnownSetupFeatures(flags: string[], knownSetupFeatures: string[], projectPath: string): void {
+  const readmePath = join(projectPath, 'README.md');
 
-  for (const flag of flags) {
-    if (knownSetupFeatures.includes(flag) || frameworkFeatures.includes(flag)) {
-      continue; // Already known or excluded
-    }
+  if (!existsSync(readmePath)) {
+    return; // No generated README file
+  }
 
-    const readmePath = join(boilerplatesDirectory, flag, 'files', '$README.md.ts');
-    if (!existsSync(readmePath)) {
-      continue; // No README file
-    }
+  try {
+    const content = readFileSync(readmePath, 'utf-8');
 
-    try {
-      const content = readFileSync(readmePath, 'utf-8');
-      // Check for shell code blocks which typically indicate setup steps
-      // Note: backticks are escaped in TypeScript template strings
-      if (content.includes('\\`\\`\\`shell') || content.includes('\\`\\`\\`bash') || content.includes('\\`\\`\\`sh')) {
-        console.warn(`⚠️  Feature '${flag}' has a README with shell commands but is not in knownSetupFeatures. Consider adding it.`);
+    // Check for shell code blocks which typically indicate setup steps
+    if (content.includes('```shell') || content.includes('```bash') || content.includes('```sh')) {
+      // Find which flags might be missing by checking if any unknown flags are used
+      const frameworkFeatures = ['react', 'vue', 'solid']; // These have README but no setup steps
+      const unknownFlags = flags.filter(flag =>
+        !knownSetupFeatures.includes(flag) && !frameworkFeatures.includes(flag)
+      );
+
+      if (unknownFlags.length > 0) {
+        console.warn(`⚠️  Generated README.md contains shell commands, but these features are not in knownSetupFeatures: ${unknownFlags.join(', ')}. Consider adding them.`);
       }
-    } catch {
-      // Ignore read errors
     }
+  } catch {
+    // Ignore read errors
   }
 }
 
@@ -155,6 +154,14 @@ function printOK(dist: string, flags: string[]): void {
 
   // Show README message only if there are features that require additional setup steps
   const hasRemainingSteps = hasAdditionalSetupSteps(flags);
+
+  // Safety assertion: validate our knownSetupFeatures list in development
+  if (process.env.NODE_ENV !== 'production') {
+    const knownSetupFeatures = [
+      'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
+    ];
+    validateKnownSetupFeatures(flags, knownSetupFeatures, dist);
+  }
 
   if (hasRemainingSteps) {
     console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
