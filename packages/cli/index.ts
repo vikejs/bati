@@ -63,31 +63,28 @@ function findDescription(key: string | undefined): string | undefined {
 }
 
 function checkRemainingSteps(flags: string[], projectPath: string): boolean {
-  const readmePath = join(projectPath, 'README.md');
+  const readmePath = join(projectPath, "README.md");
   assert(existsSync(readmePath));
-  const content = readFileSync(readmePath, 'utf-8');
-  const readmeHasTodo = content.includes('```bash') || content.includes('```sh')
+  const content = readFileSync(readmePath, "utf-8");
+  const readmeHasTodo = content.includes("```bash") || content.includes("```sh");
 
   // Assert
   {
-    const flagsAllWithTodo = [
-      'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
-    ];
-    const flagsWithTodo = flags.filter(flag => flagsAllWithTodo.includes(flag));
-    const flagsHasTodo = flagsWithTodo.length > 0
-    assert(readmeHasTodo === flagsHasTodo)
+    const flagsAllWithTodo = ["auth0", "aws", "d1", "drizzle", "mantine", "prisma", "sentry", "shadcn-ui", "sqlite"];
+    const flagsWithTodo = flags.filter((flag) => flagsAllWithTodo.includes(flag));
+    const flagsHasTodo = flagsWithTodo.length > 0;
+    assert(readmeHasTodo === flagsHasTodo);
   }
 
   // Assert
   {
-    const flagsNoTodo = ['react', 'vue', 'solid'];
-    const flagsHasTodo = flags.length === 1 && flagsNoTodo.includes(flags[0]!)
-    assert(readmeHasTodo === flagsHasTodo)
+    const flagsNoTodo = ["react", "vue", "solid"];
+    const flagsHasTodo = flags.length === 1 && flagsNoTodo.includes(flags[0]!);
+    assert(readmeHasTodo === flagsHasTodo);
   }
 
-  return readmeHasTodo
+  return readmeHasTodo;
 }
-
 
 function printInit() {
   console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
@@ -132,14 +129,14 @@ function printOK(dist: string, flags: string[]): void {
   }
 
   // Validate and get whether there are additional setup steps
-  assert(typeof dist === 'string' && dist.length > 0);
+  assert(typeof dist === "string" && dist.length > 0);
   const hasRemainingSteps = checkRemainingSteps(flags, dist);
 
   if (hasRemainingSteps) {
     console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
   }
 
-  console.log('\nHappy coding! 🚀\n');
+  console.log("\nHappy coding! 🚀\n");
 }
 
 const defaultDef = {
@@ -516,4 +513,3 @@ function assert(condition: boolean): asserts condition {
     throw new Error(`You stumbled upon an internal bug in the scaffolder. Reach out on GitHub.`);
   }
 }
-
