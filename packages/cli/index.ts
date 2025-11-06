@@ -28,22 +28,32 @@ type FeatureOrCategory = Flags | CategoryLabels;
  * Determines if any of the selected flags correspond to features that require additional setup steps
  * documented in the README.md file after project creation.
  *
- * Features that require setup steps:
- * - auth0: Requires Auth0 account setup and environment variables
- * - aws: Requires AWS CDK configuration and deployment setup
- * - d1: Requires Cloudflare D1 database creation and configuration
- * - drizzle: Requires database URL configuration and migration execution
- * - mantine: Requires CSS imports and theme configuration
- * - prisma: Requires prisma init and schema configuration
- * - sentry: Requires Sentry account setup and environment variables
- * - shadcn-ui: Requires component installation and configuration
- * - sqlite: Requires database URL configuration and migration execution
+ * This function uses build-time metadata to automatically detect which boilerplates
+ * contain setup instructions, making it maintainable and avoiding hardcoded lists.
  */
-function hasAdditionalSetupSteps(flags: string[]): boolean {
-  const featuresWithSetupSteps = [
-    'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
-  ];
-  return flags.some(flag => featuresWithSetupSteps.includes(flag));
+async function hasAdditionalSetupSteps(flags: string[]): Promise<boolean> {
+  try {
+    const boilerplatesDirectory = boilerplatesDir();
+    const boilerplates = await parseBoilerplates(boilerplatesDirectory);
+
+    // Create a map of folder names to setup requirements
+    const setupMap = new Map<string, boolean>();
+    for (const bp of boilerplates) {
+      // Extract the feature name from the folder path (e.g., "@batijs/prisma" -> "prisma")
+      const featureName = bp.folder.replace('@batijs/', '');
+      setupMap.set(featureName, bp.hasSetupSteps || false);
+    }
+
+    // Check if any of the selected flags require setup steps
+    return flags.some(flag => setupMap.get(flag) === true);
+  } catch (error) {
+    // Fallback to a basic heuristic if metadata is not available
+    console.warn('Warning: Could not load boilerplate metadata, using fallback detection');
+    const knownSetupFeatures = [
+      'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
+    ];
+    return flags.some(flag => knownSetupFeatures.includes(flag));
+  }
 }
 
 function boilerplatesDir() {
@@ -149,7 +159,7 @@ function printOK(dist: string, flags: string[]): void {
   }
 
   // Show README message only if there are features that require additional setup steps
-  const hasRemainingSteps = hasAdditionalSetupSteps(flags);
+  const hasRemainingSteps = await hasAdditionalSetupSteps(flags);
 
   if (hasRemainingSteps) {
     console.log(withIcon("-", gray, indent)(`Check README.md for final steps`));
@@ -511,7 +521,7 @@ async function run() {
         gitInit(args.project);
       }
 
-      printOK(args.project, flags);
+      await printOK(args.project, flags);
     },
   });
 

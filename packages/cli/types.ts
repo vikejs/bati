@@ -9,6 +9,7 @@ export interface BoilerplateDef {
   folder: string;
   config: BatiConfig;
   subfolders: string[];
+  hasSetupSteps?: boolean;
 }
 
 export interface ToBeCopied extends BoilerplateDef {
