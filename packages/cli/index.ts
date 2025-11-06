@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { existsSync, rmSync } from "node:fs";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -67,24 +67,51 @@ function printInit() {
 }
 
 /**
- * Determines if any of the selected flags correspond to features that require additional setup steps
- * by checking if they have $README.md.ts files (which contain setup instructions).
- * Excludes framework-only README files that contain only informational content.
+ * Determines if any of the selected flags correspond to features that require additional setup steps.
+ * Uses a known list with safety assertions to catch missing entries.
  */
 function hasAdditionalSetupSteps(flags: string[]): boolean {
+  const knownSetupFeatures = [
+    'auth0', 'aws', 'd1', 'drizzle', 'mantine', 'prisma', 'sentry', 'shadcn-ui', 'sqlite'
+  ];
+
+  // Safety assertion: check for features that might need setup steps but aren't in our list
+  if (process.env.NODE_ENV !== 'production') {
+    validateKnownSetupFeatures(flags, knownSetupFeatures);
+  }
+
+  return flags.some(flag => knownSetupFeatures.includes(flag));
+}
+
+/**
+ * Validates that our knownSetupFeatures list is complete by checking for README files
+ * that contain setup instructions (indicated by shell code blocks).
+ */
+function validateKnownSetupFeatures(flags: string[], knownSetupFeatures: string[]): void {
   const boilerplatesDirectory = boilerplatesDir();
+  const frameworkFeatures = ['react', 'vue', 'solid']; // These have README but no setup steps
 
-  // Framework features have README files but they're just informational, not setup steps
-  const frameworkFeatures = ['react', 'vue', 'solid'];
-
-  return flags.some(flag => {
-    if (frameworkFeatures.includes(flag)) {
-      return false;
+  for (const flag of flags) {
+    if (knownSetupFeatures.includes(flag) || frameworkFeatures.includes(flag)) {
+      continue; // Already known or excluded
     }
 
     const readmePath = join(boilerplatesDirectory, flag, 'files', '$README.md.ts');
-    return existsSync(readmePath);
-  });
+    if (!existsSync(readmePath)) {
+      continue; // No README file
+    }
+
+    try {
+      const content = readFileSync(readmePath, 'utf-8');
+      // Check for shell code blocks which typically indicate setup steps
+      // Note: backticks are escaped in TypeScript template strings
+      if (content.includes('\\`\\`\\`shell') || content.includes('\\`\\`\\`bash') || content.includes('\\`\\`\\`sh')) {
+        console.warn(`⚠️  Feature '${flag}' has a README with shell commands but is not in knownSetupFeatures. Consider adding it.`);
+      }
+    } catch {
+      // Ignore read errors
+    }
+  }
 }
 
 function printOK(dist: string, flags: string[]): void {
