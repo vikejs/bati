@@ -123,7 +123,7 @@ const hasAdditionalSteps: Record<string, boolean> = {
   netlify: false, // Deployment platform
 };
 
-function hasRemainingSteps(flags: string[], dist: string): boolean {
+function hasRemainingSteps(flags: string[]): boolean {
   // Assert that all flags are covered in the hasAdditionalSteps mapping
   const allFeatureFlags = features.map((f) => f.flag);
   const uncoveredFlags = allFeatureFlags.filter((flag) => !(flag in hasAdditionalSteps));
@@ -179,7 +179,7 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  if (hasRemainingSteps(flags, dist)) {
+  if (hasRemainingSteps(flags)) {
     console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
   }
 
