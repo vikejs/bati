@@ -13,7 +13,7 @@
 
 <style>
 /* Page Transition Animation */
-body.page-is-transitioning #page-content {
+body.page-transition #page-content {
   opacity: 0;
 }
 </style>

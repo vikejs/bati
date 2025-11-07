@@ -51,7 +51,7 @@ a {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
 }
-body.page-is-transitioning #page-content {
+body.page-transition #page-content {
   opacity: 0;
 }
 </style>
