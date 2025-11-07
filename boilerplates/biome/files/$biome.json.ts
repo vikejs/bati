@@ -57,7 +57,6 @@ export default async function getBiomeJson(props: TransformerProps) {
   return {
     $schema: "./node_modules/@biomejs/biome/configuration_schema.json",
     formatter: {
-      indentWidth: 2,
       indentStyle: "space",
     },
     linter: {
@@ -67,14 +66,6 @@ export default async function getBiomeJson(props: TransformerProps) {
         ...additionalLinter.rules,
       },
       ...additionalLinter,
-    },
-    assist: {
-      enabled: true,
-      actions: {
-        source: {
-          organizeImports: "on",
-        },
-      },
     },
     files: {
       includes: [
