@@ -12,7 +12,7 @@ This app is ready to start. It's powered by [Vike](https://vike.dev) and [React]
 
 [The + files are the interface](https://vike.dev/config) between Vike and your code.
 
-- [\`+config.ts\`](https://vike.dev/settings) — Settings (e.g. global default \`<title>\`)
+- [\`+config.ts\`](https://vike.dev/settings) — Settings (e.g. \`<title>\`)
 - [\`+Page.tsx\`](https://vike.dev/Page) — The \`<Page>\` component
 - [\`+data.ts\`](https://vike.dev/data) — Fetching data (for your \`<Page>\` component)
 - [\`+Layout.tsx\`](https://vike.dev/Layout) — The \`<Layout>\` component (wraps your \`<Page>\` components)
