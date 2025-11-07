@@ -1,10 +1,10 @@
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, rmSync } from "node:fs";
 import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
+import { packageManager, type VikeMeta, which, withIcon, getVersion } from "@batijs/core";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
@@ -129,7 +129,10 @@ function hasRemainingSteps(flags: string[]): boolean {
 }
 
 function printInit() {
-  console.log(cyan("\n🔨 Vike Scaffolder 🔨\n"));
+  const v = getVersion();
+  const version = v.semver.at(-1);
+  assert(version);
+  console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
 function printOK(dist: string, flags: string[]): void {
   const indent = 1;
@@ -546,7 +549,7 @@ run()
     process.exit(1);
   });
 
-function assert(condition: boolean): asserts condition {
+function assert(condition: unknown): asserts condition {
   if (!condition) {
     throw new Error("You hit a scaffolder bug — reach out on GitHub");
   }
