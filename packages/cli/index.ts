@@ -314,7 +314,7 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
 
   if (!isBarebones) {
     console.warn(
-      `${yellow("🛈 Scaffolding bare-bones app")} ➡️  Go to ${underline("https://vike.dev/new")} to scaffold full-fledged apps with Tailwind, authentication, database, deployment, ...\n`,
+      `${yellow("🛈 Scaffolding a bare-bones app")} ➡️  Go to ${underline("https://vike.dev/new")} to scaffold full-fledged apps with Tailwind, authentication, database, deployment, and more.\n`,
     );
   }
   if (!uiFlagFound) {
