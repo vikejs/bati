@@ -5,16 +5,20 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const about = `
-## React
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
 
-### \`/pages/+config.ts\`
+### Plus files
 
-Such \`+\` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
-- A default [\`<Layout>\` component](https://vike.dev/Layout) (that wraps your [\`<Page>\` components](https://vike.dev/Page)).
-- A default [\`title\`](https://vike.dev/title).
-- Global [\`<head>\` tags](https://vike.dev/head-tags).
+[The + files are the interface](https://vike.dev/config) between Vike and your code.
+
+- [\`+config.ts\`](https://vike.dev/settings) — Settings (e.g. global default \`<title>\`)
+- [\`+Page.tsx\`](https://vike.dev/Page) — The \`<Page>\` component
+- [\`+data.ts\`](https://vike.dev/data) — Fetching data (for your \`<Page>\` component)
+- [\`+Layout.tsx\`](https://vike.dev/Layout) — The \`<Layout>\` component (wraps your \`<Page>\` components)
+- [\`/pages/_error/+Page.tsx\`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
+- [\`+onPageTransitionStart.ts\`](https://vike.dev/onPageTransitionStart) and \`+onPageTransitionEnd.ts\` — For page transition animations
+- [\`+Head.tsx\`](https://vike.dev/Head) - Sets \`<head>\` tags
 
 ### Routing
 
@@ -23,21 +27,13 @@ Such \`+\` files are [the interface](https://vike.dev/config) between Vike and y
  - [Route Strings](https://vike.dev/route-string)
  - [Route Functions](https://vike.dev/route-function)
 
-### \`/pages/_error/+Page.jsx\`
-
-The [error page](https://vike.dev/error-page) which is rendered when errors occur.
-
-### \`/pages/+onPageTransitionStart.ts\` and \`/pages/+onPageTransitionEnd.ts\`
-
-The [\`onPageTransitionStart()\` hook](https://vike.dev/onPageTransitionStart), together with [\`onPageTransitionEnd()\`](https://vike.dev/onPageTransitionEnd), enables you to implement page transition animations.
-
 ### SSR
 
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all your pages or only for some pages.
+SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or specific pages.
 
 ### HTML Streaming
 
-You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pages, or only for some pages while still using it for others.`;
+You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.`;
 
   content.addMarkdownFeature(about, "react");
 
