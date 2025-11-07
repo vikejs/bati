@@ -125,16 +125,12 @@ const hasAdditionalSteps: Record<string, boolean> = {
 
 function hasRemainingSteps(flags: string[]): boolean {
   // Assert that all flags are covered in the hasAdditionalSteps mapping
+  // TODO/auggie make it one/two liner
   const allFeatureFlags = features.map((f) => f.flag);
   const uncoveredFlags = allFeatureFlags.filter((flag) => !(flag in hasAdditionalSteps));
-  if (uncoveredFlags.length > 0) {
-    throw new Error(`Uncovered flags in hasAdditionalSteps mapping: ${uncoveredFlags.join(", ")}`);
-  }
+  assert(uncoveredFlags.length > 0);
 
-  // Check if any of the provided flags require additional setup steps
-  const requiresSetup = flags.some((flag) => hasAdditionalSteps[flag] === true);
-
-  return requiresSetup;
+  return flags.some((flag) => hasAdditionalSteps[flag] === true);
 }
 
 function printInit() {
