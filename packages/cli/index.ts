@@ -62,18 +62,70 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
-function hasRemainingSteps(flags: string[], dist: string): boolean {
-  const readmePath = join(dist, "README.md");
-  assert(existsSync(readmePath));
-  const readmeContent = readFileSync(readmePath, "utf-8");
-  const readmeHasTodo = readmeContent.includes("TODO");
-  // return readmeHasTodo
+// Map of all flags and whether they require additional setup steps after scaffolding
+// TODO/eventually: TODO.md https://github.com/vikejs/bati/issues/581
+const hasAdditionalSteps: Record<string, boolean> = {
+  // UI Frameworks - work out of the box
+  react: false,
+  vue: false,
+  solid: false,
+  vike: false, // Always included, invisible in CLI
 
-  // TODO: remove this in favor of `return readmeHasTodo` above.
-  // https://github.com/vikejs/bati/issues/581
-  const flagsWithoutRemainingSteps = ["react", "vue", "solid"];
-  const noRemaingSteps = flags.length === 1 && flagsWithoutRemainingSteps.includes(flags[0]!);
-  return !noRemaingSteps;
+  // CSS - work out of the box
+  tailwindcss: false,
+  "compiled-css": false,
+
+  // UI Component Libraries - work out of the box or minimal setup
+  daisyui: false, // Works with Tailwind out of the box
+  "shadcn-ui": false, // Components can be added via CLI but not required
+  mantine: false, // Theme is pre-configured, minimal setup
+
+  // Auth - require configuration
+  auth0: true, // Requires Auth0 account, client ID/secret, callback URLs
+  authjs: true, // Requires provider configuration and secret setup
+
+  // Data fetching - work out of the box
+  telefunc: false,
+  trpc: false,
+  "ts-rest": false,
+
+  // Server frameworks - work out of the box
+  hono: false,
+  h3: false,
+  express: false,
+  fastify: false,
+
+  // Database - require setup
+  drizzle: true, // Requires DATABASE_URL and migration commands
+  sqlite: true, // Requires DATABASE_URL and migration setup
+  prisma: true, // Requires prisma init and schema setup
+
+  // Deployment platforms - work out of the box
+  cloudflare: false,
+  vercel: false,
+  aws: true, // Requires AWS CDK deployment setup
+
+  // Analytics - minimal setup (just domain update)
+  "google-analytics": false,
+  "plausible.io": false, // Just needs domain update in script tag
+  segment: false,
+
+  // Error tracking - requires configuration
+  sentry: true, // Requires Sentry DSN and build plugin configuration
+
+  // Development tools - work out of the box
+  eslint: false,
+  biome: false,
+  prettier: false,
+
+  // Disabled features
+  logrocket: false, // Currently disabled
+  netlify: false, // Deployment platform
+};
+function hasRemainingSteps(flags: string[]): boolean {
+  // Assert `flags` is covered by hasAdditionalSteps
+  assert(features.every((f) => f.flag in hasAdditionalSteps));
+  return flags.some((flag) => hasAdditionalSteps[flag] === true);
 }
 
 function printInit() {
@@ -118,7 +170,7 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  if (hasRemainingSteps(flags, dist)) {
+  if (hasRemainingSteps(flags)) {
     console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
   }
 
@@ -262,7 +314,7 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
 
   if (!isBarebones) {
     console.warn(
-      `${yellow("🛈 Scaffolding bare-bones app")} ➡️  Go to ${underline("https://vike.dev/new")} to scaffold full-fledged apps with Tailwind, authentication, database, deployment, ...\n`,
+      `${yellow("🛈 Scaffolding a bare-bones app")} ➡️  Go to ${underline("https://vike.dev/new")} to scaffold full-fledged apps with Tailwind, authentication, database, deployment, and more.\n`,
     );
   }
   if (!uiFlagFound) {
