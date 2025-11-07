@@ -18,5 +18,6 @@ export async function onNewTodo({ text }: { text: string }) {
   } else {
     // NOTE: This to-do list isn't persisted, it's reset when the user navigates away.
     // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    console.log(`Received ${text}`);
   }
 }
