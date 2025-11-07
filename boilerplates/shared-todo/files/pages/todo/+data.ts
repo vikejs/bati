@@ -7,7 +7,7 @@ import type { PageContextServer } from "vike/types";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
-export default async function data(_pageContext: PageContextServer) {
+export async function data(_pageContext: PageContextServer) {
   if (BATI.has("drizzle")) {
     const todo = await drizzleQueries.getAllTodos(_pageContext.db);
 

@@ -6,7 +6,7 @@ import type { MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
-export default async function data(pageContext: PageContextServer) {
+export async function data(pageContext: PageContextServer) {
   // https://vike.dev/useConfig
   const config = useConfig();
 

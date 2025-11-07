@@ -5,7 +5,7 @@ import type { Movie, MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
-export default async function data() {
+export async function data() {
   // https://vike.dev/useConfig
   const config = useConfig();
 
