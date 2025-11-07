@@ -63,6 +63,7 @@ function findDescription(key: string | undefined): string | undefined {
 }
 
 // Map of all flags and whether they require additional setup steps after scaffolding
+// TODO/eventually: TODO.md https://github.com/vikejs/bati/issues/581
 const hasAdditionalSteps: Record<string, boolean> = {
   // UI Frameworks - work out of the box
   react: false,
