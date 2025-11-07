@@ -5,11 +5,9 @@ import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos"
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { PageContextServer } from "vike/types";
 
-export type Data = {
-  todo: { text: string }[];
-};
+export type Data = Awaited<ReturnType<typeof data>>;
 
-export default async function data(_pageContext: PageContextServer): Promise<Data> {
+export default async function data(_pageContext: PageContextServer) {
   if (BATI.has("drizzle")) {
     const todo = await drizzleQueries.getAllTodos(_pageContext.db);
 

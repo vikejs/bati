@@ -6,7 +6,7 @@ import type { MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
-export const data = async (pageContext: PageContextServer) => {
+export default async function data(pageContext: PageContextServer) {
   // https://vike.dev/useConfig
   const config = useConfig();
 
@@ -23,7 +23,7 @@ export const data = async (pageContext: PageContextServer) => {
   movie = minimize(movie);
 
   return movie;
-};
+}
 
 function minimize(movie: MovieDetails): MovieDetails {
   const { id, title, release_date, director, producer } = movie;
