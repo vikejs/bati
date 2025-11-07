@@ -71,6 +71,7 @@ function hasRemainingSteps(flags: string[], dist: string): boolean {
 
   // TODO: remove this in favor of `return readmeHasTodo` above.
   // https://github.com/vikejs/bati/issues/581
+  // TODO/augggie: improve this. For example I don't think `--tailwind` needs any additional step? Check each flag individually and read the the readme section they generate to determnine whether the flag adds additional steps. Do this for every flag. Create a map of all flags `hasAdditionalSteps: Record<string, boolean>` and add an assertion that the `flags` is covered by `hasAdditionalSteps`.
   const flagsWithoutRemainingSteps = ["react", "vue", "solid"];
   const noRemaingSteps = flags.length === 1 && flagsWithoutRemainingSteps.includes(flags[0]!);
   return !noRemaingSteps;
