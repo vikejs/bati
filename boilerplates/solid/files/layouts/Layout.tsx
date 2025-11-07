@@ -1,4 +1,4 @@
-import "./style.css";
+import "./Layout.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
 import type { JSX } from "solid-js";
