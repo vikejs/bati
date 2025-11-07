@@ -36,7 +36,7 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all yo
 
 ### HTML Streaming
 
-You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pages, or only for some pages while still using it for others.`;
+You can enable/disable [HTML streaming](https://vike.dev/stream) for all or specific pages.`;
 
   content.addMarkdownFeature(about, "solid");
 
