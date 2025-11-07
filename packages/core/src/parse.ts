@@ -18,6 +18,18 @@ function guessCodeFormatters(code: string, filepath: string) {
   };
 }
 
+// Single-line comment patterns
+const eslintSingleLineRegex = /\/\/\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n]*/gim;
+const biomeSingleLineRegex = /\/\/\s*biome-ignore[^\n]*/gim;
+
+// Multi-line comment patterns (on one line)
+const eslintMultiLineRegex = /\/\*+\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n*]*\*+\//gim;
+const biomeMultiLineRegex = /\/\*+\s*biome-ignore[^\n*]*\*+\//gim;
+
+// Combined patterns
+const eslintRegex = new RegExp(`${eslintSingleLineRegex.source}|${eslintMultiLineRegex.source}`, "gim");
+const biomeRegex = new RegExp(`${biomeSingleLineRegex.source}|${biomeMultiLineRegex.source}`, "gim");
+
 export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
   const { eslint, squirelly } = guessCodeFormatters(code, options.filepath);
   let c = code;
@@ -31,6 +43,18 @@ export async function transformAndFormat(code: string, meta: VikeMeta, options: 
     const res = transform(c, options.filepath, meta);
     c = res.code;
     context = res.context;
+    format = true;
+  }
+
+  // Remove eslint comments
+  if (!meta.BATI.has("eslint") && eslintRegex.test(c)) {
+    c = c.replace(eslintRegex, "");
+    format = true;
+  }
+
+  // Remove biome comments
+  if (!meta.BATI.has("biome") && biomeRegex.test(c)) {
+    c = c.replace(biomeRegex, "");
     format = true;
   }
 

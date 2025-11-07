@@ -6,7 +6,7 @@ on:
       - "website/**"
   push:
     # Ensures cache is computed on main branch so that it can be reused on all PRs
-    branches: ["main"]
+    branches: [ "main" ]
     paths-ignore:
       - "website/**"
 
@@ -220,6 +220,8 @@ jobs:
           - react--vercel--eslint--biome
           - react--compiled-css--eslint--biome
           - react--mantine--eslint--biome
+          - react--ts-rest--hono--eslint
+          - react--ts-rest--hono--biome
         # pnpm run test:e2e workflow-write
         include:
           - destination: solid--plausible.io--eslint--biome
@@ -645,6 +647,12 @@ jobs:
           - destination: react--mantine--eslint--biome
             flags: --react --mantine --eslint --biome
             test-files: react+UI.spec.ts
+          - destination: react--ts-rest--hono--eslint
+            flags: --react --ts-rest --hono --eslint
+            test-files: remove-linter-comments.spec.ts
+          - destination: react--ts-rest--hono--biome
+            flags: --react --ts-rest --hono --biome
+            test-files: remove-linter-comments.spec.ts
       fail-fast: false
 
     name: Run ${{ matrix.flags }}
