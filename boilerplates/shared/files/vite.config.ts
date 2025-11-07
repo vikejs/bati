@@ -7,8 +7,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [vike()],
+  //# BATI.hasD1
   build: {
-    //# BATI.hasD1
     rollupOptions: {
       external: ["wrangler"],
     },

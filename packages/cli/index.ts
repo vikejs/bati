@@ -138,7 +138,8 @@ function printOK(dist: string, flags: string[]): void {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
-  console.log(`${green(`${bold("✓")} Project created: ${bold(dist)}`)}`);
+  const distPretty = prettifyDist(dist);
+  console.log(`${green(`${bold("✓")} Project created: ${bold(distPretty)}`)}`);
   console.log(list("Vike"));
   for (const key of flags) {
     const feature = features.find((f) => f.flag === key);
@@ -148,7 +149,7 @@ function printOK(dist: string, flags: string[]): void {
   }
 
   console.log(`\n${bold("Next steps:")}`);
-  console.log(cmd(`cd ${dist}`));
+  console.log(cmd(`cd ${distPretty}`));
 
   switch (pm?.name) {
     case "bun": {
@@ -553,4 +554,10 @@ function assert(condition: unknown): asserts condition {
   if (!condition) {
     throw new Error("You hit a scaffolder bug — reach out on GitHub");
   }
+}
+
+function prettifyDist(path: string) {
+  path = path.replaceAll("\\", "/");
+  if (!path.endsWith("/")) path = `${path}/`;
+  return path;
 }
