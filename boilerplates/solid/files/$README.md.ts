@@ -8,31 +8,17 @@ export default async function getReadme(props: TransformerProps) {
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [SolidJS](https://www.solidjs.com/guides/getting-started).
 
-### \`+\` files
+### Plus files
 
-Vike uses [\`+\` files](https://vike.dev/config) as the interface between Vike and your code. These special files define the configuration and behavior of your pages.
+[The + files are the interface](https://vike.dev/config) between Vike and your code.
 
-The main \`+\` files include:
-- [\`+config.ts\`](https://vike.dev/config) - Global configuration
-- [\`+Page.jsx\`](https://vike.dev/Page) - Page components
-- [\`+Layout.jsx\`](https://vike.dev/Layout) - Layout components
-- [\`+client.ts\`](https://vike.dev/client) - Client-side code
-- [\`+server.ts\`](https://vike.dev/server) - Server-side code
-
-#### \`/pages/+config.ts\`
-
-The global configuration file that defines:
-- A default [\`<Layout>\` component](https://vike.dev/Layout) (that wraps your [\`<Page>\` components](https://vike.dev/Page))
-- A default [\`title\`](https://vike.dev/title)
-- Global [\`<head>\` tags](https://vike.dev/head-tags)
-
-#### \`/pages/_error/+Page.jsx\`
-
-The [error page](https://vike.dev/error-page) which is rendered when errors occur.
-
-#### \`/pages/+onPageTransitionStart.ts\` and \`/pages/+onPageTransitionEnd.ts\`
-
-The [\`onPageTransitionStart()\` hook](https://vike.dev/onPageTransitionStart), together with [\`onPageTransitionEnd()\`](https://vike.dev/onPageTransitionStart), enables you to implement page transition animations.
+- [\`+config.ts\`](https://vike.dev/settings) — Settings (e.g. global default \`<title>\`)
+- [\`+Page.vue\`](https://vike.dev/Page) — The \`<Page>\` component
+- [\`+data.ts\`](https://vike.dev/data) — Fetching data (for your \`<Page>\` component)
+- [\`+Layout.vue\`](https://vike.dev/Layout) — The \`<Layout>\` component (wraps your \`<Page>\` components)
+- [\`/pages/_error/+Page.vue\`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
+- [\`+onPageTransitionStart.ts\`](https://vike.dev/onPageTransitionStart) and \`+onPageTransitionEnd.ts\` — For page transition animations
+- [\`+Head.vue\`](https://vike.dev/Head) - Sets \`<head>\` tags
 
 ### Routing
 
