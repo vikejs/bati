@@ -2,7 +2,6 @@
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
-import { todos } from "@batijs/shared-no-db/database/todoItems";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { PageContextServer } from "vike/types";
 
@@ -24,6 +23,8 @@ export default async function data(_pageContext: PageContextServer): Promise<Dat
 
     return { todo };
   } else {
-    return { todo: todos };
+    // NOTE: This to-do list isn't persisted, it's reset when the user navigates away.
+    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    return { todo: [{ text: "Buy milk" }, { text: "Buy strawberries" }] };
   }
 }
