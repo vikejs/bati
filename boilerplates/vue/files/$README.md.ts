@@ -32,7 +32,7 @@ The [\`onPageTransitionStart()\` hook](https://vike.dev/onPageTransitionStart), 
 
 ### SSR
 
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all your pages or only for some pages.
+SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or specific pages.
 
 ### HTML Streaming
 
