@@ -22,25 +22,19 @@ const markdownTree = fromMarkdown(`
 
 test("simple", () => {
   const result = createTOC(markdownTree);
-  const markdown = toMarkdown(
-    { type: "root", children: result as RootContent[] },
-    {
-      listItemIndent: "one",
-      incrementListMarker: false,
-    },
-  );
+  const markdown = toMarkdown({ type: "root", children: result as RootContent[] });
   expect(markdown).toBe(
     `## Contents
 
 * [002 h2](#002-h2)
 
-* [003 h3](#003-h3)
+  * [003 h3](#003-h3)
 
 * [004 h2](#004-h2)
 
-* [005 h3](#005-h3)
+  * [005 h3](#005-h3)
 
-* [006 h4](#006-h4)
+    * [006 h4](#006-h4)
 `,
   );
 });
@@ -53,13 +47,7 @@ test("ignore section TOC", () => {
 ## Headline
       `);
   const result = createTOC(mdast);
-  const markdown = toMarkdown(
-    { type: "root", children: result as RootContent[] },
-    {
-      listItemIndent: "one",
-      incrementListMarker: false,
-    },
-  );
+  const markdown = toMarkdown({ type: "root", children: result as RootContent[] });
   expect(markdown).toBe(
     `## Contents
 

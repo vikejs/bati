@@ -40,18 +40,10 @@ export class MarkdownV2 implements StringTransformer {
   }
 
   addMarkdownFeature(markdown: string | ZoneHandler, flag: Flags, options?: MarkdownOptions) {
-    const feature = features.find((f) => f.flag === flag)!;
-    const category = feature.category as CategoryLabels;
+    const category = features.find((f) => f.flag === flag)!.category as CategoryLabels;
     const opts: MarkdownOptions = { ...options, wrapper: { ...options?.wrapper, category, flag } };
     const optionsMarkdown = deepMerge(this.config.defaults, opts);
-
-    // Automatically prepend the feature heading if the markdown is a string and doesn't already start with a heading
-    let finalMarkdown = markdown;
-    if (typeof markdown === "string" && !markdown.trim().startsWith("##")) {
-      finalMarkdown = `## ${feature.label}\n${markdown}`;
-    }
-
-    this.contents.push({ markdown: finalMarkdown, options: optionsMarkdown });
+    this.contents.push({ markdown, options: optionsMarkdown });
   }
 
   addMarkdown(markdown: string | ZoneHandler, options: MarkdownOptions = {}) {
@@ -109,9 +101,6 @@ export class MarkdownV2 implements StringTransformer {
       if (!toc) return;
       return [start, ...toc, end];
     });
-    return toMarkdown(this.tree, {
-      listItemIndent: "one",
-      incrementListMarker: false,
-    });
+    return toMarkdown(this.tree);
   }
 }

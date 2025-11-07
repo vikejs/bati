@@ -302,15 +302,15 @@ Intro
 
 * [React](#react)
 
-* [Rendering](#rendering)
+  * [Rendering](#rendering)
 
 * [*AWS*](#aws)
 
-* [S3](#s3)
+  * [S3](#s3)
 
 * [Sentry](#sentry)
 
-* [Debugging](#debugging)
+  * [Debugging](#debugging)
 
 <!--bati:end section="TOC"-->
 
