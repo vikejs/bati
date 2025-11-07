@@ -19,30 +19,18 @@ function guessCodeFormatters(code: string, filepath: string) {
 }
 
 // Single-line comment patterns
-const eslintSingleLineRegex =
-  /\/\/\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n]*/gim;
+const eslintSingleLineRegex = /\/\/\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n]*/gim;
 const biomeSingleLineRegex = /\/\/\s*biome-ignore[^\n]*/gim;
 
 // Multi-line comment patterns (on one line)
-const eslintMultiLineRegex =
-  /\/\*+\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n*]*\*+\//gim;
+const eslintMultiLineRegex = /\/\*+\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n*]*\*+\//gim;
 const biomeMultiLineRegex = /\/\*+\s*biome-ignore[^\n*]*\*+\//gim;
 
 // Combined patterns
-const eslintRegex = new RegExp(
-  `${eslintSingleLineRegex.source}|${eslintMultiLineRegex.source}`,
-  "gim",
-);
-const biomeRegex = new RegExp(
-  `${biomeSingleLineRegex.source}|${biomeMultiLineRegex.source}`,
-  "gim",
-);
+const eslintRegex = new RegExp(`${eslintSingleLineRegex.source}|${eslintMultiLineRegex.source}`, "gim");
+const biomeRegex = new RegExp(`${biomeSingleLineRegex.source}|${biomeMultiLineRegex.source}`, "gim");
 
-export async function transformAndFormat(
-  code: string,
-  meta: VikeMeta,
-  options: { filepath: string },
-) {
+export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
   const { eslint, squirelly } = guessCodeFormatters(code, options.filepath);
   let c = code;
   let context: FileContext | undefined;
