@@ -122,11 +122,9 @@ const hasAdditionalSteps: Record<string, boolean> = {
   logrocket: false, // Currently disabled
   netlify: false, // Deployment platform
 };
-
 function hasRemainingSteps(flags: string[]): boolean {
-  // Assert that all flags are covered in the hasAdditionalSteps mapping
-  assert(features.every(f => f.flag in hasAdditionalSteps), `Uncovered flags: ${features.filter(f => !(f.flag in hasAdditionalSteps)).map(f => f.flag).join(", ")}`);
-
+  // Assert `flags` is covered by hasAdditionalSteps
+  assert(features.every((f) => f.flag in hasAdditionalSteps));
   return flags.some((flag) => hasAdditionalSteps[flag] === true);
 }
 
