@@ -12,6 +12,5 @@ export default defineConfig({
     rollupOptions: {
       external: ["wrangler"],
     },
-    target: "es2022",
   },
 });

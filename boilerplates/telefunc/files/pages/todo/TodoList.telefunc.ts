@@ -2,7 +2,6 @@
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
-import { todos } from "@batijs/shared-no-db/database/todoItems";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { getContext } from "telefunc";
 
@@ -17,6 +16,8 @@ export async function onNewTodo({ text }: { text: string }) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
   } else {
-    todos.push({ text });
+    // NOTE: This to-do list isn't persisted, it's reset when the user navigates away.
+    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    console.log(`Received ${text}`);
   }
 }

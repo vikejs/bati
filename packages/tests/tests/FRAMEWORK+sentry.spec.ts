@@ -61,7 +61,7 @@ await describeBati(({ test, expect, testMatch }) => {
         expect(content).toContain(`app: getCurrentInstance()`);
       }
       {
-        const filePath = path.join(process.cwd(), "layouts", "LayoutDefault.vue");
+        const filePath = path.join(process.cwd(), "layouts", "Layout.vue");
         expect(existsSync(filePath)).toBe(true);
         const content = readFileSync(filePath, { encoding: "utf-8" });
         expect(content).toContain(`sentryBrowserConfig`);

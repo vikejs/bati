@@ -8,6 +8,10 @@ import { evalCondition, extractBatiCondition } from "../eval.js";
 function getBlockStatementRange(
   node: AST.ESLintBlockStatement | ESTree.BlockStatement | TSESTree.BlockStatement,
 ): [number, number] {
+  if (node.body.length === 0) {
+    // Empty block with just a comment
+    return [node.range![0] + 1, node.range![1] - 1];
+  }
   return [node.body[0].range![0], node.body[node.body.length - 1].range![1]];
 }
 

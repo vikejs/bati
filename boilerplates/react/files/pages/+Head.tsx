@@ -1,6 +1,5 @@
 // https://vike.dev/Head
 
-//# BATI.has("mantine")
 import { ColorSchemeScript } from "@mantine/core";
 import logoUrl from "../assets/logo.svg";
 

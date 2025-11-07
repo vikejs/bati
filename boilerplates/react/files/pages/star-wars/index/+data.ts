@@ -5,7 +5,7 @@ import type { Movie, MovieDetails } from "../types.js";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
-export const data = async () => {
+export async function data() {
   // https://vike.dev/useConfig
   const config = useConfig();
 
@@ -22,7 +22,7 @@ export const data = async () => {
   const movies = minimize(moviesData);
 
   return movies;
-};
+}
 
 function minimize(movies: MovieDetails[]): Movie[] {
   return movies.map((movie) => {

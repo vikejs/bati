@@ -1,6 +1,7 @@
-import type { OnPageTransitionEndAsync } from "vike/types";
+import type { PageContextClient } from "vike/types";
 
-export const onPageTransitionEnd: OnPageTransitionEndAsync = async () => {
+export async function onPageTransitionEnd(pageContext: PageContextClient) {
   console.log("Page transition end");
-  document.querySelector("body")?.classList.remove("page-is-transitioning");
-};
+  console.log("Is backwards navigation?", pageContext.isBackwardNavigation);
+  document.body.classList.remove("page-transition");
+}

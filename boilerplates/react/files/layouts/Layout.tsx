@@ -1,10 +1,10 @@
-import "./style.css";
+import "./Layout.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link.js";
 
-export default function LayoutDefault({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div
       //# BATI.has("tailwindcss")
