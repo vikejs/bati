@@ -1,7 +1,7 @@
 import type { Config } from "vike/types";
 import vikePhoton from "vike-photon/config";
 import vikeReact from "vike-react/config";
-import Layout from "../layouts/LayoutDefault.js";
+import Layout from "../layouts/Layout.js";
 
 // Default config (can be overridden by pages)
 // https://vike.dev/config

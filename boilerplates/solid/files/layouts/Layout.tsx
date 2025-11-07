@@ -5,7 +5,7 @@ import type { JSX } from "solid-js";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link.js";
 
-export default function LayoutDefault(props: { children?: JSX.Element }) {
+export default function Layout(props: { children?: JSX.Element }) {
   return (
     <div
       //# BATI.has("tailwindcss")

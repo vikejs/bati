@@ -6,7 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Link } from "../components/Link";
 import theme from "./theme.js";
 
-export default function LayoutDefault({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
   return (
     <MantineProvider theme={theme}>

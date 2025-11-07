@@ -13,7 +13,7 @@ The following Packages are installed:
 * \`@mantine/hooks\` Hooks for state and UI management
 * \`@mantine/core\` Core components library: inputs, buttons, overlays, etc.
 
-If you add more packages, make sure to update the \`layouts/LayoutDefault.tsx\` file to include the required CSSs.
+If you add more packages, make sure to update the \`layouts/Layout.tsx\` file to include the required CSSs.
 
 The theme is defined in \`layouts/theme.ts\`.
 `;
