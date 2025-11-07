@@ -13,12 +13,12 @@ This app is ready to start. It's powered by [Vike](https://vike.dev) and [SolidJ
 [The + files are the interface](https://vike.dev/config) between Vike and your code.
 
 - [\`+config.ts\`](https://vike.dev/settings) — Settings (e.g. global default \`<title>\`)
-- [\`+Page.vue\`](https://vike.dev/Page) — The \`<Page>\` component
+- [\`+Page.tsx\`](https://vike.dev/Page) — The \`<Page>\` component
 - [\`+data.ts\`](https://vike.dev/data) — Fetching data (for your \`<Page>\` component)
-- [\`+Layout.vue\`](https://vike.dev/Layout) — The \`<Layout>\` component (wraps your \`<Page>\` components)
-- [\`/pages/_error/+Page.vue\`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
+- [\`+Layout.tsx\`](https://vike.dev/Layout) — The \`<Layout>\` component (wraps your \`<Page>\` components)
+- [\`/pages/_error/+Page.tsx\`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
 - [\`+onPageTransitionStart.ts\`](https://vike.dev/onPageTransitionStart) and \`+onPageTransitionEnd.ts\` — For page transition animations
-- [\`+Head.vue\`](https://vike.dev/Head) - Sets \`<head>\` tags
+- [\`+Head.tsx\`](https://vike.dev/Head) - Sets \`<head>\` tags
 
 ### Routing
 
