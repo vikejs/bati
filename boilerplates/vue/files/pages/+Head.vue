@@ -11,6 +11,6 @@
 
 <script setup lang="ts">
 //# BATI.has("tailwindcss")
-import "@batijs/tailwindcss/layouts/tailwind.css";
+import "@batijs/tailwindcss/pages/tailwind.css";
 import logoUrl from "../assets/logo.svg";
 </script>
