@@ -1,6 +1,6 @@
 import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
-export default async function getReadme(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
 
   //language=Markdown
