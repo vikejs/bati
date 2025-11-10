@@ -22,7 +22,7 @@ export default async function onafter(cwd: string, _meta: VikeMeta) {
   await cleanupMarkdown(cwd, "README.md");
   const content = await cleanupMarkdown(cwd, "TODO.md");
   // Remove empty TODO.md
-  if (content.trim() === "") {
+  if (content.trim() === "The following steps need to be performed before starting your application.") {
     await unlink(join(cwd, "TODO.md"));
   }
   await renameGitIgnore(cwd);
