@@ -10,27 +10,30 @@ import {
 } from "yaml";
 import { assert } from "./assert.js";
 import { parseMarkdown } from "./markdown/markdown.js";
-import { parseReadme } from "./markdown.js";
 import type { TransformerProps } from "./types.js";
-import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
+import {
+  type PackageJsonDeps,
+  PackageJsonTransformer,
+} from "./utils/package.js";
 
 export type { YAMLDocument };
-
-export async function loadReadme({ readfile }: TransformerProps) {
-  const content = await readfile?.();
-
-  return parseReadme(content);
-}
 
 export async function loadMarkdown({ readfile }: TransformerProps) {
   const content = await readfile?.();
   return parseMarkdown(content ?? "");
 }
 
-export async function loadAsJson({ readfile, source, target }: TransformerProps) {
+export async function loadAsJson({
+  readfile,
+  source,
+  target,
+}: TransformerProps) {
   const content = await readfile?.();
 
-  assert(typeof content === "string", `Unable to load previous JSON module ("${source}" -> "${target}")`);
+  assert(
+    typeof content === "string",
+    `Unable to load previous JSON module ("${source}" -> "${target}")`,
+  );
 
   return JSON.parse(content);
 }
@@ -41,7 +44,10 @@ export async function loadPackageJson<U extends PackageJsonDeps>(
 ) {
   const content = await readfile?.();
 
-  assert(typeof content === "string", `Unable to load previous JSON module ("${source}" -> "${target}")`);
+  assert(
+    typeof content === "string",
+    `Unable to load previous JSON module ("${source}" -> "${target}")`,
+  );
 
   return new PackageJsonTransformer(JSON.parse(content), scopedPackageJson);
 }
@@ -53,7 +59,10 @@ export async function loadAsMagicast<Exports extends object>({
 }: TransformerProps): Promise<ProxifiedModule<Exports>> {
   const content = await readfile?.();
 
-  assert(typeof content === "string", `Unable to load previous module ("${source}" -> "${target}")`);
+  assert(
+    typeof content === "string",
+    `Unable to load previous module ("${source}" -> "${target}")`,
+  );
 
   return parseModule(content);
 }
@@ -70,7 +79,9 @@ export async function loadRelativeFileAsMagicast<Exports extends object>(
 
 export async function loadYaml(
   { readfile, source, target }: TransformerProps,
-  options?: ParseOptions & DocumentOptions & SchemaOptions & { fallbackEmpty?: boolean },
+  options?: ParseOptions &
+    DocumentOptions &
+    SchemaOptions & { fallbackEmpty?: boolean },
 ) {
   const content = await readfile?.();
 
