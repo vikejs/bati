@@ -23,7 +23,7 @@ export default async function onafter(cwd: string, _meta: VikeMeta) {
   const content = await cleanupMarkdown(cwd, "TODO.md");
   // Remove empty TODO.md
   if (content.trim() === "") {
-    await unlink(join(cwd, filename));
+    await unlink(join(cwd, "TODO.md"));
   }
   await renameGitIgnore(cwd);
 }

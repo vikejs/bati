@@ -77,7 +77,7 @@ function printInit() {
   assert(version);
   console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
-async function printOK(dist: string, flags: string[]): void {
+async function printOK(dist: string, flags: string[]) {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
