@@ -67,7 +67,6 @@ export class MarkdownV2 implements StringTransformer {
     });
 
     for (const { markdown, options } of this.contents) {
-      console.log(markdown);
       const handler: ZoneHandler =
         typeof markdown === "function"
           ? markdown
@@ -107,7 +106,6 @@ export class MarkdownV2 implements StringTransformer {
       if (!toc) return;
       return [start, ...toc, end];
     });
-    console.log(toMarkdown(this.tree));
     return toMarkdown(this.tree);
   }
 }
