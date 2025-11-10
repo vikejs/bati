@@ -1,10 +1,15 @@
 import "@mantine/core/styles.css";
 
 import logoUrl from "@batijs/react/assets/logo.svg";
-import { AppShell, Burger, Group, Image, MantineProvider } from "@mantine/core";
+import type { MantineThemeOverride } from "@mantine/core";
+import { AppShell, Burger, createTheme, Group, Image, MantineProvider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "../components/Link";
-import theme from "./theme.js";
+
+const theme: MantineThemeOverride = createTheme({
+  /** Put your mantine theme override here */
+  primaryColor: "violet",
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
