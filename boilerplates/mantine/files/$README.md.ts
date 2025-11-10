@@ -4,7 +4,7 @@ export default async function getReadme(props: TransformerProps) {
   const content = await loadMarkdown(props);
 
   //language=Markdown
-  const todo = `
+  const about = `
 ## Mantine
 
 This is a boilerplate for Mantine based on the [Getting Started](https://mantine.dev/docs/getting-started/) guide.
@@ -18,7 +18,7 @@ If you add more packages, make sure to update the \`layouts/Layout.tsx\` file to
 The theme is defined in \`layouts/theme.ts\`.
 `;
 
-  content.addMarkdownFeature(todo, "mantine");
+  content.addMarkdownFeature(about, "mantine");
 
   return content;
 }

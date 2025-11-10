@@ -10,7 +10,7 @@ export default async function getReadme(props: TransformerProps) {
   const todo = `
 ## *Sqlite*
 
-First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
+Ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
 \`\`\`bash
 pnpm sqlite:migrate # creates sqlite tables
 \`\`\`

@@ -6,7 +6,6 @@ export default async function getReadme(props: TransformerProps) {
   //language=Markdown
   const todo = `
 ## *Prisma*
-### Setup
 Run the following command once:
 \`\`\`sh
 pnpx prisma init
