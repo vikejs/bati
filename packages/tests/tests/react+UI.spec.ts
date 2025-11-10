@@ -16,7 +16,7 @@ await describeBati(({ test, expect, fetch, testMatch }) => {
       expect(content.includes("@compiled/react")).toBe(true);
     },
     mantine: async () => {
-      const content = await readFile("layouts/Layout.tsx", "utf-8");
+      const content = await readFile("pages/Layout.tsx", "utf-8");
       expect(content.includes("@mantine/core/styles.css")).toBe(true);
     },
   });
