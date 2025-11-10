@@ -1,17 +1,15 @@
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { readFile, rename, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { VikeMeta } from "@batijs/core";
 
-async function cleanupReadme(cwd: string) {
-  const content = await readFile(join(cwd, "README.md"), "utf8");
-  await writeFile(
-    join(cwd, "README.md"),
-    content
-      .replaceAll(/<!--bati:.*-->/g, "")
-      .replaceAll(/\n\n+/g, "\n\n")
-      .trimStart(),
-    "utf-8",
-  );
+async function cleanupMarkdown(cwd: string, filename: `${string}.md`) {
+  const content = await readFile(join(cwd, filename), "utf8");
+  const trimmed = content
+    .replaceAll(/<!--bati:.*-->/g, "")
+    .replaceAll(/\n\n+/g, "\n\n")
+    .trimStart();
+  await writeFile(join(cwd, filename), trimmed, "utf-8");
+  return trimmed;
 }
 
 // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
@@ -21,6 +19,11 @@ async function renameGitIgnore(cwd: string) {
 }
 
 export default async function onafter(cwd: string, _meta: VikeMeta) {
-  await cleanupReadme(cwd);
+  await cleanupMarkdown(cwd, "README.md");
+  const content = await cleanupMarkdown(cwd, "TODO.md");
+  // Remove empty TODO.md
+  if (content.trim() === "") {
+    await unlink(join(cwd, filename));
+  }
   await renameGitIgnore(cwd);
 }

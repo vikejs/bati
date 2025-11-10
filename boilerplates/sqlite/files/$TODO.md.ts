@@ -8,7 +8,7 @@ export default async function getTodo(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *Sqlite*
+## Sqlite
 
 Ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
 \`\`\`bash

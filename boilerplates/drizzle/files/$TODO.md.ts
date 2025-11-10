@@ -5,7 +5,7 @@ export default async function getTodo(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *Drizzle*
+## Drizzle
 
 First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
 \`\`\`bash

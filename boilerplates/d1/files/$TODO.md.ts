@@ -5,7 +5,7 @@ export default async function getTodo(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *Cloudflare D1*
+## Cloudflare D1
 
 ### Setup
 Create a D1 database with the following command:

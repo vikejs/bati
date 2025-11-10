@@ -2,7 +2,6 @@ export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./magicast.js";
 export * from "./markdown/markdown.js";
-export * from "./markdown.js";
 export { type FileContext, transformAndFormat } from "./parse.js";
 export * from "./print.js";
 export * from "./random.js";

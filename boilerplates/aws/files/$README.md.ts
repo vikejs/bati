@@ -5,7 +5,7 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const about = `
-## *AWS CDK Deployment*
+## AWS CDK Deployment
 
 This is a boilerplate for deploying your Vike app to AWS using the AWS Cloud Development Kit (CDK) including creating a custom domain in Route53.
 

@@ -6,7 +6,7 @@ export default async function getTodo(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *plausible.io*
+## plausible.io
 Update \`pages/${headFileName}\` to properly set \`data-domain\` or replace the script with the one from your Plausible account.
 
 `;

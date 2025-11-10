@@ -5,7 +5,7 @@ export default async function getTodo(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *AWS CDK Deployment*
+## AWS CDK Deployment
 
 Before you get started, make sure to configure your AWS credentials.
 
