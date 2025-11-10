@@ -10,17 +10,10 @@ import {
 } from "yaml";
 import { assert } from "./assert.js";
 import { parseMarkdown } from "./markdown/markdown.js";
-import { parseReadme } from "./markdown.js";
 import type { TransformerProps } from "./types.js";
 import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
 
 export type { YAMLDocument };
-
-export async function loadReadme({ readfile }: TransformerProps) {
-  const content = await readfile?.();
-
-  return parseReadme(content);
-}
 
 export async function loadMarkdown({ readfile }: TransformerProps) {
   const content = await readfile?.();

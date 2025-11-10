@@ -30,7 +30,9 @@ function getNodesFromRoot(tree: Root): Nodes[] {
 export class MarkdownV2 implements StringTransformer {
   private tree: Root;
   private contents: ContentChanger[] = [];
-  private config: classConfig = { defaults: { filter: { section: "features" } } };
+  private config: classConfig = {
+    defaults: { filter: { section: "features" } },
+  };
 
   constructor(tree: Root, config?: classConfig) {
     this.tree = tree;
@@ -41,7 +43,10 @@ export class MarkdownV2 implements StringTransformer {
 
   addMarkdownFeature(markdown: string | ZoneHandler, flag: Flags, options?: MarkdownOptions) {
     const category = features.find((f) => f.flag === flag)!.category as CategoryLabels;
-    const opts: MarkdownOptions = { ...options, wrapper: { ...options?.wrapper, category, flag } };
+    const opts: MarkdownOptions = {
+      ...options,
+      wrapper: { ...options?.wrapper, category, flag },
+    };
     const optionsMarkdown = deepMerge(this.config.defaults, opts);
     this.contents.push({ markdown, options: optionsMarkdown });
   }

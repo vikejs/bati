@@ -559,6 +559,19 @@ importers:
         specifier: ^0.1.14
         version: 0.1.14(d9e97a3bc68ff2c572de09eb8bd92457)
 
+  boilerplates/plausible.io:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: file:packages/compile(jiti@2.6.1)(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+      '@types/node':
+        specifier: ^20.19.21
+        version: 20.19.22
+
   boilerplates/pnpm:
     dependencies:
       '@batijs/core':

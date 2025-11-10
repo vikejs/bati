@@ -4,7 +4,7 @@ import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { packageManager, type VikeMeta, which, withIcon, getVersion } from "@batijs/core";
+import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
@@ -62,70 +62,13 @@ function findDescription(key: string | undefined): string | undefined {
   }
 }
 
-// Map of all flags and whether they require additional setup steps after scaffolding
-// TODO/eventually: TODO.md https://github.com/vikejs/bati/issues/581
-const hasAdditionalSteps: Record<string, boolean> = {
-  // UI Frameworks - work out of the box
-  react: false,
-  vue: false,
-  solid: false,
-  vike: false, // Always included, invisible in CLI
-
-  // CSS - work out of the box
-  tailwindcss: false,
-  "compiled-css": false,
-
-  // UI Component Libraries - work out of the box or minimal setup
-  daisyui: false, // Works with Tailwind out of the box
-  "shadcn-ui": false, // Components can be added via CLI but not required
-  mantine: false, // Theme is pre-configured, minimal setup
-
-  // Auth - require configuration
-  auth0: true, // Requires Auth0 account, client ID/secret, callback URLs
-  authjs: true, // Requires provider configuration and secret setup
-
-  // Data fetching - work out of the box
-  telefunc: false,
-  trpc: false,
-  "ts-rest": false,
-
-  // Server frameworks - work out of the box
-  hono: false,
-  h3: false,
-  express: false,
-  fastify: false,
-
-  // Database - require setup
-  drizzle: true, // Requires DATABASE_URL and migration commands
-  sqlite: true, // Requires DATABASE_URL and migration setup
-  prisma: true, // Requires prisma init and schema setup
-
-  // Deployment platforms - work out of the box
-  cloudflare: false,
-  vercel: false,
-  aws: true, // Requires AWS CDK deployment setup
-
-  // Analytics - minimal setup (just domain update)
-  "google-analytics": false,
-  "plausible.io": false, // Just needs domain update in script tag
-  segment: false,
-
-  // Error tracking - requires configuration
-  sentry: true, // Requires Sentry DSN and build plugin configuration
-
-  // Development tools - work out of the box
-  eslint: false,
-  biome: false,
-  prettier: false,
-
-  // Disabled features
-  logrocket: false, // Currently disabled
-  netlify: false, // Deployment platform
-};
-function hasRemainingSteps(flags: string[]): boolean {
-  // Assert `flags` is covered by hasAdditionalSteps
-  assert(features.every((f) => f.flag in hasAdditionalSteps));
-  return flags.some((flag) => hasAdditionalSteps[flag] === true);
+async function hasRemainingSteps(dist: string) {
+  try {
+    await access(join(dist, "TODO.md"));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function printInit() {
@@ -134,7 +77,7 @@ function printInit() {
   assert(version);
   console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
-function printOK(dist: string, flags: string[]): void {
+async function printOK(dist: string, flags: string[]) {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
@@ -174,8 +117,8 @@ function printOK(dist: string, flags: string[]): void {
     }
   }
 
-  if (hasRemainingSteps(flags)) {
-    console.log(withIcon("-", gray, indent)(`Check README.md for remaining steps`));
+  if (await hasRemainingSteps(dist)) {
+    console.log(withIcon("•️", gray, indent)(`Check ${bold("TODO.md")} for remaining steps`));
   }
 
   console.log("\nHappy coding! 🚀\n");
@@ -534,7 +477,7 @@ async function run() {
         gitInit(args.project);
       }
 
-      printOK(args.project, flags);
+      await printOK(args.project, flags);
     },
   });
 

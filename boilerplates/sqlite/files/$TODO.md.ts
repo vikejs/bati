@@ -1,6 +1,6 @@
 import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
-export default async function getReadme(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps) {
   // DATABASE_URL is only required when using standard sqlite
   if (props.meta.BATI.hasD1) return;
 
@@ -8,9 +8,9 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const todo = `
-## *Sqlite*
+## Sqlite
 
-First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
+Ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
 \`\`\`bash
 pnpm sqlite:migrate # creates sqlite tables
 \`\`\`

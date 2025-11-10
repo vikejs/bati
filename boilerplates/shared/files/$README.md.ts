@@ -1,4 +1,4 @@
-import { getArgs, getVersion, loadMarkdown, markdown, type TransformerProps } from "@batijs/core";
+import { getArgs, getVersion, loadMarkdown, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
   const content = await loadMarkdown(props);
@@ -9,7 +9,7 @@ export default async function getReadme(props: TransformerProps) {
   const v = getVersion();
 
   //language=Markdown
-  const intro = `Generated with [vike.dev/new](https://vike.dev/new) ${`(${markdown.link(`https://www.npmjs.com/package/create-vike/v/${v.version}`, `version ${v.semver.at(-1)}`)})`} using this command:
+  const intro = `Generated with [vike.dev/new](https://vike.dev/new) ([version ${v.semver.at(-1)}](https://www.npmjs.com/package/create-vike/v/${v.version})) using this command:
 
 \`\`\`sh
 ${getArgs()} ${flags}

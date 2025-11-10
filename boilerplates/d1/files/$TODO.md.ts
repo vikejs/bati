@@ -1,11 +1,11 @@
 import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
-export default async function getReadme(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
 
   //language=Markdown
   const todo = `
-## *Cloudflare D1*
+## Cloudflare D1
 
 ### Setup
 Create a D1 database with the following command:
@@ -24,9 +24,7 @@ Finally, update the \`${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migra
 > - Only used for describing the database, and is not directly referenced in code.
 `;
 
-  content.addMarkdownFeature(todo, "sqlite", {
-    position: "before",
-  });
+  content.addMarkdownFeature(todo, "sqlite");
 
   return content;
 }
