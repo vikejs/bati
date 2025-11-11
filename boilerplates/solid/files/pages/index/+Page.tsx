@@ -3,13 +3,8 @@ import { Counter } from "./Counter.js";
 export default function Page() {
   return (
     <>
-      <h1
-        //# BATI.has("tailwindcss")
-        class={"font-bold text-3xl pb-4"}
-      >
-        My Vike app
-      </h1>
-      This page is:
+      <h1>My Vike app</h1>
+      <p>This page is:</p>
       <ul>
         <li>Rendered to HTML.</li>
         <li>
