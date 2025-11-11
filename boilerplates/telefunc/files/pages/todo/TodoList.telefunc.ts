@@ -1,4 +1,4 @@
-// We use Telefunc (https://telefunc.com) for data mutations. Being able to use Telefunc for fetching initial data is work-in-progress (https://vike.dev/data-fetching#tools).
+// We use Telefunc (https://telefunc.com) for data mutations.
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
@@ -16,8 +16,8 @@ export async function onNewTodo({ text }: { text: string }) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
   } else {
-    // NOTE: This to-do list isn't persisted, it's reset when the user navigates away.
-    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    // NOTE: This telefunction is only for demonstration — it doesn't actually save changes to a database.
+    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-do list.
     console.log(`Received ${text}`);
   }
 }

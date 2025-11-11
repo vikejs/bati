@@ -2,9 +2,12 @@ import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { useState } from "react";
+import { useData } from "vike-react/useData";
+import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
-export function TodoList({ initialTodoItems }: { initialTodoItems: { text: string }[] }) {
-  const [todoItems, setTodoItems] = useState(initialTodoItems);
+export function TodoList() {
+  const { todoItemsInitial } = useData<Data>();
+  const [todoItems, setTodoItems] = useState<{ text: string }[]>(todoItemsInitial);
   const [newTodo, setNewTodo] = useState("");
   return (
     <>
@@ -19,31 +22,24 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
           onSubmit={async (ev) => {
             ev.preventDefault();
 
-            // Optimistic UI update
             setTodoItems((prev) => [...prev, { text: newTodo }]);
+            setNewTodo("");
             if (BATI.hasServer) {
-              try {
-                if (BATI.has("telefunc")) {
-                  await onNewTodo({ text: newTodo });
-                } else if (BATI.has("trpc")) {
-                  await trpc.onNewTodo.mutate(newTodo);
-                } else if (BATI.has("ts-rest")) {
-                  await client.createTodo({ body: { text: newTodo } });
-                } else {
-                  const response = await fetch("/api/todo/create", {
-                    method: "POST",
-                    body: JSON.stringify({ text: newTodo }),
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  });
-                  await response.blob();
-                }
-                setNewTodo("");
-              } catch (e) {
-                console.error(e);
-                // rollback
-                setTodoItems((prev) => prev.slice(0, -1));
+              if (BATI.has("telefunc")) {
+                await onNewTodo({ text: newTodo });
+              } else if (BATI.has("trpc")) {
+                await trpc.onNewTodo.mutate(newTodo);
+              } else if (BATI.has("ts-rest")) {
+                await client.createTodo({ body: { text: newTodo } });
+              } else {
+                const response = await fetch("/api/todo/create", {
+                  method: "POST",
+                  body: JSON.stringify({ text: newTodo }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+                await response.blob();
               }
             }
           }}

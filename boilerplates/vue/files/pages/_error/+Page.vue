@@ -6,8 +6,8 @@
 <script lang="ts" setup>
 import { usePageContext } from "vike-vue/usePageContext";
 
-const ctx = usePageContext();
-let { is404, abortReason } = ctx;
+const pageContext = usePageContext();
+let { is404, abortReason } = pageContext;
 if (!abortReason) {
   abortReason = is404 ? "This page could not be found." : "Something went wrong.";
 }

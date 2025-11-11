@@ -9,20 +9,21 @@ export type Data = Awaited<ReturnType<typeof data>>;
 
 export async function data(_pageContext: PageContextServer) {
   if (BATI.has("drizzle")) {
-    const todo = await drizzleQueries.getAllTodos(_pageContext.db);
+    const todoItemsInitial = await drizzleQueries.getAllTodos(_pageContext.db);
 
-    return { todo };
+    return { todoItemsInitial };
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
-    const todo = sqliteQueries.getAllTodos(_pageContext.db);
+    const todoItemsInitial = sqliteQueries.getAllTodos(_pageContext.db);
 
-    return { todo };
+    return { todoItemsInitial };
   } else if (BATI.hasD1) {
-    const todo = await d1Queries.getAllTodos(_pageContext.db);
+    const todoItemsInitial = await d1Queries.getAllTodos(_pageContext.db);
 
-    return { todo };
+    return { todoItemsInitial };
   } else {
-    // NOTE: This to-do list is only for demonstration — it doesn’t save your changes.
-    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
-    return { todo: [{ text: "Buy milk" }, { text: "Buy strawberries" }] };
+    // NOTE: This +data hook is only for demonstration — it doesn't actually retrieve data from a database.
+    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-do list.
+    const todoItemsInitial = [{ text: "Buy milk" }, { text: "Buy strawberries" }];
+    return { todoItemsInitial };
   }
 }
