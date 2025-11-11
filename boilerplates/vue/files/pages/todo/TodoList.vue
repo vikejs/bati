@@ -5,8 +5,14 @@
     </li>
     <li>
       <form @submit.prevent="submitNewTodo()">
+        <!-- BATI.has("tailwindcss") -->
         <input v-model="newTodo" type="text" :class="[inputClass]" />
+        <!-- !BATI.has("tailwindcss") -->
+        <input v-model="newTodo" type="text" />
+        <!-- BATI.has("tailwindcss") -->
         <button type="submit" :class="[buttonClass]">Add to-do</button>
+        <!-- !BATI.has("tailwindcss") -->
+        <button type="submit">Add to-do</button>
       </form>
     </li>
   </ul>
@@ -24,16 +30,14 @@ const { todoItemsInitial } = useData<Data>();
 const todoItems = ref<{ text: string }[]>(todoItemsInitial);
 const newTodo = ref("");
 
-const inputClass = ref(
-  BATI.has("tailwindcss")
-    ? "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1"
-    : "",
-);
-const buttonClass = ref(
-  BATI.has("tailwindcss")
-    ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
-    : "",
-);
+if (BATI.has("tailwindcss")) {
+  const inputClass = ref(
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1",
+  );
+  const buttonClass = ref(
+    "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2",
+  );
+}
 
 const submitNewTodo = async () => {
   todoItems.value.push({ text: newTodo.value });
