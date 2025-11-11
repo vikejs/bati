@@ -1,4 +1,4 @@
-// We use Telefunc (https://telefunc.com) for data mutations. Being able to use Telefunc for fetching initial data is work-in-progress (https://vike.dev/data-fetching#tools).
+// We use Telefunc (https://telefunc.com) for data mutations.
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
