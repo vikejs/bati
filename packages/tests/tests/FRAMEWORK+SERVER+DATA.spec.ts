@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describeBati, describeMultipleBati, exec, npmCli } from "@batijs/tests-utils";
 
 export const matrix = [
@@ -105,6 +107,18 @@ await describeMultipleBati([
             const res = await fetch("/todo");
             expect(res.status).toBe(200);
             expect(await res.text()).toContain(text);
+          },
+        });
+
+        testMatch<typeof matrix>("TODO.md presence", {
+          sqlite: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
+          drizzle: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
+          _: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
           },
         });
       });

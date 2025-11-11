@@ -99,4 +99,8 @@ await describeBati(({ test, expect, testMatch }) => {
       }
     },
   });
+
+  test("should have TODO.md", () => {
+    expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+  });
 });

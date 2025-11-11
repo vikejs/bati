@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [
@@ -48,6 +50,15 @@ await describeBati(({ expect, fetch, testMatch }) => {
 
       expect(text).not.toContain('src="https://www.googletagmanager.com');
       expect(text).not.toContain('src="https://plausible.io');
+    },
+  });
+
+  testMatch<typeof matrix>("TODO.md presence", {
+    "plausible.io": async () => {
+      expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+    },
+    _: async () => {
+      expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
     },
   });
 });
