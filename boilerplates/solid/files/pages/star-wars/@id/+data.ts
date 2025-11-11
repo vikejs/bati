@@ -22,7 +22,7 @@ export async function data(pageContext: PageContextServer) {
   // the client; we should minimize what is sent over the network.
   movie = minimize(movie);
 
-  return movie;
+  return { movie };
 }
 
 function minimize(movie: MovieDetails): MovieDetails {

@@ -2,7 +2,7 @@ import { useData } from "vike-react/useData";
 import type { Data } from "./+data.js";
 
 export default function Page() {
-  const movies = useData<Data>();
+  const { movies } = useData<Data>();
   return (
     <>
       <h1>Star Wars Movies</h1>

@@ -21,7 +21,7 @@ export async function data() {
   // minimize what is sent over the network.
   const movies = minimize(moviesData);
 
-  return movies;
+  return { movies };
 }
 
 function minimize(movies: MovieDetails[]): Movie[] {
