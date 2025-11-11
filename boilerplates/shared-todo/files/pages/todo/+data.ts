@@ -21,8 +21,8 @@ export async function data(_pageContext: PageContextServer) {
 
     return { todoItemsInitial };
   } else {
-    // NOTE: This +data hook is only for demonstration — it doesn't actually retreive data from a database.
-    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-list.
+    // NOTE: This +data hook is only for demonstration — it doesn't actually retrieve data from a database.
+    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-do list.
     const todoItemsInitial = [{ text: "Buy milk" }, { text: "Buy strawberries" }];
     return { todoItemsInitial };
   }
