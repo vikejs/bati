@@ -7,7 +7,7 @@ import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
 export function TodoList() {
   const { todoItemsInitial } = useData<Data>();
-  const [todoItems, setTodoItems] = useState(todoItemsInitial);
+  const [todoItems, setTodoItems] = useState<{ text: string }[]>(todoItemsInitial);
   const [newTodo, setNewTodo] = useState("");
   return (
     <>

@@ -7,7 +7,7 @@ import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
 export function TodoList() {
   const { todoItemsInitial } = useData<Data>();
-  const [todoItems, setTodoItems] = createSignal(todoItemsInitial);
+  const [todoItems, setTodoItems] = createSignal<{ text: string }[]>(todoItemsInitial);
   const [newTodo, setNewTodo] = createSignal("");
   return (
     <>

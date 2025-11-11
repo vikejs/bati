@@ -21,7 +21,7 @@ import { useData } from "vike-vue/useData";
 import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
 const { todoItemsInitial } = useData<Data>();
-const todoItems = ref(todoItemsInitial);
+const todoItems = ref<{ text: string }[]>(todoItemsInitial);
 const newTodo = ref("");
 
 const inputClass = ref(
