@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <h1>To-do List</h1>
-      <TodoList initialTodoItems={data.todo} />
+      <TodoList initialTodoItems={data.todoItemsInitial} />
     </>
   );
 }

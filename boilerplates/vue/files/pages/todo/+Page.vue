@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>To-do List</h1>
-    <TodoList :initial-todo-items="data.todo" />
+    <TodoList :initial-todo-items="data.todoItemsInitial" />
   </div>
 </template>
 
