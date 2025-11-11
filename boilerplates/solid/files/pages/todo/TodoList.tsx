@@ -2,9 +2,12 @@ import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { createSignal, For, untrack } from "solid-js";
+import { useData } from "vike-solid/useData";
+import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
-export function TodoList(props: { initialTodoItems: { text: string }[] }) {
-  const [todoItems, setTodoItems] = createSignal(props.initialTodoItems);
+export function TodoList() {
+  const { todoItemsInitial } = useData<Data>();
+  const [todoItems, setTodoItems] = createSignal(todoItemsInitial);
   const [newTodo, setNewTodo] = createSignal("");
   return (
     <>

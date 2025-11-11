@@ -2,9 +2,12 @@ import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { useState } from "react";
+import { useData } from "vike-react/useData";
+import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 
-export function TodoList({ initialTodoItems }: { initialTodoItems: { text: string }[] }) {
-  const [todoItems, setTodoItems] = useState(initialTodoItems);
+export function TodoList() {
+  const { todoItemsInitial } = useData<Data>();
+  const [todoItems, setTodoItems] = useState(todoItemsInitial);
   const [newTodo, setNewTodo] = useState("");
   return (
     <>

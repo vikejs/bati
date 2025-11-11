@@ -17,6 +17,12 @@ import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { ref } from "vue";
+import { useData } from "vike-vue/useData";
+import type { Data } from "@batijs/shared-todo/pages/todo/+data";
+
+const { todoItemsInitial } = useData<Data>();
+const todoItems = ref(todoItemsInitial);
+const newTodo = ref("");
 
 const inputClass = ref(
   BATI.has("tailwindcss")
@@ -28,10 +34,6 @@ const buttonClass = ref(
     ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
     : "",
 );
-
-const props = defineProps<{ initialTodoItems: { text: string }[] }>();
-const todoItems = ref(props.initialTodoItems);
-const newTodo = ref("");
 
 const submitNewTodo = async () => {
   todoItems.value.push({ text: newTodo.value });
