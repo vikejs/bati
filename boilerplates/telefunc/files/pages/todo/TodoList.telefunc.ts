@@ -16,8 +16,8 @@ export async function onNewTodo({ text }: { text: string }) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
   } else {
-    // NOTE: This to-do list isn't persisted, it's reset when the user navigates away.
-    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    // NOTE: This telefunction is only for demonstration — it doesn't actually save changes to a database.
+    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-list.
     console.log(`Received ${text}`);
   }
 }

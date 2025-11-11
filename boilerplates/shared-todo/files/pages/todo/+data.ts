@@ -21,8 +21,8 @@ export async function data(_pageContext: PageContextServer) {
 
     return { todo };
   } else {
-    // NOTE: This to-do list is only for demonstration — it doesn’t save your changes.
-    // Go to https://vike.dev/new and select a Database tool for an example of how to persist the to-do list.
+    // NOTE: This +data hook is only for demonstration — it doesn't actually retreive data from a database.
+    // Go to https://vike.dev/new and select a database to scaffold an app with a persisted to-list.
     return { todo: [{ text: "Buy milk" }, { text: "Buy strawberries" }] };
   }
 }
