@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
 export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint", "biome"] as const;
@@ -36,6 +38,10 @@ await describeMultipleBati([
   () =>
     describeBati(
       ({ test, expect, exec, npmCli }) => {
+        test("should have TODO.md", () => {
+          expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
+        });
+
         test("deploy --dry-run", async () => {
           await expect(exec(npmCli, ["run", "deploy", "--dry-run"])).resolves.not.toThrow();
         });

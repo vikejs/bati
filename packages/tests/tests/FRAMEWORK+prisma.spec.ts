@@ -1,4 +1,6 @@
 import { describeBati } from "@batijs/tests-utils";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
 export const matrix = [["solid", "react", "vue"], "prisma", "eslint", "biome"];
 
@@ -7,5 +9,9 @@ await describeBati(({ test, expect, fetch }) => {
     const res = await fetch("/");
     expect(res.status).toBe(200);
     expect(await res.text()).not.toContain('{"is404":true}');
+  });
+
+  test("should have TODO.md", () => {
+    expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
   });
 });

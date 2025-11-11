@@ -94,6 +94,10 @@ await describeBati(
       const body = response.isBase64Encoded ? Buffer.from(response.body, "base64").toString("utf8") : response.body;
       expect(body).toContain("My Vike App");
     });
+
+    test("should have TODO.md", () => {
+      expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+    });
   },
   {
     mode: "build",

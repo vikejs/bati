@@ -1,6 +1,7 @@
 import { readFile, rename, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { VikeMeta } from "@batijs/core";
+import { todoIntro } from "../const";
 
 async function cleanupMarkdown(cwd: string, filename: `${string}.md`) {
   const content = await readFile(join(cwd, filename), "utf8");
@@ -22,7 +23,7 @@ export default async function onafter(cwd: string, _meta: VikeMeta) {
   await cleanupMarkdown(cwd, "README.md");
   const content = await cleanupMarkdown(cwd, "TODO.md");
   // Remove empty TODO.md
-  if (content.trim() === "The following steps need to be performed before starting your application.") {
+  if (content.trim() === todoIntro) {
     await unlink(join(cwd, "TODO.md"));
   }
   await renameGitIgnore(cwd);

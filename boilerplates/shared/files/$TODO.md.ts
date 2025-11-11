@@ -1,9 +1,10 @@
 import { loadMarkdown, type TransformerProps } from "@batijs/core";
+import { todoIntro } from "../const";
 
 export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
 
-  content.addMarkdown("The following steps need to be performed before starting your application.", {
+  content.addMarkdown(todoIntro, {
     wrapper: {
       section: "intro",
     },
