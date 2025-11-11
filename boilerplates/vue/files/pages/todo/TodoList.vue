@@ -37,22 +37,22 @@ const submitNewTodo = async () => {
   todoItems.value.push({ text: newTodo.value });
   newTodo.value = "";
   if (BATI.hasServer) {
-      if (BATI.has("telefunc")) {
-        await onNewTodo({ text: newTodo.value });
-      } else if (BATI.has("trpc")) {
-        await trpc.onNewTodo.mutate(newTodo.value);
-      } else if (BATI.has("ts-rest")) {
-        await client.createTodo({ body: { text: newTodo.value } });
-      } else {
-        const response = await fetch("/api/todo/create", {
-          method: "POST",
-          body: JSON.stringify({ text: newTodo.value }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        await response.blob();
-      }
+    if (BATI.has("telefunc")) {
+      await onNewTodo({ text: newTodo.value });
+    } else if (BATI.has("trpc")) {
+      await trpc.onNewTodo.mutate(newTodo.value);
+    } else if (BATI.has("ts-rest")) {
+      await client.createTodo({ body: { text: newTodo.value } });
+    } else {
+      const response = await fetch("/api/todo/create", {
+        method: "POST",
+        body: JSON.stringify({ text: newTodo.value }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      await response.blob();
+    }
   }
 };
 </script>

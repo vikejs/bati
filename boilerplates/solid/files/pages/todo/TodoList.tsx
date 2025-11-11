@@ -19,22 +19,22 @@ export function TodoList(props: { initialTodoItems: { text: string }[] }) {
             setTodoItems((prev) => [...prev, { text: untrack(newTodo) }]);
             setNewTodo("");
             if (BATI.hasServer) {
-                if (BATI.has("telefunc")) {
-                  await onNewTodo({ text: untrack(newTodo) });
-                } else if (BATI.has("trpc")) {
-                  await trpc.onNewTodo.mutate(untrack(newTodo));
-                } else if (BATI.has("ts-rest")) {
-                  await client.createTodo({ body: { text: untrack(newTodo) } });
-                } else {
-                  const response = await fetch("/api/todo/create", {
-                    method: "POST",
-                    body: JSON.stringify({ text: untrack(newTodo) }),
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  });
-                  await response.blob();
-                }
+              if (BATI.has("telefunc")) {
+                await onNewTodo({ text: untrack(newTodo) });
+              } else if (BATI.has("trpc")) {
+                await trpc.onNewTodo.mutate(untrack(newTodo));
+              } else if (BATI.has("ts-rest")) {
+                await client.createTodo({ body: { text: untrack(newTodo) } });
+              } else {
+                const response = await fetch("/api/todo/create", {
+                  method: "POST",
+                  body: JSON.stringify({ text: untrack(newTodo) }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+                await response.blob();
+              }
             }
           }}
         >
