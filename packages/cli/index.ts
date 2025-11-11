@@ -92,34 +92,17 @@ async function printOK(dist: string, flags: string[]) {
   }
 
   console.log(`\n${bold("Next steps:")}`);
+  // Step 1
   console.log(cmd(`cd ${distPretty}`));
-
-  switch (pm?.name) {
-    case "bun": {
-      console.log(cmd("bun install"));
-      console.log(cmd("bun run dev"));
-      break;
-    }
-    case "yarn": {
-      console.log(cmd("yarn install"));
-      console.log(cmd("yarn run dev"));
-      break;
-    }
-    case "npm": {
-      console.log(cmd("npm install"));
-      console.log(cmd("npm run dev"));
-      break;
-    }
-    default: {
-      console.log(cmd("pnpm install"));
-      console.log(cmd("pnpm run dev"));
-      break;
-    }
-  }
-
+  const pmName = pm?.name ?? "pnpm";
+  // Step 2
+  console.log(cmd(`${pmName} install`));
   if (await hasRemainingSteps(dist)) {
+    // Step 3
     console.log(withIcon("•️", gray, indent)(`Check ${bold("TODO.md")} for remaining steps`));
   }
+  // Step 4
+  console.log(cmd(`${pmName} run dev`));
 
   console.log("\nHappy coding! 🚀\n");
 }
