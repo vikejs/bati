@@ -19,10 +19,9 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
           onSubmit={async (ev) => {
             ev.preventDefault();
 
-            // Optimistic UI update
             setTodoItems((prev) => [...prev, { text: newTodo }]);
+            setNewTodo("");
             if (BATI.hasServer) {
-              try {
                 if (BATI.has("telefunc")) {
                   await onNewTodo({ text: newTodo });
                 } else if (BATI.has("trpc")) {
@@ -39,12 +38,6 @@ export function TodoList({ initialTodoItems }: { initialTodoItems: { text: strin
                   });
                   await response.blob();
                 }
-                setNewTodo("");
-              } catch (e) {
-                console.error(e);
-                // rollback
-                setTodoItems((prev) => prev.slice(0, -1));
-              }
             }
           }}
         >

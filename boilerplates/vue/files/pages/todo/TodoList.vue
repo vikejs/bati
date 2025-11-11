@@ -34,10 +34,9 @@ const todoItems = ref(props.initialTodoItems);
 const newTodo = ref("");
 
 const submitNewTodo = async () => {
-  // Optimistic UI update
   todoItems.value.push({ text: newTodo.value });
+  newTodo.value = "";
   if (BATI.hasServer) {
-    try {
       if (BATI.has("telefunc")) {
         await onNewTodo({ text: newTodo.value });
       } else if (BATI.has("trpc")) {
@@ -54,12 +53,6 @@ const submitNewTodo = async () => {
         });
         await response.blob();
       }
-      newTodo.value = "";
-    } catch (e) {
-      console.error(e);
-      // rollback
-      todoItems.value.slice(0, -1);
-    }
   }
 };
 </script>
