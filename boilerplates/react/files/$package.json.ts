@@ -4,6 +4,6 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .addDevDependencies(["vite", "@types/react", "@types/react-dom"])
-    .addDependencies(["@vitejs/plugin-react", "react", "react-dom", "vike", "vike-react"]);
+    .addDevDependencies(["vite", "@vitejs/plugin-react", "@types/react", "@types/react-dom"])
+    .addDependencies(["react", "react-dom", "vike", "vike-react"]);
 }
