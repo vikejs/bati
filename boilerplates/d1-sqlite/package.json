@@ -24,16 +24,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$all": [
-          "sqlite",
-          "cloudflare"
-        ]
-      }
-    }
-  },
   "exports": {
     "./database/d1/queries/todos": {
       "types": "./dist/types/database/d1/queries/todos.d.ts"

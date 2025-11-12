@@ -15,7 +15,7 @@ function isAllowedImport(args: OnResolveArgs) {
 
 export async function build() {
   await esbuild.build({
-    entryPoints: await globby(["./files/**/\\$!($*).ts", "./hooks/**/*.ts"]),
+    entryPoints: await globby(["./files/**/\\$!($*).ts", "./hooks/**/*.ts", "./bati.config.ts"]),
     outdir: "./dist",
     outbase: ".",
     format: "esm",

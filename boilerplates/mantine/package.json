@@ -33,17 +33,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "enforce": "post",
-    "if": {
-      "flag": {
-        "$all": [
-          "mantine",
-          "react"
-        ]
-      }
-    }
-  },
   "exports": {
     "./components/Link": {
       "types": "./dist/types/components/Link.d.ts"

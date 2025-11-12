@@ -23,18 +23,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "h3",
-          "hono",
-          "express",
-          "fastify"
-        ]
-      }
-    }
-  },
   "exports": {
     "./server/create-todo-handler": {
       "types": "./dist/types/server/create-todo-handler.d.ts"

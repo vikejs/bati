@@ -23,17 +23,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "drizzle",
-          "sqlite",
-          "prisma"
-        ]
-      }
-    }
-  },
   "exports": {
     "./server/db-middleware": {
       "types": "./dist/types/server/db-middleware.d.ts"

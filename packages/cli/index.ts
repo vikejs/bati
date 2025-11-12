@@ -4,16 +4,15 @@ import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
+import { type BatiConfig, getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
-import sift from "sift";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
-import type { BoilerplateDef, Hook } from "./types.js";
+import type { BoilerplateDef, BoilerplateDefWithConfig, Hook } from "./types.js";
 
 printInit();
 
@@ -33,8 +32,19 @@ function boilerplatesDir() {
   throw new Error("Missing boilerplates.json file. Run `pnpm run build`");
 }
 
-async function parseBoilerplates(dir: string): Promise<BoilerplateDef[]> {
-  return JSON.parse(await readFile(join(dir, "boilerplates.json"), "utf-8"));
+async function loadBoilerplates(dir: string): Promise<BoilerplateDefWithConfig[]> {
+  const boilerplates: BoilerplateDef[] = JSON.parse(await readFile(join(dir, "boilerplates.json"), "utf-8"));
+
+  return await Promise.all(
+    boilerplates.map(async (bl) => {
+      const batiConfigFile = join(dir, bl.folder, "bati.config.js");
+      const { default: batiConfig }: { default: BatiConfig } = await import(batiConfigFile);
+      return {
+        ...bl,
+        config: batiConfig,
+      };
+    }),
+  );
 }
 
 function toArg(flag: string | undefined, description: string | undefined): ArgsDef {
@@ -338,11 +348,9 @@ async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
   return map;
 }
 
-function testFlags(flags: string[], bl: BoilerplateDef) {
+function testFlags(meta: VikeMeta, bl: BoilerplateDefWithConfig) {
   if (bl.config.if) {
-    return (sift as unknown as typeof sift.default)(bl.config.if)(
-      flags.map((f) => ({ flag: f, packageManager: pm?.name })),
-    );
+    return bl.config.if(meta, pm?.name);
   }
 
   // No condition means always true
@@ -384,7 +392,7 @@ function gitInit(cwd: string) {
 
 async function run() {
   const dir = boilerplatesDir();
-  const boilerplates = await parseBoilerplates(dir);
+  const boilerplates = await loadBoilerplates(dir);
 
   const main = defineCommand({
     meta: {
@@ -418,6 +426,11 @@ async function run() {
       await checkFlagsIncludesUiFramework(flags);
       checkRules(flags);
 
+      const meta: VikeMeta = {
+        BATI: new BatiSet(flags as Flags[], features),
+        BATI_TEST: Boolean(process.env.BATI_TEST),
+      };
+
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`
       boilerplates.sort((b1, b2) => {
         if (b1.config.enforce === "pre") return -1;
@@ -428,7 +441,7 @@ async function run() {
       });
 
       for (const bl of boilerplates) {
-        if (testFlags(flags, bl)) {
+        if (testFlags(meta, bl)) {
           if (bl.subfolders.includes("files")) {
             sources.push(join(dir, bl.folder, "files"));
           }
@@ -439,10 +452,6 @@ async function run() {
       }
 
       const hooksMap = await retrieveHooks(hooks);
-      const meta: VikeMeta = {
-        BATI: new BatiSet(flags as Flags[], features),
-        BATI_TEST: Boolean(process.env.BATI_TEST),
-      };
 
       await exec(
         {

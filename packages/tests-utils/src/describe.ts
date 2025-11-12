@@ -1,4 +1,4 @@
-import type { TestOptions, SuiteFactory } from "vitest";
+import type { SuiteFactory, TestOptions } from "vitest";
 import { prepare } from "./prepare.js";
 import type { FlagMatrix, GlobalContext, PrepareOptions, TestContext, TestMatch, TestMatches } from "./types.js";
 

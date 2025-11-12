@@ -22,20 +22,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "h3",
-          "express",
-          "hono",
-          "fastify",
-          "vercel",
-          "cloudflare"
-        ]
-      }
-    }
-  },
   "exports": {
     "./+photon": {
       "types": "./dist/types/+photon.d.ts"

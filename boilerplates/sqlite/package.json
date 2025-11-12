@@ -25,20 +25,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "sqlite"
-        ],
-        "$not": {
-          "$in": [
-            "cloudflare"
-          ]
-        }
-      }
-    }
-  },
   "exports": {
     "./database/sqlite/db": {
       "types": "./dist/types/database/sqlite/db.d.ts"

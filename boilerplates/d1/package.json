@@ -25,19 +25,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "drizzle",
-          "sqlite"
-        ],
-        "$all": [
-          "cloudflare"
-        ]
-      }
-    }
-  },
   "exports": {
     "./database/d1/helpers": {
       "types": "./dist/types/database/d1/helpers.d.ts"

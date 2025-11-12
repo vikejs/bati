@@ -1,3 +1,4 @@
+export * from "./config.js";
 export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./magicast.js";
