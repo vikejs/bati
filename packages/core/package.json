@@ -49,12 +49,16 @@
   },
   "exports": {
     ".": "./dist/index.js",
+    "./config": "./dist/config.js",
     "./types": {
       "types": "./global.d.ts"
     }
   },
   "typesVersions": {
     "*": {
+      "config": [
+        "./dist/config.d.ts"
+      ],
       "types": [
         "./global.d.ts"
       ]

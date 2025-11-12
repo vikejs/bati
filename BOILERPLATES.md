@@ -37,10 +37,10 @@ One other important goal is to keep code safely typed. Thanks to Bati's [special
 > For instance, importing `@batijs/trpc/trpc/server` imports the `boilerplates/trpc/files/trpc/server.ts` file. Typing information is conserved when doing so.
 > Upon scaffolding, those imports are replaced by relative ones.
 
-## `package.json#bati` condition
+## `bati.config.ts`
 
-All boilerplates `package.json` files contain a `bati` property, which dictates if the boilerplate is part of a _feature_.
-Most notably, the `bati.if` property leverages [sift](https://www.npmjs.com/package/sift) syntax to include or exclude said boilerplate depending on CLI flags.
+All boilerplates contain a `bati.config.ts` file, which dictates if the boilerplate is part of a _feature_.
+Most notably, the `if` property must a boolean to include or exclude said boilerplate depending on CLI flags.
 
 > [!TIP]
 > Take a look at existing boilerplates `package.json` for inspiration

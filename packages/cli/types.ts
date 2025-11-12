@@ -1,14 +1,15 @@
 import type { VikeMeta } from "@batijs/core";
-
-export interface BatiConfig {
-  if?: Record<string, unknown>;
-  enforce?: "pre" | "post";
-}
+import type { BatiConfig } from "@batijs/core/config";
 
 export interface BoilerplateDef {
   folder: string;
-  config: BatiConfig;
   subfolders: string[];
+}
+
+export interface BoilerplateDefWithConfig {
+  folder: string;
+  subfolders: string[];
+  config: BatiConfig;
 }
 
 export interface ToBeCopied extends BoilerplateDef {

@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts" setup>
+import type { Data } from "@batijs/shared-todo/pages/todo/+data";
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
 import { trpc } from "@batijs/trpc/trpc/client";
 import { client } from "@batijs/ts-rest/ts-rest/client";
-import { ref } from "vue";
 import { useData } from "vike-vue/useData";
-import type { Data } from "@batijs/shared-todo/pages/todo/+data";
+import { ref } from "vue";
 
 const { todoItemsInitial } = useData<Data>();
 const todoItems = ref<{ text: string }[]>(todoItemsInitial);

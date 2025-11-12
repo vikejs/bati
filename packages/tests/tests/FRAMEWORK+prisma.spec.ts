@@ -1,6 +1,6 @@
-import { describeBati } from "@batijs/tests-utils";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { describeBati } from "@batijs/tests-utils";
 
 export const matrix = [["solid", "react", "vue"], "prisma", "eslint", "biome"];
 

@@ -24,16 +24,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$in": [
-          "authjs",
-          "auth0"
-        ]
-      }
-    }
-  },
   "exports": {
     "./server/authjs-handler": {
       "types": "./dist/types/server/authjs-handler.d.ts"

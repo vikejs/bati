@@ -3,10 +3,10 @@ import { cp, mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises"
 import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { which } from "@batijs/core";
-import { bold, cyan, green, yellow } from "colorette";
+import { cyan, green, yellow } from "colorette";
 import type { Plugin } from "esbuild";
 import { $ } from "execa";
-import type { BatiConfig, BoilerplateDef, ToBeCopied } from "./types.js";
+import type { BoilerplateDef, ToBeCopied } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,11 +16,6 @@ interface PnpmPackageInfo {
   version: string;
   path: string;
   private: boolean;
-}
-
-interface SimplePackageJson {
-  bati?: BatiConfig | false;
-  name: string;
 }
 
 async function getRecursivePackages() {
@@ -50,12 +45,18 @@ async function* getBatiPackageJson() {
 async function boilerplateFilesToCopy() {
   const arr: ToBeCopied[] = [];
   for await (const [filepath, packageJson] of getBatiPackageJson()) {
-    assertBatiConfig(packageJson, filepath);
+    const pkgDir = dirname(filepath);
+
+    const batiConfigFile = existsSync(join(pkgDir, "dist", "bati.config.js"));
+
+    if (!batiConfigFile) {
+      throw new Error(`Missing 'bati.config.ts' in '${filepath}'`);
+    }
 
     const subfolders: string[] = [];
-    const distFolder = existsSync(join(dirname(filepath), "dist"));
-    const hooksFolder = existsSync(join(dirname(filepath), "dist", "hooks"));
-    const filesFolder = existsSync(join(dirname(filepath), "dist", "files"));
+    const distFolder = existsSync(join(pkgDir, "dist"));
+    const hooksFolder = existsSync(join(pkgDir, "dist", "hooks"));
+    const filesFolder = existsSync(join(pkgDir, "dist", "files"));
 
     if (filesFolder) {
       subfolders.push("files");
@@ -67,25 +68,15 @@ async function boilerplateFilesToCopy() {
 
     arr.push({
       folder: packageJson.name,
-      source: distFolder ? join(dirname(filepath), "dist") : undefined,
-      config: packageJson.bati,
+      source: distFolder ? join(pkgDir, "dist") : undefined,
       subfolders,
     });
   }
   return arr;
 }
 
-function assertBatiConfig(packageJson: SimplePackageJson, filepath: string) {
-  if (packageJson.bati === false) return;
-  if (!packageJson.bati) {
-    console.warn(`${yellow("WARN")}: Missing '${bold("bati")}' property in ${cyan(filepath)}`);
-    return;
-  }
-}
-
 function formatCopiedToDef(boilerplates: ToBeCopied[]): BoilerplateDef[] {
   return boilerplates.map((bl) => ({
-    config: bl.config,
     folder: bl.folder,
     subfolders: bl.subfolders,
   }));

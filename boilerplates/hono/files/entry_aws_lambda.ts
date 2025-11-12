@@ -9,12 +9,12 @@ Notes:
 
 */
 
-// @ts-expect-error loading file compiled by Vite
-import app from "./dist/server/index.mjs";
 import type { APIGatewayProxyResult, Handler } from "aws-lambda";
 import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 import { handle } from "hono/aws-lambda";
+// @ts-expect-error loading file compiled by Vite
+import app from "./dist/server/index.mjs";
 
 type Bindings = {
   event: LambdaEvent;

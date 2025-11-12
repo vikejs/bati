@@ -45,14 +45,26 @@ async function createPackageJson(name: string) {
       "@batijs/core": "workspace:*",
     },
     files: ["dist/"],
-    bati: {
-      if: {
-        flag: name,
-      },
-    },
   };
 
   await writeFile(dest, JSON.stringify(json, undefined, 2), "utf-8");
+}
+
+async function createBatiConfig(name: string) {
+  const dest = join(__boilerplates, name, "bati.config.ts");
+
+  await writeFile(
+    dest,
+    `import { defineConfig } from "@batijs/core/config";
+
+export default defineConfig({
+  if(meta) {
+    return meta.BATI.has(${JSON.stringify(name)});
+  },
+});
+`,
+    "utf-8",
+  );
 }
 
 async function createTsconfig(name: string) {
@@ -84,6 +96,7 @@ async function exec(name: string) {
   const root = await createFolders(name);
 
   await createPackageJson(name);
+  await createBatiConfig(name);
   await createTsconfig(name);
   await updateCliDependencies();
 

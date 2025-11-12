@@ -13,6 +13,19 @@ function isAllowedImport(args: OnResolveArgs) {
   return Boolean(args.path.match(/^\.?\.\//));
 }
 
+export async function buildConfig() {
+  await esbuild.build({
+    entryPoints: await globby(["./bati.config.ts"]),
+    outdir: "./dist",
+    outbase: ".",
+    format: "esm",
+    bundle: true,
+    platform: "node",
+    treeShaking: true,
+  });
+  console.log("Config build step complete");
+}
+
 export async function build() {
   await esbuild.build({
     entryPoints: await globby(["./files/**/\\$!($*).ts", "./hooks/**/*.ts"]),

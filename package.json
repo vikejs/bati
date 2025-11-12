@@ -16,7 +16,7 @@
     "test": "turbo run test",
     "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
-    "build": "turbo run build --no-daemon && pnpm run format",
+    "build": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --no-daemon && turbo run build --no-daemon && pnpm run format",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",

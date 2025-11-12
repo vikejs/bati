@@ -27,16 +27,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$all": [
-          "react",
-          "sentry"
-        ]
-      }
-    }
-  },
   "exports": {
     "./sentry.browser.config": {
       "types": "./dist/types/sentry.browser.config.d.ts"

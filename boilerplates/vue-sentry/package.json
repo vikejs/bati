@@ -25,16 +25,6 @@
   "files": [
     "dist/"
   ],
-  "bati": {
-    "if": {
-      "flag": {
-        "$all": [
-          "vue",
-          "sentry"
-        ]
-      }
-    }
-  },
   "exports": {
     "./sentry.browser.config": {
       "types": "./dist/types/sentry.browser.config.d.ts"
