@@ -1,4 +1,5 @@
-import type { BatiConfig, VikeMeta } from "@batijs/core";
+import type { VikeMeta } from "@batijs/core";
+import type { BatiConfig } from "@batijs/core/config";
 
 export interface BoilerplateDef {
   folder: string;

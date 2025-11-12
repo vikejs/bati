@@ -55,7 +55,7 @@ async function createBatiConfig(name: string) {
 
   await writeFile(
     dest,
-    `import { defineConfig } from "@batijs/core";
+    `import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {

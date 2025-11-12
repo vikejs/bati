@@ -18,27 +18,38 @@ const eslintFixPlugin: Plugin = {
   },
 };
 
-export default defineConfig({
-  entry: ["./src/index.ts"],
-  platform: "node",
-  format: "esm",
-  target: "es2022",
-  outDir: "./dist",
-  dts: true,
-  bundle: true,
-  esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({})],
-  minify: true,
-  // metafile: true,
-
-  noExternal: ["espree"],
-
-  esbuildOptions(options) {
-    // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
-    // https://esbuild.github.io/api/#platform
-    options.mainFields = ["module", "main"];
+export default defineConfig([
+  {
+    entry: ["./src/config.ts"],
+    platform: "node",
+    format: "esm",
+    target: "es2022",
+    outDir: "./dist",
+    dts: true,
+    bundle: true,
+    minify: true,
   },
-  banner: {
-    js: `import { createRequire as BATI_core_createRequire } from 'module';
+  {
+    entry: ["./src/index.ts"],
+    platform: "node",
+    format: "esm",
+    target: "es2022",
+    outDir: "./dist",
+    dts: true,
+    bundle: true,
+    esbuildPlugins: [eslintFixPlugin, purgePolyfills.esbuild({})],
+    minify: true,
+    // metafile: true,
+
+    noExternal: ["espree"],
+
+    esbuildOptions(options) {
+      // Defaults to ["main", "module"] for platform node, but we prefer module if it's available
+      // https://esbuild.github.io/api/#platform
+      options.mainFields = ["module", "main"];
+    },
+    banner: {
+      js: `import { createRequire as BATI_core_createRequire } from 'module';
 import { fileURLToPath as BATI_fileURLToPath } from "node:url";
 import { dirname as BATI_dirname } from "node:path";
 const require = BATI_core_createRequire(import.meta.url);
@@ -46,5 +57,6 @@ const require = BATI_core_createRequire(import.meta.url);
 const __filename = BATI_fileURLToPath(import.meta.url);
 const __dirname = BATI_dirname(__filename);
 `,
+    },
   },
-});
+]);
