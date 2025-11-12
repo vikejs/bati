@@ -5,6 +5,7 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const about = `
+## Vike
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
 
@@ -35,7 +36,9 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or
 
 You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.`;
 
-  content.addMarkdownFeature(about, "react");
+  content.addMarkdownFeature(about, "react", {
+    position: "before",
+  });
 
   return content;
 }

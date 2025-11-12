@@ -26,7 +26,7 @@ export type ContentChanger = {
   options: MarkdownOptions;
 };
 
-export type classConfig = {
+export type ClassConfig = {
   defaults?: MarkdownOptions;
 };
 

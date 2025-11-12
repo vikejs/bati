@@ -5,7 +5,7 @@ import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
 import type { StringTransformer } from "../types.js";
 import { createTOC } from "./createTOC.js";
-import type { ContentChanger, classConfig, MarkdownOptions, ZoneHandler } from "./types.js";
+import type { ClassConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
 import { wrapWithComment } from "./utils.js";
 import { zone } from "./zone.js";
 
@@ -30,11 +30,11 @@ function getNodesFromRoot(tree: Root): Nodes[] {
 export class MarkdownV2 implements StringTransformer {
   private tree: Root;
   private contents: ContentChanger[] = [];
-  private config: classConfig = {
+  private config: ClassConfig = {
     defaults: { filter: { section: "features" } },
   };
 
-  constructor(tree: Root, config?: classConfig) {
+  constructor(tree: Root, config?: ClassConfig) {
     this.tree = tree;
     if (this.config) {
       this.config = deepMerge(this.config, config);

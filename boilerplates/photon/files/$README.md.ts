@@ -15,6 +15,9 @@ and popular servers ([Hono](https://photonjs.dev/hono), [Express](https://photon
     filter: {
       section: "features",
     },
+    wrapper: {
+      category: "Server",
+    },
   });
 
   return content;
