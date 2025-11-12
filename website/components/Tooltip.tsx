@@ -125,41 +125,35 @@ export function EnrichedTooltip(props: {
       >
         {props.children}
       </div>
-      <div
-        role="tooltip"
-        ref={setFloating}
-        class={clsx("dropdown-content z-10 absolute bg-transparent flex", arrowPosition[placement()])}
-        style={position.modal}
-      >
-        <Show when={props.arrow}>
-          <div
-            class="flex items-center justify-center"
-            classList={{
-              "w-1 relative hidden lg:block": props.withReference,
-              invisible: props.disabled,
-            }}
-          >
-            <div
-              ref={setArrow}
-              class={clsx("w-2 h-2 rotate-45", props.arrowClass, arrowOffset[placement()])}
-              classList={{
-                absolute: props.withReference,
-              }}
-              style={{
-                top: positionArrow?.y ? `${positionArrow.y - 4}px` : undefined,
-              }}
-            ></div>
-          </div>
-        </Show>
+      <Show when={!props.disabled}>
         <div
-          class={clsx("rounded-md flex-row items-center", props.tooltipClass)}
-          classList={{
-            invisible: props.disabled,
-          }}
+          role="tooltip"
+          ref={setFloating}
+          class={clsx("dropdown-content z-10 absolute bg-transparent flex", arrowPosition[placement()])}
+          style={position.modal}
         >
-          {props.tip}
+          <Show when={props.arrow}>
+            <div
+              class="flex items-center justify-center"
+              classList={{
+                "w-1 relative hidden lg:block": props.withReference,
+              }}
+            >
+              <div
+                ref={setArrow}
+                class={clsx("w-2 h-2 rotate-45", props.arrowClass, arrowOffset[placement()])}
+                classList={{
+                  absolute: props.withReference,
+                }}
+                style={{
+                  top: positionArrow?.y ? `${positionArrow.y - 4}px` : undefined,
+                }}
+              ></div>
+            </div>
+          </Show>
+          <div class={clsx("rounded-md flex-row items-center", props.tooltipClass)}>{props.tip}</div>
         </div>
-      </div>
+      </Show>
     </div>
   );
 }

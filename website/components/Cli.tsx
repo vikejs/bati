@@ -18,7 +18,7 @@ export function Cli(
     // biome-ignore lint/a11y/noInteractiveElementToNoninteractiveRole: ignored
     <kbd
       role="tabpanel"
-      class="group h-10 join-item rounded-md cursor-pointer relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap leading-9 gap-2.5"
+      class="group min-h-10 join-item rounded-md cursor-pointer relative flex-1 justify-start pl-9 tooltip tooltip-primary text-left inline-flex tooltip-bottom kbd kbd-sm select-all flex-wrap leading-9 gap-2.5"
       use:copy
       onMouseEnter={props.onMouseEnter}
       onClick={props.onClick}
@@ -40,7 +40,7 @@ export function Cli(
         <polyline points="4 17 10 11 4 5" />
         <line x1="12" x2="20" y1="19" y2="19" />
       </svg>
-      {props.children}
+      <span class="text-xs/4">{props.children}</span>
     </kbd>
   );
 }
