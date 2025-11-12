@@ -5,6 +5,7 @@ export default async function getReadme(props: TransformerProps) {
 
   //language=Markdown
   const about = `
+## Vike
 
 This app is ready to start. It's powered by [Vike](https://vike.dev) and [Vue](https://vuejs.org/guide/quick-start.html).
 
@@ -35,7 +36,9 @@ SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or
 
 You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.`;
 
-  content.addMarkdownFeature(about, "vue");
+  content.addMarkdownFeature(about, "vue", {
+    position: "before",
+  });
 
   return content;
 }
