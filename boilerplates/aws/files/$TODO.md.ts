@@ -43,6 +43,12 @@ This is often the most convenient way to configure credentials when deploying yo
 
 > [!NOTE]
 > You should change the stack name to give your app stack a distinctive name in your AWS environment. You can do so by modifying the \`infrastructure.ts.ts\` file in the \`cdk/bin\` directory.
+
+### Deployment to AWS
+
+If this is your **first time deploying a CDK app** in this environment you need to **bootstrap**:
+\`pnpm cdk bootstrap\`. (The default region based on your AWS CLI configuration will be used)
+
 `;
 
   content.addMarkdownFeature(todo, "aws");

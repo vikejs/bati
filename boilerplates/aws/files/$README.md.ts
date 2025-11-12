@@ -20,10 +20,6 @@ This boilerplate is a starting point for deploying your Vike app to AWS. You can
 
 If you want to have a look at the synthesized CloudFormation template, you can run \`pnpm cdk synth\` and see the template as YAML on screen or in \`cdk.out/VikeStack.template.json\`.
 
-> [!NOTE]
-> If this is your **first time deploying a CDK app** in this environment you need to **bootstrap**:
-> \`pnpm cdk bootstrap\`. (The default region based on your AWS CLI configuration will be used)
-
 You can deploy your Vike App via the following command:
 \`pnpm deploy:aws\` or \`pnpm cdk deploy\`
 
