@@ -7,21 +7,17 @@ export default async function getTodo(props: TransformerProps) {
   const todo = `
 ## Cloudflare D1
 
-### Setup
-Create a D1 database with the following command:
+If you didn't already, create the \`my-vike-demo-database\` database:
 \`\`\`sh
-wrangler d1 create <your-db-name>
+wrangler d1 create my-vike-demo-database
 \`\`\`
 
-Then, copy the output to \`wrangler.toml\`.
+Then migrate:
+\`\`\`sh
+${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migrate
+\`\`\`
 
-Finally, update the \`${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migrate\` script (in \`package.json\`) to replace \`YOUR_DATABASE_NAME\`, and execute it.
-
-> [!NOTE]
-> For reference, a good database name is:
-> - Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
-> - Descriptive of the use-case and environment. For example, “staging-db-web” or “production-db-backend”.
-> - Only used for describing the database, and is not directly referenced in code.
+More infos can be found at https://developers.cloudflare.com/d1/get-started/
 `;
 
   content.addMarkdownFeature(todo, "sqlite");

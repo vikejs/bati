@@ -5,11 +5,11 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("d1:migrate", {
-      value: "wrangler d1 migrations apply YOUR_DATABASE_NAME --local",
+      value: "wrangler d1 migrations apply MY_VIKE_DEMO_DATABASE --local",
       precedence: 0,
     })
     .setScript("d1:deploy", {
-      value: "wrangler d1 migrations apply YOUR_DATABASE_NAME --remote",
+      value: "wrangler d1 migrations apply MY_VIKE_DEMO_DATABASE --remote",
       precedence: 0,
     });
 }

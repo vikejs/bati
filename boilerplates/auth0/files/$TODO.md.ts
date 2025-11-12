@@ -6,6 +6,7 @@ export default async function getTodo(props: TransformerProps) {
   //language=Markdown
   const todo = `
 ## Auth0
+
 - Sign up or login to an Auth0 account, then go to [your Dashboard](https://manage.auth0.com/dashboard/)
 - Create Application -> Regular Web Application 
 - What technology are you using for your project? -> Node.js (Express) -> Integrate Now

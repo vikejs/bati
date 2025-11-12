@@ -9,7 +9,9 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 20,
     })
     .setScript("drizzle:migrate", {
-      value: props.meta.BATI.hasD1 ? "wrangler d1 migrations apply YOUR_DATABASE_NAME --local" : "drizzle-kit migrate",
+      value: props.meta.BATI.hasD1
+        ? "wrangler d1 migrations apply MY_VIKE_DEMO_DATABASE --local"
+        : "drizzle-kit migrate",
       precedence: 20,
     })
     .setScript("drizzle:studio", {

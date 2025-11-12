@@ -12,8 +12,8 @@ export default async function getToml(props: TransformerProps) {
 # https://developers.cloudflare.com/d1/build-with-d1/local-development/#develop-locally-with-pages
 [[d1_databases]]
 binding = "DB" # Should match preview_database_id
-database_name = "YOUR_DATABASE_NAME"
-database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
+database_name = "MY_VIKE_DEMO_DATABASE"
+database_id = "my-vike-demo-database"
 preview_database_id = "DB" # Required for Pages local development
 migrations_dir = "database/migrations"
 `;
