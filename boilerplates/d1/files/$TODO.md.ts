@@ -7,14 +7,14 @@ export default async function getTodo(props: TransformerProps) {
   const todo = `
 ## Cloudflare D1
 
-If you didn't already, create the \`my-vike-demo-database\` database:
+Create the \`my-vike-demo-database\` database:
 \`\`\`sh
-wrangler d1 create my-vike-demo-database
+pnpm wrangler d1 create my-vike-demo-database
 \`\`\`
 
 Then migrate:
 \`\`\`sh
-${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migrate
+pnpm ${props.meta.BATI.has("drizzle") ? "drizzle" : "d1"}:migrate
 \`\`\`
 
 More infos can be found at https://developers.cloudflare.com/d1/get-started/
