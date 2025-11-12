@@ -1,5 +1,6 @@
-import "@mantine/core/styles.css";
+// https://vike.dev/Layout
 
+import "@mantine/core/styles.css";
 import logoUrl from "@batijs/react/assets/logo.svg";
 import type { MantineThemeOverride } from "@mantine/core";
 import { AppShell, Burger, createTheme, Group, Image, MantineProvider } from "@mantine/core";

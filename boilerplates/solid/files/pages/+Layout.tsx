@@ -1,3 +1,5 @@
+// https://vike.dev/Layout
+
 import "./Layout.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";

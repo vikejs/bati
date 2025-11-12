@@ -1,3 +1,5 @@
+<!-- https://vike.dev/Layout -->
+
 <template>
   <div class="layout">
     <Sidebar>
