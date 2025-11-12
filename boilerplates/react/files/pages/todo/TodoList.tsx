@@ -22,19 +22,20 @@ export function TodoList() {
           onSubmit={async (ev) => {
             ev.preventDefault();
 
-            setTodoItems((prev) => [...prev, { text: newTodo }]);
+            const text = newTodo;
+            setTodoItems((prev) => [...prev, { text }]);
             setNewTodo("");
             if (BATI.hasServer) {
               if (BATI.has("telefunc")) {
-                await onNewTodo({ text: newTodo });
+                await onNewTodo({ text });
               } else if (BATI.has("trpc")) {
-                await trpc.onNewTodo.mutate(newTodo);
+                await trpc.onNewTodo.mutate(text);
               } else if (BATI.has("ts-rest")) {
-                await client.createTodo({ body: { text: newTodo } });
+                await client.createTodo({ body: { text } });
               } else {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",
-                  body: JSON.stringify({ text: newTodo }),
+                  body: JSON.stringify({ text }),
                   headers: {
                     "Content-Type": "application/json",
                   },

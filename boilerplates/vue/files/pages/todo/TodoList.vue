@@ -31,19 +31,20 @@ const todoItems = ref<{ text: string }[]>(todoItemsInitial);
 const newTodo = ref("");
 
 const submitNewTodo = async () => {
-  todoItems.value.push({ text: newTodo.value });
+  const text = newTodo.value;
+  todoItems.value.push({ text });
   newTodo.value = "";
   if (BATI.hasServer) {
     if (BATI.has("telefunc")) {
-      await onNewTodo({ text: newTodo.value });
+      await onNewTodo({ text });
     } else if (BATI.has("trpc")) {
-      await trpc.onNewTodo.mutate(newTodo.value);
+      await trpc.onNewTodo.mutate(text);
     } else if (BATI.has("ts-rest")) {
-      await client.createTodo({ body: { text: newTodo.value } });
+      await client.createTodo({ body: { text } });
     } else {
       const response = await fetch("/api/todo/create", {
         method: "POST",
-        body: JSON.stringify({ text: newTodo.value }),
+        body: JSON.stringify({ text }),
         headers: {
           "Content-Type": "application/json",
         },

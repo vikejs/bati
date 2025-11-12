@@ -19,19 +19,20 @@ export function TodoList() {
           onSubmit={async (ev) => {
             ev.preventDefault();
 
-            setTodoItems((prev) => [...prev, { text: untrack(newTodo) }]);
+            const text = untrack(newTodo);
+            setTodoItems((prev) => [...prev, { text }]);
             setNewTodo("");
             if (BATI.hasServer) {
               if (BATI.has("telefunc")) {
-                await onNewTodo({ text: untrack(newTodo) });
+                await onNewTodo({ text });
               } else if (BATI.has("trpc")) {
-                await trpc.onNewTodo.mutate(untrack(newTodo));
+                await trpc.onNewTodo.mutate(text);
               } else if (BATI.has("ts-rest")) {
-                await client.createTodo({ body: { text: untrack(newTodo) } });
+                await client.createTodo({ body: { text } });
               } else {
                 const response = await fetch("/api/todo/create", {
                   method: "POST",
-                  body: JSON.stringify({ text: untrack(newTodo) }),
+                  body: JSON.stringify({ text }),
                   headers: {
                     "Content-Type": "application/json",
                   },
