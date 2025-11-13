@@ -1,7 +1,8 @@
-import { loadMarkdown, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
 export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
+  const pmCmd = packageManager().run;
 
   //language=Markdown
   const todo = `
@@ -47,7 +48,7 @@ This is often the most convenient way to configure credentials when deploying yo
 ### Deployment to AWS
 
 If this is your **first time deploying a CDK app** in this environment you need to **bootstrap**:
-\`pnpm cdk bootstrap\`. (The default region based on your AWS CLI configuration will be used)
+\`${pmCmd} cdk bootstrap\`. (The default region based on your AWS CLI configuration will be used)
 
 `;
 

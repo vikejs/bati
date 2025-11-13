@@ -1,7 +1,8 @@
-import { loadMarkdown, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
   const content = await loadMarkdown(props);
+  const pmCmd = packageManager().run;
 
   //language=Markdown
   const about = `
@@ -18,10 +19,10 @@ This boilerplate is a starting point for deploying your Vike app to AWS. You can
 
 ### Deployment to AWS
 
-If you want to have a look at the synthesized CloudFormation template, you can run \`pnpm cdk synth\` and see the template as YAML on screen or in \`cdk.out/VikeStack.template.json\`.
+If you want to have a look at the synthesized CloudFormation template, you can run \`${pmCmd} cdk synth\` and see the template as YAML on screen or in \`cdk.out/VikeStack.template.json\`.
 
 You can deploy your Vike App via the following command:
-\`pnpm deploy:aws\` or \`pnpm cdk deploy\`
+\`${pmCmd} deploy:aws\` or \`${pmCmd} cdk deploy\`
 
 The URL to the CloudFront distribution will be displayed in the output of the deployment.
 You can also access the CloudFront distribution domainname in the AWS SSM registry und \`vike/distribution/url\`.
@@ -50,13 +51,13 @@ If you have a custom domain, you can add it to the stack configuration in the \`
 
 > [!NOTE]
 > If you deploy your App to a region different than \`us-east-1\` and you have never deployed to this region before, you will need to bootstrap this region too:
- \`CDK_DEFAULT_REGION=us-east-1 pnpm deploy:cdk bootstrap\`
+ \`CDK_DEFAULT_REGION=us-east-1 ${pmCmd} deploy:cdk bootstrap\`
 
 
 ### Destroying the Stack on AWS
 
 To destroy the stack on AWS, run the following command:
-\`pnpm cdk destroy\`
+\`${pmCmd} cdk destroy\`
 
 Or delete the CloudFormation stack which starts with "VikeStack-<Your App Name>" created by this project.
 `;

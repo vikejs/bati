@@ -1,7 +1,8 @@
-import { loadMarkdown, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
 export default async function getReadme(props: TransformerProps) {
   const content = await loadMarkdown(props);
+  const pmCmd = packageManager().run;
 
   //language=Markdown
   const about = `
@@ -22,7 +23,7 @@ export default async function getReadme(props: TransformerProps) {
   ### Add Components to Your Project
 
   **Example:** add a component to your project.
-  \`pnpm shadcn add button\`
+  \`${pmCmd} shadcn add button\`
 
   use the \`<Button />\` component in your project:
   \`import { Button } from "@/components/ui/button";\`
