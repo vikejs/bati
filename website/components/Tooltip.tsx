@@ -129,7 +129,10 @@ export function EnrichedTooltip(props: {
         <div
           role="tooltip"
           ref={setFloating}
-          class={clsx("dropdown-content z-10 absolute bg-transparent flex", arrowPosition[placement()])}
+          class={clsx(
+            "dropdown-content z-10 absolute bg-transparent hidden md:flex md:visible",
+            arrowPosition[placement()],
+          )}
           style={position.modal}
         >
           <Show when={props.arrow}>
