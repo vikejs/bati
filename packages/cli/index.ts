@@ -106,15 +106,14 @@ async function printOK(dist: string, flags: string[]) {
   console.log(`\n${bold("Next steps:")}`);
   // Step 1
   console.log(cmd(`cd ${distPretty}`));
-  const pmName = pm?.name ?? "pnpm";
   // Step 2
-  console.log(cmd(`${pmName} install`));
+  console.log(cmd(`${pm.name} install`));
   if (await hasRemainingSteps(dist)) {
     // Step 3
     console.log(withIcon("•️", gray, indent)(`Check ${bold("TODO.md")} for remaining steps`));
   }
   // Step 4
-  console.log(cmd(`${pmName} run dev`));
+  console.log(cmd(`${pm.run} dev`));
 
   console.log("\nHappy coding! 🚀\n");
 }
@@ -352,7 +351,7 @@ async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
 
 function testFlags(meta: VikeMeta, bl: BoilerplateDefWithConfig) {
   if (bl.config.if) {
-    return bl.config.if(meta, pm?.name);
+    return bl.config.if(meta, pm.name);
   }
 
   // No condition means always true

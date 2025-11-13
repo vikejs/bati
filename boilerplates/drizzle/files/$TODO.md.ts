@@ -1,7 +1,8 @@
-import { loadMarkdown, type TransformerProps } from "@batijs/core";
+import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
 export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
+  const pmCmd = packageManager().run;
 
   //language=Markdown
   const todo = `
@@ -9,8 +10,8 @@ export default async function getTodo(props: TransformerProps) {
 
 First, ensure that \`DATABASE_URL\` is configured in \`.env\` file, then create the database:
 \`\`\`bash
-pnpm drizzle:generate # a script that executes drizzle-kit generate.
-pnpm drizzle:migrate # a script that executes drizzle-kit migrate.
+${pmCmd} drizzle:generate # a script that executes drizzle-kit generate.
+${pmCmd} drizzle:migrate # a script that executes drizzle-kit migrate.
 \`\`\`
 
 > [!NOTE]
