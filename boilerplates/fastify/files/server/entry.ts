@@ -7,14 +7,14 @@ import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
 import { apply, serve } from "@photonjs/fastify";
-import fastify, { type FastifyInstance } from "fastify";
+import fastify from "fastify";
 import rawBody from "fastify-raw-body";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default await startServer();
+export default (await startServer()) as unknown;
 
-async function startServer(): Promise<FastifyInstance> {
+async function startServer() {
   const app = fastify({
     // Ensures proper HMR support
     forceCloseConnections: true,
