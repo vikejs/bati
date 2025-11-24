@@ -187,7 +187,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
   }
 
   if (flags.includes("vercel")) {
-    ignoreDependencies.push("vite-plugin-vercel", "@photonjs/vercel");
+    ignoreDependencies.push("vite-plugin-vercel", "@photonjs/vercel", "h3");
     ignore.push(".vercel/**");
   }
 
