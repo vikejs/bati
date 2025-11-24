@@ -246,6 +246,17 @@ export async function createBatiConfig(projectDir: string, flags: string[]) {
   );
 }
 
+export async function updateViteConfig(projectDir: string) {
+  // add tsconfig exclude option
+  let viteConfig = await readFile(join(projectDir, "vite.config.json"), "utf-8");
+  // disable HMR for concurrency
+  viteConfig = viteConfig.replace(
+    "export default defineConfig({",
+    "export default defineConfig({ server: { hmr: false },",
+  );
+  await writeFile(join(projectDir, "vite.config.json"), viteConfig, "utf-8");
+}
+
 export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyBuiltDependencies: Set<string>) {
   try {
     const content = await readFile(join(projectDir, "pnpm-workspace.yaml"), "utf-8");

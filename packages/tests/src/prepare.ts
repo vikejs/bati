@@ -6,6 +6,7 @@ import {
   createTurboConfig,
   updatePackageJson,
   updateTsconfig,
+  updateViteConfig,
   updateVitestConfig,
 } from "./common.js";
 
@@ -20,6 +21,7 @@ async function prepare(flags: string[], testFiles: string) {
   // @ts-expect-error
   const packageJson = await updatePackageJson(projectDir, flags, `./${packedTestUtils}`, `bun@${Bun.version}`, true);
   await updateTsconfig(projectDir);
+  await updateViteConfig(projectDir);
   await updateVitestConfig(projectDir, testFiles);
   await createTurboConfig({
     tmpdir: projectDir,
