@@ -38,6 +38,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".toml":
         return fileContent as string;
       case ".json":
+      case ".jsonc":
         if (typeof fileContent === "string") return fileContent;
         return JSON.stringify(fileContent, null, 2);
       case ".yml":
