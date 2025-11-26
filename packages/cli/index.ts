@@ -250,8 +250,9 @@ function colorFirstLetter(choice: (typeof choices)[number]) {
 
 async function checkFlagsIncludesUiFramework(flags: string[]) {
   const flagsUi: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
+  const flagsHosting: string[] = features.filter((fs) => fs.category === "Hosting").map((fs) => fs.flag);
   const flagsUiFound = flags.some((f) => flagsUi.includes(f));
-  const isBarebones = flags.filter((f) => !flagsUi.includes(f)).length === 0;
+  const isBarebones = flags.filter((f) => !flagsUi.includes(f) && !flagsHosting.includes(f)).length === 0;
 
   if (isBarebones) {
     console.warn(
