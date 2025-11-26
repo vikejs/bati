@@ -14,6 +14,11 @@ export default async function getPackageJson(props: TransformerProps) {
       precedence: 25,
       warnIfReplaced: true,
     })
+    .setScript("cf-typegen", {
+      value: "wrangler types",
+      precedence: 25,
+      warnIfReplaced: true,
+    })
     .addDevDependencies(["@cloudflare/workers-types", "wrangler"])
     .addDependencies(["@photonjs/cloudflare"]);
 }
