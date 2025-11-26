@@ -238,15 +238,11 @@ const choices = [
     labelColor: green,
   },
   {
-    label: "SolidJS",
+    label: "Solid",
     value: "solid",
     labelColor: blue,
   },
 ];
-
-function colorFirstLetter(choice: (typeof choices)[number]) {
-  return choice.labelColor(choice.label[0]) + choice.label.substring(1);
-}
 
 async function checkFlagsIncludesUiFramework(flags: string[]) {
   const flagsUi: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
@@ -264,14 +260,14 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
       theme: {
         style: {
           highlight(t: string) {
-            const found = choices.find((c) => t.includes(colorFirstLetter(c)));
+            const found = choices.find((c) => t.includes(c.label));
             return (found?.labelColor ?? cyan)(t);
           },
         },
       },
-      message: "Select a framework:",
+      message: "Select a UI framework:",
       choices: choices.map((c) => ({
-        name: colorFirstLetter(c),
+        name: c.label,
         value: c.value,
       })),
     });
