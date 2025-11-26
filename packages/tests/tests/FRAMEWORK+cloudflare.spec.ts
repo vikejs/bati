@@ -40,7 +40,7 @@ await describeMultipleBati([
     describeBati(
       ({ test, expect, exec, npmCli }) => {
         test("should have TODO.md", () => {
-          expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
+          expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
         });
 
         test("deploy --dry-run", async () => {
