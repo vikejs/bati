@@ -1,1 +1,1 @@
-export const todoIntro = "The following steps need to be performed before starting your application.";
+export const todoIntro = "Follow the steps below to finish setting up your application.";
