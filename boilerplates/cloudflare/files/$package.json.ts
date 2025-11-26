@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("prod", {
-      value: "vike build && wrangler dev ./dist/server/index.js -c ./dist/server/wrangler.json",
+      value: "vike build && vike preview",
       precedence: 25,
       warnIfReplaced: true,
     })
