@@ -4,6 +4,7 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
+    .removeScript("prod")
     .setScript("deploy", {
       value: "vike build && wrangler deploy",
       precedence: 25,
