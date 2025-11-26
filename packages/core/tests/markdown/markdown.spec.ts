@@ -300,12 +300,12 @@ Intro
 
 ## Contents
 
-* [React](#react)
-  * [Rendering](#rendering)
-* [*AWS*](#aws)
-  * [S3](#s3)
-* [Sentry](#sentry)
-  * [Debugging](#debugging)
+- [React](#react)
+  - [Rendering](#rendering)
+- [*AWS*](#aws)
+  - [S3](#s3)
+- [Sentry](#sentry)
+  - [Debugging](#debugging)
 
 <!--bati:end section="TOC"-->
 
