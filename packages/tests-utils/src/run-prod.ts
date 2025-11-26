@@ -4,6 +4,7 @@ import type { GlobalContext, PrepareOptions } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
 export async function runProd(context: GlobalContext, script?: PrepareOptions["script"]) {
+  if (context.flags.includes("--cloudflare")) script ??= "preview";
   const cmd = ["run", script ?? "prod", "--port", String(context.port)];
   context.server = exec(npmCli, cmd, {
     env: {
