@@ -106,6 +106,6 @@ export class MarkdownV2 implements StringTransformer {
       if (!toc) return;
       return [start, ...toc, end];
     });
-    return toMarkdown(this.tree);
+    return toMarkdown(this.tree, { bullet: "-" });
   }
 }
