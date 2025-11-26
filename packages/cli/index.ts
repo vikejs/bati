@@ -249,16 +249,16 @@ function colorFirstLetter(choice: (typeof choices)[number]) {
 }
 
 async function checkFlagsIncludesUiFramework(flags: string[]) {
-  const uiFlags: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
-  const uiFlagFound = flags.some((f) => uiFlags.includes(f));
-  const isBarebones = flags.filter((f) => !uiFlags.includes(f)).length > 0;
+  const flagsUi: string[] = features.filter((fs) => fs.category === "UI Framework").map((fs) => fs.flag);
+  const flagsUiFound = flags.some((f) => flagsUi.includes(f));
+  const isBarebones = flags.filter((f) => !flagsUi.includes(f)).length === 0;
 
-  if (!isBarebones) {
+  if (isBarebones) {
     console.warn(
       `${yellow("🛈 Scaffolding a bare-bones app")} ➡️  Go to ${underline("https://vike.dev/new")} to scaffold full-fledged apps with Tailwind, authentication, database, deployment, and more.\n`,
     );
   }
-  if (!uiFlagFound) {
+  if (!flagsUiFound) {
     const ui = await select({
       theme: {
         style: {
