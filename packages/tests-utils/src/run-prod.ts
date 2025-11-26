@@ -1,10 +1,11 @@
 import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
-import type { GlobalContext } from "./types.js";
+import type { GlobalContext, PrepareOptions } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
-export async function runProd(context: GlobalContext) {
-  const cmd = ["run", "prod", "--port", String(context.port)];
+export async function runProd(context: GlobalContext, script?: PrepareOptions["script"]) {
+  if (context.flags.includes("cloudflare")) script ??= "preview";
+  const cmd = ["run", script ?? "prod", "--port", String(context.port)];
   context.server = exec(npmCli, cmd, {
     env: {
       PORT: String(context.port),

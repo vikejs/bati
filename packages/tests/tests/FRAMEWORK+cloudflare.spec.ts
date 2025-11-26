@@ -31,6 +31,7 @@ await describeMultipleBati([
       },
       {
         mode: "prod",
+        script: "preview",
         retry: 3,
       },
     ),
