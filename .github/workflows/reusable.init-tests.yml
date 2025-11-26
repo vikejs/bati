@@ -22,33 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         id: pnpm-install
         with:
           run_install: false
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
 
       - name: mkdir temp folder
         run: mkdir -p ${{ runner.temp }}/bati-cache
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ inputs.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ inputs.os }}-pnpm-store-
 
 #      - name: Cache for Turbo
 #        uses: rharkor/caching-for-turbo@v1.8
