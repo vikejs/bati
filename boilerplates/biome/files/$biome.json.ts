@@ -3,7 +3,7 @@ import type { Configuration, LinterConfiguration } from "@biomejs/wasm-nodejs";
 
 export default async function getBiomeJson(props: TransformerProps) {
   const additionalLinter: Omit<LinterConfiguration, "enabled"> = {};
-  const additionalConfig: Omit<Configuration, "vcs" | "files" | "assist" | "linter" | "formatter"> = {};
+  const additionalConfig: Omit<Configuration, "vcs" | "assist" | "linter" | "formatter"> = {};
 
   if (props.meta.BATI.has("vue")) {
     additionalLinter.domains = {
@@ -54,7 +54,14 @@ export default async function getBiomeJson(props: TransformerProps) {
     });
   }
 
+  additionalConfig.files ??= {};
+  additionalConfig.files.includes ??= [];
+  if (props.meta.BATI.has("cloudflare")) {
+    additionalConfig.files.includes.push("!worker-configuration.d.ts");
+  }
+
   return {
+    ...additionalConfig,
     $schema: "./node_modules/@biomejs/biome/configuration_schema.json",
     formatter: {
       indentStyle: "space",
@@ -68,6 +75,7 @@ export default async function getBiomeJson(props: TransformerProps) {
       ...additionalLinter,
     },
     files: {
+      ...additionalConfig.files,
       includes: [
         "**",
         "!*.cjs",
@@ -78,6 +86,7 @@ export default async function getBiomeJson(props: TransformerProps) {
         "!dist/*",
         "!node_modules/*",
         "!**/.DS_Store",
+        ...additionalConfig.files.includes,
       ],
     },
     vcs: {
@@ -85,6 +94,5 @@ export default async function getBiomeJson(props: TransformerProps) {
       clientKind: "git",
       useIgnoreFile: true,
     },
-    ...additionalConfig,
   };
 }
