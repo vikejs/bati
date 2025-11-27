@@ -1,7 +1,9 @@
 declare global {
   namespace Vike {
-    interface PageContext {
+    interface PageContextServer {
       env: Env;
     }
   }
 }
+
+export {};

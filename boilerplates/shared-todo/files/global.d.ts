@@ -4,7 +4,7 @@ import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 //# BATI.hasDatabase
 declare global {
   namespace Vike {
-    interface PageContext {
+    interface PageContextServer {
       db: BATI.If<{
         'BATI.has("sqlite") && !BATI.hasD1': ReturnType<typeof sqliteDb>;
         'BATI.has("drizzle") && !BATI.hasD1': ReturnType<typeof dbSqlite>;
