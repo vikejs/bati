@@ -1,5 +1,3 @@
-//# BATI.has("cloudflare")
-/// <reference types="@cloudflare/workers-types" />
 import { env as cloudflareEnv } from "cloudflare:workers";
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";

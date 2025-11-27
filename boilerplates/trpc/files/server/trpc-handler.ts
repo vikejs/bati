@@ -1,6 +1,5 @@
 /*# BATI include-if-imported #*/
 
-import type { D1Database } from "@cloudflare/workers-types";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { enhance, type Get, type UniversalHandler } from "@universal-middleware/core";
 import { appRouter } from "../trpc/server";

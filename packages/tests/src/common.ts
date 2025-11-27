@@ -183,7 +183,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
 
   if (flags.includes("cloudflare")) {
     entry.push("cloudflare-entry.ts");
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare", "@photonjs/cloudflare");
+    ignoreDependencies.push("wrangler", "cloudflare", "@photonjs/cloudflare");
   }
 
   if (flags.includes("vercel")) {

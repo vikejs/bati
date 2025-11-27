@@ -4,7 +4,6 @@ import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
-import type { D1Database } from "@cloudflare/workers-types";
 import { fetchRequestHandler, tsr } from "@ts-rest/serverless/fetch";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { contract } from "../ts-rest/contract";
