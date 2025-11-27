@@ -6,8 +6,8 @@ import type { Session } from "@auth/core/types";
 import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
 //# BATI.has("auth0")
-const env: Record<string, string | undefined> = BATI.has("cloudflare")
-  ? (cloudflareEnv as Record<string, string | undefined>)
+const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefined> }> = BATI.has("cloudflare")
+  ? (cloudflareEnv as BATI.Any)
   : typeof process?.env !== "undefined"
     ? process.env
     : import.meta && "env" in import.meta

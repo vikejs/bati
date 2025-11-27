@@ -505,11 +505,9 @@ describe("BATI. expressions", () => {
     assert.equal(renderedOutput.code.trim(), "const a = options?.router || appRouter;");
   });
 
-  testIfElse(
-    `const a = "a" as BATI.If<{ 'BATI.has("react")': { env: string } }>;`,
-    `const a = "a" as { env: string };`,
-    `const a = "a";`,
-  );
+  testIfElse(`const a = "a" as BATI.If<{ 'BATI.has("react")':string }>;`, `const a = "a" as string;`, `const a = "a";`);
+
+  testIfElse(`const a: BATI.If<{ 'BATI.has("react")': string }> = "a";`, `const a: string = "a";`, `const a = "a";`);
 
   testIfElse(
     `const t = initTRPC
