@@ -3,7 +3,6 @@
 import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 import { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
-import type { D1Database } from "@cloudflare/workers-types";
 import { enhance, type UniversalMiddleware } from "@universal-middleware/core";
 
 //# BATI.hasDatabase

@@ -38,6 +38,10 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     flags: bati.flags,
   };
 
+  if (context.flags.includes("cloudflare")) {
+    script ??= "preview";
+  }
+
   function hooks() {
     beforeAll(async () => {
       if (mode === "dev") {

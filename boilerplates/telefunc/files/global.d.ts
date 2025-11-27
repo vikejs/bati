@@ -1,6 +1,5 @@
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
-import type { D1Database } from "@cloudflare/workers-types";
 
 //# BATI.hasDatabase
 declare module "telefunc" {
@@ -16,3 +15,7 @@ declare module "telefunc" {
     }
   }
 }
+
+//# BATI.has("REMOVE-COMMENT") || "remove-comments-only"
+// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module
+export {};

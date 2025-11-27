@@ -1,4 +1,3 @@
-import type { D1Database } from "@cloudflare/workers-types";
 import Database from "better-sqlite3";
 import { drizzle as drizzleSqlite } from "drizzle-orm/better-sqlite3";
 import { drizzle as drizzleD1 } from "drizzle-orm/d1";

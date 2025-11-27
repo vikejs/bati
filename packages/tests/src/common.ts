@@ -75,22 +75,25 @@ export async function createTurboConfig(context: GlobalContext) {
     JSON.stringify({
       $schema: "https://turbo.build/schema.json",
       tasks: {
+        "generate-types": {
+          outputs: ["worker-configuration.d.ts"],
+        },
         build: {
-          dependsOn: ["^build"],
+          dependsOn: ["^build", "generate-types"],
           outputs: ["dist/**"],
         },
         test: {
-          dependsOn: ["build"],
+          dependsOn: ["generate-types", "build"],
           env: ["TEST_*"],
         },
         "lint:eslint": {
-          dependsOn: ["build"],
+          dependsOn: ["generate-types", "build"],
         },
         "lint:biome": {
-          dependsOn: ["build"],
+          dependsOn: ["generate-types", "build"],
         },
         typecheck: {
-          dependsOn: ["build"],
+          dependsOn: ["generate-types", "build"],
         },
         knip: {
           // adding "test" because of possible race conditions as knip can execute some files
@@ -183,7 +186,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
 
   if (flags.includes("cloudflare")) {
     entry.push("cloudflare-entry.ts");
-    ignoreDependencies.push("@cloudflare/workers-types", "wrangler", "cloudflare", "@photonjs/cloudflare");
+    ignoreDependencies.push("wrangler", "cloudflare", "@photonjs/cloudflare");
   }
 
   if (flags.includes("vercel")) {

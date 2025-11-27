@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["@types/node", "@batijs/core/types"]
+    "types": [
+      "@types/node",
+      "@batijs/core/types",
+      "../cloudflare/worker-configuration.d.ts"
+    ]
   },
   "extends": ["../tsconfig.base.json"]
 }
