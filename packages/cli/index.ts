@@ -480,7 +480,7 @@ async function run() {
       const nextSteps = filteredBoilerplates
         .flatMap((b) => b.config.nextSteps?.(meta, pm.run, colorette))
         .filter(Boolean) as BatiConfigStep[];
-      nextSteps.sort((s) => s.order);
+      nextSteps.sort((s) => s.order ?? 0);
 
       await printOK(args.project, flags, nextSteps);
     },
