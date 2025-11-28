@@ -51,14 +51,6 @@ export async function mergeDts({
     filepath,
   });
 
-  console.log({
-    filepath,
-    code: currentAst.generate().code,
-    clean: res.code,
-    previousContent,
-    fileContent,
-  });
-
   return clearExports(res.code, meta);
 }
 

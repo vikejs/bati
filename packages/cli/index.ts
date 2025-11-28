@@ -5,11 +5,12 @@ import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
 import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
-import type { BatiConfig } from "@batijs/core/config";
+import type { BatiConfig, BatiConfigStep } from "@batijs/core/config";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
 import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
+import * as colorette from "colorette";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
@@ -89,7 +90,8 @@ function printInit() {
   assert(version);
   console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
-async function printOK(dist: string, flags: string[]) {
+
+async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[]) {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
@@ -108,8 +110,16 @@ async function printOK(dist: string, flags: string[]) {
   console.log(cmd(`cd ${distPretty}`));
   // Step 2
   console.log(cmd(`${pm.name} install`));
-  if (await hasRemainingSteps(dist)) {
-    // Step 3
+  // Step 3
+  if (nextSteps.length > 0) {
+    for (const step of nextSteps) {
+      if (step.type === "command") {
+        console.log(cmd(step.step));
+      } else {
+        console.log(withIcon("•️", gray, indent)(step.step));
+      }
+    }
+  } else if (await hasRemainingSteps(dist)) {
     console.log(withIcon("•️", gray, indent)(`Check ${bold("TODO.md")} for remaining steps`));
   }
   // Step 4
@@ -438,14 +448,14 @@ async function run() {
         return 0;
       });
 
-      for (const bl of boilerplates) {
-        if (testFlags(meta, bl)) {
-          if (bl.subfolders.includes("files")) {
-            sources.push(join(dir, bl.folder, "files"));
-          }
-          if (bl.subfolders.includes("hooks")) {
-            hooks.push(join(dir, bl.folder, "hooks"));
-          }
+      const filteredBoilerplates = boilerplates.filter((bl) => testFlags(meta, bl));
+
+      for (const bl of filteredBoilerplates) {
+        if (bl.subfolders.includes("files")) {
+          sources.push(join(dir, bl.folder, "files"));
+        }
+        if (bl.subfolders.includes("hooks")) {
+          hooks.push(join(dir, bl.folder, "hooks"));
         }
       }
 
@@ -467,7 +477,12 @@ async function run() {
         gitInit(args.project);
       }
 
-      await printOK(args.project, flags);
+      const nextSteps = filteredBoilerplates
+        .flatMap((b) => b.config.nextSteps?.(meta, pm.run, colorette))
+        .filter(Boolean) as BatiConfigStep[];
+      nextSteps.sort((s) => s.order);
+
+      await printOK(args.project, flags, nextSteps);
     },
   });
 
