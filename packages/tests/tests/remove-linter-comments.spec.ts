@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", "ts-rest", "hono", ["eslint", "biome"]];
+export const matrix = ["react", "ts-rest", "hono", ["eslint", "biome", "oxlint"]];
 
 await describeBati(
   ({ expect, testMatch }) => {
@@ -33,6 +33,7 @@ await describeBati(
         for await (const file of listFiles()) {
           const content = await readFile(file, "utf8");
           expect(content).not.toContain("biome-");
+          expect(content).not.toContain("oxlint-");
         }
       },
       biome: async () => {
@@ -40,6 +41,13 @@ await describeBati(
         for await (const file of listFiles()) {
           const content = await readFile(file, "utf8");
           expect(content).not.toContain("eslint-");
+        }
+      },
+      oxlint: async () => {
+        expect.hasAssertions();
+        for await (const file of listFiles()) {
+          const content = await readFile(file, "utf8");
+          expect(content).not.toContain("biome-");
         }
       },
     });

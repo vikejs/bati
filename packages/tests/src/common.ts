@@ -23,6 +23,9 @@ export async function updatePackageJson(
   if (flags.includes("biome")) {
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
+  if (flags.includes("oxlint")) {
+    pkgjson.scripts["lint:oxlint"] = "oxlint --tpye-aware .";
+  }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;

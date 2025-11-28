@@ -1,6 +1,6 @@
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "eslint", "biome", "prettier"];
+export const matrix = [["solid", "react", "vue"], "eslint", "biome", "oxlint", "prettier"];
 
 await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {

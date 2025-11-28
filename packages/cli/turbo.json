@@ -1,6 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"],
+  "extends": [
+    "//"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -9,6 +11,7 @@
         "@batijs/authjs#build",
         "@batijs/aws#build",
         "@batijs/biome#build",
+        "@batijs/oxlint#build",
         "@batijs/cloudflare#build",
         "@batijs/compiled#build",
         "@batijs/d1#build",
@@ -45,7 +48,9 @@
         "@batijs/vue#build",
         "@batijs/vue-sentry#build"
       ],
-      "outputs": ["dist/**"]
+      "outputs": [
+        "dist/**"
+      ]
     },
     "check-types": {}
   }

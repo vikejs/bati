@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describeBati } from "@batijs/tests-utils";
 
-export const matrix = ["sentry", ["solid", "react", "vue"], "eslint", "biome"];
+export const matrix = ["sentry", ["solid", "react", "vue"], "eslint", "biome", "oxlint"];
 
 await describeBati(({ test, expect, testMatch }) => {
   testMatch<typeof matrix>("sentry.browser.config.ts", {
