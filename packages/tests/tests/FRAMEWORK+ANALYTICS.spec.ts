@@ -7,7 +7,7 @@ export const matrix = [
   ["plausible.io", "google-analytics", undefined],
   "eslint",
   "biome",
-  "oxlint"
+  "oxlint",
 ] as const;
 
 await describeBati(({ expect, fetch, testMatch }) => {
