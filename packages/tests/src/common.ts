@@ -24,7 +24,7 @@ export async function updatePackageJson(
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
   if (flags.includes("oxlint")) {
-    pkgjson.scripts["lint:oxlint"] = "oxlint --tpye-aware .";
+    pkgjson.scripts["lint:oxlint"] = "oxlint --type-aware .";
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
@@ -90,6 +90,9 @@ export async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build"],
         },
         "lint:biome": {
+          dependsOn: ["build"],
+        },
+        "lint:oxlint": {
           dependsOn: ["build"],
         },
         typecheck: {
