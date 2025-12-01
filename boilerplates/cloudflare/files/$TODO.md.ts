@@ -2,7 +2,7 @@ import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/cor
 
 export default async function getTodo(props: TransformerProps) {
   const content = await loadMarkdown(props);
-  const pmCmd = packageManager().run;
+  const pmExec = packageManager().exec;
 
   //language=Markdown
   const todo = `
@@ -10,7 +10,7 @@ export default async function getTodo(props: TransformerProps) {
 
 Run [\`wrangler types\`](https://developers.cloudflare.com/workers/wrangler/commands/#types) to generate the \`worker-configuration.d.ts\` file:
 \`\`\`sh
-${pmCmd} wrangler types
+${pmExec} wrangler types
 \`\`\`
 
 > Re-run it whenever you change your Cloudflare configuration to update \`worker-configuration.d.ts\`.

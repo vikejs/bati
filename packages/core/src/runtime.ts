@@ -4,6 +4,7 @@ export interface PackageManagerInfo {
   name: string;
   version?: string;
   run: string;
+  exec: string;
 }
 
 export function packageManager(): PackageManagerInfo {
@@ -11,6 +12,7 @@ export function packageManager(): PackageManagerInfo {
     return {
       name: "npm",
       run: "npm run",
+      exec: "npx",
     };
   }
   return pmFromUserAgent(process.env.npm_config_user_agent);
@@ -21,10 +23,30 @@ function pmFromUserAgent(userAgent: string): PackageManagerInfo {
   const separatorPos = pmSpec.lastIndexOf("/");
   let name = pmSpec.substring(0, separatorPos);
   name = name === "npminstall" ? "cnpm" : name;
+
+  let exec: string;
+  switch (name) {
+    case "pnpm":
+      exec = "pnpm dlx";
+      break;
+    case "yarn":
+      exec = "yarn dlx";
+      break;
+    case "bun":
+      exec = "bunx";
+      break;
+    case "cnpm":
+      exec = "cnpx";
+      break;
+    default:
+      exec = "npx";
+  }
+
   return {
     name,
     version: pmSpec.substring(separatorPos + 1),
     run: name === "npm" ? "npm run" : name,
+    exec,
   };
 }
 
