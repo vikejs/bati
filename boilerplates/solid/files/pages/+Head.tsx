@@ -4,7 +4,7 @@
 
 import logoUrl from "../assets/logo.svg";
 
-export default function HeadDefault() {
+export function Head() {
   if (BATI.has("plausible.io")) {
     return (
       <>

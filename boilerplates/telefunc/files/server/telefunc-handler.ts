@@ -1,6 +1,5 @@
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
-import type { D1Database } from "@cloudflare/workers-types";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { telefunc } from "telefunc";
 

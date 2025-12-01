@@ -1,5 +1,3 @@
-//# BATI.has("cloudflare")
-/// <reference types="@cloudflare/workers-types" />
 import { env as cloudflareEnv } from "cloudflare:workers";
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
@@ -8,8 +6,8 @@ import type { Session } from "@auth/core/types";
 import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
 //# BATI.has("auth0")
-const env: Record<string, string | undefined> = BATI.has("cloudflare")
-  ? (cloudflareEnv as Record<string, string | undefined>)
+const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefined> }> = BATI.has("cloudflare")
+  ? (cloudflareEnv as BATI.Any)
   : typeof process?.env !== "undefined"
     ? process.env
     : import.meta && "env" in import.meta

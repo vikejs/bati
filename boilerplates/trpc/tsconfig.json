@@ -1,3 +1,6 @@
 {
-  "extends": ["../tsconfig.base.json"]
+  "extends": ["../tsconfig.base.json"],
+  "compilerOptions": {
+    "types": ["@batijs/core/types", "../cloudflare/worker-configuration.d.ts"]
+  }
 }

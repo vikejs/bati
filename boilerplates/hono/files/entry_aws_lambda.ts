@@ -14,7 +14,7 @@ import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 import { handle } from "hono/aws-lambda";
 // @ts-expect-error loading file compiled by Vite
-import app from "./dist/server/index.mjs";
+import app from "./dist/server/aws.mjs";
 
 type Bindings = {
   event: LambdaEvent;
@@ -23,7 +23,7 @@ type Bindings = {
 
 const lambdaApp = new Hono<{ Bindings: Bindings }>();
 
-lambdaApp.route("/", app as Hono);
+lambdaApp.route("/", app.server.app as Hono);
 const awsHandler = handle(lambdaApp);
 
 export const handler: Handler<LambdaEvent, APIGatewayProxyResult> = awsHandler;

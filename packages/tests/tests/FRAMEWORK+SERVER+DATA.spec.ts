@@ -118,6 +118,9 @@ await describeMultipleBati([
           drizzle: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
+          cloudflare: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
           _: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
           },

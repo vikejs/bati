@@ -2,7 +2,7 @@
   "name": "bati",
   "private": true,
   "type": "module",
-  "version": "0.0.516",
+  "version": "0.0.532",
   "description": "@batijs monorepo",
   "scripts": {
     "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
@@ -17,6 +17,7 @@
     "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --no-daemon && turbo run build --no-daemon && pnpm run format",
+    "build:force": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --no-daemon --force && turbo run build --no-daemon --force && pnpm run format",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",
@@ -26,22 +27,22 @@
   "author": "Joël Charles <joel.charles91@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@biomejs/biome": "2.3.5",
+    "@biomejs/biome": "2.3.7",
     "@vikejs/biome-config": "^2.0.1",
-    "bumpp": "^10.3.1",
+    "bumpp": "^10.3.2",
     "citty": "^0.1.6",
     "globals": "^16.5.0",
-    "rimraf": "^6.1.0",
-    "tsx": "^4.20.6",
+    "rimraf": "^6.1.2",
+    "tsx": "^4.21.0",
     "turbo": "^2.6.1",
     "typescript": "^5.9.3"
   },
   "optionalDependencies": {
     "browserless": "^10.9.8",
-    "puppeteer": "^24.30.0"
+    "puppeteer": "^24.31.0"
   },
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "pnpm@10.22.0"
+  "packageManager": "pnpm@10.24.0"
 }

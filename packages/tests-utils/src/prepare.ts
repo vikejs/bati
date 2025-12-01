@@ -26,7 +26,7 @@ async function retryX<T>(task: () => T | Promise<T>, retriesLeft?: number) {
   throw new Error("Unreachable");
 }
 
-export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
+export async function prepare({ mode = "dev", retry, script }: PrepareOptions = {}) {
   const { beforeAll, afterAll } = await import("vitest");
 
   const bati = JSON.parse(await readFile("bati.config.json", "utf-8"));
@@ -38,6 +38,10 @@ export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
     flags: bati.flags,
   };
 
+  if (context.flags.includes("cloudflare")) {
+    script ??= "preview";
+  }
+
   function hooks() {
     beforeAll(async () => {
       if (mode === "dev") {
@@ -45,7 +49,7 @@ export async function prepare({ mode = "dev", retry }: PrepareOptions = {}) {
         await runDevServer(context);
       } else if (mode === "prod") {
         await initPort(context);
-        await runProd(context);
+        await runProd(context, script);
       } else if (mode === "build") {
         await retryX(() => runBuild(context), retry);
       }

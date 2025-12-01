@@ -6,9 +6,10 @@ export default async function getReadme(props: TransformerProps) {
   //language=Markdown
   const photon = `
 ## Photon
-[Photon](https://photonjs.dev) is a next-generation server and deployment toolkit.
-It supports popular deployments ([self-hosted](https://photonjs.dev/self-hosted), [Cloudflare](https://photonjs.dev/cloudflare), [Vercel](https://photonjs.dev/vercel), and [more](https://photonjs.dev/deploy))
-and popular servers ([Hono](https://photonjs.dev/hono), [Express](https://photonjs.dev/express), [Fastify](https://photonjs.dev/fastify), and [more](https://photonjs.dev/server)).
+
+[Photon](https://photonjs.dev) is a next-generation infrastructure for deploying JavaScript servers.
+
+See [Introducing Photon](https://vike.dev/blog/photon) and [Why Photon](https://photonjs.dev/why) to learn more.
 `;
 
   content.addMarkdown(photon, {

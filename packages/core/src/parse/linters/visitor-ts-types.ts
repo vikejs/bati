@@ -116,7 +116,6 @@ export function transformBatiType(
                   (member.key.type !== "Literal" && member.key.type !== "Identifier") ||
                   member.typeAnnotation?.type !== "TSTypeAnnotation"
                 ) {
-                  console.log();
                   throw new Error("Linter: Malformed BATI.If members type");
                 }
                 const condition = ("value" in member.key ? member.key.value : member.key.name) as string;
@@ -142,6 +141,12 @@ export function transformBatiType(
               if (!replaced) {
                 if (fallback) {
                   yield fixer.replaceTextRange(range, replaceBy(fallback, right));
+                } else if (node.parent?.parent?.type === "Identifier") {
+                  // Replace
+                  //  const a: BATI.If<{ "...": number }> = 8;
+                  // By
+                  //  const a = 8;
+                  yield fixer.removeRange([range[0] - 2, range[1]]);
                 } else {
                   yield fixer.removeRange(range);
                 }

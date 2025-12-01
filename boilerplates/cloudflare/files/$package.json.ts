@@ -4,16 +4,17 @@ export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .setScript("prod", {
-      value: "vike build && wrangler dev ./dist/server/index.js -c ./dist/server/wrangler.json",
-      precedence: 25,
-      warnIfReplaced: true,
-    })
+    .removeScript("prod")
     .setScript("deploy", {
       value: "vike build && wrangler deploy",
       precedence: 25,
       warnIfReplaced: true,
     })
-    .addDevDependencies(["@cloudflare/workers-types", "wrangler"])
+    .setScript("generate-types", {
+      value: "wrangler types",
+      precedence: 0,
+      warnIfReplaced: true,
+    })
+    .addDevDependencies(["wrangler"])
     .addDependencies(["@photonjs/cloudflare"]);
 }
