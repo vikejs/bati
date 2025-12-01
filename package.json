@@ -15,6 +15,7 @@
     "check-types": "turbo run check-types",
     "test": "turbo run test",
     "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
+    "test:e2e:workflow-write": "pnpm test:e2e workflow-write",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --no-daemon && turbo run build --no-daemon && pnpm run format",
     "build:force": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --no-daemon --force && turbo run build --no-daemon --force && pnpm run format",
