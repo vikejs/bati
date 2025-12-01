@@ -5,7 +5,7 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson
     .setScript("lint", {
-      value: "oxlint --type-aware .",
+      value: "oxlint --type-aware --ignore-path .gitignore .",
       precedence: 0,
     })
     .addDevDependencies(["oxlint", "oxlint-tsgolint"]);

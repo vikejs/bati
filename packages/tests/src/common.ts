@@ -24,7 +24,7 @@ export async function updatePackageJson(
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
   if (flags.includes("oxlint")) {
-    pkgjson.scripts["lint:oxlint"] = "oxlint --type-aware .";
+    pkgjson.scripts["lint:oxlint"] = "oxlint --type-aware --ignore-path .gitignore .";
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
