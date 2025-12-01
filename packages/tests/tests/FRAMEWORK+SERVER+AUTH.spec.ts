@@ -1,12 +1,15 @@
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
+const testAuth0 = Boolean(process.env.TEST_AUTH0_CLIENT_ID);
+
 export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify"],
-  ["authjs", ...(process.env.TEST_AUTH0_CLIENT_ID ? (["auth0"] as const) : [])],
+  ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])],
   ["cloudflare", undefined],
   "eslint",
   "biome",
+  "oxlint",
 ] as const;
 
 export const exclude = [
@@ -27,14 +30,14 @@ export const exclude = [
 
 await describeMultipleBati([
   () =>
-    describeBati(({ test, expect, fetch }) => {
+    describeBati(({ test, expect, fetch, context }) => {
       test("home", async () => {
         const res = await fetch("/");
         expect(res.status).toBe(200);
         expect(await res.text()).not.toContain('{"is404":true}');
       });
 
-      test("auth/signin", async () => {
+      test("auth/signin", { skip: context.flags.includes("auth0") && !testAuth0 }, async () => {
         const res = await fetch("/api/auth/signin");
         expect(res.status).toBe(200);
         expect(await res.text()).not.toContain('{"is404":true}');

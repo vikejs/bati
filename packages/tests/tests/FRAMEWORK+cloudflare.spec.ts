@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
-export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint", "biome"] as const;
+export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint", "biome", "oxlint"] as const;
 
 await describeMultipleBati([
   // dev

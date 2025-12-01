@@ -163,7 +163,16 @@ async function execTurborepo(context: GlobalContext, args: mri.Argv<CliOptions>)
     npmCli,
     [
       ...args_1,
-      ...(steps ?? ["generate-types", "build", "test", "lint:eslint", "lint:biome", "typecheck", "knip"]),
+      ...(steps ?? [
+        "generate-types",
+        "build",
+        "test",
+        "lint:eslint",
+        "lint:biome",
+        "lint:oxlint",
+        "typecheck",
+        "knip",
+      ]),
       ...args_2,
     ],
     {

@@ -1,6 +1,6 @@
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", "vercel", ["hono", "h3", "express", "fastify", undefined], "eslint", "biome"];
+export const matrix = ["react", "vercel", ["hono", "h3", "express", "fastify", undefined], "eslint", "biome", "oxlint"];
 
 await describeMultipleBati([
   // dev

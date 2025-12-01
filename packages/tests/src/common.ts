@@ -23,6 +23,9 @@ export async function updatePackageJson(
   if (flags.includes("biome")) {
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
+  if (flags.includes("oxlint")) {
+    pkgjson.scripts["lint:oxlint"] = "oxlint --type-aware --ignore-path .gitignore .";
+  }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
@@ -91,6 +94,9 @@ export async function createTurboConfig(context: GlobalContext) {
         },
         "lint:biome": {
           dependsOn: ["generate-types", "build"],
+        },
+        "lint:oxlint": {
+          dependsOn: ["build"],
         },
         typecheck: {
           dependsOn: ["generate-types", "build"],

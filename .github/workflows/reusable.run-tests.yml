@@ -136,6 +136,13 @@ jobs:
           false --env-mode loose
         working-directory: ${{ inputs.destination }}
 
+      - name: Run lint:oxlint
+        shell: bash
+        run:
+          bun turbo run lint:oxlint --only --no-update-notifier --framework-inference
+          false --env-mode loose
+        working-directory: ${{ inputs.destination }}
+
       - name: Run typecheck
         shell: bash
         run:
