@@ -113,7 +113,7 @@ await describeBati(({ test, expect, fetch, testMatch }) => {
 2. **Use `exclude` array**: Reduce test permutations by excluding unnecessary combinations
 3. **Add to existing matrix when possible**: If your feature fits an existing test category
 4. **Create new spec file only if needed**: For truly unique features
-5. **Update workflow matrix**: Add entries to `tests-entry.yml` under `tests-ubuntu` job
+5. **Regenerate workflow matrix**: Run `pnpm run test:e2e workflow-write` to auto-generate entries in `tests-entry.yml` (do NOT edit manually)
 
 ### Test Modes
 
@@ -123,14 +123,13 @@ Tests can run in different modes via `describeBati` options:
 - `mode: "build"` - Build only, no server
 - `mode: "none"` - No build, no server (file checks only)
 
-### Example Workflow Entry
+### Workflow Entry Generation
 
-Add to `.github/workflows/tests-entry.yml`:
-```yaml
-- destination: myfeature--solid--eslint--biome--oxlint
-  flags: --myfeature --solid --eslint --biome --oxlint
-  test-files: FRAMEWORK+myfeature.spec.ts
+After adding a new test file or modifying matrices, regenerate workflow entries:
+```bash
+pnpm run test:e2e workflow-write
 ```
+This auto-generates the matrix entries in `.github/workflows/tests-entry.yml`. Never edit this file manually.
 
 ## Project Layout
 
