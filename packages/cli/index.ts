@@ -91,6 +91,23 @@ async function generateKnipConfig(
     }
   }
 
+  // Add dynamic script-based dependencies from the generated package.json
+  try {
+    const pkgJsonPath = join(dist, "package.json");
+    const pkgJson = JSON.parse(await readFile(pkgJsonPath, "utf-8"));
+    const scriptsValues = Object.values(pkgJson.scripts ?? {}) as string[];
+
+    if (scriptsValues.some((s) => s.includes("tsx "))) {
+      aggregated.ignoreDependencies!.push("tsx");
+    }
+
+    if (scriptsValues.some((s) => s.includes("cross-env "))) {
+      aggregated.ignoreDependencies!.push("cross-env");
+    }
+  } catch {
+    // package.json might not exist yet, skip script-based checks
+  }
+
   await writeFile(
     join(dist, "knip.json"),
     JSON.stringify(

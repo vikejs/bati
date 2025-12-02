@@ -9,7 +9,8 @@ const __dirname = dirname(__filename);
 export async function execLocalBati(context: GlobalContext, flags: string[], monorepo = true) {
   const digest = flags.join("--") || "empty";
   // --skip-git ensures proper turborepo cache computation
-  const mappedFlags = ["skip-git", ...flags].map((f) => `--${f}`);
+  // --knip generates knip.json for E2E tests
+  const mappedFlags = ["skip-git", "knip", ...flags].map((f) => `--${f}`);
 
   if (context.localRepository) {
     // local verdaccio server is running.
