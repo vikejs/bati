@@ -13,4 +13,8 @@ export default defineConfig({
     ];
   },
   enforce: "post",
+  knip: {
+    entry: ["cloudflare-entry.ts"],
+    ignoreDependencies: ["wrangler", "cloudflare", "@photonjs/cloudflare"],
+  },
 });

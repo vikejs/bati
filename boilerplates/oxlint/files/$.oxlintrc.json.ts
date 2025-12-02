@@ -3,6 +3,7 @@ import type { TransformerProps } from "@batijs/core";
 export default async function getOxlintJson(props: TransformerProps) {
   const oxlintPlugins: string[] = ["eslint", "typescript", "unicorn", "oxc"];
   const jsPlugins: string[] = [];
+  // biome-ignore lint/suspicious/noExplicitAny: cast
   const rules: Record<string, any> = {};
 
   if (props.meta.BATI.has("vue")) {

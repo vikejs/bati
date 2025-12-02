@@ -4,4 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("ts-rest");
   },
+  knip: {
+    ignoreDependencies: ["zod"],
+  },
 });

@@ -4,4 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("biome");
   },
+  knip: {
+    ignoreDependencies: ["@biomejs/biome"],
+  },
 });

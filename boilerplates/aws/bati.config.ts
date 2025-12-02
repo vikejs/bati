@@ -13,4 +13,9 @@ export default defineConfig({
     ];
   },
   enforce: "post",
+  knip: {
+    entry: ["entry_aws_lambda.ts", "cdk/lib/vike-stack.ts", "tests/aws_handler.spec.ts"],
+    ignore: ["cdk.out/**"],
+    ignoreDependencies: ["aws-cdk", "cdk", "esbuild", "npm-run-all2"],
+  },
 });
