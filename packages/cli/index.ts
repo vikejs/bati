@@ -197,7 +197,7 @@ const defaultDef = {
   },
   knip: {
     type: "boolean",
-    // Hidden flag - no description shown in --help
+    // Hidden flag used by E2E tests to generate knip.json during scaffolding
     required: false,
   },
 } as const satisfies ArgsDef;
