@@ -224,7 +224,6 @@ The `packages/features/src/helpers.ts` file provides `BatiSet` with useful helpe
 - `$filename.ts` - Dynamic files that export functions returning content
 - `!filename` - Higher priority override files
 - `//# BATI.has("feature")` - Conditional line inclusion (next line only)
-- `// BATI.has("feature")` - Conditional import statement
 
 ## CI Validation (GitHub Actions)
 
