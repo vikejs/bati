@@ -1,4 +1,5 @@
-import { type dbKysely, dbKyselyD1 } from "../db";
+import type { dbKysely } from "../db";
+import { dbKyselyD1 } from "../db";
 
 export async function insertTodo(
   db: BATI.If<{

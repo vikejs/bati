@@ -1,5 +1,6 @@
 /*# BATI include-if-imported #*/
 
+//# !BATI.hasD1
 import "dotenv/config";
 import type { Database } from "./types";
 import SQLite from "better-sqlite3";
