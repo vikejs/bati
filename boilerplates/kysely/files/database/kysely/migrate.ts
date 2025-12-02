@@ -1,8 +1,8 @@
 /*{ @if (!it.BATI.hasD1) }*/
-import * as path from "path";
+import * as path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { promises as fs } from "fs";
+import * as fs from "node:fs/promises";
 import { Migrator, FileMigrationProvider } from "kysely";
 import { dbKysely } from "./db";
 

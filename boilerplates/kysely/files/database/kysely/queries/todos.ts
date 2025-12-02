@@ -10,12 +10,13 @@ export async function insertTodo(
   if (BATI.hasD1) {
     const kyselyDb = dbKyselyD1(db as D1Database);
     return await kyselyDb.insertInto("todos").values({ text }).returningAll().executeTakeFirstOrThrow();
+  } else {
+    return await (db as ReturnType<typeof dbKysely>)
+      .insertInto("todos")
+      .values({ text })
+      .returningAll()
+      .executeTakeFirstOrThrow();
   }
-  return await (db as ReturnType<typeof dbKysely>)
-    .insertInto("todos")
-    .values({ text })
-    .returningAll()
-    .executeTakeFirstOrThrow();
 }
 
 export async function getAllTodos(
@@ -27,6 +28,7 @@ export async function getAllTodos(
   if (BATI.hasD1) {
     const kyselyDb = dbKyselyD1(db as D1Database);
     return await kyselyDb.selectFrom("todos").selectAll().execute();
+  } else {
+    return await (db as ReturnType<typeof dbKysely>).selectFrom("todos").selectAll().execute();
   }
-  return await (db as ReturnType<typeof dbKysely>).selectFrom("todos").selectAll().execute();
 }
