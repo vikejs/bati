@@ -88,16 +88,61 @@ pnpm run test:e2e --filter solid,authjs
 
 ## Adding/Modifying Boilerplates
 
-1. Create new boilerplate: `pnpm run new-boilerplate <name>`
-2. Then run: `pnpm install` to link new package
-3. Edit `boilerplates/<name>/bati.config.ts` to configure feature conditions
-4. Add files to `boilerplates/<name>/files/`
-5. Use `$*.ts` prefix for dynamic files (e.g., `$package.json.ts`)
+**MAINTAINABILITY is the top priority.** Strive for clean code and good separation of concerns.
 
-**Boilerplate Syntax:**
+### When to Create a New Boilerplate
+
+Use `pnpm run new-boilerplate <name>` when:
+- The feature is **UI-framework independent** (e.g., `sentry`, `tailwindcss`, `auth0`)
+
+Create **UI-specific boilerplates** when the feature requires framework-specific code:
+- Example: `sentry` feature has: `sentry/` (shared), `react-sentry/`, `vue-sentry/`, `solid-sentry/`
+- The UI-specific configs use combined conditions: `meta.BATI.has("react") && meta.BATI.has("sentry")`
+
+### When to Edit Existing Boilerplates (Instead of Creating New Ones)
+
+**Prefer editing existing boilerplates** when creating a new one would add too much complexity or duplication:
+- Example: `tailwindcss` doesn't duplicate all components; it uses BATI compiler syntax to conditionally add classes in `react/`, `vue/`, `solid/` boilerplates:
+  ```tsx
+  <div
+    //# BATI.has("tailwindcss")
+    className={"flex max-w-5xl m-auto"}
+    //# !BATI.has("tailwindcss") && !BATI.has("compiled-css")
+    style={{ display: "flex", maxWidth: 900, margin: "auto" }}
+  >
+  ```
+
+### Boilerplate Setup Steps
+
+1. Create: `pnpm run new-boilerplate <name>` then `pnpm install`
+2. Configure `boilerplates/<name>/bati.config.ts`:
+   ```ts
+   export default defineConfig({
+     if(meta) {
+       return meta.BATI.has("feature-name");
+     },
+   });
+   ```
+3. Add files to `boilerplates/<name>/files/`
+4. Use `$*.ts` prefix for dynamic files (e.g., `$package.json.ts`)
+
+### BatiSet Helpers
+
+The `packages/features/src/helpers.ts` file provides `BatiSet` with useful helpers:
 - `BATI.has("feature")` - Check if feature is enabled
-- `$filename.ts` files export default functions returning file content
+- `BATI.hasServer` - Check if any server feature is enabled
+- `BATI.hasDatabase` - Check if database features (sqlite/drizzle) are enabled
+- `BATI.hasD1` - Check if Cloudflare D1 is used
+- `BATI.hasPhoton` - Check if Photon-compatible hosting is used
+
+**Update helpers** when adding features that need cross-cutting detection logic.
+
+### Boilerplate File Syntax
+
+- `$filename.ts` - Dynamic files that export functions returning content
 - `!filename` - Higher priority override files
+- `//# BATI.has("feature")` - Conditional line inclusion (next line only)
+- `// BATI.has("feature")` - Conditional import statement
 
 ## CI Validation (GitHub Actions)
 
