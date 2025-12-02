@@ -83,7 +83,7 @@ jobs:
 
       - name: Run Bati CLI
         shell: bash
-        run: bun ./bati-cli/index.js ${{ inputs.flags }} ${{ inputs.destination }}
+        run: bun ./bati-cli/index.js --knip ${{ inputs.flags }} ${{ inputs.destination }}
 
       - name: Link tests-utils
         shell: bash

@@ -16,4 +16,7 @@ export default defineConfig({
       },
     ];
   },
+  knip: {
+    ignoreDependencies: ["@prisma/client", "prisma"],
+  },
 });
