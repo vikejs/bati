@@ -221,9 +221,109 @@ The `packages/features/src/helpers.ts` file provides `BatiSet` with useful helpe
 
 ### Boilerplate File Syntax
 
-- `$filename.ts` - Dynamic files that export functions returning content
-- `!filename` - Higher priority override files
-- `//# BATI.has("feature")` - Conditional line inclusion (next line only)
+For detailed syntax documentation, see [boilerplates/README.md](https://github.com/vikejs/bati/blob/main/boilerplates/README.md).
+
+**Key Concept:** `BATI` is a global `Set` available during the templating phase, containing all chosen features.
+
+#### Special File Names
+
+| Pattern | Description | Priority (low to high) |
+|---------|-------------|------------------------|
+| `filename` | Standard file | 1 (lowest) |
+| `!filename` | Higher priority override file | 2 |
+| `$filename.ts` | Dynamic file processed through callback (e.g., `$README.md.ts`) | 3 |
+| `!$filename.ts` | Highest priority dynamic file | 4 (highest) |
+
+#### JS/TS/Vue Script Syntax
+
+**If/else statements:**
+```ts
+if (BATI.has("feature")) {
+  console.log("A");
+} else {
+  console.log("B");
+}
+// Also works with else-if
+```
+
+**Ternary expressions:**
+```ts
+const myvar = BATI.has("feature") ? "A" : "B";
+```
+
+**Comment-based conditional (next line only):**
+```ts
+// BATI.has("feature")
+import "./mycss";
+
+//# BATI.has("feature")  // Alternative with # (commonly used for JSX attributes)
+import "./other";
+```
+
+**Include file only if imported:**
+```ts
+/*# BATI include-if-imported #*/
+const a = 1;
+```
+
+**Type casting helper:**
+```ts
+// Equivalent to `as any` but dropped entirely when compiled
+const a = 'react' as BATI.Any;
+```
+
+**Conditional types with BATI.If:**
+```ts
+interface Context {
+  ui: BATI.If<{
+    'BATI.has("react")': "react";
+    'BATI.has("vue")': "vue";
+    'BATI.has("solid")': "solid";
+    _: "other";  // fallback
+  }>;
+}
+```
+
+#### JSX/TSX Syntax
+
+**Conditional attributes (use `//# ` comment before attribute):**
+```tsx
+<div
+  //# BATI.has("feature")
+  class="p-5"
+  //# !BATI.has("feature")
+  style={{ padding: "20px" }}
+>
+  {props.children}
+</div>
+```
+
+#### HTML/JSX/TSX/Vue Template Syntax
+
+**Conditional elements (next sibling only):**
+```html
+<!-- BATI.has("feature") -->
+<div>
+  <span>my text</span>
+</div>
+<span>my other text</span>
+```
+
+#### Universal Syntax (Any File Extension)
+
+Uses [SquirellyJS](https://squirrelly.js.org/docs/syntax/overview) with custom `/*{ ... }*/` tags:
+```css
+/*{ @if (it.BATI.has("feature")) }*/
+@import "./feature.css";
+/*{ /if }*/
+```
+
+#### Important Notes
+
+- **Unsupported JSX pattern:** `{BATI.has("feature") && <div>show me</div>}` is NOT supported
+- Unused imports are automatically removed after compilation
+- Code is automatically formatted with prettier after compilation
+- Empty files are not deployed; if an empty file overrides another file, the original is deleted
 
 ## CI Validation (GitHub Actions)
 
