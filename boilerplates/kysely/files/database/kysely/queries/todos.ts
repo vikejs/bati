@@ -1,35 +1,20 @@
-import type { dbKysely } from "../db";
-import { dbKyselyD1 } from "../db";
+import type { dbKysely, dbKyselyD1 } from "../db";
 
 export async function insertTodo(
   db: BATI.If<{
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    _: D1Database;
+    _: ReturnType<typeof dbKyselyD1>;
   }>,
   text: string,
 ) {
-  if (BATI.hasD1) {
-    const kyselyDb = dbKyselyD1(db as D1Database);
-    return await kyselyDb.insertInto("todos").values({ text }).returningAll().executeTakeFirstOrThrow();
-  } else {
-    return await (db as ReturnType<typeof dbKysely>)
-      .insertInto("todos")
-      .values({ text })
-      .returningAll()
-      .executeTakeFirstOrThrow();
-  }
+  return await db.insertInto("todos").values({ text }).returningAll().executeTakeFirstOrThrow();
 }
 
 export async function getAllTodos(
   db: BATI.If<{
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    _: D1Database;
+    _: ReturnType<typeof dbKyselyD1>;
   }>,
 ) {
-  if (BATI.hasD1) {
-    const kyselyDb = dbKyselyD1(db as D1Database);
-    return await kyselyDb.selectFrom("todos").selectAll().execute();
-  } else {
-    return await (db as ReturnType<typeof dbKysely>).selectFrom("todos").selectAll().execute();
-  }
+  return await db.selectFrom("todos").selectAll().execute();
 }
