@@ -23,7 +23,7 @@ export function dbKysely() {
     dialect,
     //# !BATI.hasD1
   });
-//# !BATI.hasD1
+  //# !BATI.hasD1
 }
 
 //# BATI.hasD1
@@ -34,5 +34,5 @@ export function dbKyselyD1(d1: D1Database) {
     dialect: new D1Dialect({ database: d1 }),
     //# BATI.hasD1
   });
-//# BATI.hasD1
+  //# BATI.hasD1
 }

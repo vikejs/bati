@@ -93,6 +93,18 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_KYSELY_R_SERVER]: error(() => {
+    return (
+      <span class="inline-block">
+        A <span class="font-bold">Server</span> is required when using <span class="font-bold">Kysely</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">Kysely</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(() => {
     const { selectedFeatures } = useContext(StoreContext);
 
@@ -178,7 +190,9 @@ export const rulesMessages = {
     const { selectedFeatures } = useContext(StoreContext);
 
     const unsupported = createMemo(() =>
-      selectedFeatures().filter((f) => f.flag === "drizzle" || f.flag === "sqlite" || f.flag === "cloudflare"),
+      selectedFeatures().filter(
+        (f) => f.flag === "drizzle" || f.flag === "sqlite" || f.flag === "kysely" || f.flag === "cloudflare",
+      ),
     );
 
     function updateTooltip() {

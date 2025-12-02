@@ -29,11 +29,17 @@
     "dist/"
   ],
   "exports": {
+    "./database/kysely/types": {
+      "types": "./dist/types/database/kysely/types.d.ts"
+    },
     "./database/kysely/db": {
       "types": "./dist/types/database/kysely/db.d.ts"
     },
-    "./database/kysely/types": {
-      "types": "./dist/types/database/kysely/types.d.ts"
+    "./database/kysely/migrate": {
+      "types": "./dist/types/database/kysely/migrate.d.ts"
+    },
+    "./database/kysely/migrations/001_create_todos_table": {
+      "types": "./dist/types/database/kysely/migrations/001_create_todos_table.d.ts"
     },
     "./database/kysely/queries/todos": {
       "types": "./dist/types/database/kysely/queries/todos.d.ts"
@@ -41,11 +47,17 @@
   },
   "typesVersions": {
     "*": {
+      "database/kysely/types": [
+        "./dist/types/database/kysely/types.d.ts"
+      ],
       "database/kysely/db": [
         "./dist/types/database/kysely/db.d.ts"
       ],
-      "database/kysely/types": [
-        "./dist/types/database/kysely/types.d.ts"
+      "database/kysely/migrate": [
+        "./dist/types/database/kysely/migrate.d.ts"
+      ],
+      "database/kysely/migrations/001_create_todos_table": [
+        "./dist/types/database/kysely/migrations/001_create_todos_table.d.ts"
       ],
       "database/kysely/queries/todos": [
         "./dist/types/database/kysely/queries/todos.d.ts"
