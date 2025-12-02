@@ -3,6 +3,8 @@
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
+import type { dbKysely, dbKyselyD1 } from "@batijs/kysely/database/kysely/db";
+import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
@@ -13,6 +15,8 @@ export const createTodoHandler: UniversalHandler<
       'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
       'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
+      'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
+      'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
       "BATI.hasD1": { db: D1Database };
       _: object;
     }>
@@ -25,6 +29,8 @@ export const createTodoHandler: UniversalHandler<
       await drizzleQueries.insertTodo(_context.db, newTodo.text);
     } else if (BATI.has("sqlite") && !BATI.hasD1) {
       sqliteQueries.insertTodo(_context.db, newTodo.text);
+    } else if (BATI.has("kysely")) {
+      await kyselyQueries.insertTodo(_context.db, newTodo.text);
     } else if (BATI.hasD1) {
       await d1Queries.insertTodo(_context.db, newTodo.text);
     } else {

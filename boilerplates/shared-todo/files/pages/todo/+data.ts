@@ -2,6 +2,7 @@
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
+import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import type { PageContextServer } from "vike/types";
 
@@ -14,6 +15,10 @@ export async function data(_pageContext: PageContextServer) {
     return { todoItemsInitial };
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
     const todoItemsInitial = sqliteQueries.getAllTodos(_pageContext.db);
+
+    return { todoItemsInitial };
+  } else if (BATI.has("kysely")) {
+    const todoItemsInitial = await kyselyQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
   } else if (BATI.hasD1) {

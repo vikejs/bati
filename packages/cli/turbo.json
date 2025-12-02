@@ -1,6 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"],
+  "extends": [
+    "//"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -9,10 +11,10 @@
         "@batijs/authjs#build",
         "@batijs/aws#build",
         "@batijs/biome#build",
-        "@batijs/oxlint#build",
         "@batijs/cloudflare#build",
         "@batijs/compiled#build",
         "@batijs/d1#build",
+        "@batijs/d1-kysely#build",
         "@batijs/d1-sqlite#build",
         "@batijs/drizzle#build",
         "@batijs/eslint#build",
@@ -21,7 +23,9 @@
         "@batijs/google-analytics#build",
         "@batijs/h3#build",
         "@batijs/hono#build",
+        "@batijs/kysely#build",
         "@batijs/mantine#build",
+        "@batijs/oxlint#build",
         "@batijs/photon#build",
         "@batijs/plausible.io#build",
         "@batijs/pnpm#build",
@@ -46,7 +50,9 @@
         "@batijs/vue#build",
         "@batijs/vue-sentry#build"
       ],
-      "outputs": ["dist/**"]
+      "outputs": [
+        "dist/**"
+      ]
     },
     "check-types": {}
   }

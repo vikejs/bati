@@ -2,6 +2,7 @@
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
+import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { getContext } from "telefunc";
 
@@ -12,6 +13,9 @@ export async function onNewTodo({ text }: { text: string }) {
   } else if (BATI.has("sqlite") && !BATI.hasD1) {
     const context = getContext();
     sqliteQueries.insertTodo(context.db, text);
+  } else if (BATI.has("kysely")) {
+    const context = getContext();
+    await kyselyQueries.insertTodo(context.db, text);
   } else if (BATI.hasD1) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
