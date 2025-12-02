@@ -1,11 +1,11 @@
 import { execSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
-import { access, constants, lstat, readdir, readFile } from "node:fs/promises";
+import { access, constants, lstat, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
 import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
-import type { BatiConfig, BatiConfigStep } from "@batijs/core/config";
+import type { BatiConfig, BatiConfigStep, BatiKnipConfig } from "@batijs/core/config";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
@@ -60,6 +60,57 @@ function toArg(flag: string | undefined, description: string | undefined): ArgsD
       description,
     },
   };
+}
+
+async function generateKnipConfig(
+  dist: string,
+  filteredBoilerplates: BoilerplateDefWithConfig[],
+  _meta: VikeMeta,
+): Promise<void> {
+  const aggregated: BatiKnipConfig = {
+    entry: [],
+    ignore: [],
+    ignoreDependencies: [],
+    vite: true,
+  };
+
+  for (const bl of filteredBoilerplates) {
+    if (bl.config.knip) {
+      if (bl.config.knip.entry) {
+        aggregated.entry!.push(...bl.config.knip.entry);
+      }
+      if (bl.config.knip.ignore) {
+        aggregated.ignore!.push(...bl.config.knip.ignore);
+      }
+      if (bl.config.knip.ignoreDependencies) {
+        aggregated.ignoreDependencies!.push(...bl.config.knip.ignoreDependencies);
+      }
+      if (bl.config.knip.vite === false) {
+        aggregated.vite = false;
+      }
+    }
+  }
+
+  await writeFile(
+    join(dist, "knip.json"),
+    JSON.stringify(
+      {
+        $schema: "https://unpkg.com/knip@5/schema.json",
+        entry: aggregated.entry,
+        ignore: aggregated.ignore,
+        ignoreDependencies: aggregated.ignoreDependencies,
+        rules: {
+          types: "off",
+          binaries: "off",
+          exports: "off",
+        },
+        vite: aggregated.vite,
+      },
+      undefined,
+      2,
+    ),
+    "utf-8",
+  );
 }
 
 function findDescription(key: string | undefined): string | undefined {
@@ -142,6 +193,11 @@ const defaultDef = {
   "skip-git": {
     type: "boolean",
     description: "If true, does not execute `git init`",
+    required: false,
+  },
+  knip: {
+    type: "boolean",
+    // Hidden flag - no description shown in --help
     required: false,
   },
 } as const satisfies ArgsDef;
@@ -473,6 +529,11 @@ async function run() {
 
       for (const onafter of hooksMap.get("after") ?? []) {
         await onafter(args.project, meta);
+      }
+
+      // Generate knip.json when --knip flag is set (used by E2E tests)
+      if (args.knip) {
+        await generateKnipConfig(args.project, filteredBoilerplates, meta);
       }
 
       if (!args["skip-git"]) {
