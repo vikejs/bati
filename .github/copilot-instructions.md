@@ -49,6 +49,89 @@ pnpm run test:e2e
 pnpm run test:e2e --filter solid,authjs
 ```
 
+## Adding E2E Tests for New Features
+
+When adding a new feature, **add E2E tests** to verify it works correctly.
+
+### E2E Test Structure
+
+Tests are in `packages/tests/tests/` with naming convention: `FRAMEWORK+<feature>.spec.ts`
+
+Existing test files and their purposes:
+- `FRAMEWORK+ANALYTICS.spec.ts` - Analytics (plausible.io, google-analytics)
+- `FRAMEWORK+CSS.spec.ts` - CSS frameworks (tailwindcss, daisyui)
+- `FRAMEWORK+SERVER+AUTH.spec.ts` - Server + auth combinations (authjs, auth0)
+- `FRAMEWORK+SERVER+DATA.spec.ts` - Server + data fetching (trpc, telefunc, ts-rest, drizzle, sqlite)
+- `FRAMEWORK+sentry.spec.ts` - Sentry error tracking
+- `FRAMEWORK+prisma.spec.ts` - Prisma ORM
+- `FRAMEWORK+cloudflare.spec.ts` - Cloudflare deployment
+- `FRAMEWORK+vercel.spec.ts` - Vercel deployment
+- `FRAMEWORK+aws.spec.ts` - AWS Lambda deployment
+- `FRAMEWORK+prettier.spec.ts` - Prettier formatter
+- `react+UI.spec.ts` - React-specific UI libs (compiled-css, mantine)
+- `remove-linter-comments.spec.ts` - Linter comment cleanup verification
+
+### Test File Structure
+
+Each test file exports a `matrix` array and optionally an `exclude` array:
+
+```ts
+import { describeBati } from "@batijs/tests-utils";
+
+// Matrix defines feature combinations to test
+// Arrays create permutations, single values are always included
+export const matrix = [
+  ["solid", "react", "vue"],  // One of these UI frameworks
+  ["feature1", "feature2", undefined],  // Optional features (undefined = without)
+  "eslint", "biome", "oxlint"  // Always included
+];
+
+// Exclude specific combinations to reduce test count
+export const exclude = [
+  ["react", "feature1"],  // Don't test react + feature1
+  ["vue", "feature2"],    // Don't test vue + feature2
+];
+
+await describeBati(({ test, expect, fetch, testMatch }) => {
+  test("home", async () => {
+    const res = await fetch("/");
+    expect(res.status).toBe(200);
+  });
+
+  // Conditional tests based on matrix
+  testMatch<typeof matrix>("feature-specific test", {
+    feature1: async () => { /* test for feature1 */ },
+    feature2: async () => { /* test for feature2 */ },
+    _: async () => { /* default/fallback test */ },
+  });
+});
+```
+
+### Adding Tests - Key Rules
+
+1. **Avoid duplicate combinations**: Check `.github/workflows/tests-entry.yml` to ensure your test combinations don't overlap with existing ones
+2. **Use `exclude` array**: Reduce test permutations by excluding unnecessary combinations
+3. **Add to existing matrix when possible**: If your feature fits an existing test category
+4. **Create new spec file only if needed**: For truly unique features
+5. **Update workflow matrix**: Add entries to `tests-entry.yml` under `tests-ubuntu` job
+
+### Test Modes
+
+Tests can run in different modes via `describeBati` options:
+- `mode: "dev"` (default) - Development server
+- `mode: "prod"` - Production build + preview
+- `mode: "build"` - Build only, no server
+- `mode: "none"` - No build, no server (file checks only)
+
+### Example Workflow Entry
+
+Add to `.github/workflows/tests-entry.yml`:
+```yaml
+- destination: myfeature--solid--eslint--biome--oxlint
+  flags: --myfeature --solid --eslint --biome --oxlint
+  test-files: FRAMEWORK+myfeature.spec.ts
+```
+
 ## Project Layout
 
 ```
