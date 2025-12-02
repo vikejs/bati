@@ -9,7 +9,7 @@ import type { BatiConfig, BatiConfigStep, BatiKnipConfig } from "@batijs/core/co
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
 import { select } from "@inquirer/prompts";
-import { type ArgsDef, type CommandDef, defineCommand, type ParsedArgs, runMain } from "citty";
+import { type ArgDef, type CommandDef, defineCommand, type ParsedArgs, runMain, showUsage } from "citty";
 import * as colorette from "colorette";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
 import packageJson from "./package.json" with { type: "json" };
@@ -24,6 +24,8 @@ const isWin = process.platform === "win32";
 const pm = packageManager();
 
 type FeatureOrCategory = Flags | CategoryLabels;
+type BatiArgDef = ArgDef & { invisible?: boolean };
+type BatiArgsDef = Record<string, BatiArgDef>;
 
 function boilerplatesDir() {
   if (existsSync(join(__dirname, "boilerplates", "boilerplates.json"))) {
@@ -50,40 +52,37 @@ async function loadBoilerplates(dir: string): Promise<BoilerplateDefWithConfig[]
   );
 }
 
-function toArg(flag: string | undefined, description: string | undefined): ArgsDef {
+function toArg(flag: string | undefined, feature: Feature | undefined): BatiArgsDef {
   if (!flag) return {};
 
   return {
     [flag]: {
       type: "boolean",
       required: false,
-      description,
+      description: feature?.description,
+      invisible: feature?.disabled,
     },
   };
 }
 
-async function generateKnipConfig(
-  dist: string,
-  filteredBoilerplates: BoilerplateDefWithConfig[],
-  _meta: VikeMeta,
-): Promise<void> {
-  const aggregated: BatiKnipConfig = {
+async function generateKnipConfig(dist: string, boilerplates: BoilerplateDefWithConfig[]): Promise<void> {
+  const aggregated: Required<BatiKnipConfig> = {
     entry: [],
     ignore: [],
     ignoreDependencies: [],
     vite: true,
   };
 
-  for (const bl of filteredBoilerplates) {
+  for (const bl of boilerplates) {
     if (bl.config.knip) {
       if (bl.config.knip.entry) {
-        aggregated.entry!.push(...bl.config.knip.entry);
+        aggregated.entry.push(...bl.config.knip.entry);
       }
       if (bl.config.knip.ignore) {
-        aggregated.ignore!.push(...bl.config.knip.ignore);
+        aggregated.ignore.push(...bl.config.knip.ignore);
       }
       if (bl.config.knip.ignoreDependencies) {
-        aggregated.ignoreDependencies!.push(...bl.config.knip.ignoreDependencies);
+        aggregated.ignoreDependencies.push(...bl.config.knip.ignoreDependencies);
       }
       if (bl.config.knip.vite === false) {
         aggregated.vite = false;
@@ -98,11 +97,11 @@ async function generateKnipConfig(
     const scriptsValues = Object.values(pkgJson.scripts ?? {}) as string[];
 
     if (scriptsValues.some((s) => s.includes("tsx "))) {
-      aggregated.ignoreDependencies!.push("tsx");
+      aggregated.ignoreDependencies.push("tsx");
     }
 
     if (scriptsValues.some((s) => s.includes("cross-env "))) {
-      aggregated.ignoreDependencies!.push("cross-env");
+      aggregated.ignoreDependencies.push("cross-env");
     }
   } catch {
     // package.json might not exist yet, skip script-based checks
@@ -130,17 +129,18 @@ async function generateKnipConfig(
   );
 }
 
-function findDescription(key: string | undefined): string | undefined {
+function findFeature(key: string | undefined): Feature | undefined {
   const feat: Feature | undefined = features.find((f) => f.flag === key);
   if (!feat) return;
 
   if (feat.description) {
-    return feat.description;
+    return feat;
   } else if (feat.label && feat.url) {
-    return `Include ${feat.label} - ${feat.url}`;
+    return { ...feat, description: `Include ${feat.label} - ${feat.url}` };
   } else if (feat.label) {
-    return `Include ${feat.label}`;
+    return { ...feat, description: `Include ${feat.label}` };
   }
+  return feat;
 }
 
 async function hasRemainingSteps(dist: string) {
@@ -215,9 +215,10 @@ const defaultDef = {
   knip: {
     type: "boolean",
     // Hidden flag used by E2E tests to generate knip.json during scaffolding
+    invisible: true,
     required: false,
   },
-} as const satisfies ArgsDef;
+} as const satisfies BatiArgsDef;
 
 type Args = typeof defaultDef &
   Record<
@@ -481,7 +482,7 @@ async function run() {
       version: packageJson.version,
       description: packageJson.description,
     },
-    args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findDescription(k)))) as Args,
+    args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args,
     async run({ args }) {
       await checkArguments(args);
 
@@ -550,7 +551,7 @@ async function run() {
 
       // Generate knip.json when --knip flag is set (used by E2E tests)
       if (args.knip) {
-        await generateKnipConfig(args.project, filteredBoilerplates, meta);
+        await generateKnipConfig(args.project, filteredBoilerplates);
       }
 
       if (!args["skip-git"]) {
@@ -566,7 +567,26 @@ async function run() {
     },
   });
 
-  await runMain(main as CommandDef);
+  await runMain(main as CommandDef, {
+    showUsage(cmd, parent) {
+      const args = cmd.args as BatiArgsDef;
+
+      return showUsage(
+        {
+          ...cmd,
+          // filter invisible args
+          args: Object.fromEntries(
+            Object.entries(args)
+              .map(([k, v]) => (v.invisible ? null : [k, v]))
+              // biome-ignore lint/suspicious/noExplicitAny: cast
+              .filter(Boolean) as any,
+            // biome-ignore lint/suspicious/noExplicitAny: cast
+          ) as any,
+        },
+        parent,
+      );
+    },
+  });
 }
 
 run()
