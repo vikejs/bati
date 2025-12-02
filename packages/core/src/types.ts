@@ -5,6 +5,8 @@ export type ContentGetter = () => string | Promise<string>;
 export interface VikeMeta {
   BATI: BatiSet;
   BATI_TEST?: boolean;
+  BATI_SKIP_GIT?: boolean;
+  BATI_IS_CI?: boolean;
 }
 
 export type TransformerProps = {

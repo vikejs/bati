@@ -437,6 +437,8 @@ async function run() {
       const meta: VikeMeta = {
         BATI: new BatiSet(flags as Flags[], features),
         BATI_TEST: Boolean(process.env.BATI_TEST),
+        BATI_SKIP_GIT: args["skip-git"],
+        BATI_IS_CI: Boolean(process.env.CI),
       };
 
       // `enforce: "pre"` boilerplates first, then `enforce: undefined`, then `enforce: "post"`
