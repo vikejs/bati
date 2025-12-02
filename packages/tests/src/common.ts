@@ -1,8 +1,15 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { basename, join } from "node:path";
+import { basename, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { isNode, parseDocument } from "yaml";
+import type { BatiConfig, BatiKnipConfig } from "@batijs/core/config";
+import { BatiSet, features, type Flags } from "@batijs/features";
 import packageJson from "../package.json" with { type: "json" };
 import type { GlobalContext } from "./types.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const isWin = process.platform === "win32";
 
 export async function updatePackageJson(
   projectDir: string,
@@ -115,103 +122,88 @@ export async function createTurboConfig(context: GlobalContext) {
   );
 }
 
-export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
-  const ignoreDependencies = ["@batijs/tests-utils", "turbo", "photon"];
-  const entry: string[] = [];
-  const ignore: string[] = ["*.spec.ts"];
+interface BoilerplateDef {
+  folder: string;
+  subfolders: string[];
+}
 
-  function addPhotonConfig() {
-    entry.push("server/entry.ts");
-  }
+interface BoilerplateDefWithConfig extends BoilerplateDef {
+  config: BatiConfig;
+}
 
-  if (flags.includes("eslint")) {
-    ignoreDependencies.push("eslint");
-  }
+function boilerplatesDir() {
+  // When running from tests package
+  const cliDir = join(__dirname, "..", "..", "cli", "dist", "boilerplates");
+  return cliDir;
+}
 
-  if (flags.includes("biome")) {
-    ignoreDependencies.push("@biomejs/biome");
-  }
+async function loadBoilerplates(dir: string): Promise<BoilerplateDefWithConfig[]> {
+  const boilerplates: BoilerplateDef[] = JSON.parse(await readFile(join(dir, "boilerplates.json"), "utf-8"));
 
-  if (flags.includes("prettier")) {
-    ignoreDependencies.push("prettier");
+  return await Promise.all(
+    boilerplates.map(async (bl) => {
+      const batiConfigFile = join(dir, bl.folder, "bati.config.js");
+      const importFile = isWin ? `file://${batiConfigFile}` : batiConfigFile;
+      const { default: batiConfig }: { default: BatiConfig } = await import(importFile);
+      return {
+        ...bl,
+        config: batiConfig,
+      };
+    }),
+  );
+}
 
-    if (flags.includes("eslint")) {
-      ignoreDependencies.push("eslint-config-prettier");
+export async function aggregateKnipConfigs(flags: string[]): Promise<BatiKnipConfig> {
+  const dir = boilerplatesDir();
+  const boilerplates = await loadBoilerplates(dir);
+
+  const meta = {
+    BATI: new BatiSet(flags as Flags[], features),
+  };
+
+  const aggregated: BatiKnipConfig = {
+    entry: [],
+    ignore: [],
+    ignoreDependencies: [],
+    vite: true,
+  };
+
+  for (const bl of boilerplates) {
+    // Check if this boilerplate applies based on its `if` condition
+    if (bl.config.if && !bl.config.if(meta)) {
+      continue;
+    }
+
+    // Aggregate knip configs
+    if (bl.config.knip) {
+      if (bl.config.knip.entry) {
+        aggregated.entry!.push(...bl.config.knip.entry);
+      }
+      if (bl.config.knip.ignore) {
+        aggregated.ignore!.push(...bl.config.knip.ignore);
+      }
+      if (bl.config.knip.ignoreDependencies) {
+        aggregated.ignoreDependencies!.push(...bl.config.knip.ignoreDependencies);
+      }
+      if (bl.config.knip.vite === false) {
+        aggregated.vite = false;
+      }
     }
   }
 
-  if (flags.includes("react")) {
-    ignoreDependencies.push("react-dom", "@types/react-dom");
-  }
+  return aggregated;
+}
 
-  if (flags.includes("vue")) {
-    ignoreDependencies.push("@vue/.+");
-  }
+export async function createKnipConfig(projectDir: string, flags: string[], scripts: Record<string, string>) {
+  // Aggregate knip configs from boilerplates
+  const aggregated = await aggregateKnipConfigs(flags);
 
-  if (flags.includes("tailwindcss")) {
-    ignoreDependencies.push("tailwindcss");
-  }
+  const entry = aggregated.entry ?? [];
+  const ignore = aggregated.ignore ?? [];
+  const ignoreDependencies = aggregated.ignoreDependencies ?? [];
+  const vite = aggregated.vite ?? true;
 
-  if (flags.includes("daisyui")) {
-    ignoreDependencies.push("tailwindcss", "daisyui");
-  }
-
-  if (flags.includes("mantine")) {
-    ignoreDependencies.push("postcss");
-  }
-
-  // With compiled-css -> Error while parsing vite.config.ts
-  if (flags.includes("compiled-css")) {
-    ignore.push("vite.config.ts");
-    ignoreDependencies.push("@compiled/react", "@vitejs/plugin-react", "vite-plugin-compiled-react");
-  }
-
-  if (flags.includes("prisma")) {
-    ignoreDependencies.push("@prisma/client", "prisma");
-  }
-
-  if (flags.includes("ts-rest")) {
-    ignoreDependencies.push("zod");
-  }
-
-  if (flags.includes("hono")) {
-    addPhotonConfig();
-  }
-
-  if (flags.includes("h3")) {
-    addPhotonConfig();
-  }
-
-  if (flags.includes("express")) {
-    addPhotonConfig();
-  }
-
-  if (flags.includes("fastify")) {
-    addPhotonConfig();
-  }
-
-  if (flags.includes("cloudflare")) {
-    entry.push("cloudflare-entry.ts");
-    ignoreDependencies.push("wrangler", "cloudflare", "@photonjs/cloudflare");
-  }
-
-  if (flags.includes("vercel")) {
-    ignoreDependencies.push("vite-plugin-vercel", "@photonjs/vercel", "h3");
-    ignore.push(".vercel/**");
-  }
-
-  if (flags.includes("aws")) {
-    entry.push("entry_aws_lambda.ts");
-    entry.push("cdk/lib/vike-stack.ts");
-    entry.push("tests/aws_handler.spec.ts");
-    ignoreDependencies.push("aws-cdk", "cdk", "esbuild", "npm-run-all2");
-    ignore.push("cdk.out/**");
-  }
-
-  if (flags.includes("auth0") || flags.includes("authjs")) {
-    entry.push("server/authjs-handler.ts");
-  }
-
+  // Dynamic script-based checks that can't be defined in bati.config.ts
   const scriptsValues = Array.from(Object.values(scripts));
 
   if (scriptsValues.some((s) => s.includes("tsx "))) {
@@ -235,8 +227,7 @@ export async function createKnipConfig(projectDir: string, flags: string[], scri
           binaries: "off",
           exports: "off",
         },
-        // With compiled-css -> Error while parsing vite.config.ts
-        vite: !flags.includes("compiled-css"),
+        vite,
       },
       undefined,
       2,

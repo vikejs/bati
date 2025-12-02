@@ -5,4 +5,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("mantine") && meta.BATI.has("react");
   },
+  knip: {
+    ignoreDependencies: ["postcss"],
+  },
 });

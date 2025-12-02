@@ -4,4 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("hono");
   },
+  knip: {
+    entry: ["server/entry.ts"],
+  },
 });
