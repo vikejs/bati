@@ -80,5 +80,5 @@ function loadCertificate(stack: cdk.Stack, stackConfig: CustomStackProps): certi
     domainName: siteDomainName,
     //subjectAlternativeNames: props.domainAliases,
     validation: certificatemanager.CertificateValidation.fromDns(hostedZone),
-  });
+  }) as certificatemanager.ICertificate;
 }

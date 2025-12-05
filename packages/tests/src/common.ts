@@ -16,7 +16,7 @@ export async function updatePackageJson(
   pkgjson.name = basename(projectDir);
   pkgjson.scripts ??= {};
   pkgjson.scripts.test = "vitest run";
-  pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip";
+  pkgjson.scripts.knip = "VITE_CJS_IGNORE_WARNING=1 knip --no-config-hints";
   if (flags.includes("eslint")) {
     pkgjson.scripts["lint:eslint"] = "eslint --max-warnings 0 .";
   }

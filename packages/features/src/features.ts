@@ -394,6 +394,22 @@ export const features = [
   },
   {
     category: "Database",
+    label: "Kysely",
+    flag: "kysely",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTMyJyBoZWlnaHQ9JzEzMicgdmlld0JveD0nMCAwIDEzMiAxMzInIGZpbGw9J25vbmUnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PGcgY2xpcC1wYXRoPSd1cmwoI2NsaXAwXzhfMyknPjxyZWN0IHg9JzInIHk9JzInIHdpZHRoPScxMjgnIGhlaWdodD0nMTI4JyByeD0nMTYnIGZpbGw9J3doaXRlJy8+PHBhdGggZD0nTTQxLjI5ODMgMTA5VjIzLjkwOTFINDYuNDkxOFY3My4zMUg0Ny4wNzM1TDkxLjk0NTcgMjMuOTA5MUg5OC44NDI3TDYxLjkwNjIgNjQuMTY5NEw5OC41MTAzIDEwOUg5Mi4wMjg4TDU4LjU4MjQgNjcuOTA4N0w0Ni40OTE4IDgxLjI4NzNWMTA5SDQxLjI5ODNaJyBmaWxsPSdibGFjaycvPjwvZz48cmVjdCB4PScyJyB5PScyJyB3aWR0aD0nMTI4JyBoZWlnaHQ9JzEyOCcgcng9JzE2JyBzdHJva2U9JyMxMjEyMTInIHN0cm9rZS13aWR0aD0nNCcvPjxkZWZzPjxjbGlwUGF0aCBpZD0nY2xpcDBfOF8zJz48cmVjdCB4PScyJyB5PScyJyB3aWR0aD0nMTI4JyBoZWlnaHQ9JzEyOCcgcng9JzE2JyBmaWxsPSd3aGl0ZScvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPgo=",
+    url: "https://kysely.dev/",
+    tagline: "The type-safe SQL query builder for TypeScript",
+    repo: "kysely-org/kysely",
+    links: [
+      {
+        label: "Docs & Getting started",
+        href: "https://kysely.dev/docs/getting-started",
+      },
+    ],
+  },
+  {
+    category: "Database",
     label: "Prisma",
     flag: "prisma",
     image:

@@ -1,0 +1,67 @@
+{
+  "name": "@batijs/kysely",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@cloudflare/workers-types": "^4.20250605.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20.19.25",
+    "better-sqlite3": "^12.5.0",
+    "dotenv": "^17.2.3",
+    "kysely": "^0.28.2",
+    "kysely-d1": "^0.4.0",
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "@batijs/core": "workspace:*"
+  },
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    "./database/kysely/types": {
+      "types": "./dist/types/database/kysely/types.d.ts"
+    },
+    "./database/kysely/db": {
+      "types": "./dist/types/database/kysely/db.d.ts"
+    },
+    "./database/kysely/migrate": {
+      "types": "./dist/types/database/kysely/migrate.d.ts"
+    },
+    "./database/kysely/migrations/001_create_todos_table": {
+      "types": "./dist/types/database/kysely/migrations/001_create_todos_table.d.ts"
+    },
+    "./database/kysely/queries/todos": {
+      "types": "./dist/types/database/kysely/queries/todos.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "database/kysely/types": [
+        "./dist/types/database/kysely/types.d.ts"
+      ],
+      "database/kysely/db": [
+        "./dist/types/database/kysely/db.d.ts"
+      ],
+      "database/kysely/migrate": [
+        "./dist/types/database/kysely/migrate.d.ts"
+      ],
+      "database/kysely/migrations/001_create_todos_table": [
+        "./dist/types/database/kysely/migrations/001_create_todos_table.d.ts"
+      ],
+      "database/kysely/queries/todos": [
+        "./dist/types/database/kysely/queries/todos.d.ts"
+      ]
+    }
+  }
+}

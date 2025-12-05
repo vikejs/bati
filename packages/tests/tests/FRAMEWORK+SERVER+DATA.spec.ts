@@ -6,7 +6,7 @@ export const matrix = [
   ["solid", "react", "vue"],
   ["express", "h3", "hono", "fastify"],
   ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", "sqlite", undefined],
+  ["drizzle", "sqlite", "kysely", undefined],
   ["cloudflare", undefined],
   "eslint",
   "biome",
@@ -19,6 +19,8 @@ export const exclude = [
   ["vue", "drizzle"],
   ["react", "sqlite"],
   ["vue", "sqlite"],
+  ["react", "kysely"],
+  ["vue", "kysely"],
   // Testing Solid with all servers, but others UIs with only Hono
   ["react", "express"],
   ["react", "h3"],
@@ -45,6 +47,12 @@ await describeMultipleBati([
             await exec(npmCli, ["run", "d1:migrate"]);
           } else {
             await exec(npmCli, ["run", "sqlite:migrate"]);
+          }
+        } else if (context.flags.includes("kysely")) {
+          if (context.flags.includes("cloudflare")) {
+            await exec(npmCli, ["run", "d1:migrate"]);
+          } else {
+            await exec(npmCli, ["run", "kysely:migrate"]);
           }
         }
       }, 70000);
@@ -109,6 +117,11 @@ await describeMultipleBati([
             expect(res.status).toBe(200);
             expect(await res.text()).toContain(text);
           },
+          kysely: async () => {
+            const res = await fetch("/todo");
+            expect(res.status).toBe(200);
+            expect(await res.text()).toContain(text);
+          },
         });
 
         testMatch<typeof matrix>("TODO.md presence", {
@@ -116,6 +129,9 @@ await describeMultipleBati([
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
           drizzle: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
+          kysely: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
           cloudflare: async () => {
