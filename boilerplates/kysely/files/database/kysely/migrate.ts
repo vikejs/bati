@@ -1,9 +1,10 @@
 /*{ @if (!it.BATI.hasD1) }*/
+
+import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import * as fs from "node:fs/promises";
-import { Migrator, FileMigrationProvider } from "kysely";
+import { FileMigrationProvider, Migrator } from "kysely";
 import { dbKysely } from "./db";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -40,5 +41,5 @@ async function migrateToLatest() {
   await db.destroy();
 }
 
-migrateToLatest();
+await migrateToLatest();
 /*{ /if }*/

@@ -3,7 +3,7 @@ import type { dbKysely, dbKyselyD1 } from "../db";
 export async function insertTodo(
   db: BATI.If<{
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    _: ReturnType<typeof dbKyselyD1>;
+    "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,
   text: string,
 ) {
@@ -13,7 +13,7 @@ export async function insertTodo(
 export async function getAllTodos(
   db: BATI.If<{
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    _: ReturnType<typeof dbKyselyD1>;
+    "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,
 ) {
   return await db.selectFrom("todos").selectAll().execute();
