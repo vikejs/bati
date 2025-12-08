@@ -11,9 +11,9 @@ import { createApp } from "h3";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default startServer() as BATI.Any;
+export default startApp() as BATI.Any;
 
-function startServer() {
+function startApp() {
   const app = createApp();
 
   apply(app, [

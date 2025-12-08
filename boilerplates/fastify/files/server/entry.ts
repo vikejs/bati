@@ -12,9 +12,9 @@ import rawBody from "fastify-raw-body";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default (await startServer()) as unknown;
+export default (await startApp()) as unknown;
 
-async function startServer() {
+async function startApp() {
   const app = fastify({
     // Ensures proper HMR support
     forceCloseConnections: true,

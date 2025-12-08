@@ -12,9 +12,9 @@ import { getMiddlewares } from "vike-photon/universal-middlewares";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default startServer() as unknown;
+export default startApp() as unknown;
 
-function startServer() {
+function startApp() {
   const app = new Hono();
 
   apply(app, [
