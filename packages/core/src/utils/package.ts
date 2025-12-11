@@ -5,6 +5,7 @@ import type { StringTransformer } from "../types.js";
 export interface PackageJsonDeps {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
 }
 
 export interface PackageJsonScripts {
@@ -191,6 +192,23 @@ export class PackageJsonTransformer<U extends PackageJsonDeps> implements String
           }
         }
       }
+    }
+
+    // Sort dependencies alphabetically
+    if (this.packageJson.dependencies) {
+      this.packageJson.dependencies = Object.fromEntries(
+        Object.entries(this.packageJson.dependencies).sort(([a], [b]) => a.localeCompare(b)),
+      );
+    }
+    if (this.packageJson.devDependencies) {
+      this.packageJson.devDependencies = Object.fromEntries(
+        Object.entries(this.packageJson.devDependencies).sort(([a], [b]) => a.localeCompare(b)),
+      );
+    }
+    if (this.packageJson.peerDependencies) {
+      this.packageJson.peerDependencies = Object.fromEntries(
+        Object.entries(this.packageJson.peerDependencies).sort(([a], [b]) => a.localeCompare(b)),
+      );
     }
 
     return JSON.stringify(this.packageJson, undefined, 2);
