@@ -22,7 +22,10 @@ declare global {
   }
 }
 
-// Add `db` to the Context
+// Note: You can use your server directly instead of defining a universal middleware. (Bati uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
+/**
+ * Add the `db` object to the context.
+ */
 export const dbMiddleware: UniversalMiddleware = enhance(
   // The context we add here is automatically merged into pageContext
   async (_request, context, _runtime) => {

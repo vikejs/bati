@@ -65,10 +65,11 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
   throw new Error(typeof data === "object" && "message" in data ? (data.message as string) : undefined);
 }
 
+// Note: You can use your server directly instead of defining a universal middleware. (Bati uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 /**
- * Add Auth.js session to context
+ * Add Auth.js session to the context.
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
- **/
+ */
 export const authjsSessionMiddleware: UniversalMiddleware = enhance(
   // The context we add here is automatically merged into pageContext
   async (request, context) => {
