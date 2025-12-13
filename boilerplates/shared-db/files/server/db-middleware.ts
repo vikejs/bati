@@ -24,6 +24,7 @@ declare global {
 
 // Add `db` to the Context
 export const dbMiddleware: UniversalMiddleware = enhance(
+  // The context we add here is automatically merged into pageContext
   async (_request, context, _runtime) => {
     const db =
       BATI.has("sqlite") && !BATI.hasD1
@@ -40,6 +41,7 @@ export const dbMiddleware: UniversalMiddleware = enhance(
 
     return {
       ...context,
+      // Sets pageContext.db
       db: db as BATI.Any,
     };
   },

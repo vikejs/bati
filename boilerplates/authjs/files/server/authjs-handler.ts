@@ -70,10 +70,12 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
  **/
 export const authjsSessionMiddleware: UniversalMiddleware = enhance(
+  // The context we add here is automatically merged into pageContext
   async (request, context) => {
     try {
       return {
         ...context,
+        // Sets pageContext.session
         session: await getSession(request, authjsConfig),
       };
     } catch (error) {
