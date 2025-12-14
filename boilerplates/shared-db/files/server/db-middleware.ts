@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-// Note: You can use your server directly instead of defining a universal middleware. (Bati uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
+// Note: You can also directly use your server, instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 /**
  * Add the `db` object to the context.
  */
