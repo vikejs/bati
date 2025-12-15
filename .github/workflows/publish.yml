@@ -9,6 +9,9 @@ on:
     paths-ignore:
       - 'website/**'
 
+permissions:
+  id-token: write  # Required for OIDC
+
 jobs:
 #  printJob:
 #    name: Print GH context
@@ -39,6 +42,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
+      # Ensure npm 11.5.1 or later is installed (OIDC support)
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: pnpm install
 
@@ -47,11 +54,4 @@ jobs:
           git config --global user.name "Joël Charles"
           git config --global user.email "joel.charles91@gmail.com"
 
-      - name: Set publishing config
-        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - run: pnpm run release:ci
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
