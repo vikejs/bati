@@ -40,7 +40,7 @@ jobs:
       - name: mkdir temp folder
         run: mkdir -p ${{ runner.temp }}/bati-cache
 
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v5
         name: Setup Turborepo cache
         with:
           path: .turbo
