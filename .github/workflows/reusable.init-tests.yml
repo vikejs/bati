@@ -53,7 +53,7 @@ jobs:
         run: pnpm deploy --prod --filter=./packages/cli ./bati-cli
 
       - name: Archive Bati CLI
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: bati-cli-${{ inputs.os }}-${{ env.NODE_VERSION }}
           if-no-files-found: error
@@ -66,7 +66,7 @@ jobs:
         run: pnpm deploy --prod --filter=./packages/tests ./bati-tests
 
       - name: Archive Bati tests
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: bati-tests-${{ inputs.os }}-${{ env.NODE_VERSION }}
           if-no-files-found: error
@@ -80,7 +80,7 @@ jobs:
         working-directory: ./packages/tests-utils
 
       - name: Archive tests-utils
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: tests-utils-${{ inputs.os }}-${{ env.NODE_VERSION }}
           if-no-files-found: error
@@ -90,7 +90,7 @@ jobs:
           path: ./packages/tests-utils/batijs-tests-utils-*.tgz
 
       - name: Archive tests files
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: tests-files-${{ inputs.os }}-${{ env.NODE_VERSION }}
           if-no-files-found: error
