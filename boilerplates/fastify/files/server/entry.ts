@@ -6,6 +6,7 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
+import { getTodosHandler } from "@batijs/vike-react-query/server/todo-handlers";
 import { apply, serve } from "@photonjs/fastify";
 import fastify from "fastify";
 import rawBody from "fastify-raw-body";
@@ -42,6 +43,8 @@ async function startApp() {
     //# BATI.has("ts-rest")
     // ts-rest route. See https://ts-rest.com
     tsRestHandler,
+    //# BATI.has("vike-react-query")
+    getTodosHandler,
     //# !BATI.has("telefunc") && !BATI.has("trpc") && !BATI.has("ts-rest")
     createTodoHandler,
   ]);
