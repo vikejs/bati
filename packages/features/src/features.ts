@@ -287,6 +287,7 @@ export const features = [
     label: "React Query",
     flag: "react-query",
     dependsOn: ["react"],
+    image: "https://tanstack.com/images/logos/logo-color-100.png",
     url: "https://tanstack.com/query",
     tagline: "Powerful asynchronous state management, server-state utilities and data fetching",
     repo: "tanstack/query",
