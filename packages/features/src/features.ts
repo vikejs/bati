@@ -285,7 +285,7 @@ export const features = [
   {
     category: "Data fetching",
     label: "React Query",
-    flag: "vike-react-query",
+    flag: "react-query",
     dependsOn: ["react"],
     url: "https://tanstack.com/query",
     tagline: "Powerful asynchronous state management, server-state utilities and data fetching",

@@ -5,4 +5,3 @@ export default async function getPackageJson(props: TransformerProps) {
 
   return packageJson.addDependencies(["@tanstack/react-query", "vike-react-query"]);
 }
-

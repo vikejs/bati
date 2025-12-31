@@ -50,8 +50,8 @@ export default [
     return false;
   }),
   filter(RulesMessage.ERROR_VIKE_REACT_QUERY_R_REACT, (fts) => {
-    if (fts.has("vike-react-query")) {
-      return fts.has("vue") || fts.has("solid") || !fts.has("react");
+    if (fts.has("react-query")) {
+      return !fts.has("react");
     }
 
     return false;

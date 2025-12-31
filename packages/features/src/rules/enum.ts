@@ -18,7 +18,7 @@ export enum RulesMessage {
   ERROR_MANTINE_R_REACT,
   // shadcn/ui is only compatible with React
   ERROR_SHADCN_R_REACT,
-  // React is required when using vike-react-query
+  // React is required when using React Query
   ERROR_VIKE_REACT_QUERY_R_REACT,
 
   // --- WARNING

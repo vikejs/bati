@@ -2,6 +2,6 @@ import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {
-    return meta.BATI.has("vike-react-query");
+    return meta.BATI.has("react-query");
   },
 });
