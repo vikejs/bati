@@ -1,6 +1,6 @@
+import { StoreContext } from "#components/Store";
 import { createMemo, createSignal, type JSX, useContext } from "solid-js";
 import { isServer } from "solid-js/web";
-import { StoreContext } from "#components/Store";
 import { track } from "../lib/track";
 import { Cli } from "./Cli";
 import Stackblitz from "./Stackblitz";
@@ -35,6 +35,7 @@ export default function InputGroup() {
   const pnpm = createMemo(() => ["pnpm", "create", "vike@latest", ...getFlags()]);
   const yarn = createMemo(() => ["yarn", "create", "vike@latest", ...getFlags()]);
   const bun = createMemo(() => ["bun", "create", "vike@latest", ...getFlags()]);
+  const deno = createMemo(() => ["deno", "run", "-A", "npm:create-vike@latest", ...getFlags()]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
@@ -132,6 +133,25 @@ export default function InputGroup() {
         flags={getFlags()}
       >
         {bun().join(" ")}
+      </CliGroup>
+
+      <input
+        type="radio"
+        name="package_manager"
+        role="tab"
+        class="tab"
+        aria-label="deno"
+        onChange={() => persist("deno")}
+        checked={initialInputValue === "deno"}
+      />
+
+      <CliGroup
+        onMouseEnter={handleMouseEnter}
+        onClick={() => handleCopy("deno")}
+        tooltipText={tooltipText()}
+        flags={getFlags()}
+      >
+        {deno().join(" ")}
       </CliGroup>
 
       {/* Immediatly update DOM on client-side rendering */}
