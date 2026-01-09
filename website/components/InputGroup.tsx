@@ -1,6 +1,6 @@
+import { StoreContext } from "#components/Store";
 import { createMemo, createSignal, type JSX, useContext } from "solid-js";
 import { isServer } from "solid-js/web";
-import { StoreContext } from "#components/Store";
 import { track } from "../lib/track";
 import { Cli } from "./Cli";
 import Stackblitz from "./Stackblitz";
@@ -9,15 +9,28 @@ export function CliGroup(
   props: {
     tooltipText: string;
     flags: string[];
-  } & Pick<JSX.HTMLAttributes<unknown>, "onMouseEnter" | "onClick" | "children">,
+  } & Pick<
+    JSX.HTMLAttributes<unknown>,
+    "onMouseEnter" | "onClick" | "children"
+  >,
 ) {
   return (
-    <div role="tabpanel" class="tab-content !h-auto w-full bg-base-100 border-base-300 p-1.5">
+    <div
+      role="tabpanel"
+      class="tab-content !h-auto w-full bg-base-100 border-base-300 p-1.5"
+    >
       <div class="sm:join flex flex-row w-full rounded-md">
-        <Cli onMouseEnter={props.onMouseEnter} onClick={props.onClick} tooltipText={props.tooltipText}>
+        <Cli
+          onMouseEnter={props.onMouseEnter}
+          onClick={props.onClick}
+          tooltipText={props.tooltipText}
+        >
           {props.children}
         </Cli>
-        <Stackblitz flags={props.flags} class="join-item hidden sm:flex font-normal" />
+        <Stackblitz
+          flags={props.flags}
+          class="join-item hidden sm:flex font-normal"
+        />
       </div>
     </div>
   );
@@ -31,10 +44,33 @@ export default function InputGroup() {
     return selectedFeaturesFlags().map((flag) => `--${flag}`);
   }
 
-  const npm = createMemo(() => ["npm", "create", "vike@latest", "---", ...getFlags()]);
-  const pnpm = createMemo(() => ["pnpm", "create", "vike@latest", ...getFlags()]);
-  const yarn = createMemo(() => ["yarn", "create", "vike@latest", ...getFlags()]);
+  const npm = createMemo(() => [
+    "npm",
+    "create",
+    "vike@latest",
+    "---",
+    ...getFlags(),
+  ]);
+  const pnpm = createMemo(() => [
+    "pnpm",
+    "create",
+    "vike@latest",
+    ...getFlags(),
+  ]);
+  const yarn = createMemo(() => [
+    "yarn",
+    "create",
+    "vike@latest",
+    ...getFlags(),
+  ]);
   const bun = createMemo(() => ["bun", "create", "vike@latest", ...getFlags()]);
+  const deno = createMemo(() => [
+    "deno",
+    "run",
+    "-A",
+    "npm:create-vike@latest",
+    ...getFlags(),
+  ]);
 
   const handleMouseEnter = () => {
     setTooltipText("Copy to Clipboard");
@@ -54,7 +90,9 @@ export default function InputGroup() {
 
   // Works as expected only for SPA or Web Component
   // For SSR, the <script> tag below ensures proper rendering on client side
-  const initialInputValue = isServer ? "npm" : localStorage.getItem("packageManager") || "npm";
+  const initialInputValue = isServer
+    ? "npm"
+    : localStorage.getItem("packageManager") || "npm";
 
   return (
     <div role="tablist" class="tabs tabs-lift tabs-sm flex-1">
@@ -132,6 +170,25 @@ export default function InputGroup() {
         flags={getFlags()}
       >
         {bun().join(" ")}
+      </CliGroup>
+
+      <input
+        type="radio"
+        name="package_manager"
+        role="tab"
+        class="tab"
+        aria-label="deno"
+        onChange={() => persist("deno")}
+        checked={initialInputValue === "deno"}
+      />
+
+      <CliGroup
+        onMouseEnter={handleMouseEnter}
+        onClick={() => handleCopy("deno")}
+        tooltipText={tooltipText()}
+        flags={getFlags()}
+      >
+        {deno().join(" ")}
       </CliGroup>
 
       {/* Immediatly update DOM on client-side rendering */}
