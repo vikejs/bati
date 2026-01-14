@@ -177,6 +177,18 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_VIKE_REACT_QUERY_R_REACT]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">React</span> is required when using <span class="font-bold">React Query</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick <span class="font-bold">React</span> or unselect <span class="font-bold">React Query</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.WARN_SHADCN_R_TAILWINDCSS]: warning(() => {
     return (
       <span class="inline-block">

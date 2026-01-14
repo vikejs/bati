@@ -59,6 +59,9 @@ Choose one of them or remove selected Server`,
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(
     `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,
   ),
+  [RulesMessage.ERROR_VIKE_REACT_QUERY_R_REACT]: error(
+    `${inverse(bold("React"))} is required when using ${inverse(bold("React Query"))}`,
+  ),
   [RulesMessage.WARN_SHADCN_R_TAILWINDCSS]: warning(
     `${inverse(bold("shadcn/ui"))} integration is tied to ${inverse(bold("TailwindCSS"))}. Using another CSS library with it may have unpredictable behaviour.`,
   ),
