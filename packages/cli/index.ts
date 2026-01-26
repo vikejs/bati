@@ -259,48 +259,63 @@ function generateRandomFilename(size: number) {
   return result;
 }
 
-async function checkArguments(args: ParsedArgs<Args>) {
+async function checkArguments(args: ParsedArgs<Args>): Promise<
+  ParsedArgs<
+    Omit<Args, "project"> & {
+      project: {
+        type: "positional";
+        description: "Project directory";
+        required: true;
+      };
+    }
+  >
+> {
   const projectChosenByUser = Boolean(args.project);
-  if (!args.project) {
+  const newArgs = {
+    ...args,
+  };
+  if (!newArgs.project) {
     // Try to default to `my-app`, otherwise `my-app[randomString]`
-    args.project = "my-app";
+    newArgs.project = "my-app";
   }
 
-  if (existsSync(args.project)) {
+  if (existsSync(newArgs.project)) {
     // is target a directory
-    const stat = await lstat(args.project);
+    const stat = await lstat(newArgs.project);
     if (!projectChosenByUser) {
-      args.project = `my-app-${generateRandomFilename(5)}`;
-      return;
+      newArgs.project = `my-app-${generateRandomFilename(5)}`;
+      // biome-ignore lint/suspicious/noExplicitAny: ok
+      return newArgs as any;
     } else if (!stat.isDirectory()) {
       console.error(
-        `${yellow("⚠")} Target ${cyan(args.project)} already exists but is not a directory. ${yellow("Aborting")}.`,
+        `${yellow("⚠")} Target ${cyan(newArgs.project)} already exists but is not a directory. ${yellow("Aborting")}.`,
       );
       process.exit(2);
     }
 
     // is target a writable directory
     try {
-      await access(args.project, constants.W_OK);
+      await access(newArgs.project, constants.W_OK);
     } catch {
       console.error(
-        `${yellow("⚠")} Target folder ${cyan(args.project)} already exists but is not writable. ${yellow("Aborting")}.`,
+        `${yellow("⚠")} Target folder ${cyan(newArgs.project)} already exists but is not writable. ${yellow("Aborting")}.`,
       );
       process.exit(3);
     }
 
     // is target an empty directory
-    if (!args.force) {
-      const isFolderEmpty = (await readdir(args.project)).length === 0;
+    if (!newArgs.force) {
+      const isFolderEmpty = (await readdir(newArgs.project)).length === 0;
 
       if (!isFolderEmpty) {
         if (!projectChosenByUser) {
-          args.project = `my-app-${generateRandomFilename(5)}`;
-          return;
+          newArgs.project = `my-app-${generateRandomFilename(5)}`;
+          // biome-ignore lint/suspicious/noExplicitAny: ok
+          return newArgs as any;
         } else {
           console.error(
             `${yellow("⚠")} Target folder ${cyan(
-              args.project,
+              newArgs.project,
             )} already exists and is not empty.\n  Continuing might erase existing files. ${yellow("Aborting")}.`,
           );
           process.exit(4);
@@ -308,6 +323,9 @@ async function checkArguments(args: ParsedArgs<Args>) {
       }
     }
   }
+
+  // biome-ignore lint/suspicious/noExplicitAny: ok
+  return newArgs as any;
 }
 
 const choices = [
@@ -483,8 +501,8 @@ async function run() {
       description: packageJson.description,
     },
     args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args,
-    async run({ args }) {
-      await checkArguments(args);
+    async run({ args: _args }) {
+      const args = await checkArguments(_args);
 
       const sources: string[] = [];
       const hooks: string[] = [];
