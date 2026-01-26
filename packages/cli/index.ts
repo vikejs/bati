@@ -12,6 +12,7 @@ import { select } from "@inquirer/prompts";
 import { type ArgDef, type CommandDef, defineCommand, type ParsedArgs, runMain, showUsage } from "citty";
 import * as colorette from "colorette";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
+import { kebabCase } from "scule";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, BoilerplateDefWithConfig, Hook } from "./types.js";
@@ -379,7 +380,10 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
 
 function checkFlagsExist(flags: string[]) {
   const inValidOptions = flags.reduce((acc: string[], flag: string) => {
-    if (!Object.hasOwn(defaultDef, flag) && !features.some((f) => f.flag === flag)) {
+    if (
+      !Object.hasOwn(defaultDef, flag) &&
+      !features.some((f) => f.flag === flag || kebabCase(f.flag) === kebabCase(flag))
+    ) {
       acc.push(flag);
     }
     return acc;
@@ -494,15 +498,17 @@ async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await loadBoilerplates(dir);
 
+  const optsArgs = Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args;
+
   const main = defineCommand({
     meta: {
       name: packageJson.name,
       version: packageJson.version,
       description: packageJson.description,
     },
-    args: Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args,
-    async run({ args: _args }) {
-      const args = await checkArguments(_args);
+    args: optsArgs,
+    async run(commandContext) {
+      const args = await checkArguments(commandContext.args);
 
       const sources: string[] = [];
       const hooks: string[] = [];
