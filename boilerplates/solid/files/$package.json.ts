@@ -3,5 +3,7 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps) {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  return packageJson.addDevDependencies(["vite"]).addDependencies(["solid-js", "vike-solid", "vike"]);
+  return packageJson
+    .addDevDependencies(["vite", "vite-plugin-solid"])
+    .addDependencies(["solid-js", "vike-solid", "vike"]);
 }
