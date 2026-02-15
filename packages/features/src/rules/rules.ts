@@ -49,6 +49,13 @@ export default [
 
     return false;
   }),
+  filter(RulesMessage.ERROR_VIKE_REACT_QUERY_R_REACT, (fts) => {
+    if (fts.has("react-query")) {
+      return !fts.has("react");
+    }
+
+    return false;
+  }),
   filter(RulesMessage.WARN_SHADCN_R_TAILWINDCSS, (fts) => {
     if (fts.has("shadcn-ui")) {
       return fts.has("daisyui") || fts.has("compiled-css");
