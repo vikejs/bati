@@ -26,6 +26,17 @@ export default async function getBiomeJson(props: TransformerProps) {
     additionalLinter.domains = {
       react: "recommended",
     };
+    additionalConfig.overrides ??= [];
+    additionalConfig.overrides.push({
+      includes: ["**/+data.ts", "**/+data.js"],
+      linter: {
+        rules: {
+          correctness: {
+            useHookAtTopLevel: "off",
+          },
+        },
+      },
+    });
   }
 
   if (props.meta.BATI.has("solid")) {

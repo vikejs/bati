@@ -5,5 +5,17 @@
     "domains": {
       "react": "recommended"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/+data.ts", "**/+data.js"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "off"
+          }
+        }
+      }
+    }
+  ]
 }
