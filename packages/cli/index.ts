@@ -382,6 +382,7 @@ function checkFlagsExist(flags: string[]) {
   const inValidOptions = flags.reduce((acc: string[], flag: string) => {
     if (
       !Object.hasOwn(defaultDef, flag) &&
+      !Object.hasOwn(defaultDef, kebabCase(flag)) &&
       !features.some((f) => f.flag === flag || kebabCase(f.flag) === kebabCase(flag))
     ) {
       acc.push(flag);
