@@ -58,6 +58,7 @@ const router = tsr
     },
   });
 
+// Note: You can also directly use your server, instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 export const tsRestHandler: UniversalHandler = enhance(
   async (request, ctx, runtime) =>
     fetchRequestHandler({

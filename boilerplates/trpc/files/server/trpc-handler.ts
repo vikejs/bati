@@ -4,6 +4,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { enhance, type Get, type UniversalHandler } from "@universal-middleware/core";
 import { appRouter } from "../trpc/server";
 
+// Note: You can also directly use your server, instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 export const trpcHandler = ((endpoint) =>
   enhance(
     (request, context, runtime) => {

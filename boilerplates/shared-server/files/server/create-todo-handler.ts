@@ -9,6 +9,7 @@ import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 
+// Note: You can also directly use your server, instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 export const createTodoHandler: UniversalHandler<
   Universal.Context &
     BATI.If<{

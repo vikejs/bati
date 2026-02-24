@@ -93,6 +93,7 @@ export const authjsSessionMiddleware: UniversalMiddleware = enhance(
   },
 );
 
+// Note: You can also directly use your server, instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
 /**
  * Auth.js route
  * @link {@see https://authjs.dev/getting-started/installation}
