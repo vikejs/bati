@@ -4,7 +4,7 @@ import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { telefunc } from "telefunc";
 
-// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
+// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic, see also https://github.com/vikejs/vike/discussions/3116)
 export const telefuncHandler: UniversalHandler = enhance(
   async (request, context, runtime) => {
     const httpResponse = await telefunc({

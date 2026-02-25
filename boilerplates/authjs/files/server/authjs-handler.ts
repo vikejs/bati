@@ -65,7 +65,7 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
   throw new Error(typeof data === "object" && "message" in data ? (data.message as string) : undefined);
 }
 
-// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
+// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic, see also https://github.com/vikejs/vike/discussions/3116)
 /**
  * Add Auth.js session to the context.
  * @link {@see https://authjs.dev/getting-started/session-management/get-session}
@@ -93,7 +93,7 @@ export const authjsSessionMiddleware: UniversalMiddleware = enhance(
   },
 );
 
-// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic.)
+// Note: You can directly define a server middleware instead of defining a universal middleware. (Vike's scaffolder uses https://github.com/magne4000/universal-middleware to simplify its internal logic, see also https://github.com/vikejs/vike/discussions/3116)
 /**
  * Auth.js route
  * @link {@see https://authjs.dev/getting-started/installation}
