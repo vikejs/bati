@@ -8,9 +8,7 @@ import { telefunc } from "telefunc";
 export const telefuncHandler: UniversalHandler = enhance(
   async (request, context, runtime) => {
     const httpResponse = await telefunc({
-      url: request.url.toString(),
-      method: request.method,
-      body: await request.text(),
+      request,
       context: {
         ...(context as BATI.If<{
           'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
