@@ -16,6 +16,11 @@ import { kebabCase } from "scule";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
 import type { BoilerplateDef, BoilerplateDefWithConfig, Hook } from "./types.js";
+import {
+  getUiFrameworkFlag,
+  initStorybook,
+  isStorybookFrameworkSupported,
+} from "./storybook.js";
 
 printInit();
 
@@ -160,7 +165,7 @@ function printInit() {
   console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
 
-async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[]) {
+async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[], extraLabels: string[] = []) {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
@@ -172,6 +177,10 @@ async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[
     if (!feature || !feature.label) continue;
 
     console.log(list(feature.label));
+  }
+
+  for (const label of extraLabels) {
+    console.log(list(label));
   }
 
   console.log(`\n${bold("Next steps:")}`);
@@ -217,6 +226,11 @@ const defaultDef = {
     type: "boolean",
     // Hidden flag used by E2E tests to generate knip.json during scaffolding
     invisible: true,
+    required: false,
+  },
+  storybook: {
+    type: "boolean",
+    description: "If true, initializes Storybook in the generated app (React, Vue, Solid only)",
     required: false,
   },
 } as const satisfies BatiArgsDef;
@@ -583,12 +597,27 @@ async function run() {
         gitInit(args.project);
       }
 
+      // Initialize Storybook before printing next steps
+      if (args.storybook) {
+        const uiFramework = getUiFrameworkFlag(flags, features);
+        if (!isStorybookFrameworkSupported(uiFramework)) {
+          console.error(`${red("⚠")} The \`--storybook\` flag is currently supported only with React, Vue, or Solid.`);
+          process.exit(6);
+        }
+        await initStorybook(args.project, pm.exec);
+      }
+
       const nextSteps = filteredBoilerplates
         .flatMap((b) => b.config.nextSteps?.(meta, pm.run, colorette))
         .filter(Boolean) as BatiConfigStep[];
       nextSteps.sort((s) => s.order ?? 0);
 
-      await printOK(args.project, flags, nextSteps);
+      const extraLabels: string[] = [];
+      if (args.storybook) {
+        extraLabels.push("Storybook");
+      }
+
+      await printOK(args.project, flags, nextSteps, extraLabels);
     },
   });
 

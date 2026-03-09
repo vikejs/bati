@@ -35,7 +35,7 @@ export async function loadTestFileMatrix(filepath: string) {
     assert(Array.isArray(exclude), `\`exclude\` export in "${filepath}" must be of type \`string[][]\``);
   }
 
-  const validKeys = new Set<unknown>(flags);
+  const validKeys = new Set<unknown>([...flags, "storybook"]);
 
   for (const m of matrix as unknown[]) {
     if (Array.isArray(m)) {
