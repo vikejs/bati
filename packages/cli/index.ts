@@ -13,14 +13,10 @@ import { type ArgDef, type CommandDef, defineCommand, type ParsedArgs, runMain, 
 import * as colorette from "colorette";
 import { blue, blueBright, bold, cyan, gray, green, red, underline, yellow } from "colorette";
 import { kebabCase } from "scule";
+import { getEnabledIntegrations, getIntegrationArgDefs, runEnabledIntegrations } from "./integrations.js";
 import packageJson from "./package.json" with { type: "json" };
 import { type RuleMessage, rulesMessages } from "./rules.js";
-import type { BoilerplateDef, BoilerplateDefWithConfig, Hook } from "./types.js";
-import {
-  getUiFrameworkFlag,
-  initStorybook,
-  isStorybookFrameworkSupported,
-} from "./storybook.js";
+import type { BatiArgDef, BoilerplateDef, BoilerplateDefWithConfig, Hook } from "./types.js";
 
 printInit();
 
@@ -30,7 +26,6 @@ const isWin = process.platform === "win32";
 const pm = packageManager();
 
 type FeatureOrCategory = Flags | CategoryLabels;
-type BatiArgDef = ArgDef & { invisible?: boolean };
 type BatiArgsDef = Record<string, BatiArgDef>;
 
 function boilerplatesDir() {
@@ -228,11 +223,6 @@ const defaultDef = {
     invisible: true,
     required: false,
   },
-  storybook: {
-    type: "boolean",
-    description: "If true, initializes Storybook in the generated app (React, Vue, Solid only)",
-    required: false,
-  },
 } as const satisfies BatiArgsDef;
 
 type Args = typeof defaultDef &
@@ -243,7 +233,8 @@ type Args = typeof defaultDef &
       required: boolean;
       description: string | undefined;
     }
-  >;
+  > &
+  Record<string, ArgDef>;
 
 export default function yn(value: unknown, default_?: boolean) {
   if (value === undefined || value === null) {
@@ -392,13 +383,11 @@ async function checkFlagsIncludesUiFramework(flags: string[]) {
   }
 }
 
-function checkFlagsExist(flags: string[]) {
+function checkFlagsExist(flags: string[], knownOptions: string[]) {
+  const normalizedKnownOptions = new Set(knownOptions.map((option) => kebabCase(option)));
+
   const inValidOptions = flags.reduce((acc: string[], flag: string) => {
-    if (
-      !Object.hasOwn(defaultDef, flag) &&
-      !Object.hasOwn(defaultDef, kebabCase(flag)) &&
-      !features.some((f) => f.flag === flag || kebabCase(f.flag) === kebabCase(flag))
-    ) {
+    if (!normalizedKnownOptions.has(kebabCase(flag))) {
       acc.push(flag);
     }
     return acc;
@@ -410,6 +399,10 @@ function checkFlagsExist(flags: string[]) {
     );
     process.exit(5);
   }
+}
+
+function isFeatureFlag(flag: string): flag is Flags {
+  return features.some((f) => f.flag === flag);
 }
 
 function checkRules(flags: string[]) {
@@ -513,7 +506,9 @@ async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await loadBoilerplates(dir);
 
-  const optsArgs = Object.assign({}, defaultDef, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args;
+  const integrationArgs = getIntegrationArgDefs();
+  const optsArgs = Object.assign({}, defaultDef, integrationArgs, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args;
+  const knownOptionKeys = Object.keys(optsArgs);
 
   const main = defineCommand({
     meta: {
@@ -527,11 +522,23 @@ async function run() {
 
       const sources: string[] = [];
       const hooks: string[] = [];
-      const flags = [
+      const selectedFlags = [
         ...new Set(
           Object.entries(args)
-            .filter(([, val]) => val === true)
-            .flatMap(([key]) => {
+            .filter(([, val]) => typeof val === "boolean" && val)
+            .map(([key]) => key),
+        ),
+      ];
+
+      checkFlagsExist(selectedFlags, knownOptionKeys);
+
+      const flags = [
+        ...new Set(
+          selectedFlags.flatMap((key) => {
+            if (!isFeatureFlag(key)) {
+              return [];
+            }
+
               const flag: string[] = [key];
               const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
 
@@ -543,7 +550,6 @@ async function run() {
         ),
       ];
 
-      checkFlagsExist(flags);
       await checkFlagsIncludesUiFramework(flags);
       checkRules(flags);
 
@@ -597,25 +603,20 @@ async function run() {
         gitInit(args.project);
       }
 
-      // Initialize Storybook before printing next steps
-      if (args.storybook) {
-        const uiFramework = getUiFrameworkFlag(flags, features);
-        if (!isStorybookFrameworkSupported(uiFramework)) {
-          console.error(`${red("⚠")} The \`--storybook\` flag is currently supported only with React, Vue, or Solid.`);
-          process.exit(6);
-        }
-        await initStorybook(args.project, pm.exec);
-      }
+      const enabledIntegrations = getEnabledIntegrations(args as unknown as Record<string, unknown>);
+      const appliedIntegrations = await runEnabledIntegrations(enabledIntegrations, {
+        project: args.project,
+        flags,
+        allFeatures: features,
+        packageManagerExec: pm.exec,
+      });
 
       const nextSteps = filteredBoilerplates
         .flatMap((b) => b.config.nextSteps?.(meta, pm.run, colorette))
         .filter(Boolean) as BatiConfigStep[];
       nextSteps.sort((s) => s.order ?? 0);
 
-      const extraLabels: string[] = [];
-      if (args.storybook) {
-        extraLabels.push("Storybook");
-      }
+      const extraLabels = appliedIntegrations.map((integration) => integration.label);
 
       await printOK(args.project, flags, nextSteps, extraLabels);
     },

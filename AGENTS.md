@@ -166,7 +166,13 @@ This auto-generates the matrix entries in `.github/workflows/tests-entry.yml`. N
 | `pnpm-workspace.yaml` | Workspace package locations and hoisting config |
 | `packages/cli/turbo.json` | CLI-specific build dependencies |
 | `packages/features/src/features.ts` | Feature flag definitions |
+| `packages/cli/integrations.ts` | CLI-only integrations registry (e.g. `--storybook`) |
+| `packages/cli/types.ts` | Integration types (`Integration`, `IntegrationContext`) |
 | `packages/features/src/rules/rules.ts` | Feature compatibility rules |
+
+**Important:** CLI options are now split in two groups:
+- Feature flags come from `packages/features/src/features.ts`.
+- CLI-only integrations (that aren't product features) are registered in `packages/cli/integrations.ts` and provide their own arg definition + runtime hook.
 
 ## Adding/Modifying Boilerplates
 

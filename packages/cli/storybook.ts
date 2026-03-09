@@ -1,6 +1,8 @@
 import { execSync } from "node:child_process";
 import { confirm } from "@inquirer/prompts";
 import type { Feature } from "@batijs/features";
+import { red } from "colorette";
+import type { Integration } from "./types.js";
 
 const supportedStorybookFrameworks = ["react", "vue", "solid"];
 
@@ -24,7 +26,7 @@ export async function initStorybook(
   cwd: string,
   packageManagerExec: string,
   interactive: boolean = true,
-): Promise<void> {
+): Promise<boolean> {
   // Prompt user if they want to initialize Storybook
   if (interactive) {
     const confirmed = await confirm({
@@ -33,11 +35,35 @@ export async function initStorybook(
     });
 
     if (!confirmed) {
-      return;
+      return false;
     }
   }
 
   // Run Storybook init with interactive questionnaire
   const command = `${packageManagerExec} storybook@latest init --no-dev`;
   execSync(command, { cwd, stdio: "inherit" });
+  return true;
 }
+
+export const storybookIntegration: Integration = {
+  flag: "storybook",
+  label: "Storybook",
+  arg: {
+    type: "boolean",
+    description:
+      "If true, initializes Storybook in the generated app (React, Vue, Solid only)",
+    required: false,
+  },
+  async run({ project, flags, allFeatures, packageManagerExec }) {
+    const uiFramework = getUiFrameworkFlag(flags, allFeatures);
+
+    if (!isStorybookFrameworkSupported(uiFramework)) {
+      console.error(
+        `${red("⚠")} The \`--storybook\` flag is currently supported only with React, Vue, or Solid.`,
+      );
+      process.exit(6);
+    }
+
+    return await initStorybook(project, packageManagerExec);
+  },
+};
