@@ -1,5 +1,5 @@
 import type { VikeMeta } from "@batijs/core";
-import type { BatiConfig } from "@batijs/core/config";
+import type { BatiConfig, BatiConfigStep } from "@batijs/core/config";
 import type { Feature } from "@batijs/features";
 import type { ArgDef } from "citty";
 
@@ -34,4 +34,5 @@ export interface Integration {
   label: string;
   arg: BatiArgDef;
   run: (context: IntegrationContext) => Promise<boolean | void> | boolean | void;
+  nextSteps?: (packageManagerRun: string) => BatiConfigStep[];
 }

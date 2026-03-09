@@ -8,17 +8,11 @@ function isEnabled(args: Record<string, unknown>, flag: string): boolean {
 }
 
 export function getIntegrationArgDefs(): Record<string, BatiArgDef> {
-  return Object.fromEntries(
-    integrations.map((integration) => [integration.flag, integration.arg]),
-  );
+  return Object.fromEntries(integrations.map((integration) => [integration.flag, integration.arg]));
 }
 
-export function getEnabledIntegrations(
-  args: Record<string, unknown>,
-): Integration[] {
-  return integrations.filter((integration) =>
-    isEnabled(args, integration.flag),
-  );
+export function getEnabledIntegrations(args: Record<string, unknown>): Integration[] {
+  return integrations.filter((integration) => isEnabled(args, integration.flag));
 }
 
 export async function runEnabledIntegrations(

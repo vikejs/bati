@@ -160,7 +160,13 @@ function printInit() {
   console.log(`\n🔨 ${cyan("Vike Scaffolder")} 🔨 ${gray(`v${version}`)}\n`);
 }
 
-async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[], extraLabels: string[] = []) {
+async function printOK(
+  dist: string,
+  flags: string[],
+  nextSteps: BatiConfigStep[],
+  extraLabels: string[] = [],
+  integrationNextSteps: BatiConfigStep[] = [],
+) {
   const indent = 1;
   const list = withIcon("-", gray, indent);
   const cmd = withIcon("$", gray, indent);
@@ -197,6 +203,14 @@ async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[
   }
   // Step 4
   console.log(cmd(`${pm.run} dev`));
+
+  for (const step of integrationNextSteps) {
+    if (step.type === "command") {
+      console.log(cmd(step.step));
+    } else {
+      console.log(withIcon("•️", gray, indent)(step.step));
+    }
+  }
 
   console.log("\nHappy coding! 🚀\n");
 }
@@ -507,7 +521,12 @@ async function run() {
   const boilerplates = await loadBoilerplates(dir);
 
   const integrationArgs = getIntegrationArgDefs();
-  const optsArgs = Object.assign({}, defaultDef, integrationArgs, ...cliFlags.map((k) => toArg(k, findFeature(k)))) as Args;
+  const optsArgs = Object.assign(
+    {},
+    defaultDef,
+    integrationArgs,
+    ...cliFlags.map((k) => toArg(k, findFeature(k))),
+  ) as Args;
   const knownOptionKeys = Object.keys(optsArgs);
 
   const main = defineCommand({
@@ -539,14 +558,14 @@ async function run() {
               return [];
             }
 
-              const flag: string[] = [key];
-              const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
+            const flag: string[] = [key];
+            const dependsOn = (features as ReadonlyArray<Feature>).find((f) => f.flag === key)?.dependsOn;
 
-              if (dependsOn) {
-                flag.push(...dependsOn);
-              }
-              return flag;
-            }),
+            if (dependsOn) {
+              flag.push(...dependsOn);
+            }
+            return flag;
+          }),
         ),
       ];
 
@@ -616,9 +635,13 @@ async function run() {
         .filter(Boolean) as BatiConfigStep[];
       nextSteps.sort((s) => s.order ?? 0);
 
+      const integrationNextSteps = appliedIntegrations
+        .flatMap((integration) => integration.nextSteps?.(pm.run) ?? [])
+        .filter(Boolean) as BatiConfigStep[];
+
       const extraLabels = appliedIntegrations.map((integration) => integration.label);
 
-      await printOK(args.project, flags, nextSteps, extraLabels);
+      await printOK(args.project, flags, nextSteps, extraLabels, integrationNextSteps);
     },
   });
 
