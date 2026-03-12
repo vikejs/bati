@@ -19,6 +19,8 @@ export default tseslint.config(
       "cdk.out/*",
       //# BATI.has("cloudflare")
       "worker-configuration.d.ts",
+      //# BATI.has("storybook")
+      "stories/*",
       // JS files at the root of the project
       "*.js",
       "*.cjs",
