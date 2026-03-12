@@ -223,6 +223,9 @@ jobs:
           - sentry--solid--eslint--biome--oxlint
           - sentry--react--eslint--biome--oxlint
           - sentry--vue--eslint--biome--oxlint
+          - solid--storybook--eslint
+          - react--storybook--eslint
+          - vue--storybook--eslint
           - react--vercel--hono--eslint--biome--oxlint
           - react--vercel--h3--eslint--biome--oxlint
           - react--vercel--express--eslint--biome--oxlint
@@ -683,6 +686,15 @@ jobs:
           - destination: sentry--vue--eslint--biome--oxlint
             flags: --sentry --vue --eslint --biome --oxlint
             test-files: FRAMEWORK+sentry.spec.ts
+          - destination: solid--storybook--eslint
+            flags: --solid --storybook --eslint
+            test-files: FRAMEWORK+storybook.spec.ts
+          - destination: react--storybook--eslint
+            flags: --react --storybook --eslint
+            test-files: FRAMEWORK+storybook.spec.ts
+          - destination: vue--storybook--eslint
+            flags: --vue --storybook --eslint
+            test-files: FRAMEWORK+storybook.spec.ts
           - destination: react--vercel--hono--eslint--biome--oxlint
             flags: --react --vercel --hono --eslint --biome --oxlint
             test-files: FRAMEWORK+vercel.spec.ts

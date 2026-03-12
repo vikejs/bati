@@ -26,4 +26,6 @@ export enum RulesMessage {
   // --- INFO
   // Some tools do not work on Stackblitz
   INFO_STACKBLITZ_COMPAT,
+  // Storybook requires a supported UI framework (React, Vue, or Solid)
+  ERROR_STORYBOOK_R_UI_FRAMEWORK,
 }

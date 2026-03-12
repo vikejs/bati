@@ -73,6 +73,11 @@ tailored for Vike.`,
     group: categoriesGroups.Utilities,
     description: `Coming soon: Error Tracking solution for frontend and backend`,
   },
+  {
+    label: "Tooling",
+    group: categoriesGroups.Utilities,
+    description: `Additional tooling to improve your developer experience.`,
+  },
 ] as const satisfies ReadonlyArray<Category>;
 
 export type CategoryLabels = (typeof categories)[number]["label"];

@@ -59,4 +59,10 @@ export default [
   filter(RulesMessage.INFO_STACKBLITZ_COMPAT, (fts) => {
     return fts.has("drizzle") || fts.has("sqlite") || fts.has("kysely") || fts.has("cloudflare");
   }),
+  filter(RulesMessage.ERROR_STORYBOOK_R_UI_FRAMEWORK, (fts) => {
+    if (fts.has("storybook")) {
+      return !fts.has("react") && !fts.has("vue") && !fts.has("solid");
+    }
+    return false;
+  }),
 ] satisfies Rule[];

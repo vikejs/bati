@@ -974,6 +974,19 @@ importers:
         specifier: ^4.21.0
         version: 4.21.0
 
+  boilerplates/storybook:
+    dependencies:
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: file:packages/compile(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
+      '@types/node':
+        specifier: ^20.19.37
+        version: 20.19.37
+
   boilerplates/tailwindcss:
     dependencies:
       '@batijs/core':

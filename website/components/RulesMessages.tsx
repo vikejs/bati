@@ -226,4 +226,17 @@ export const rulesMessages = {
     // biome-ignore lint/complexity/noUselessFragments: Valid TS
     return <></>;
   }),
+  [RulesMessage.ERROR_STORYBOOK_R_UI_FRAMEWORK]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">Storybook</span> is only supported with <span class="font-bold">React</span>,{" "}
+        <span class="font-bold">Vue</span>, or <span class="font-bold">Solid</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick one of these UI frameworks or unselect <span class="font-bold">Storybook</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
 } satisfies Record<RulesMessage, RuleMessage>;

@@ -63,4 +63,7 @@ Choose one of them or remove selected Server`,
     `${inverse(bold("shadcn/ui"))} integration is tied to ${inverse(bold("TailwindCSS"))}. Using another CSS library with it may have unpredictable behaviour.`,
   ),
   [RulesMessage.INFO_STACKBLITZ_COMPAT]: null,
+  [RulesMessage.ERROR_STORYBOOK_R_UI_FRAMEWORK]: error(
+    `${inverse(bold("Storybook"))} is only supported with ${inverse(bold("React"))}, ${inverse(bold("Vue"))}, or ${inverse(bold("Solid"))}`,
+  ),
 } satisfies Record<RulesMessage, RuleMessage | null>;

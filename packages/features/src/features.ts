@@ -596,6 +596,24 @@ export const features = [
     url: "https://logrocket.com",
     disabled: true,
   },
+
+  // Tooling
+  {
+    category: "Tooling",
+    label: "Storybook",
+    flag: "storybook",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjg3ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI5NiI+PHBhdGggZmlsbD0iI0ZGNDc4NSIgZD0iTTAgMjkyLjI3VjMuNzJMMTcuNDggMEwyNTMuOTkgOS4wOHYyNzcuNThsLTM3LjQ1IDguMTRMMCwyOTIuMjdaIi8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTE2Ni41NSA2Ny40MWwxLjg5LTQ1LjQ3bDM5LjkgMTIuNTd2MzUuNjdsLTQxLjc5LTIuNzdabS04Ni44MSAxNy4yNmMtLjU2IDEwLjAzIDI2LjIzIDEwLjQxIDMxLjE1IDE0LjMzYzE0Ljg5IDExLjQ3IDExLjM2IDI4LjEyIDEwLjkgNDMuNzVjMTUuMTUtMzIuMzcgNTEuNTEtMTguNDUgNjEuMjgtMjguNDhjMi4wMy0yLjExIDMuMTYtNS4wNyAzLjM4LTguNDFsMi45NiAyLjI1Yy4wNiAyNC42Ny0xNC40NCAzOS43OC0zOC43NiA0NC42MWwtMjAuMzUgMy45NUMxMjAuNjMgMTYxLjYzIDEwNiAxNjcuNSA5NiAxNzguNjZsLS4xOS4yM2MtMTEuNzEgMTQuMi0xNS45IDMzLjM2LTE1Ljk2IDQ1LjY3Yy0yNy41Ni0xNS40Ni0yNi43Ni0xMjguMTkgLjU5LTE0MC4xTTIwNy42IDkwLjY1YzguMTMgOS4zMiAxMC4xOSAyMy44NiA5LjM4IDM4LjU5Yy0xLjc0IDMxLjUyLTI0LjI1IDUwLjMtNjEuMiA1Mi41OGwtNS43OC4zOGMtMjIuNzkgMS41Mi0yOS4yMSAxNS4zMS0yOC4xNSAzMi4yNGMxLjI4IDIwLjA3IDEzLjE3IDI3LjE0IDI4LjE1IDI3LjE0YzIxLjYyIDAgNDEuMTItMTMuMzYgNDEuMjktMzYuMjhsMS4yOS4wOGMuMDYgMjEuMjYtMTUuMjkgMzkuNzItMzguNzggNDQuNTlsLTIwLjM1IDMuOTVDMTIwLjYzIDI1NS41IDEwNiAyNjEuMzYgOTYgMjcyLjUzYzE1LjA2LTY1Ljk3IDY4LjE2LTYyLjg2IDEwOC42MS02NS4xM2wyNi45OC0xLjc5YzE4Ljc1LTEuNCAyOS4zNy0xNC43MSAyOS4zNy0zMy43N2MwLTEuMTQtLjAzLTIuMi0uMDgtMy4zN2MtLjg3LTIzLjMyLTE2LjAxLTM5LjEtMzkuNTItNDUuMDVjLTkuNzUtMi41My0yMS0zLjcyLTMxLjE1LTMuNzJjLTEyLjQgMC0yMi41LTEwLjYzLTIyLjUtMjMuNjhzMTAuMS0yMy42OCAyMi41LTIzLjY4YzEzLjMzIDAgMjIuMDIgNi41NCAyMi45MSAxOC40OGM3LjItNC45MyAyNy4wMy01LjQ5IDM3LjM2IDEuNzNhMy4yNiAzLjI2IDAgMCAxLTMuMzktNS4zNWMtMTcuOTctMTAuNjMtNDAuNDItMTEuNDEtNDguMzQgMy4yOGMtMi4xLTQuOTktNy4wMi0xMS44OC0xMi4xNy0xMy44OWMxNS4yMS0xNy4yOSA0NS43OC0xMy40NiA2MS43NyA1LjA0WiIvPjwvc3ZnPg==",
+    url: "https://storybook.js.org",
+    tagline: "Build UI components and pages in isolation",
+    repo: "storybookjs/storybook",
+    links: [
+      {
+        label: "Docs",
+        href: "https://storybook.js.org/docs",
+      },
+    ],
+  },
 ] as const satisfies ReadonlyArray<Feature<CategoryLabels>>;
 
 export const flags = features.map((f) => f.flag);
