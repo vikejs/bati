@@ -24,7 +24,8 @@ export async function updatePackageJson(
     pkgjson.scripts["lint:biome"] = "biome lint --error-on-warnings";
   }
   if (flags.includes("oxlint")) {
-    pkgjson.scripts["lint:oxlint"] = "oxlint --type-aware --ignore-path .gitignore .";
+    pkgjson.scripts["lint:oxlint"] =
+      "oxlint --max-warnings 0 --type-aware --ignore-pattern '*.spec.ts' --ignore-path .gitignore .";
   }
   pkgjson.scripts.typecheck = "tsc --noEmit";
   pkgjson.devDependencies ??= {};
@@ -106,7 +107,6 @@ export async function createTurboConfig(context: GlobalContext) {
           dependsOn: ["build", "test"],
         },
       },
-      daemon: false,
       remoteCache: {
         signature: false,
       },
