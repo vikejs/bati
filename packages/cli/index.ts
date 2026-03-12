@@ -431,9 +431,16 @@ function checkRules(flags: string[]) {
   }
 }
 
-async function retrieveHooks(hooks: string[]): Promise<Map<"after", Hook[]>> {
+async function retrieveHooks(hooks: Map<BoilerplateDefWithConfig, string>): Promise<Map<"after", Hook[]>> {
   const map = new Map<"after", Hook[]>();
-  for (const hook of hooks) {
+  const sortedHooks = Array.from(hooks.entries()).sort(([b1], [b2]) => {
+    if (b1.config.enforce === "pre") return 1;
+    if (b1.config.enforce === "post") return -1;
+    if (b2.config.enforce === "pre") return -1;
+    if (b2.config.enforce === "post") return 1;
+    return 0;
+  });
+  for (const [, hook] of sortedHooks) {
     for await (const file of walk(hook)) {
       const parsed = parse(file);
       const importFile = isWin ? `file://${file}` : file;
@@ -512,7 +519,7 @@ async function run() {
       const args = await checkArguments(commandContext.args);
 
       const sources: string[] = [];
-      const hooks: string[] = [];
+      const hooks = new Map<BoilerplateDefWithConfig, string>();
       const flags = [
         ...new Set(
           Object.entries(args)
@@ -556,7 +563,7 @@ async function run() {
           sources.push(join(dir, bl.folder, "files"));
         }
         if (bl.subfolders.includes("hooks")) {
-          hooks.push(join(dir, bl.folder, "hooks"));
+          hooks.set(bl, join(dir, bl.folder, "hooks"));
         }
       }
 
