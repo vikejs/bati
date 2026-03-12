@@ -10,7 +10,7 @@ export type Data = Awaited<ReturnType<typeof data>>;
 
 export async function data(_pageContext: PageContextServer) {
   if (BATI.has("drizzle")) {
-    const todoItemsInitial = drizzleQueries.getAllTodos(_pageContext.db);
+    const todoItemsInitial = await drizzleQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
   } else if (BATI.has("sqlite") && !BATI.hasD1) {

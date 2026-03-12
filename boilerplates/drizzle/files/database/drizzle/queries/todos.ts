@@ -14,10 +14,13 @@ export function insertTodo(
 }
 
 export function getAllTodos(
-  db: BATI.If<{
-    "!BATI.hasD1": ReturnType<typeof dbSqlite>;
-    _: ReturnType<typeof dbD1>;
-  }>,
+  db: BATI.If<
+    {
+      "!BATI.hasD1": ReturnType<typeof dbSqlite>;
+      _: ReturnType<typeof dbD1>;
+    },
+    "union"
+  >,
 ) {
   return db.select().from(todoTable).all();
 }
