@@ -12,4 +12,7 @@ export default defineConfig({
       },
     ];
   },
+  knip: {
+    ignoreDependencies: ["playwright", "@vitest/coverage-v8"],
+  },
 });
