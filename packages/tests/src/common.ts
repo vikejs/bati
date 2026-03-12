@@ -27,7 +27,10 @@ export async function updatePackageJson(
     pkgjson.scripts["lint:oxlint"] =
       "oxlint --max-warnings 0 --type-aware --ignore-pattern '*.spec.ts' --ignore-path .gitignore .";
   }
-  pkgjson.scripts.typecheck = "tsc --noEmit";
+  // Storybook create .ts files that imports .vue files, and tsc complains about that
+  if (!flags.includes("storybook") || !flags.includes("vue")) {
+    pkgjson.scripts.typecheck = "tsc --noEmit";
+  }
   pkgjson.devDependencies ??= {};
   pkgjson.devDependencies.vitest = packageJson.devDependencies.vitest;
   pkgjson.devDependencies.knip = packageJson.devDependencies.knip;
