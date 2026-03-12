@@ -94,6 +94,8 @@ jobs:
           - solid--daisyui--eslint--biome--oxlint
           - react--daisyui--eslint--biome--oxlint
           - vue--daisyui--eslint--biome--oxlint
+          - react--h3--auth0--cloudflare--eslint--biome--oxlint
+          - react--hono--auth0--cloudflare--eslint--biome--oxlint
           - solid--express--authjs--eslint--biome--oxlint
           - react--express--authjs--eslint--biome--oxlint
           - vue--express--authjs--eslint--biome--oxlint
@@ -106,6 +108,18 @@ jobs:
           - solid--fastify--authjs--eslint--biome--oxlint
           - react--fastify--authjs--eslint--biome--oxlint
           - vue--fastify--authjs--eslint--biome--oxlint
+          - solid--express--auth0--eslint--biome--oxlint
+          - react--express--auth0--eslint--biome--oxlint
+          - vue--express--auth0--eslint--biome--oxlint
+          - solid--h3--auth0--eslint--biome--oxlint
+          - react--h3--auth0--eslint--biome--oxlint
+          - vue--h3--auth0--eslint--biome--oxlint
+          - solid--hono--auth0--eslint--biome--oxlint
+          - react--hono--auth0--eslint--biome--oxlint
+          - vue--hono--auth0--eslint--biome--oxlint
+          - solid--fastify--auth0--eslint--biome--oxlint
+          - react--fastify--auth0--eslint--biome--oxlint
+          - vue--fastify--auth0--eslint--biome--oxlint
           - solid--h3--trpc--drizzle--cloudflare--eslint--biome--oxlint
           - solid--hono--trpc--drizzle--cloudflare--eslint--biome--oxlint
           - solid--h3--telefunc--drizzle--cloudflare--eslint--biome--oxlint
@@ -283,6 +297,12 @@ jobs:
           - destination: vue--daisyui--eslint--biome--oxlint
             flags: --vue --daisyui --eslint --biome --oxlint
             test-files: FRAMEWORK+CSS.spec.ts
+          - destination: react--h3--auth0--cloudflare--eslint--biome--oxlint
+            flags: --react --h3 --auth0 --cloudflare --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--auth0--cloudflare--eslint--biome--oxlint
+            flags: --react --hono --auth0 --cloudflare --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--express--authjs--eslint--biome--oxlint
             flags: --solid --express --authjs --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
@@ -318,6 +338,42 @@ jobs:
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: vue--fastify--authjs--eslint--biome--oxlint
             flags: --vue --fastify --authjs --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--express--auth0--eslint--biome--oxlint
+            flags: --solid --express --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--express--auth0--eslint--biome--oxlint
+            flags: --react --express --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--express--auth0--eslint--biome--oxlint
+            flags: --vue --express --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--h3--auth0--eslint--biome--oxlint
+            flags: --solid --h3 --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--h3--auth0--eslint--biome--oxlint
+            flags: --react --h3 --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--h3--auth0--eslint--biome--oxlint
+            flags: --vue --h3 --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--hono--auth0--eslint--biome--oxlint
+            flags: --solid --hono --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--auth0--eslint--biome--oxlint
+            flags: --react --hono --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--hono--auth0--eslint--biome--oxlint
+            flags: --vue --hono --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--fastify--auth0--eslint--biome--oxlint
+            flags: --solid --fastify --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--fastify--auth0--eslint--biome--oxlint
+            flags: --react --fastify --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--fastify--auth0--eslint--biome--oxlint
+            flags: --vue --fastify --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--h3--trpc--drizzle--cloudflare--eslint--biome--oxlint
             flags: --solid --h3 --trpc --drizzle --cloudflare --eslint --biome
