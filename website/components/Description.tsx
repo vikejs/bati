@@ -8,7 +8,7 @@ const lf = new Intl.ListFormat("en");
 function FeatureWord(props: { feature: Pick<Feature, "label" | "url"> }) {
   if (props.feature.url) {
     return (
-      <a href={props.feature.url} target="_blank">
+      <a href={props.feature.url} target="_blank" rel="noopener">
         <span class={clsx("text-primary link link-hover", props.feature.label === "Vike" && "font-semibold")}>
           {props.feature.label}
         </span>

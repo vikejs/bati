@@ -185,7 +185,7 @@ function CombinedTooltip(props: { feature: Feature }) {
             <For each={links}>
               {(link) => (
                 <ul>
-                  <a href={link.href} class="link" target="_blank" tabindex="0">
+                  <a href={link.href} class="link" target="_blank" tabindex="0" rel="noopener">
                     {link.label}
                   </a>
                 </ul>
