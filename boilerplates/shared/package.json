@@ -23,32 +23,14 @@
     "dist/files/.gitignore"
   ],
   "exports": {
-    "./bati.config": {
-      "types": "./dist/bati.config.d.mts"
-    },
-    "./files/_README.md": {
-      "types": "./dist/files/_README.md.d.mts"
-    },
-    "./files/_TODO.md": {
-      "types": "./dist/files/_TODO.md.d.mts"
-    },
-    "./hooks/after": {
-      "types": "./dist/hooks/after.d.mts"
+    "./vite.config": {
+      "types": "./dist/types/vite.config.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "bati.config": [
-        "./dist/bati.config.d.mts"
-      ],
-      "files/_README.md": [
-        "./dist/files/_README.md.d.mts"
-      ],
-      "files/_TODO.md": [
-        "./dist/files/_TODO.md.d.mts"
-      ],
-      "hooks/after": [
-        "./dist/hooks/after.d.mts"
+      "vite.config": [
+        "./dist/types/vite.config.d.mts"
       ]
     }
   }

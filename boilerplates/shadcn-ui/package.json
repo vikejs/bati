@@ -30,32 +30,14 @@
     "dist/"
   ],
   "exports": {
-    "./_README.md": {
-      "types": "./dist/_README.md.d.mts"
-    },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
-    },
-    "./_tsconfig.json": {
-      "types": "./dist/_tsconfig.json.d.mts"
-    },
-    "./_vite.config.ts": {
-      "types": "./dist/_vite.config.ts.d.mts"
+    "./lib/utils": {
+      "types": "./dist/types/lib/utils.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_README.md": [
-        "./dist/_README.md.d.mts"
-      ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
-      ],
-      "_tsconfig.json": [
-        "./dist/_tsconfig.json.d.mts"
-      ],
-      "_vite.config.ts": [
-        "./dist/_vite.config.ts.d.mts"
+      "lib/utils": [
+        "./dist/types/lib/utils.d.mts"
       ]
     }
   }

@@ -30,32 +30,104 @@
     "dist/"
   ],
   "exports": {
-    "./_README.md": {
-      "types": "./dist/_README.md.d.mts"
+    "./components/Link": {
+      "types": "./dist/types/components/Link.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./pages/+Head": {
+      "types": "./dist/types/pages/+Head.d.mts"
     },
-    "./_tsconfig.json": {
-      "types": "./dist/_tsconfig.json.d.mts"
+    "./pages/+Layout": {
+      "types": "./dist/types/pages/+Layout.d.mts"
     },
-    "./_vite.config.ts": {
-      "types": "./dist/_vite.config.ts.d.mts"
+    "./pages/+config": {
+      "types": "./dist/types/pages/+config.d.mts"
+    },
+    "./pages/+onPageTransitionEnd": {
+      "types": "./dist/types/pages/+onPageTransitionEnd.d.mts"
+    },
+    "./pages/+onPageTransitionStart": {
+      "types": "./dist/types/pages/+onPageTransitionStart.d.mts"
+    },
+    "./pages/_error/+Page": {
+      "types": "./dist/types/pages/_error/+Page.d.mts"
+    },
+    "./pages/index/+Page": {
+      "types": "./dist/types/pages/index/+Page.d.mts"
+    },
+    "./pages/index/Counter": {
+      "types": "./dist/types/pages/index/Counter.d.mts"
+    },
+    "./pages/star-wars/types": {
+      "types": "./dist/types/pages/star-wars/types.d.mts"
+    },
+    "./pages/todo/+Page": {
+      "types": "./dist/types/pages/todo/+Page.d.mts"
+    },
+    "./pages/todo/TodoList": {
+      "types": "./dist/types/pages/todo/TodoList.d.mts"
+    },
+    "./pages/star-wars/@id/+Page": {
+      "types": "./dist/types/pages/star-wars/@id/+Page.d.mts"
+    },
+    "./pages/star-wars/@id/+data": {
+      "types": "./dist/types/pages/star-wars/@id/+data.d.mts"
+    },
+    "./pages/star-wars/index/+Page": {
+      "types": "./dist/types/pages/star-wars/index/+Page.d.mts"
+    },
+    "./pages/star-wars/index/+data": {
+      "types": "./dist/types/pages/star-wars/index/+data.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_README.md": [
-        "./dist/_README.md.d.mts"
+      "components/Link": [
+        "./dist/types/components/Link.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "pages/+Head": [
+        "./dist/types/pages/+Head.d.mts"
       ],
-      "_tsconfig.json": [
-        "./dist/_tsconfig.json.d.mts"
+      "pages/+Layout": [
+        "./dist/types/pages/+Layout.d.mts"
       ],
-      "_vite.config.ts": [
-        "./dist/_vite.config.ts.d.mts"
+      "pages/+config": [
+        "./dist/types/pages/+config.d.mts"
+      ],
+      "pages/+onPageTransitionEnd": [
+        "./dist/types/pages/+onPageTransitionEnd.d.mts"
+      ],
+      "pages/+onPageTransitionStart": [
+        "./dist/types/pages/+onPageTransitionStart.d.mts"
+      ],
+      "pages/_error/+Page": [
+        "./dist/types/pages/_error/+Page.d.mts"
+      ],
+      "pages/index/+Page": [
+        "./dist/types/pages/index/+Page.d.mts"
+      ],
+      "pages/index/Counter": [
+        "./dist/types/pages/index/Counter.d.mts"
+      ],
+      "pages/star-wars/types": [
+        "./dist/types/pages/star-wars/types.d.mts"
+      ],
+      "pages/todo/+Page": [
+        "./dist/types/pages/todo/+Page.d.mts"
+      ],
+      "pages/todo/TodoList": [
+        "./dist/types/pages/todo/TodoList.d.mts"
+      ],
+      "pages/star-wars/@id/+Page": [
+        "./dist/types/pages/star-wars/@id/+Page.d.mts"
+      ],
+      "pages/star-wars/@id/+data": [
+        "./dist/types/pages/star-wars/@id/+data.d.mts"
+      ],
+      "pages/star-wars/index/+Page": [
+        "./dist/types/pages/star-wars/index/+Page.d.mts"
+      ],
+      "pages/star-wars/index/+data": [
+        "./dist/types/pages/star-wars/index/+data.d.mts"
       ]
     }
   }

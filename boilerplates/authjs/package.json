@@ -24,14 +24,20 @@
     "dist/"
   ],
   "exports": {
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./global": {
+      "types": "./dist/types/global.d.mts"
+    },
+    "./server/authjs-handler": {
+      "types": "./dist/types/server/authjs-handler.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "global": [
+        "./dist/types/global.d.mts"
+      ],
+      "server/authjs-handler": [
+        "./dist/types/server/authjs-handler.d.mts"
       ]
     }
   }

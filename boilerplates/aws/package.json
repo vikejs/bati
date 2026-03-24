@@ -34,44 +34,32 @@
     "dist/"
   ],
   "exports": {
-    "./_README.md": {
-      "types": "./dist/_README.md.d.mts"
+    "./vitest.config": {
+      "types": "./dist/types/vitest.config.d.mts"
     },
-    "./_TODO.md": {
-      "types": "./dist/_TODO.md.d.mts"
+    "./tests/aws_handler.spec": {
+      "types": "./dist/types/tests/aws_handler.spec.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./cdk/bin/infrastructure": {
+      "types": "./dist/types/cdk/bin/infrastructure.d.mts"
     },
-    "./_tsconfig.json": {
-      "types": "./dist/_tsconfig.json.d.mts"
-    },
-    "./_vite.config.ts": {
-      "types": "./dist/_vite.config.ts.d.mts"
-    },
-    "./cdk/_stack-name-suffix.json": {
-      "types": "./dist/cdk/_stack-name-suffix.json.d.mts"
+    "./cdk/lib/vike-stack": {
+      "types": "./dist/types/cdk/lib/vike-stack.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_README.md": [
-        "./dist/_README.md.d.mts"
+      "vitest.config": [
+        "./dist/types/vitest.config.d.mts"
       ],
-      "_TODO.md": [
-        "./dist/_TODO.md.d.mts"
+      "tests/aws_handler.spec": [
+        "./dist/types/tests/aws_handler.spec.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "cdk/bin/infrastructure": [
+        "./dist/types/cdk/bin/infrastructure.d.mts"
       ],
-      "_tsconfig.json": [
-        "./dist/_tsconfig.json.d.mts"
-      ],
-      "_vite.config.ts": [
-        "./dist/_vite.config.ts.d.mts"
-      ],
-      "cdk/_stack-name-suffix.json": [
-        "./dist/cdk/_stack-name-suffix.json.d.mts"
+      "cdk/lib/vike-stack": [
+        "./dist/types/cdk/lib/vike-stack.d.mts"
       ]
     }
   }

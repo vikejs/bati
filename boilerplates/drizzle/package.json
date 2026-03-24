@@ -27,26 +27,32 @@
     "dist/"
   ],
   "exports": {
-    "./_.env": {
-      "types": "./dist/_.env.d.mts"
+    "./drizzle.config": {
+      "types": "./dist/types/drizzle.config.d.mts"
     },
-    "./_TODO.md": {
-      "types": "./dist/_TODO.md.d.mts"
+    "./database/drizzle/db": {
+      "types": "./dist/types/database/drizzle/db.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./database/drizzle/queries/todos": {
+      "types": "./dist/types/database/drizzle/queries/todos.d.mts"
+    },
+    "./database/drizzle/schema/todos": {
+      "types": "./dist/types/database/drizzle/schema/todos.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_.env": [
-        "./dist/_.env.d.mts"
+      "drizzle.config": [
+        "./dist/types/drizzle.config.d.mts"
       ],
-      "_TODO.md": [
-        "./dist/_TODO.md.d.mts"
+      "database/drizzle/db": [
+        "./dist/types/database/drizzle/db.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "database/drizzle/queries/todos": [
+        "./dist/types/database/drizzle/queries/todos.d.mts"
+      ],
+      "database/drizzle/schema/todos": [
+        "./dist/types/database/drizzle/schema/todos.d.mts"
       ]
     }
   }

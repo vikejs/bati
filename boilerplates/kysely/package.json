@@ -29,26 +29,38 @@
     "dist/"
   ],
   "exports": {
-    "./_.env": {
-      "types": "./dist/_.env.d.mts"
+    "./database/kysely/db": {
+      "types": "./dist/types/database/kysely/db.d.mts"
     },
-    "./_TODO.md": {
-      "types": "./dist/_TODO.md.d.mts"
+    "./database/kysely/migrate": {
+      "types": "./dist/types/database/kysely/migrate.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./database/kysely/types": {
+      "types": "./dist/types/database/kysely/types.d.mts"
+    },
+    "./database/kysely/migrations/001_create_todos_table": {
+      "types": "./dist/types/database/kysely/migrations/001_create_todos_table.d.mts"
+    },
+    "./database/kysely/queries/todos": {
+      "types": "./dist/types/database/kysely/queries/todos.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_.env": [
-        "./dist/_.env.d.mts"
+      "database/kysely/db": [
+        "./dist/types/database/kysely/db.d.mts"
       ],
-      "_TODO.md": [
-        "./dist/_TODO.md.d.mts"
+      "database/kysely/migrate": [
+        "./dist/types/database/kysely/migrate.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "database/kysely/types": [
+        "./dist/types/database/kysely/types.d.mts"
+      ],
+      "database/kysely/migrations/001_create_todos_table": [
+        "./dist/types/database/kysely/migrations/001_create_todos_table.d.mts"
+      ],
+      "database/kysely/queries/todos": [
+        "./dist/types/database/kysely/queries/todos.d.mts"
       ]
     }
   }

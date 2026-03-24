@@ -24,13 +24,37 @@
   ],
   "exports": {
     "./server/db-middleware": {
-      "types": "./dist/types/server/db-middleware.d.ts"
+      "types": "./dist/types/server/db-middleware.d.mts"
+    },
+    "./drizzle/dist/types/database/drizzle/db": {
+      "types": "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
+    },
+    "./kysely/dist/types/database/kysely/db": {
+      "types": "./dist/types/kysely/dist/types/database/kysely/db.d.mts"
+    },
+    "./kysely/dist/types/database/kysely/types": {
+      "types": "./dist/types/kysely/dist/types/database/kysely/types.d.mts"
+    },
+    "./sqlite/dist/types/database/sqlite/db": {
+      "types": "./dist/types/sqlite/dist/types/database/sqlite/db.d.mts"
     }
   },
   "typesVersions": {
     "*": {
       "server/db-middleware": [
-        "./dist/types/server/db-middleware.d.ts"
+        "./dist/types/server/db-middleware.d.mts"
+      ],
+      "drizzle/dist/types/database/drizzle/db": [
+        "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
+      ],
+      "kysely/dist/types/database/kysely/db": [
+        "./dist/types/kysely/dist/types/database/kysely/db.d.mts"
+      ],
+      "kysely/dist/types/database/kysely/types": [
+        "./dist/types/kysely/dist/types/database/kysely/types.d.mts"
+      ],
+      "sqlite/dist/types/database/sqlite/db": [
+        "./dist/types/sqlite/dist/types/database/sqlite/db.d.mts"
       ]
     }
   }

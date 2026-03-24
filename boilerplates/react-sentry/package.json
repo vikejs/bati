@@ -28,14 +28,20 @@
     "dist/"
   ],
   "exports": {
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./sentry.browser.config": {
+      "types": "./dist/types/sentry.browser.config.d.mts"
+    },
+    "./pages/sentry/+Page": {
+      "types": "./dist/types/pages/sentry/+Page.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "sentry.browser.config": [
+        "./dist/types/sentry.browser.config.d.mts"
+      ],
+      "pages/sentry/+Page": [
+        "./dist/types/pages/sentry/+Page.d.mts"
       ]
     }
   }

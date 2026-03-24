@@ -25,26 +25,20 @@
     "dist/"
   ],
   "exports": {
-    "./_TODO.md": {
-      "types": "./dist/_TODO.md.d.mts"
+    "./global": {
+      "types": "./dist/types/global.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
-    },
-    "./_wrangler.jsonc": {
-      "types": "./dist/_wrangler.jsonc.d.mts"
+    "./database/d1/helpers": {
+      "types": "./dist/types/database/d1/helpers.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_TODO.md": [
-        "./dist/_TODO.md.d.mts"
+      "global": [
+        "./dist/types/global.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
-      ],
-      "_wrangler.jsonc": [
-        "./dist/_wrangler.jsonc.d.mts"
+      "database/d1/helpers": [
+        "./dist/types/database/d1/helpers.d.mts"
       ]
     }
   }

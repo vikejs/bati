@@ -27,14 +27,38 @@
   ],
   "typesVersions": {
     "*": {
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "server/trpc-handler": [
+        "./dist/types/server/trpc-handler.d.mts"
+      ],
+      "trpc/client": [
+        "./dist/types/trpc/client.d.mts"
+      ],
+      "trpc/server": [
+        "./dist/types/trpc/server.d.mts"
+      ],
+      "drizzle/dist/types/database/drizzle/db": [
+        "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
+      ],
+      "sqlite/dist/types/database/sqlite/db": [
+        "./dist/types/sqlite/dist/types/database/sqlite/db.d.mts"
       ]
     }
   },
   "exports": {
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./server/trpc-handler": {
+      "types": "./dist/types/server/trpc-handler.d.mts"
+    },
+    "./trpc/client": {
+      "types": "./dist/types/trpc/client.d.mts"
+    },
+    "./trpc/server": {
+      "types": "./dist/types/trpc/server.d.mts"
+    },
+    "./drizzle/dist/types/database/drizzle/db": {
+      "types": "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
+    },
+    "./sqlite/dist/types/database/sqlite/db": {
+      "types": "./dist/types/sqlite/dist/types/database/sqlite/db.d.mts"
     }
   }
 }

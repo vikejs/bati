@@ -24,14 +24,14 @@
     "dist/"
   ],
   "exports": {
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./database/d1/queries/todos": {
+      "types": "./dist/types/database/d1/queries/todos.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "database/d1/queries/todos": [
+        "./dist/types/database/d1/queries/todos.d.mts"
       ]
     }
   }

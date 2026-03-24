@@ -33,14 +33,14 @@
     "dist/"
   ],
   "exports": {
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./server/entry": {
+      "types": "./dist/types/server/entry.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "server/entry": [
+        "./dist/types/server/entry.d.mts"
       ]
     }
   }

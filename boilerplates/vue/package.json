@@ -32,32 +32,50 @@
     "dist/"
   ],
   "exports": {
-    "./_README.md": {
-      "types": "./dist/_README.md.d.mts"
+    "./pages/+config": {
+      "types": "./dist/types/pages/+config.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./pages/+onCreateApp": {
+      "types": "./dist/types/pages/+onCreateApp.d.mts"
     },
-    "./_tsconfig.json": {
-      "types": "./dist/_tsconfig.json.d.mts"
+    "./pages/+onPageTransitionEnd": {
+      "types": "./dist/types/pages/+onPageTransitionEnd.d.mts"
     },
-    "./_vite.config.ts": {
-      "types": "./dist/_vite.config.ts.d.mts"
+    "./pages/+onPageTransitionStart": {
+      "types": "./dist/types/pages/+onPageTransitionStart.d.mts"
+    },
+    "./pages/star-wars/types": {
+      "types": "./dist/types/pages/star-wars/types.d.mts"
+    },
+    "./pages/star-wars/@id/+data": {
+      "types": "./dist/types/pages/star-wars/@id/+data.d.mts"
+    },
+    "./pages/star-wars/index/+data": {
+      "types": "./dist/types/pages/star-wars/index/+data.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_README.md": [
-        "./dist/_README.md.d.mts"
+      "pages/+config": [
+        "./dist/types/pages/+config.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "pages/+onCreateApp": [
+        "./dist/types/pages/+onCreateApp.d.mts"
       ],
-      "_tsconfig.json": [
-        "./dist/_tsconfig.json.d.mts"
+      "pages/+onPageTransitionEnd": [
+        "./dist/types/pages/+onPageTransitionEnd.d.mts"
       ],
-      "_vite.config.ts": [
-        "./dist/_vite.config.ts.d.mts"
+      "pages/+onPageTransitionStart": [
+        "./dist/types/pages/+onPageTransitionStart.d.mts"
+      ],
+      "pages/star-wars/types": [
+        "./dist/types/pages/star-wars/types.d.mts"
+      ],
+      "pages/star-wars/@id/+data": [
+        "./dist/types/pages/star-wars/@id/+data.d.mts"
+      ],
+      "pages/star-wars/index/+data": [
+        "./dist/types/pages/star-wars/index/+data.d.mts"
       ]
     }
   }

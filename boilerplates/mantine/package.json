@@ -34,20 +34,20 @@
     "dist/"
   ],
   "exports": {
-    "./_README.md": {
-      "types": "./dist/_README.md.d.mts"
+    "./components/Link": {
+      "types": "./dist/types/components/Link.d.mts"
     },
-    "./_package.json": {
-      "types": "./dist/_package.json.d.mts"
+    "./pages/+Layout": {
+      "types": "./dist/types/pages/+Layout.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "_README.md": [
-        "./dist/_README.md.d.mts"
+      "components/Link": [
+        "./dist/types/components/Link.d.mts"
       ],
-      "_package.json": [
-        "./dist/_package.json.d.mts"
+      "pages/+Layout": [
+        "./dist/types/pages/+Layout.d.mts"
       ]
     }
   }
