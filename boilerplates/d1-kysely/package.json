@@ -20,5 +20,17 @@
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "exports": {
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "_package.json": [
+        "./dist/_package.json.d.mts"
+      ]
+    }
+  }
 }

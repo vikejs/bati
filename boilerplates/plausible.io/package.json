@@ -20,5 +20,17 @@
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "exports": {
+    "./_TODO.md": {
+      "types": "./dist/_TODO.md.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "_TODO.md": [
+        "./dist/_TODO.md.d.mts"
+      ]
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
-export default async function getPackageJson(props: TransformerProps) {
+export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   const gitIgnore = props.meta.BATI_IS_CI || props.meta.BATI_SKIP_GIT ? "--ignore-path .gitignore " : "";

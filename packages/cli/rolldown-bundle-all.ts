@@ -47,7 +47,7 @@ async function boilerplateFilesToCopy() {
   for await (const [filepath, packageJson] of getBatiPackageJson()) {
     const pkgDir = dirname(filepath);
 
-    const batiConfigFile = existsSync(join(pkgDir, "dist", "bati.config.js"));
+    const batiConfigFile = existsSync(join(pkgDir, "dist", "bati.config.mjs"));
 
     if (!batiConfigFile) {
       throw new Error(`Missing 'bati.config.ts' in '${filepath}'`);

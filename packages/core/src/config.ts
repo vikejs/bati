@@ -2,6 +2,8 @@ import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
 import type { VikeMeta } from "./types.js";
 
+export type { VikeMeta };
+
 export interface BatiConfigStep {
   order?: number;
   step: string;

@@ -24,14 +24,44 @@
     "dist/"
   ],
   "exports": {
-    "./sentry.browser.config copy": {
-      "types": "./dist/types/sentry.browser.config copy.d.ts"
+    "./_.env": {
+      "types": "./dist/_.env.d.mts"
+    },
+    "./_README.md": {
+      "types": "./dist/_README.md.d.mts"
+    },
+    "./_TODO.md": {
+      "types": "./dist/_TODO.md.d.mts"
+    },
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
+    },
+    "./_vite.config.ts": {
+      "types": "./dist/_vite.config.ts.d.mts"
+    },
+    "./pages/__client.ts": {
+      "types": "./dist/pages/__client.ts.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "sentry.browser.config copy": [
-        "./dist/types/sentry.browser.config copy.d.ts"
+      "_.env": [
+        "./dist/_.env.d.mts"
+      ],
+      "_README.md": [
+        "./dist/_README.md.d.mts"
+      ],
+      "_TODO.md": [
+        "./dist/_TODO.md.d.mts"
+      ],
+      "_package.json": [
+        "./dist/_package.json.d.mts"
+      ],
+      "_vite.config.ts": [
+        "./dist/_vite.config.ts.d.mts"
+      ],
+      "pages/__client.ts": [
+        "./dist/pages/__client.ts.d.mts"
       ]
     }
   }

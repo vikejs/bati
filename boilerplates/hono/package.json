@@ -32,20 +32,14 @@
     "dist/"
   ],
   "exports": {
-    "./entry_aws_lambda": {
-      "types": "./dist/types/entry_aws_lambda.d.ts"
-    },
-    "./server/entry": {
-      "types": "./dist/types/server/entry.d.ts"
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "entry_aws_lambda": [
-        "./dist/types/entry_aws_lambda.d.ts"
-      ],
-      "server/entry": [
-        "./dist/types/server/entry.d.ts"
+      "_package.json": [
+        "./dist/_package.json.d.mts"
       ]
     }
   }

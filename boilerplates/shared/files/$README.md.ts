@@ -1,6 +1,6 @@
 import { getArgs, getVersion, loadMarkdown, type TransformerProps } from "@batijs/core";
 
-export default async function getReadme(props: TransformerProps) {
+export default async function getReadme(props: TransformerProps): Promise<unknown> {
   const content = await loadMarkdown(props);
   const flags = Array.from(props.meta.BATI)
     .filter((f) => (f as string) !== "force")

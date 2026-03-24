@@ -27,26 +27,14 @@
   ],
   "typesVersions": {
     "*": {
-      "trpc/server": [
-        "./dist/types/trpc/server.d.ts"
-      ],
-      "server/trpc-handler": [
-        "./dist/types/server/trpc-handler.d.ts"
-      ],
-      "trpc/client": [
-        "./dist/types/trpc/client.d.ts"
+      "_package.json": [
+        "./dist/_package.json.d.mts"
       ]
     }
   },
   "exports": {
-    "./trpc/server": {
-      "types": "./dist/types/trpc/server.d.ts"
-    },
-    "./server/trpc-handler": {
-      "types": "./dist/types/server/trpc-handler.d.ts"
-    },
-    "./trpc/client": {
-      "types": "./dist/types/trpc/client.d.ts"
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
     }
   }
 }

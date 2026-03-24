@@ -19,7 +19,7 @@ async function renameGitIgnore(cwd: string) {
   await rename(join(cwd, "gitignore"), join(cwd, ".gitignore"));
 }
 
-export default async function onafter(cwd: string, _meta: VikeMeta) {
+export default async function onafter(cwd: string, _meta: VikeMeta): Promise<void> {
   await cleanupMarkdown(cwd, "README.md");
   const content = await cleanupMarkdown(cwd, "TODO.md");
   // Remove empty TODO.md

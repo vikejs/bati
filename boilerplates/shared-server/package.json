@@ -23,14 +23,20 @@
     "dist/"
   ],
   "exports": {
-    "./server/create-todo-handler": {
-      "types": "./dist/types/server/create-todo-handler.d.ts"
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
+    },
+    "./bati.config": {
+      "types": "./dist/bati.config.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "server/create-todo-handler": [
-        "./dist/types/server/create-todo-handler.d.ts"
+      "_package.json": [
+        "./dist/_package.json.d.mts"
+      ],
+      "bati.config": [
+        "./dist/bati.config.d.mts"
       ]
     }
   }
