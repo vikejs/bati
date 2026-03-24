@@ -1267,15 +1267,9 @@ importers:
 
   packages/compile:
     dependencies:
-      esbuild:
-        specifier: ^0.27.4
-        version: 0.27.4
       globby:
         specifier: ^16.1.1
         version: 16.1.1
-      tsc-prog:
-        specifier: ^2.3.0
-        version: 2.3.0(typescript@6.0.2)
       tsdown:
         specifier: ^0.21.4
         version: 0.21.4(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
@@ -8422,12 +8416,6 @@ packages:
 
   ts-morph@26.0.0:
     resolution: {integrity: sha512-ztMO++owQnz8c/gIENcM9XfCEzgoGphTv+nKpYNM1bgsdOVC/jRZuEBf6N+mLLDNg68Kl+GgUZfOySaRiG1/Ug==}
-
-  tsc-prog@2.3.0:
-    resolution: {integrity: sha512-ycET2d75EgcX7y8EmG4KiZkLAwUzbY4xRhA6NU0uVbHkY4ZjrAAuzTMxXI85kOwATqPnBI5C/7y7rlpY0xdqHA==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      typescript: '>=4'
 
   tsdown@0.21.4:
     resolution: {integrity: sha512-Q/kBi8SXkr4X6JI/NAZKZY1UuiEcbuXtIskL4tZCsgpDiEPM/2W6lC+OonNA31S+V3KsWedFvbFDBs23hvt+Aw==}
@@ -16284,10 +16272,6 @@ snapshots:
     dependencies:
       '@ts-morph/common': 0.27.0
       code-block-writer: 13.0.3
-
-  tsc-prog@2.3.0(typescript@6.0.2):
-    dependencies:
-      typescript: 6.0.2
 
   tsdown@0.21.4(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2):
     dependencies:
