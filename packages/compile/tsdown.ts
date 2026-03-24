@@ -23,7 +23,7 @@ const forbidImportsPlugin: Plugin = {
 
 export async function build() {
   const fileEntries = await globby(["./files/**/$!($()*).ts", "./hooks/**/*.ts"]);
-  const dtsEntries = await globby(["./files/**/*.ts", "./files/**/*.tsx", "!./files/**/$*"]);
+  const dtsEntries = await globby(["./files/**/*.ts", "./files/**/*.tsx", "!./files/**/$*", "!./files/**/*.d.ts"]);
 
   const buildPromises: Promise<unknown>[] = [];
 
