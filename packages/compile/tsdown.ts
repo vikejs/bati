@@ -29,6 +29,7 @@ export async function build() {
 
   buildPromises.push(
     tsdownBuild({
+      clean: false,
       entry: await globby(["./bati.config.ts"]),
       outDir: "./dist",
       format: ["esm"],
@@ -42,6 +43,7 @@ export async function build() {
   if (fileEntries.length > 0) {
     buildPromises.push(
       tsdownBuild({
+        clean: false,
         entry: fileEntries,
         outDir: "./dist",
         format: ["esm"],
@@ -61,6 +63,7 @@ export async function build() {
   if (dtsEntries.length > 0) {
     buildPromises.push(
       tsdownBuild({
+        clean: false,
         entry: dtsEntries,
         outDir: "./dist/types",
         root: "./files",

@@ -26,9 +26,6 @@
     "./server/create-todo-handler": {
       "types": "./dist/types/server/create-todo-handler.d.mts"
     },
-    "./drizzle/dist/types/database/drizzle/db": {
-      "types": "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
-    },
     "./kysely/dist/types/database/kysely/db": {
       "types": "./dist/types/kysely/dist/types/database/kysely/db.d.mts"
     },
@@ -43,9 +40,6 @@
     "*": {
       "server/create-todo-handler": [
         "./dist/types/server/create-todo-handler.d.mts"
-      ],
-      "drizzle/dist/types/database/drizzle/db": [
-        "./dist/types/drizzle/dist/types/database/drizzle/db.d.mts"
       ],
       "kysely/dist/types/database/kysely/db": [
         "./dist/types/kysely/dist/types/database/kysely/db.d.mts"

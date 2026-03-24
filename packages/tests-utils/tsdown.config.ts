@@ -9,7 +9,6 @@ export default defineConfig({
   outDir: "./dist",
   dts: true,
   minify: false,
-  clean: true,
   inputOptions: {
     resolve: {
       mainFields: ["module", "main"],

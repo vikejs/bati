@@ -9,7 +9,6 @@ export default defineConfig({
   format: "esm",
   fixedExtension: false,
   outDir: "./dist",
-  clean: true,
   platform: "node",
   outputOptions: {
     sanitizeFileName: false,
