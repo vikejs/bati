@@ -42,9 +42,6 @@ One other important goal is to keep code safely typed. Thanks to Bati's [special
 All boilerplates contain a `bati.config.ts` file, which dictates if the boilerplate is part of a _feature_.
 Most notably, the `if` property must a boolean to include or exclude said boilerplate depending on CLI flags.
 
-> [!TIP]
-> Take a look at existing boilerplates `package.json` for inspiration
-
 ## `$*.ts` files
 
 `files/` folder can contain special `$*.ts` files which, contrary to other files which are [mostly](https://github.com/vikejs/bati/blob/main/boilerplates/README.md) copied as-is,
@@ -88,9 +85,6 @@ export default async function getViteConfig(props: TransformerProps) {
   return mod.generate().code;
 }
 ```
-
-> [!TIP]
-> Take a look at existing boilerplates for examples
 
 ## Advanced rules
 
