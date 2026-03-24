@@ -62,16 +62,7 @@ export default defineConfig([
         mainFields: ["module", "main"],
       },
     },
-    banner: {
-      js: `import { createRequire as BATI_core_createRequire } from 'module';
-import { fileURLToPath as BATI_fileURLToPath } from "node:url";
-import { dirname as BATI_dirname } from "node:path";
-const require = BATI_core_createRequire(import.meta.url);
-
-const __filename = BATI_fileURLToPath(import.meta.url);
-const __dirname = BATI_dirname(__filename);
-`,
-    },
+    shims: true,
   },
   {
     entry: ["./src/index.ts"],

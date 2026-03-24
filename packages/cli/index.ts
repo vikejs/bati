@@ -42,7 +42,7 @@ async function loadBoilerplates(dir: string): Promise<BoilerplateDefWithConfig[]
 
   return await Promise.all(
     boilerplates.map(async (bl) => {
-      const batiConfigFile = join(dir, bl.folder, "bati.config.js");
+      const batiConfigFile = join(dir, bl.folder, "bati.config.mjs");
       const importFile = isWin ? `file://${batiConfigFile}` : batiConfigFile;
       const { default: batiConfig }: { default: BatiConfig } = await import(importFile);
       return {

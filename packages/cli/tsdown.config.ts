@@ -11,11 +11,12 @@ export default defineConfig({
   outDir: "./dist",
   clean: true,
   platform: "node",
+  outputOptions: {
+    sanitizeFileName: false,
+  },
   plugins: [purgePolyfills.rolldown({}), rolldownPlugin],
   banner: {
     js: `#!/usr/bin/env node
-import { createRequire as createRequire_BATI_CLI } from 'module';
-const require = createRequire_BATI_CLI(import.meta.url);
 `,
   },
   hooks: {
