@@ -6,7 +6,11 @@ export default defineConfig({
   format: "esm",
   target: "es2022",
   outDir: "./dist",
-  dts: true,
+  dts: {
+    compilerOptions: {
+      ignoreDeprecations: "6.0",
+    },
+  },
   bundle: true,
   minify: false,
   clean: true,

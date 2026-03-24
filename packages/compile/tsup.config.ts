@@ -5,7 +5,11 @@ export default defineConfig({
   entry: ["index.ts"],
   clean: true,
   format: "esm",
-  dts: true,
+  dts: {
+    compilerOptions: {
+      ignoreDeprecations: "6.0",
+    },
+  },
   outDir: "./dist",
   esbuildPlugins: [purgePolyfills.esbuild({})],
   banner: {

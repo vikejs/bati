@@ -7,7 +7,11 @@ export default defineConfig({
   target: "es2022",
   bundle: true,
   clean: true,
-  dts: true,
+  dts: {
+    compilerOptions: {
+      ignoreDeprecations: "6.0",
+    },
+  },
   outDir: "./dist",
   esbuildOptions(options) {
     options.mainFields = ["module", "main"];

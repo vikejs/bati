@@ -5,7 +5,7 @@ import vikeVue from "vike-vue/config";
 // Default config (can be overridden by pages)
 // https://vike.dev/config
 
-export default {
+const config: Config = {
   // https://vike.dev/head-tags
   title: "My Vike App",
   description: "Demo showcasing Vike",
@@ -23,4 +23,6 @@ export default {
   photon: {
     server: "../server/entry.ts",
   },
-} as Config;
+};
+
+export default config;

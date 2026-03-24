@@ -43,6 +43,7 @@ export async function buildTypes() {
     basePath: process.cwd(),
     configFilePath: "tsconfig.json",
     compilerOptions: {
+      baseUrl: "./",
       rootDir: "./files",
       noEmit: false,
       outDir: "./dist/types",
