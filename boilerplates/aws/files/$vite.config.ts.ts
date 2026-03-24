@@ -18,7 +18,7 @@ const plugin = `{
   }
 }`;
 
-export default async function getViteConfig(props: TransformerProps) {
+export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
   // biome-ignore lint/style/noNonNullAssertion: always exists
   const viteConfig = await props.readfile!();
 

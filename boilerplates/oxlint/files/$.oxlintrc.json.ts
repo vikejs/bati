@@ -1,6 +1,6 @@
 import type { TransformerProps } from "@batijs/core";
 
-export default async function getOxlintJson(props: TransformerProps) {
+export default async function getOxlintJson(props: TransformerProps): Promise<unknown> {
   const oxlintPlugins: string[] = ["eslint", "typescript", "unicorn", "oxc"];
   const jsPlugins: string[] = [];
   // biome-ignore lint/suspicious/noExplicitAny: cast

@@ -1,6 +1,6 @@
 import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
-export default async function getTodo(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps): Promise<unknown> {
   // DATABASE_URL is only required when using standard sqlite
   if (props.meta.BATI.hasD1) return;
 

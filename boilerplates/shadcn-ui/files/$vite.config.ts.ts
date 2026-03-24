@@ -1,6 +1,6 @@
 import { loadAsMagicast, type TransformerProps, yellow } from "@batijs/core";
 
-export default async function getViteConfig(props: TransformerProps) {
+export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
   const mod = await loadAsMagicast(props);
 
   const replacement = `new URL("./", import.meta.url).pathname`;

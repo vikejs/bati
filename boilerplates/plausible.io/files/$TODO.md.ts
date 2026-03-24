@@ -1,6 +1,6 @@
 import { loadMarkdown, type TransformerProps } from "@batijs/core";
 
-export default async function getTodo(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps): Promise<unknown> {
   const content = await loadMarkdown(props);
   const headFileName = props.meta.BATI.has("vue") ? "+Head.vue" : "+Head.tsx";
 

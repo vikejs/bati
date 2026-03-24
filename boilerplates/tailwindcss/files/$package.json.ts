@@ -1,6 +1,6 @@
 import { loadPackageJson, type TransformerProps } from "@batijs/core";
 
-export default async function getPackageJson(props: TransformerProps) {
+export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const pkgjson = await import("../package.json").then((x) => x.default);
   const packageJson = await loadPackageJson(props, pkgjson);
 

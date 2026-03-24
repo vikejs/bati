@@ -1,7 +1,7 @@
 import type { TransformerProps } from "@batijs/core";
 import type { Configuration, LinterConfiguration } from "@biomejs/wasm-nodejs";
 
-export default async function getBiomeJson(props: TransformerProps) {
+export default async function getBiomeJson(props: TransformerProps): Promise<unknown> {
   const additionalLinter: Omit<LinterConfiguration, "enabled"> = {};
   const additionalConfig: Omit<Configuration, "vcs" | "assist" | "linter" | "formatter"> = {};
 

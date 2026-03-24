@@ -2,7 +2,7 @@ import type { TransformerProps } from "@batijs/core";
 import { loadAsJson } from "@batijs/core";
 
 // TODO create a global util that can adapt to any kind of env adapter (dotenv/cloudflare/etc.)
-export default async function getEnv(props: TransformerProps) {
+export default async function getEnv(props: TransformerProps): Promise<unknown> {
   if (!props.meta.BATI.has("cloudflare")) return;
 
   const wrangler = await loadAsJson(props);

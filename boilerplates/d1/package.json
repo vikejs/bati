@@ -25,14 +25,26 @@
     "dist/"
   ],
   "exports": {
-    "./database/d1/helpers": {
-      "types": "./dist/types/database/d1/helpers.d.ts"
+    "./_TODO.md": {
+      "types": "./dist/_TODO.md.d.mts"
+    },
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
+    },
+    "./_wrangler.jsonc": {
+      "types": "./dist/_wrangler.jsonc.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "database/d1/helpers": [
-        "./dist/types/database/d1/helpers.d.ts"
+      "_TODO.md": [
+        "./dist/_TODO.md.d.mts"
+      ],
+      "_package.json": [
+        "./dist/_package.json.d.mts"
+      ],
+      "_wrangler.jsonc": [
+        "./dist/_wrangler.jsonc.d.mts"
       ]
     }
   }

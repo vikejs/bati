@@ -26,20 +26,20 @@
     "dist/"
   ],
   "exports": {
-    "./pages/todo/TodoList.telefunc": {
-      "types": "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+    "./_package.json": {
+      "types": "./dist/_package.json.d.mts"
     },
-    "./server/telefunc-handler": {
-      "types": "./dist/types/server/telefunc-handler.d.ts"
+    "./_vite.config.ts": {
+      "types": "./dist/_vite.config.ts.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "pages/todo/TodoList.telefunc": [
-        "./dist/types/pages/todo/TodoList.telefunc.d.ts"
+      "_package.json": [
+        "./dist/_package.json.d.mts"
       ],
-      "server/telefunc-handler": [
-        "./dist/types/server/telefunc-handler.d.ts"
+      "_vite.config.ts": [
+        "./dist/_vite.config.ts.d.mts"
       ]
     }
   }

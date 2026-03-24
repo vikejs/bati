@@ -14,7 +14,7 @@ function intersect<T>(a: T[], b: T[]) {
   return a.filter((x) => b.includes(x));
 }
 
-export default async function getPnpmWorkspace(props: TransformerProps) {
+export default async function getPnpmWorkspace(props: TransformerProps): Promise<unknown> {
   const deps = [
     ...Object.keys(props.packageJson.dependencies ?? {}),
     ...Object.keys(props.packageJson.devDependencies ?? {}),

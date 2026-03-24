@@ -1,7 +1,7 @@
 import type { TransformerProps } from "@batijs/core";
 import { loadAsJson } from "@batijs/core";
 
-export default async function getToml(props: TransformerProps) {
+export default async function getToml(props: TransformerProps): Promise<unknown> {
   const wrangler = await loadAsJson(props);
 
   wrangler.d1_databases ??= [];

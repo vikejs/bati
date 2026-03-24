@@ -1,6 +1,6 @@
 import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/core";
 
-export default async function getTodo(props: TransformerProps) {
+export default async function getTodo(props: TransformerProps): Promise<unknown> {
   const content = await loadMarkdown(props);
   const pmCmd = packageManager().run;
 

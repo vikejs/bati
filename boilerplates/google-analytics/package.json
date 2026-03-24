@@ -20,5 +20,17 @@
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "exports": {
+    "./_.env": {
+      "types": "./dist/_.env.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "_.env": [
+        "./dist/_.env.d.mts"
+      ]
+    }
+  }
 }

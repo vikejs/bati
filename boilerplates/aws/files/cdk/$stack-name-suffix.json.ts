@@ -1,4 +1,4 @@
-export default async function getDataJson() {
+export default async function getDataJson(): Promise<unknown> {
   const dataJson = {
     stackNameSuffix: generateRandomPrefix(8),
   };

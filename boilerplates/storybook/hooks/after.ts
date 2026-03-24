@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { VikeMeta } from "@batijs/core";
 import { packageManager } from "@batijs/core";
 
-export default async function onafter(cwd: string, meta: VikeMeta) {
+export default async function onafter(cwd: string, meta: VikeMeta): Promise<void> {
   const isInteractive = !meta.BATI_IS_CI && !meta.BATI_TEST;
   const pm = packageManager();
   const command = `${pm.exec} storybook@latest init --skip-install --no-dev${isInteractive ? "" : " --yes"}`;
