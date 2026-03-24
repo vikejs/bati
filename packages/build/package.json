@@ -6,7 +6,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "prepublishOnly": "pnpm run build",
-    "build": "tsup"
+    "build": "tsdown"
   },
   "keywords": [],
   "author": "Joël Charles <joel.charles91@gmail.com>",
@@ -14,11 +14,12 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:*",
     "@batijs/features": "workspace:*",
     "@types/node": "^20.19.37",
-    "tsup": "^8.5.1"
+    "tsdown": "^0.21.4"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@batijs/core": "workspace:*"
   },
   "main": "./dist/index.js",

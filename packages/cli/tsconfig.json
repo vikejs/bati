@@ -1,4 +1,7 @@
 {
   "extends": ["../tsconfig.base.json"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
 }

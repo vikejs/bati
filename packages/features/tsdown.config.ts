@@ -1,19 +1,17 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsdown";
 
 export default defineConfig({
   entry: { index: "./src/index.ts", rules: "./src/rules/index.ts" },
   platform: "neutral",
   format: "esm",
+  fixedExtension: false,
   target: "es2022",
-  bundle: true,
   clean: true,
-  dts: {
-    compilerOptions: {
-      ignoreDeprecations: "6.0",
-    },
-  },
+  dts: true,
   outDir: "./dist",
-  esbuildOptions(options) {
-    options.mainFields = ["module", "main"];
+  inputOptions: {
+    resolve: {
+      mainFields: ["module", "main"],
+    },
   },
 });

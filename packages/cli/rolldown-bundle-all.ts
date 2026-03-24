@@ -4,8 +4,8 @@ import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { which } from "@batijs/core";
 import { cyan, green, yellow } from "colorette";
-import type { Plugin } from "esbuild";
 import { $ } from "execa";
+import type { Plugin } from "rolldown";
 import type { BoilerplateDef, ToBeCopied } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -116,53 +116,66 @@ export async function* yield$files(dir: string): AsyncGenerator<{ dir: string; n
   }
 }
 
+export async function runPostBuild() {
+  const boilerplates = await boilerplateFilesToCopy();
+  console.log("RUN POST BUILD CALLED");
+  const folderCreated = new Set<string>();
+
+  for (const bl of boilerplates) {
+    const dest = join(__dirname, "dist", "boilerplates", bl.folder);
+
+    if (!folderCreated.has(dest)) {
+      folderCreated.add(dest);
+      await mkdir(dest, { recursive: true });
+    }
+
+    if (bl.source) {
+      await cp(bl.source, dest, {
+        dereference: true,
+        force: true,
+        recursive: true,
+        filter(source) {
+          return !basename(source).startsWith("$");
+        },
+      });
+    }
+
+    console.log(`${yellow("BLP")} ${join("dist", "boilerplates")}/${cyan(bl.folder)}`);
+  }
+
+  const stats = await createBoilerplatesJson(boilerplates);
+  console.log(
+    `${yellow("BLP")} ${join("dist", "boilerplates", "boilerplates.json")} ${green(readableFileSize(stats.size))}`,
+  );
+}
+
 // TODO: assert all rules messages are implemented
-const esbuildPlugin: Plugin = {
+const rolldownPlugin: Plugin = {
   name: "BLP",
-  async setup(build) {
+  async options(options) {
     const boilerplates = await boilerplateFilesToCopy();
+
+    const input = options.input;
+    const entryPoints: Record<string, string> = Array.isArray(input)
+      ? input.reduce(
+          (acc, cur) => {
+            acc[parse(cur).name] = cur;
+            return acc;
+          },
+          {} as Record<string, string>,
+        )
+      : (input as Record<string, string>);
 
     for (const bl of boilerplates) {
       if (bl.source) {
         for await (const { dir, name } of yield$files(bl.source)) {
-          (build.initialOptions.entryPoints as Record<string, string>)[
-            join("boilerplates", bl.folder, relative(bl.source, dir), parse(name).name)
-          ] = join(dir, name);
+          entryPoints[join("boilerplates", bl.folder, relative(bl.source, dir), parse(name).name)] = join(dir, name);
         }
       }
     }
-
-    build.onEnd(async () => {
-      const folderCreated = new Set<string>();
-
-      for (const bl of boilerplates) {
-        const dest = join(__dirname, "dist", "boilerplates", bl.folder);
-
-        if (!folderCreated.has(dest)) {
-          folderCreated.add(dest);
-          await mkdir(dest, { recursive: true });
-        }
-
-        if (bl.source) {
-          await cp(bl.source, dest, {
-            dereference: true,
-            force: true,
-            recursive: true,
-            filter(source) {
-              return !basename(source).startsWith("$");
-            },
-          });
-        }
-
-        console.log(`${yellow("BLP")} ${join("dist", "boilerplates")}/${cyan(bl.folder)}`);
-      }
-
-      const stats = await createBoilerplatesJson(boilerplates);
-      console.log(
-        `${yellow("BLP")} ${join("dist", "boilerplates", "boilerplates.json")} ${green(readableFileSize(stats.size))}`,
-      );
-    });
+    options.input = entryPoints;
+    return options;
   },
 };
 
-export default esbuildPlugin;
+export default rolldownPlugin;

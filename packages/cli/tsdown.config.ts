@@ -1,22 +1,26 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsdown";
 import { purgePolyfills } from "unplugin-purge-polyfills";
-import esbuildBundleAllPlugin from "./esbuild-bundle-all.js";
+import rolldownPlugin, { runPostBuild } from "./rolldown-bundle-all.ts";
 
 export default defineConfig({
   entry: {
     index: "index.ts",
   },
-  format: ["esm"],
+  format: "esm",
+  fixedExtension: false,
   outDir: "./dist",
   clean: true,
-  bundle: true,
-  esbuildPlugins: [esbuildBundleAllPlugin, purgePolyfills.esbuild({})],
   platform: "node",
+  plugins: [purgePolyfills.rolldown({}), rolldownPlugin],
   banner: {
     js: `#!/usr/bin/env node
 import { createRequire as createRequire_BATI_CLI } from 'module';
 const require = createRequire_BATI_CLI(import.meta.url);
 `,
   },
-  noExternal: ["@batijs/core", "@batijs/features"],
+  hooks: {
+    "build:done": async () => {
+      await runPostBuild();
+    },
+  },
 });

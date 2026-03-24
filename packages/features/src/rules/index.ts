@@ -2,7 +2,7 @@ import { RulesMessage } from "./enum.js";
 import rules from "./rules.js";
 import { type FeatureOrCategory, prepare } from "./utils.js";
 
-export { rules, RulesMessage };
+export { RulesMessage, rules };
 
 export function execRules<T>(fts: FeatureOrCategory[], rulesMessages: Record<RulesMessage, T>) {
   const sfts = prepare(fts);

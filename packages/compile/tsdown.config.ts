@@ -1,17 +1,14 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsdown";
 import { purgePolyfills } from "unplugin-purge-polyfills";
 
 export default defineConfig({
   entry: ["index.ts"],
   clean: true,
   format: "esm",
-  dts: {
-    compilerOptions: {
-      ignoreDeprecations: "6.0",
-    },
-  },
+  fixedExtension: false,
+  dts: true,
   outDir: "./dist",
-  esbuildPlugins: [purgePolyfills.esbuild({})],
+  plugins: [purgePolyfills.rolldown({})],
   banner: {
     js: "const require = (await import('node:module')).createRequire(import.meta.url);const __filename = (await import('node:url')).fileURLToPath(import.meta.url);const __dirname = (await import('node:path')).dirname(__filename);",
   },
