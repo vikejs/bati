@@ -120,7 +120,7 @@ importers:
         version: 6.0.2
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       which:
         specifier: ^6.0.1
         version: 6.0.1
@@ -155,7 +155,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/cloudflare':
         specifier: ^0.1.13
-        version: 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
+        version: 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
@@ -179,11 +179,11 @@ importers:
         specifier: ^20.19.37
         version: 20.19.37
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-compiled-react:
         specifier: ^1.3.1
-        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
   boilerplates/d1:
     dependencies:
@@ -202,7 +202,7 @@ importers:
         version: 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       wrangler:
         specifier: ^4.76.0
         version: 4.76.0(@cloudflare/workers-types@4.20260317.1)
@@ -237,7 +237,7 @@ importers:
         version: 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/drizzle:
     dependencies:
@@ -321,7 +321,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/express':
         specifier: ^0.1.13
-        version: 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@trpc/server':
         specifier: ^11.14.1
         version: 11.14.1(typescript@6.0.2)
@@ -339,13 +339,13 @@ importers:
         version: 5.2.1
       telefunc:
         specifier: ^0.2.19
-        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/fastify:
     dependencies:
@@ -361,7 +361,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/fastify':
         specifier: ^0.1.12
-        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@trpc/server':
         specifier: ^11.14.1
         version: 11.14.1(typescript@6.0.2)
@@ -382,13 +382,13 @@ importers:
         version: 5.0.0
       telefunc:
         specifier: ^0.2.19
-        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/google-analytics:
     dependencies:
@@ -417,7 +417,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/h3':
         specifier: ^0.1.12
-        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@trpc/server':
         specifier: ^11.14.1
         version: 11.14.1(typescript@6.0.2)
@@ -438,16 +438,16 @@ importers:
         version: 1.15.10
       telefunc:
         specifier: ^0.2.19
-        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/hono:
     dependencies:
@@ -463,7 +463,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/hono':
         specifier: ^0.1.12
-        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@hono/node-server@1.19.9(hono@4.12.8))(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.1.12(@cloudflare/workers-types@4.20260317.1)(@hono/node-server@1.19.9(hono@4.12.8))(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@trpc/server':
         specifier: ^11.14.1
         version: 11.14.1(typescript@6.0.2)
@@ -481,16 +481,16 @@ importers:
         version: 4.12.8
       telefunc:
         specifier: ^0.2.19
-        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/kysely:
     dependencies:
@@ -567,13 +567,13 @@ importers:
         version: 19.2.4(react@19.2.4)
       vike-react:
         specifier: ^0.6.21
-        version: 0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-compiled-react:
         specifier: ^1.3.1
-        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
   boilerplates/oxlint:
     dependencies:
@@ -608,7 +608,7 @@ importers:
         version: 20.19.37
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
 
   boilerplates/plausible.io:
     dependencies:
@@ -706,7 +706,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@vitejs/plugin-react':
         specifier: ^5.2.0
-        version: 5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -721,19 +721,19 @@ importers:
         version: 6.0.2
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
       vike-react:
         specifier: ^0.6.21
-        version: 0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-compiled-react:
         specifier: ^1.3.1
-        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
   boilerplates/react-sentry:
     dependencies:
@@ -763,8 +763,8 @@ importers:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/sentry:
     dependencies:
@@ -777,13 +777,13 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@sentry/vite-plugin':
         specifier: ^5.1.1
-        version: 5.1.1(encoding@0.1.13)(rollup@4.52.5)
+        version: 5.1.1(encoding@0.1.13)
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/shadcn-ui:
     dependencies:
@@ -832,10 +832,10 @@ importers:
         version: 20.19.37
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/shared-db:
     dependencies:
@@ -866,10 +866,10 @@ importers:
         version: 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/shared-todo:
     dependencies:
@@ -885,7 +885,7 @@ importers:
         version: 20.19.37
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/solid:
     dependencies:
@@ -910,19 +910,19 @@ importers:
         version: 6.0.2
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
       vike-solid:
         specifier: ^0.8.1
-        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
+        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-solid:
         specifier: ^2.11.11
-        version: 2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
   boilerplates/solid-sentry:
     dependencies:
@@ -944,10 +944,10 @@ importers:
         version: 1.9.11
       vike-solid:
         specifier: ^0.8.1
-        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
+        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/sqlite:
     dependencies:
@@ -998,7 +998,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@tailwindcss/vite':
         specifier: ^4.2.2
-        version: 4.2.2(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.2.2(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
@@ -1013,10 +1013,10 @@ importers:
         version: 4.2.2
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/telefunc:
     dependencies:
@@ -1035,13 +1035,13 @@ importers:
         version: 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       telefunc:
         specifier: ^0.2.19
-        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/trpc:
     dependencies:
@@ -1065,8 +1065,8 @@ importers:
         specifier: ^0.4.17
         version: 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/ts-rest:
     dependencies:
@@ -1104,7 +1104,7 @@ importers:
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       '@photonjs/vercel':
         specifier: ^0.1.22
-        version: 0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
@@ -1113,10 +1113,10 @@ importers:
         version: 1.15.10
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   boilerplates/vue:
     dependencies:
@@ -1135,7 +1135,7 @@ importers:
         version: 20.19.37
       '@vitejs/plugin-vue':
         specifier: ^6.0.5
-        version: 6.0.5(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
+        version: 6.0.5(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
@@ -1144,16 +1144,16 @@ importers:
         version: 6.0.2
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-photon:
         specifier: ^0.1.25
-        version: 0.1.25(a2254ee345913125153bae506d7cb26f)
+        version: 0.1.25(2d77ebadb3b09aa04683439197b7df8e)
       vike-vue:
         specifier: ^0.9.11
-        version: 0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
+        version: 0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vue:
         specifier: ^3.5.30
         version: 3.5.30(typescript@6.0.2)
@@ -1178,10 +1178,10 @@ importers:
         version: 20.19.37
       vike-vue:
         specifier: ^0.9.11
-        version: 0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
+        version: 0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vue:
         specifier: ^3.5.30
         version: 3.5.30(typescript@6.0.2)
@@ -1259,8 +1259,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   packages/compile:
     dependencies:
@@ -1363,7 +1363,7 @@ importers:
         version: 0.1.0
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vue-eslint-parser:
         specifier: ^10.4.0
         version: 10.4.0(eslint@9.39.4(jiti@2.6.1))
@@ -1396,7 +1396,7 @@ importers:
         version: 0.21.4(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   packages/tests:
     devDependencies:
@@ -1444,7 +1444,7 @@ importers:
         version: 6.0.2
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       yaml:
         specifier: ^2.8.3
         version: 2.8.3
@@ -1459,7 +1459,7 @@ importers:
         version: 3.3.2
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       which:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1505,7 +1505,7 @@ importers:
         version: 1.11.0
       '@tailwindcss/vite':
         specifier: ^4.2.2
-        version: 4.2.2(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.2.2(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       babel-preset-solid:
         specifier: ^1.9.10
         version: 1.9.10(@babel/core@7.29.0)(solid-js@1.9.11)
@@ -1544,16 +1544,16 @@ importers:
         version: 6.0.2
       vike:
         specifier: ^0.4.255
-        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vike-solid:
         specifier: ^0.8.1
-        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
+        version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+        specifier: ^8.0.2
+        version: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-solid:
         specifier: ^2.11.11
-        version: 2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+        version: 2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
 packages:
 
@@ -3282,6 +3282,9 @@ packages:
   '@oxc-project/types@0.115.0':
     resolution: {integrity: sha512-4n91DKnebUS4yjUHl2g3/b2T+IUdCfmoZGhmwsovZCDaJSs+QkVAM+0AqqTxHSsHfeiMuueT75cZaZcT/m0pSw==}
 
+  '@oxc-project/types@0.122.0':
+    resolution: {integrity: sha512-oLAl5kBpV4w69UtFZ9xqcmTi+GENWOcPF7FCrczTiBbmC0ibXxCwyvZGbO39rCVEuLGAZM84DH0pUIyyv/YJzA==}
+
   '@oxc-project/types@0.98.0':
     resolution: {integrity: sha512-Vzmd6FsqVuz5HQVcRC/hrx7Ujo3WEVeQP7C2UNP5uy1hUY4SQvMB+93jxkI1KRHz9a/6cni3glPOtvteN+zpsw==}
 
@@ -3715,6 +3718,12 @@ packages:
     cpu: [arm64]
     os: [android]
 
+  '@rolldown/binding-android-arm64@1.0.0-rc.11':
+    resolution: {integrity: sha512-SJ+/g+xNnOh6NqYxD0V3uVN4W3VfnrGsC9/hoglicgTNfABFG9JjISvkkU0dNY84MNHLWyOgxP9v9Y9pX4S7+A==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [android]
+
   '@rolldown/binding-android-arm64@1.0.0-rc.9':
     resolution: {integrity: sha512-lcJL0bN5hpgJfSIz/8PIf02irmyL43P+j1pTCfbD1DbLkmGRuFIA4DD3B3ZOvGqG0XiVvRznbKtN0COQVaKUTg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3723,6 +3732,12 @@ packages:
 
   '@rolldown/binding-darwin-arm64@1.0.0-beta.51':
     resolution: {integrity: sha512-EL1aRW2Oq15ShUEkBPsDtLMO8GTqfb/ktM/dFaVzXKQiEE96Ss6nexMgfgQrg8dGnNpndFyffVDb5IdSibsu1g==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@rolldown/binding-darwin-arm64@1.0.0-rc.11':
+    resolution: {integrity: sha512-7WQgR8SfOPwmDZGFkThUvsmd/nwAWv91oCO4I5LS7RKrssPZmOt7jONN0cW17ydGC1n/+puol1IpoieKqQidmg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [darwin]
@@ -3739,6 +3754,12 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@rolldown/binding-darwin-x64@1.0.0-rc.11':
+    resolution: {integrity: sha512-39Ks6UvIHq4rEogIfQBoBRusj0Q0nPVWIvqmwBLaT6aqQGIakHdESBVOPRRLacy4WwUPIx4ZKzfZ9PMW+IeyUQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [darwin]
+
   '@rolldown/binding-darwin-x64@1.0.0-rc.9':
     resolution: {integrity: sha512-iwtmmghy8nhfRGeNAIltcNXzD0QMNaaA5U/NyZc1Ia4bxrzFByNMDoppoC+hl7cDiUq5/1CnFthpT9n+UtfFyg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3747,6 +3768,12 @@ packages:
 
   '@rolldown/binding-freebsd-x64@1.0.0-beta.51':
     resolution: {integrity: sha512-JRoVTQtHYbZj1P07JLiuTuXjiBtIa7ag7/qgKA6CIIXnAcdl4LrOf7nfDuHPJcuRKaP5dzecMgY99itvWfmUFQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@rolldown/binding-freebsd-x64@1.0.0-rc.11':
+    resolution: {integrity: sha512-jfsm0ZHfhiqrvWjJAmzsqiIFPz5e7mAoCOPBNTcNgkiid/LaFKiq92+0ojH+nmJmKYkre4t71BWXUZDNp7vsag==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [freebsd]
@@ -3763,6 +3790,12 @@ packages:
     cpu: [arm]
     os: [linux]
 
+  '@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.11':
+    resolution: {integrity: sha512-zjQaUtSyq1nVe3nxmlSCuR96T1LPlpvmJ0SZy0WJFEsV4kFbXcq2u68L4E6O0XeFj4aex9bEauqjW8UQBeAvfQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [linux]
+
   '@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.9':
     resolution: {integrity: sha512-CsjTmTwd0Hri6iTw/DRMK7kOZ7FwAkrO4h8YWKoX/kcj833e4coqo2wzIFywtch/8Eb5enQ/lwLM7w6JX1W5RQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3771,6 +3804,12 @@ packages:
 
   '@rolldown/binding-linux-arm64-gnu@1.0.0-beta.51':
     resolution: {integrity: sha512-xLd7da5jkfbVsBCm1buIRdWtuXY8+hU3+6ESXY/Tk5X5DPHaifrUblhYDgmA34dQt6WyNC2kfXGgrduPEvDI6Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@rolldown/binding-linux-arm64-gnu@1.0.0-rc.11':
+    resolution: {integrity: sha512-WMW1yE6IOnehTcFE9eipFkm3XN63zypWlrJQ2iF7NrQ9b2LDRjumFoOGJE8RJJTJCTBAdmLMnJ8uVitACUUo1Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
@@ -3787,16 +3826,34 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@rolldown/binding-linux-arm64-musl@1.0.0-rc.11':
+    resolution: {integrity: sha512-jfndI9tsfm4APzjNt6QdBkYwre5lRPUgHeDHoI7ydKUuJvz3lZeCfMsI56BZj+7BYqiKsJm7cfd/6KYV7ubrBg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+
   '@rolldown/binding-linux-arm64-musl@1.0.0-rc.9':
     resolution: {integrity: sha512-JA1QRW31ogheAIRhIg9tjMfsYbglXXYGNPLdPEYrwFxdbkQCAzvpSCSHCDWNl4hTtrol8WeboCSEpjdZK8qrCg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
 
+  '@rolldown/binding-linux-ppc64-gnu@1.0.0-rc.11':
+    resolution: {integrity: sha512-ZlFgw46NOAGMgcdvdYwAGu2Q+SLFA9LzbJLW+iyMOJyhj5wk6P3KEE9Gct4xWwSzFoPI7JCdYmYMzVtlgQ+zfw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [ppc64]
+    os: [linux]
+
   '@rolldown/binding-linux-ppc64-gnu@1.0.0-rc.9':
     resolution: {integrity: sha512-aOKU9dJheda8Kj8Y3w9gnt9QFOO+qKPAl8SWd7JPHP+Cu0EuDAE5wokQubLzIDQWg2myXq2XhTpOVS07qqvT+w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
+    os: [linux]
+
+  '@rolldown/binding-linux-s390x-gnu@1.0.0-rc.11':
+    resolution: {integrity: sha512-hIOYmuT6ofM4K04XAZd3OzMySEO4K0/nc9+jmNcxNAxRi6c5UWpqfw3KMFV4MVFWL+jQsSh+bGw2VqmaPMTLyw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [s390x]
     os: [linux]
 
   '@rolldown/binding-linux-s390x-gnu@1.0.0-rc.9':
@@ -3807,6 +3864,12 @@ packages:
 
   '@rolldown/binding-linux-x64-gnu@1.0.0-beta.51':
     resolution: {integrity: sha512-p5P6Xpa68w3yFaAdSzIZJbj+AfuDnMDqNSeglBXM7UlJT14Q4zwK+rV+8Mhp9MiUb4XFISZtbI/seBprhkQbiQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@rolldown/binding-linux-x64-gnu@1.0.0-rc.11':
+    resolution: {integrity: sha512-qXBQQO9OvkjjQPLdUVr7Nr2t3QTZI7s4KZtfw7HzBgjbmAPSFwSv4rmET9lLSgq3rH/ndA3ngv3Qb8l2njoPNA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
@@ -3823,6 +3886,12 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@rolldown/binding-linux-x64-musl@1.0.0-rc.11':
+    resolution: {integrity: sha512-/tpFfoSTzUkH9LPY+cYbqZBDyyX62w5fICq9qzsHLL8uTI6BHip3Q9Uzft0wylk/i8OOwKik8OxW+QAhDmzwmg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+
   '@rolldown/binding-linux-x64-musl@1.0.0-rc.9':
     resolution: {integrity: sha512-UzYnKCIIc4heAKgI4PZ3dfBGUZefGCJ1TPDuLHoCzgrMYPb5Rv6TLFuYtyM4rWyHM7hymNdsg5ik2C+UD9VDbA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3831,6 +3900,12 @@ packages:
 
   '@rolldown/binding-openharmony-arm64@1.0.0-beta.51':
     resolution: {integrity: sha512-e/JMTz9Q8+T3g/deEi8DK44sFWZWGKr9AOCW5e8C8SCVWzAXqYXAG7FXBWBNzWEZK0Rcwo9TQHTQ9Q0gXgdCaA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@rolldown/binding-openharmony-arm64@1.0.0-rc.11':
+    resolution: {integrity: sha512-mcp3Rio2w72IvdZG0oQ4bM2c2oumtwHfUfKncUM6zGgz0KgPz4YmDPQfnXEiY5t3+KD/i8HG2rOB/LxdmieK2g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
@@ -3846,6 +3921,11 @@ packages:
     engines: {node: '>=14.0.0'}
     cpu: [wasm32]
 
+  '@rolldown/binding-wasm32-wasi@1.0.0-rc.11':
+    resolution: {integrity: sha512-LXk5Hii1Ph9asuGRjBuz8TUxdc1lWzB7nyfdoRgI0WGPZKmCxvlKk8KfYysqtr4MfGElu/f/pEQRh8fcEgkrWw==}
+    engines: {node: '>=14.0.0'}
+    cpu: [wasm32]
+
   '@rolldown/binding-wasm32-wasi@1.0.0-rc.9':
     resolution: {integrity: sha512-rgFN6sA/dyebil3YTlL2evvi/M+ivhfnyxec7AccTpRPccno/rPoNlqybEZQBkcbZu8Hy+eqNJCqfBR8P7Pg8g==}
     engines: {node: '>=14.0.0'}
@@ -3853,6 +3933,12 @@ packages:
 
   '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.51':
     resolution: {integrity: sha512-fj56buHRuMM+r/cb6ZYfNjNvO/0xeFybI6cTkTROJatdP4fvmQ1NS8D/Lm10FCSDEOkqIz8hK3TGpbAThbPHsA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [win32]
+
+  '@rolldown/binding-win32-arm64-msvc@1.0.0-rc.11':
+    resolution: {integrity: sha512-dDwf5otnx0XgRY1yqxOC4ITizcdzS/8cQ3goOWv3jFAo4F+xQYni+hnMuO6+LssHHdJW7+OCVL3CoU4ycnh35Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [win32]
@@ -3875,6 +3961,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rolldown/binding-win32-x64-msvc@1.0.0-rc.11':
+    resolution: {integrity: sha512-LN4/skhSggybX71ews7dAj6r2geaMJfm3kMbK2KhFMg9B10AZXnKoLCVVgzhMHL0S+aKtr4p8QbAW8k+w95bAA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [win32]
+
   '@rolldown/binding-win32-x64-msvc@1.0.0-rc.9':
     resolution: {integrity: sha512-G0oA4+w1iY5AGi5HcDTxWsoxF509hrFIPB2rduV5aDqS9FtDg1CAfa7V34qImbjfhIcA8C+RekocJZA96EarwQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3883,6 +3975,9 @@ packages:
 
   '@rolldown/pluginutils@1.0.0-beta.51':
     resolution: {integrity: sha512-51/8cNXMrqWqX3o8DZidhwz1uYq0BhHDDSfVygAND1Skx5s1TDw3APSSxCMcFFedwgqGcx34gRouwY+m404BBQ==}
+
+  '@rolldown/pluginutils@1.0.0-rc.11':
+    resolution: {integrity: sha512-xQO9vbwBecJRv9EUcQ/y0dzSTJgA7Q6UVN7xp6B81+tBGSLVAK03yJ9NkJaUA7JFD91kbjxRSC/mDnmvXzbHoQ==}
 
   '@rolldown/pluginutils@1.0.0-rc.2':
     resolution: {integrity: sha512-izyXV/v+cHiRfozX62W9htOAvwMo4/bXKDrQ+vom1L1qRuexPock/7VZDAhnpHCLNejd3NJ6hiab+tO0D44Rgw==}
@@ -3901,116 +3996,6 @@ packages:
     peerDependenciesMeta:
       rollup:
         optional: true
-
-  '@rollup/rollup-android-arm-eabi@4.52.5':
-    resolution: {integrity: sha512-8c1vW4ocv3UOMp9K+gToY5zL2XiiVw3k7f1ksf4yO1FlDFQ1C2u72iACFnSOceJFsWskc2WZNqeRhFRPzv+wtQ==}
-    cpu: [arm]
-    os: [android]
-
-  '@rollup/rollup-android-arm64@4.52.5':
-    resolution: {integrity: sha512-mQGfsIEFcu21mvqkEKKu2dYmtuSZOBMmAl5CFlPGLY94Vlcm+zWApK7F/eocsNzp8tKmbeBP8yXyAbx0XHsFNA==}
-    cpu: [arm64]
-    os: [android]
-
-  '@rollup/rollup-darwin-arm64@4.52.5':
-    resolution: {integrity: sha512-takF3CR71mCAGA+v794QUZ0b6ZSrgJkArC+gUiG6LB6TQty9T0Mqh3m2ImRBOxS2IeYBo4lKWIieSvnEk2OQWA==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@rollup/rollup-darwin-x64@4.52.5':
-    resolution: {integrity: sha512-W901Pla8Ya95WpxDn//VF9K9u2JbocwV/v75TE0YIHNTbhqUTv9w4VuQ9MaWlNOkkEfFwkdNhXgcLqPSmHy0fA==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@rollup/rollup-freebsd-arm64@4.52.5':
-    resolution: {integrity: sha512-QofO7i7JycsYOWxe0GFqhLmF6l1TqBswJMvICnRUjqCx8b47MTo46W8AoeQwiokAx3zVryVnxtBMcGcnX12LvA==}
-    cpu: [arm64]
-    os: [freebsd]
-
-  '@rollup/rollup-freebsd-x64@4.52.5':
-    resolution: {integrity: sha512-jr21b/99ew8ujZubPo9skbrItHEIE50WdV86cdSoRkKtmWa+DDr6fu2c/xyRT0F/WazZpam6kk7IHBerSL7LDQ==}
-    cpu: [x64]
-    os: [freebsd]
-
-  '@rollup/rollup-linux-arm-gnueabihf@4.52.5':
-    resolution: {integrity: sha512-PsNAbcyv9CcecAUagQefwX8fQn9LQ4nZkpDboBOttmyffnInRy8R8dSg6hxxl2Re5QhHBf6FYIDhIj5v982ATQ==}
-    cpu: [arm]
-    os: [linux]
-
-  '@rollup/rollup-linux-arm-musleabihf@4.52.5':
-    resolution: {integrity: sha512-Fw4tysRutyQc/wwkmcyoqFtJhh0u31K+Q6jYjeicsGJJ7bbEq8LwPWV/w0cnzOqR2m694/Af6hpFayLJZkG2VQ==}
-    cpu: [arm]
-    os: [linux]
-
-  '@rollup/rollup-linux-arm64-gnu@4.52.5':
-    resolution: {integrity: sha512-a+3wVnAYdQClOTlyapKmyI6BLPAFYs0JM8HRpgYZQO02rMR09ZcV9LbQB+NL6sljzG38869YqThrRnfPMCDtZg==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@rollup/rollup-linux-arm64-musl@4.52.5':
-    resolution: {integrity: sha512-AvttBOMwO9Pcuuf7m9PkC1PUIKsfaAJ4AYhy944qeTJgQOqJYJ9oVl2nYgY7Rk0mkbsuOpCAYSs6wLYB2Xiw0Q==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@rollup/rollup-linux-loong64-gnu@4.52.5':
-    resolution: {integrity: sha512-DkDk8pmXQV2wVrF6oq5tONK6UHLz/XcEVow4JTTerdeV1uqPeHxwcg7aFsfnSm9L+OO8WJsWotKM2JJPMWrQtA==}
-    cpu: [loong64]
-    os: [linux]
-
-  '@rollup/rollup-linux-ppc64-gnu@4.52.5':
-    resolution: {integrity: sha512-W/b9ZN/U9+hPQVvlGwjzi+Wy4xdoH2I8EjaCkMvzpI7wJUs8sWJ03Rq96jRnHkSrcHTpQe8h5Tg3ZzUPGauvAw==}
-    cpu: [ppc64]
-    os: [linux]
-
-  '@rollup/rollup-linux-riscv64-gnu@4.52.5':
-    resolution: {integrity: sha512-sjQLr9BW7R/ZiXnQiWPkErNfLMkkWIoCz7YMn27HldKsADEKa5WYdobaa1hmN6slu9oWQbB6/jFpJ+P2IkVrmw==}
-    cpu: [riscv64]
-    os: [linux]
-
-  '@rollup/rollup-linux-riscv64-musl@4.52.5':
-    resolution: {integrity: sha512-hq3jU/kGyjXWTvAh2awn8oHroCbrPm8JqM7RUpKjalIRWWXE01CQOf/tUNWNHjmbMHg/hmNCwc/Pz3k1T/j/Lg==}
-    cpu: [riscv64]
-    os: [linux]
-
-  '@rollup/rollup-linux-s390x-gnu@4.52.5':
-    resolution: {integrity: sha512-gn8kHOrku8D4NGHMK1Y7NA7INQTRdVOntt1OCYypZPRt6skGbddska44K8iocdpxHTMMNui5oH4elPH4QOLrFQ==}
-    cpu: [s390x]
-    os: [linux]
-
-  '@rollup/rollup-linux-x64-gnu@4.52.5':
-    resolution: {integrity: sha512-hXGLYpdhiNElzN770+H2nlx+jRog8TyynpTVzdlc6bndktjKWyZyiCsuDAlpd+j+W+WNqfcyAWz9HxxIGfZm1Q==}
-    cpu: [x64]
-    os: [linux]
-
-  '@rollup/rollup-linux-x64-musl@4.52.5':
-    resolution: {integrity: sha512-arCGIcuNKjBoKAXD+y7XomR9gY6Mw7HnFBv5Rw7wQRvwYLR7gBAgV7Mb2QTyjXfTveBNFAtPt46/36vV9STLNg==}
-    cpu: [x64]
-    os: [linux]
-
-  '@rollup/rollup-openharmony-arm64@4.52.5':
-    resolution: {integrity: sha512-QoFqB6+/9Rly/RiPjaomPLmR/13cgkIGfA40LHly9zcH1S0bN2HVFYk3a1eAyHQyjs3ZJYlXvIGtcCs5tko9Cw==}
-    cpu: [arm64]
-    os: [openharmony]
-
-  '@rollup/rollup-win32-arm64-msvc@4.52.5':
-    resolution: {integrity: sha512-w0cDWVR6MlTstla1cIfOGyl8+qb93FlAVutcor14Gf5Md5ap5ySfQ7R9S/NjNaMLSFdUnKGEasmVnu3lCMqB7w==}
-    cpu: [arm64]
-    os: [win32]
-
-  '@rollup/rollup-win32-ia32-msvc@4.52.5':
-    resolution: {integrity: sha512-Aufdpzp7DpOTULJCuvzqcItSGDH73pF3ko/f+ckJhxQyHtp67rHw3HMNxoIdDMUITJESNE6a8uh4Lo4SLouOUg==}
-    cpu: [ia32]
-    os: [win32]
-
-  '@rollup/rollup-win32-x64-gnu@4.52.5':
-    resolution: {integrity: sha512-UGBUGPFp1vkj6p8wCRraqNhqwX/4kNQPS57BCFc8wYh0g94iVIW33wJtQAx3G7vrjjNtRaxiMUylM0ktp/TRSQ==}
-    cpu: [x64]
-    os: [win32]
-
-  '@rollup/rollup-win32-x64-msvc@4.52.5':
-    resolution: {integrity: sha512-TAcgQh2sSkykPRWLrdyy2AiceMckNf5loITqXxFI5VuQjS5tSuw3WlwdN8qv8vzjLAUTvYaH/mVjSFpbkFbpTg==}
-    cpu: [x64]
-    os: [win32]
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
@@ -7904,14 +7889,14 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  rolldown@1.0.0-rc.9:
-    resolution: {integrity: sha512-9EbgWge7ZH+yqb4d2EnELAntgPTWbfL8ajiTW+SyhJEC4qhBbkCKbqFV4Ge4zmu5ziQuVbWxb/XwLZ+RIO7E8Q==}
+  rolldown@1.0.0-rc.11:
+    resolution: {integrity: sha512-NRjoKMusSjfRbSYiH3VSumlkgFe7kYAa3pzVOsVYVFY3zb5d7nS+a3KGQ7hJKXuYWbzJKPVQ9Wxq2UvyK+ENpw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  rollup@4.52.5:
-    resolution: {integrity: sha512-3GuObel8h7Kqdjt0gxkEzaifHTqLVW56Y/bjN7PSQtkKr0w3V/QYSdt6QWYtd7A1xUtYQigtdUfgj1RvWVtorw==}
-    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
+  rolldown@1.0.0-rc.9:
+    resolution: {integrity: sha512-9EbgWge7ZH+yqb4d2EnELAntgPTWbfL8ajiTW+SyhJEC4qhBbkCKbqFV4Ge4zmu5ziQuVbWxb/XwLZ+RIO7E8Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
   router@2.2.0:
@@ -8755,15 +8740,16 @@ packages:
     peerDependencies:
       vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
 
-  vite@7.3.1:
-    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
+  vite@8.0.2:
+    resolution: {integrity: sha512-1gFhNi+bHhRE/qKZOJXACm6tX4bA3Isy9KuKF15AgSRuRazNBOJfdDemPBU16/mpMxApDPrWvZ08DcLPEoRnuA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       '@types/node': ^20.19.0 || >=22.12.0
+      '@vitejs/devtools': ^0.1.0
+      esbuild: ^0.27.0
       jiti: '>=1.21.0'
       less: ^4.0.0
-      lightningcss: ^1.21.0
       sass: ^1.70.0
       sass-embedded: ^1.70.0
       stylus: '>=0.54.8'
@@ -8774,11 +8760,13 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
+      '@vitejs/devtools':
+        optional: true
+      esbuild:
+        optional: true
       jiti:
         optional: true
       less:
-        optional: true
-      lightningcss:
         optional: true
       sass:
         optional: true
@@ -9410,7 +9398,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260317.1
 
-  '@cloudflare/vite-plugin@1.19.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))':
+  '@cloudflare/vite-plugin@1.19.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))':
     dependencies:
       '@cloudflare/unenv-preset': 2.7.13(unenv@2.0.0-rc.24)(workerd@1.20260317.1)
       '@remix-run/node-fetch-server': 0.8.1
@@ -9420,7 +9408,7 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.15
       unenv: 2.0.0-rc.24
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       wrangler: 4.76.0(@cloudflare/workers-types@4.20260317.1)
       ws: 8.18.0
     transitivePeerDependencies:
@@ -10515,6 +10503,8 @@ snapshots:
 
   '@oxc-project/types@0.115.0': {}
 
+  '@oxc-project/types@0.122.0': {}
+
   '@oxc-project/types@0.98.0': {}
 
   '@oxc-resolver/binding-android-arm-eabi@11.19.1':
@@ -10656,10 +10646,10 @@ snapshots:
 
   '@panva/hkdf@1.2.1': {}
 
-  '@photonjs/cloudflare@0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))':
+  '@photonjs/cloudflare@0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))':
     dependencies:
-      '@cloudflare/vite-plugin': 1.19.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@cloudflare/vite-plugin': 1.19.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/cloudflare': 0.4.10(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -10677,7 +10667,7 @@ snapshots:
       - workerd
       - wrangler
 
-  '@photonjs/core@0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/core@0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@brillout/vite-plugin-server-entry': 0.7.18
       '@universal-middleware/cloudflare': 0.4.10(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
@@ -10689,7 +10679,7 @@ snapshots:
       ts-deepmerge: 7.0.3
       zod: 4.3.6
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10701,12 +10691,12 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/express@0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/express@0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/express': 0.4.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10718,12 +10708,12 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/fastify@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/fastify@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/fastify': 0.5.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10735,12 +10725,12 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/h3@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/h3@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/h3': 0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10752,13 +10742,13 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/hono@0.1.12(@cloudflare/workers-types@4.20260317.1)(@hono/node-server@1.19.9(hono@4.12.8))(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/hono@0.1.12(@cloudflare/workers-types@4.20260317.1)(@hono/node-server@1.19.9(hono@4.12.8))(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/hono': 0.4.18(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     optionalDependencies:
       '@hono/node-server': 1.19.9(hono@4.12.8)
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10770,16 +10760,16 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/runtime@0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/runtime@0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
-      '@photonjs/srvx': 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/srvx': 0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/core': 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       '@universal-middleware/sirv': 0.1.25
       srvx: 0.9.8
-      standaloner: 0.1.11(encoding@0.1.13)(rollup@4.52.5)
+      standaloner: 0.1.11(encoding@0.1.13)
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10793,12 +10783,12 @@ snapshots:
       - rollup
       - supports-color
 
-  '@photonjs/srvx@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/srvx@0.1.12(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/srvx': 0.1.1(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10810,16 +10800,16 @@ snapshots:
       - hono
       - srvx
 
-  '@photonjs/vercel@0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@photonjs/vercel@0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 3.1.0
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
-      '@photonjs/runtime': 0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/runtime': 0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/core': 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       '@universal-middleware/vercel': 0.4.29(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       '@vercel/build-utils': 13.2.4
-      '@vercel/nft': 1.1.1(encoding@0.1.13)(rollup@4.52.5)
+      '@vercel/nft': 1.1.1(encoding@0.1.13)
       '@vercel/routing-utils': 5.3.1
       '@vite-plugin-vercel/schemas': 1.1.0
       convert-route: 0.1.2
@@ -10828,8 +10818,8 @@ snapshots:
       magicast: 0.5.2
       path-to-regexp: 8.3.0
       strip-ansi: 7.1.2
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
-      vite-plugin-wasm: 3.5.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite-plugin-wasm: 3.5.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10994,10 +10984,16 @@ snapshots:
   '@rolldown/binding-android-arm64@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-android-arm64@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-android-arm64@1.0.0-rc.9':
     optional: true
 
   '@rolldown/binding-darwin-arm64@1.0.0-beta.51':
+    optional: true
+
+  '@rolldown/binding-darwin-arm64@1.0.0-rc.11':
     optional: true
 
   '@rolldown/binding-darwin-arm64@1.0.0-rc.9':
@@ -11006,10 +11002,16 @@ snapshots:
   '@rolldown/binding-darwin-x64@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-darwin-x64@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-darwin-x64@1.0.0-rc.9':
     optional: true
 
   '@rolldown/binding-freebsd-x64@1.0.0-beta.51':
+    optional: true
+
+  '@rolldown/binding-freebsd-x64@1.0.0-rc.11':
     optional: true
 
   '@rolldown/binding-freebsd-x64@1.0.0-rc.9':
@@ -11018,10 +11020,16 @@ snapshots:
   '@rolldown/binding-linux-arm-gnueabihf@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.9':
     optional: true
 
   '@rolldown/binding-linux-arm64-gnu@1.0.0-beta.51':
+    optional: true
+
+  '@rolldown/binding-linux-arm64-gnu@1.0.0-rc.11':
     optional: true
 
   '@rolldown/binding-linux-arm64-gnu@1.0.0-rc.9':
@@ -11030,10 +11038,19 @@ snapshots:
   '@rolldown/binding-linux-arm64-musl@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-linux-arm64-musl@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-linux-arm64-musl@1.0.0-rc.9':
     optional: true
 
+  '@rolldown/binding-linux-ppc64-gnu@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-linux-ppc64-gnu@1.0.0-rc.9':
+    optional: true
+
+  '@rolldown/binding-linux-s390x-gnu@1.0.0-rc.11':
     optional: true
 
   '@rolldown/binding-linux-s390x-gnu@1.0.0-rc.9':
@@ -11042,10 +11059,16 @@ snapshots:
   '@rolldown/binding-linux-x64-gnu@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-linux-x64-gnu@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-linux-x64-gnu@1.0.0-rc.9':
     optional: true
 
   '@rolldown/binding-linux-x64-musl@1.0.0-beta.51':
+    optional: true
+
+  '@rolldown/binding-linux-x64-musl@1.0.0-rc.11':
     optional: true
 
   '@rolldown/binding-linux-x64-musl@1.0.0-rc.9':
@@ -11054,10 +11077,18 @@ snapshots:
   '@rolldown/binding-openharmony-arm64@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-openharmony-arm64@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-openharmony-arm64@1.0.0-rc.9':
     optional: true
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.51':
+    dependencies:
+      '@napi-rs/wasm-runtime': 1.1.1
+    optional: true
+
+  '@rolldown/binding-wasm32-wasi@1.0.0-rc.11':
     dependencies:
       '@napi-rs/wasm-runtime': 1.1.1
     optional: true
@@ -11070,6 +11101,9 @@ snapshots:
   '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-win32-arm64-msvc@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-win32-arm64-msvc@1.0.0-rc.9':
     optional: true
 
@@ -11079,10 +11113,15 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.0.0-beta.51':
     optional: true
 
+  '@rolldown/binding-win32-x64-msvc@1.0.0-rc.11':
+    optional: true
+
   '@rolldown/binding-win32-x64-msvc@1.0.0-rc.9':
     optional: true
 
   '@rolldown/pluginutils@1.0.0-beta.51': {}
+
+  '@rolldown/pluginutils@1.0.0-rc.11': {}
 
   '@rolldown/pluginutils@1.0.0-rc.2': {}
 
@@ -11090,79 +11129,11 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-rc.9': {}
 
-  '@rollup/pluginutils@5.3.0(rollup@4.52.5)':
+  '@rollup/pluginutils@5.3.0':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.3
-    optionalDependencies:
-      rollup: 4.52.5
-
-  '@rollup/rollup-android-arm-eabi@4.52.5':
-    optional: true
-
-  '@rollup/rollup-android-arm64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-darwin-arm64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-darwin-x64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-freebsd-arm64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-freebsd-x64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-arm-gnueabihf@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-arm-musleabihf@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-arm64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-arm64-musl@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-loong64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-ppc64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-riscv64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-riscv64-musl@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-s390x-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-x64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-linux-x64-musl@4.52.5':
-    optional: true
-
-  '@rollup/rollup-openharmony-arm64@4.52.5':
-    optional: true
-
-  '@rollup/rollup-win32-arm64-msvc@4.52.5':
-    optional: true
-
-  '@rollup/rollup-win32-ia32-msvc@4.52.5':
-    optional: true
-
-  '@rollup/rollup-win32-x64-gnu@4.52.5':
-    optional: true
-
-  '@rollup/rollup-win32-x64-msvc@4.52.5':
-    optional: true
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -11259,11 +11230,10 @@ snapshots:
       '@sentry/core': 10.45.0
       react: 19.2.4
 
-  '@sentry/rollup-plugin@5.1.1(encoding@0.1.13)(rollup@4.52.5)':
+  '@sentry/rollup-plugin@5.1.1(encoding@0.1.13)':
     dependencies:
       '@sentry/bundler-plugin-core': 5.1.1(encoding@0.1.13)
       magic-string: 0.30.21
-      rollup: 4.52.5
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -11274,10 +11244,10 @@ snapshots:
       '@sentry/core': 10.45.0
       solid-js: 1.9.11
 
-  '@sentry/vite-plugin@5.1.1(encoding@0.1.13)(rollup@4.52.5)':
+  '@sentry/vite-plugin@5.1.1(encoding@0.1.13)':
     dependencies:
       '@sentry/bundler-plugin-core': 5.1.1(encoding@0.1.13)
-      '@sentry/rollup-plugin': 5.1.1(encoding@0.1.13)(rollup@4.52.5)
+      '@sentry/rollup-plugin': 5.1.1(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
       - rollup
@@ -11390,12 +11360,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.2.2
       '@tailwindcss/oxide-win32-x64-msvc': 4.2.2
 
-  '@tailwindcss/vite@4.2.2(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@tailwindcss/vite@4.2.2(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@tailwindcss/node': 4.2.2
       '@tailwindcss/oxide': 4.2.2
       tailwindcss: 4.2.2
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   '@tootallnate/quickjs-emscripten@0.23.0':
     optional: true
@@ -11809,10 +11779,10 @@ snapshots:
 
   '@vercel/build-utils@13.2.4': {}
 
-  '@vercel/nft@0.30.4(encoding@0.1.13)(rollup@4.52.5)':
+  '@vercel/nft@0.30.4(encoding@0.1.13)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0(encoding@0.1.13)
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.5)
+      '@rollup/pluginutils': 5.3.0
       acorn: 8.16.0
       acorn-import-attributes: 1.9.5(acorn@8.16.0)
       async-sema: 3.1.1
@@ -11828,10 +11798,10 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/nft@1.1.1(encoding@0.1.13)(rollup@4.52.5)':
+  '@vercel/nft@1.1.1(encoding@0.1.13)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0(encoding@0.1.13)
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.5)
+      '@rollup/pluginutils': 5.3.0
       acorn: 8.16.0
       acorn-import-attributes: 1.9.5(acorn@8.16.0)
       async-sema: 3.1.1
@@ -11862,7 +11832,7 @@ snapshots:
     dependencies:
       zod: 4.3.6
 
-  '@vitejs/plugin-react@5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@vitejs/plugin-react@5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -11870,14 +11840,14 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-rc.3
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@6.0.5(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))':
+  '@vitejs/plugin-vue@6.0.5(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-rc.2
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vue: 3.5.30(typescript@6.0.2)
 
   '@vitest/expect@4.1.0':
@@ -11889,13 +11859,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.1.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
+  '@vitest/mocker@4.1.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   '@vitest/pretty-format@4.1.0':
     dependencies:
@@ -15611,6 +15581,27 @@ snapshots:
       '@rolldown/binding-win32-ia32-msvc': 1.0.0-beta.51
       '@rolldown/binding-win32-x64-msvc': 1.0.0-beta.51
 
+  rolldown@1.0.0-rc.11:
+    dependencies:
+      '@oxc-project/types': 0.122.0
+      '@rolldown/pluginutils': 1.0.0-rc.11
+    optionalDependencies:
+      '@rolldown/binding-android-arm64': 1.0.0-rc.11
+      '@rolldown/binding-darwin-arm64': 1.0.0-rc.11
+      '@rolldown/binding-darwin-x64': 1.0.0-rc.11
+      '@rolldown/binding-freebsd-x64': 1.0.0-rc.11
+      '@rolldown/binding-linux-arm-gnueabihf': 1.0.0-rc.11
+      '@rolldown/binding-linux-arm64-gnu': 1.0.0-rc.11
+      '@rolldown/binding-linux-arm64-musl': 1.0.0-rc.11
+      '@rolldown/binding-linux-ppc64-gnu': 1.0.0-rc.11
+      '@rolldown/binding-linux-s390x-gnu': 1.0.0-rc.11
+      '@rolldown/binding-linux-x64-gnu': 1.0.0-rc.11
+      '@rolldown/binding-linux-x64-musl': 1.0.0-rc.11
+      '@rolldown/binding-openharmony-arm64': 1.0.0-rc.11
+      '@rolldown/binding-wasm32-wasi': 1.0.0-rc.11
+      '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.11
+      '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.11
+
   rolldown@1.0.0-rc.9:
     dependencies:
       '@oxc-project/types': 0.115.0
@@ -15631,34 +15622,6 @@ snapshots:
       '@rolldown/binding-wasm32-wasi': 1.0.0-rc.9
       '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.9
       '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.9
-
-  rollup@4.52.5:
-    dependencies:
-      '@types/estree': 1.0.8
-    optionalDependencies:
-      '@rollup/rollup-android-arm-eabi': 4.52.5
-      '@rollup/rollup-android-arm64': 4.52.5
-      '@rollup/rollup-darwin-arm64': 4.52.5
-      '@rollup/rollup-darwin-x64': 4.52.5
-      '@rollup/rollup-freebsd-arm64': 4.52.5
-      '@rollup/rollup-freebsd-x64': 4.52.5
-      '@rollup/rollup-linux-arm-gnueabihf': 4.52.5
-      '@rollup/rollup-linux-arm-musleabihf': 4.52.5
-      '@rollup/rollup-linux-arm64-gnu': 4.52.5
-      '@rollup/rollup-linux-arm64-musl': 4.52.5
-      '@rollup/rollup-linux-loong64-gnu': 4.52.5
-      '@rollup/rollup-linux-ppc64-gnu': 4.52.5
-      '@rollup/rollup-linux-riscv64-gnu': 4.52.5
-      '@rollup/rollup-linux-riscv64-musl': 4.52.5
-      '@rollup/rollup-linux-s390x-gnu': 4.52.5
-      '@rollup/rollup-linux-x64-gnu': 4.52.5
-      '@rollup/rollup-linux-x64-musl': 4.52.5
-      '@rollup/rollup-openharmony-arm64': 4.52.5
-      '@rollup/rollup-win32-arm64-msvc': 4.52.5
-      '@rollup/rollup-win32-ia32-msvc': 4.52.5
-      '@rollup/rollup-win32-x64-gnu': 4.52.5
-      '@rollup/rollup-win32-x64-msvc': 4.52.5
-      fsevents: 2.3.3
 
   router@2.2.0:
     dependencies:
@@ -15987,9 +15950,9 @@ snapshots:
 
   stackback@0.0.2: {}
 
-  standaloner@0.1.11(encoding@0.1.13)(rollup@4.52.5):
+  standaloner@0.1.11(encoding@0.1.13):
     dependencies:
-      '@vercel/nft': 0.30.4(encoding@0.1.13)(rollup@4.52.5)
+      '@vercel/nft': 0.30.4(encoding@0.1.13)
       acorn: 8.16.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
@@ -15999,9 +15962,9 @@ snapshots:
       - rollup
       - supports-color
 
-  standaloner@0.2.2(encoding@0.1.13)(rollup@4.52.5):
+  standaloner@0.2.2(encoding@0.1.13):
     dependencies:
-      '@vercel/nft': 1.1.1(encoding@0.1.13)(rollup@4.52.5)
+      '@vercel/nft': 1.1.1(encoding@0.1.13)
       acorn: 8.16.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
@@ -16210,7 +16173,7 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  telefunc@0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  telefunc@0.2.19(@babel/core@7.29.0)(@babel/parser@7.29.0)(@babel/types@7.29.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@brillout/import': 0.2.6
       '@brillout/json-serializer': 0.5.22
@@ -16225,7 +16188,7 @@ snapshots:
       '@babel/types': 7.29.0
       react: 19.2.4
       react-streaming: 0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
   text-decoder@1.2.3:
     dependencies:
@@ -16575,22 +16538,22 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vike-photon@0.1.25(a2254ee345913125153bae506d7cb26f):
+  vike-photon@0.1.25(2d77ebadb3b09aa04683439197b7df8e):
     dependencies:
       '@brillout/picocolors': 1.0.30
       '@brillout/vite-plugin-server-entry': 0.7.18
-      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
-      '@photonjs/runtime': 0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/core': 0.1.21(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@photonjs/runtime': 0.1.16(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(encoding@0.1.13)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@universal-middleware/compress': 0.2.35
       '@universal-middleware/core': 0.4.17(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)
       '@universal-middleware/sirv': 0.1.25
       pkg-types: 2.3.0
-      standaloner: 0.2.2(encoding@0.1.13)(rollup@4.52.5)
-      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      standaloner: 0.2.2(encoding@0.1.13)
+      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     optionalDependencies:
-      '@photonjs/cloudflare': 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
-      '@photonjs/vercel': 0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(rollup@4.52.5)(srvx@0.9.8)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      '@photonjs/cloudflare': 0.1.13(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.76.0(@cloudflare/workers-types@4.20260317.1))
+      '@photonjs/vercel': 0.1.22(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20260317.1)(@types/express@5.0.6)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8))(encoding@0.1.13)(express@5.2.1)(fastify@5.8.2)(h3@1.15.10)(hono@4.12.8)(srvx@0.9.8)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -16605,29 +16568,29 @@ snapshots:
       - srvx
       - supports-color
 
-  vike-react@0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  vike-react@0.6.21(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       react-streaming: 0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
-  vike-solid@0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))):
+  vike-solid@0.8.1(solid-js@1.9.11)(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))):
     dependencies:
       isbot-fast: 1.2.0
       solid-js: 1.9.11
-      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
-      vite-plugin-solid: 2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite-plugin-solid: 2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
 
-  vike-vue@0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2)):
+  vike-vue@0.9.11(vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.30(typescript@6.0.2)):
     dependencies:
       magic-string: 0.30.21
       oxc-parser: 0.104.0
       oxc-walker: 0.6.0(oxc-parser@0.104.0)
-      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vike: 0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       vue: 3.5.30(typescript@6.0.2)
 
-  vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
+  vike@0.4.255(@types/node@20.19.37)(jiti@2.6.1)(react-streaming@0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       '@babel/core': 7.29.0
       '@babel/types': 7.29.0
@@ -16645,14 +16608,14 @@ snapshots:
       sirv: 3.0.2
       source-map-support: 0.5.21
       tinyglobby: 0.2.15
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     optionalDependencies:
       react-streaming: 0.4.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     transitivePeerDependencies:
       - '@types/node'
+      - '@vitejs/devtools'
       - jiti
       - less
-      - lightningcss
       - sass
       - sass-embedded
       - stylus
@@ -16662,19 +16625,19 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-compiled-react@1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  vite-plugin-compiled-react@1.3.1(@compiled/react@0.20.0(react@19.2.4))(@vitejs/plugin-react@5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)))(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@babel/types': 7.29.0
       '@compiled/babel-plugin': 0.37.1
       '@compiled/babel-plugin-strip-runtime': 0.37.1
       '@compiled/react': 0.20.0(react@19.2.4)
-      '@vitejs/plugin-react': 5.2.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@vitejs/plugin-react': 5.2.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       babel-plugin-module-resolver: 5.0.2
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  vite-plugin-solid@2.11.11(solid-js@1.9.11)(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@babel/core': 7.29.0
       '@types/babel__core': 7.20.5
@@ -16682,40 +16645,39 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.11
       solid-refresh: 0.6.3(solid-js@1.9.11)
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
-      vitefu: 1.1.1(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vitefu: 1.1.1(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-wasm@3.5.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  vite-plugin-wasm@3.5.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
-  vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
+  vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
-      esbuild: 0.27.4
-      fdir: 6.5.0(picomatch@4.0.3)
+      lightningcss: 1.32.0
       picomatch: 4.0.3
       postcss: 8.5.8
-      rollup: 4.52.5
+      rolldown: 1.0.0-rc.11
       tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 20.19.37
+      esbuild: 0.27.4
       fsevents: 2.3.3
       jiti: 2.6.1
-      lightningcss: 1.32.0
       sugarss: 5.0.1(postcss@8.5.8)
       tsx: 4.21.0
       yaml: 2.8.3
 
-  vitefu@1.1.1(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
+  vitefu@1.1.1(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)):
     optionalDependencies:
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
 
-  vitest@4.1.0(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
+  vitest@4.1.0(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
+      '@vitest/mocker': 4.1.0(vite@8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3))
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -16732,14 +16694,15 @@ snapshots:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
+      vite: 8.0.2(@types/node@20.19.37)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(tsx@4.21.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 20.19.37
     transitivePeerDependencies:
+      - '@vitejs/devtools'
+      - esbuild
       - jiti
       - less
-      - lightningcss
       - msw
       - sass
       - sass-embedded
