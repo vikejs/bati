@@ -18,7 +18,7 @@
     "test:e2e:workflow-write": "pnpm test:e2e workflow-write",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build && turbo run build && pnpm run format",
-    "build:force": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --force && turbo run build --force && pnpm run format",
+    "build:force": "turbo run @batijs/core#build @batijs/compile#build @batijs/build#build @batijs/features#build --force --concurrency 1 && turbo run build --force && pnpm run format",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",

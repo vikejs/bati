@@ -12,7 +12,7 @@ const reIgnoreFile = /^(chunk-|asset-|#)/gi;
 
 function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
-  split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.[tj]sx?$/, "$1").replace(/^!(.*)$/, "$1");
+  split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.m?[tj]sx?$/, "$1").replace(/^!(.*)$/, "$1");
   return split.join(path.sep).replace(source, dist);
 }
 
@@ -50,6 +50,7 @@ async function safeRmFile(destination: string, options?: { removeEmptyDir?: bool
 export async function* walk(dir: string): AsyncGenerator<string> {
   if (!existsSync(dir)) return;
   for await (const d of await opendir(dir)) {
+    if (d.name.match(reIgnoreFile)) continue;
     const entry = path.join(dir, d.name);
     if (d.isDirectory()) {
       yield* walk(entry);
@@ -79,12 +80,12 @@ export default async function main(options: { source: string | string[]; dist: s
       const parsed = path.parse(p);
       if (parsed.name.match(reIgnoreFile)) {
         // continue
-      } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.tsx?$/)) {
+      } else if (parsed.name.startsWith("$") && parsed.ext.match(/\.m?tsx?$/)) {
         throw new Error(
           `Typescript file needs to be compiled before it can be executed: '${p}'.
 Please report this issue to https://github.com/vikejs/bati`,
         );
-      } else if ((parsed.name.startsWith("!$") || parsed.name.startsWith("$")) && parsed.ext.match(/\.jsx?$/)) {
+      } else if ((parsed.name.startsWith("!$") || parsed.name.startsWith("$")) && parsed.ext.match(/\.m?jsx?$/)) {
         rearranger.addFile({
           source,
           sourceAbsolute: p,

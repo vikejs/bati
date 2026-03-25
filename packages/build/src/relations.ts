@@ -76,8 +76,8 @@ function importToPotentialTargets(imp: string): string[] {
   const ext = extname(imp);
   const targets: string[] = [];
 
-  if (ext.match(/^\.[jt]sx?$/)) {
-    subject = subject.replace(/^\.[jt]sx?$/, "");
+  if (ext.match(/^\.m?[jt]sx?$/)) {
+    subject = subject.replace(/^\.m?[jt]sx?$/, "");
   }
 
   if (!ext || subject !== imp) {

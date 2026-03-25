@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import * as path from "node:path";
 import { globby } from "globby";
 import type { Plugin } from "rolldown";
-import { build as tsdownBuild } from "tsdown";
+import { type InlineConfig, build as tsdownBuild } from "tsdown";
 
 const forbidImportsPlugin: Plugin = {
   name: "forbid-imports",
@@ -22,7 +22,8 @@ const forbidImportsPlugin: Plugin = {
 };
 
 export async function build() {
-  const fileEntries = await globby(["./files/**/$!($()*).ts", "./hooks/**/*.ts"]);
+  const fileEntries = await globby(["./files/**/$!($()*).ts"]);
+  const hookEntries = await globby(["./hooks/**/*.ts"]);
   const dtsEntries = await globby(["./files/**/*.ts", "./files/**/*.tsx", "!./files/**/$*", "!./files/**/*.d.ts"]);
 
   const buildPromises: Promise<unknown>[] = [];
@@ -40,22 +41,45 @@ export async function build() {
     }),
   );
 
+  const commonTsdownOptions: InlineConfig = {
+    clean: false,
+    format: ["esm"],
+    platform: "node",
+    unbundle: true,
+    plugins: [forbidImportsPlugin],
+    deps: {
+      neverBundle: ["@batijs/core"],
+    },
+    outputOptions: {
+      sanitizeFileName: false,
+      chunkFileNames: "chunk-[name]-[hash].js",
+      assetFileNames: "asset-[name]-[hash][extname]",
+      entryFileNames(chunkInfo) {
+        if (!chunkInfo.isEntry) return `asset-${chunkInfo.name}.mjs`;
+        return `${chunkInfo.name}.mjs`;
+      },
+    },
+    dts: false,
+  };
+
   if (fileEntries.length > 0) {
     buildPromises.push(
       tsdownBuild({
-        clean: false,
+        ...commonTsdownOptions,
         entry: fileEntries,
-        outDir: "./dist",
-        format: ["esm"],
-        platform: "node",
-        plugins: [forbidImportsPlugin],
-        deps: {
-          neverBundle: ["@batijs/core"],
-        },
-        outputOptions: {
-          sanitizeFileName: false,
-        },
-        dts: false,
+        outDir: "./dist/files",
+        root: "./files",
+      }),
+    );
+  }
+
+  if (hookEntries.length > 0) {
+    buildPromises.push(
+      tsdownBuild({
+        ...commonTsdownOptions,
+        entry: hookEntries,
+        outDir: "./dist/hooks",
+        root: "./hooks",
       }),
     );
   }

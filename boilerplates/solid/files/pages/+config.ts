@@ -23,6 +23,9 @@ const config: Config = {
   photon: {
     server: "../server/entry.ts",
   },
+
+  //# BATI.has("vercel")
+  prerender: true,
 };
 
 export default config;
