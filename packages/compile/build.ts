@@ -107,9 +107,9 @@ export async function build() {
         },
         onSuccess: async () => {
           const distDir = path.join(process.cwd(), "dist", "types");
-          const emittedFiles = (await globby(["./dist/types/**/*.d.mts"])).map((f) =>
-            path.relative(distDir, path.resolve(f)).replace(/\\/g, "/"),
-          );
+          const emittedFiles = (await globby(["./dist/types/**/*.d.mts"]))
+            .map((f) => path.relative(distDir, path.resolve(f)).replace(/\\/g, "/"))
+            .sort();
 
           const packageJsonTypes = emittedFiles.reduce(
             (acc, cur) => {
@@ -123,6 +123,7 @@ export async function build() {
               typesVersions: { "*": {} as Record<string, string[]> },
             },
           );
+          q;
 
           const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
           packageJson.exports = sortObject(packageJsonTypes.exports);
@@ -155,5 +156,12 @@ export async function build() {
 }
 
 function sortObject<T extends object>(obj: T): T {
-  return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => a.localeCompare(b))) as T;
+  return Object.fromEntries(
+    Object.entries(obj)
+      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+      .map(([key, value]) => [
+        key,
+        value !== null && typeof value === "object" && !Array.isArray(value) ? sortObject(value) : value,
+      ]),
+  ) as T;
 }
