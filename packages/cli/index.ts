@@ -1,7 +1,8 @@
 import { execSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
 import { access, constants, lstat, readdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, parse } from "node:path";
+import { tmpdir } from "node:os";
+import { dirname, join, normalize, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
 import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
@@ -260,6 +261,45 @@ function generateRandomFilename(size: number) {
   return result;
 }
 
+function posixToWindowsIfAbsolute(p: string) {
+  const match = p.match(/^\/([a-zA-Z])\/(.*)/);
+
+  if (match) {
+    const drive = match[1].toUpperCase();
+    const rest = match[2].replace(/\//g, "\\");
+    return `${drive}:\\${rest}`;
+  }
+
+  return p;
+}
+
+function handleTmpOnWindows(p: string) {
+  if (p === "/tmp") {
+    return tmpdir();
+  }
+
+  if (p.startsWith("/tmp/")) {
+    return join(tmpdir(), p.slice(5));
+  }
+
+  return p;
+}
+
+function normalizeDist(inputPath: string) {
+  let p = inputPath;
+
+  if (process.platform === "win32") {
+    // Handle /tmp first (absolute semantic)
+    p = handleTmpOnWindows(p);
+
+    // Handle /c/... style paths
+    p = posixToWindowsIfAbsolute(p);
+  }
+
+  // Normalize separators (keeps relative if it was)
+  return normalize(p);
+}
+
 async function checkArguments(args: ParsedArgs<Args>): Promise<
   ParsedArgs<
     Omit<Args, "project"> & {
@@ -278,6 +318,10 @@ async function checkArguments(args: ParsedArgs<Args>): Promise<
   if (!newArgs.project) {
     // Try to default to `my-app`, otherwise `my-app[randomString]`
     newArgs.project = "my-app";
+  }
+
+  if (projectChosenByUser) {
+    newArgs.project = normalizeDist(newArgs.project);
   }
 
   if (existsSync(newArgs.project)) {
