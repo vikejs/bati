@@ -108,6 +108,9 @@ export async function createNxConfig(context: GlobalContext) {
     JSON.stringify(
       {
         $schema: "https://nx.dev/reference/nx-json",
+        tui: {
+          autoExit: 0,
+        },
         targetDefaults: {
           "generate-types": {
             cache: false,

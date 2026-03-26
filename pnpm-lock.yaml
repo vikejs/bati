@@ -858,6 +858,9 @@ importers:
       '@batijs/compile':
         specifier: workspace:*
         version: file:packages/compile(oxc-resolver@11.19.1)(synckit@0.11.12)(typescript@6.0.2)
+      '@batijs/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
