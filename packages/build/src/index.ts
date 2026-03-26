@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
+import * as os from "node:os";
 import path from "node:path";
 import type { PackageJson, VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";
@@ -47,6 +48,45 @@ async function safeRmFile(destination: string, options?: { removeEmptyDir?: bool
   }
 }
 
+function posixToWindowsIfAbsolute(p: string) {
+  const match = p.match(/^\/([a-zA-Z])\/(.*)/);
+
+  if (match) {
+    const drive = match[1].toUpperCase();
+    const rest = match[2].replace(/\//g, "\\");
+    return `${drive}:\\${rest}`;
+  }
+
+  return p;
+}
+
+function handleTmpOnWindows(p: string) {
+  if (p === "/tmp") {
+    return os.tmpdir();
+  }
+
+  if (p.startsWith("/tmp/")) {
+    return path.join(os.tmpdir(), p.slice(5));
+  }
+
+  return p;
+}
+
+export function normalizeDist(inputPath: string) {
+  let p = inputPath;
+
+  if (process.platform === "win32") {
+    // Handle /tmp first (absolute semantic)
+    p = handleTmpOnWindows(p);
+
+    // Handle /c/... style paths
+    p = posixToWindowsIfAbsolute(p);
+  }
+
+  // Normalize separators (keeps relative if it was)
+  return path.normalize(p);
+}
+
 export async function* walk(dir: string): AsyncGenerator<string> {
   if (!existsSync(dir)) return;
   for await (const d of await opendir(dir)) {
@@ -59,6 +99,7 @@ export async function* walk(dir: string): AsyncGenerator<string> {
 }
 
 export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
+  options.dist = normalizeDist(options.dist);
   const sources = Array.isArray(options.source) ? options.source : [options.source];
 
   function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
