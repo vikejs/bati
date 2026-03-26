@@ -45,7 +45,6 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
   function hooks() {
     beforeAll(async () => {
       const t0 = Date.now();
-      console.log(`[bati-test] beforeAll start (mode=${mode}, cwd=${process.cwd()})`);
       if (mode === "dev") {
         await initPort(context);
         await runDevServer(context);
@@ -55,7 +54,6 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
       } else if (mode === "build") {
         await retryX(() => runBuild(context), retry);
       }
-      console.log(`[bati-test] beforeAll done in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
     }, 120000);
 
     // Cleanup tests:
@@ -63,7 +61,6 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     // - Remove temp dir
     afterAll(async () => {
       const pid = context.server?.pid;
-      console.log(`[bati-test] afterAll: killing server PID=${pid ?? "none"}`);
       if (typeof pid === "number") {
         await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
       }

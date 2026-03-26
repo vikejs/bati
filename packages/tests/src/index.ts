@@ -139,18 +139,14 @@ async function execNx(context: GlobalContext, args: mri.Argv<CliOptions>) {
   for (const step of steps) {
     const t0 = Date.now();
     console.log(`[${new Date().toISOString()}] Running step: ${step}`);
-    await exec(
-      npmCli,
-      [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--target=${step}`],
-      {
-        timeout: 35 * 60 * 1000, // 35min
-        cwd: context.tmpdir,
-        env: {
-          NX_DAEMON: "false",
-          NX_TUI: "false",
-        },
+    await exec(npmCli, [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--target=${step}`], {
+      timeout: 35 * 60 * 1000, // 35min
+      cwd: context.tmpdir,
+      env: {
+        NX_DAEMON: "false",
+        NX_TUI: "false",
       },
-    );
+    });
     console.log(`[${new Date().toISOString()}] Step "${step}" completed in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
   }
 }
@@ -287,7 +283,6 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   }
 
   await initTmpDir(context);
-  console.log(`Temp directory: ${context.tmpdir}${args.keep ? " (kept after run with --keep)" : ""}`);
   const onlyBuiltDependencies = new Set<string>();
   const pnpmRebuildProjectDirs: string[] = [];
 
