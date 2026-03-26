@@ -18,7 +18,7 @@
     "test:e2e:workflow-write": "pnpm test:e2e workflow-write",
     "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js /tmp/bati-app",
     "build": "nx run-many --target=build",
-    "build:force": "nx run-many --target=build",
+    "build:force": "nx run-many --target=build --skip-nx-cache",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",
