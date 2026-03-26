@@ -123,7 +123,6 @@ export async function build() {
               typesVersions: { "*": {} as Record<string, string[]> },
             },
           );
-          q;
 
           const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
           packageJson.exports = sortObject(packageJsonTypes.exports);

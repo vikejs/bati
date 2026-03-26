@@ -1,6 +1,5 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
-import * as os from "node:os";
 import path from "node:path";
 import type { PackageJson, VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";

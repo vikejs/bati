@@ -476,7 +476,6 @@ function checkRules(flags: string[]) {
 }
 
 async function retrieveHooks(hooks: Map<BoilerplateDefWithConfig, string>): Promise<Map<"after", Hook[]>> {
-  const reIgnoreFile = /^(chunk-|asset-|#)/gi;
   const map = new Map<"after", Hook[]>();
   const sortedHooks = Array.from(hooks.entries()).sort(([b1], [b2]) => {
     if (b1.config.enforce === "pre") return 1;

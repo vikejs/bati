@@ -105,7 +105,7 @@ export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyB
 export async function createNxConfig(context: GlobalContext) {
   await writeFile(
     join(context.tmpdir, "nx.json"),
-    JSON.stringify(
+    `${JSON.stringify(
       {
         $schema: "https://nx.dev/reference/nx-json",
         tui: {
@@ -148,7 +148,8 @@ export async function createNxConfig(context: GlobalContext) {
       },
       undefined,
       2,
-    ) + "\n",
+    )}\n`,
+
     "utf-8",
   );
 }

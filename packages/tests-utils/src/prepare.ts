@@ -44,7 +44,6 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
 
   function hooks() {
     beforeAll(async () => {
-      const t0 = Date.now();
       if (mode === "dev") {
         await initPort(context);
         await runDevServer(context);
