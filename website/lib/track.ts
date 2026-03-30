@@ -1,53 +1,64 @@
-type Events = CopyEvent;
-
-interface CopyEvent {
-  name: "copy";
-  data: {
-    flags: string[];
-    package_manager: string;
-  };
-}
-
-interface Zaraz {
-  track: <T extends Events>(event: T["name"], data: unknown) => Promise<void>;
-}
-
 declare global {
   // eslint-disable-next-line no-var
   var zaraz: Zaraz | undefined;
 }
 
-function generateUUID() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+/**
+ * This signature is compatible with both Umami and GA
+ */
+export function track<T extends TrackingEvent>(name: T["name"], data: T["data"]) {
+  globalThis.zaraz?.track(name, data);
 }
 
-export function track<T extends Events>(event: T["name"], data: T["data"]) {
-  const interactionid = generateUUID();
-  console.log({
-    interactionid,
-    event,
-    data,
-  });
-  switch (event) {
-    case "copy": {
-      if (data.flags.length === 0) {
-        globalThis.zaraz?.track(event, {
-          flag: undefined,
-          package_manager: data.package_manager,
-          interactionid,
-        });
+interface Zaraz {
+  track: <T extends TrackingEvent>(event: T["name"], data: unknown) => Promise<void>;
+}
+
+type TrackingEvent = CopyEvent;
+
+export interface CopyEvent {
+  name: "copy_scaffold";
+  data: {
+    package_manager: string;
+    // could be interesting, but maybe tracking
+    // button clicks as part of a funnel is better
+    // is_preset: boolean;
+    [key: string]: string;
+  };
+}
+
+type FeatureFlag = {
+  flag: string;
+  category: string;
+};
+
+export function formatFeatureFlags(selectedFlags: FeatureFlag[]): Record<string, string> {
+  const categoriesMultiple = new Set<string>();
+
+  const flags = selectedFlags.reduce(
+    (data, { flag, category }) => {
+      if (data[category]) {
+        if (Array.isArray(data[category])) {
+          data[category].push(flag);
+        } else {
+          // Track all keys converted to arrays
+          categoriesMultiple.add(category);
+          data[category] = [data[category], flag];
+        }
+      } else {
+        data[category] = flag;
       }
-      for (const flag of data.flags) {
-        globalThis.zaraz?.track(event, {
-          flag,
-          package_manager: data.package_manager,
-          interactionid,
-        });
-      }
+      return data;
+    },
+    {} as Record<string, string | string[]>,
+  );
+
+  // Recombine all arrays into strings
+  categoriesMultiple.forEach((category) => {
+    if (Array.isArray(flags[category])) {
+      flags[category] = flags[category].sort().join(":");
     }
-  }
+  });
+
+  return flags as Record<string, string>;
 }

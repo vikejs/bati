@@ -1,7 +1,7 @@
 import { createMemo, createSignal, type JSX, useContext } from "solid-js";
 import { isServer } from "solid-js/web";
 import { StoreContext } from "#components/Store";
-import { track } from "../lib/track";
+import { formatFeatureFlags, track } from "../lib/track";
 import { Cli } from "./Cli";
 import Stackblitz from "./Stackblitz";
 
@@ -28,7 +28,7 @@ export default function InputGroup() {
   const [tooltipText, setTooltipText] = createSignal("Copy to Clipboard");
 
   function getFlags() {
-    return selectedFeaturesFlags().map((flag) => `--${flag}`);
+    return selectedFeaturesFlags().map(({ flag }) => `--${flag}`);
   }
 
   const npm = createMemo(() => ["npm", "create", "vike@latest", "---", ...getFlags()]);
@@ -42,9 +42,10 @@ export default function InputGroup() {
   };
 
   const handleCopy = (packageManager: string) => {
-    track("copy", {
-      flags: selectedFeaturesFlags(),
+    const selectedFlags = selectedFeaturesFlags();
+    track("copy_scaffold", {
       package_manager: packageManager,
+      ...formatFeatureFlags(selectedFlags),
     });
     setTooltipText("Copied to Clipboard!");
   };

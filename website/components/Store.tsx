@@ -29,7 +29,10 @@ function initStore() {
   const selectedFeaturesFlags = createMemo(() =>
     selectedFeatures()
       .filter((f) => !f.invisibleCli)
-      .map((f) => f.flag),
+      .map((f) => ({
+        flag: f.flag,
+        category: f.category.toLowerCase().replaceAll(" ", "_"),
+      })),
   );
 
   function selectPreset(ks: (Flags | CategoryLabels)[]) {
