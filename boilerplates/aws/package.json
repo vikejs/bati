@@ -47,17 +47,17 @@
   },
   "typesVersions": {
     "*": {
-      "vitest.config": [
-        "./dist/types/vitest.config.d.mts"
-      ],
-      "tests/aws_handler.spec": [
-        "./dist/types/tests/aws_handler.spec.d.mts"
-      ],
       "cdk/bin/infrastructure": [
         "./dist/types/cdk/bin/infrastructure.d.mts"
       ],
       "cdk/lib/vike-stack": [
         "./dist/types/cdk/lib/vike-stack.d.mts"
+      ],
+      "tests/aws_handler.spec": [
+        "./dist/types/tests/aws_handler.spec.d.mts"
+      ],
+      "vitest.config": [
+        "./dist/types/vitest.config.d.mts"
       ]
     }
   },
