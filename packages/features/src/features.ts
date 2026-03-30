@@ -282,6 +282,26 @@ export const features = [
       },
     ],
   },
+  {
+    category: "Data fetching",
+    label: "React Query",
+    flag: "react-query",
+    dependsOn: ["react"],
+    image: "https://tanstack.com/images/logos/logo-color-100.png",
+    url: "https://tanstack.com/query",
+    tagline: "Powerful asynchronous state management, server-state utilities and data fetching",
+    repo: "tanstack/query",
+    links: [
+      {
+        label: "Getting started",
+        href: "https://tanstack.com/query/latest/docs/react/overview",
+      },
+      {
+        label: "vike-react-query",
+        href: "https://github.com/vikejs/vike-react-query",
+      },
+    ],
+  },
 
   // Server
   {
