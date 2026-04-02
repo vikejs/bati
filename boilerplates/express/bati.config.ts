@@ -5,6 +5,6 @@ export default defineConfig({
     return meta.BATI.has("express");
   },
   knip: {
-    entry: ["server/entry.ts"],
+    entry: ["+server.ts"],
   },
 });
