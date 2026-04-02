@@ -45,6 +45,8 @@ async function getHandler() {
     createTodoHandler,
   ]);
 
+  await app.ready();
+
   return toFetchHandler(app.routing);
 }
 
