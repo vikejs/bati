@@ -17,6 +17,5 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     .setScript("prod", {
       value: "vike build && node ./dist/server/index.mjs",
       precedence: 20,
-    })
-    .addDependencies(["vike-photon"]);
+    });
 }

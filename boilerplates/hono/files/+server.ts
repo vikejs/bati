@@ -1,4 +1,4 @@
-// BATI.has("auth0") || BATI.hasDatabase
+// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
@@ -6,17 +6,16 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { apply, serve } from "@photonjs/express";
-import express from "express";
+import vike from "@vikejs/hono";
+import { Hono } from "hono";
+import type { Server } from "vike/types";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default startApp() as unknown;
+function getHandler() {
+  const app = new Hono();
 
-function startApp() {
-  const app = express();
-
-  apply(app, [
+  vike(app, [
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
@@ -39,7 +38,15 @@ function startApp() {
     createTodoHandler,
   ]);
 
-  return serve(app, {
-    port,
-  });
+  return app.fetch;
 }
+
+export default {
+  fetch: getHandler(),
+  prod: {
+    port,
+    //# BATI.has("aws")
+    // We need to override static root config when deploying to AWS
+    static: `${process.cwd()}/dist/client`,
+  },
+} satisfies Server;

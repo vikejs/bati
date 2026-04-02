@@ -1,4 +1,4 @@
-// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
+// BATI.has("auth0") || BATI.hasDatabase
 import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
@@ -6,17 +6,23 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { apply, serve } from "@photonjs/h3";
-import { createApp } from "h3";
+import vike, { toFetchHandler } from "@vikejs/fastify";
+import fastify from "fastify";
+import rawBody from "fastify-raw-body";
+import type { Server } from "vike/types";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default startApp() as BATI.Any;
+async function getHandler() {
+  const app = fastify({
+    // Ensures proper HMR support
+    forceCloseConnections: true,
+  });
 
-function startApp() {
-  const app = createApp();
+  // /!\ Mandatory if you need to access the request body in any Universal Middleware or Handler
+  await app.register(rawBody);
 
-  apply(app, [
+  await vike(app, [
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
@@ -39,7 +45,10 @@ function startApp() {
     createTodoHandler,
   ]);
 
-  return serve(app, {
-    port,
-  });
+  return toFetchHandler(app.routing);
 }
+
+export default {
+  fetch: await getHandler(),
+  prod: { port },
+} satisfies Server;

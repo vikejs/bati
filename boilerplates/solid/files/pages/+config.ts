@@ -1,5 +1,4 @@
 import type { Config } from "vike/types";
-import vikePhoton from "vike-photon/config";
 import vikeSolid from "vike-solid/config";
 
 // Default config (can be overridden by pages)
@@ -12,11 +11,7 @@ const config: Config = {
 
   //# BATI.has("auth0") || BATI.has("authjs")
   passToClient: ["user"],
-  extends: [
-    vikeSolid,
-    //# BATI.hasUD
-    vikePhoton,
-  ],
+  extends: [vikeSolid],
 
   //# BATI.hasServer
   // https://vike.dev/vike-photon

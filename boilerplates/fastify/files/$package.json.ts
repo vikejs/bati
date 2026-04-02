@@ -5,6 +5,6 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
 
   return packageJson
     .addDevDependencies(["@types/node"])
-    .addDependencies(["@photonjs/fastify", "fastify", "fastify-raw-body", "vike", "vite"])
+    .addDependencies(["@vikejs/fastify", "fastify", "fastify-raw-body", "vike", "vite"])
     .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
 }
