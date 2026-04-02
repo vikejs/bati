@@ -14,7 +14,7 @@ const config: Config = {
   passToClient: ["user"],
   extends: [
     vikeReact,
-    //# BATI.hasPhoton
+    //# BATI.hasUD
     vikePhoton,
   ],
 
