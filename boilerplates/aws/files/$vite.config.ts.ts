@@ -13,7 +13,7 @@ const plugin = `{
     this.emitFile({
       type: "chunk",
       fileName: "aws.mjs",
-      id: "virtual:photon:server-entry",
+      id: "./server/hono.ts",
     });
   }
 }`;

@@ -51,4 +51,4 @@ async function getHandler() {
 export default {
   fetch: await getHandler(),
   prod: { port },
-} satisfies Server;
+} as Server;

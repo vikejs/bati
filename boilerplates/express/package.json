@@ -29,14 +29,14 @@
     "dist/"
   ],
   "exports": {
-    "./server/entry": {
-      "types": "./dist/types/server/entry.d.mts"
+    "./+server": {
+      "types": "./dist/types/+server.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "server/entry": [
-        "./dist/types/server/entry.d.mts"
+      "+server": [
+        "./dist/types/+server.d.mts"
       ]
     }
   },

@@ -29,20 +29,26 @@
     "dist/"
   ],
   "exports": {
+    "./+server": {
+      "types": "./dist/types/+server.d.mts"
+    },
     "./entry_aws_lambda": {
       "types": "./dist/types/entry_aws_lambda.d.mts"
     },
-    "./server/entry": {
-      "types": "./dist/types/server/entry.d.mts"
+    "./server/hono": {
+      "types": "./dist/types/server/hono.d.mts"
     }
   },
   "typesVersions": {
     "*": {
+      "+server": [
+        "./dist/types/+server.d.mts"
+      ],
       "entry_aws_lambda": [
         "./dist/types/entry_aws_lambda.d.mts"
       ],
-      "server/entry": [
-        "./dist/types/server/entry.d.mts"
+      "server/hono": [
+        "./dist/types/server/hono.d.mts"
       ]
     }
   },

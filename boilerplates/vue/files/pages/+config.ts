@@ -13,12 +13,6 @@ const config: Config = {
   passToClient: ["user"],
   extends: [vikeVue],
 
-  //# BATI.hasServer
-  // https://vike.dev/vike-photon
-  photon: {
-    server: "../server/entry.ts",
-  },
-
   //# BATI.has("vercel")
   prerender: true,
 };

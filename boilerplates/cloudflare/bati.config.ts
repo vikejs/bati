@@ -15,6 +15,6 @@ export default defineConfig({
   enforce: "post",
   knip: {
     entry: ["cloudflare-entry.ts"],
-    ignoreDependencies: ["wrangler", "cloudflare", "@photonjs/cloudflare"],
+    ignoreDependencies: ["wrangler", "cloudflare", "@cloudflare/vite-plugin"],
   },
 });

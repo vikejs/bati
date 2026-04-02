@@ -1,19 +1,14 @@
-// BATI.has("auth0") || BATI.hasDatabase
-import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import vike, { toFetchHandler } from "@vikejs/express";
-import express from "express";
-import type { Server } from "vike/types";
+import vike from "@vikejs/hono";
+import { Hono } from "hono";
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-
-function getHandler() {
-  const app = express();
+function getApp() {
+  const app = new Hono();
 
   vike(app, [
     //# BATI.hasDatabase
@@ -38,10 +33,7 @@ function getHandler() {
     createTodoHandler,
   ]);
 
-  return toFetchHandler(app);
+  return app;
 }
 
-export default {
-  fetch: getHandler(),
-  prod: { port },
-} as Server;
+export const app = getApp();
