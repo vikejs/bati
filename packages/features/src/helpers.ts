@@ -1,6 +1,9 @@
 import type { Flags } from "./features.js";
 import type { Feature } from "./types.js";
 
+/**
+ * /!\ This needs to be published for updates to be taken into account in the CI
+ */
 export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: used
@@ -33,5 +36,12 @@ export class BatiSet extends Set<Flags> {
 
   get hasUD(): boolean {
     return this.has("cloudflare") || this.has("vercel") || this.hasOneOf(this.#servers);
+  }
+
+  /**
+   * @deprecated
+   */
+  get hasPhoton(): boolean {
+    return this.hasUD;
   }
 }
