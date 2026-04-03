@@ -124,9 +124,6 @@ export async function createNxConfig(context: GlobalContext) {
             dependsOn: ["build"],
             cache: false,
           },
-          prod: {
-            cache: false,
-          },
           "lint:eslint": {
             dependsOn: ["build"],
             cache: false,
