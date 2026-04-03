@@ -116,39 +116,39 @@ jobs:
 
       - name: Run build
         shell: bash
-        run: bun run build --excludeTaskDependencies
+        run: bun run build
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run tests
         shell: bash
         # Bun hangs on Windows
-        run: ${{ runner.os == 'Windows' && 'npm run test --excludeTaskDependencies' || 'bun run test --excludeTaskDependencies' }}
+        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun run test' }}
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:eslint
         if: contains(inputs.flags, '--eslint')
         shell: bash
-        run: bun run lint:eslint --excludeTaskDependencies
+        run: bun run lint:eslint
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:biome
         if: contains(inputs.flags, '--biome')
         shell: bash
-        run: bun run lint:biome --excludeTaskDependencies
+        run: bun run lint:biome
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:oxlint
         if: contains(inputs.flags, '--oxlint')
         shell: bash
-        run: bun run lint:oxlint --excludeTaskDependencies
+        run: bun run lint:oxlint
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run typecheck
         shell: bash
-        run: bun run typecheck --excludeTaskDependencies
+        run: bun run typecheck
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run knip
         shell: bash
-        run: bun run knip --excludeTaskDependencies
+        run: bun run knip
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
