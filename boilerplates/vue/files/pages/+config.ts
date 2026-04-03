@@ -15,6 +15,9 @@ const config: Config = {
 
   //# BATI.has("vercel")
   prerender: true,
+
+  //# BATI.hasUD && !BATI.hasServer
+  server: true,
 };
 
 export default config;
