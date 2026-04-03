@@ -47,7 +47,7 @@ async function getHandler() {
 
   await app.ready();
 
-  return toFetchHandler(app.routing);
+  return toFetchHandler(app.routing.bind(app));
 }
 
 export default {
