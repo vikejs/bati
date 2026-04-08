@@ -1,0 +1,28 @@
+{
+  "name": "@batijs/edgeone",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "@edgeone/vite": "^1.1.0",
+    "@types/node": "^20.19.37"
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  },
+  "files": [
+    "dist/"
+  ]
+}
