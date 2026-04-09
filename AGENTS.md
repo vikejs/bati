@@ -215,7 +215,7 @@ The `packages/features/src/helpers.ts` file provides `BatiSet` with useful helpe
 - `BATI.hasServer` - Check if any server feature is enabled
 - `BATI.hasDatabase` - Check if database features (sqlite/drizzle) are enabled
 - `BATI.hasD1` - Check if Cloudflare D1 is used
-- `BATI.hasPhoton` - Check if Photon-compatible hosting is used
+- `BATI.hasUD` - Check if Universal Deploy must be used
 
 **Update helpers** when adding features that need cross-cutting detection logic.
 

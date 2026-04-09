@@ -16,5 +16,5 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
       warnIfReplaced: true,
     })
     .addDevDependencies(["wrangler"])
-    .addDependencies(["@photonjs/cloudflare"]);
+    .addDependencies(["@cloudflare/vite-plugin"]);
 }

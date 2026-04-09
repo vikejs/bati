@@ -15,35 +15,40 @@
     "@auth/core": "^0.41.1",
     "@batijs/compile": "workspace:*",
     "@batijs/core": "workspace:*",
-    "@photonjs/hono": "^0.1.12",
     "@trpc/server": "^11.16.0",
     "@types/aws-lambda": "^8.10.161",
     "@types/node": "^20.19.37",
-    "dotenv": "^17.3.1",
-    "hono": "^4.12.9",
+    "@vikejs/hono": "^0.2.0",
+    "dotenv": "^17.4.0",
+    "hono": "^4.12.10",
     "telefunc": "^0.2.19",
-    "vike": "^0.4.255",
-    "vike-photon": "^0.1.26",
+    "vike": "0.4.257",
     "vite": "^8.0.3"
   },
   "files": [
     "dist/"
   ],
   "exports": {
+    "./+server": {
+      "types": "./dist/types/+server.d.mts"
+    },
     "./entry_aws_lambda": {
       "types": "./dist/types/entry_aws_lambda.d.mts"
     },
-    "./server/entry": {
-      "types": "./dist/types/server/entry.d.mts"
+    "./server/hono": {
+      "types": "./dist/types/server/hono.d.mts"
     }
   },
   "typesVersions": {
     "*": {
+      "+server": [
+        "./dist/types/+server.d.mts"
+      ],
       "entry_aws_lambda": [
         "./dist/types/entry_aws_lambda.d.mts"
       ],
-      "server/entry": [
-        "./dist/types/server/entry.d.mts"
+      "server/hono": [
+        "./dist/types/server/hono.d.mts"
       ]
     }
   },

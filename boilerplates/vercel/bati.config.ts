@@ -6,6 +6,6 @@ export default defineConfig({
   },
   knip: {
     ignore: [".vercel/**"],
-    ignoreDependencies: ["vite-plugin-vercel", "@photonjs/vercel", "h3"],
+    ignoreDependencies: ["vite-plugin-vercel"],
   },
 });

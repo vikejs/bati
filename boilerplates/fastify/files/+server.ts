@@ -6,15 +6,14 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { apply, serve } from "@photonjs/fastify";
+import vike, { toFetchHandler } from "@vikejs/fastify";
 import fastify from "fastify";
 import rawBody from "fastify-raw-body";
+import type { Server } from "vike/types";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default (await startApp()) as unknown;
-
-async function startApp() {
+async function getHandler() {
   const app = fastify({
     // Ensures proper HMR support
     forceCloseConnections: true,
@@ -23,7 +22,7 @@ async function startApp() {
   // /!\ Mandatory if you need to access the request body in any Universal Middleware or Handler
   await app.register(rawBody);
 
-  await apply(app, [
+  await vike(app, [
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
@@ -46,7 +45,13 @@ async function startApp() {
     createTodoHandler,
   ]);
 
-  return serve(app, {
-    port,
-  });
+  await app.ready();
+
+  return toFetchHandler(app.routing.bind(app));
 }
+
+// https://vike.dev/server
+export default {
+  fetch: await getHandler(),
+  prod: { port },
+} as Server;

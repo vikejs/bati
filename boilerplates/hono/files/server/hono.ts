@@ -1,22 +1,16 @@
-// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
-import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { apply, serve } from "@photonjs/h3";
-import { createApp } from "h3";
+import vike from "@vikejs/hono";
+import { Hono } from "hono";
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+function getApp() {
+  const app = new Hono();
 
-export default startApp() as BATI.Any;
-
-function startApp() {
-  const app = createApp();
-
-  apply(app, [
+  vike(app, [
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
@@ -39,7 +33,7 @@ function startApp() {
     createTodoHandler,
   ]);
 
-  return serve(app, {
-    port,
-  });
+  return app;
 }
+
+export const app = getApp();

@@ -170,7 +170,7 @@ async function printOK(dist: string, flags: string[], nextSteps: BatiConfigStep[
   console.log(list("Vike"));
   for (const key of flags) {
     const feature = features.find((f) => f.flag === key);
-    if (!feature || !feature.label) continue;
+    if (!feature?.label) continue;
 
     console.log(list(feature.label));
   }

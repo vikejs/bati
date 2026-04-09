@@ -132,20 +132,22 @@ async function pnpmRebuild(projectDirs: string[]) {
 }
 
 async function execNx(context: GlobalContext, args: mri.Argv<CliOptions>) {
-  const steps = args.steps
-    ? args.steps.split(",")
-    : ["generate-types", "build", "test", "lint:eslint", "lint:biome", "lint:oxlint", "typecheck", "knip"];
+  const steps =
+    args.steps ??
+    ["generate-types", "build", "test", "lint:eslint", "lint:biome", "lint:oxlint", "typecheck", "knip"].join(",");
 
-  for (const step of steps) {
-    await exec(npmCli, [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--target=${step}`], {
+  await exec(
+    npmCli,
+    [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--targets=${steps}`, "--excludeTaskDependencies"],
+    {
       timeout: 35 * 60 * 1000, // 35min
       cwd: context.tmpdir,
       env: {
         NX_DAEMON: "false",
         NX_TUI: "false",
       },
-    });
-  }
+    },
+  );
 }
 
 function isVerdaccioRunning() {

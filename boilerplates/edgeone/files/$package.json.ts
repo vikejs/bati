@@ -3,8 +3,5 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  return packageJson
-    .addDevDependencies(["@types/express"])
-    .addDependencies(["@vikejs/express", "express", "vite", "vike"])
-    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
+  return packageJson.addDevDependencies(["@edgeone/vite"]);
 }

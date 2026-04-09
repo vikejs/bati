@@ -6,25 +6,16 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import { apply, serve } from "@photonjs/hono";
-import { Hono } from "hono";
-import { getMiddlewares } from "vike-photon/universal-middlewares";
+import vike from "@vikejs/h3";
+import { createApp, toWebHandler } from "h3";
+import type { Server } from "vike/types";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-export default startApp() as unknown;
+function getHandler() {
+  const app = createApp();
 
-function startApp() {
-  const app = new Hono();
-
-  apply(app, [
-    //# BATI.has("aws")
-    ...getMiddlewares({
-      static: {
-        // We need to override static root config when deploying to AWS
-        root: `${process.cwd()}/dist/client`,
-      },
-    }),
+  vike(app, [
     //# BATI.hasDatabase
     // Make database available in Context as `context.db`
     dbMiddleware,
@@ -47,7 +38,13 @@ function startApp() {
     createTodoHandler,
   ]);
 
-  return serve(app, {
-    port,
-  });
+  return toWebHandler(app);
 }
+
+// https://vike.dev/server
+export default {
+  fetch: getHandler(),
+  prod: {
+    port,
+  },
+} satisfies Server;

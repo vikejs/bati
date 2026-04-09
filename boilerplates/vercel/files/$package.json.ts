@@ -7,8 +7,6 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     packageJson
       // vite preview does not make sense when targeting Vercel
       .removeScript("prod")
-      // FIXME required because of @universal-middleware/vercel barrel import of all servers
-      .addDevDependencies(["h3"])
-      .addDependencies(["@photonjs/vercel"])
+      .addDependencies(["vite-plugin-vercel"])
   );
 }

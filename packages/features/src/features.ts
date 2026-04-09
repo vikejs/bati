@@ -482,6 +482,25 @@ export const features = [
   },
   {
     category: "Hosting",
+    label: "EdgeOne Pages",
+    flag: "edgeone",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyOCAyOCI+CiAgPHBhdGggZmlsbD0idXJsKCNhKSIgZD0iTTI3Ljc3OCAxNi40OTRhMTQuMSAxNC4xIDAgMCAwIC4wNjMtNC42MTEuNTQ1LjU0NSAwIDAgMC0uNTQzLS40NTloLTkuMDA0YS40NDguNDQ4IDAgMCAxLS40MzMtLjU2NGwxLjA2Ni0zLjk3OGEuNjcuNjcgMCAwIDEgLjY0OS0uNDk4aDUuMzQ4Yy4zNTUgMCAuNTY2LS4zOTIuMzU1LS42NzhBMTMuOTggMTMuOTggMCAwIDAgMTQgMEM2LjI2OCAwIDAgNi4yNjggMCAxNGMwIDMuNTIgMS4zIDYuNzM3IDMuNDQ0IDkuMTk3LjIyOS4yNjIuNjQ4LjE1My43MzgtLjE4MmwzLjA5Ny0xMS42MTZhLjMzNi4zMzYgMCAwIDAtLjMyNC0uNDIzaC0yLjY5YS40NDguNDQ4IDAgMCAxLS40MzQtLjU2M2wuODc0LTMuMjc2YS41Ny41NyAwIDAgMSAuNTQzLS40MiAxOC40IDE4LjQgMCAwIDAgOC4zOTktMi4yMzNjLjI2Ni0uMTQ1LjU4Ny4wOTguNTEuMzlsLTUuNyAyMS4zNjlhLjY1LjY1IDAgMCAwIC4zOC43NzZjMS41OTguNjM0IDMuMzQuOTgyIDUuMTYyLjk4MiA0LjQyIDAgOC4zNi0yLjA0NyAxMC45MjYtNS4yNDUuMjI3LS4yODQuMDE4LS42OTEtLjM0NS0uNjkxaC05LjEzOGEuNDQ4LjQ0OCAwIDAgMS0uNDMzLS41NjRsMS4wNjYtMy45NzhhLjY3LjY3IDAgMCAxIC42NDktLjQ5OGgxMC40MDdhLjY1LjY1IDAgMCAwIC42NDYtLjUzIi8+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSI0LjgxNiIgeDI9IjIyLjI4OCIgeTE9IjIuMzUyIiB5Mj0iMjMuMTg0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMwZGYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGM2MGYyIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KPC9zdmc+Cg==",
+    url: "https://pages.edgeone.ai",
+    tagline: "A better way to build full-stack Web",
+    links: [
+      {
+        label: "Docs",
+        href: "https://pages.edgeone.ai/document/framework-vike",
+      },
+      {
+        label: "Vike integration",
+        href: "https://vike.dev/edgeone-pages",
+      },
+    ],
+  },
+  {
+    category: "Hosting",
     label: "Vercel",
     flag: "vercel",
     image:
