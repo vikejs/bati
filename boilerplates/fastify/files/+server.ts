@@ -50,6 +50,7 @@ async function getHandler() {
   return toFetchHandler(app.routing.bind(app));
 }
 
+// https://vike.dev/server
 export default {
   fetch: await getHandler(),
   prod: { port },

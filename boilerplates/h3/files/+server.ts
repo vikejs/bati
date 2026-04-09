@@ -41,6 +41,7 @@ function getHandler() {
   return toWebHandler(app);
 }
 
+// https://vike.dev/server
 export default {
   fetch: getHandler(),
   prod: {

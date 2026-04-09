@@ -6,7 +6,7 @@ import { createTodoHandler } from "@batijs/shared-server/server/create-todo-hand
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import vike, { connectToWeb, toFetchHandler } from "@vikejs/express";
+import vike, { toFetchHandler } from "@vikejs/express";
 import express from "express";
 import type { Server } from "vike/types";
 
@@ -41,6 +41,7 @@ function getHandler() {
   return toFetchHandler(app);
 }
 
+// https://vike.dev/server
 export default {
   fetch: getHandler(),
   prod: { port },
