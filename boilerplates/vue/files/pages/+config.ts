@@ -17,6 +17,7 @@ const config: Config = {
   prerender: true,
 
   //# BATI.hasUD && !BATI.hasServer
+  // https://vike.dev/server
   server: true,
 };
 
