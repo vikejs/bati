@@ -67,8 +67,21 @@ export default async function getBiomeJson(props: TransformerProps): Promise<unk
 
   additionalConfig.files ??= {};
   additionalConfig.files.includes ??= [];
+
   if (props.meta.BATI.has("cloudflare")) {
     additionalConfig.files.includes.push("!worker-configuration.d.ts");
+  }
+
+  if (props.meta.BATI.has("vercel")) {
+    additionalConfig.files.includes.push("!.vercel/*");
+  }
+
+  if (props.meta.BATI.has("edgeone")) {
+    additionalConfig.files.includes.push("!.edgeone/*");
+  }
+
+  if (props.meta.BATI.has("netlify")) {
+    additionalConfig.files.includes.push("!.netlify/*");
   }
 
   return {
