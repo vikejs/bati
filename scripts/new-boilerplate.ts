@@ -37,7 +37,7 @@ async function createPackageJson(name: string) {
     license: "MIT",
     devDependencies: {
       "@batijs/compile": "workspace:*",
-      "@batijs/core": "workspace:*",
+      "@batijs/core": "workspace:",
       "@types/node": sharedPackageJson.devDependencies["@types/node"],
     },
     nx: {

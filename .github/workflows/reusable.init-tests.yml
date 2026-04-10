@@ -54,7 +54,7 @@ jobs:
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-cli/dist/*
+          path: ./bati-cli/*
 
       - name: Deploy tests locally
         run: pnpm deploy --prod --filter=./packages/tests ./bati-tests

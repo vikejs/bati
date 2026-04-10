@@ -17,6 +17,10 @@ export default tseslint.config(
       ".vercel/*",
       //# BATI.has("aws")
       "cdk.out/*",
+      //# BATI.has("edgeone")
+      ".edgeone",
+      //# BATI.has("netlify")
+      ".netlify",
       //# BATI.has("cloudflare")
       "worker-configuration.d.ts",
       //# BATI.has("storybook")

@@ -2,9 +2,6 @@ import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {
-    return meta.BATI.has("edgeone");
-  },
-  knip: {
-    ignore: [".edgeone/**"],
+    return meta.BATI.has("netlify");
   },
 });

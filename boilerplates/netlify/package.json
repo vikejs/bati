@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/biome",
+  "name": "@batijs/netlify",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -14,16 +14,16 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/core": "workspace:",
-    "@biomejs/biome": "2.4.10",
-    "@biomejs/wasm-nodejs": "^2.4.10",
-    "@types/node": "^20.19.37"
+    "@netlify/vite-plugin": "^2.11.3",
+    "@types/node": "^20.19.37",
+    "@universal-deploy/netlify": "^0.2.1"
   },
-  "files": [
-    "dist/"
-  ],
   "nx": {
     "tags": [
       "type:boilerplate"
     ]
-  }
+  },
+  "files": [
+    "dist/"
+  ]
 }

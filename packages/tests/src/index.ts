@@ -198,6 +198,12 @@ function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
 
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
+
+  if (command === "workflow-write") {
+    // Ensure tests for auth0 are generated even if no env var is defined
+    process.env.TEST_AUTH0_CLIENT_ID ??= "TEST";
+  }
+
   let filter = args.filter ? args.filter.split(",") : undefined;
   const exclude = filter ? filter.filter((f) => f.startsWith("!")).map((f) => f.slice(1)) : undefined;
 

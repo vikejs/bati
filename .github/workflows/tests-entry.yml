@@ -228,6 +228,8 @@ jobs:
           - cloudflare--react--hono--eslint--biome--oxlint
           - cloudflare--react--h3--eslint--biome--oxlint
           - cloudflare--react--eslint--biome--oxlint
+          - react--edgeone--eslint--biome--oxlint
+          - vue--netlify--eslint--biome--oxlint
           - solid--eslint--biome--oxlint--prettier
           - react--eslint--biome--oxlint--prettier
           - vue--eslint--biome--oxlint--prettier
@@ -715,6 +717,12 @@ jobs:
           - destination: cloudflare--react--eslint--biome--oxlint
             flags: --cloudflare --react --eslint --biome --oxlint
             test-files: FRAMEWORK+cloudflare.spec.ts
+          - destination: react--edgeone--eslint--biome--oxlint
+            flags: --react --edgeone --eslint --biome --oxlint
+            test-files: FRAMEWORK+edgeone.spec.ts
+          - destination: vue--netlify--eslint--biome--oxlint
+            flags: --vue --netlify --eslint --biome --oxlint
+            test-files: FRAMEWORK+netlify.spec.ts
           - destination: solid--eslint--biome--oxlint--prettier
             flags: --solid --eslint --biome --oxlint --prettier
             test-files: FRAMEWORK+prettier.spec.ts

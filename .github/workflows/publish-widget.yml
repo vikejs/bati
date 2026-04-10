@@ -1,0 +1,48 @@
+name: Publish Widget to npmjs on PR merge
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+    paths:
+      - 'website/**'
+      - 'packages/features/src/**'
+
+permissions:
+  contents: write
+  id-token: write  # Required for OIDC
+
+jobs:
+  build-and-publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v5
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v6
+        with:
+          # Note: Trusted publishing requires npm CLI version 11.5.1 or later and Node version 22.14.0 or higher.
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Configure git before publish
+        run: |
+          git config --global user.name "Joël Charles"
+          git config --global user.email "joel.charles91@gmail.com"
+
+      - run: pnpm run release-widget:ci
+        working-directory: website
