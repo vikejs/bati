@@ -1,0 +1,29 @@
+{
+  "name": "@batijs/netlify",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:",
+    "@netlify/vite-plugin": "^2.11.3",
+    "@types/node": "^20.19.37",
+    "@universal-deploy/netlify": "^0.2.0"
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  },
+  "files": [
+    "dist/"
+  ]
+}
