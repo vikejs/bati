@@ -10,6 +10,11 @@ on:
       - 'website/**'
       - 'packages/features/src/**'
 
+# Conflicts with publish.yml
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 permissions:
   contents: write
   id-token: write  # Required for OIDC
@@ -21,6 +26,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+
+      - name: Fetch latest
+        run: |
+          git fetch --tags origin
+          git pull origin ${{ github.ref_name }}
 
       - uses: pnpm/action-setup@v5
         name: Install pnpm
@@ -38,6 +48,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Build dependencies
+        run: pnpm build
 
       - name: Configure git before publish
         run: |

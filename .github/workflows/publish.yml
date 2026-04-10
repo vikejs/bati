@@ -9,6 +9,11 @@ on:
     paths-ignore:
       - 'website/**'
 
+# Conflicts with publish-widget.yml
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 permissions:
   contents: write
   id-token: write  # Required for OIDC
@@ -20,6 +25,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+
+      - name: Fetch latest
+        run: |
+          git fetch --tags origin
+          git pull origin ${{ github.ref_name }}
 
       - uses: pnpm/action-setup@v5
         name: Install pnpm
