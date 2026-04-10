@@ -84,7 +84,7 @@ jobs:
         # like Storybook from walking up and detecting nx.json in the repo root.
         # Use $GITHUB_WORKSPACE/$RUNNER_TEMP env vars (not ${{ }} expressions) so bash
         # does not interpret backslashes in Windows paths as escape sequences.
-        run: bun "$GITHUB_WORKSPACE/bati-cli/index.js" --knip ${{ inputs.flags }} "$RUNNER_TEMP/${{ inputs.destination }}"
+        run: bun "$GITHUB_WORKSPACE/bati-cli/dist/index.js" --knip ${{ inputs.flags }} "$RUNNER_TEMP/${{ inputs.destination }}"
 
       - name: Link tests-utils
         shell: bash
