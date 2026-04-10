@@ -1,6 +1,6 @@
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
-export const matrix = ["react", "netlify", "eslint", "biome", "oxlint"];
+export const matrix = ["vue", "netlify", "eslint", "biome", "oxlint"];
 
 await describeMultipleBati([
   // dev
