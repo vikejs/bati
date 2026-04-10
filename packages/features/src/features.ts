@@ -526,7 +526,14 @@ export const features = [
     image:
       "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxLjE0ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDIyNiI+PHBhdGggZmlsbD0iIzA1QkRCQSIgZD0iTTY5LjE4MSAxODguMDg3aC0yLjQxN2wtMTIuMDY1LTEyLjA2NXYtMi40MTdsMTguNDQ0LTE4LjQ0NGgxMi43NzhsMS43MDQgMS43MDR2MTIuNzc4ek01NC42OTkgNTEuNjI4di0yLjQxN2wxMi4wNjUtMTIuMDY1aDIuNDE3TDg3LjYyNSA1NS41OXYxMi43NzhsLTEuNzA0IDEuNzA0SDczLjE0M3oiLz48cGF0aCBmaWxsPSIjMDE0ODQ3IiBkPSJNMTYwLjkwNiAxNDkuMTk4aC0xNy41NTJsLTEuNDY2LTEuNDY2di00MS4wODljMC03LjMxLTIuODczLTEyLjk3Ni0xMS42ODktMTMuMTc0Yy00LjUzNy0uMTE5LTkuNzI3IDAtMTUuMjc0LjIxOGwtLjgzMy44NTJ2NTMuMTczbC0xLjQ2NiAxLjQ2Nkg5NS4wNzRsLTEuNDY2LTEuNDY2di03MC4xOWwxLjQ2Ni0xLjQ2N2gzOS41MDNjMTUuMzU0IDAgMjcuNzk1IDEyLjQ0MSAyNy43OTUgMjcuNzk1djQzLjg4MmwtMS40NjYgMS40NjZaIi8+PHBhdGggZmlsbD0iIzA1QkRCQSIgZD0iTTcxLjY3NyAxMjIuODg5SDEuNDY2TDAgMTIxLjQyM1YxMDMuODNsMS40NjYtMS40NjZoNzAuMjExbDEuNDY2IDEuNDY2djE3LjU5M3ptMTgyLjg1NyAwaC03MC4yMTFsLTEuNDY2LTEuNDY2VjEwMy44M2wxLjQ2Ni0xLjQ2Nmg3MC4yMTFMMjU2IDEwMy44M3YxNy41OTN6TTExNy44NzYgNTQuMTI0VjEuNDY2TDExOS4zNDIgMGgxNy41OTNsMS40NjYgMS40NjZ2NTIuNjU4bC0xLjQ2NiAxLjQ2NmgtMTcuNTkzem0wIDE2OS42NjN2LTUyLjY1OGwxLjQ2Ni0xLjQ2NmgxNy41OTNsMS40NjYgMS40NjZ2NTIuNjU4bC0xLjQ2NiAxLjQ2NWgtMTcuNTkzeiIvPjwvc3ZnPg==",
     url: "https://www.netlify.com",
-    disabled: true,
+    tagline: "Push your ideas to the web",
+    repo: "netlify/primitives",
+    links: [
+      {
+        label: "Docs",
+        href: "https://docs.netlify.com/build/frameworks/framework-setup-guides/vite/",
+      },
+    ],
   },
   {
     category: "Hosting",
