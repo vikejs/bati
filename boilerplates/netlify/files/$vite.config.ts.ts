@@ -13,10 +13,5 @@ export default async function getViteConfig(props: TransformerProps): Promise<un
     },
   });
 
-  addVitePlugin(mod, {
-    from: "@universal-deploy/netlify/vite",
-    constructor: "netlifyCompat",
-  });
-
   return mod.generate().code;
 }
