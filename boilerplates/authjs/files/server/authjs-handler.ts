@@ -53,13 +53,10 @@ export async function getSession(req: Request, config: Omit<AuthConfig, "raw">):
   const url = createActionURL("session", requestURL.protocol, req.headers, process.env, config);
 
   const response = await Auth(new Request(url, { headers: { cookie: req.headers.get("cookie") ?? "" } }), config);
-
-  const { status = 200 } = response;
-
   const data = await response.json();
 
   if (!data || !Object.keys(data).length) return null;
-  if (status === 200) return data as Session;
+  if (response.status === 200) return data as Session;
   throw new Error(typeof data === "object" && "message" in data ? (data.message as string) : undefined);
 }
 
