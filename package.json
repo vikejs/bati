@@ -11,7 +11,7 @@
     "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish --no-git-checks",
     "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
     "release:local": "pnpm -r prerelease && bumpp -y --no-push --no-tag --no-commit --preid local prerelease && pnpm run publish --no-git-checks --tag local --registry http://localhost:4873",
-    "publish": "pnpm run build && pnpm -r publish",
+    "publish": "pnpm run build && pnpm -r --filter \"!@batijs/elements\" publish",
     "check-types": "nx run-many --target=check-types",
     "test": "nx run-many --target=test",
     "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
