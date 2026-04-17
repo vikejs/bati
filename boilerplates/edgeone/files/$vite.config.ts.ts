@@ -6,7 +6,6 @@ export default async function getViteConfig(props: TransformerProps): Promise<un
   addVitePlugin(mod, {
     from: "@edgeone/vite",
     constructor: "edgeone",
-    options: { serverWrapper: "vike" },
   });
 
   return mod.generate().code;
