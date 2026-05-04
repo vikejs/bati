@@ -31,7 +31,7 @@ jobs:
           git fetch --tags origin
           git pull origin ${{ github.ref_name }}
 
-      - uses: pnpm/action-setup@v5
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         id: pnpm-install
         with:
