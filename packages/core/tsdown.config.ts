@@ -1,20 +1,5 @@
-import type { Plugin } from "rolldown";
 import { defineConfig } from "tsdown";
 import { purgePolyfills } from "unplugin-purge-polyfills";
-
-const eslintFixPlugin: Plugin = {
-  name: "eslint-fix-plugin",
-  transform(code, id) {
-    if (id.match(/eslint[/\\]lib[/\\]linter[/\\]esquery\.js$/)) {
-      return {
-        code: code
-          .replace("esquery.matches", "esquery.default.matches")
-          .replace("esquery.parse", "esquery.default.parse"),
-        map: null,
-      };
-    }
-  },
-};
 
 export default defineConfig([
   {
@@ -51,10 +36,11 @@ export default defineConfig([
     target: "es2022",
     outDir: "./dist",
     dts: false,
-    plugins: [eslintFixPlugin, purgePolyfills.rolldown({})],
+    plugins: [purgePolyfills.rolldown({})],
     minify: true,
     deps: {
       alwaysBundle: [/./],
+      neverBundle: [/@ast-grep\//],
       onlyBundle: false,
     },
     inputOptions: {
@@ -79,7 +65,6 @@ export default defineConfig([
       neverBundle: [/@batijs\/.*/, "@types/unist", "@types/mdast"],
       onlyBundle: false,
     },
-    plugins: [eslintFixPlugin],
     inputOptions: {
       resolve: {
         mainFields: ["module", "main"],
