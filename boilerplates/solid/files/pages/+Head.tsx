@@ -1,3 +1,4 @@
+//# BATI.has("google-analytics")
 /* eslint-disable solid/no-innerhtml */
 
 // https://vike.dev/Head

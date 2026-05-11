@@ -15,6 +15,7 @@ interface Specifier {
   name: string;
   node: SgNode;
   isDefault: boolean;
+  isNamespace: boolean;
 }
 
 function collectSpecifiers(importNode: SgNode): Specifier[] {
@@ -24,7 +25,7 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
     if (child.kind() === "import_clause") {
       for (const clauseChild of child.children()) {
         if (clauseChild.kind() === "identifier") {
-          specifiers.push({ name: clauseChild.text(), node: clauseChild, isDefault: true });
+          specifiers.push({ name: clauseChild.text(), node: clauseChild, isDefault: true, isNamespace: false });
         } else if (clauseChild.kind() === "named_imports") {
           for (const spec of clauseChild.children()) {
             if (spec.kind() === "import_specifier") {
@@ -32,12 +33,17 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
               const children = spec.children().filter((c) => c.kind() === "identifier");
               const localName = children[children.length - 1];
               if (localName) {
-                specifiers.push({ name: localName.text(), node: spec, isDefault: false });
+                specifiers.push({ name: localName.text(), node: spec, isDefault: false, isNamespace: false });
               }
             }
           }
+        } else if (clauseChild.kind() === "namespace_import") {
+          // import * as ns — local name is the identifier after "as"
+          const ident = clauseChild.children().find((c) => c.kind() === "identifier");
+          if (ident) {
+            specifiers.push({ name: ident.text(), node: clauseChild, isDefault: false, isNamespace: true });
+          }
         }
-        // namespace_import (import * as ns) — skip, can't easily check usage
       }
     }
   }
@@ -49,15 +55,18 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
 // Returns a TextEdit that replaces the whole import statement.
 function rebuildImport(importNode: SgNode, usedSpecs: Specifier[], sourceText: string): TextEdit {
   const defaultSpec = usedSpecs.find((s) => s.isDefault);
-  const namedSpecs = usedSpecs.filter((s) => !s.isDefault);
+  const namespaceSpec = usedSpecs.find((s) => s.isNamespace);
+  const namedSpecs = usedSpecs.filter((s) => !s.isDefault && !s.isNamespace);
 
   // Preserve statement-level `type` keyword: `import type { Foo }` vs `import { type Foo }`
   const isTypeImport = /^import\s+type\s/.test(importNode.text());
 
   let clause = "";
   if (defaultSpec) clause += defaultSpec.name;
-  if (defaultSpec && namedSpecs.length > 0) clause += ", ";
-  if (namedSpecs.length > 0) {
+  if (defaultSpec && (namespaceSpec || namedSpecs.length > 0)) clause += ", ";
+  if (namespaceSpec) {
+    clause += `* as ${namespaceSpec.name}`;
+  } else if (namedSpecs.length > 0) {
     clause += `{ ${namedSpecs.map((s) => s.node.text()).join(", ")} }`;
   }
 
@@ -87,6 +96,8 @@ export function removeUnusedImports(code: string, lang: Lang, extractor: Extract
       const usages = [
         ...root.findAll({ rule: { kind: "identifier", regex: `^${escapedName}$` } }),
         ...root.findAll({ rule: { kind: "type_identifier", regex: `^${escapedName}$` } }),
+        // shorthand_property_identifier covers `{ fs }` in object literals (value === key)
+        ...root.findAll({ rule: { kind: "shorthand_property_identifier", regex: `^${escapedName}$` } }),
       ].filter((n) => !isDescendant(importNode, n));
 
       if (usages.length > 0) {

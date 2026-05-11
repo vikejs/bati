@@ -395,6 +395,74 @@ export const framework = solid();`,
   );
 });
 
+describe("remove unused namespace imports (import * as)", async () => {
+  test("namespace import used only as shorthand property is kept", async () => {
+    const result = await transformAndFormat(
+      `import * as fs from "node:fs/promises";
+export const x = doSomething({ fs });`,
+      { BATI: new BatiSet([], features), BATI_TEST: false },
+      { filepath: "test.ts" },
+    );
+    assert.equal(
+      result.code.trim(),
+      `import * as fs from "node:fs/promises";
+export const x = doSomething({ fs });`,
+    );
+  });
+
+  test("unused namespace import is removed", async () => {
+    const result = await transformAndFormat(
+      `import * as ns from "some-lib";
+export const x = 1;`,
+      { BATI: new BatiSet([], features), BATI_TEST: false },
+      { filepath: "test.ts" },
+    );
+    assert.equal(result.code.trim(), "export const x = 1;");
+  });
+
+  test("used namespace import is kept", async () => {
+    const result = await transformAndFormat(
+      `import * as ns from "some-lib";
+export const x = ns.foo;`,
+      { BATI: new BatiSet([], features), BATI_TEST: false },
+      { filepath: "test.ts" },
+    );
+    assert.equal(
+      result.code.trim(),
+      `import * as ns from "some-lib";
+export const x = ns.foo;`,
+    );
+  });
+
+  testIfElse(
+    `import * as solidNs from "solid";
+import * as reactNs from "react";
+
+export const framework = BATI.has("react")
+? reactNs.something()
+: BATI.has("solid")
+? solidNs.something()
+: null;`,
+    `import * as reactNs from "react";
+
+export const framework = reactNs.something();`,
+    `import * as solidNs from "solid";
+
+export const framework = solidNs.something();`,
+    `export const framework = null;`,
+  );
+
+  // import Default, * as ns — condition selects which binding is actually used
+  testIfElse(
+    `import React, * as ReactNs from "react";
+export const x = BATI.has("react") ? ReactNs.createElement("div") : React("div");`,
+    `import * as ReactNs from "react";
+export const x = ReactNs.createElement("div");`,
+    `import React from "react";
+export const x = React("div");`,
+  );
+});
+
 describe('rewrite "@batijs/" imports', async () => {
   test("simple", async () => {
     const filename = ctx.jsx ? "test.tsx" : "test.ts";
