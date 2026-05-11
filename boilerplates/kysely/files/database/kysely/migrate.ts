@@ -4,7 +4,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { FileMigrationProvider, Migrator } from "kysely";
+import { FileMigrationProvider, Migrator } from "kysely/migration";
 import { dbKysely } from "./db";
 
 const __filename = fileURLToPath(import.meta.url);
