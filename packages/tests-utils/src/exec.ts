@@ -50,13 +50,15 @@ export function exec(
 
   setupCleanup(childProcess);
 
+  const strCmd = `${command} ${args.join(" ")} (cwd: ${restOptions.cwd})`;
+
   const promise = new Promise<void>((resolve, reject) => {
     let timeoutId: NodeJS.Timeout | null = null;
 
     if (timeout) {
       timeoutId = setTimeout(async () => {
         await kill(childProcess.pid!);
-        reject(new Error(`Process timed out after ${timeout}ms`));
+        reject(new Error(`Process timed out after ${timeout}ms: ${strCmd}`));
       }, timeout);
     }
 
@@ -67,7 +69,7 @@ export function exec(
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error(`Process exited with code ${code}: ${command} ${args.join(" ")} (cwd: ${restOptions.cwd})`));
+        reject(new Error(`Process exited with code ${code}: ${strCmd}`));
       }
     });
 
