@@ -1,4 +1,3 @@
-import type { SourceCode } from "eslint";
 import type { VikeMeta } from "../types.js";
 
 export type ValidEvalResponse = boolean | "remove-comments-only";
@@ -18,14 +17,6 @@ function _extractCondition(test: string) {
   if (!test.includes("BATI.has") && !test.includes("BATI_TEST")) return null;
 
   return test.replace(/^# /, "").trim();
-}
-
-export function extractBatiCondition(sourceCode: SourceCode, node: { test: { range?: [number, number] } }) {
-  if (!node.test.range) return null;
-
-  const test = sourceCode.text.slice(node.test.range[0], node.test.range[1]);
-
-  return _extractCondition(test);
 }
 
 export function extractBatiConditionComment(comment: { value: string }) {

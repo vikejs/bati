@@ -1,5 +1,29 @@
 import { type CategoryLabels, type Flags, features } from "@batijs/features";
-import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
+
+function deepMerge<T extends Record<string, unknown>>(target: T | undefined, source?: Partial<T>): T {
+  if (!target) return (source ?? {}) as T;
+  if (!source) return target;
+  const result = { ...target } as T;
+  for (const key of Object.keys(source) as (keyof T)[]) {
+    const sv = source[key];
+    const tv = target[key];
+    if (
+      sv !== null &&
+      sv !== undefined &&
+      typeof sv === "object" &&
+      !Array.isArray(sv) &&
+      tv !== null &&
+      tv !== undefined &&
+      typeof tv === "object" &&
+      !Array.isArray(tv)
+    ) {
+      result[key] = deepMerge(tv as Record<string, unknown>, sv as Record<string, unknown>) as T[keyof T];
+    } else if (sv !== undefined) {
+      result[key] = sv as T[keyof T];
+    }
+  }
+  return result;
+}
 import type { Nodes, Root } from "mdast";
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
