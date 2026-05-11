@@ -1,7 +1,7 @@
 import type { Lang, SgNode } from "@ast-grep/napi";
 import { parse } from "@ast-grep/napi";
 import type { Extractor } from "../linters/common.js";
-import { applyEdits, type TextEdit } from "./apply-edits.js";
+import { applyEdits, removeNodeWithNewline, type TextEdit } from "./apply-edits.js";
 
 function isDescendant(ancestor: SgNode, node: SgNode): boolean {
   const aStart = ancestor.range().start.index;
@@ -9,18 +9,6 @@ function isDescendant(ancestor: SgNode, node: SgNode): boolean {
   const nStart = node.range().start.index;
   const nEnd = node.range().end.index;
   return nStart >= aStart && nEnd <= aEnd;
-}
-
-function removeNodeWithNewline(node: SgNode, code: string): TextEdit {
-  const start = node.range().start.index;
-  let end = node.range().end.index;
-  while (end < code.length && code[end] !== "\n" && (code[end] === " " || code[end] === "\t")) {
-    end++;
-  }
-  if (end < code.length && code[end] === "\n") {
-    end++;
-  }
-  return { startIndex: start, endIndex: end, newText: "" };
 }
 
 interface Specifier {
@@ -63,6 +51,9 @@ function rebuildImport(importNode: SgNode, usedSpecs: Specifier[], sourceText: s
   const defaultSpec = usedSpecs.find((s) => s.isDefault);
   const namedSpecs = usedSpecs.filter((s) => !s.isDefault);
 
+  // Preserve statement-level `type` keyword: `import type { Foo }` vs `import { type Foo }`
+  const isTypeImport = /^import\s+type\s/.test(importNode.text());
+
   let clause = "";
   if (defaultSpec) clause += defaultSpec.name;
   if (defaultSpec && namedSpecs.length > 0) clause += ", ";
@@ -70,10 +61,11 @@ function rebuildImport(importNode: SgNode, usedSpecs: Specifier[], sourceText: s
     clause += `{ ${namedSpecs.map((s) => s.node.text()).join(", ")} }`;
   }
 
+  const typeKeyword = isTypeImport ? "type " : "";
   return {
     startIndex: importNode.range().start.index,
     endIndex: importNode.range().end.index,
-    newText: `import ${clause} from ${sourceText}`,
+    newText: `import ${typeKeyword}${clause} from ${sourceText}`,
   };
 }
 
@@ -91,9 +83,10 @@ export function removeUnusedImports(code: string, lang: Lang, extractor: Extract
 
     const usedSpecs: Specifier[] = [];
     for (const spec of specifiers) {
+      const escapedName = spec.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const usages = [
-        ...root.findAll({ rule: { kind: "identifier", regex: `^${spec.name}$` } }),
-        ...root.findAll({ rule: { kind: "type_identifier", regex: `^${spec.name}$` } }),
+        ...root.findAll({ rule: { kind: "identifier", regex: `^${escapedName}$` } }),
+        ...root.findAll({ rule: { kind: "type_identifier", regex: `^${escapedName}$` } }),
       ].filter((n) => !isDescendant(importNode, n));
 
       if (usages.length > 0) {

@@ -2,14 +2,10 @@ import type { Lang, SgNode } from "@ast-grep/napi";
 import { parse } from "@ast-grep/napi";
 import { relative } from "../../relative.js";
 import type { VikeMeta } from "../../types.js";
-import { evalCondition, extractBatiConditionComment, extractBatiGlobalComment } from "../eval.js";
+import { evalCondition, extractBatiConditionComment, extractBatiGlobalComment, hasBatiCondition } from "../eval.js";
 import type { Extractor } from "../linters/common.js";
 import { getBatiImportMatch } from "../linters/common.js";
 import { applyEdits, type TextEdit } from "./apply-edits.js";
-
-function hasBatiCondition(text: string): boolean {
-  return text.includes("BATI.has") || text.includes("BATI_TEST");
-}
 
 function removeNode(node: SgNode): TextEdit {
   return { startIndex: node.range().start.index, endIndex: node.range().end.index, newText: "" };
@@ -319,6 +315,8 @@ function runOnePass(code: string, lang: Lang, filename: string, meta: VikeMeta, 
 
 export function transformTs(code: string, lang: Lang, filename: string, meta: VikeMeta, extractor: Extractor): string {
   let current = code;
+  // Multiple passes because resolving one BATI condition can expose another (e.g. nested ternaries).
+  // 10 is a safe upper bound; in practice 1–2 passes suffice.
   for (let pass = 0; pass < 10; pass++) {
     const next = runOnePass(current, lang, filename, meta, extractor);
     if (next === current) break;

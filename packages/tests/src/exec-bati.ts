@@ -29,7 +29,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       bunExists ? "bun" : "node",
       [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
       {
-        timeout: flags.includes('storybook') ? 120000 : 10000,
+        timeout: flags.includes("storybook") ? 120000 : 10000,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
         env: {
           BATI_TEST: "1",

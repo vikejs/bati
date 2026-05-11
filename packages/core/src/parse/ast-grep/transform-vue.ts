@@ -1,18 +1,10 @@
 import type { SgNode } from "@ast-grep/napi";
 import { Lang, parse } from "@ast-grep/napi";
 import type { VikeMeta } from "../../types.js";
-import { evalCondition, extractBatiConditionComment } from "../eval.js";
+import { evalCondition, extractBatiConditionComment, hasBatiCondition } from "../eval.js";
 import type { Extractor } from "../linters/common.js";
-import { applyEdits, type TextEdit } from "./apply-edits.js";
+import { applyEdits, removeNodeWithNewline, type TextEdit } from "./apply-edits.js";
 import { transformTs } from "./transform-ts.js";
-
-function removeNodeWithNewline(node: SgNode, code: string): TextEdit {
-  const start = node.range().start.index;
-  let end = node.range().end.index;
-  while (end < code.length && code[end] !== "\n" && (code[end] === " " || code[end] === "\t")) end++;
-  if (end < code.length && code[end] === "\n") end++;
-  return { startIndex: start, endIndex: end, newText: "" };
-}
 
 function findTemplateElement(root: SgNode): SgNode | null {
   for (const child of root.children()) {
@@ -23,10 +15,6 @@ function findTemplateElement(root: SgNode): SgNode | null {
     if (tagName?.text() === "template") return child;
   }
   return null;
-}
-
-function hasBatiCondition(text: string): boolean {
-  return text.includes("BATI.has") || text.includes("BATI_TEST");
 }
 
 // Process {{ expr }} interpolations in template text nodes
@@ -52,6 +40,7 @@ function collectVueTemplateEdits(
   for (const commentNode of templateEl.findAll({ rule: { kind: "comment" } })) {
     const idx = commentNode.range().start.index;
     if (processedComments.has(idx)) continue;
+    processedComments.add(idx);
 
     const raw = commentNode.text();
     if (!raw.startsWith("<!--")) continue;

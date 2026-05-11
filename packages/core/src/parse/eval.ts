@@ -2,6 +2,10 @@ import type { VikeMeta } from "../types.js";
 
 export type ValidEvalResponse = boolean | "remove-comments-only";
 
+export function hasBatiCondition(text: string): boolean {
+  return text.includes("BATI.has") || text.includes("BATI_TEST");
+}
+
 export function evalCondition(code: string, meta: VikeMeta): ValidEvalResponse {
   const func = new Function(`{ return function(BATI, BATI_TEST){ return ${code} } };`);
   const result: unknown = func.call(null).call(null, meta.BATI, meta.BATI_TEST);

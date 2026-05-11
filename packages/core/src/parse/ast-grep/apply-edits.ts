@@ -1,7 +1,21 @@
+import type { SgNode } from "@ast-grep/napi";
+
 export interface TextEdit {
   startIndex: number;
   endIndex: number;
   newText: string;
+}
+
+export function removeNodeWithNewline(node: SgNode, code: string): TextEdit {
+  const start = node.range().start.index;
+  let end = node.range().end.index;
+  while (end < code.length && code[end] !== "\n" && (code[end] === " " || code[end] === "\t")) {
+    end++;
+  }
+  if (end < code.length && code[end] === "\n") {
+    end++;
+  }
+  return { startIndex: start, endIndex: end, newText: "" };
 }
 
 function deduplicateEdits(edits: TextEdit[]): TextEdit[] {

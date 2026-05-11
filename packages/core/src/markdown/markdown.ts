@@ -1,4 +1,12 @@
 import { type CategoryLabels, type Flags, features } from "@batijs/features";
+import type { Nodes, Root } from "mdast";
+import { fromMarkdown, type Value } from "mdast-util-from-markdown";
+import { toMarkdown } from "mdast-util-to-markdown";
+import type { StringTransformer } from "../types.js";
+import { createTOC } from "./createTOC.js";
+import type { ClassConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
+import { wrapWithComment } from "./utils.js";
+import { zone } from "./zone.js";
 
 function deepMerge<T extends Record<string, unknown>>(target: T | undefined, source?: Partial<T>): T {
   if (!target) return (source ?? {}) as T;
@@ -24,15 +32,6 @@ function deepMerge<T extends Record<string, unknown>>(target: T | undefined, sou
   }
   return result;
 }
-
-import type { Nodes, Root } from "mdast";
-import { fromMarkdown, type Value } from "mdast-util-from-markdown";
-import { toMarkdown } from "mdast-util-to-markdown";
-import type { StringTransformer } from "../types.js";
-import { createTOC } from "./createTOC.js";
-import type { ClassConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
-import { wrapWithComment } from "./utils.js";
-import { zone } from "./zone.js";
 
 export function parseMarkdown(text: string, defaults?: MarkdownOptions) {
   const markdownText = /<!--\s*bati:start\s+section="document"\s*-->/.test(text)
