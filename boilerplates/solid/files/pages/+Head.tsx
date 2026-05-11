@@ -18,6 +18,7 @@ export function Head() {
   } else if (BATI.has("google-analytics")) {
     return (
       <>
+        <link rel="icon" href={logoUrl} />;
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
