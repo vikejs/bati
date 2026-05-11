@@ -1,8 +1,8 @@
-import { Lang, parse } from "@ast-grep/napi";
 import type { SgNode } from "@ast-grep/napi";
+import { Lang, parse } from "@ast-grep/napi";
+import type { VikeMeta } from "../../types.js";
 import { evalCondition, extractBatiConditionComment } from "../eval.js";
 import type { Extractor } from "../linters/common.js";
-import type { VikeMeta } from "../../types.js";
 import { applyEdits, type TextEdit } from "./apply-edits.js";
 import { transformTs } from "./transform-ts.js";
 

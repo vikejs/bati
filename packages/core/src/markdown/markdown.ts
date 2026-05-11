@@ -24,6 +24,7 @@ function deepMerge<T extends Record<string, unknown>>(target: T | undefined, sou
   }
   return result;
 }
+
 import type { Nodes, Root } from "mdast";
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";

@@ -1,10 +1,10 @@
 import type { Lang, SgNode } from "@ast-grep/napi";
 import { parse } from "@ast-grep/napi";
-import { evalCondition, extractBatiConditionComment, extractBatiGlobalComment } from "../eval.js";
-import { getBatiImportMatch } from "../linters/common.js";
 import { relative } from "../../relative.js";
-import type { Extractor } from "../linters/common.js";
 import type { VikeMeta } from "../../types.js";
+import { evalCondition, extractBatiConditionComment, extractBatiGlobalComment } from "../eval.js";
+import type { Extractor } from "../linters/common.js";
+import { getBatiImportMatch } from "../linters/common.js";
 import { applyEdits, type TextEdit } from "./apply-edits.js";
 
 function hasBatiCondition(text: string): boolean {

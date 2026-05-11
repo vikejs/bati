@@ -23,8 +23,6 @@ function removeNodeWithNewline(node: SgNode, code: string): TextEdit {
   return { startIndex: start, endIndex: end, newText: "" };
 }
 
-// Collect import specifier nodes from an import_statement
-// Returns array of { name, node } for each named binding
 interface Specifier {
   name: string;
   node: SgNode;
@@ -38,10 +36,8 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
     if (child.kind() === "import_clause") {
       for (const clauseChild of child.children()) {
         if (clauseChild.kind() === "identifier") {
-          // default import: import foo from "..."
           specifiers.push({ name: clauseChild.text(), node: clauseChild, isDefault: true });
         } else if (clauseChild.kind() === "named_imports") {
-          // named: import { a, b } from "..."
           for (const spec of clauseChild.children()) {
             if (spec.kind() === "import_specifier") {
               // Could have alias: `import { a as b }` — local name is last identifier
@@ -52,9 +48,8 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
               }
             }
           }
-        } else if (clauseChild.kind() === "namespace_import") {
-          // import * as ns from "..." — skip, can't easily check usage
         }
+        // namespace_import (import * as ns) — skip, can't easily check usage
       }
     }
   }
@@ -62,39 +57,24 @@ function collectSpecifiers(importNode: SgNode): Specifier[] {
   return specifiers;
 }
 
-function removeSpecifier(specNode: SgNode, importNode: SgNode, code: string): TextEdit {
-  const namedImports = importNode
-    .children()
-    .flatMap((c) => (c.kind() === "import_clause" ? c.children() : []))
-    .find((c) => c.kind() === "named_imports");
+// Rebuild an import statement retaining only the used specifiers.
+// Returns a TextEdit that replaces the whole import statement.
+function rebuildImport(importNode: SgNode, usedSpecs: Specifier[], sourceText: string): TextEdit {
+  const defaultSpec = usedSpecs.find((s) => s.isDefault);
+  const namedSpecs = usedSpecs.filter((s) => !s.isDefault);
 
-  if (!namedImports) return { startIndex: 0, endIndex: 0, newText: "" };
-
-  const allSpecs = namedImports.children().filter((c) => c.kind() === "import_specifier");
-  const idx = allSpecs.findIndex((s) => s.range().start.index === specNode.range().start.index);
-
-  if (allSpecs.length === 1) {
-    // only specifier — remove entire import
-    return removeNodeWithNewline(importNode, code);
+  let clause = "";
+  if (defaultSpec) clause += defaultSpec.name;
+  if (defaultSpec && namedSpecs.length > 0) clause += ", ";
+  if (namedSpecs.length > 0) {
+    clause += `{ ${namedSpecs.map((s) => s.node.text()).join(", ")} }`;
   }
 
-  if (idx < allSpecs.length - 1) {
-    // not last: remove from start of this specifier to start of next
-    const nextSpec = allSpecs[idx + 1];
-    return {
-      startIndex: specNode.range().start.index,
-      endIndex: nextSpec.range().start.index,
-      newText: "",
-    };
-  } else {
-    // last: remove from end of previous to end of this
-    const prevSpec = allSpecs[idx - 1];
-    return {
-      startIndex: prevSpec.range().end.index,
-      endIndex: specNode.range().end.index,
-      newText: "",
-    };
-  }
+  return {
+    startIndex: importNode.range().start.index,
+    endIndex: importNode.range().end.index,
+    newText: `import ${clause} from ${sourceText}`,
+  };
 }
 
 export function removeUnusedImports(code: string, lang: Lang, extractor: Extractor): string {
@@ -109,20 +89,27 @@ export function removeUnusedImports(code: string, lang: Lang, extractor: Extract
     const specifiers = collectSpecifiers(importNode);
     if (specifiers.length === 0) continue;
 
-    for (const { name, node: specNode } of specifiers) {
-      // Find all identifier usages outside the import declaration
-      const usages = root
-        .findAll({ rule: { kind: "identifier", regex: `^${name}$` } })
-        .filter((n) => !isDescendant(importNode, n));
+    const usedSpecs: Specifier[] = [];
+    for (const spec of specifiers) {
+      const usages = [
+        ...root.findAll({ rule: { kind: "identifier", regex: `^${spec.name}$` } }),
+        ...root.findAll({ rule: { kind: "type_identifier", regex: `^${spec.name}$` } }),
+      ].filter((n) => !isDescendant(importNode, n));
 
-      if (usages.length === 0) {
-        if (specifiers.length === 1) {
-          extractor.deleteImport(source);
-          edits.push(removeNodeWithNewline(importNode, code));
-        } else {
-          edits.push(removeSpecifier(specNode, importNode, code));
-        }
+      if (usages.length > 0) {
+        usedSpecs.push(spec);
       }
+    }
+
+    if (usedSpecs.length === specifiers.length) continue; // all used
+
+    if (usedSpecs.length === 0) {
+      // all unused — remove entire import
+      extractor.deleteImport(source);
+      edits.push(removeNodeWithNewline(importNode, code));
+    } else {
+      // some unused — rebuild import with only used specifiers
+      edits.push(rebuildImport(importNode, usedSpecs, sourceNode.text()));
     }
   }
 
