@@ -26,7 +26,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       corepackLine = "";
       installCmd = "bun install --frozen-lockfile";
       installProdCmd = "bun install --production --frozen-lockfile";
-      lockfile = "bun.lock";
+      lockfile = "bun.lockb";
       break;
     default: // npm
       corepackLine = "";
