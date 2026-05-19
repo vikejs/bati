@@ -8,7 +8,7 @@ export default defineConfig({
     return [
       {
         type: "text",
-        step: `Push your repository to a Git provider, then create a new project in Dokploy. Check ${bold("TODO.md")} for details`,
+        step: `${bold("dokploy")}: Check ${bold("TODO.md")} for remaining steps.`,
       },
     ];
   },
