@@ -35,7 +35,13 @@ export class BatiSet extends Set<Flags> {
   }
 
   get hasUD(): boolean {
-    return this.has("cloudflare") || this.has("vercel") || this.has("netlify") || this.has("dokploy") || this.hasOneOf(this.#servers);
+    return (
+      this.has("cloudflare") ||
+      this.has("vercel") ||
+      this.has("netlify") ||
+      this.has("dokploy") ||
+      this.hasOneOf(this.#servers)
+    );
   }
 
   /**

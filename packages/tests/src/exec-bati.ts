@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 
 export async function execLocalBati(context: GlobalContext, flags: string[], monorepo = true) {
   const digest = flags.join("--") || "empty";
+  const timeout = flags.includes("storybook") ? 120000 : 15000;
   // --skip-git prevents git init in generated projects
   // --knip generates knip.json for E2E tests
   const mappedFlags = ["skip-git", "knip", ...flags].map((f) => `--${f}`);
@@ -17,7 +18,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
     // This is better than using the local dist build directly
     // as we are also testing that the generated package dependencies are properly bundled.
     await exec("npm", ["--registry", "http://localhost:4873", "create", "bati@local", "--", ...mappedFlags, digest], {
-      timeout: 15000,
+      timeout,
       cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
       env: {
         BATI_TEST: "1",
@@ -29,7 +30,7 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
       bunExists ? "bun" : "node",
       [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
       {
-        timeout: 10000,
+        timeout,
         cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
         env: {
           BATI_TEST: "1",

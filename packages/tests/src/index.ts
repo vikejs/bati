@@ -353,6 +353,9 @@ const context: GlobalContext = { tmpdir: "", localRepository: false };
 try {
   context.localRepository = await isVerdaccioRunning();
   await main(context, args);
+} catch (e) {
+  console.error(e);
+  throw e;
 } finally {
   if (context.tmpdir && !args.keep) {
     // Delete all tmp dirs

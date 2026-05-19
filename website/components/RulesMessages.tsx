@@ -171,8 +171,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Dokploy</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Hono / Express.js / Fastify / H3) or unselect{" "}
-            <span class="font-bold">Dokploy</span>
+            Either pick a server (Hono / Express.js / Fastify / H3) or unselect <span class="font-bold">Dokploy</span>
           </li>
         </ul>
       </span>
