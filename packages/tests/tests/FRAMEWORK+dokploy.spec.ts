@@ -7,7 +7,9 @@ export const matrix = [
   "react",
   ["hono", "express", "fastify", "h3"],
   ["drizzle", "authjs", undefined],
-  ["eslint", "biome", "oxlint"],
+  "eslint",
+  "biome",
+  "oxlint",
 ] as const;
 
 await describeBati(
