@@ -18,11 +18,7 @@ export default async function getTodo(props: TransformerProps): Promise<unknown>
 
 4. **Create a new application** in the Dokploy dashboard and connect it to your repository.
 
-5. **Set environment variables** in the application's Environment tab. At minimum:
-   - \`NODE_ENV=production\`
-   - \`PORT=3000\`
-
-6. **Deploy** — Dokploy will use the \`docker-compose.yml\` at the root of your repository to build and start your application.
+5. **Deploy** — Dokploy will use the \`docker-compose.yml\` at the root of your repository to build and start your application.
 
 See also: https://docs.dokploy.com
 `;
