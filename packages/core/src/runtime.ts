@@ -8,14 +8,31 @@ export interface PackageManagerInfo {
 }
 
 export function packageManager(): PackageManagerInfo {
-  if (!process.env.npm_config_user_agent) {
+  const ua = process.env.npm_config_user_agent;
+
+  // 1. Bun runtime detection (most reliable in Bun)
+  // @ts-expect-error Bun types not installed
+  if (typeof Bun !== "undefined" || process.versions.bun) {
     return {
-      name: "npm",
-      run: "npm run",
-      exec: "npx",
+      name: "bun",
+      // @ts-expect-error Bun types not installed
+      version: process.versions.bun ?? Bun.version,
+      run: "bun run",
+      exec: "bunx",
     };
   }
-  return pmFromUserAgent(process.env.npm_config_user_agent);
+
+  // 2. If we have a user agent, parse it
+  if (ua) {
+    return pmFromUserAgent(ua);
+  }
+
+  // 3. CI / unknown environment fallback
+  return {
+    name: "npm",
+    run: "npm run",
+    exec: "npx",
+  };
 }
 
 function pmFromUserAgent(userAgent: string): PackageManagerInfo {
