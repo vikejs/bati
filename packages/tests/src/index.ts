@@ -1,4 +1,4 @@
-import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
@@ -93,6 +93,33 @@ function linkTestUtils() {
     timeout: 60 * 1000,
     cwd: join(__dirname, "..", "..", "tests-utils"),
   });
+}
+
+async function packTestsUtils(): Promise<string> {
+  const testsUtilsDir = join(__dirname, "..", "..", "tests-utils");
+
+  // Clean up any stale tgz files
+  const existing = (await readdir(testsUtilsDir)).filter(
+    (f) => f.startsWith("batijs-tests-utils-") && f.endsWith(".tgz"),
+  );
+  await Promise.all(existing.map((f) => rm(join(testsUtilsDir, f))));
+
+  // npm pack is universally available and creates a proper .tgz
+  await exec("npm", ["pack", "--quiet"], {
+    timeout: 30 * 1000,
+    cwd: testsUtilsDir,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
+
+  const tgzFiles = (await readdir(testsUtilsDir)).filter(
+    (f) => f.startsWith("batijs-tests-utils-") && f.endsWith(".tgz"),
+  );
+
+  if (tgzFiles.length === 0) {
+    throw new Error("packTestsUtils: no .tgz found after npm pack");
+  }
+
+  return join(testsUtilsDir, tgzFiles[0]);
 }
 
 async function packageManagerInstall(context: GlobalContext) {
@@ -291,13 +318,28 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const onlyBuiltDependencies = new Set<string>();
   const pnpmRebuildProjectDirs: string[] = [];
 
+  // Pack @batijs/tests-utils for docker-compose (dokploy) test combinations.
+  // In CI the tarball is provided via build artifacts; locally we need to generate it.
+  const hasDockerCombinations = [...matrices.values()].some((m) => m.flags.includes("dokploy"));
+  const packedTestsUtilsTgzPath = hasDockerCombinations ? await packTestsUtils() : undefined;
+
   // for all matrices
   for (const { testFiles, flags } of matrices.values()) {
     promises.push(
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
         const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
-        await updatePackageJson(projectDir, flags);
+
+        // For dokploy projects: copy the tgz into the build context so that
+        // `docker build` can COPY it before running `npm install`.
+        let packedTestUtils: string | undefined;
+        if (flags.includes("dokploy") && packedTestsUtilsTgzPath) {
+          const tgzFilename = basename(packedTestsUtilsTgzPath);
+          await copyFile(packedTestsUtilsTgzPath, join(projectDir, tgzFilename));
+          packedTestUtils = `./${tgzFilename}`;
+        }
+
+        await updatePackageJson(projectDir, flags, packedTestUtils);
         await Promise.all([
           ...filesP,
           updateTsconfig(projectDir),

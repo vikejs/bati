@@ -88,7 +88,13 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     builderLines.push(corepackLine, "");
   }
 
-  builderLines.push(`COPY package.json ${lockfile} ./`, `RUN ${installCmd}`, "", "COPY . .");
+  builderLines.push(`COPY package.json ${lockfile} ./`);
+
+  if (meta.BATI_TEST) {
+    builderLines.push(`COPY batijs-tests-utils-*.tgz ./`);
+  }
+
+  builderLines.push(`RUN ${installCmd}`, "", "COPY . .");
 
   for (const cmd of builderCommands) {
     builderLines.push(cmd);
@@ -112,12 +118,13 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     runnerLines.push(corepackLine, "");
   }
 
-  runnerLines.push(`COPY package.json ${lockfile} ./`, `RUN ${runnerInstallCmd}`, "");
+  runnerLines.push(`COPY package.json ${lockfile} ./`);
 
   if (meta.BATI_TEST) {
-    // TODO in CI, the file is probably 2 folders above. When running test:e2e locally, this file is not generated
     runnerLines.push(`COPY batijs-tests-utils-*.tgz ./`);
   }
+
+  runnerLines.push(`RUN ${runnerInstallCmd}`, "");
 
   runnerLines.push("COPY --from=builder /app/dist ./dist");
 
