@@ -36,6 +36,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".html":
       case ".md":
       case ".toml":
+      case "Dockerfile":
         return fileContent as string;
       case ".json":
       case ".jsonc":
