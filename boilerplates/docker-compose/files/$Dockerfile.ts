@@ -9,6 +9,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   let lockfile: string;
   let corepackLine: string;
   let dockerImage: string;
+  const nodeCli = pm.name === "bun" ? "bun" : "node";
 
   switch (pm.name) {
     case "pnpm":
@@ -121,10 +122,10 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
 
   // CMD
   if (hasMigrations) {
-    const cmd = [...startupMigrations, "node ./dist/server/index.mjs"].join(" && ");
+    const cmd = [...startupMigrations, `${nodeCli} ./dist/server/index.mjs`].join(" && ");
     runnerLines.push(`CMD ["sh", "-c", "${cmd}"]`);
   } else {
-    runnerLines.push(`CMD ["node", "./dist/server/index.mjs"]`);
+    runnerLines.push(`CMD ["${nodeCli}", "./dist/server/index.mjs"]`);
   }
 
   return [...builderLines, ...runnerLines].join("\n") + "\n";
