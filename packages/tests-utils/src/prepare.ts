@@ -5,6 +5,7 @@ import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
+import { runDockerCompose, stopDockerCompose } from "./run-docker-compose.js";
 import { runDevServer } from "./run-dev.js";
 import { runProd } from "./run-prod.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
@@ -42,6 +43,8 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     script ??= "preview";
   }
 
+  const useDockerCompose = mode === "prod" && context.flags.includes("dokploy");
+
   function hooks() {
     beforeAll(async () => {
       if (mode === "dev") {
@@ -49,21 +52,33 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
         await runDevServer(context);
       } else if (mode === "prod") {
         await initPort(context);
-        await runProd(context, script);
+        if (useDockerCompose) {
+          await runDockerCompose(context);
+        } else {
+          await runProd(context, script);
+        }
       } else if (mode === "build") {
         await retryX(() => runBuild(context), retry);
       }
-    }, 120000);
+    }, useDockerCompose ? 300000 : 120000);
 
     // Cleanup tests:
-    // - Close the dev server
+    // - Close the dev server / docker-compose stack
     // - Remove temp dir
     afterAll(async () => {
-      const pid = context.server?.pid;
-      if (typeof pid === "number") {
-        await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+      if (useDockerCompose) {
+        try {
+          await stopDockerCompose();
+        } catch {
+          // best-effort cleanup — don't fail the test run
+        }
+      } else {
+        const pid = context.server?.pid;
+        if (typeof pid === "number") {
+          await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+        }
       }
-    }, 20000);
+    }, useDockerCompose ? 60000 : 20000);
   }
 
   return {

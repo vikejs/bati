@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
 
 const testAuth0 = Boolean(process.env.TEST_AUTH0_CLIENT_ID);
@@ -7,6 +9,7 @@ export const matrix = [
   ["express", "h3", "hono", "fastify"],
   ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])],
   ["cloudflare", undefined],
+  ["dokploy", undefined],
   "eslint",
   "biome",
   "oxlint",
@@ -19,6 +22,14 @@ export const exclude = [
   ["authjs", "cloudflare"],
   ["fastify", "cloudflare"],
   ["express", "cloudflare"],
+  // cloudflare and dokploy are mutually exclusive
+  ["cloudflare", "dokploy"],
+  // Restrict dokploy tests to react + hono only (one combination per auth layer)
+  ["solid", "dokploy"],
+  ["vue", "dokploy"],
+  ["express", "dokploy"],
+  ["h3", "dokploy"],
+  ["fastify", "dokploy"],
 ];
 
 // How to configure your environment for testing auth?
@@ -30,7 +41,7 @@ export const exclude = [
 
 await describeMultipleBati([
   () =>
-    describeBati(({ test, expect, fetch, context }) => {
+    describeBati(({ test, expect, fetch, context, testMatch }) => {
       test("home", async () => {
         const res = await fetch("/");
         expect(res.status).toBe(200);
@@ -49,8 +60,36 @@ await describeMultipleBati([
         });
         expect(res.status).toBe(404);
       });
+
+      testMatch<typeof matrix>("has Dockerfile", {
+        dokploy: async () => {
+          expect(existsSync(path.join(process.cwd(), "Dockerfile"))).toBe(true);
+        },
+      });
+
+      testMatch<typeof matrix>("has docker-compose.yml", {
+        dokploy: async () => {
+          expect(existsSync(path.join(process.cwd(), "docker-compose.yml"))).toBe(true);
+        },
+      });
+
+      testMatch<typeof matrix>("docker-compose.yml references Dockerfile", {
+        dokploy: async () => {
+          const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+          expect(content).toContain("Dockerfile");
+        },
+      });
+
+      testMatch<typeof matrix>("docker-compose.yml has AUTH_SECRET when authjs", {
+        dokploy: {
+          authjs: async () => {
+            const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+            expect(content).toContain("AUTH_SECRET");
+          },
+        },
+      });
     }),
-  // preview
+  // preview / docker-compose (mode: "prod" uses docker-compose when dokploy is active)
   () =>
     describeBati(
       ({ test, expect, fetch }) => {
@@ -65,3 +104,4 @@ await describeMultipleBati([
       },
     ),
 ]);
+

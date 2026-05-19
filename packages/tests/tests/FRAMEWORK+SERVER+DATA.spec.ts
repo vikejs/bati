@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describeBati, describeMultipleBati, exec, npmCli } from "@batijs/tests-utils";
 
@@ -8,6 +8,7 @@ export const matrix = [
   ["trpc", "telefunc", "ts-rest", undefined],
   ["drizzle", "sqlite", "kysely", undefined],
   ["cloudflare", undefined],
+  ["dokploy", undefined],
   "eslint",
   "biome",
   "oxlint",
@@ -33,6 +34,18 @@ export const exclude = [
   ["cloudflare", "fastify"],
   ["cloudflare", "react"],
   ["cloudflare", "vue"],
+  // cloudflare and dokploy are mutually exclusive
+  ["cloudflare", "dokploy"],
+  // Restrict dokploy tests: only react + hono, once per data-fetch layer and once per db
+  ["solid", "dokploy"],
+  ["vue", "dokploy"],
+  ["express", "dokploy"],
+  ["h3", "dokploy"],
+  ["fastify", "dokploy"],
+  ["trpc", "dokploy"],
+  ["ts-rest", "dokploy"],
+  ["sqlite", "dokploy"],
+  ["kysely", "dokploy"],
 ];
 
 await describeMultipleBati([
@@ -137,13 +150,39 @@ await describeMultipleBati([
           cloudflare: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
+          dokploy: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
           _: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
           },
         });
+
+        testMatch<typeof matrix>("has Dockerfile", {
+          dokploy: async () => {
+            expect(existsSync(path.join(process.cwd(), "Dockerfile"))).toBe(true);
+          },
+        });
+
+        testMatch<typeof matrix>("has docker-compose.yml", {
+          dokploy: async () => {
+            const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+            expect(content).toContain("Dockerfile");
+            expect(content).toContain("3000");
+          },
+        });
+
+        testMatch<typeof matrix>("docker-compose.yml has DATABASE_URL when db selected", {
+          dokploy: {
+            drizzle: async () => {
+              const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+              expect(content).toContain("DATABASE_URL");
+            },
+          },
+        });
       });
     }),
-  // preview
+  // preview / docker-compose (mode: "prod" uses docker-compose when dokploy is active)
   () =>
     describeBati(
       ({ test, expect, fetch }) => {

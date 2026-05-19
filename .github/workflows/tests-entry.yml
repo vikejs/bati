@@ -94,6 +94,8 @@ jobs:
           - solid--daisyui--eslint--biome--oxlint
           - react--daisyui--eslint--biome--oxlint
           - vue--daisyui--eslint--biome--oxlint
+          - react--hono--authjs--dokploy--eslint--biome--oxlint
+          - react--hono--auth0--dokploy--eslint--biome--oxlint
           - react--h3--auth0--cloudflare--eslint--biome--oxlint
           - react--hono--auth0--cloudflare--eslint--biome--oxlint
           - solid--express--authjs--eslint--biome--oxlint
@@ -120,6 +122,8 @@ jobs:
           - solid--fastify--auth0--eslint--biome--oxlint
           - react--fastify--auth0--eslint--biome--oxlint
           - vue--fastify--auth0--eslint--biome--oxlint
+          - react--hono--telefunc--dokploy--eslint--biome--oxlint
+          - react--hono--dokploy--eslint--biome--oxlint
           - solid--h3--trpc--drizzle--cloudflare--eslint--biome--oxlint
           - solid--hono--trpc--drizzle--cloudflare--eslint--biome--oxlint
           - solid--h3--telefunc--drizzle--cloudflare--eslint--biome--oxlint
@@ -228,18 +232,6 @@ jobs:
           - cloudflare--react--hono--eslint--biome--oxlint
           - cloudflare--react--h3--eslint--biome--oxlint
           - cloudflare--react--eslint--biome--oxlint
-          - dokploy--react--hono--drizzle--eslint--biome--oxlint
-          - dokploy--react--express--drizzle--eslint--biome--oxlint
-          - dokploy--react--fastify--drizzle--eslint--biome--oxlint
-          - dokploy--react--h3--drizzle--eslint--biome--oxlint
-          - dokploy--react--hono--authjs--eslint--biome--oxlint
-          - dokploy--react--express--authjs--eslint--biome--oxlint
-          - dokploy--react--fastify--authjs--eslint--biome--oxlint
-          - dokploy--react--h3--authjs--eslint--biome--oxlint
-          - dokploy--react--hono--eslint--biome--oxlint
-          - dokploy--react--express--eslint--biome--oxlint
-          - dokploy--react--fastify--eslint--biome--oxlint
-          - dokploy--react--h3--eslint--biome--oxlint
           - react--edgeone--eslint--biome--oxlint
           - vue--netlify--eslint--biome--oxlint
           - solid--eslint--biome--oxlint--prettier
@@ -311,6 +303,12 @@ jobs:
           - destination: vue--daisyui--eslint--biome--oxlint
             flags: --vue --daisyui --eslint --biome --oxlint
             test-files: FRAMEWORK+CSS.spec.ts
+          - destination: react--hono--authjs--dokploy--eslint--biome--oxlint
+            flags: --react --hono --authjs --dokploy --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--auth0--dokploy--eslint--biome--oxlint
+            flags: --react --hono --auth0 --dokploy --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: react--h3--auth0--cloudflare--eslint--biome--oxlint
             flags: --react --h3 --auth0 --cloudflare --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
@@ -389,6 +387,12 @@ jobs:
           - destination: vue--fastify--auth0--eslint--biome--oxlint
             flags: --vue --fastify --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--telefunc--dokploy--eslint--biome--oxlint
+            flags: --react --hono --telefunc --dokploy --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--hono--dokploy--eslint--biome--oxlint
+            flags: --react --hono --dokploy --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: solid--h3--trpc--drizzle--cloudflare--eslint--biome--oxlint
             flags: --solid --h3 --trpc --drizzle --cloudflare --eslint --biome
               --oxlint
@@ -729,42 +733,6 @@ jobs:
           - destination: cloudflare--react--eslint--biome--oxlint
             flags: --cloudflare --react --eslint --biome --oxlint
             test-files: FRAMEWORK+cloudflare.spec.ts
-          - destination: dokploy--react--hono--drizzle--eslint--biome--oxlint
-            flags: --dokploy --react --hono --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--express--drizzle--eslint--biome--oxlint
-            flags: --dokploy --react --express --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--fastify--drizzle--eslint--biome--oxlint
-            flags: --dokploy --react --fastify --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--h3--drizzle--eslint--biome--oxlint
-            flags: --dokploy --react --h3 --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--hono--authjs--eslint--biome--oxlint
-            flags: --dokploy --react --hono --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--express--authjs--eslint--biome--oxlint
-            flags: --dokploy --react --express --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--fastify--authjs--eslint--biome--oxlint
-            flags: --dokploy --react --fastify --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--h3--authjs--eslint--biome--oxlint
-            flags: --dokploy --react --h3 --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--hono--eslint--biome--oxlint
-            flags: --dokploy --react --hono --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--express--eslint--biome--oxlint
-            flags: --dokploy --react --express --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--fastify--eslint--biome--oxlint
-            flags: --dokploy --react --fastify --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
-          - destination: dokploy--react--h3--eslint--biome--oxlint
-            flags: --dokploy --react --h3 --eslint --biome --oxlint
-            test-files: FRAMEWORK+dokploy.spec.ts
           - destination: react--edgeone--eslint--biome--oxlint
             flags: --react --edgeone --eslint --biome --oxlint
             test-files: FRAMEWORK+edgeone.spec.ts

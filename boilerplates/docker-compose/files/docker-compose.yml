@@ -9,7 +9,7 @@ services:
       - NODE_ENV=production
       - PORT=3000
       # !BATI.hasD1 && BATI.hasDatabase
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}
       # BATI.has("authjs")
       - AUTH_SECRET=${AUTH_SECRET}
       # BATI.has("authjs")
