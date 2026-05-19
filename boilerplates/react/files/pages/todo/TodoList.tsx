@@ -47,6 +47,7 @@ export function TodoList() {
         >
           <input
             type="text"
+            aria-label="New to-do"
             onChange={(ev) => setNewTodo(ev.target.value)}
             value={newTodo}
             //# BATI.has("tailwindcss")
