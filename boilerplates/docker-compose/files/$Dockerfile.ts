@@ -31,7 +31,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       corepackLine = "";
       installCmd = "bun install --frozen-lockfile";
       installProdCmd = "bun install --production --frozen-lockfile";
-      lockfile = "bun.lockb";
+      lockfile = "bun.lock";
       break;
     default: // npm
       dockerImage = "node:24-alpine";
