@@ -35,6 +35,7 @@ export default [
 
     return false;
   }),
+  requires(RulesMessage.ERROR_DOKPLOY_R_SERVER, "dokploy", ["Server"]),
   filter(RulesMessage.ERROR_MANTINE_R_REACT, (fts) => {
     if (fts.has("mantine")) {
       return fts.has("vue") || fts.has("solid");

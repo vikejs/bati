@@ -14,6 +14,8 @@ export enum RulesMessage {
   ERROR_CLOUDFLARE_R_COMPAT_SERVER,
   // A compabible Server (or no Server) is required when using Cloudflare
   ERROR_AWS_R_COMPAT_SERVER,
+  // A Server is required when using Dokploy
+  ERROR_DOKPLOY_R_SERVER,
   // React is required when using Mantine UI Components Framework
   ERROR_MANTINE_R_REACT,
   // shadcn/ui is only compatible with React

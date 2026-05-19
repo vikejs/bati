@@ -552,6 +552,23 @@ export const features = [
     ],
   },
 
+  {
+    category: "Hosting",
+    label: "Dokploy",
+    flag: "dokploy",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjM0RENjhDIi8+PHRleHQgeD0iNTAiIHk9Ijc2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSI2NSIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIj5EPC90ZXh0Pjwvc3ZnPg==",
+    url: "https://dokploy.com",
+    tagline: "Open source alternative to Heroku, Vercel, and Netlify. Self-host on any VPS",
+    repo: "Dokploy/dokploy",
+    links: [
+      {
+        label: "Docs",
+        href: "https://docs.dokploy.com",
+      },
+    ],
+  },
+
   // Linter
   {
     category: "Linter",

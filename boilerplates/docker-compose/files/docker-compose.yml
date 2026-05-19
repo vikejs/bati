@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      /*{ @if (it.BATI.has("authjs")) }*/
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_URL=${AUTH_URL:-http://localhost:3000}
+      /*{ /if }*/
+      /*{ @if (it.BATI.has("auth0")) }*/
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_ISSUER_BASE_URL=${AUTH0_ISSUER_BASE_URL}
+      /*{ /if }*/
+      /*{ @if (it.BATI.has("sentry")) }*/
+      - SENTRY_DSN=${SENTRY_DSN}
+      /*{ /if }*/
+    /*{ @if (it.BATI.hasDatabase) }*/
+    volumes:
+      - sqlite_data:/app/data
+    /*{ /if }*/
+    restart: unless-stopped
+
+/*{ @if (it.BATI.hasDatabase) }*/
+volumes:
+  sqlite_data:
+/*{ /if }*/
