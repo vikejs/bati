@@ -38,7 +38,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       corepackLine = "";
       installCmd = "npm ci";
       installProdCmd = "npm ci --omit=dev";
-      lockfile = "package-lock.json";
+      lockfile = "package-lock.json*";
       break;
   }
 
