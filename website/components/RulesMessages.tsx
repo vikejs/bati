@@ -165,18 +165,6 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.ERROR_DOKPLOY_R_SERVER]: error(() => {
-    return (
-      <span class="inline-block">
-        A <span class="font-bold">Server</span> is required when using <span class="font-bold">Dokploy</span>.
-        <ul class="list-custom list-dot">
-          <li>
-            Either pick a server (Hono / Express.js / Fastify / H3) or unselect <span class="font-bold">Dokploy</span>
-          </li>
-        </ul>
-      </span>
-    );
-  }),
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(() => {
     return (
       <span class="inline-block">

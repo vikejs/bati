@@ -56,9 +56,6 @@ Choose one of them or remove selected Server`,
   [RulesMessage.ERROR_AWS_R_COMPAT_SERVER]: error(
     `${inverse(bold("AWS"))} deployment is only compatible with ${inverse(bold("Hono"))}`,
   ),
-  [RulesMessage.ERROR_DOKPLOY_R_SERVER]: error(
-    `${inverse(bold("Dokploy"))} requires a ${inverse(bold("Server"))}. Choose Hono, Express, Fastify, or H3`,
-  ),
   [RulesMessage.ERROR_SHADCN_R_REACT]: error(
     `${inverse(bold("shadcn/ui"))} is only compatible with ${inverse(bold("React"))}`,
   ),
