@@ -105,50 +105,50 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: bun install
+        run: bun --bun install
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Generate types
         if: contains(inputs.flags, '--cloudflare')
         shell: bash
-        run: bun run generate-types
+        run: bun --bun run generate-types
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run build
         shell: bash
-        run: bun run build
+        run: bun --bun run build
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run tests
         shell: bash
         # Bun hangs on Windows
-        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun run test' }}
+        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun --bun run test' }}
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:eslint
         if: contains(inputs.flags, '--eslint')
         shell: bash
-        run: bun run lint:eslint
+        run: bun --bun run lint:eslint
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:biome
         if: contains(inputs.flags, '--biome')
         shell: bash
-        run: bun run lint:biome
+        run: bun --bun run lint:biome
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run lint:oxlint
         if: contains(inputs.flags, '--oxlint')
         shell: bash
-        run: bun run lint:oxlint
+        run: bun --bun run lint:oxlint
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run typecheck
         shell: bash
-        run: bun run typecheck
+        run: bun --bun run typecheck
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Run knip
         shell: bash
-        run: bun run knip
+        run: bun --bun run knip
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
