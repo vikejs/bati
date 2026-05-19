@@ -89,7 +89,7 @@ await describeMultipleBati([
         },
       });
     }),
-  // preview / docker-compose (mode: "prod" uses docker-compose when dokploy is active)
+  // preview / docker-compose
   () =>
     describeBati(
       ({ test, expect, fetch }) => {
@@ -100,7 +100,7 @@ await describeMultipleBati([
         });
       },
       {
-        mode: "prod",
+        mode: (ctx) => (ctx.flags.includes("dokploy") ? "docker" : "prod"),
       },
     ),
 ]);

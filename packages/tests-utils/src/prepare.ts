@@ -5,8 +5,8 @@ import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
-import { runDockerCompose, stopDockerCompose } from "./run-docker-compose.js";
 import { runDevServer } from "./run-dev.js";
+import { runDockerCompose, stopDockerCompose } from "./run-docker-compose.js";
 import { runProd } from "./run-prod.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
 
@@ -43,7 +43,9 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     script ??= "preview";
   }
 
-  const useDockerCompose = mode === "prod" && context.flags.includes("dokploy");
+  if (typeof mode === "function") {
+    mode = mode(context);
+  }
 
   function hooks() {
     beforeAll(
@@ -53,16 +55,15 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
           await runDevServer(context);
         } else if (mode === "prod") {
           await initPort(context);
-          if (useDockerCompose) {
-            await runDockerCompose(context);
-          } else {
-            await runProd(context, script);
-          }
+          await runProd(context, script);
+        } else if (mode === "docker") {
+          await initPort(context);
+          await runDockerCompose(context);
         } else if (mode === "build") {
           await retryX(() => runBuild(context), retry);
         }
       },
-      useDockerCompose ? 300000 : 120000,
+      mode === "docker" ? 300000 : 120000,
     );
 
     // Cleanup tests:
@@ -70,7 +71,7 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     // - Remove temp dir
     afterAll(
       async () => {
-        if (useDockerCompose) {
+        if (mode === "docker") {
           try {
             await stopDockerCompose();
           } catch {
@@ -83,7 +84,7 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
           }
         }
       },
-      useDockerCompose ? 60000 : 20000,
+      mode === "docker" ? 60000 : 20000,
     );
   }
 
