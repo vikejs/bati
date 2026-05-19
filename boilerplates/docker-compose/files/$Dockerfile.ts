@@ -10,34 +10,35 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   let corepackLine: string;
   let dockerImage: string;
   const nodeCli = pm.name === "bun" ? "bun" : "node";
+  const frozenLockFile = meta.BATI_TEST ? " --frozen-lockfile" : "";
 
   switch (pm.name) {
     case "pnpm":
       dockerImage = "node:24-alpine";
       corepackLine = "RUN corepack enable";
-      installCmd = "pnpm install --frozen-lockfile";
-      installProdCmd = "pnpm install --prod --frozen-lockfile";
-      lockfile = "pnpm-lock.yaml pnpm-workspace.yaml*";
+      installCmd = `pnpm install${frozenLockFile}`;
+      installProdCmd = `pnpm install${frozenLockFile} --prod`;
+      lockfile = "pnpm-lock.yaml* pnpm-workspace.yaml*";
       break;
     case "yarn":
       dockerImage = "node:24-alpine";
       corepackLine = "RUN corepack enable";
-      installCmd = "yarn install --frozen-lockfile";
-      installProdCmd = "yarn install --frozen-lockfile --production";
-      lockfile = "yarn.lock";
+      installCmd = `yarn install${frozenLockFile}`;
+      installProdCmd = `yarn install${frozenLockFile} --production`;
+      lockfile = "yarn.lock*";
       break;
     case "bun":
       dockerImage = "oven/bun:1";
       corepackLine = "";
-      installCmd = "bun install --frozen-lockfile";
-      installProdCmd = "bun install --production --frozen-lockfile";
-      lockfile = "bun.lock";
+      installCmd = `bun install${frozenLockFile}`;
+      installProdCmd = `bun install${frozenLockFile} --production`;
+      lockfile = "bun.lock*";
       break;
     default: // npm
       dockerImage = "node:24-alpine";
       corepackLine = "";
-      installCmd = "npm ci";
-      installProdCmd = "npm ci --omit=dev";
+      installCmd = meta.BATI_TEST ? "npm install" : "npm ci";
+      installProdCmd = meta.BATI_TEST ? "npm install --omit=dev" : "npm ci --omit=dev";
       lockfile = "package-lock.json*";
       break;
   }
@@ -112,6 +113,11 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   }
 
   runnerLines.push(`COPY package.json ${lockfile} ./`, `RUN ${runnerInstallCmd}`, "");
+
+  if (meta.BATI_TEST) {
+    // TODO in CI, the file is probably 2 folders above. When running test:e2e locally, this file is not generated
+    runnerLines.push(`COPY batijs-tests-utils-*.tgz ./`);
+  }
 
   runnerLines.push("COPY --from=builder /app/dist ./dist");
 
