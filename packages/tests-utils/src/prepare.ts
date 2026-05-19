@@ -46,39 +46,45 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
   const useDockerCompose = mode === "prod" && context.flags.includes("dokploy");
 
   function hooks() {
-    beforeAll(async () => {
-      if (mode === "dev") {
-        await initPort(context);
-        await runDevServer(context);
-      } else if (mode === "prod") {
-        await initPort(context);
-        if (useDockerCompose) {
-          await runDockerCompose(context);
-        } else {
-          await runProd(context, script);
+    beforeAll(
+      async () => {
+        if (mode === "dev") {
+          await initPort(context);
+          await runDevServer(context);
+        } else if (mode === "prod") {
+          await initPort(context);
+          if (useDockerCompose) {
+            await runDockerCompose(context);
+          } else {
+            await runProd(context, script);
+          }
+        } else if (mode === "build") {
+          await retryX(() => runBuild(context), retry);
         }
-      } else if (mode === "build") {
-        await retryX(() => runBuild(context), retry);
-      }
-    }, useDockerCompose ? 300000 : 120000);
+      },
+      useDockerCompose ? 300000 : 120000,
+    );
 
     // Cleanup tests:
     // - Close the dev server / docker-compose stack
     // - Remove temp dir
-    afterAll(async () => {
-      if (useDockerCompose) {
-        try {
-          await stopDockerCompose();
-        } catch {
-          // best-effort cleanup — don't fail the test run
+    afterAll(
+      async () => {
+        if (useDockerCompose) {
+          try {
+            await stopDockerCompose();
+          } catch {
+            // best-effort cleanup — don't fail the test run
+          }
+        } else {
+          const pid = context.server?.pid;
+          if (typeof pid === "number") {
+            await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+          }
         }
-      } else {
-        const pid = context.server?.pid;
-        if (typeof pid === "number") {
-          await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
-        }
-      }
-    }, useDockerCompose ? 60000 : 20000);
+      },
+      useDockerCompose ? 60000 : 20000,
+    );
   }
 
   return {
