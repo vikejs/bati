@@ -8,27 +8,32 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   let installProdCmd: string;
   let lockfile: string;
   let corepackLine: string;
+  let dockerImage: string;
 
   switch (pm.name) {
     case "pnpm":
+      dockerImage = "node:24-alpine";
       corepackLine = "RUN corepack enable";
       installCmd = "pnpm install --frozen-lockfile";
       installProdCmd = "pnpm install --prod --frozen-lockfile";
       lockfile = "pnpm-lock.yaml";
       break;
     case "yarn":
+      dockerImage = "node:24-alpine";
       corepackLine = "RUN corepack enable";
       installCmd = "yarn install --frozen-lockfile";
       installProdCmd = "yarn install --frozen-lockfile --production";
       lockfile = "yarn.lock";
       break;
     case "bun":
+      dockerImage = "oven/bun:1";
       corepackLine = "";
       installCmd = "bun install --frozen-lockfile";
       installProdCmd = "bun install --production --frozen-lockfile";
       lockfile = "bun.lockb";
       break;
     default: // npm
+      dockerImage = "node:24-alpine";
       corepackLine = "";
       installCmd = "npm ci";
       installProdCmd = "npm ci --omit=dev";
@@ -74,7 +79,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   }
 
   // ── Builder stage ──────────────────────────────────────────────
-  const builderLines: string[] = ["FROM node:20-alpine AS builder", "WORKDIR /app", ""];
+  const builderLines: string[] = [`FROM ${dockerImage} AS builder`, "WORKDIR /app", ""];
 
   if (corepackLine) {
     builderLines.push(corepackLine, "");
@@ -92,7 +97,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   const runnerLines: string[] = [
     "",
     "",
-    "FROM node:20-alpine AS runner",
+    `FROM ${dockerImage} AS runner`,
     "WORKDIR /app",
     "",
     "ENV NODE_ENV=production",
