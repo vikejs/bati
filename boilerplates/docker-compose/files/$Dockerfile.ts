@@ -62,6 +62,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     startupMigrations.push(`${run} kysely:migrate`);
   }
 
+  // TODO either move necessary deps out of devDeps or convert/compile migration files to JS
   const hasMigrations = startupMigrations.length > 0;
   // Migration tools (tsx, drizzle-kit) are devDeps — install all deps in runner when needed
   const runnerInstallCmd = hasMigrations ? installCmd : installProdCmd;
