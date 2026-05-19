@@ -8,6 +8,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
+      # !BATI.hasD1 && BATI.hasDatabase
+      - DATABASE_URL=${DATABASE_URL}
       # BATI.has("authjs")
       - AUTH_SECRET=${AUTH_SECRET}
       # BATI.has("authjs")

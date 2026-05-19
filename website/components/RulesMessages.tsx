@@ -93,6 +93,18 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_SQLITE_R_SERVER]: error(() => {
+    return (
+      <span class="inline-block">
+        A <span class="font-bold">Server</span> is required when using <span class="font-bold">SQLite</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">SQLite</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.ERROR_KYSELY_R_SERVER]: error(() => {
     return (
       <span class="inline-block">

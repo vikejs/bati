@@ -17,7 +17,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       corepackLine = "RUN corepack enable";
       installCmd = "pnpm install --frozen-lockfile";
       installProdCmd = "pnpm install --prod --frozen-lockfile";
-      lockfile = "pnpm-lock.yaml";
+      lockfile = "pnpm-lock.yaml pnpm-workspace.yaml*";
       break;
     case "yarn":
       dockerImage = "node:24-alpine";

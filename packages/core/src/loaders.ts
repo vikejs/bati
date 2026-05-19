@@ -13,6 +13,7 @@ import { parseMarkdown } from "./markdown/markdown.js";
 import type { TransformerProps } from "./types.js";
 import { type PackageJsonDeps, PackageJsonTransformer } from "./utils/package.js";
 
+export { YAMLMap, YAMLSeq } from "yaml";
 export type { YAMLDocument };
 
 export async function loadMarkdown({ readfile }: TransformerProps) {

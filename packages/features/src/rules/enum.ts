@@ -8,6 +8,8 @@ export enum RulesMessage {
   ERROR_DRIZZLE_R_SERVER,
   // A Server is required when using Kysely
   ERROR_KYSELY_R_SERVER,
+  // A Server is required when using SQLite
+  ERROR_SQLITE_R_SERVER,
   // A Server is required when using Data fetching / RPC
   ERROR_DATA_R_SERVER,
   // A compabible Server (or no Server) is required when using Cloudflare
