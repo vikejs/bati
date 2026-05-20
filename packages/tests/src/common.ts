@@ -60,9 +60,9 @@ export async function createE2EWorkspace(options: E2EWorkspaceOptions) {
     // Proxy the build target to the sibling app so nx can satisfy
     // `dependsOn: ["build"]` within this project.
     build: `cd ${appRel} && bun run build`,
-    // knip lives in the .e2e workspace's node_modules; `--cwd ../<app>` makes
+    // knip lives in the .e2e workspace's node_modules; `--directory ../<app>` makes
     // it analyse the app while binary discovery stays here.
-    knip: `VITE_CJS_IGNORE_WARNING=1 knip --no-config-hints --cwd ${appRel}`,
+    knip: `VITE_CJS_IGNORE_WARNING=1 knip --no-config-hints --directory ${appRel}`,
   };
   if (flags.includes("eslint")) {
     // `bunx eslint .` runs from the app dir, so eslint resolves its binary
