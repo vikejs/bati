@@ -86,19 +86,15 @@ jobs:
         # does not interpret backslashes in Windows paths as escape sequences.
         run: bun "$GITHUB_WORKSPACE/bati-cli/dist/index.js" --knip ${{ inputs.flags }} "$RUNNER_TEMP/${{ inputs.destination }}"
 
-      # For dokploy: keep the generated app pristine and host all e2e
-      # artifacts in a sibling `<destination>.e2e` workspace. TEST_DIR is what
-      # `Link tests-utils`, `Link tests files`, `Prepare Bati tests`, and
-      # `Run tests` use; it equals the destination dir for non-dokploy.
+      # Every matrix keeps the generated app pristine and hosts all e2e
+      # artefacts in a sibling `<destination>.e2e/` workspace. TEST_DIR is
+      # where Link tests-utils, Link tests files, Prepare Bati tests, lint
+      # and test all run.
       - name: Resolve test working dir
         shell: bash
         run: |
-          if [[ "${{ inputs.flags }}" == *"--dokploy"* ]]; then
-            mkdir -p "$RUNNER_TEMP/${{ inputs.destination }}.e2e"
-            echo "TEST_DIR=$RUNNER_TEMP/${{ inputs.destination }}.e2e" >> "$GITHUB_ENV"
-          else
-            echo "TEST_DIR=$RUNNER_TEMP/${{ inputs.destination }}" >> "$GITHUB_ENV"
-          fi
+          mkdir -p "$RUNNER_TEMP/${{ inputs.destination }}.e2e"
+          echo "TEST_DIR=$RUNNER_TEMP/${{ inputs.destination }}.e2e" >> "$GITHUB_ENV"
 
       - name: Link tests-utils
         shell: bash
@@ -117,16 +113,15 @@ jobs:
           inputs.flags }}
         working-directory: ${{ env.TEST_DIR }}
 
-      - name: Install dependencies
+      - name: Install dependencies (app)
         shell: bash
         run: bun install
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       - name: Install dependencies (e2e workspace)
-        if: contains(inputs.flags, '--dokploy')
         shell: bash
         run: bun install
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}.e2e
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Generate types
         if: contains(inputs.flags, '--cloudflare')
@@ -135,8 +130,7 @@ jobs:
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
       # For dokploy the build happens inside `docker compose up --build` during
-      # the test step; a separate local build would duplicate the work and the
-      # app's package.json has no e2e shim to invoke vike build standalone.
+      # the test step; a separate local build would duplicate the work.
       - name: Run build
         if: "!contains(inputs.flags, '--dokploy')"
         shell: bash
@@ -149,35 +143,33 @@ jobs:
         run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun run test' }}
         working-directory: ${{ env.TEST_DIR }}
 
-      # lint/typecheck/knip target scripts only exist on the (mutated) app's
-      # package.json for non-dokploy matrices. The same source is covered by
-      # those combinations, so we skip these checks for --dokploy.
+      # Lint / typecheck / knip scripts live on the .e2e/ workspace and proxy
+      # to the sibling app via `cd ../<app>`. They run for every matrix that
+      # selected the corresponding flag — including --dokploy.
       - name: Run lint:eslint
-        if: contains(inputs.flags, '--eslint') && !contains(inputs.flags, '--dokploy')
+        if: contains(inputs.flags, '--eslint')
         shell: bash
         run: bun run lint:eslint
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run lint:biome
-        if: contains(inputs.flags, '--biome') && !contains(inputs.flags, '--dokploy')
+        if: contains(inputs.flags, '--biome')
         shell: bash
         run: bun run lint:biome
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run lint:oxlint
-        if: contains(inputs.flags, '--oxlint') && !contains(inputs.flags, '--dokploy')
+        if: contains(inputs.flags, '--oxlint')
         shell: bash
         run: bun run lint:oxlint
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run typecheck
-        if: "!contains(inputs.flags, '--dokploy')"
         shell: bash
         run: bun run typecheck
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run knip
-        if: "!contains(inputs.flags, '--dokploy')"
         shell: bash
         run: bun run knip
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
