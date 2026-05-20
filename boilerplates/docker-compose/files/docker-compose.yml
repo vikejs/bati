@@ -10,10 +10,6 @@ services:
       - PORT=3000
       # !BATI.hasD1 && BATI.hasDatabase
       - DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}
-      # BATI.has("authjs")
-      - AUTH_SECRET=${AUTH_SECRET}
-      # BATI.has("authjs")
-      - AUTH_URL=${AUTH_URL:-http://localhost:3000}
       # BATI.has("auth0")
       - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
       # BATI.has("auth0")

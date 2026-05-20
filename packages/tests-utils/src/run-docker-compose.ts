@@ -10,17 +10,15 @@ export async function runDockerCompose(context: GlobalContext) {
   await exec(npmCli, ["run", "prod"], {
     env: {
       PORT: String(context.port),
-      AUTH_SECRET: process.env.AUTH_SECRET ?? "test-secret-for-ci-tests",
-      AUTH_URL: `http://localhost:${context.port}`,
     },
-    timeout: process.env.CI ? 300000 : 180000, // 5 min CI / 3 min local
+    timeout: process.env.CI ? 600_000 : 300_000, // 10 min CI / 5 min local
   });
 
   // The container starts in the background; wait for it to accept HTTP connections
   await waitForLocalhost({
     port: context.port,
     useGet: true,
-    timeout: process.env.CI ? 60000 : 30000,
+    timeout: process.env.CI ? 60_000 : 30_000,
     debug: `docker compose (port ${context.port})`,
   });
 

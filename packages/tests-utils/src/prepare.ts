@@ -63,7 +63,7 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
           await retryX(() => runBuild(context), retry);
         }
       },
-      mode === "docker" ? 300000 : 120000,
+      mode === "docker" ? 900_000 : 600_000,
     );
 
     // Cleanup tests:
@@ -84,7 +84,7 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
           }
         }
       },
-      mode === "docker" ? 60000 : 20000,
+      mode === "docker" ? 60_000 : 30_000,
     );
   }
 

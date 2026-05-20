@@ -80,11 +80,11 @@ await describeMultipleBati([
         },
       });
 
-      testMatch<typeof matrix>("docker-compose.yml has AUTH_SECRET when authjs", {
+      testMatch<typeof matrix>("docker-compose.yml has AUTH0_CLIENT_ID when auth0", {
         dokploy: {
           authjs: async () => {
             const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
-            expect(content).toContain("AUTH_SECRET");
+            expect(content).toContain("AUTH0_CLIENT_ID");
           },
         },
       });

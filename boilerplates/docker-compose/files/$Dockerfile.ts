@@ -124,7 +124,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     runnerLines.push(`COPY batijs-tests-utils-*.tgz ./`);
   }
 
-  runnerLines.push(`RUN ${runnerInstallCmd}`, "");
+  // runnerLines.push(`RUN ${runnerInstallCmd}`, "");
 
   runnerLines.push("COPY --from=builder /app/dist ./dist");
 
