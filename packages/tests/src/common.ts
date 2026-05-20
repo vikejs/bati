@@ -75,6 +75,42 @@ export default defineConfig({
   );
 }
 
+/**
+ * Write the sibling host-only workspace for a docker app. The app dir stays
+ * pristine (CLI output only); everything e2e-related lives here.
+ *
+ * `testsUtilsRef` is the value for `devDependencies["@batijs/tests-utils"]`:
+ *  - `"link:@batijs/tests-utils"` for local (the workspace registers the link)
+ *  - `"./batijs-tests-utils-*.tgz"` on CI (the tarball is symlinked next to package.json)
+ */
+export async function createE2EWorkspace(
+  e2eDir: string,
+  appName: string,
+  flags: string[],
+  testsUtilsRef: string,
+  testFiles?: string,
+  packageManagerSpec?: string,
+) {
+  const pkgjson: Record<string, unknown> = {
+    name: `${appName}-e2e`,
+    private: true,
+    type: "module",
+    scripts: {
+      test: "vitest run",
+    },
+    devDependencies: {
+      vitest: packageJson.devDependencies.vitest,
+      "@batijs/tests-utils": testsUtilsRef,
+    },
+  };
+  if (packageManagerSpec) {
+    pkgjson.packageManager = packageManagerSpec;
+  }
+  await writeFile(join(e2eDir, "package.json"), JSON.stringify(pkgjson, undefined, 2), "utf-8");
+  await updateVitestConfig(e2eDir, testFiles);
+  await createBatiConfig(e2eDir, flags);
+}
+
 export async function createBatiConfig(projectDir: string, flags: string[]) {
   await writeFile(
     join(projectDir, "bati.config.json"),

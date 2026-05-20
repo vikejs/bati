@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { basename, resolve } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { exec } from "./exec.js";
@@ -50,6 +51,17 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
   function hooks() {
     beforeAll(
       async () => {
+        // When vitest is launched from a host-only `<app>.e2e` workspace
+        // (the dokploy layout: bati.config.json + spec files there, app dir
+        // pristine), every mode needs to operate against the sibling app —
+        // `dev`/`prod`/`build` resolve scripts via the app's package.json,
+        // `docker` runs compose from the app's Dockerfile, and spec
+        // assertions on `process.cwd()` expect to see the app dir. The chdir
+        // is a no-op when we are already in the app dir (non-dokploy layout).
+        const here = basename(resolve("."));
+        if (here.endsWith(".e2e")) {
+          process.chdir(resolve("..", here.slice(0, -".e2e".length)));
+        }
         if (mode === "dev") {
           await initPort(context);
           await runDevServer(context);

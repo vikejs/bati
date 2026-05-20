@@ -82,7 +82,7 @@ await describeMultipleBati([
 
       testMatch<typeof matrix>("docker-compose.yml has AUTH0_CLIENT_ID when auth0", {
         dokploy: {
-          authjs: async () => {
+          auth0: async () => {
             const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
             expect(content).toContain("AUTH0_CLIENT_ID");
           },

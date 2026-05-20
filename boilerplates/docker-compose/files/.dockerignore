@@ -6,3 +6,8 @@ dist
 !.env.example
 *.log
 .DS_Store
+# e2e plumbing (lives in the sibling `<app>.e2e/` workspace, never the image)
+batijs-tests-utils-*.tgz
+bati.config.json
+vitest.config.ts
+*.spec.ts

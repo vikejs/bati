@@ -9,7 +9,9 @@ interface PmConfig {
 }
 
 function getPmConfig(pmName: string, isTest: boolean): PmConfig {
-  const frozenLockFile = isTest ? " --frozen-lockfile" : "";
+  // In e2e tests the app dir has no per-app lockfile (only a workspace-level one,
+  // which Docker doesn't see), so we install loosely. Real users pin to the lockfile.
+  const frozenLockFile = isTest ? "" : " --frozen-lockfile";
   switch (pmName) {
     case "pnpm":
       return {
@@ -97,9 +99,6 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
 
   // Files that participate in dependency installation
   const installSources = ["package.json", ...pmConfig.lockfiles];
-  if (meta.BATI_TEST) {
-    installSources.push("batijs-tests-utils-*.tgz");
-  }
 
   const df = dockerfile()
     // ── deps-dev: install all dependencies (devDeps + deps) ─────────────────
