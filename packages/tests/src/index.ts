@@ -80,17 +80,10 @@ async function createGitIgnore(context: GlobalContext) {
   await copyFile(join(root, ".gitignore"), join(context.tmpdir, ".gitignore"));
 }
 
-function linkTestUtils() {
-  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--loglevel", "error"], {
-    // pnpm link can take some time
-    timeout: 60 * 1000,
-    cwd: join(__dirname, "..", "..", "tests-utils"),
-  });
-}
-
-// Pack @batijs/tests-utils so dokploy e2e workspaces can reference it via a
-// real tarball (file: dependency). The tarball lives in the sibling `.e2e/`
-// dir — never in the app dir — so `docker build`'s context stays clean.
+// Pack @batijs/tests-utils so the sibling `.e2e/` workspaces can install it as
+// a real tarball (file: dependency). The tarball lives in `<app>.e2e/` —
+// never in the app dir — so docker build contexts stay clean and no
+// `bun link` / `pnpm link` global registration is required.
 async function packTestsUtils(): Promise<string> {
   const testsUtilsDir = join(__dirname, "..", "..", "tests-utils");
 
@@ -115,29 +108,16 @@ async function packTestsUtils(): Promise<string> {
 }
 
 async function packageManagerInstall(context: GlobalContext) {
-  {
-    const child = exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
-      // really slow on Windows CI
-      timeout: 5 * 60 * 1000,
-      cwd: context.tmpdir,
-      stdio: ["ignore", "ignore", "inherit"],
-    });
-
-    await child;
-  }
+  await exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
+    // really slow on Windows CI
+    timeout: 5 * 60 * 1000,
+    cwd: context.tmpdir,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
 
   if (npmCli === "bun") {
     // Circumvent https://github.com/aws/aws-cdk/issues/33270
     await writeFile(join(context.tmpdir, "bun.lockb"), "", "utf-8");
-  } else {
-    // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
-    const child = exec(npmCli, ["link", "@batijs/tests-utils"], {
-      timeout: 60000,
-      cwd: context.tmpdir,
-      stdio: ["ignore", "ignore", "inherit"],
-    });
-
-    await child;
   }
 }
 
@@ -151,22 +131,44 @@ async function pnpmRebuild(projectDirs: string[]) {
 }
 
 async function execNx(context: GlobalContext, args: mri.Argv<CliOptions>) {
-  const steps =
-    args.steps ??
-    ["generate-types", "build", "test", "lint:eslint", "lint:biome", "lint:oxlint", "typecheck", "knip"].join(",");
+  if (args.steps) {
+    // User-specified target list — single pass across every project.
+    await execNxRunMany(context, args.steps);
+    return;
+  }
 
-  await exec(
-    npmCli,
-    [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--targets=${steps}`, "--excludeTaskDependencies"],
-    {
-      timeout: 35 * 60 * 1000, // 35min
-      cwd: context.tmpdir,
-      env: {
-        NX_DAEMON: "false",
-        NX_TUI: "false",
-      },
+  // Two-pass orchestration:
+  //   - Build targets run only on app projects (`!*-e2e` excludes the e2e workspaces),
+  //     so the app build runs exactly once per matrix.
+  //   - Dev targets run only on `*-e2e` workspaces, where the scripts proxy back into
+  //     the sibling app via `cd ../<app>`. nx still sequences these correctly because
+  //     pass 1 completes before pass 2 starts.
+  //
+  // The `.e2e/` workspaces ship a `build` script too (so `dependsOn: ["build"]` stays
+  // satisfiable for direct `bun run` invocations), but with this split it is never
+  // triggered by nx — pass 2 doesn't list `build` as a target.
+  await execNxRunMany(context, "generate-types,build", "!*-e2e");
+  await execNxRunMany(context, "test,lint:eslint,lint:biome,lint:oxlint,typecheck,knip", "*-e2e");
+}
+
+async function execNxRunMany(context: GlobalContext, steps: string, projectsPattern?: string) {
+  const cmdArgs = [
+    npmCli === "bun" ? "x" : "exec",
+    "nx",
+    "run-many",
+    `--targets=${steps}`,
+    "--excludeTaskDependencies",
+  ];
+  if (projectsPattern) cmdArgs.push(`--projects=${projectsPattern}`);
+
+  await exec(npmCli, cmdArgs, {
+    timeout: 35 * 60 * 1000, // 35min
+    cwd: context.tmpdir,
+    env: {
+      NX_DAEMON: "false",
+      NX_TUI: "false",
     },
-  );
+  });
 }
 
 function isVerdaccioRunning() {
@@ -358,10 +360,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // Note: nx.json is created AFTER execLocalBati so storybook init cannot detect it
   await createNxConfig(context);
 
-  // pnpm/bun link in @batijs/tests-utils so that it can be used inside /tmt/bati/*
-  await linkTestUtils();
-
-  // pnpm/bun install
+  // pnpm/bun install — every package.json references the packed tests-utils
+  // tarball, so no global link registration is required.
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // better-sqlite3 needs to be rebuilt sometimes
