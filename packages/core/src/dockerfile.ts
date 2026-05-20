@@ -1,197 +1,261 @@
 /**
  * Chainable TypeScript API for generating Dockerfiles.
  *
- * Usage:
- *   const df = new DockerfileBuilder()
- *     .from("oven/bun:1", { as: "base" })
- *     .workdir("/usr/src/app")
- *     .from("base", { as: "install" })
- *     .run("mkdir -p /temp/dev")
- *     .copy(["package.json", "bun.lock*"], "/temp/dev/")
- *     .run("cd /temp/dev && bun install")
- *     .build();
+ * The builder tracks declared stage names at the type level.
+ * After `.from("img", { as: "myStage" })`, all subsequent `.copy(..., { from: ... })`
+ * calls are restricted to known stage names, giving compile-time safety.
+ *
+ * @example
+ * const df = dockerfile()
+ *   .from("oven/bun:1", { as: "base", comment: "official Bun image" })
+ *   .workdir("/usr/src/app")
+ *   .from("base", { as: "install" })
+ *   .run("mkdir -p /temp/dev")
+ *   .copy(["package.json", "bun.lock*"], "/temp/dev/")
+ *   .copy(["node_modules"], "node_modules", { from: "install" }) // ✅ type-safe
+ *   // .copyFrom("typo", ["x"], "y")                             // ❌ TS error
+ *   .build();
  */
 
 // ---------------------------------------------------------------------------
-// Types
+// Shared base options (every instruction can have an optional comment)
 // ---------------------------------------------------------------------------
 
-export interface FromOptions {
-  /** Multi-stage alias: `AS <name>` */
-  as?: string;
-  /** Build platform: `--platform=<platform>` */
+interface BaseOptions {
+  /**
+   * Emitted as `# <comment>` on the line(s) immediately before this instruction.
+   * Multi-line strings produce multiple comment lines.
+   */
+  comment?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Per-instruction option types
+// ---------------------------------------------------------------------------
+
+export interface FromOptions extends BaseOptions {
+  /** Stage alias (required): `AS <name>` */
+  as: string;
+  /** `--platform=<platform>` e.g. `"linux/amd64"` */
   platform?: string;
 }
 
-export interface CopyOptions {
-  /** Source stage to copy from: `--from=<stage>` */
-  from?: string;
-  /** Change ownership of copied files: `--chown=<user>:<group>` */
-  chown?: string;
-  /** Change permissions of copied files: `--chmod=<perms>` */
-  chmod?: string;
-}
-
-export interface AddOptions {
-  /** Change ownership: `--chown=<user>:<group>` */
-  chown?: string;
-  /** Change permissions: `--chmod=<perms>` */
-  chmod?: string;
-  /** Keep archive format (tar): `--keep-git-dir` */
-  keepGitDir?: boolean;
-}
-
-export interface RunOptions {
-  /** Render as a comment-prefixed disabled line: `# RUN ...` */
+export interface RunOptions extends BaseOptions {
+  /** Emit as `# RUN ...` (commented-out / disabled line) */
   disabled?: boolean;
-  /** Mount options: `--mount=...` */
+  /** `--mount=<...>` */
   mount?: string;
-  /** Network mode: `--network=<mode>` */
+  /** `--network=<mode>` */
   network?: string;
-  /** Security options: `--security=<insecure|sandbox>` */
+  /** `--security=<insecure|sandbox>` */
   security?: string;
 }
 
-export interface ExposeOptions {
-  /** Protocol: `tcp` or `udp` (default: `tcp`) */
-  protocol?: "tcp" | "udp";
+export interface CopyOptions<Stages extends string = string> extends BaseOptions {
+  /** Copy files from a named build stage: `--from=<stage>` */
+  from?: Stages;
+  /** `--chown=<user>:<group>` */
+  chown?: string;
+  /** `--chmod=<perms>` */
+  chmod?: string;
 }
 
-export interface HealthcheckOptions {
-  /** Time between checks: e.g. `30s` */
+export interface AddOptions extends BaseOptions {
+  /** `--chown=<user>:<group>` */
+  chown?: string;
+  /** `--chmod=<perms>` */
+  chmod?: string;
+  /** `--keep-git-dir` */
+  keepGitDir?: boolean;
+}
+
+export interface CmdOptions extends BaseOptions {}
+export interface EntrypointOptions extends BaseOptions {}
+export interface EnvOptions extends BaseOptions {}
+export interface ArgOptions extends BaseOptions {
+  /** Default value: `ARG <name>=<default>` */
+  default?: string;
+}
+export interface LabelOptions extends BaseOptions {}
+export interface ExposeOptions extends BaseOptions {
+  /** `tcp` or `udp` (default: `tcp`) */
+  protocol?: "tcp" | "udp";
+}
+export interface VolumeOptions extends BaseOptions {}
+export interface UserOptions extends BaseOptions {}
+export interface OnbuildOptions extends BaseOptions {}
+export interface StopsignalOptions extends BaseOptions {}
+export interface ShellOptions extends BaseOptions {}
+
+export interface HealthcheckOptions extends BaseOptions {
+  /** e.g. `"30s"` */
   interval?: string;
-  /** Time to wait for a check: e.g. `30s` */
+  /** e.g. `"10s"` */
   timeout?: string;
-  /** Start period: e.g. `0s` */
+  /** e.g. `"0s"` */
   startPeriod?: string;
   /** Number of retries before unhealthy */
   retries?: number;
-}
-
-export interface ArgOptions {
-  /** Default value for the ARG */
-  default?: string;
 }
 
 export type EnvRecord = Record<string, string>;
 export type LabelRecord = Record<string, string>;
 
 // ---------------------------------------------------------------------------
-// Internal instruction types
+// Internal instruction representation
 // ---------------------------------------------------------------------------
 
 type Instruction =
-  | { kind: "comment"; text: string }
-  | { kind: "blank" }
   | { kind: "from"; image: string; options: FromOptions }
-  | { kind: "workdir"; path: string }
+  | { kind: "workdir"; path: string; options: BaseOptions }
   | { kind: "run"; command: string | string[]; options: RunOptions }
   | { kind: "copy"; sources: string[]; dest: string; options: CopyOptions }
   | { kind: "add"; sources: string[]; dest: string; options: AddOptions }
-  | { kind: "cmd"; command: string | string[] }
-  | { kind: "entrypoint"; command: string | string[] }
-  | { kind: "env"; vars: EnvRecord }
+  | { kind: "cmd"; command: string | string[]; options: CmdOptions }
+  | { kind: "entrypoint"; command: string | string[]; options: EntrypointOptions }
+  | { kind: "env"; vars: EnvRecord; options: EnvOptions }
   | { kind: "arg"; name: string; options: ArgOptions }
-  | { kind: "label"; labels: LabelRecord }
+  | { kind: "label"; labels: LabelRecord; options: LabelOptions }
   | { kind: "expose"; port: number | string; options: ExposeOptions }
-  | { kind: "volume"; paths: string[] }
-  | { kind: "user"; user: string }
-  | { kind: "onbuild"; instruction: string }
-  | { kind: "stopsignal"; signal: string }
+  | { kind: "volume"; paths: string[]; options: VolumeOptions }
+  | { kind: "user"; user: string; options: UserOptions }
+  | { kind: "onbuild"; instruction: string; options: OnbuildOptions }
+  | { kind: "stopsignal"; signal: string; options: StopsignalOptions }
   | { kind: "healthcheck"; command: string | null; options: HealthcheckOptions }
-  | { kind: "shell"; command: string[] };
+  | { kind: "shell"; command: string[]; options: ShellOptions };
 
 // ---------------------------------------------------------------------------
-// Builder
+// DockerfileBuilder<Stages>
+//
+// `Stages` accumulates the union of all `as` names declared via `.from()`.
+// This lets `.copy(..., { from: <Stages> })` be type-checked at compile time.
 // ---------------------------------------------------------------------------
 
-export class DockerfileBuilder {
-  private readonly instructions: Instruction[] = [];
+export class DockerfileBuilder<Stages extends string = never> {
+  // Accessible to `merge()` on a compatible instance; otherwise opaque.
+  /** @internal */
+  readonly _instructions: Instruction[] = [];
 
   // -------------------------------------------------------------------------
-  // Comments & whitespace
-  // -------------------------------------------------------------------------
-
-  /** Add a `# comment` line */
-  comment(text: string): this {
-    // Support multi-line comments
-    for (const line of text.split("\n")) {
-      this.instructions.push({ kind: "comment", text: line });
-    }
-    return this;
-  }
-
-  /** Add a blank line for readability */
-  blank(): this {
-    this.instructions.push({ kind: "blank" });
-    return this;
-  }
-
-  // -------------------------------------------------------------------------
-  // Core instructions
+  // FROM  — the only method that widens the Stages type parameter
   // -------------------------------------------------------------------------
 
   /**
-   * `FROM <image> [AS <name>]`
+   * `FROM <image> AS <name>`
+   *
+   * `as` is required — every stage must be named. The returned builder type
+   * accumulates `S` into its `Stages` union, making `<name>` available as a
+   * valid value for `from` in `.copy()` / `.copyFrom()` calls.
    *
    * @example
-   * builder.from("oven/bun:1", { as: "base" })
+   * const b = dockerfile()
+   *   .from("oven/bun:1", { as: "base" })
+   *   .from("base",       { as: "install" })
+   *   .copy(["dist"], ".", { from: "base" })      // ✅ autocompleted
+   *   .copyFrom("install", ["node_modules"], ".") // ✅ hard-checked
+   *   // .copyFrom("typo", ["x"], ".")            // ❌ TS error
    */
-  from(image: string, options: FromOptions = {}): this {
-    this.instructions.push({ kind: "from", image, options });
+  from<S extends string>(image: string, options: FromOptions & { as: S }): DockerfileBuilder<Stages | S> {
+    this._instructions.push({ kind: "from", image, options });
+    return this as any;
+  }
+
+  // -------------------------------------------------------------------------
+  // WORKDIR
+  // -------------------------------------------------------------------------
+
+  /** `WORKDIR <path>` */
+  workdir(path: string, options: BaseOptions = {}): this {
+    this._instructions.push({ kind: "workdir", path, options });
     return this;
   }
 
-  /**
-   * `WORKDIR <path>`
-   */
-  workdir(path: string): this {
-    this.instructions.push({ kind: "workdir", path });
-    return this;
-  }
+  // -------------------------------------------------------------------------
+  // RUN
+  // -------------------------------------------------------------------------
 
   /**
    * `RUN <command>`
    *
-   * Pass an array to produce the exec form: `RUN ["cmd", "arg1"]`
-   * Use `options.disabled = true` to comment the line out.
+   * - String → shell form: `RUN cd /app && bun install`
+   * - Array  → exec form:  `RUN [ "bun", "install" ]`
+   * - `options.disabled = true` → `# RUN ...`
    *
    * @example
-   * builder.run("bun install")
-   * builder.run(["bun", "install"], { disabled: true })
+   * .run("cd /temp && bun install")
+   * .run("cd /temp && bun install --frozen-lockfile", { disabled: true })
    */
   run(command: string | string[], options: RunOptions = {}): this {
-    this.instructions.push({ kind: "run", command, options });
+    this._instructions.push({ kind: "run", command, options });
     return this;
   }
 
+  // -------------------------------------------------------------------------
+  // COPY
+  // -------------------------------------------------------------------------
+
   /**
-   * `COPY [options] <src>... <dest>`
+   * `COPY [--from=<stage>] <src>... <dest>`
+   *
+   * The `from` option provides **IDE autocompletion** for declared stage names
+   * while still accepting arbitrary strings for external image refs (e.g. `"nginx:alpine"`).
+   *
+   * Use `.copyFrom()` for **hard compile errors** on unknown stage names.
    *
    * @example
-   * builder.copy(["package.json", "bun.lock*"], "/temp/dev/")
-   * builder.copy(["node_modules"], "node_modules", { from: "install" })
+   * .copy(["package.json", "bun.lock*"], "/temp/dev/")
+   * .copy(["node_modules"], "node_modules", { from: "install" })   // autocompleted
+   * .copy(["nginx.conf"], "/etc/nginx/", { from: "nginx:alpine" }) // external ok
    */
-  copy(sources: string[], dest: string, options: CopyOptions = {}): this {
-    this.instructions.push({ kind: "copy", sources, dest, options });
+  copy(
+    sources: string[],
+    dest: string,
+    options: CopyOptions<Stages | (string & {})> = {},
+    //                   ^^^^^^^^^^^^^^^^^^^^
+    // `string & {}` surfaces known stage names as autocomplete suggestions
+    // while keeping the type open for external image refs like "nginx:alpine".
+  ): this {
+    this._instructions.push({ kind: "copy", sources, dest, options });
     return this;
   }
 
   /**
-   * `ADD [options] <src>... <dest>`
+   * `COPY --from=<stage> <src>... <dest>` — **strict** variant.
+   *
+   * Unlike `.copy()`, `from` is restricted **only** to stage names declared
+   * via `.from(..., { as })`. Any other string is a **compile-time error**.
+   *
+   * @example
+   * // After .from("oven/bun:1", { as: "build" }):
+   * .copyFrom("build", ["dist"], "./dist")      // ✅ known stage
+   * // .copyFrom("typo", ["x"], "y")            // ❌ TS error: not in Stages
    */
-  add(sources: string[], dest: string, options: AddOptions = {}): this {
-    this.instructions.push({ kind: "add", sources, dest, options });
+  copyFrom(from: Stages, sources: string[], dest: string, options: Omit<CopyOptions<Stages>, "from"> = {}): this {
+    this._instructions.push({ kind: "copy", sources, dest, options: { ...options, from } });
     return this;
   }
+
+  // -------------------------------------------------------------------------
+  // ADD
+  // -------------------------------------------------------------------------
+
+  /** `ADD [options] <src>... <dest>` */
+  add(sources: string[], dest: string, options: AddOptions = {}): this {
+    this._instructions.push({ kind: "add", sources, dest, options });
+    return this;
+  }
+
+  // -------------------------------------------------------------------------
+  // CMD / ENTRYPOINT
+  // -------------------------------------------------------------------------
 
   /**
    * `CMD <command>`
    *
-   * Pass an array for exec form: `CMD ["bun", "run", "start"]`
+   * Pass an array for exec form: `CMD ["node", "server.js"]`
    */
-  cmd(command: string | string[]): this {
-    this.instructions.push({ kind: "cmd", command });
+  cmd(command: string | string[], options: CmdOptions = {}): this {
+    this._instructions.push({ kind: "cmd", command, options });
     return this;
   }
 
@@ -200,103 +264,104 @@ export class DockerfileBuilder {
    *
    * Pass an array for exec form: `ENTRYPOINT ["bun", "run", "start"]`
    */
-  entrypoint(command: string | string[]): this {
-    this.instructions.push({ kind: "entrypoint", command });
+  entrypoint(command: string | string[], options: EntrypointOptions = {}): this {
+    this._instructions.push({ kind: "entrypoint", command, options });
     return this;
   }
+
+  // -------------------------------------------------------------------------
+  // ENV / ARG / LABEL
+  // -------------------------------------------------------------------------
 
   /**
    * `ENV <key>=<value> ...`
    *
-   * @example
-   * builder.env({ NODE_ENV: "production", PORT: "3000" })
+   * @example .env({ NODE_ENV: "production", PORT: "3000" })
    */
-  env(vars: EnvRecord): this {
-    this.instructions.push({ kind: "env", vars });
+  env(vars: EnvRecord, options: EnvOptions = {}): this {
+    this._instructions.push({ kind: "env", vars, options });
     return this;
   }
 
   /**
    * `ARG <name>[=<default>]`
    *
-   * @example
-   * builder.arg("NODE_VERSION", { default: "20" })
+   * @example .arg("NODE_VERSION", { default: "20" })
    */
   arg(name: string, options: ArgOptions = {}): this {
-    this.instructions.push({ kind: "arg", name, options });
+    this._instructions.push({ kind: "arg", name, options });
     return this;
   }
 
-  /**
-   * `LABEL <key>=<value> ...`
-   */
-  label(labels: LabelRecord): this {
-    this.instructions.push({ kind: "label", labels });
+  /** `LABEL <key>="<value>" ...` */
+  label(labels: LabelRecord, options: LabelOptions = {}): this {
+    this._instructions.push({ kind: "label", labels, options });
     return this;
   }
+
+  // -------------------------------------------------------------------------
+  // EXPOSE / VOLUME / USER
+  // -------------------------------------------------------------------------
 
   /**
    * `EXPOSE <port>[/<protocol>]`
    *
-   * @example
-   * builder.expose(3000, { protocol: "tcp" })
+   * @example .expose(3000, { protocol: "tcp" })
    */
   expose(port: number | string, options: ExposeOptions = {}): this {
-    this.instructions.push({ kind: "expose", port, options });
+    this._instructions.push({ kind: "expose", port, options });
     return this;
   }
 
-  /**
-   * `VOLUME ["/data"]`
-   */
-  volume(...paths: string[]): this {
-    this.instructions.push({ kind: "volume", paths });
+  /** `VOLUME <path> [<path>...]` */
+  volume(paths: string[], options: VolumeOptions = {}): this {
+    this._instructions.push({ kind: "volume", paths, options });
     return this;
   }
 
-  /**
-   * `USER <user>[:<group>]`
-   */
-  user(user: string): this {
-    this.instructions.push({ kind: "user", user });
+  /** `USER <user>[:<group>]` */
+  user(user: string, options: UserOptions = {}): this {
+    this._instructions.push({ kind: "user", user, options });
     return this;
   }
 
-  /**
-   * `ONBUILD <instruction>`
-   */
-  onbuild(instruction: string): this {
-    this.instructions.push({ kind: "onbuild", instruction });
+  // -------------------------------------------------------------------------
+  // ONBUILD / STOPSIGNAL / SHELL
+  // -------------------------------------------------------------------------
+
+  /** `ONBUILD <instruction>` */
+  onbuild(instruction: string, options: OnbuildOptions = {}): this {
+    this._instructions.push({ kind: "onbuild", instruction, options });
     return this;
   }
 
-  /**
-   * `STOPSIGNAL <signal>`
-   */
-  stopsignal(signal: string): this {
-    this.instructions.push({ kind: "stopsignal", signal });
+  /** `STOPSIGNAL <signal>` */
+  stopsignal(signal: string, options: StopsignalOptions = {}): this {
+    this._instructions.push({ kind: "stopsignal", signal, options });
     return this;
   }
 
+  /** `SHELL ["executable", "params"]` */
+  shell(command: string[], options: ShellOptions = {}): this {
+    this._instructions.push({ kind: "shell", command, options });
+    return this;
+  }
+
+  // -------------------------------------------------------------------------
+  // HEALTHCHECK
+  // -------------------------------------------------------------------------
+
   /**
-   * `HEALTHCHECK` instruction.
+   * `HEALTHCHECK [options] CMD <command>`
    *
    * Pass `null` as command to emit `HEALTHCHECK NONE`.
    *
    * @example
-   * builder.healthcheck("curl -f http://localhost/ || exit 1", { interval: "30s" })
-   * builder.healthcheck(null) // HEALTHCHECK NONE
+   * .healthcheck("curl -f http://localhost/ || exit 1", { interval: "30s", retries: 3 })
+   * .healthcheck(null)  // → HEALTHCHECK NONE
    */
   healthcheck(command: string | null, options: HealthcheckOptions = {}): this {
-    this.instructions.push({ kind: "healthcheck", command, options });
-    return this;
-  }
-
-  /**
-   * `SHELL ["executable", "params"]`
-   */
-  shell(command: string[]): this {
-    this.instructions.push({ kind: "shell", command });
+    this._instructions.push({ kind: "healthcheck", command, options });
     return this;
   }
 
@@ -306,22 +371,23 @@ export class DockerfileBuilder {
 
   /**
    * Merge another builder's instructions into this one.
-   * Useful for sharing base configurations across stages.
+   *
+   * The returned type merges both builders' known stages.
    *
    * @example
-   * const sharedSetup = new DockerfileBuilder().workdir("/app").env({ TZ: "UTC" });
-   * const final = new DockerfileBuilder().from("node:20").merge(sharedSetup);
+   * const shared = dockerfile().workdir("/app").env({ TZ: "UTC" });
+   * const final  = dockerfile().from("node:20", { as: "base" }).merge(shared);
    */
-  merge(other: DockerfileBuilder): this {
-    this.instructions.push(...other.instructions);
-    return this;
+  merge<OtherStages extends string>(other: DockerfileBuilder<OtherStages>): DockerfileBuilder<Stages | OtherStages> {
+    this._instructions.push(...other._instructions);
+    return this as any;
   }
 
   /**
-   * Conditionally apply a callback to this builder.
+   * Conditionally apply a callback.
    *
    * @example
-   * builder.when(isDev, b => b.run("bun install").run("bun run dev"))
+   * .when(isDev, b => b.run("bun install").run("bun run dev"))
    */
   when(condition: boolean, cb: (builder: this) => void): this {
     if (condition) cb(this);
@@ -329,13 +395,13 @@ export class DockerfileBuilder {
   }
 
   /**
-   * Apply a callback to this builder (useful for extracting reusable step groups).
+   * Apply a callback (useful for reusable step groups).
    *
    * @example
-   * const addHealthcheck = (b: DockerfileBuilder) =>
-   *   b.healthcheck("curl -f http://localhost/ || exit 1");
+   * const addMeta = (b: DockerfileBuilder<any>) =>
+   *   b.label({ maintainer: "team@example.com" });
    *
-   * builder.pipe(addHealthcheck)
+   * dockerfile().from("node:20", { as: "base" }).pipe(addMeta)
    */
   pipe(cb: (builder: this) => void): this {
     cb(this);
@@ -346,29 +412,44 @@ export class DockerfileBuilder {
   // Output
   // -------------------------------------------------------------------------
 
-  /** Render the Dockerfile as a string */
+  /** Render the Dockerfile as a string. */
   build(): string {
-    return this.instructions.map(renderInstruction).join("\n");
+    return this._instructions.map(renderInstruction).join("\n");
   }
 
-  /** Alias for `build()` */
+  /** Alias for `.build()` */
   toString(): string {
     return this.build();
   }
 }
 
 // ---------------------------------------------------------------------------
-// Rendering helpers
+// Factory function (preferred entry point — avoids `new` keyword)
+// ---------------------------------------------------------------------------
+
+/** Create a new `DockerfileBuilder`. Preferred over `new DockerfileBuilder()`. */
+export function dockerfile(): DockerfileBuilder<never> {
+  return new DockerfileBuilder();
+}
+
+// ---------------------------------------------------------------------------
+// Rendering
 // ---------------------------------------------------------------------------
 
 function renderInstruction(inst: Instruction): string {
+  const commentLines = inst.options.comment
+    ? inst.options.comment
+        .split("\n")
+        .map((l) => (l.trim() === "" ? "#" : `# ${l}`))
+        .join("\n") + "\n"
+    : "";
+
+  const body = renderBody(inst);
+  return commentLines + body;
+}
+
+function renderBody(inst: Instruction): string {
   switch (inst.kind) {
-    case "comment":
-      return inst.text === "" ? "#" : `# ${inst.text}`;
-
-    case "blank":
-      return "";
-
     case "from": {
       const { image, options } = inst;
       const parts = ["FROM"];
@@ -387,7 +468,6 @@ function renderInstruction(inst: Instruction): string {
       if (options.mount) flags.push(`--mount=${options.mount}`);
       if (options.network) flags.push(`--network=${options.network}`);
       if (options.security) flags.push(`--security=${options.security}`);
-
       const flagStr = flags.length ? flags.join(" ") + " " : "";
       const cmdStr = Array.isArray(command) ? formatExecForm(command) : command;
       const line = `RUN ${flagStr}${cmdStr}`;
@@ -427,10 +507,10 @@ function renderInstruction(inst: Instruction): string {
       return `ENV ${pairs}`;
     }
 
-    case "arg": {
-      const { name, options } = inst;
-      return options.default !== undefined ? `ARG ${name}=${quoteEnvValue(options.default)}` : `ARG ${name}`;
-    }
+    case "arg":
+      return inst.options.default !== undefined
+        ? `ARG ${inst.name}=${quoteEnvValue(inst.options.default)}`
+        : `ARG ${inst.name}`;
 
     case "label": {
       const pairs = Object.entries(inst.labels)
@@ -474,14 +554,9 @@ function renderInstruction(inst: Instruction): string {
 }
 
 function formatExecForm(args: string[]): string {
-  const escaped = args.map((a) => `"${a.replace(/"/g, '\\"')}"`);
-  return `[ ${escaped.join(", ")} ]`;
+  return `[ ${args.map((a) => `"${a.replace(/"/g, '\\"')}"`).join(", ")} ]`;
 }
 
 function quoteEnvValue(value: string): string {
-  // Quote if value contains spaces or special shell characters
-  if (/[\s"'\\$`|&;<>(){}]/.test(value)) {
-    return `"${value.replace(/"/g, '\\"')}"`;
-  }
-  return value;
+  return /[\s"'\\$`|&;<>(){}]/.test(value) ? `"${value.replace(/"/g, '\\"')}"` : value;
 }

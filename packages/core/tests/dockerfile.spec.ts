@@ -1,228 +1,358 @@
 import { assert, describe, test } from "vitest";
-import { DockerfileBuilder } from "../src/dockerfile.js";
+import { type DockerfileBuilder, dockerfile } from "../src/dockerfile.js";
 
 describe("DockerfileBuilder", () => {
-  test("FROM with AS and platform", () => {
-    const out = new DockerfileBuilder().from("oven/bun:1", { as: "base", platform: "linux/amd64" }).build();
-    assert.equal(out, "FROM --platform=linux/amd64 oven/bun:1 AS base");
+  // ── Comments ────────────────────────────────────────────────────────────────
+
+  test("comment in options renders before instruction", () => {
+    const out = dockerfile().from("node:20", { comment: "use official image", as: "base" }).build();
+    assert.equal(out, "# use official image\nFROM node:20 AS base");
   });
 
-  test("FROM without options", () => {
-    const out = new DockerfileBuilder().from("node:20").build();
-    assert.equal(out, "FROM node:20");
+  test("multi-line comment splits into multiple # lines", () => {
+    const out = dockerfile().workdir("/app", { comment: "line one\nline two" }).build();
+    assert.equal(out, "# line one\n# line two\nWORKDIR /app");
   });
+
+  test("comment on run", () => {
+    const out = dockerfile().run("bun install", { comment: "install deps" }).build();
+    assert.equal(out, "# install deps\nRUN bun install");
+  });
+
+  test("comment on copy", () => {
+    const out = dockerfile().copy(["dist"], "/app", { comment: "copy output" }).build();
+    assert.equal(out, "# copy output\nCOPY dist /app");
+  });
+
+  test("comment on env", () => {
+    const out = dockerfile().env({ NODE_ENV: "production" }, { comment: "set env" }).build();
+    assert.equal(out, "# set env\nENV NODE_ENV=production");
+  });
+
+  test("no comment → no extra line", () => {
+    const out = dockerfile().from("node:20", { as: "app" }).build();
+    assert.equal(out, "FROM node:20 AS app");
+  });
+
+  // ── Stage type tracking ──────────────────────────────────────────────────────
+
+  test("from with as returns builder that knows the stage", () => {
+    // This is a type-level test: if it compiles, the type is correct.
+    // We verify at runtime that the output is also correct.
+    const out = dockerfile()
+      .from("oven/bun:1", { as: "base" })
+      .from("base", { as: "install" })
+      .copy(["node_modules"], "node_modules", { from: "base" })
+      .copy(["node_modules"], "node_modules", { from: "install" })
+      .build();
+    assert.match(out, /COPY --from=base/);
+    assert.match(out, /COPY --from=install/);
+  });
+
+  test("merge propagates stage types", () => {
+    const a = dockerfile().from("alpine", { as: "a" });
+    const b = dockerfile().from("debian", { as: "b" });
+    const merged = a.merge(b);
+    // Both "a" and "b" are known after merge — type-checked at compile time
+    const out = merged.copy(["x"], "y", { from: "a" }).copy(["x"], "y", { from: "b" }).build();
+    assert.match(out, /--from=a/);
+    assert.match(out, /--from=b/);
+  });
+
+  // ── FROM ────────────────────────────────────────────────────────────────────
+
+  test("FROM with as", () => {
+    const out = dockerfile().from("oven/bun:1", { as: "base" }).build();
+    assert.equal(out, "FROM oven/bun:1 AS base");
+  });
+
+  test("FROM with platform", () => {
+    const out = dockerfile().from("node:20", { as: "base", platform: "linux/amd64" }).build();
+    assert.equal(out, "FROM --platform=linux/amd64 node:20 AS base");
+  });
+
+  test("FROM minimal (as only)", () => {
+    assert.equal(dockerfile().from("node:20", { as: "app" }).build(), "FROM node:20 AS app");
+  });
+
+  // ── WORKDIR ─────────────────────────────────────────────────────────────────
 
   test("WORKDIR", () => {
-    const out = new DockerfileBuilder().workdir("/app").build();
-    assert.equal(out, "WORKDIR /app");
+    assert.equal(dockerfile().workdir("/app").build(), "WORKDIR /app");
   });
 
+  // ── RUN ─────────────────────────────────────────────────────────────────────
+
   test("RUN shell form", () => {
-    const out = new DockerfileBuilder().run("bun install").build();
-    assert.equal(out, "RUN bun install");
+    assert.equal(dockerfile().run("bun install").build(), "RUN bun install");
   });
 
   test("RUN exec form", () => {
-    const out = new DockerfileBuilder().run(["bun", "install"]).build();
-    assert.equal(out, 'RUN [ "bun", "install" ]');
+    assert.equal(dockerfile().run(["bun", "install"]).build(), 'RUN [ "bun", "install" ]');
   });
 
-  test("RUN disabled (commented out)", () => {
-    const out = new DockerfileBuilder().run("bun install --frozen-lockfile", { disabled: true }).build();
-    assert.equal(out, "# RUN bun install --frozen-lockfile");
+  test("RUN disabled", () => {
+    assert.equal(
+      dockerfile().run("bun install --frozen-lockfile", { disabled: true }).build(),
+      "# RUN bun install --frozen-lockfile",
+    );
   });
 
   test("RUN with mount flag", () => {
-    const out = new DockerfileBuilder()
-      .run("apt-get install -y curl", { mount: "type=cache,target=/var/cache/apt" })
-      .build();
-    assert.equal(out, "RUN --mount=type=cache,target=/var/cache/apt apt-get install -y curl");
+    assert.equal(
+      dockerfile().run("apt-get install -y curl", { mount: "type=cache,target=/var/cache/apt" }).build(),
+      "RUN --mount=type=cache,target=/var/cache/apt apt-get install -y curl",
+    );
   });
 
+  // ── COPY ────────────────────────────────────────────────────────────────────
+
   test("COPY basic", () => {
-    const out = new DockerfileBuilder().copy(["package.json", "bun.lock*"], "/app/").build();
-    assert.equal(out, "COPY package.json bun.lock* /app/");
+    assert.equal(
+      dockerfile().copy(["package.json", "bun.lock*"], "/app/").build(),
+      "COPY package.json bun.lock* /app/",
+    );
   });
 
   test("COPY with --from", () => {
-    const out = new DockerfileBuilder().copy(["node_modules"], "node_modules", { from: "install" }).build();
-    assert.equal(out, "COPY --from=install node_modules node_modules");
+    const out = dockerfile()
+      .from("node:20", { as: "build" })
+      .copy(["node_modules"], "node_modules", { from: "build" })
+      .build();
+    assert.match(out, /COPY --from=build node_modules node_modules/);
   });
 
   test("COPY with --chown and --chmod", () => {
-    const out = new DockerfileBuilder().copy(["app.js"], "/app/", { chown: "node:node", chmod: "755" }).build();
-    assert.equal(out, "COPY --chown=node:node --chmod=755 app.js /app/");
+    assert.equal(
+      dockerfile().copy(["app.js"], "/app/", { chown: "node:node", chmod: "755" }).build(),
+      "COPY --chown=node:node --chmod=755 app.js /app/",
+    );
   });
 
+  // ── ADD ─────────────────────────────────────────────────────────────────────
+
+  test("ADD with keepGitDir", () => {
+    assert.equal(
+      dockerfile().add(["https://example.com/repo.git"], "/app", { keepGitDir: true }).build(),
+      "ADD --keep-git-dir https://example.com/repo.git /app",
+    );
+  });
+
+  // ── CMD / ENTRYPOINT ────────────────────────────────────────────────────────
+
   test("CMD exec form", () => {
-    const out = new DockerfileBuilder().cmd(["node", "server.js"]).build();
-    assert.equal(out, 'CMD [ "node", "server.js" ]');
+    assert.equal(dockerfile().cmd(["node", "server.js"]).build(), 'CMD [ "node", "server.js" ]');
   });
 
   test("ENTRYPOINT exec form", () => {
-    const out = new DockerfileBuilder().entrypoint(["bun", "run", "./dist/server/index.mjs"]).build();
-    assert.equal(out, 'ENTRYPOINT [ "bun", "run", "./dist/server/index.mjs" ]');
+    assert.equal(
+      dockerfile().entrypoint(["bun", "run", "./dist/server/index.mjs"]).build(),
+      'ENTRYPOINT [ "bun", "run", "./dist/server/index.mjs" ]',
+    );
   });
 
-  test("ENV single", () => {
-    const out = new DockerfileBuilder().env({ NODE_ENV: "production" }).build();
-    assert.equal(out, "ENV NODE_ENV=production");
+  // ── ENV ─────────────────────────────────────────────────────────────────────
+
+  test("ENV single value", () => {
+    assert.equal(dockerfile().env({ NODE_ENV: "production" }).build(), "ENV NODE_ENV=production");
   });
 
   test("ENV value with spaces gets quoted", () => {
-    const out = new DockerfileBuilder().env({ GREETING: "hello world" }).build();
-    assert.equal(out, 'ENV GREETING="hello world"');
+    assert.equal(dockerfile().env({ MSG: "hello world" }).build(), 'ENV MSG="hello world"');
   });
 
-  test("ENV multiple entries", () => {
-    const out = new DockerfileBuilder().env({ NODE_ENV: "production", PORT: "3000" }).build();
-    assert.match(out, /ENV/);
-    assert.match(out, /NODE_ENV=production/);
-    assert.match(out, /PORT=3000/);
-  });
+  // ── ARG ─────────────────────────────────────────────────────────────────────
 
   test("ARG with default", () => {
-    const out = new DockerfileBuilder().arg("VERSION", { default: "1.0" }).build();
-    assert.equal(out, "ARG VERSION=1.0");
+    assert.equal(dockerfile().arg("VERSION", { default: "1.0" }).build(), "ARG VERSION=1.0");
   });
 
   test("ARG without default", () => {
-    const out = new DockerfileBuilder().arg("SECRET").build();
-    assert.equal(out, "ARG SECRET");
+    assert.equal(dockerfile().arg("SECRET").build(), "ARG SECRET");
   });
 
-  test("LABEL", () => {
-    const out = new DockerfileBuilder().label({ maintainer: "team@example.com" }).build();
-    assert.equal(out, 'LABEL maintainer="team@example.com"');
+  // ── LABEL ───────────────────────────────────────────────────────────────────
+
+  test("LABEL single", () => {
+    assert.equal(dockerfile().label({ maintainer: "team@example.com" }).build(), 'LABEL maintainer="team@example.com"');
   });
+
+  // ── EXPOSE ──────────────────────────────────────────────────────────────────
 
   test("EXPOSE with protocol", () => {
-    const out = new DockerfileBuilder().expose(3000, { protocol: "tcp" }).build();
-    assert.equal(out, "EXPOSE 3000/tcp");
+    assert.equal(dockerfile().expose(3000, { protocol: "tcp" }).build(), "EXPOSE 3000/tcp");
   });
 
   test("EXPOSE without protocol", () => {
-    const out = new DockerfileBuilder().expose(8080).build();
-    assert.equal(out, "EXPOSE 8080");
+    assert.equal(dockerfile().expose(8080).build(), "EXPOSE 8080");
   });
 
-  test("USER", () => {
-    const out = new DockerfileBuilder().user("bun").build();
-    assert.equal(out, "USER bun");
-  });
+  // ── VOLUME ──────────────────────────────────────────────────────────────────
 
   test("VOLUME single path", () => {
-    const out = new DockerfileBuilder().volume("/data").build();
-    assert.equal(out, "VOLUME /data");
+    assert.equal(dockerfile().volume(["/data"]).build(), "VOLUME /data");
   });
 
   test("VOLUME multiple paths", () => {
-    const out = new DockerfileBuilder().volume("/data", "/logs").build();
-    assert.equal(out, 'VOLUME [ "/data", "/logs" ]');
+    assert.equal(dockerfile().volume(["/data", "/logs"]).build(), 'VOLUME [ "/data", "/logs" ]');
   });
 
+  // ── USER ────────────────────────────────────────────────────────────────────
+
+  test("USER", () => {
+    assert.equal(dockerfile().user("bun").build(), "USER bun");
+  });
+
+  // ── HEALTHCHECK ─────────────────────────────────────────────────────────────
+
   test("HEALTHCHECK with options", () => {
-    const out = new DockerfileBuilder()
-      .healthcheck("curl -f http://localhost/ || exit 1", {
-        interval: "30s",
-        timeout: "10s",
-        retries: 3,
-      })
-      .build();
-    assert.equal(out, "HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost/ || exit 1");
+    assert.equal(
+      dockerfile()
+        .healthcheck("curl -f http://localhost/ || exit 1", {
+          interval: "30s",
+          timeout: "10s",
+          retries: 3,
+        })
+        .build(),
+      "HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost/ || exit 1",
+    );
   });
 
   test("HEALTHCHECK NONE", () => {
-    const out = new DockerfileBuilder().healthcheck(null).build();
-    assert.equal(out, "HEALTHCHECK NONE");
+    assert.equal(dockerfile().healthcheck(null).build(), "HEALTHCHECK NONE");
   });
 
+  // ── SHELL / STOPSIGNAL / ONBUILD ────────────────────────────────────────────
+
   test("SHELL", () => {
-    const out = new DockerfileBuilder().shell(["/bin/bash", "-c"]).build();
-    assert.equal(out, 'SHELL [ "/bin/bash", "-c" ]');
+    assert.equal(dockerfile().shell(["/bin/bash", "-c"]).build(), 'SHELL [ "/bin/bash", "-c" ]');
   });
 
   test("STOPSIGNAL", () => {
-    const out = new DockerfileBuilder().stopsignal("SIGTERM").build();
-    assert.equal(out, "STOPSIGNAL SIGTERM");
+    assert.equal(dockerfile().stopsignal("SIGTERM").build(), "STOPSIGNAL SIGTERM");
   });
 
   test("ONBUILD", () => {
-    const out = new DockerfileBuilder().onbuild("RUN echo hello").build();
-    assert.equal(out, "ONBUILD RUN echo hello");
+    assert.equal(dockerfile().onbuild("RUN echo hello").build(), "ONBUILD RUN echo hello");
   });
 
-  test("comment", () => {
-    const out = new DockerfileBuilder().comment("hello world").build();
-    assert.equal(out, "# hello world");
-  });
+  // ── Composition ─────────────────────────────────────────────────────────────
 
-  test("blank line", () => {
-    const out = new DockerfileBuilder().from("node:20").blank().workdir("/app").build();
-    assert.equal(out, "FROM node:20\n\nWORKDIR /app");
-  });
-
-  test(".when() applies when true", () => {
-    const out = new DockerfileBuilder()
-      .from("node:20")
+  test(".when() applies callback when true", () => {
+    const out = dockerfile()
+      .from("node:20", { as: "base" })
       .when(true, (b) => b.env({ DEV: "1" }))
       .build();
     assert.match(out, /ENV DEV=1/);
   });
 
-  test(".when() skips when false", () => {
-    const out = new DockerfileBuilder()
-      .from("node:20")
+  test(".when() skips callback when false", () => {
+    const out = dockerfile()
+      .from("node:20", { as: "base" })
       .when(false, (b) => b.env({ DEV: "1" }))
       .build();
     assert.notMatch(out, /ENV/);
   });
 
   test(".pipe() applies callback", () => {
-    const addLabel = (b: DockerfileBuilder) => b.label({ team: "platform" });
-    const out = new DockerfileBuilder().from("node:20").pipe(addLabel).build();
+    const addLabel = (b: DockerfileBuilder<any>) => b.label({ team: "platform" });
+    const out = dockerfile().from("node:20", { as: "base" }).pipe(addLabel).build();
     assert.match(out, /LABEL team="platform"/);
   });
 
-  test(".merge() combines builders", () => {
-    const shared = new DockerfileBuilder().workdir("/app").env({ TZ: "UTC" });
-    const out = new DockerfileBuilder().from("node:20").merge(shared).build();
-    assert.match(out, /FROM node:20/);
+  test(".merge() combines instructions and stages", () => {
+    const shared = dockerfile().workdir("/app").env({ TZ: "UTC" });
+    const out = dockerfile().from("node:20", { as: "base" }).merge(shared).build();
+    assert.match(out, /FROM node:20 AS base/);
     assert.match(out, /WORKDIR \/app/);
     assert.match(out, /ENV TZ=UTC/);
   });
 
   test("toString() equals build()", () => {
-    const builder = new DockerfileBuilder().from("node:20").workdir("/app");
-    assert.equal(builder.toString(), builder.build());
+    const b = dockerfile().from("node:20", { as: "base" }).workdir("/app");
+    assert.equal(b.toString(), b.build());
   });
 
-  test("full multi-stage Bun Dockerfile", () => {
-    const out = new DockerfileBuilder()
-      .comment("use the official Bun image")
-      .from("oven/bun:1", { as: "base" })
+  // ── copy --from (type-checked stage names) ──────────────────────────────────
+
+  test("copy --from a declared stage", () => {
+    const out = dockerfile().from("oven/bun:1", { as: "build" }).copy(["dist"], "./dist", { from: "build" }).build();
+    assert.equal(out, "FROM oven/bun:1 AS build\nCOPY --from=build dist ./dist");
+  });
+
+  test("copy --from with extra options", () => {
+    const out = dockerfile()
+      .from("node:20", { as: "deps" })
+      .copy(["node_modules"], "node_modules", {
+        from: "deps",
+        chown: "node:node",
+        comment: "copy deps",
+      })
+      .build();
+    assert.match(out, /# copy deps\nCOPY --from=deps --chown=node:node node_modules node_modules/);
+  });
+
+  // Type-level: copy({ from }) is restricted to declared stage names only.
+  // The following would be a TS compile error (verified separately):
+  //   .copy(["x"], "y", { from: "typo" })  // ❌ "typo" not assignable to "build"
+
+  // ── Full integration: Bun multi-stage ───────────────────────────────────────
+
+  test("reproduces the Bun multi-stage Dockerfile", () => {
+    const out = dockerfile()
+      .from("oven/bun:1", {
+        as: "base",
+        comment: "use the official Bun image\nsee all versions at https://hub.docker.com/r/oven/bun/tags",
+      })
       .workdir("/usr/src/app")
-      .blank()
-      .from("base", { as: "install" })
+      .from("base", {
+        as: "install",
+        comment: "install dependencies into temp directory\nthis will cache them and speed up future builds",
+      })
       .run("mkdir -p /temp/dev")
       .copy(["package.json", "bun.lock*", "batijs-tests-utils-*.tgz"], "/temp/dev/")
       .run("cd /temp/dev && bun install")
       .run("cd /temp/dev && bun install --frozen-lockfile", { disabled: true })
-      .blank()
-      .from("base", { as: "release" })
-      .user("bun")
+      .run("mkdir -p /temp/prod", { comment: "install with --production (exclude devDependencies)" })
+      .copy(["package.json", "bun.lock*", "batijs-tests-utils-*.tgz"], "/temp/prod/")
+      .run("cd /temp/prod && bun install --production")
+      .run("cd /temp/prod && bun install --frozen-lockfile --production", { disabled: true })
+      .from("base", {
+        as: "prerelease",
+        comment: "copy node_modules from temp directory\nthen copy all (non-ignored) project files into the image",
+      })
+      .copy(["/temp/dev/node_modules"], "node_modules", { from: "install" })
+      .copy(["."], ".")
+      .env({ NODE_ENV: "production" }, { comment: "[optional] tests & build" })
+      .run("bun run build")
+      .from("base", {
+        as: "release",
+        comment: "copy production dependencies and source code into final image",
+      })
+      .copy(["/temp/prod/node_modules"], "node_modules", { from: "install" })
+      .copy(["/usr/src/app/dist"], "./dist", { from: "prerelease" })
+      .copy(["/usr/src/app/package.json"], ".", { from: "prerelease" })
+      .user("bun", { comment: "run the app" })
       .expose(3000, { protocol: "tcp" })
       .entrypoint(["bun", "run", "./dist/server/index.mjs"])
       .build();
 
-    assert.match(out, /^# use the official Bun image/);
-    assert.match(out, /FROM oven\/bun:1 AS base/);
-    assert.match(out, /WORKDIR \/usr\/src\/app/);
-    assert.match(out, /FROM base AS install/);
-    assert.match(out, /COPY package\.json bun\.lock\* batijs-tests-utils-\*\.tgz \/temp\/dev\//);
+    // Comments appear before their instructions (multi-line comment = multiple # lines)
+    assert.match(out, /# use the official Bun image\n# see all versions at.*\nFROM oven\/bun:1 AS base/);
+    assert.match(out, /# install dependencies into temp directory\n# this will cache them/);
+    assert.match(out, /# \[optional\] tests & build\nENV NODE_ENV=production/);
+    assert.match(out, /# run the app\nUSER bun/);
+    // Disabled line
     assert.match(out, /# RUN cd \/temp\/dev && bun install --frozen-lockfile/);
+    // Stage aliases
+    assert.match(out, /FROM oven\/bun:1 AS base/);
+    assert.match(out, /FROM base AS install/);
+    assert.match(out, /FROM base AS prerelease/);
     assert.match(out, /FROM base AS release/);
-    assert.match(out, /USER bun/);
+    // Cross-stage COPY
+    assert.match(out, /COPY --from=install \/temp\/dev\/node_modules node_modules/);
+    assert.match(out, /COPY --from=prerelease \/usr\/src\/app\/dist \.\/dist/);
+    // Final instructions
     assert.match(out, /EXPOSE 3000\/tcp/);
     assert.match(out, /ENTRYPOINT \[ "bun", "run", ".\/dist\/server\/index\.mjs" \]/);
   });

@@ -1,55 +1,64 @@
-import { packageManager, type TransformerProps } from "@batijs/core";
+import { dockerfile, packageManager, type TransformerProps } from "@batijs/core";
+
+interface PmConfig {
+  dockerImage: string;
+  corepack: boolean;
+  installCmd: string;
+  installProdCmd: string;
+  lockfiles: string[];
+}
+
+function getPmConfig(pmName: string, isTest: boolean): PmConfig {
+  const frozenLockFile = isTest ? " --frozen-lockfile" : "";
+  switch (pmName) {
+    case "pnpm":
+      return {
+        dockerImage: "node:24-alpine",
+        corepack: true,
+        installCmd: `pnpm install${frozenLockFile}`,
+        installProdCmd: `pnpm install${frozenLockFile} --prod`,
+        lockfiles: ["pnpm-lock.yaml*", "pnpm-workspace.yaml*"],
+      };
+    case "yarn":
+      return {
+        dockerImage: "node:24-alpine",
+        corepack: true,
+        installCmd: `yarn install${frozenLockFile}`,
+        installProdCmd: `yarn install${frozenLockFile} --production`,
+        lockfiles: ["yarn.lock*"],
+      };
+    case "bun":
+      return {
+        dockerImage: "oven/bun:1",
+        corepack: false,
+        installCmd: `bun install${frozenLockFile}`,
+        installProdCmd: `bun install${frozenLockFile} --production`,
+        lockfiles: ["bun.lock*"],
+      };
+    default:
+      return {
+        dockerImage: "node:24-alpine",
+        corepack: false,
+        installCmd: isTest ? "npm install" : "npm ci",
+        installProdCmd: isTest ? "npm install --omit=dev" : "npm ci --omit=dev",
+        lockfiles: ["package-lock.json*"],
+      };
+  }
+}
 
 export default async function getDockerfile(props: TransformerProps): Promise<string> {
   const { meta } = props;
   const pm = packageManager();
-
-  let installCmd: string;
-  let installProdCmd: string;
-  let lockfile: string;
-  let corepackLine: string;
-  let dockerImage: string;
-  const nodeCli = pm.name === "bun" ? "bun" : "node";
-  const frozenLockFile = meta.BATI_TEST ? " --frozen-lockfile" : "";
-
-  switch (pm.name) {
-    case "pnpm":
-      dockerImage = "node:24-alpine";
-      corepackLine = "RUN corepack enable";
-      installCmd = `pnpm install${frozenLockFile}`;
-      installProdCmd = `pnpm install${frozenLockFile} --prod`;
-      lockfile = "pnpm-lock.yaml* pnpm-workspace.yaml*";
-      break;
-    case "yarn":
-      dockerImage = "node:24-alpine";
-      corepackLine = "RUN corepack enable";
-      installCmd = `yarn install${frozenLockFile}`;
-      installProdCmd = `yarn install${frozenLockFile} --production`;
-      lockfile = "yarn.lock*";
-      break;
-    case "bun":
-      dockerImage = "oven/bun:1";
-      corepackLine = "";
-      installCmd = `bun install${frozenLockFile}`;
-      installProdCmd = `bun install${frozenLockFile} --production`;
-      lockfile = "bun.lock*";
-      break;
-    default: // npm
-      dockerImage = "node:24-alpine";
-      corepackLine = "";
-      installCmd = meta.BATI_TEST ? "npm install" : "npm ci";
-      installProdCmd = meta.BATI_TEST ? "npm install --omit=dev" : "npm ci --omit=dev";
-      lockfile = "package-lock.json*";
-      break;
-  }
-
   const run = pm.run;
+  const nodeCli = pm.name === "bun" ? "bun" : "node";
+  const pmConfig = getPmConfig(pm.name, !!meta.BATI_TEST);
 
-  // Build-time commands (run in builder stage, devDeps available)
-  const builderCommands: string[] = [];
+  // Build-time commands (run in builder stage; devDeps are available)
+  const buildSteps: string[] = [];
   if (meta.BATI.has("drizzle") && !meta.BATI.hasD1) {
-    builderCommands.push(`RUN ${run} drizzle:generate`);
+    buildSteps.push(`${run} drizzle:generate`);
   }
+  buildSteps.push(`${run} build`);
 
   // Startup migration commands (run at container startup)
   const startupMigrations: string[] = [];
@@ -63,84 +72,81 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     startupMigrations.push(`${run} kysely:migrate`);
   }
 
-  // TODO either move necessary deps out of devDeps or convert/compile migration files to JS
+  // Migration tools (tsx, drizzle-kit, …) are devDeps — when migrations
+  // run at container startup, the runner needs the dev node_modules.
+  // TODO: move necessary deps out of devDeps, or compile migration files to JS.
   const hasMigrations = startupMigrations.length > 0;
-  // Migration tools (tsx, drizzle-kit) are devDeps — install all deps in runner when needed
-  const runnerInstallCmd = hasMigrations ? installCmd : installProdCmd;
 
-  // Source files required by migration scripts in the runner stage
-  const migrationCopies: string[] = [];
+  // Source files required by migration scripts, copied into the runner.
+  const migrationCopies: { sources: string[]; dest: string }[] = [];
   if (meta.BATI.has("sqlite") && !meta.BATI.hasD1) {
-    migrationCopies.push("COPY --from=builder /app/database/sqlite ./database/sqlite");
+    migrationCopies.push({ sources: ["/app/database/sqlite"], dest: "./database/sqlite" });
   }
   if (meta.BATI.has("drizzle") && !meta.BATI.hasD1) {
-    migrationCopies.push("COPY --from=builder /app/database/migrations ./database/migrations");
-    migrationCopies.push("COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts");
+    migrationCopies.push({ sources: ["/app/database/migrations"], dest: "./database/migrations" });
+    migrationCopies.push({ sources: ["/app/drizzle.config.ts"], dest: "./drizzle.config.ts" });
   }
   if (meta.BATI.has("kysely") && !meta.BATI.hasD1) {
-    migrationCopies.push("COPY --from=builder /app/database/kysely ./database/kysely");
+    migrationCopies.push({ sources: ["/app/database/kysely"], dest: "./database/kysely" });
   }
 
-  // ── Builder stage ──────────────────────────────────────────────
-  const builderLines: string[] = [`FROM ${dockerImage} AS builder`, "WORKDIR /app", ""];
+  // Exec-form CMD, or shell-form when migrations must run before the server.
+  const startCmd: string[] = hasMigrations
+    ? ["sh", "-c", [...startupMigrations, `${nodeCli} ./dist/server/index.mjs`].join(" && ")]
+    : [nodeCli, "./dist/server/index.mjs"];
 
-  if (corepackLine) {
-    builderLines.push(corepackLine, "");
-  }
-
-  builderLines.push(`COPY package.json ${lockfile} ./`);
-
+  // Files that participate in dependency installation
+  const installSources = ["package.json", ...pmConfig.lockfiles];
   if (meta.BATI_TEST) {
-    builderLines.push(`COPY batijs-tests-utils-*.tgz ./`);
+    installSources.push("batijs-tests-utils-*.tgz");
   }
 
-  builderLines.push(`RUN ${installCmd}`, "", "COPY . .");
+  const df = dockerfile()
+    // ── deps-dev: install all dependencies (devDeps + deps) ─────────────────
+    .from(pmConfig.dockerImage, {
+      as: "deps-dev",
+      comment: "install all dependencies (devDeps + deps) for build & migrations",
+    })
+    .workdir("/app")
+    .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    .copy(installSources, "./")
+    .run(pmConfig.installCmd)
 
-  for (const cmd of builderCommands) {
-    builderLines.push(cmd);
-  }
+    // ── deps-prod: install production dependencies only ─────────────────────
+    .from(pmConfig.dockerImage, {
+      as: "deps-prod",
+      comment: "install production-only dependencies for the runtime image",
+    })
+    .workdir("/app")
+    .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    .copy(installSources, "./")
+    .run(pmConfig.installProdCmd)
 
-  builderLines.push(`RUN ${run} build`);
+    // ── builder: build the application using deps-dev ───────────────────────
+    .from(pmConfig.dockerImage, { as: "builder", comment: "build the application" })
+    .workdir("/app")
+    .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    .copy(["/app/node_modules"], "./node_modules", { from: "deps-dev" })
+    .copy(["."], ".")
+    .pipe((b) => {
+      for (const cmd of buildSteps) b.run(cmd);
+    })
 
-  // ── Runner stage ───────────────────────────────────────────────
-  const runnerLines: string[] = [
-    "",
-    "",
-    `FROM ${dockerImage} AS runner`,
-    "WORKDIR /app",
-    "",
-    "ENV NODE_ENV=production",
-    "ENV PORT=3000",
-    "",
-  ];
+    // ── runner: production runtime image ────────────────────────────────────
+    .from(pmConfig.dockerImage, { as: "runner", comment: "production runtime image" })
+    .workdir("/app")
+    .env({ NODE_ENV: "production", PORT: "3000" })
+    .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    .copy(installSources, "./")
+    .copy(["/app/node_modules"], "./node_modules", { from: hasMigrations ? "deps-dev" : "deps-prod" })
+    .copy(["/app/dist"], "./dist", { from: "builder" })
+    .pipe((b) => {
+      for (const { sources, dest } of migrationCopies) {
+        b.copy(sources, dest, { from: "builder" });
+      }
+    })
+    .expose(3000)
+    .cmd(startCmd);
 
-  if (corepackLine) {
-    runnerLines.push(corepackLine, "");
-  }
-
-  runnerLines.push(`COPY package.json ${lockfile} ./`);
-
-  if (meta.BATI_TEST) {
-    runnerLines.push(`COPY batijs-tests-utils-*.tgz ./`);
-  }
-
-  // runnerLines.push(`RUN ${runnerInstallCmd}`, "");
-
-  runnerLines.push("COPY --from=builder /app/dist ./dist");
-
-  for (const copy of migrationCopies) {
-    runnerLines.push(copy);
-  }
-
-  runnerLines.push("", "EXPOSE 3000", "");
-
-  // CMD
-  if (hasMigrations) {
-    const cmd = [...startupMigrations, `${nodeCli} ./dist/server/index.mjs`].join(" && ");
-    runnerLines.push(`CMD ["sh", "-c", "${cmd}"]`);
-  } else {
-    runnerLines.push(`CMD ["${nodeCli}", "./dist/server/index.mjs"]`);
-  }
-
-  return [...builderLines, ...runnerLines].join("\n") + "\n";
+  return `${df.build()}\n`;
 }
