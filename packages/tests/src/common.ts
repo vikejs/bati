@@ -60,9 +60,13 @@ export async function createE2EWorkspace(options: E2EWorkspaceOptions) {
     // Proxy the build target to the sibling app so nx can satisfy
     // `dependsOn: ["build"]` within this project.
     build: `cd ${appRel} && bun run build`,
-    // knip lives in the .e2e workspace's node_modules; `--directory ../<app>` makes
-    // it analyse the app while binary discovery stays here.
-    knip: `VITE_CJS_IGNORE_WARNING=1 knip --no-config-hints --directory ${appRel}`,
+    // knip lives in the .e2e workspace's node_modules. We `cd` into the app
+    // before invoking it so that config files loaded by knip plugins (notably
+    // drizzle.config.ts, which calls dotenv/config) resolve their `.env`
+    // against the app dir. `bun run knip` augments PATH with the .e2e
+    // `node_modules/.bin` *before* the script starts, so `cd` doesn't unset
+    // the knip binary lookup.
+    knip: `cd ${appRel} && VITE_CJS_IGNORE_WARNING=1 knip --no-config-hints`,
   };
   if (flags.includes("eslint")) {
     // `bunx eslint .` runs from the app dir, so eslint resolves its binary
