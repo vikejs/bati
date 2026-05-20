@@ -255,7 +255,7 @@ describe("DockerfileBuilder", () => {
   });
 
   test(".pipe() applies callback", () => {
-    const addLabel = (b: DockerfileBuilder<any>) => b.label({ team: "platform" });
+    const addLabel = (b: DockerfileBuilder) => b.label({ team: "platform" });
     const out = dockerfile().from("node:20", { as: "base" }).pipe(addLabel).build();
     assert.match(out, /LABEL team="platform"/);
   });

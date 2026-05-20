@@ -28,7 +28,7 @@ export function transformYaml(code: string, meta: VikeMeta): string {
   const doc = parseDocument(code);
 
   visit(doc, {
-    Pair(key, node) {
+    Pair(_key, node) {
       if (!isScalar(node.key)) return;
       const commentBefore = node.key.commentBefore;
       const condition = extractBatiConditionFromYamlComment(commentBefore);
@@ -42,7 +42,7 @@ export function transformYaml(code: string, meta: VikeMeta): string {
         node.key.commentBefore = stripBatiLinesFromYamlComment(commentBefore);
       }
     },
-    Map(key, node, path) {
+    Map(_key, node, path) {
       const parent = path[path.length - 1];
       if (!isSeq(parent)) return;
 
@@ -57,7 +57,7 @@ export function transformYaml(code: string, meta: VikeMeta): string {
         node.commentBefore = stripBatiLinesFromYamlComment(commentBefore);
       }
     },
-    Scalar(key, node, path) {
+    Scalar(_key, node, path) {
       const parent = path[path.length - 1];
       if (!isSeq(parent)) return;
 

@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";

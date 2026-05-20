@@ -157,7 +157,7 @@ export class DockerfileBuilder<Stages extends string = never> {
    */
   from<S extends string>(image: string, options: FromOptions & { as: S }): DockerfileBuilder<Stages | S> {
     this._instructions.push({ kind: "from", image, options });
-    return this as any;
+    return this as DockerfileBuilder<Stages | S>;
   }
 
   // -------------------------------------------------------------------------
@@ -380,7 +380,7 @@ export class DockerfileBuilder<Stages extends string = never> {
    */
   merge<OtherStages extends string>(other: DockerfileBuilder<OtherStages>): DockerfileBuilder<Stages | OtherStages> {
     this._instructions.push(...other._instructions);
-    return this as any;
+    return this as DockerfileBuilder<Stages | OtherStages>;
   }
 
   /**
@@ -438,10 +438,10 @@ export function dockerfile(): DockerfileBuilder<never> {
 
 function renderInstruction(inst: Instruction): string {
   const commentLines = inst.options.comment
-    ? inst.options.comment
+    ? `${inst.options.comment
         .split("\n")
         .map((l) => (l.trim() === "" ? "#" : `# ${l}`))
-        .join("\n") + "\n"
+        .join("\n")}\n`
     : "";
 
   const body = renderBody(inst);
@@ -468,7 +468,7 @@ function renderBody(inst: Instruction): string {
       if (options.mount) flags.push(`--mount=${options.mount}`);
       if (options.network) flags.push(`--network=${options.network}`);
       if (options.security) flags.push(`--security=${options.security}`);
-      const flagStr = flags.length ? flags.join(" ") + " " : "";
+      const flagStr = flags.length ? `${flags.join(" ")} ` : "";
       const cmdStr = Array.isArray(command) ? formatExecForm(command) : command;
       const line = `RUN ${flagStr}${cmdStr}`;
       return options.disabled ? `# ${line}` : line;
@@ -480,7 +480,7 @@ function renderBody(inst: Instruction): string {
       if (options.from) flags.push(`--from=${options.from}`);
       if (options.chown) flags.push(`--chown=${options.chown}`);
       if (options.chmod) flags.push(`--chmod=${options.chmod}`);
-      const flagStr = flags.length ? flags.join(" ") + " " : "";
+      const flagStr = flags.length ? `${flags.join(" ")} ` : "";
       return `COPY ${flagStr}${[...sources, dest].join(" ")}`;
     }
 
@@ -490,7 +490,7 @@ function renderBody(inst: Instruction): string {
       if (options.chown) flags.push(`--chown=${options.chown}`);
       if (options.chmod) flags.push(`--chmod=${options.chmod}`);
       if (options.keepGitDir) flags.push("--keep-git-dir");
-      const flagStr = flags.length ? flags.join(" ") + " " : "";
+      const flagStr = flags.length ? `${flags.join(" ")} ` : "";
       return `ADD ${flagStr}${[...sources, dest].join(" ")}`;
     }
 
@@ -544,7 +544,7 @@ function renderBody(inst: Instruction): string {
       if (options.timeout) flags.push(`--timeout=${options.timeout}`);
       if (options.startPeriod) flags.push(`--start-period=${options.startPeriod}`);
       if (options.retries !== undefined) flags.push(`--retries=${options.retries}`);
-      const flagStr = flags.length ? flags.join(" ") + " " : "";
+      const flagStr = flags.length ? `${flags.join(" ")} ` : "";
       return `HEALTHCHECK ${flagStr}CMD ${inst.command}`;
     }
 
