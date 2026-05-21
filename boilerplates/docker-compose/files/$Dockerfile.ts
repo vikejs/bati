@@ -53,7 +53,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   const pm = packageManager();
   const run = pm.run;
   const nodeCli = pm.name === "bun" ? "bun" : "node";
-  const pmConfig = getPmConfig(pm.name, !!meta.BATI_TEST);
+  const pmConfig = getPmConfig(pm.name, Boolean(meta.BATI_TEST));
 
   // Build-time commands (run in builder stage; devDeps are available)
   const buildSteps: string[] = [];
@@ -65,7 +65,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     startupMigrations.push(`${run} sqlite:migrate`);
   }
   if (meta.BATI.has("kysely") && !meta.BATI.hasD1) {
-    startupMigrations.push(`${run} kysely:migrate`);
+    startupMigrations.push(`${nodeCli} ./dist/server/migrate.mjs`);
   }
 
   // Migration tools (tsx, drizzle-kit, …) are devDeps — when migrations
@@ -80,7 +80,6 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   }
   if (meta.BATI.has("drizzle") && !meta.BATI.hasD1) {
     migrationCopies.push({ sources: ["/app/database/migrations"], dest: "./database/migrations" });
-    migrationCopies.push({ sources: ["/app/drizzle.config.ts"], dest: "./drizzle.config.ts" });
   }
   if (meta.BATI.has("kysely") && !meta.BATI.hasD1) {
     migrationCopies.push({ sources: ["/app/database/kysely"], dest: "./database/kysely" });
