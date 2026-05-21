@@ -100,6 +100,14 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   // Files that participate in dependency installation
   const installSources = ["package.json", ...pmConfig.lockfiles];
 
+  // Sqlite + bun fix
+  const deps = Object.keys({ ...props.packageJson.dependencies, ...props.packageJson.devDependencies });
+  const sqliteBun = {
+    when: nodeCli === "bun" && deps.includes("better-sqlite3"),
+    run: "apk --no-cache add python3 gcc make",
+    comment: "Required to compile sqlite3 using node-gyp",
+  };
+
   const df = dockerfile()
     // ── deps-dev: install all dependencies (devDeps + deps) ─────────────────
     .from(pmConfig.dockerImage, {
@@ -108,6 +116,8 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     })
     .workdir("/app")
     .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    // Required to compile sqlite3 using node-gyp
+    .when(sqliteBun.when, (b) => b.run(sqliteBun.run, { comment: sqliteBun.comment }))
     .copy(installSources, "./")
     .run(pmConfig.installCmd)
 
@@ -118,6 +128,8 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     })
     .workdir("/app")
     .when(pmConfig.corepack, (b) => b.run("corepack enable"))
+    // Required to compile sqlite3 using node-gyp
+    .when(sqliteBun.when, (b) => b.run(sqliteBun.run, { comment: sqliteBun.comment }))
     .copy(installSources, "./")
     .run(pmConfig.installProdCmd)
 
