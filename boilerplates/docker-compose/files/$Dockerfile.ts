@@ -31,7 +31,7 @@ function getPmConfig(pmName: string, isTest: boolean): PmConfig {
       };
     case "bun":
       return {
-        dockerImage: "oven/bun:1",
+        dockerImage: "oven/bun:1-alpine",
         corepack: false,
         installCmd: `bun install${frozenLockFile}`,
         installProdCmd: `bun install${frozenLockFile} --production`,
@@ -57,18 +57,12 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
 
   // Build-time commands (run in builder stage; devDeps are available)
   const buildSteps: string[] = [];
-  if (meta.BATI.has("drizzle") && !meta.BATI.hasD1) {
-    buildSteps.push(`${run} drizzle:generate`);
-  }
   buildSteps.push(`${run} build`);
 
   // Startup migration commands (run at container startup)
   const startupMigrations: string[] = [];
   if (meta.BATI.has("sqlite") && !meta.BATI.hasD1) {
     startupMigrations.push(`${run} sqlite:migrate`);
-  }
-  if (meta.BATI.has("drizzle") && !meta.BATI.hasD1) {
-    startupMigrations.push(`${run} drizzle:migrate`);
   }
   if (meta.BATI.has("kysely") && !meta.BATI.hasD1) {
     startupMigrations.push(`${run} kysely:migrate`);
@@ -104,7 +98,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   const deps = Object.keys({ ...props.packageJson.dependencies, ...props.packageJson.devDependencies });
   const sqliteBun = {
     when: nodeCli === "bun" && deps.includes("better-sqlite3"),
-    run: "apk --no-cache add python3 gcc make",
+    run: "apk add --no-cache python3 build-base sqlite-dev",
     comment: "Required to compile sqlite3 using node-gyp",
   };
 
