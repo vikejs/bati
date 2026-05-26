@@ -1,4 +1,5 @@
 export * from "./dockerfile.js";
+export * from "./env-registry.js";
 export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./magicast.js";
