@@ -77,7 +77,15 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .from(config.image, { as: "runner", comment: "production runtime image" })
     .workdir("/app")
     .env({ NODE_ENV: "production", PORT: "3000" })
-    .when(meta.BATI.has("drizzle"), (b) => b.env({ DATABASE_URL: "/app/database/sqlite.db" }))
+    // Runtime env mirrors docker-compose.yml: every var compose injects gets a default
+    // here so the image runs on its own. Secrets stay empty — compose overrides them.
+    .when(!meta.BATI.hasD1 && meta.BATI.hasDatabase, (b) =>
+      b.env({ DATABASE_URL: "/app/database/sqlite.db" }, { comment: "non-D1 database" }),
+    )
+    .when(meta.BATI.has("auth0"), (b) =>
+      b.env({ AUTH0_CLIENT_ID: "", AUTH0_CLIENT_SECRET: "", AUTH0_ISSUER_BASE_URL: "" }, { comment: "auth0" }),
+    )
+    .when(meta.BATI.has("sentry"), (b) => b.env({ SENTRY_DSN: "" }, { comment: "sentry" }))
     .when(config.corepack, (b) => b.run("corepack enable"))
     .copy(installSources, "./")
     .copy(["/app/node_modules"], "./node_modules", { from: "deps-prod" })
