@@ -1,24 +1,17 @@
-import { copyFile, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import http from "node:http";
 import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import * as process from "node:process";
 import { fileURLToPath } from "node:url";
-import { exec, npmCli, zx } from "@batijs/tests-utils";
+import { Balancer, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
 
 import { Document, parseDocument, YAMLMap, YAMLSeq } from "yaml";
 import rootPackageJson from "../../../package.json" with { type: "json" };
-import {
-  createBatiConfig,
-  createNxConfig,
-  extractPnpmOnlyBuiltDependencies,
-  updatePackageJson,
-  updateTsconfig,
-  updateVitestConfig,
-} from "./common.js";
+import { createE2EWorkspace, createNxConfig, extractPnpmOnlyBuiltDependencies } from "./common.js";
 import { execLocalBati } from "./exec-bati.js";
 import { listTestFiles, loadTestFileMatrix } from "./load-test-files.js";
 import { initTmpDir } from "./tmp.js";
@@ -87,38 +80,44 @@ async function createGitIgnore(context: GlobalContext) {
   await copyFile(join(root, ".gitignore"), join(context.tmpdir, ".gitignore"));
 }
 
-function linkTestUtils() {
-  return exec(npmCli, npmCli === "bun" ? ["link"] : ["link", "--loglevel", "error"], {
-    // pnpm link can take some time
-    timeout: 60 * 1000,
-    cwd: join(__dirname, "..", "..", "tests-utils"),
+// Pack @batijs/tests-utils so the sibling `.e2e/` workspaces can install it as
+// a real tarball (file: dependency). The tarball lives in `<app>.e2e/` —
+// never in the app dir — so docker build contexts stay clean and no
+// `bun link` / `pnpm link` global registration is required.
+async function packTestsUtils(): Promise<string> {
+  const testsUtilsDir = join(__dirname, "..", "..", "tests-utils");
+
+  const existing = (await readdir(testsUtilsDir)).filter(
+    (f) => f.startsWith("batijs-tests-utils-") && f.endsWith(".tgz"),
+  );
+  await Promise.all(existing.map((f) => rm(join(testsUtilsDir, f))));
+
+  await exec("npm", ["pack", "--quiet"], {
+    timeout: 30 * 1000,
+    cwd: testsUtilsDir,
+    stdio: ["ignore", "ignore", "inherit"],
   });
+
+  const tgzFiles = (await readdir(testsUtilsDir)).filter(
+    (f) => f.startsWith("batijs-tests-utils-") && f.endsWith(".tgz"),
+  );
+  if (tgzFiles.length === 0) {
+    throw new Error("packTestsUtils: no .tgz produced by npm pack");
+  }
+  return join(testsUtilsDir, tgzFiles[0]);
 }
 
 async function packageManagerInstall(context: GlobalContext) {
-  {
-    const child = exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
-      // really slow on Windows CI
-      timeout: 5 * 60 * 1000,
-      cwd: context.tmpdir,
-      stdio: ["ignore", "ignore", "inherit"],
-    });
-
-    await child;
-  }
+  await exec(npmCli, ["install", "--prefer-offline", ...(npmCli === "bun" ? ["--linker", "isolated"] : [])], {
+    // really slow on Windows CI
+    timeout: 5 * 60 * 1000,
+    cwd: context.tmpdir,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
 
   if (npmCli === "bun") {
     // Circumvent https://github.com/aws/aws-cdk/issues/33270
     await writeFile(join(context.tmpdir, "bun.lockb"), "", "utf-8");
-  } else {
-    // see https://stackoverflow.com/questions/72032028/can-pnpm-replace-npm-link-yarn-link/72106897#72106897
-    const child = exec(npmCli, ["link", "@batijs/tests-utils"], {
-      timeout: 60000,
-      cwd: context.tmpdir,
-      stdio: ["ignore", "ignore", "inherit"],
-    });
-
-    await child;
   }
 }
 
@@ -132,22 +131,44 @@ async function pnpmRebuild(projectDirs: string[]) {
 }
 
 async function execNx(context: GlobalContext, args: mri.Argv<CliOptions>) {
-  const steps =
-    args.steps ??
-    ["generate-types", "build", "test", "lint:eslint", "lint:biome", "lint:oxlint", "typecheck", "knip"].join(",");
+  if (args.steps) {
+    // User-specified target list — single pass across every project.
+    await execNxRunMany(context, args.steps);
+    return;
+  }
 
-  await exec(
-    npmCli,
-    [npmCli === "bun" ? "x" : "exec", "nx", "run-many", `--targets=${steps}`, "--excludeTaskDependencies"],
-    {
-      timeout: 35 * 60 * 1000, // 35min
-      cwd: context.tmpdir,
-      env: {
-        NX_DAEMON: "false",
-        NX_TUI: "false",
-      },
+  // Two-pass orchestration:
+  //   - Build targets run only on app projects (`!*-e2e` excludes the e2e workspaces),
+  //     so the app build runs exactly once per matrix.
+  //   - Dev targets run only on `*-e2e` workspaces, where the scripts proxy back into
+  //     the sibling app via `cd ../<app>`. nx still sequences these correctly because
+  //     pass 1 completes before pass 2 starts.
+  //
+  // The `.e2e/` workspaces ship a `build` script too (so `dependsOn: ["build"]` stays
+  // satisfiable for direct `bun run` invocations), but with this split it is never
+  // triggered by nx — pass 2 doesn't list `build` as a target.
+  await execNxRunMany(context, "generate-types,build", "!*-e2e");
+  await execNxRunMany(context, "test,lint:eslint,lint:biome,lint:oxlint,typecheck,knip", "*-e2e");
+}
+
+async function execNxRunMany(context: GlobalContext, steps: string, projectsPattern?: string) {
+  const cmdArgs = [
+    npmCli === "bun" ? "x" : "exec",
+    "nx",
+    "run-many",
+    `--targets=${steps}`,
+    "--excludeTaskDependencies",
+  ];
+  if (projectsPattern) cmdArgs.push(`--projects=${projectsPattern}`);
+
+  await exec(npmCli, cmdArgs, {
+    timeout: 35 * 60 * 1000, // 35min
+    cwd: context.tmpdir,
+    env: {
+      NX_DAEMON: "false",
+      NX_TUI: "false",
     },
-  );
+  });
 }
 
 function isVerdaccioRunning() {
@@ -182,20 +203,6 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: util
-function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
-  if (maxChunks <= 0) throw new Error("The number of chunks must be greater than 0");
-
-  const result: T[][] = [];
-  const chunkSize = Math.ceil(arr.length / Math.min(arr.length, maxChunks));
-
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    result.push(arr.slice(i, i + chunkSize));
-  }
-
-  return result;
-}
-
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
 
@@ -223,17 +230,24 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   loadDotEnvTest();
 
-  const testFiles = await spinner("Loading all test files matrices...", async () =>
-    Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
-  );
+  // One balancer shared across all spec files — gives `.spread()` calls a global
+  // round-robin so vue / react / solid each get roughly equal coverage. Sort
+  // spec paths so balancer state (and therefore generated combos) are stable
+  // across runs.
+  const balancer = new Balancer();
+  const testFiles = await spinner("Loading all test files matrices...", async () => {
+    const paths = (await listTestFiles()).sort();
+    const loaded = [];
+    for (const filepath of paths) {
+      loaded.push(await loadTestFileMatrix(filepath, balancer));
+    }
+    return loaded;
+  });
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
-      if (
-        testFile.exclude?.some((x) => areAllElementsOfAIncludedInB(x, flags)) ||
-        // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
-        (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element)))
-      ) {
+      // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
+      if (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element))) {
         continue;
       }
       if (filter && filter.length > 0 && !areAllElementsOfAIncludedInB(filter, flags)) {
@@ -291,20 +305,30 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const onlyBuiltDependencies = new Set<string>();
   const pnpmRebuildProjectDirs: string[] = [];
 
-  // for all matrices
+  // Every matrix uses a sibling host-only workspace at `<projectDir>.e2e/` —
+  // the app dir stays byte-identical to CLI output. The tarball lives in the
+  // sibling (never the app), so docker build contexts are pristine and the
+  // bun `link:` protocol is sidestepped entirely.
+  const packedTestsUtilsTgzPath = await packTestsUtils();
+  const tgzFilename = basename(packedTestsUtilsTgzPath);
+
   for (const { testFiles, flags } of matrices.values()) {
     promises.push(
       limit(async () => {
         const projectDir = await execLocalBati(context, flags);
-        const filesP = testFiles.map((f) => copyFile(f, join(projectDir, basename(f))));
-        await updatePackageJson(projectDir, flags);
+        const e2eDir = `${projectDir}.e2e`;
+        await mkdir(e2eDir);
+        await copyFile(packedTestsUtilsTgzPath, join(e2eDir, tgzFilename));
         await Promise.all([
-          ...filesP,
-          updateTsconfig(projectDir),
-          updateVitestConfig(projectDir),
-          createBatiConfig(projectDir, flags),
-          // knip.json is generated by CLI with --knip flag
+          ...testFiles.map((f) => copyFile(f, join(e2eDir, basename(f)))),
+          createE2EWorkspace({
+            e2eDir,
+            appName: basename(projectDir),
+            flags,
+            testsUtilsRef: `./${tgzFilename}`,
+          }),
         ]);
+
         const localBuildDeps = await extractPnpmOnlyBuiltDependencies(projectDir, onlyBuiltDependencies);
         if (localBuildDeps?.includes("better-sqlite3")) {
           pnpmRebuildProjectDirs.push(projectDir);
@@ -329,10 +353,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   // Note: nx.json is created AFTER execLocalBati so storybook init cannot detect it
   await createNxConfig(context);
 
-  // pnpm/bun link in @batijs/tests-utils so that it can be used inside /tmt/bati/*
-  await linkTestUtils();
-
-  // pnpm/bun install
+  // pnpm/bun install — every package.json references the packed tests-utils
+  // tarball, so no global link registration is required.
   await spinner("Installing dependencies...", () => packageManagerInstall(context));
 
   // better-sqlite3 needs to be rebuilt sometimes
@@ -353,6 +375,9 @@ const context: GlobalContext = { tmpdir: "", localRepository: false };
 try {
   context.localRepository = await isVerdaccioRunning();
   await main(context, args);
+} catch (e) {
+  console.error(e);
+  throw e;
 } finally {
   if (context.tmpdir && !args.keep) {
     // Delete all tmp dirs

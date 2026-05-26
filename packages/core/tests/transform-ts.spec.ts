@@ -22,7 +22,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet(["react"], features),
+        BATI: new BatiSet(["react"], features, "pnpm"),
         BATI_TEST: false,
       },
       { filepath: filename },
@@ -37,7 +37,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
       const renderedOutput = await transformAndFormat(
         code,
         {
-          BATI: new BatiSet(["solid"], features),
+          BATI: new BatiSet(["solid"], features, "pnpm"),
           BATI_TEST: false,
         },
         { filepath: filename },
@@ -52,7 +52,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
         BATI_TEST: true,
       },
       { filepath: filename },
@@ -368,7 +368,7 @@ test("ts: if throws", () => {
   }`,
         "test.ts",
         {
-          BATI: new BatiSet(["react"], features),
+          BATI: new BatiSet(["react"], features, "pnpm"),
         },
       ),
     ReferenceError,
@@ -403,7 +403,7 @@ describe('rewrite "@batijs/" imports', async () => {
 
 export const test = trpc;`,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
       },
       { filepath: filename },
     );
@@ -424,7 +424,7 @@ export const test = trpc;`,
 
 export const test = 1;`,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
       },
       { filepath: filename },
     );
@@ -442,7 +442,7 @@ describe("global meta comments", async () => {
       `/*# BATI include-if-imported #*/      
 const a = 1;`,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
       },
       options,
     );
@@ -457,7 +457,7 @@ const a = 1;`,
         `/*# BATI invalid #*/      
 const a = 1;`,
         {
-          BATI: new BatiSet([], features),
+          BATI: new BatiSet([], features, "pnpm"),
         },
         options,
       ),
@@ -470,7 +470,7 @@ const a = 1;`,
         `/*# BATI include-if-imported,invalid #*/      
 const a = 1;`,
         {
-          BATI: new BatiSet([], features),
+          BATI: new BatiSet([], features, "pnpm"),
         },
         options,
       ),
@@ -483,7 +483,7 @@ describe("BATI. expressions", () => {
     const renderedOutput = await transformAndFormat(
       `const a = "a" as BATI.Any;`,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
         BATI_TEST: false,
       },
       { filepath: "test-as.ts" },
@@ -496,7 +496,7 @@ describe("BATI. expressions", () => {
     const renderedOutput = await transformAndFormat(
       `const a = (options?.router || appRouter) as BATI.Any;`,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
         BATI_TEST: false,
       },
       { filepath: "test-as.ts" },

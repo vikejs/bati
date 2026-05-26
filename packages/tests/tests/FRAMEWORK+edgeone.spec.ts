@@ -1,6 +1,8 @@
-import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
+import { describeBati, describeMultipleBati, suite } from "@batijs/tests-utils";
 
-export const matrix = ["react", "edgeone", "eslint", "biome", "oxlint"];
+export default suite()
+  .case({ flags: ["react", "edgeone"] })
+  .linters("eslint", "biome", "oxlint");
 
 await describeMultipleBati([
   // dev

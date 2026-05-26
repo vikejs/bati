@@ -1,11 +1,14 @@
 import { readFile } from "node:fs/promises";
+import { basename, resolve } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { exec } from "./exec.js";
+import { isDockerAvailable } from "./is-docker-available.js";
 import { npmCli } from "./package-manager.js";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
 import { runDevServer } from "./run-dev.js";
+import { runDockerCompose, stopDockerCompose } from "./run-docker-compose.js";
 import { runProd } from "./run-prod.js";
 import type { GlobalContext, PrepareOptions } from "./types.js";
 
@@ -42,28 +45,76 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     script ??= "preview";
   }
 
-  function hooks() {
-    beforeAll(async () => {
-      if (mode === "dev") {
-        await initPort(context);
-        await runDevServer(context);
-      } else if (mode === "prod") {
-        await initPort(context);
-        await runProd(context, script);
-      } else if (mode === "build") {
-        await retryX(() => runBuild(context), retry);
+  if (typeof mode === "function") {
+    mode = mode(context);
+  }
+
+  // Locally, skip docker-based tests when Docker isn't installed or its daemon
+  // isn't running. In CI we keep them strict — CI is expected to provide Docker,
+  // and a silent skip there would mask infra regressions.
+  let skip = false;
+  if (mode === "docker" && !process.env.CI && !(await isDockerAvailable())) {
+    skip = true;
+    console.warn(
+      `[tests-utils] Docker not available — skipping docker test: ${context.flags.join(", ") || "(no flags)"}`,
+    );
+  }
+
+  function preHooks() {
+    beforeAll(() => {
+      // When vitest is launched from a host-only `<app>.e2e` workspace
+      // (the dokploy layout: bati.config.json + spec files there, app dir
+      // pristine), every mode needs to operate against the sibling app —
+      // `dev`/`prod`/`build` resolve scripts via the app's package.json,
+      // `docker` runs compose from the app's Dockerfile, and spec
+      // assertions on `process.cwd()` expect to see the app dir. The chdir
+      // is a no-op when we are already in the app dir (non-dokploy layout).
+      const here = basename(resolve("."));
+      if (here.endsWith(".e2e")) {
+        process.chdir(resolve("..", here.slice(0, -".e2e".length)));
       }
-    }, 120000);
+    }, 1000);
 
     // Cleanup tests:
-    // - Close the dev server
+    // - Close the dev server / docker-compose stack
     // - Remove temp dir
-    afterAll(async () => {
-      const pid = context.server?.pid;
-      if (typeof pid === "number") {
-        await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
-      }
-    }, 20000);
+    afterAll(
+      async () => {
+        if (mode === "docker") {
+          try {
+            await stopDockerCompose();
+          } catch {
+            // best-effort cleanup — don't fail the test run
+          }
+        } else {
+          const pid = context.server?.pid;
+          if (typeof pid === "number") {
+            await Promise.race([kill(pid), new Promise((_resolve, reject) => setTimeout(reject, 5000))]);
+          }
+        }
+      },
+      mode === "docker" ? 60_000 : 30_000,
+    );
+  }
+
+  function postHooks() {
+    beforeAll(
+      async () => {
+        if (mode === "dev") {
+          await initPort(context);
+          await runDevServer(context);
+        } else if (mode === "prod") {
+          await initPort(context);
+          await runProd(context, script);
+        } else if (mode === "docker") {
+          await initPort(context);
+          await runDockerCompose(context);
+        } else if (mode === "build") {
+          await retryX(() => runBuild(context), retry);
+        }
+      },
+      mode === "docker" ? 900_000 : 600_000,
+    );
   }
 
   return {
@@ -74,6 +125,8 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     exec,
     npmCli,
     context,
-    hooks,
+    skip,
+    preHooks,
+    postHooks,
   };
 }

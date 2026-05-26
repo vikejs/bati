@@ -12,8 +12,10 @@ export interface GlobalContext {
   flags: string[];
 }
 
+export type Modes = "dev" | "build" | "prod" | "none" | "docker";
+
 export interface PrepareOptions {
-  mode?: "dev" | "build" | "prod" | "none";
+  mode?: Modes | ((context: GlobalContext) => Modes);
   retry?: number;
   script?: "preview";
 }

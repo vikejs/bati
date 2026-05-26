@@ -1,6 +1,8 @@
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "storybook", "eslint"];
+export default suite()
+  .case({ framework: spread(framework), flags: "storybook" })
+  .linters("eslint");
 
 await describeBati(({ test, expect }) => {
   test("storybook config files", async () => {

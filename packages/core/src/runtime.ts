@@ -8,14 +8,18 @@ export interface PackageManagerInfo {
 }
 
 export function packageManager(): PackageManagerInfo {
-  if (!process.env.npm_config_user_agent) {
-    return {
-      name: "npm",
-      run: "npm run",
-      exec: "npx",
-    };
+  // Bun always populates `process.versions.bun`; detecting the runtime is more
+  // reliable than the user-agent, which a wrapping `npm run` would otherwise mask.
+  if (process.versions.bun) {
+    return { name: "bun", version: process.versions.bun, run: "bun run", exec: "bunx" };
   }
-  return pmFromUserAgent(process.env.npm_config_user_agent);
+
+  const ua = process.env.npm_config_user_agent;
+  if (ua) {
+    return pmFromUserAgent(ua);
+  }
+
+  return { name: "npm", run: "npm run", exec: "npx" };
 }
 
 function pmFromUserAgent(userAgent: string): PackageManagerInfo {

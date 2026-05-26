@@ -5,10 +5,11 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
 
   return packageJson
     .setScript("sqlite:migrate", {
-      value: "tsx ./database/sqlite/schema/all.ts",
+      value: `tsx ./database/sqlite/schema/all.ts`,
       precedence: 1,
     })
     .addDevDependencies(["@types/better-sqlite3"])
+    .addDependencies(["better-sqlite3"])
     .addDevDependencies(["tsx"], ["sqlite:migrate"])
-    .addDependencies(["better-sqlite3", "dotenv"]);
+    .addDependencies(["dotenv"]);
 }

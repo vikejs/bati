@@ -9,8 +9,11 @@ export class BatiSet extends Set<Flags> {
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: used
   readonly #databases: Set<Flags>;
 
-  constructor(flags: Flags[], allFeatures: ReadonlyArray<Feature>) {
+  public pm: string;
+
+  constructor(flags: Flags[], allFeatures: ReadonlyArray<Feature>, pm: string) {
     super(flags);
+    this.pm = pm;
     this.#servers = new Set(allFeatures.filter((f) => f.category === "Server").map((f) => f.flag as Flags));
     this.#databases = new Set(allFeatures.filter((f) => f.category === "Database").map((f) => f.flag as Flags));
   }
@@ -35,7 +38,13 @@ export class BatiSet extends Set<Flags> {
   }
 
   get hasUD(): boolean {
-    return this.has("cloudflare") || this.has("vercel") || this.has("netlify") || this.hasOneOf(this.#servers);
+    return (
+      this.has("cloudflare") ||
+      this.has("vercel") ||
+      this.has("netlify") ||
+      this.has("dokploy") ||
+      this.hasOneOf(this.#servers)
+    );
   }
 
   /**

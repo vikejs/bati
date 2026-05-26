@@ -2,9 +2,15 @@
 import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import path from "node:path";
-import { describeBati, npmCli } from "@batijs/tests-utils";
+import { describeBati, npmCli, suite } from "@batijs/tests-utils";
 
-export const matrix = ["aws", "react", "hono", "eslint", "biome", "oxlint"] as const;
+const tests = suite()
+  .case({ flags: ["aws", "react", "hono"] })
+  .linters("eslint", "biome", "oxlint");
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(
   ({ test, expect, beforeAll, testMatch }) => {
@@ -30,7 +36,7 @@ await describeBati(
       2 * 60 * 1000,
     );
 
-    testMatch<typeof matrix>("entry_aws_lambda.ts", {
+    testMatch<TestFlags>("entry_aws_lambda.ts", {
       hono: async () => {
         const awsEntryGHandlerFile = path.join(process.cwd(), "entry_aws_lambda.ts");
         expect(existsSync(awsEntryGHandlerFile)).toBe(true);

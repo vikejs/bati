@@ -1,11 +1,14 @@
 export * from "./combinate.js";
 export * from "./describe.js";
+export * from "./suite.js";
 export * from "./exec.js";
+export * from "./is-docker-available.js";
 export * from "./package-manager.js";
 export * from "./port.js";
 export * from "./prepare.js";
 export * from "./run-build.js";
 export * from "./run-dev.js";
+export * from "./run-docker-compose.js";
 export type * from "./types.js";
 export * from "./wait-for-localhost.js";
 export * from "./zx.js";

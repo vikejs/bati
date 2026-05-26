@@ -1,6 +1,8 @@
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "eslint", "biome", "oxlint", "prettier"];
+export default suite()
+  .case({ framework: spread(framework), flags: "prettier" })
+  .linters("eslint", "biome", "oxlint");
 
 await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {

@@ -1,25 +1,19 @@
-import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { describeBati, describeMultipleBati, framework, server, suite } from "@batijs/tests-utils";
 
 const testAuth0 = Boolean(process.env.TEST_AUTH0_CLIENT_ID);
+const auths = ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])] as const;
 
-export const matrix = [
-  ["solid", "react", "vue"],
-  ["express", "h3", "hono", "fastify"],
-  ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])],
-  ["cloudflare", undefined],
-  "eslint",
-  "biome",
-  "oxlint",
-] as const;
+const tests = suite()
+  .matrix({ framework: framework.values, server: server.values, auth: auths })
+  .matrix({ framework: "react", server: ["hono", "h3"], deploy: "cloudflare", auth: "auth0" })
+  .matrix({ framework: "react", server: "hono", deploy: "dokploy", auth: auths })
+  .linters("eslint", "biome", "oxlint");
 
-export const exclude = [
-  // Restrict cloudflare tests to react + compatible servers
-  ["solid", "cloudflare"],
-  ["vue", "cloudflare"],
-  ["authjs", "cloudflare"],
-  ["fastify", "cloudflare"],
-  ["express", "cloudflare"],
-];
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 // How to configure your environment for testing auth?
 // First, create a .env.test file at the root of bati workspace
@@ -30,7 +24,7 @@ export const exclude = [
 
 await describeMultipleBati([
   () =>
-    describeBati(({ test, expect, fetch, context }) => {
+    describeBati(({ test, expect, fetch, context, testMatch }) => {
       test("home", async () => {
         const res = await fetch("/");
         expect(res.status).toBe(200);
@@ -49,8 +43,36 @@ await describeMultipleBati([
         });
         expect(res.status).toBe(404);
       });
+
+      testMatch<TestFlags>("has Dockerfile", {
+        dokploy: async () => {
+          expect(existsSync(path.join(process.cwd(), "Dockerfile"))).toBe(true);
+        },
+      });
+
+      testMatch<TestFlags>("has docker-compose.yml", {
+        dokploy: async () => {
+          expect(existsSync(path.join(process.cwd(), "docker-compose.yml"))).toBe(true);
+        },
+      });
+
+      testMatch<TestFlags>("docker-compose.yml references Dockerfile", {
+        dokploy: async () => {
+          const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+          expect(content).toContain("Dockerfile");
+        },
+      });
+
+      testMatch<TestFlags>("docker-compose.yml has AUTH0_CLIENT_ID when auth0", {
+        dokploy: {
+          auth0: async () => {
+            const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+            expect(content).toContain("AUTH0_CLIENT_ID");
+          },
+        },
+      });
     }),
-  // preview
+  // preview / docker-compose
   () =>
     describeBati(
       ({ test, expect, fetch }) => {
@@ -61,7 +83,7 @@ await describeMultipleBati([
         });
       },
       {
-        mode: "prod",
+        mode: (ctx) => (ctx.flags.includes("dokploy") ? "docker" : "prod"),
       },
     ),
 ]);

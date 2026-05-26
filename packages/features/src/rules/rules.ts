@@ -9,6 +9,7 @@ export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
+  requires(RulesMessage.ERROR_SQLITE_R_SERVER, "sqlite", ["Server"]),
   requires(RulesMessage.ERROR_KYSELY_R_SERVER, "kysely", ["Server"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
   filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {

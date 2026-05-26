@@ -86,27 +86,42 @@ jobs:
         # does not interpret backslashes in Windows paths as escape sequences.
         run: bun "$GITHUB_WORKSPACE/bati-cli/dist/index.js" --knip ${{ inputs.flags }} "$RUNNER_TEMP/${{ inputs.destination }}"
 
+      # Every matrix keeps the generated app pristine and hosts all e2e
+      # artefacts in a sibling `<destination>.e2e/` workspace. TEST_DIR is
+      # where Link tests-utils, Link tests files, Prepare Bati tests, lint
+      # and test all run.
+      - name: Resolve test working dir
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/${{ inputs.destination }}.e2e"
+          echo "TEST_DIR=$RUNNER_TEMP/${{ inputs.destination }}.e2e" >> "$GITHUB_ENV"
+
       - name: Link tests-utils
         shell: bash
         run: cp -s "$GITHUB_WORKSPACE/bati-tests-utils/"* .
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Link tests files
         shell: bash
         run: cp -s "$GITHUB_WORKSPACE/bati-tests-files/"* .
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Prepare Bati tests
         shell: bash
         run:
           bun "$GITHUB_WORKSPACE/bati-tests/prepare.js" --test-files='${{ inputs.test-files }}' ${{
           inputs.flags }}
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
-      - name: Install dependencies
+      - name: Install dependencies (app)
         shell: bash
         run: bun install
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+
+      - name: Install dependencies (e2e workspace)
+        shell: bash
+        run: bun install
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Generate types
         if: contains(inputs.flags, '--cloudflare')
@@ -114,7 +129,10 @@ jobs:
         run: bun run generate-types
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
+      # For dokploy the build happens inside `docker compose up --build` during
+      # the test step; a separate local build would duplicate the work.
       - name: Run build
+        if: "!contains(inputs.flags, '--dokploy')"
         shell: bash
         run: bun run build
         working-directory: ${{ runner.temp }}/${{ inputs.destination }}
@@ -123,32 +141,35 @@ jobs:
         shell: bash
         # Bun hangs on Windows
         run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun run test' }}
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
+      # Lint / typecheck / knip scripts live on the .e2e/ workspace and proxy
+      # to the sibling app via `cd ../<app>`. They run for every matrix that
+      # selected the corresponding flag — including --dokploy.
       - name: Run lint:eslint
         if: contains(inputs.flags, '--eslint')
         shell: bash
         run: bun run lint:eslint
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run lint:biome
         if: contains(inputs.flags, '--biome')
         shell: bash
         run: bun run lint:biome
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run lint:oxlint
         if: contains(inputs.flags, '--oxlint')
         shell: bash
         run: bun run lint:oxlint
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run typecheck
         shell: bash
         run: bun run typecheck
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}
 
       - name: Run knip
         shell: bash
         run: bun run knip
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
+        working-directory: ${{ env.TEST_DIR }}

@@ -1,8 +1,10 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "prisma", "eslint", "biome", "oxlint"];
+export default suite()
+  .case({ framework: spread(framework), flags: "prisma" })
+  .linters("eslint", "biome", "oxlint");
 
 await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {

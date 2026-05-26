@@ -231,6 +231,30 @@ importers:
         specifier: 0.4.259
         version: 0.4.259(@cloudflare/workers-types@4.20260525.1)(@types/express@5.0.6)(@types/node@20.19.37)(fastify@5.8.5)(h3@1.15.11)(hono@4.12.23)(jiti@2.6.1)(react-streaming@0.4.17(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(srvx@0.11.15)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0)
 
+  boilerplates/docker-compose:
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: file:packages/compile(oxc-resolver@11.19.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0))(tsx@4.22.3)(typescript@6.0.3)
+      '@batijs/core':
+        specifier: 'workspace:'
+        version: link:../../packages/core
+      '@types/node':
+        specifier: ^20.19.37
+        version: 20.19.37
+
+  boilerplates/dokploy:
+    devDependencies:
+      '@batijs/compile':
+        specifier: workspace:*
+        version: file:packages/compile(oxc-resolver@11.19.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0))(tsx@4.22.3)(typescript@6.0.3)
+      '@batijs/core':
+        specifier: 'workspace:'
+        version: link:../../packages/core
+      '@types/node':
+        specifier: ^20.19.37
+        version: 20.19.37
+
   boilerplates/drizzle:
     devDependencies:
       '@batijs/compile':
@@ -305,6 +329,9 @@ importers:
       globals:
         specifier: ^17.6.0
         version: 17.6.0
+      jiti:
+        specifier: ^2.6.1
+        version: 2.6.1
       typescript-eslint:
         specifier: ^8.59.4
         version: 8.59.4(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3)
@@ -1448,6 +1475,9 @@ importers:
         specifier: ^8.8.5
         version: 8.8.5
     devDependencies:
+      '@batijs/features':
+        specifier: 'workspace:'
+        version: link:../features
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37

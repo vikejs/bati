@@ -43,6 +43,9 @@ export const rulesMessages = {
   [RulesMessage.ERROR_DRIZZLE_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Drizzle"))}`,
   ),
+  [RulesMessage.ERROR_SQLITE_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("SQLite"))}`,
+  ),
   [RulesMessage.ERROR_KYSELY_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Kysely"))}`,
   ),

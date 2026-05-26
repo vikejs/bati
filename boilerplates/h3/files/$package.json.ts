@@ -4,7 +4,8 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .addDependencies(["h3", "vike", "vite", "@vikejs/h3", "@universal-middleware/core"])
+    .addDevDependencies(["@types/node", "vite"])
+    .addDependencies(["h3", "vike", "@vikejs/h3", "@universal-middleware/core"])
     .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
     .addDependencies(
       ["dotenv"],

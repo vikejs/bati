@@ -2,11 +2,18 @@ import { formatCode } from "./format.js";
 import type { FileContext } from "./parse/linters/common.js";
 import { transform } from "./parse/linters/index.js";
 import { renderSquirrelly, tags } from "./parse/squirelly.js";
+import { transformYaml } from "./parse/yaml.js";
 import type { VikeMeta } from "./types.js";
 
+function isYamlFile(filepath: string) {
+  return filepath.endsWith(".yml") || filepath.endsWith(".yaml");
+}
+
 function guessCodeFormatters(code: string, filepath: string) {
+  const yaml = isYamlFile(filepath);
   return {
     eslint:
+      !yaml &&
       (code.includes("BATI.has") ||
         code.includes("BATI_TEST") ||
         code.includes("/*# BATI ") ||
@@ -15,6 +22,7 @@ function guessCodeFormatters(code: string, filepath: string) {
         filepath.endsWith(".tsx")) &&
       !filepath.endsWith(".css"),
     squirelly: code.includes(tags[0]),
+    yaml,
   };
 }
 
@@ -31,13 +39,17 @@ const eslintRegex = new RegExp(`${eslintSingleLineRegex.source}|${eslintMultiLin
 const biomeRegex = new RegExp(`${biomeSingleLineRegex.source}|${biomeMultiLineRegex.source}`, "gim");
 
 export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
-  const { eslint, squirelly } = guessCodeFormatters(code, options.filepath);
+  const { eslint, squirelly, yaml } = guessCodeFormatters(code, options.filepath);
   let c = code;
   let context: FileContext | undefined;
   let format = false;
   if (squirelly) {
     c = renderSquirrelly(c, meta);
     format = true;
+  }
+  if (yaml) {
+    c = transformYaml(c, meta);
+    // yaml.toString() already produces clean output -- no need for prettier
   }
   if (eslint) {
     const res = transform(c, options.filepath, meta);

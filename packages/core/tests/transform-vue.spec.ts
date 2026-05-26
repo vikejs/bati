@@ -11,7 +11,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet(["vue"], features),
+        BATI: new BatiSet(["vue"], features, "pnpm"),
       },
       { filepath: filename },
     );
@@ -23,7 +23,7 @@ function testIfElse(code: string, expectedIf: string, expectedElse: string) {
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
       },
       { filepath: filename },
     );
@@ -153,7 +153,7 @@ import { router } from "@batijs/trpc/router";
 export const appRouter = router();
 </script>`,
       {
-        BATI: new BatiSet(["vue"], features),
+        BATI: new BatiSet(["vue"], features, "pnpm"),
       },
       { filepath: "test.vue" },
     );
@@ -213,7 +213,7 @@ export default {
 `;
 
   const renderedOutput = transform(code, "test.vue", {
-    BATI: new BatiSet(["vue"], features),
+    BATI: new BatiSet(["vue"], features, "pnpm"),
   });
 
   assert.equal(await formatCode(renderedOutput.code, { filepath: "test.vue" }), code);

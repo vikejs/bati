@@ -17,7 +17,7 @@ export async function runDevServer(context: GlobalContext) {
     waitForLocalhost({
       port: context.port,
       useGet: true,
-      timeout: process.env.CI ? 30000 : 15000,
+      timeout: 30000,
       debug: cmd.join(" "),
     }),
     // or for server to crash

@@ -1,39 +1,40 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { describeBati, describeMultipleBati, exec, npmCli } from "@batijs/tests-utils";
+import { describeBati, describeMultipleBati, exec, npmCli, suite } from "@batijs/tests-utils";
 
-export const matrix = [
-  ["solid", "react", "vue"],
-  ["express", "h3", "hono", "fastify"],
-  ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", "sqlite", "kysely", undefined],
-  ["cloudflare", undefined],
-  "eslint",
-  "biome",
-  "oxlint",
-] as const;
+const tests = suite()
+  .matrix({
+    framework: "solid",
+    server: ["express", "h3", "hono", "fastify"],
+    data: ["trpc", "telefunc", "ts-rest", null],
+    db: ["drizzle", "sqlite", "kysely", null],
+  })
+  .matrix({
+    framework: ["react", "vue"],
+    server: "hono",
+    data: ["trpc", "telefunc", "ts-rest", null],
+  })
+  .matrix({
+    framework: "solid",
+    server: ["hono", "h3"],
+    deploy: "cloudflare",
+    data: ["trpc", "telefunc", "ts-rest", null],
+    db: ["drizzle", "sqlite", "kysely", null],
+  })
+  .matrix({
+    framework: "react",
+    server: "hono",
+    deploy: "dokploy",
+    data: "telefunc",
+    db: ["drizzle", "sqlite", "kysely", null],
+  })
+  .linters("eslint", "biome", "oxlint");
 
-export const exclude = [
-  // Testing databases with Solid only is enough
-  ["react", "drizzle"],
-  ["vue", "drizzle"],
-  ["react", "sqlite"],
-  ["vue", "sqlite"],
-  ["react", "kysely"],
-  ["vue", "kysely"],
-  // Testing Solid with all servers, but others UIs with only Hono
-  ["react", "express"],
-  ["react", "h3"],
-  ["react", "fastify"],
-  ["vue", "express"],
-  ["vue", "h3"],
-  ["vue", "fastify"],
-  // Testing Cloudflare with [Hono, h3] and Solid only
-  ["cloudflare", "express"],
-  ["cloudflare", "fastify"],
-  ["cloudflare", "react"],
-  ["cloudflare", "vue"],
-];
+export default tests;
+
+// FlagMatrix-shaped alias so testMatch<TestFlags>() keeps autocompleting
+// keys like "trpc", "telefunc", "drizzle", "dokploy", etc.
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeMultipleBati([
   () =>
@@ -72,7 +73,7 @@ await describeMultipleBati([
       describe("add a todo", { sequential: true }, () => {
         const text = "__BATI_TEST_VALUE";
 
-        testMatch<typeof matrix>("post", {
+        testMatch<TestFlags>("post", {
           telefunc: async () => {
             const res = await fetch("/_telefunc", {
               method: "POST",
@@ -106,7 +107,7 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("todo after post", {
+        testMatch<TestFlags>("todo after post", {
           sqlite: async () => {
             const res = await fetch("/todo");
             expect(res.status).toBe(200);
@@ -124,7 +125,7 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("TODO.md presence", {
+        testMatch<TestFlags>("TODO.md presence", {
           sqlite: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
@@ -137,13 +138,39 @@ await describeMultipleBati([
           cloudflare: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
+          dokploy: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
           _: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(false);
           },
         });
+
+        testMatch<TestFlags>("has Dockerfile", {
+          dokploy: async () => {
+            expect(existsSync(path.join(process.cwd(), "Dockerfile"))).toBe(true);
+          },
+        });
+
+        testMatch<TestFlags>("has docker-compose.yml", {
+          dokploy: async () => {
+            const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+            expect(content).toContain("Dockerfile");
+            expect(content).toContain("3000");
+          },
+        });
+
+        testMatch<TestFlags>("docker-compose.yml has DATABASE_URL when db selected", {
+          dokploy: {
+            drizzle: async () => {
+              const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
+              expect(content).toContain("DATABASE_URL");
+            },
+          },
+        });
       });
     }),
-  // preview
+  // preview / docker-compose
   () =>
     describeBati(
       ({ test, expect, fetch }) => {
@@ -154,7 +181,7 @@ await describeMultipleBati([
         });
       },
       {
-        mode: "prod",
+        mode: (ctx) => (ctx.flags.includes("dokploy") ? "docker" : "prod"),
       },
     ),
 ]);

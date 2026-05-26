@@ -1,8 +1,10 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { describeBati, describeMultipleBati } from "@batijs/tests-utils";
+import { describeBati, describeMultipleBati, suite } from "@batijs/tests-utils";
 
-export const matrix = ["cloudflare", "react", ["hono", "h3", undefined], "eslint", "biome", "oxlint"] as const;
+export default suite()
+  .matrix({ framework: "react", deploy: "cloudflare", server: ["hono", "h3", null] })
+  .linters("eslint", "biome", "oxlint");
 
 await describeMultipleBati([
   // dev
