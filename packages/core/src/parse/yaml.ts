@@ -2,6 +2,23 @@ import { isScalar, isSeq, type Node, parseDocument, visit } from "yaml";
 import type { VikeMeta } from "../types.js";
 import { evalCondition } from "./eval.js";
 
+/**
+ * Append `KEY=value` items to `services.<service>.environment` of a
+ * docker-compose document. Used to inject the env-registry-derived env block
+ * (see `composeEnvEntries`) without the compose boilerplate hardcoding vars.
+ */
+export function setComposeEnvironment(code: string, entries: string[], service = "app"): string {
+  if (entries.length === 0) return code;
+
+  const doc = parseDocument(code);
+  const env = doc.getIn(["services", service, "environment"]);
+  if (isSeq(env)) {
+    for (const entry of entries) env.add(entry);
+  }
+
+  return doc.toString();
+}
+
 const isBatiLine = (line: string) => line.includes("BATI.has") || line.includes("BATI_TEST");
 
 function extractBatiCondition(commentBefore: string | null | undefined): string | null {
