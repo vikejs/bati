@@ -1,6 +1,11 @@
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "eslint", "biome", "oxlint", "prettier"];
+// Prettier formatting is framework-agnostic — one combo is enough, and the
+// global balancer rotates which framework hosts it across spec files.
+// Was 3 combos in the old matrix; now 1.
+export default suite()
+  .case({ framework: spread(framework), flags: "prettier" })
+  .linters("eslint", "biome", "oxlint");
 
 await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {

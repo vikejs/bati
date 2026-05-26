@@ -1,7 +1,7 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { flags } from "@batijs/features";
-import { combinate } from "@batijs/tests-utils";
+import { type Balancer, combinate, Suite } from "@batijs/tests-utils";
 import fg from "fast-glob";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,11 +21,25 @@ export function assert(condition: unknown, message: string): asserts condition {
   throw new Error(message);
 }
 
-export async function loadTestFileMatrix(filepath: string) {
+export async function loadTestFileMatrix(filepath: string, balancer: Balancer) {
   const defaultErrorMessage = `\`matrix\` export in "${filepath}" must be of type \`(string | string[])[]\``;
   const importFile = isWin ? `file://${filepath}` : filepath;
   const f = await import(importFile);
 
+  const validKeys = new Set<unknown>(flags);
+
+  // New API: `export default suite()...` — the balancer resolves spread markers.
+  if (f.default instanceof Suite) {
+    const matrix = f.default.flatten(balancer);
+    for (const combo of matrix) {
+      for (const flag of combo) {
+        assert(validKeys.has(flag), `default Suite in "${filepath}" produced unknown feature "${flag}"`);
+      }
+    }
+    return { matrix, exclude: undefined, filepath };
+  }
+
+  // Legacy API: `export const matrix`, optional `export const exclude`.
   const matrix: unknown = f.matrix;
   const exclude: unknown = f.exclude;
 
@@ -34,8 +48,6 @@ export async function loadTestFileMatrix(filepath: string) {
   if (exclude) {
     assert(Array.isArray(exclude), `\`exclude\` export in "${filepath}" must be of type \`string[][]\``);
   }
-
-  const validKeys = new Set<unknown>(flags);
 
   for (const m of matrix as unknown[]) {
     if (Array.isArray(m)) {

@@ -1,17 +1,19 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, suite } from "@batijs/tests-utils";
 
-export const matrix = [
-  ["solid", "react", "vue"],
-  ["plausible.io", "google-analytics", undefined],
-  "eslint",
-  "biome",
-  "oxlint",
-] as const;
+// Framework matters here — vue+google-analytics uses +onCreateApp.ts instead
+// of the inline script tag. Keep full 3×3 sweep.
+const tests = suite()
+  .matrix({ framework: framework.values, analytics: ["plausible.io", "google-analytics", null] })
+  .linters("eslint", "biome", "oxlint");
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(({ expect, fetch, testMatch }) => {
-  testMatch<typeof matrix>("home", {
+  testMatch<TestFlags>("home", {
     "plausible.io": async () => {
       const res = await fetch("/");
       expect(res.status).toBe(200);
@@ -54,7 +56,7 @@ await describeBati(({ expect, fetch, testMatch }) => {
     },
   });
 
-  testMatch<typeof matrix>("TODO.md presence", {
+  testMatch<TestFlags>("TODO.md presence", {
     "plausible.io": async () => {
       expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
     },

@@ -1,6 +1,11 @@
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "storybook", "eslint"];
+// Storybook assertions are framework-agnostic (config file presence, scripts).
+// Note: only eslint is configured in `.linters()` — was the same in the old matrix.
+// Was 3 combos; now 1.
+export default suite()
+  .case({ framework: spread(framework), flags: "storybook" })
+  .linters("eslint");
 
 await describeBati(({ test, expect }) => {
   test("storybook config files", async () => {

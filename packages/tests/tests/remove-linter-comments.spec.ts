@@ -1,8 +1,20 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, suite } from "@batijs/tests-utils";
 
-export const matrix = ["react", "ts-rest", "hono", ["eslint", "biome", "oxlint"]];
+// Each combo enables exactly ONE linter (to verify other linters' comments
+// have been stripped). No `.linters()` call — the linter is a real matrix
+// dimension here.
+const tests = suite().matrix({
+  framework: "react",
+  data: "ts-rest",
+  server: "hono",
+  linter: ["eslint", "biome", "oxlint"],
+});
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(
   ({ expect, testMatch }) => {
@@ -27,7 +39,7 @@ await describeBati(
       }
     }
 
-    testMatch<typeof matrix>("home", {
+    testMatch<TestFlags>("home", {
       eslint: async () => {
         expect.hasAssertions();
         for await (const file of listFiles()) {

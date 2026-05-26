@@ -1,5 +1,6 @@
 export * from "./combinate.js";
 export * from "./describe.js";
+export * from "./suite.js";
 export * from "./exec.js";
 export * from "./is-docker-available.js";
 export * from "./package-manager.js";

@@ -4,7 +4,7 @@ import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import * as process from "node:process";
 import { fileURLToPath } from "node:url";
-import { exec, npmCli, zx } from "@batijs/tests-utils";
+import { Balancer, exec, npmCli, zx } from "@batijs/tests-utils";
 import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
@@ -244,9 +244,19 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   loadDotEnvTest();
 
-  const testFiles = await spinner("Loading all test files matrices...", async () =>
-    Promise.all((await listTestFiles()).map((filepath) => loadTestFileMatrix(filepath))),
-  );
+  // One balancer shared across all spec files — gives `.spread()` calls a global
+  // round-robin so vue / react / solid each get roughly equal coverage. Sort
+  // spec paths so balancer state (and therefore generated combos) are stable
+  // across runs.
+  const balancer = new Balancer();
+  const testFiles = await spinner("Loading all test files matrices...", async () => {
+    const paths = (await listTestFiles()).sort();
+    const loaded = [];
+    for (const filepath of paths) {
+      loaded.push(await loadTestFileMatrix(filepath, balancer));
+    }
+    return loaded;
+  });
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {

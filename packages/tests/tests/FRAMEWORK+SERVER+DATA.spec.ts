@@ -1,52 +1,50 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { describeBati, describeMultipleBati, exec, npmCli } from "@batijs/tests-utils";
+import { describeBati, describeMultipleBati, exec, npmCli, suite } from "@batijs/tests-utils";
 
-export const matrix = [
-  ["solid", "react", "vue"],
-  ["express", "h3", "hono", "fastify"],
-  ["trpc", "telefunc", "ts-rest", undefined],
-  ["drizzle", "sqlite", "kysely", undefined],
-  ["cloudflare", undefined],
-  ["dokploy", undefined],
-  "eslint",
-  "biome",
-  "oxlint",
-] as const;
+// Replaces the old `matrix` + 20 `exclude` rules with 4 explicit include sections.
+// Each section reads as a positive declaration of what gets tested.
+const tests = suite()
+  // Section 1: full data×server×db sweep — on Solid only.
+  // (Old excludes: react/vue × drizzle/sqlite/kysely)
+  .matrix({
+    framework: "solid",
+    server: ["express", "h3", "hono", "fastify"],
+    data: ["trpc", "telefunc", "ts-rest", null],
+    db: ["drizzle", "sqlite", "kysely", null],
+  })
+  // Section 2: react & vue tested with Hono only, no db sweep.
+  // (Old excludes: react/vue × express/h3/fastify)
+  .matrix({
+    framework: ["react", "vue"],
+    server: "hono",
+    data: ["trpc", "telefunc", "ts-rest", null],
+  })
+  // Section 3: Cloudflare — solid + hono/h3 only.
+  // (Old excludes: cloudflare × {express,fastify,react,vue,dokploy})
+  .matrix({
+    framework: "solid",
+    server: ["hono", "h3"],
+    deploy: "cloudflare",
+    data: ["trpc", "telefunc", "ts-rest", null],
+    db: ["drizzle", "sqlite", "kysely", null],
+  })
+  // Section 4: Dokploy — react + hono only, narrow data×db (matches old
+  // excludes that whitelisted only telefunc/_ and kysely/_).
+  .matrix({
+    framework: "react",
+    server: "hono",
+    deploy: "dokploy",
+    data: "telefunc",
+    db: ["kysely", "drizzle", "sqlite", null],
+  })
+  .linters("eslint", "biome", "oxlint");
 
-export const exclude = [
-  // Testing databases with Solid only is enough
-  ["react", "drizzle"],
-  ["vue", "drizzle"],
-  ["react", "sqlite"],
-  ["vue", "sqlite"],
-  ["react", "kysely"],
-  ["vue", "kysely"],
-  // Testing Solid with all servers, but others UIs with only Hono
-  ["react", "express"],
-  ["react", "h3"],
-  ["react", "fastify"],
-  ["vue", "express"],
-  ["vue", "h3"],
-  ["vue", "fastify"],
-  // Testing Cloudflare with [Hono, h3] and Solid only
-  ["cloudflare", "express"],
-  ["cloudflare", "fastify"],
-  ["cloudflare", "react"],
-  ["cloudflare", "vue"],
-  // cloudflare and dokploy are mutually exclusive
-  ["cloudflare", "dokploy"],
-  // Restrict dokploy tests: only react + hono, once per data-fetch layer and once per db
-  ["solid", "dokploy"],
-  ["vue", "dokploy"],
-  ["express", "dokploy"],
-  ["h3", "dokploy"],
-  ["fastify", "dokploy"],
-  ["trpc", "dokploy"],
-  ["ts-rest", "dokploy"],
-  ["sqlite", "dokploy"],
-  ["kysely", "dokploy"],
-];
+export default tests;
+
+// FlagMatrix-shaped alias so testMatch<TestFlags>() keeps autocompleting
+// keys like "trpc", "telefunc", "drizzle", "dokploy", etc.
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeMultipleBati([
   () =>
@@ -85,7 +83,7 @@ await describeMultipleBati([
       describe("add a todo", { sequential: true }, () => {
         const text = "__BATI_TEST_VALUE";
 
-        testMatch<typeof matrix>("post", {
+        testMatch<TestFlags>("post", {
           telefunc: async () => {
             const res = await fetch("/_telefunc", {
               method: "POST",
@@ -119,7 +117,7 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("todo after post", {
+        testMatch<TestFlags>("todo after post", {
           sqlite: async () => {
             const res = await fetch("/todo");
             expect(res.status).toBe(200);
@@ -137,7 +135,7 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("TODO.md presence", {
+        testMatch<TestFlags>("TODO.md presence", {
           sqlite: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
@@ -158,13 +156,13 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("has Dockerfile", {
+        testMatch<TestFlags>("has Dockerfile", {
           dokploy: async () => {
             expect(existsSync(path.join(process.cwd(), "Dockerfile"))).toBe(true);
           },
         });
 
-        testMatch<typeof matrix>("has docker-compose.yml", {
+        testMatch<TestFlags>("has docker-compose.yml", {
           dokploy: async () => {
             const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");
             expect(content).toContain("Dockerfile");
@@ -172,7 +170,7 @@ await describeMultipleBati([
           },
         });
 
-        testMatch<typeof matrix>("docker-compose.yml has DATABASE_URL when db selected", {
+        testMatch<TestFlags>("docker-compose.yml has DATABASE_URL when db selected", {
           dokploy: {
             drizzle: async () => {
               const content = readFileSync(path.join(process.cwd(), "docker-compose.yml"), "utf8");

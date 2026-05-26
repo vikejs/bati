@@ -1,8 +1,11 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], "prisma", "eslint", "biome", "oxlint"];
+// Prisma is framework-agnostic — one framework per combo. Was 3, now 1.
+export default suite()
+  .case({ framework: spread(framework), flags: "prisma" })
+  .linters("eslint", "biome", "oxlint");
 
 await describeBati(({ test, expect, fetch }) => {
   test("home", async () => {

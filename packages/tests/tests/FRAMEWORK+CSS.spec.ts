@@ -1,7 +1,21 @@
 import { readFile } from "node:fs/promises";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-export const matrix = [["solid", "react", "vue"], ["tailwindcss", "daisyui"], "eslint", "biome", "oxlint"];
+// Tests the two original CSS/UI flavours: bare tailwindcss, and tailwindcss
+// + daisyui (which is a UI Component Library that requires tailwindcss).
+// Spread picks one framework per combo. Was 6 combos; now 2.
+//
+// Note: the `css` axis derived from features now contains tailwindcss +
+// compiled-css. We don't use it here because compiled-css requires React and
+// is exercised by react+UI.spec.ts instead.
+const tests = suite()
+  .case({ framework: spread(framework), flags: "tailwindcss" })
+  .case({ framework: spread(framework), flags: ["tailwindcss", "daisyui"] })
+  .linters("eslint", "biome", "oxlint");
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(({ test, expect, fetch, testMatch, context }) => {
   test("home", async () => {
@@ -10,7 +24,7 @@ await describeBati(({ test, expect, fetch, testMatch, context }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  testMatch<typeof matrix>("config exists", {
+  testMatch<TestFlags>("config exists", {
     daisyui: async () => {
       const content = await readFile("pages/tailwind.css", "utf-8");
       expect(content.includes("daisyui")).toBe(context.flags.includes("daisyui"));

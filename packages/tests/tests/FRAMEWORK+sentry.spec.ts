@@ -1,11 +1,17 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, framework, suite } from "@batijs/tests-utils";
 
-export const matrix = ["sentry", ["solid", "react", "vue"], "eslint", "biome", "oxlint"];
+// Sentry has per-framework assertions (different `@sentry/{react,vue,solid}`
+// packages). Keep full 3-framework sweep.
+const tests = suite().matrix({ framework: framework.values, flags: "sentry" }).linters("eslint", "biome", "oxlint");
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(({ test, expect, testMatch }) => {
-  testMatch<typeof matrix>("sentry.browser.config.ts", {
+  testMatch<TestFlags>("sentry.browser.config.ts", {
     vue: async () => {
       expect(existsSync(path.join(process.cwd(), "pages", "+client.ts"))).toBe(false);
     },
@@ -39,7 +45,7 @@ await describeBati(({ test, expect, testMatch }) => {
     expect(content).toContain(`sentryVitePlugin`);
   });
 
-  testMatch<typeof matrix>("sentry.browser.config.ts", {
+  testMatch<TestFlags>("sentry.browser.config.ts", {
     react: async () => {
       const filePath = path.join(process.cwd(), "sentry.browser.config.ts");
       expect(existsSync(filePath)).toBe(true);
@@ -75,7 +81,7 @@ await describeBati(({ test, expect, testMatch }) => {
     },
   });
 
-  testMatch<typeof matrix>("pages/sentry/+Page.<vue/tsx/js", {
+  testMatch<TestFlags>("pages/sentry/+Page.<vue/tsx/js", {
     vue: async () => {
       const filePath = path.join(process.cwd(), "pages", "sentry", "+Page.vue");
       expect(existsSync(filePath)).toBe(true);

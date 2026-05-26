@@ -1,7 +1,14 @@
 import { readFile } from "node:fs/promises";
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, suite } from "@batijs/tests-utils";
 
-export const matrix = ["react", ["compiled-css", "mantine"], "eslint", "biome"] as const;
+// Note: oxlint deliberately not listed — old matrix only enabled eslint+biome.
+const tests = suite()
+  .matrix({ framework: "react", ui: ["compiled-css", "mantine"] })
+  .linters("eslint", "biome");
+
+export default tests;
+
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(({ test, expect, fetch, testMatch }) => {
   test("home", async () => {
@@ -10,7 +17,7 @@ await describeBati(({ test, expect, fetch, testMatch }) => {
     expect(await res.text()).not.toContain('{"is404":true}');
   });
 
-  testMatch<typeof matrix>("ui lib", {
+  testMatch<TestFlags>("ui lib", {
     "compiled-css": async () => {
       const content = await readFile("package.json", "utf-8");
       expect(content.includes("@compiled/react")).toBe(true);
