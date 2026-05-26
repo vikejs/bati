@@ -8,17 +8,17 @@ export function waitForLocalhost({
   timeout,
   debug,
 }: {
-  port?: number;
+  port: number;
   path?: string;
   useGet?: boolean;
-  timeout?: number;
-  debug?: string;
-} = {}) {
+  timeout: number;
+  debug: string;
+}) {
   return new Promise((resolve, reject) => {
     const startedAt = Date.now();
     const retry = () => {
-      if (Number.isInteger(timeout) && startedAt + timeout! < Date.now()) {
-        reject(new Error(debug ? "Timeout" : `Timeout (${debug})`));
+      if (startedAt + timeout < Date.now()) {
+        reject(new Error(debug ? `Timeout (${debug})` : "Timeout"));
       } else {
         setTimeout(main, 200);
       }

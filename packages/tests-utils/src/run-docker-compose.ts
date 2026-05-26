@@ -19,7 +19,7 @@ export async function runDockerCompose(context: GlobalContext) {
     port: context.port,
     useGet: true,
     timeout: process.env.CI ? 60_000 : 30_000,
-    debug: `docker compose (port ${context.port})`,
+    debug: `docker waitForLocalhost (port ${context.port})`,
   });
 
   return { port: context.port };

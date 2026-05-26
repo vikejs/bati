@@ -1,6 +1,7 @@
 import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/core";
 
 export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
+  if (props.meta.BATI.hasD1) return;
   const mod = await loadAsMagicast(props);
 
   addVitePlugin(mod, {

@@ -3,6 +3,7 @@ import { basename, resolve } from "node:path";
 import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { exec } from "./exec.js";
+import { isDockerAvailable } from "./is-docker-available.js";
 import { npmCli } from "./package-manager.js";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
@@ -48,35 +49,29 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     mode = mode(context);
   }
 
-  function hooks() {
-    beforeAll(
-      async () => {
-        // When vitest is launched from a host-only `<app>.e2e` workspace
-        // (the dokploy layout: bati.config.json + spec files there, app dir
-        // pristine), every mode needs to operate against the sibling app —
-        // `dev`/`prod`/`build` resolve scripts via the app's package.json,
-        // `docker` runs compose from the app's Dockerfile, and spec
-        // assertions on `process.cwd()` expect to see the app dir. The chdir
-        // is a no-op when we are already in the app dir (non-dokploy layout).
-        const here = basename(resolve("."));
-        if (here.endsWith(".e2e")) {
-          process.chdir(resolve("..", here.slice(0, -".e2e".length)));
-        }
-        if (mode === "dev") {
-          await initPort(context);
-          await runDevServer(context);
-        } else if (mode === "prod") {
-          await initPort(context);
-          await runProd(context, script);
-        } else if (mode === "docker") {
-          await initPort(context);
-          await runDockerCompose(context);
-        } else if (mode === "build") {
-          await retryX(() => runBuild(context), retry);
-        }
-      },
-      mode === "docker" ? 900_000 : 600_000,
-    );
+  // Locally, skip docker-based tests when Docker isn't installed or its daemon
+  // isn't running. In CI we keep them strict — CI is expected to provide Docker,
+  // and a silent skip there would mask infra regressions.
+  let skip = false;
+  if (mode === "docker" && !process.env.CI && !(await isDockerAvailable())) {
+    skip = true;
+    console.warn(`[tests-utils] Docker not available — skipping docker test: ${context.flags.join(", ") || "(no flags)"}`);
+  }
+
+  function preHooks() {
+    beforeAll(() => {
+      // When vitest is launched from a host-only `<app>.e2e` workspace
+      // (the dokploy layout: bati.config.json + spec files there, app dir
+      // pristine), every mode needs to operate against the sibling app —
+      // `dev`/`prod`/`build` resolve scripts via the app's package.json,
+      // `docker` runs compose from the app's Dockerfile, and spec
+      // assertions on `process.cwd()` expect to see the app dir. The chdir
+      // is a no-op when we are already in the app dir (non-dokploy layout).
+      const here = basename(resolve("."));
+      if (here.endsWith(".e2e")) {
+        process.chdir(resolve("..", here.slice(0, -".e2e".length)));
+      }
+    }, 1000);
 
     // Cleanup tests:
     // - Close the dev server / docker-compose stack
@@ -100,6 +95,26 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     );
   }
 
+  function postHooks() {
+    beforeAll(
+      async () => {
+        if (mode === "dev") {
+          await initPort(context);
+          await runDevServer(context);
+        } else if (mode === "prod") {
+          await initPort(context);
+          await runProd(context, script);
+        } else if (mode === "docker") {
+          await initPort(context);
+          await runDockerCompose(context);
+        } else if (mode === "build") {
+          await retryX(() => runBuild(context), retry);
+        }
+      },
+      mode === "docker" ? 900_000 : 600_000,
+    );
+  }
+
   return {
     fetch(path: string, init?: RequestInit) {
       const url = path.startsWith("http") ? path : `http://localhost:${context.port}${path}`;
@@ -108,6 +123,8 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     exec,
     npmCli,
     context,
-    hooks,
+    skip,
+    preHooks,
+    postHooks,
   };
 }

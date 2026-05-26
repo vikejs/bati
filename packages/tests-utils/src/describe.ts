@@ -60,13 +60,19 @@ export async function describeBati(fn: (props: TestContext) => void, options?: P
 
   const name = p.context.flags.map((f) => `--${f}`).join(" ");
 
-  vitest.describe.concurrent(name, { retry: options?.retry }, () => {
-    p.hooks();
+  // `describe.skip` collects the tests as skipped without running the suite's
+  // beforeAll/afterAll hooks, so the docker-compose spin-up never happens.
+  const describeFn = p.skip ? vitest.describe.skip : vitest.describe.concurrent;
+
+  describeFn(name, { retry: options?.retry }, () => {
+    p.preHooks();
 
     fn({
       ...vitest,
       ...p,
       testMatch,
     } as unknown as TestContext);
+
+    p.postHooks();
   });
 }

@@ -13,7 +13,7 @@ function testCondition(
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet([featureFlag] as never[], features),
+        BATI: new BatiSet([featureFlag] as never[], features, "pnpm"),
       },
       { filepath: filename },
     );
@@ -24,7 +24,7 @@ function testCondition(
     const renderedOutput = await transformAndFormat(
       code,
       {
-        BATI: new BatiSet([], features),
+        BATI: new BatiSet([], features, "pnpm"),
       },
       { filepath: filename },
     );

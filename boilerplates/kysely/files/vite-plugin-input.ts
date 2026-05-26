@@ -1,3 +1,4 @@
+/*{ @if (!it.BATI.hasD1) }*/
 import type { Plugin } from "vite";
 
 /**
@@ -24,3 +25,4 @@ export function inputPlugin({ name, entry, env = "ssr" }: { name: string; entry:
     },
   };
 }
+/*{ /if }*/

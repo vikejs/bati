@@ -585,7 +585,7 @@ async function run() {
       checkRules(flags);
 
       const meta: VikeMeta = {
-        BATI: new BatiSet(flags as Flags[], features),
+        BATI: new BatiSet(flags as Flags[], features, pm.name),
         BATI_TEST: Boolean(process.env.BATI_TEST),
         BATI_SKIP_GIT: args["skip-git"],
         BATI_IS_CI: Boolean(process.env.CI),
