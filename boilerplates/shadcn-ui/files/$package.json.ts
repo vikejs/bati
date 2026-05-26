@@ -3,18 +3,15 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  return packageJson
-    .setScript("shadcn", {
-      value: "npx shadcn@latest",
-      precedence: 1,
-      warnIfReplaced: true,
-    })
-    .addDependencies([
-      "class-variance-authority",
-      "clsx",
-      "tailwind-merge",
-      "lucide-react",
-      "@radix-ui/react-icons",
-      "tw-animate-css",
-    ]);
+  return (
+    packageJson
+      .setScript("shadcn", {
+        value: "npx shadcn@latest",
+        precedence: 1,
+        warnIfReplaced: true,
+      })
+      .addDependencies(["class-variance-authority", "clsx", "tailwind-merge", "lucide-react", "@radix-ui/react-icons"])
+      // CSS-only: pulled in via `@import "tw-animate-css"` and compiled by Tailwind at build time.
+      .addDevDependencies(["tw-animate-css"])
+  );
 }

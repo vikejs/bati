@@ -7,6 +7,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     packageJson
       // vite preview does not make sense when targeting Vercel
       .removeScript("prod")
-      .addDependencies(["vite-plugin-vercel"])
+      // Build-time only: consumed by vite.config.ts, never at runtime.
+      .addDevDependencies(["vite-plugin-vercel"])
   );
 }

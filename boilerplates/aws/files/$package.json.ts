@@ -3,29 +3,33 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
-  return packageJson
-    .setScript("test", {
-      value: "vitest",
-      precedence: 0,
-    })
-    .setScript("deploy:cdk-deploy-all", {
-      value: "cdk deploy --all",
-      precedence: 0,
-    })
-    .setScript("deploy:aws", {
-      value: "run-s build deploy:cdk-deploy-all",
-      precedence: 0,
-    })
-    .setScript("cdk:app", {
-      value: "tsx cdk/bin/infrastructure.ts",
-      precedence: 0,
-    })
-    .setScript("cdk", {
-      value: "cdk",
-      precedence: 0,
-    })
-    .addDependencies(["aws-cdk-lib", "constructs", "source-map-support"])
-    .addDevDependencies(["cdk", "aws-cdk", "@types/node", "@types/which", "typescript", "esbuild", "vitest", "which"])
-    .addDevDependencies(["npm-run-all2"], ["deploy:aws"])
-    .addDevDependencies(["tsx"], ["cdk:app"]);
+  return (
+    packageJson
+      .setScript("test", {
+        value: "vitest",
+        precedence: 0,
+      })
+      .setScript("deploy:cdk-deploy-all", {
+        value: "cdk deploy --all",
+        precedence: 0,
+      })
+      .setScript("deploy:aws", {
+        value: "run-s build deploy:cdk-deploy-all",
+        precedence: 0,
+      })
+      .setScript("cdk:app", {
+        value: "tsx cdk/bin/infrastructure.ts",
+        precedence: 0,
+      })
+      .setScript("cdk", {
+        value: "cdk",
+        precedence: 0,
+      })
+      // CDK (infra-as-code) and source-map-support are only loaded by the `cdk/` deploy
+      // scripts — never by the app at runtime, and CDK esbuild-bundles the lambda anyway.
+      .addDevDependencies(["aws-cdk-lib", "constructs", "source-map-support"])
+      .addDevDependencies(["cdk", "aws-cdk", "@types/node", "@types/which", "typescript", "esbuild", "vitest", "which"])
+      .addDevDependencies(["npm-run-all2"], ["deploy:aws"])
+      .addDevDependencies(["tsx"], ["cdk:app"])
+  );
 }

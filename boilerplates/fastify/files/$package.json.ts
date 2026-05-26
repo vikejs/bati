@@ -4,7 +4,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
   return packageJson
-    .addDevDependencies(["@types/node"])
-    .addDependencies(["@vikejs/fastify", "fastify", "fastify-raw-body", "vike", "vite"])
+    .addDevDependencies(["@types/node", "vite"])
+    .addDependencies(["@vikejs/fastify", "fastify", "fastify-raw-body", "vike"])
     .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
 }
