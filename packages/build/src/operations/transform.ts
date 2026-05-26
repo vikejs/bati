@@ -1,5 +1,5 @@
 import { parse } from "node:path";
-import type { PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
+import type { EnvRegistry, PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
 import { formatCode } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./common.js";
 
@@ -65,7 +65,13 @@ export async function executeOperationTransform(
     meta,
     previousOperationSameDestination,
     packageJson,
-  }: { meta: VikeMeta; previousOperationSameDestination?: FileOperation & OperationReport; packageJson: PackageJson },
+    env,
+  }: {
+    meta: VikeMeta;
+    previousOperationSameDestination?: FileOperation & OperationReport;
+    packageJson: PackageJson;
+    env: EnvRegistry;
+  },
 ): Promise<OperationReport> {
   const transformer = await importTransformer(op.sourceAbsolute);
 
@@ -79,6 +85,7 @@ export async function executeOperationTransform(
       source: op.source,
       target: op.destination,
       packageJson,
+      env,
     }),
   );
 
