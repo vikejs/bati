@@ -222,10 +222,10 @@ jobs:
           - solid--h3--cloudflare--sqlite--eslint--biome--oxlint
           - solid--h3--cloudflare--kysely--eslint--biome--oxlint
           - solid--h3--cloudflare--eslint--biome--oxlint
+          - react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--drizzle--eslint--biome--oxlint
+          - react--hono--dokploy--telefunc--sqlite--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--eslint--biome--oxlint
-          - react--hono--dokploy--drizzle--eslint--biome--oxlint
-          - react--hono--dokploy--eslint--biome--oxlint
           - aws--react--hono--eslint--biome--oxlint
           - react--cloudflare--hono--eslint--biome--oxlint
           - react--cloudflare--h3--eslint--biome--oxlint
@@ -695,18 +695,20 @@ jobs:
           - destination: solid--h3--cloudflare--eslint--biome--oxlint
             flags: --solid --h3 --cloudflare --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
+            flags: --react --hono --dokploy --telefunc --kysely --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--dokploy--telefunc--drizzle--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --drizzle --eslint --biome
               --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--hono--dokploy--telefunc--sqlite--eslint--biome--oxlint
+            flags: --react --hono --dokploy --telefunc --sqlite --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--dokploy--telefunc--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: react--hono--dokploy--drizzle--eslint--biome--oxlint
-            flags: --react --hono --dokploy --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: react--hono--dokploy--eslint--biome--oxlint
-            flags: --react --hono --dokploy --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: aws--react--hono--eslint--biome--oxlint
             flags: --aws --react --hono --eslint --biome --oxlint
