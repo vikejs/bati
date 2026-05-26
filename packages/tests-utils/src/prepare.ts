@@ -55,7 +55,9 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
   let skip = false;
   if (mode === "docker" && !process.env.CI && !(await isDockerAvailable())) {
     skip = true;
-    console.warn(`[tests-utils] Docker not available — skipping docker test: ${context.flags.join(", ") || "(no flags)"}`);
+    console.warn(
+      `[tests-utils] Docker not available — skipping docker test: ${context.flags.join(", ") || "(no flags)"}`,
+    );
   }
 
   function preHooks() {
