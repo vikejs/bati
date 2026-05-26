@@ -8,31 +8,18 @@ export interface PackageManagerInfo {
 }
 
 export function packageManager(): PackageManagerInfo {
-  const ua = process.env.npm_config_user_agent;
-
-  // 1. Bun runtime detection (most reliable in Bun)
-  // @ts-expect-error Bun types not installed
-  if (typeof Bun !== "undefined" || process.versions.bun) {
-    return {
-      name: "bun",
-      // @ts-expect-error Bun types not installed
-      version: process.versions.bun ?? Bun.version,
-      run: "bun run",
-      exec: "bunx",
-    };
+  // Bun always populates `process.versions.bun`; detecting the runtime is more
+  // reliable than the user-agent, which a wrapping `npm run` would otherwise mask.
+  if (process.versions.bun) {
+    return { name: "bun", version: process.versions.bun, run: "bun run", exec: "bunx" };
   }
 
-  // 2. If we have a user agent, parse it
+  const ua = process.env.npm_config_user_agent;
   if (ua) {
     return pmFromUserAgent(ua);
   }
 
-  // 3. CI / unknown environment fallback
-  return {
-    name: "npm",
-    run: "npm run",
-    exec: "npx",
-  };
+  return { name: "npm", run: "npm run", exec: "npx" };
 }
 
 function pmFromUserAgent(userAgent: string): PackageManagerInfo {

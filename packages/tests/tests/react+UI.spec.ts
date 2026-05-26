@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { describeBati, suite } from "@batijs/tests-utils";
 
-// Note: oxlint deliberately not listed — old matrix only enabled eslint+biome.
 const tests = suite()
   .matrix({ framework: "react", ui: ["compiled-css", "mantine"] })
   .linters("eslint", "biome");

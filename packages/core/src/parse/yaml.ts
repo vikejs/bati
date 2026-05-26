@@ -1,76 +1,49 @@
-import { isScalar, isSeq, parseDocument, visit } from "yaml";
+import { isScalar, isSeq, type Node, parseDocument, visit } from "yaml";
 import type { VikeMeta } from "../types.js";
 import { evalCondition } from "./eval.js";
 
-function isBatiLine(line: string): boolean {
-  return line.includes("BATI.has") || line.includes("BATI_TEST");
-}
+const isBatiLine = (line: string) => line.includes("BATI.has") || line.includes("BATI_TEST");
 
-function extractBatiConditionFromYamlComment(commentBefore: string | null | undefined): string | null {
-  if (!commentBefore) return null;
-  for (const line of commentBefore.split("\n")) {
-    if (isBatiLine(line)) {
-      return line.replace(/^#\s*/, "").trim();
-    }
+function extractBatiCondition(commentBefore: string | null | undefined): string | null {
+  for (const line of commentBefore?.split("\n") ?? []) {
+    if (isBatiLine(line)) return line.replace(/^#\s*/, "").trim();
   }
   return null;
 }
 
-function stripBatiLinesFromYamlComment(commentBefore: string | null | undefined): string | undefined {
-  if (!commentBefore) return undefined;
-  const lines = commentBefore.split("\n");
-  const filtered = lines.filter((l) => !isBatiLine(l));
-  const result = filtered.join("\n");
-  return result.trim() ? result : undefined;
+function stripBatiLines(commentBefore: string | null | undefined): string | undefined {
+  const remaining = (commentBefore?.split("\n") ?? []).filter((l) => !isBatiLine(l)).join("\n");
+  return remaining.trim() ? remaining : undefined;
+}
+
+// Drops the node when its leading `# BATI...` comment evaluates falsy; otherwise
+// strips the BATI line(s) and keeps any surrounding comment. Clearing the comment
+// before removal stops it from re-attaching to the following sibling.
+function resolveBatiComment(node: Node, meta: VikeMeta): typeof visit.REMOVE | undefined {
+  const condition = extractBatiCondition(node.commentBefore);
+  if (condition === null) return;
+
+  if (!evalCondition(condition, meta)) {
+    node.commentBefore = undefined;
+    return visit.REMOVE;
+  }
+  node.commentBefore = stripBatiLines(node.commentBefore);
 }
 
 export function transformYaml(code: string, meta: VikeMeta): string {
   const doc = parseDocument(code);
 
   visit(doc, {
+    // Map entries carry the conditional comment on their key.
     Pair(_key, node) {
-      if (!isScalar(node.key)) return;
-      const commentBefore = node.key.commentBefore;
-      const condition = extractBatiConditionFromYamlComment(commentBefore);
-      if (condition === null) return;
-
-      const testVal = evalCondition(condition, meta);
-      if (!testVal) {
-        node.key.commentBefore = undefined;
-        return visit.REMOVE;
-      } else {
-        node.key.commentBefore = stripBatiLinesFromYamlComment(commentBefore);
-      }
+      if (isScalar(node.key)) return resolveBatiComment(node.key, meta);
     },
+    // Sequence items carry it on the item node itself (map or scalar).
     Map(_key, node, path) {
-      const parent = path[path.length - 1];
-      if (!isSeq(parent)) return;
-
-      const commentBefore = node.commentBefore;
-      const condition = extractBatiConditionFromYamlComment(commentBefore);
-      if (condition === null) return;
-
-      const testVal = evalCondition(condition, meta);
-      if (!testVal) {
-        return visit.REMOVE;
-      } else {
-        node.commentBefore = stripBatiLinesFromYamlComment(commentBefore);
-      }
+      if (isSeq(path[path.length - 1])) return resolveBatiComment(node, meta);
     },
     Scalar(_key, node, path) {
-      const parent = path[path.length - 1];
-      if (!isSeq(parent)) return;
-
-      const commentBefore = node.commentBefore;
-      const condition = extractBatiConditionFromYamlComment(commentBefore);
-      if (condition === null) return;
-
-      const testVal = evalCondition(condition, meta);
-      if (!testVal) {
-        return visit.REMOVE;
-      } else {
-        node.commentBefore = stripBatiLinesFromYamlComment(commentBefore);
-      }
+      if (isSeq(path[path.length - 1])) return resolveBatiComment(node, meta);
     },
   });
 

@@ -2,26 +2,18 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describeBati, describeMultipleBati, exec, npmCli, suite } from "@batijs/tests-utils";
 
-// Replaces the old `matrix` + 20 `exclude` rules with 4 explicit include sections.
-// Each section reads as a positive declaration of what gets tested.
 const tests = suite()
-  // Section 1: full data×server×db sweep — on Solid only.
-  // (Old excludes: react/vue × drizzle/sqlite/kysely)
   .matrix({
     framework: "solid",
     server: ["express", "h3", "hono", "fastify"],
     data: ["trpc", "telefunc", "ts-rest", null],
     db: ["drizzle", "sqlite", "kysely", null],
   })
-  // Section 2: react & vue tested with Hono only, no db sweep.
-  // (Old excludes: react/vue × express/h3/fastify)
   .matrix({
     framework: ["react", "vue"],
     server: "hono",
     data: ["trpc", "telefunc", "ts-rest", null],
   })
-  // Section 3: Cloudflare — solid + hono/h3 only.
-  // (Old excludes: cloudflare × {express,fastify,react,vue,dokploy})
   .matrix({
     framework: "solid",
     server: ["hono", "h3"],
@@ -29,14 +21,12 @@ const tests = suite()
     data: ["trpc", "telefunc", "ts-rest", null],
     db: ["drizzle", "sqlite", "kysely", null],
   })
-  // Section 4: Dokploy — react + hono only, narrow data×db (matches old
-  // excludes that whitelisted only telefunc/_ and kysely/_).
   .matrix({
     framework: "react",
     server: "hono",
     deploy: "dokploy",
     data: "telefunc",
-    db: ["kysely", "drizzle", "sqlite", null],
+    db: ["drizzle", "sqlite", "kysely", null],
   })
   .linters("eslint", "biome", "oxlint");
 

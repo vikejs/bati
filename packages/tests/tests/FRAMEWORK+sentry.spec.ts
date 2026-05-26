@@ -2,8 +2,6 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describeBati, framework, suite } from "@batijs/tests-utils";
 
-// Sentry has per-framework assertions (different `@sentry/{react,vue,solid}`
-// packages). Keep full 3-framework sweep.
 const tests = suite().matrix({ framework: framework.values, flags: "sentry" }).linters("eslint", "biome", "oxlint");
 
 export default tests;

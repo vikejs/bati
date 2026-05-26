@@ -203,20 +203,6 @@ async function spinner<T>(title: string, callback: () => T): Promise<T> {
   return zx.spinner(title, callback);
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: util
-function chunkArray<T>(arr: T[], maxChunks: number): T[][] {
-  if (maxChunks <= 0) throw new Error("The number of chunks must be greater than 0");
-
-  const result: T[][] = [];
-  const chunkSize = Math.ceil(arr.length / Math.min(arr.length, maxChunks));
-
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    result.push(arr.slice(i, i + chunkSize));
-  }
-
-  return result;
-}
-
 async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
   const command: string | undefined = args._[0];
 
@@ -260,11 +246,8 @@ async function main(context: GlobalContext, args: mri.Argv<CliOptions>) {
 
   for (const testFile of testFiles) {
     for (const flags of testFile.matrix) {
-      if (
-        testFile.exclude?.some((x) => areAllElementsOfAIncludedInB(x, flags)) ||
-        // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
-        (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element)))
-      ) {
+      // Manually added --filter=!... If multiple are present (exclude), and only one is found (flags), it will still pass
+      if (exclude && exclude.length > 0 && exclude.some((element) => flags.includes(element))) {
         continue;
       }
       if (filter && filter.length > 0 && !areAllElementsOfAIncludedInB(filter, flags)) {

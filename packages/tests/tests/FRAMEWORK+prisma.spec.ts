@@ -2,7 +2,6 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
-// Prisma is framework-agnostic — one framework per combo. Was 3, now 1.
 export default suite()
   .case({ framework: spread(framework), flags: "prisma" })
   .linters("eslint", "biome", "oxlint");

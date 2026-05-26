@@ -5,15 +5,9 @@ import { describeBati, describeMultipleBati, framework, server, suite } from "@b
 const testAuth0 = Boolean(process.env.TEST_AUTH0_CLIENT_ID);
 const auths = ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])] as const;
 
-// Replaces 11 exclude rules with 3 explicit include sections.
 const tests = suite()
-  // Section 1: base sweep — all frameworks × all servers × all auth providers.
   .matrix({ framework: framework.values, server: server.values, auth: auths })
-  // Section 2: Cloudflare — react + (hono|h3) + auth0 only.
-  // (Old excludes: solid/vue/express/fastify/authjs × cloudflare)
   .matrix({ framework: "react", server: ["hono", "h3"], deploy: "cloudflare", auth: "auth0" })
-  // Section 3: Dokploy — react + hono only, per-auth-provider.
-  // (Old excludes: solid/vue/express/h3/fastify × dokploy; cloudflare × dokploy)
   .matrix({ framework: "react", server: "hono", deploy: "dokploy", auth: auths })
   .linters("eslint", "biome", "oxlint");
 
