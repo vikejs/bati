@@ -1,5 +1,6 @@
 import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
+import type { EnvRegistry } from "./env-registry.js";
 import type { VikeMeta } from "./types.js";
 
 export type { VikeMeta };
@@ -22,6 +23,8 @@ export interface BatiConfig {
   enforce?: "pre" | "post";
   nextSteps?: (meta: VikeMeta, packageManager: string, utils: typeof Colorette) => BatiConfigStep[];
   knip?: BatiKnipConfig;
+  /** Environment variables this feature contributes (see {@link EnvRegistry}). */
+  env?: EnvRegistry;
 }
 
 // Small helper to provide type inference like Vite's defineConfig
@@ -51,6 +54,16 @@ export function defineConfig<T extends BatiConfig>(config: T): T {
     }
     if ("vite" in config.knip) {
       assert(typeof config.knip.vite === "boolean", `'knip.vite' must be a boolean`);
+    }
+  }
+  if ("env" in config) {
+    assert(Array.isArray(config.env), `'env' must be an array`);
+    for (const def of config.env!) {
+      assert(typeof def.key === "string" && def.key.length > 0, `each 'env' entry needs a non-empty 'key'`);
+      assert(
+        def.scope === "secret" || def.scope === "server-default" || def.scope === "public",
+        `'env.scope' must be 'secret' | 'server-default' | 'public' (was ${def.scope} for ${def.key})`,
+      );
     }
   }
   return config;
