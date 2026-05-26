@@ -1,6 +1,6 @@
 import { BatiSet, features } from "@batijs/features";
 import { assert, describe, test } from "vitest";
-import { transformAndFormat } from "../src/index.js";
+import { setComposeEnvironment, transformAndFormat } from "../src/index.js";
 
 function testCondition(
   code: string,
@@ -156,4 +156,33 @@ describe("yaml: .yaml extension also works", () => {
     "authjs",
     "compose.yaml",
   );
+});
+
+describe("setComposeEnvironment", () => {
+  const skeleton = `services:
+  app:
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+`;
+
+  test("appends entries unquoted after the existing ones", () => {
+    assert.equal(
+      setComposeEnvironment(skeleton, ["DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}", "SENTRY_DSN=${SENTRY_DSN}"]),
+      `services:
+  app:
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=\${DATABASE_URL:-/app/data/db.sqlite}
+      - SENTRY_DSN=\${SENTRY_DSN}
+    restart: unless-stopped
+`,
+    );
+  });
+
+  test("no entries leaves the document untouched", () => {
+    assert.equal(setComposeEnvironment(skeleton, []), skeleton);
+  });
 });
