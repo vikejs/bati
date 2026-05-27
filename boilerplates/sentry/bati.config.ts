@@ -8,14 +8,14 @@ export default defineConfig({
     {
       key: "SENTRY_DSN",
       scope: "secret",
-      comment: "Sentry DNS. Used for Error Reporting on the Server",
+      comment: "Sentry DSN. Used for Error Reporting on the Server",
       devValueFrom: "TEST_SENTRY_DSN",
       group: "sentry",
     },
     {
       key: "PUBLIC_ENV__SENTRY_DSN",
       scope: "public",
-      comment: "Sentry DNS. Used for Error Reporting in the Browser",
+      comment: "Sentry DSN. Used for Error Reporting in the Browser",
       default: "",
     },
   ],
