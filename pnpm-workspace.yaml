@@ -39,3 +39,10 @@ onlyBuiltDependencies:
 packageManagerStrictVersion: false
 
 shamefullyHoist: true
+
+# Nx's run-script executor spawns one `pnpm run <script>` per package in
+# parallel. Each invocation's pre-run deps check reads/refreshes the shared
+# workspace-state cache in node_modules, so concurrent runs can read a
+# half-written file ("Unexpected end of JSON input"). The check is redundant
+# here (CI installs right before building), so disable it.
+verifyDepsBeforeRun: false
