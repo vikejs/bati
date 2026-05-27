@@ -1,4 +1,4 @@
-import { appendToEnv, type EnvRegistry, envVarApplies, type EnvVarDef, type VikeMeta } from "@batijs/core";
+import { appendToEnv, appliesToSink, type EnvRegistry, type EnvVarDef } from "@batijs/core";
 
 // Renders the `.env` file from the merged registry. Lives in `shared` because it
 // is the sole producer of `.env`; core owns the data model, not how each sink
@@ -8,10 +8,10 @@ import { appendToEnv, type EnvRegistry, envVarApplies, type EnvVarDef, type Vike
  * Render the whole `.env` from the registry. Returns `undefined` when no var
  * targets `.env`, so the caller writes no (empty) file.
  */
-export function renderDotenv(registry: EnvRegistry, meta: VikeMeta): string | undefined {
+export function renderDotenv(registry: EnvRegistry): string | undefined {
   let content: string | undefined;
   for (const def of registry) {
-    if (envVarApplies(def, meta, "dotenv")) {
+    if (appliesToSink(def, "dotenv")) {
       content = appendToEnv(content, def.key, dotenvValue(def), def.comment);
     }
   }

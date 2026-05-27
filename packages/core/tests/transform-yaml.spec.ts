@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: valid */
 import { BatiSet, features } from "@batijs/features";
 import { assert, describe, test } from "vitest";
 import { setComposeEnvironment, transformAndFormat } from "../src/index.js";

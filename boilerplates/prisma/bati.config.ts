@@ -4,12 +4,12 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("prisma");
   },
-  env: [
+  env: () => [
     {
       key: "DATABASE_URL",
       scope: "server-default",
       // Prisma manages its own connection string; it is not part of the container env.
-      when: ({ sink }) => sink === "dotenv",
+      sinks: ["dotenv"],
       default: "postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public",
       comment: `Prisma
 

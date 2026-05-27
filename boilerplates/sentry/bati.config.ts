@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("sentry");
   },
-  env: [
+  env: () => [
     {
       key: "SENTRY_DSN",
       scope: "secret",

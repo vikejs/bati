@@ -1,9 +1,11 @@
 /**
- * Declarative env-var registry. Each feature declares the vars it needs in its
- * `bati.config.ts`; the CLI merges all selected boilerplates into one registry
- * and threads it to transformers via `TransformerProps.env`. Core owns only this
- * shape — each sink's rendering lives in the boilerplate that owns it (`.env` in
- * `shared`, compose/Dockerfile in `docker-compose`).
+ * Declarative env-var registry. Each feature exposes an `env(meta)` producer in
+ * its `bati.config.ts`; the CLI runs every selected boilerplate's producer,
+ * merges the results into one registry, and threads it to transformers via
+ * `TransformerProps.env`. Meta-gating happens in the producer, so the merged
+ * registry is already feature-resolved — consumers only filter by sink. Core
+ * owns this shape; each sink's rendering lives in the boilerplate that owns it
+ * (`.env` in `shared`, compose/Dockerfile in `docker-compose`).
  */
 import type { VikeMeta } from "./types.js";
 
@@ -17,11 +19,6 @@ export type EnvSink = "dotenv" | "compose" | "dockerfile";
  * - `public`: a client/build-time var (e.g. `PUBLIC_ENV__*`), never part of the server runtime.
  */
 export type EnvScope = "secret" | "server-default" | "public";
-
-export interface EnvVarContext {
-  meta: VikeMeta;
-  sink: EnvSink;
-}
 
 export interface EnvVarDef {
   /** Variable name, e.g. `DATABASE_URL`. */
@@ -37,16 +34,16 @@ export interface EnvVarDef {
   devValueFrom?: string;
   /** Groups + comments vars in the compose/Dockerfile output, e.g. `"auth0"`. */
   group?: string;
-  /**
-   * Finer per-(meta, sink) gate; selection of the owning feature is already
-   * implied. Defaults to applying everywhere.
-   */
-  when?: (ctx: EnvVarContext) => boolean;
+  /** Destinations to emit to; defaults to all. */
+  sinks?: EnvSink[];
 }
 
 export type EnvRegistry = EnvVarDef[];
 
-/** Whether a declaration applies to the given sink under the current meta. */
-export function envVarApplies(def: EnvVarDef, meta: VikeMeta, sink: EnvSink): boolean {
-  return def.when ? def.when({ meta, sink }) : true;
+/** A feature's env-var producer; meta-gating lives here, not at render time. */
+export type EnvRegistryFactory = (meta: VikeMeta) => EnvRegistry;
+
+/** Whether a declaration targets the given sink. */
+export function appliesToSink(def: EnvVarDef, sink: EnvSink): boolean {
+  return def.sinks?.includes(sink) ?? true;
 }

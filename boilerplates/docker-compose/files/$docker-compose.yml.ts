@@ -7,5 +7,5 @@ export default async function getDockerCompose(props: TransformerProps): Promise
   // biome-ignore lint/style/noNonNullAssertion: docker-compose.yml is always copied first
   const code = await props.readfile!();
 
-  return setComposeEnvironment(code, composeEnvEntries(props.env, props.meta));
+  return setComposeEnvironment(code, composeEnvEntries(props.env));
 }

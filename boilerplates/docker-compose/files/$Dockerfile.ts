@@ -81,7 +81,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     // Runtime defaults from the env registry, so the image runs standalone and this
     // stage stays feature-agnostic. Secrets stay empty — compose overrides them.
     .pipe((b) => {
-      for (const group of serverEnvDefaults(props.env, meta)) {
+      for (const group of serverEnvDefaults(props.env)) {
         b.env(group.vars, { comment: group.comment });
       }
     })

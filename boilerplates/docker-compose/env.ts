@@ -1,11 +1,4 @@
-import {
-  type EnvRecord,
-  type EnvRegistry,
-  type EnvSink,
-  envVarApplies,
-  type EnvVarDef,
-  type VikeMeta,
-} from "@batijs/core";
+import { appliesToSink, type EnvRecord, type EnvRegistry, type EnvSink, type EnvVarDef } from "@batijs/core";
 
 // Renders the env vars for the two sinks this boilerplate owns: the
 // docker-compose `environment:` list and the Dockerfile runtime `ENV`. Core
@@ -16,8 +9,8 @@ import {
  * secrets are pulled from the host (`${KEY}`), defaulted vars are host-overridable
  * (`${KEY:-<default>}`).
  */
-export function composeEnvEntries(registry: EnvRegistry, meta: VikeMeta): string[] {
-  return serverVars(registry, meta, "compose").map((def) =>
+export function composeEnvEntries(registry: EnvRegistry): string[] {
+  return serverVars(registry, "compose").map((def) =>
     def.scope === "secret"
       ? `${def.key}=\${${def.key}}`
       : `${def.key}=\${${def.key}:-${def.perSink?.compose ?? def.default ?? ""}}`,
@@ -35,9 +28,9 @@ export interface DockerfileEnvGroup {
  * `.env(vars, { comment })` per group. Secrets default to empty — compose
  * overrides them at runtime.
  */
-export function serverEnvDefaults(registry: EnvRegistry, meta: VikeMeta): DockerfileEnvGroup[] {
+export function serverEnvDefaults(registry: EnvRegistry): DockerfileEnvGroup[] {
   const groups = new Map<string, DockerfileEnvGroup>();
-  for (const def of serverVars(registry, meta, "dockerfile")) {
+  for (const def of serverVars(registry, "dockerfile")) {
     const groupKey = def.group ?? "";
     let group = groups.get(groupKey);
     if (!group) {
@@ -49,8 +42,8 @@ export function serverEnvDefaults(registry: EnvRegistry, meta: VikeMeta): Docker
   return [...groups.values()];
 }
 
-// Vars that reach a container's server runtime: non-public declarations whose
-// `when` admits this sink. Public (client/build-time) vars never get here.
-function serverVars(registry: EnvRegistry, meta: VikeMeta, sink: EnvSink): EnvVarDef[] {
-  return registry.filter((def) => def.scope !== "public" && envVarApplies(def, meta, sink));
+// Vars that reach a container's server runtime: non-public declarations that
+// target this sink. Public (client/build-time) vars never get here.
+function serverVars(registry: EnvRegistry, sink: EnvSink): EnvVarDef[] {
+  return registry.filter((def) => def.scope !== "public" && appliesToSink(def, sink));
 }

@@ -1,32 +1,20 @@
-import type { EnvRegistry, VikeMeta } from "@batijs/core";
-import { BatiSet, features } from "@batijs/features";
+/** biome-ignore-all lint/style/noNonNullAssertion: ok */
+import type { EnvRegistry } from "@batijs/core";
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { renderDotenv } from "./env";
-
-function meta(...flags: string[]): VikeMeta {
-  return { BATI: new BatiSet(flags as never[], features, "pnpm") };
-}
-
-const notCloudflareDotenv = ({ meta, sink }: { meta: VikeMeta; sink: string }) =>
-  !(sink === "dotenv" && meta.BATI.has("cloudflare"));
 
 const registry: EnvRegistry = [
   {
     key: "DATABASE_URL",
     scope: "server-default",
-    comment: "Path to the sqlite database",
+    comment: `Path to the database
+Used by the ORM`,
     default: "sqlite.db",
-    when: ({ meta }) => !meta.BATI.hasD1,
   },
-  {
-    key: "AUTH0_CLIENT_ID",
-    scope: "secret",
-    comment: "Auth0 Client ID",
-    devValueFrom: "TEST_AUTH0_CLIENT_ID",
-    when: notCloudflareDotenv,
-  },
+  { key: "AUTH0_CLIENT_ID", scope: "secret", comment: "Auth0 Client ID", devValueFrom: "TEST_AUTH0_CLIENT_ID" },
   { key: "SENTRY_DSN", scope: "secret", comment: "Sentry server DSN", devValueFrom: "TEST_SENTRY_DSN" },
   { key: "PUBLIC_ENV__SENTRY_DSN", scope: "public", comment: "Sentry browser DSN", default: "" },
+  { key: "COMPOSE_ONLY", scope: "secret", sinks: ["compose"] },
 ];
 
 // These may be set in the ambient environment (e.g. .env.test); isolate each
@@ -51,7 +39,7 @@ afterEach(() => {
 
 describe("renderDotenv", () => {
   test("quotes a defaulted value and leaves an empty secret blank", () => {
-    const out = renderDotenv(registry, meta("sqlite"))!;
+    const out = renderDotenv(registry)!;
     expect(out).toContain(`DATABASE_URL="sqlite.db"`);
     expect(out).toContain(`AUTH0_CLIENT_ID=\n`);
     expect(out).toContain(`SENTRY_DSN=\n`);
@@ -60,22 +48,18 @@ describe("renderDotenv", () => {
 
   test("injects a secret's dev/test value when its source env var is set", () => {
     process.env.TEST_AUTH0_CLIENT_ID = "abc123";
-    assert.match(renderDotenv(registry, meta("sqlite"))!, /AUTH0_CLIENT_ID="abc123"/);
+    assert.match(renderDotenv(registry)!, /AUTH0_CLIENT_ID="abc123"/);
   });
 
   test("multi-line comments are prefixed per line", () => {
-    assert.match(renderDotenv(registry, meta())!, /# Path to the sqlite database\nDATABASE_URL=/);
+    assert.match(renderDotenv(registry)!, /# Path to the database\n# Used by the ORM\nDATABASE_URL=/);
   });
 
-  test("excludes a var from .env when its `when` rejects the dotenv sink", () => {
-    assert.notMatch(renderDotenv(registry, meta("cloudflare"))!, /AUTH0_CLIENT_ID/);
-  });
-
-  test("drops the DATABASE_URL under D1", () => {
-    assert.notMatch(renderDotenv(registry, meta("cloudflare", "sqlite"))!, /DATABASE_URL/);
+  test("excludes a var that does not target the dotenv sink", () => {
+    assert.notMatch(renderDotenv(registry)!, /COMPOSE_ONLY/);
   });
 
   test("returns undefined when nothing applies (no empty file)", () => {
-    expect(renderDotenv([], meta())).toBeUndefined();
+    expect(renderDotenv([])).toBeUndefined();
   });
 });

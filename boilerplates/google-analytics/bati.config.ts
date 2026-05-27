@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("google-analytics");
   },
-  env: [
+  env: () => [
     {
       key: "PUBLIC_ENV__GOOGLE_ANALYTICS",
       scope: "public",
