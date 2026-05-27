@@ -614,7 +614,7 @@ async function run() {
       const hooksMap = await retrieveHooks(hooks);
 
       // Run each selected boilerplate's env producer and merge into one registry,
-      // from which the .env / docker-compose / Dockerfile sinks are derived.
+      // from which every env sink (.env, docker-compose, Dockerfile, wrangler) is derived.
       const env = filteredBoilerplates.flatMap((b) => b.config.env?.(meta) ?? []);
 
       await exec(

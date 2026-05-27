@@ -37,6 +37,12 @@ export class BatiSet extends Set<Flags> {
     return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle") || this.has("kysely"));
   }
 
+  get hasDotEnvSecrets(): boolean {
+    // Cloudflare keeps runtime vars in wrangler.jsonc; there `.env` is public-only.
+    // Other targets store secrets in `.env`. Widen as platform adapters are added.
+    return !this.has("cloudflare");
+  }
+
   get hasUD(): boolean {
     return (
       this.has("cloudflare") ||

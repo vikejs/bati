@@ -1,7 +1,12 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: ok */
-import type { EnvRegistry } from "@batijs/core";
+import type { EnvRegistry, VikeMeta } from "@batijs/core";
+import { BatiSet, features } from "@batijs/features";
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { renderDotenv } from "./env";
+
+function meta(...flags: string[]): VikeMeta {
+  return { BATI: new BatiSet(flags as never[], features, "pnpm") };
+}
 
 const registry: EnvRegistry = [
   {
@@ -14,7 +19,6 @@ Used by the ORM`,
   { key: "AUTH0_CLIENT_ID", scope: "secret", comment: "Auth0 Client ID", devValueFrom: "TEST_AUTH0_CLIENT_ID" },
   { key: "SENTRY_DSN", scope: "secret", comment: "Sentry server DSN", devValueFrom: "TEST_SENTRY_DSN" },
   { key: "PUBLIC_ENV__SENTRY_DSN", scope: "public", comment: "Sentry browser DSN", default: "" },
-  { key: "COMPOSE_ONLY", scope: "secret", sinks: ["compose"] },
 ];
 
 // These may be set in the ambient environment (e.g. .env.test); isolate each
@@ -39,7 +43,7 @@ afterEach(() => {
 
 describe("renderDotenv", () => {
   test("quotes a defaulted value and leaves an empty secret blank", () => {
-    const out = renderDotenv(registry)!;
+    const out = renderDotenv(registry, meta("sqlite"))!;
     expect(out).toContain(`DATABASE_URL="sqlite.db"`);
     expect(out).toContain(`AUTH0_CLIENT_ID=\n`);
     expect(out).toContain(`SENTRY_DSN=\n`);
@@ -48,18 +52,22 @@ describe("renderDotenv", () => {
 
   test("injects a secret's dev/test value when its source env var is set", () => {
     process.env.TEST_AUTH0_CLIENT_ID = "abc123";
-    assert.match(renderDotenv(registry)!, /AUTH0_CLIENT_ID="abc123"/);
+    assert.match(renderDotenv(registry, meta("sqlite"))!, /AUTH0_CLIENT_ID="abc123"/);
   });
 
   test("multi-line comments are prefixed per line", () => {
-    assert.match(renderDotenv(registry)!, /# Path to the database\n# Used by the ORM\nDATABASE_URL=/);
+    assert.match(renderDotenv(registry, meta())!, /# Path to the database\n# Used by the ORM\nDATABASE_URL=/);
   });
 
-  test("excludes a var that does not target the dotenv sink", () => {
-    assert.notMatch(renderDotenv(registry)!, /COMPOSE_ONLY/);
+  test("under cloudflare, keeps public vars but drops server-runtime secrets/defaults", () => {
+    const out = renderDotenv(registry, meta("cloudflare"))!;
+    assert.match(out, /^PUBLIC_ENV__SENTRY_DSN=/m);
+    assert.notMatch(out, /^AUTH0_CLIENT_ID=/m);
+    assert.notMatch(out, /^SENTRY_DSN=/m);
+    assert.notMatch(out, /^DATABASE_URL=/m);
   });
 
   test("returns undefined when nothing applies (no empty file)", () => {
-    expect(renderDotenv([])).toBeUndefined();
+    expect(renderDotenv([], meta())).toBeUndefined();
   });
 });

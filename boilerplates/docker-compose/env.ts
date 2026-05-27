@@ -1,4 +1,4 @@
-import { appliesToSink, type EnvRecord, type EnvRegistry, type EnvSink, type EnvVarDef } from "@batijs/core";
+import { committedValue, type EnvRecord, type EnvRegistry, isServerVar } from "@batijs/core";
 
 // Renders the env vars for the two sinks this boilerplate owns: the
 // docker-compose `environment:` list and the Dockerfile runtime `ENV`. Core
@@ -10,11 +10,13 @@ import { appliesToSink, type EnvRecord, type EnvRegistry, type EnvSink, type Env
  * (`${KEY:-<default>}`).
  */
 export function composeEnvEntries(registry: EnvRegistry): string[] {
-  return serverVars(registry, "compose").map((def) =>
-    def.scope === "secret"
-      ? `${def.key}=\${${def.key}}`
-      : `${def.key}=\${${def.key}:-${def.perSink?.compose ?? def.default ?? ""}}`,
-  );
+  return registry
+    .filter(isServerVar)
+    .map((def) =>
+      def.scope === "secret"
+        ? `${def.key}=\${${def.key}}`
+        : `${def.key}=\${${def.key}:-${committedValue(def, "compose")}}`,
+    );
 }
 
 /** A group of Dockerfile `ENV` defaults sharing a comment. */
@@ -30,20 +32,14 @@ export interface DockerfileEnvGroup {
  */
 export function serverEnvDefaults(registry: EnvRegistry): DockerfileEnvGroup[] {
   const groups = new Map<string, DockerfileEnvGroup>();
-  for (const def of serverVars(registry, "dockerfile")) {
+  for (const def of registry.filter(isServerVar)) {
     const groupKey = def.group ?? "";
     let group = groups.get(groupKey);
     if (!group) {
       group = { comment: def.group, vars: {} };
       groups.set(groupKey, group);
     }
-    group.vars[def.key] = def.scope === "secret" ? "" : (def.perSink?.dockerfile ?? def.default ?? "");
+    group.vars[def.key] = def.scope === "secret" ? "" : committedValue(def, "dockerfile");
   }
   return [...groups.values()];
-}
-
-// Vars that reach a container's server runtime: non-public declarations that
-// target this sink. Public (client/build-time) vars never get here.
-function serverVars(registry: EnvRegistry, sink: EnvSink): EnvVarDef[] {
-  return registry.filter((def) => def.scope !== "public" && appliesToSink(def, sink));
 }
