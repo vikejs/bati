@@ -613,8 +613,6 @@ async function run() {
 
       const hooksMap = await retrieveHooks(hooks);
 
-      // Merge each selected boilerplate's env-var declarations into one registry,
-      // from which the .env / docker-compose / Dockerfile sinks are derived.
       const env = filteredBoilerplates.flatMap((b) => b.config.env ?? []);
 
       await exec(

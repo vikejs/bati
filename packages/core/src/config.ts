@@ -23,7 +23,6 @@ export interface BatiConfig {
   enforce?: "pre" | "post";
   nextSteps?: (meta: VikeMeta, packageManager: string, utils: typeof Colorette) => BatiConfigStep[];
   knip?: BatiKnipConfig;
-  /** Environment variables this feature contributes (see {@link EnvRegistry}). */
   env?: EnvRegistry;
 }
 

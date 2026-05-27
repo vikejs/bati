@@ -16,7 +16,6 @@ export type TransformerProps = {
   source: string;
   meta: VikeMeta;
   packageJson: PackageJson;
-  /** Merged env-var registry across all selected boilerplates. */
   env: EnvRegistry;
 };
 
