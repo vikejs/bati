@@ -1,4 +1,5 @@
 import { isScalar, isSeq, type Node, parseDocument, visit } from "yaml";
+import { assert } from "../assert.js";
 import type { VikeMeta } from "../types.js";
 import { evalCondition } from "./eval.js";
 
@@ -12,9 +13,8 @@ export function setComposeEnvironment(code: string, entries: string[], service =
 
   const doc = parseDocument(code);
   const env = doc.getIn(["services", service, "environment"]);
-  if (isSeq(env)) {
-    for (const entry of entries) env.add(entry);
-  }
+  assert(isSeq(env), `compose service '${service}' has no 'environment' list to extend`);
+  for (const entry of entries) env.add(entry);
 
   return doc.toString();
 }

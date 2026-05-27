@@ -78,9 +78,8 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .from(config.image, { as: "runner", comment: "production runtime image" })
     .workdir("/app")
     .env({ NODE_ENV: "production", PORT: "3000" })
-    // Runtime env mirrors docker-compose.yml: every var compose injects gets a default
-    // here so the image runs on its own. Secrets stay empty — compose overrides them.
-    // Derived from the env registry, so this stage knows nothing about specific features.
+    // Runtime defaults from the env registry, so the image runs standalone and this
+    // stage stays feature-agnostic. Secrets stay empty — compose overrides them.
     .pipe((b) => {
       for (const group of serverEnvDefaults(props.env, meta)) {
         b.env(group.vars, { comment: group.comment });

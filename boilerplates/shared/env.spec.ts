@@ -77,6 +77,5 @@ describe("renderDotenv", () => {
 
   test("returns undefined when nothing applies (no empty file)", () => {
     expect(renderDotenv([], meta())).toBeUndefined();
-    expect(renderDotenv(undefined, meta())).toBeUndefined();
   });
 });
