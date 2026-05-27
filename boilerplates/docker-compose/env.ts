@@ -1,9 +1,5 @@
 import { committedValue, type EnvRecord, type EnvRegistry, isServerVar } from "@batijs/core";
 
-// Renders the env vars for the two sinks this boilerplate owns: the
-// docker-compose `environment:` list and the Dockerfile runtime `ENV`. Core
-// owns only the data model; the sink-specific formatting policy lives here.
-
 /**
  * `KEY=<expr>` lines for the docker-compose `services.<app>.environment` list:
  * secrets are pulled from the host (`${KEY}`), defaulted vars are host-overridable
