@@ -169,7 +169,10 @@ describe("setComposeEnvironment", () => {
 
   test("appends entries unquoted after the existing ones", () => {
     assert.equal(
-      setComposeEnvironment(skeleton, ["DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}", "SENTRY_DSN=${SENTRY_DSN}"]),
+      setComposeEnvironment(skeleton, [
+        "DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}",
+        "SENTRY_DSN=${SENTRY_DSN}",
+      ]),
       `services:
   app:
     environment:

@@ -18,7 +18,13 @@ const registry: EnvRegistry = [
     default: "sqlite.db",
     when: ({ meta }) => !meta.BATI.hasD1,
   },
-  { key: "AUTH0_CLIENT_ID", scope: "secret", comment: "Auth0 Client ID", devValueFrom: "TEST_AUTH0_CLIENT_ID", when: notCloudflareDotenv },
+  {
+    key: "AUTH0_CLIENT_ID",
+    scope: "secret",
+    comment: "Auth0 Client ID",
+    devValueFrom: "TEST_AUTH0_CLIENT_ID",
+    when: notCloudflareDotenv,
+  },
   { key: "SENTRY_DSN", scope: "secret", comment: "Sentry server DSN", devValueFrom: "TEST_SENTRY_DSN" },
   { key: "PUBLIC_ENV__SENTRY_DSN", scope: "public", comment: "Sentry browser DSN", default: "" },
 ];

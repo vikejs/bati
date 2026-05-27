@@ -2,8 +2,7 @@ import type { EnvVarContext } from "@batijs/core";
 import { defineConfig } from "@batijs/core/config";
 
 // Auth0 secrets are managed by wrangler under cloudflare, not the .env file.
-const notCloudflareDotenv = ({ meta, sink }: EnvVarContext) =>
-  !(sink === "dotenv" && meta.BATI.has("cloudflare"));
+const notCloudflareDotenv = ({ meta, sink }: EnvVarContext) => !(sink === "dotenv" && meta.BATI.has("cloudflare"));
 
 export default defineConfig({
   if(meta) {
