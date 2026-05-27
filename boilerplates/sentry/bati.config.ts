@@ -4,6 +4,21 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("sentry");
   },
+  env: () => [
+    {
+      key: "SENTRY_DSN",
+      scope: "secret",
+      comment: "Sentry DSN. Used for Error Reporting on the Server",
+      devValueFrom: "TEST_SENTRY_DSN",
+      group: "sentry",
+    },
+    {
+      key: "PUBLIC_ENV__SENTRY_DSN",
+      scope: "public",
+      comment: "Sentry DSN. Used for Error Reporting in the Browser",
+      default: "",
+    },
+  ],
   nextSteps(_meta, _packageManager, { bold }) {
     return [
       {

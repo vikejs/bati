@@ -1,4 +1,5 @@
 import { dockerfile, dockerPackageManager, packageManager, type TransformerProps } from "@batijs/core";
+import { serverEnvDefaults } from "../env";
 
 export default async function getDockerfile(props: TransformerProps): Promise<string> {
   const { meta } = props;
@@ -77,15 +78,12 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .from(config.image, { as: "runner", comment: "production runtime image" })
     .workdir("/app")
     .env({ NODE_ENV: "production", PORT: "3000" })
-    // Runtime env mirrors docker-compose.yml: every var compose injects gets a default
-    // here so the image runs on its own. Secrets stay empty — compose overrides them.
-    .when(!meta.BATI.hasD1 && meta.BATI.hasDatabase, (b) =>
-      b.env({ DATABASE_URL: "/app/database/sqlite.db" }, { comment: "non-D1 database" }),
-    )
-    .when(meta.BATI.has("auth0"), (b) =>
-      b.env({ AUTH0_CLIENT_ID: "", AUTH0_CLIENT_SECRET: "", AUTH0_ISSUER_BASE_URL: "" }, { comment: "auth0" }),
-    )
-    .when(meta.BATI.has("sentry"), (b) => b.env({ SENTRY_DSN: "" }, { comment: "sentry" }))
+    // Add environment variables from the env registry
+    .pipe((b) => {
+      for (const group of serverEnvDefaults(props.env)) {
+        b.env(group.vars, { comment: group.comment });
+      }
+    })
     .when(config.corepack, (b) => b.run("corepack enable"))
     .copy(installSources, "./")
     .copy(["/app/node_modules"], "./node_modules", { from: "deps-prod" })

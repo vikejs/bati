@@ -1,12 +1,13 @@
 export * from "./dockerfile.js";
+export * from "./env-registry.js";
 export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./magicast.js";
 export * from "./markdown/markdown.js";
+export { setComposeEnvironment } from "./parse/yaml.js";
 export { type FileContext, transformAndFormat } from "./parse.js";
 export * from "./print.js";
 export * from "./random.js";
 export * from "./runtime.js";
 export type * from "./types.js";
-export * from "./utils/env.js";
 export * from "./which.js";

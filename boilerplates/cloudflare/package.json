@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
+    "test": "vitest run",
     "build": "bati-compile-boilerplate"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "@batijs/core": "workspace:",
     "@cloudflare/vite-plugin": "^1.38.0",
     "@types/node": "^20.19.37",
+    "vitest": "^4.1.7",
     "wrangler": "^4.94.0"
   },
   "files": [

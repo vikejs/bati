@@ -1,5 +1,6 @@
 import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
+import type { EnvRegistryFactory } from "./env-registry.js";
 import type { VikeMeta } from "./types.js";
 
 export type { VikeMeta };
@@ -22,6 +23,8 @@ export interface BatiConfig {
   enforce?: "pre" | "post";
   nextSteps?: (meta: VikeMeta, packageManager: string, utils: typeof Colorette) => BatiConfigStep[];
   knip?: BatiKnipConfig;
+  /** Env vars this feature contributes, gated on `meta` (see {@link EnvRegistryFactory}). */
+  env?: EnvRegistryFactory;
 }
 
 // Small helper to provide type inference like Vite's defineConfig
@@ -52,6 +55,9 @@ export function defineConfig<T extends BatiConfig>(config: T): T {
     if ("vite" in config.knip) {
       assert(typeof config.knip.vite === "boolean", `'knip.vite' must be a boolean`);
     }
+  }
+  if ("env" in config) {
+    assert(typeof config.env === "function", `'env' must be a function of meta`);
   }
   return config;
 }

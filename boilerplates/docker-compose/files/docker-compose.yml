@@ -8,16 +8,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      # !BATI.hasD1 && BATI.hasDatabase
-      - DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}
-      # BATI.has("auth0")
-      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
-      # BATI.has("auth0")
-      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
-      # BATI.has("auth0")
-      - AUTH0_ISSUER_BASE_URL=${AUTH0_ISSUER_BASE_URL}
-      # BATI.has("sentry")
-      - SENTRY_DSN=${SENTRY_DSN}
     # BATI.hasDatabase
     volumes:
       - sqlite_data:/app/data

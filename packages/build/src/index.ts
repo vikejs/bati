@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { mkdir, opendir, rm, rmdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { PackageJson, VikeMeta } from "@batijs/core";
+import type { EnvRegistry, PackageJson, VikeMeta } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./operations/common.js";
 import { executeOperationFile } from "./operations/file.js";
 import { OperationsRearranger } from "./operations/rearranger.js";
@@ -58,8 +58,12 @@ export async function* walk(dir: string): AsyncGenerator<string> {
   }
 }
 
-export default async function main(options: { source: string | string[]; dist: string }, meta: VikeMeta) {
+export default async function main(
+  options: { source: string | string[]; dist: string; env?: EnvRegistry },
+  meta: VikeMeta,
+) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
+  const env = options.env ?? [];
 
   function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
     const rf = new RelationFile(target, includeIfImported);
@@ -138,6 +142,7 @@ Please report this issue to https://github.com/vikejs/bati`,
         meta,
         previousOperationSameDestination: previousOp,
         packageJson,
+        env,
       });
 
       // TODO: also call updateAllImports. Needs to compute report.context.imports

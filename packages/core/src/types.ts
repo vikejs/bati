@@ -1,4 +1,5 @@
 import type { BatiSet } from "@batijs/features";
+import type { EnvRegistry } from "./env-registry.js";
 
 export type ContentGetter = () => string | Promise<string>;
 
@@ -15,6 +16,7 @@ export type TransformerProps = {
   source: string;
   meta: VikeMeta;
   packageJson: PackageJson;
+  env: EnvRegistry;
 };
 
 export type Transformer = (props: TransformerProps) => unknown;
