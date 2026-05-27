@@ -1,6 +1,6 @@
 import type { EnvRegistry, VikeMeta } from "@batijs/core";
 import { BatiSet, features } from "@batijs/features";
-import { afterEach, assert, describe, expect, test } from "vitest";
+import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { renderDotenv } from "./env";
 
 function meta(...flags: string[]): VikeMeta {
@@ -23,9 +23,24 @@ const registry: EnvRegistry = [
   { key: "PUBLIC_ENV__SENTRY_DSN", scope: "public", comment: "Sentry browser DSN", default: "" },
 ];
 
+// These may be set in the ambient environment (e.g. .env.test); isolate each
+// test from them so the "empty secret" assertions are deterministic.
+const TEST_VARS = ["TEST_AUTH0_CLIENT_ID", "TEST_SENTRY_DSN"] as const;
+let savedEnv: Record<string, string | undefined>;
+
+beforeEach(() => {
+  savedEnv = {};
+  for (const k of TEST_VARS) {
+    savedEnv[k] = process.env[k];
+    delete process.env[k];
+  }
+});
+
 afterEach(() => {
-  delete process.env.TEST_AUTH0_CLIENT_ID;
-  delete process.env.TEST_SENTRY_DSN;
+  for (const k of TEST_VARS) {
+    if (savedEnv[k] === undefined) delete process.env[k];
+    else process.env[k] = savedEnv[k];
+  }
 });
 
 describe("renderDotenv", () => {
