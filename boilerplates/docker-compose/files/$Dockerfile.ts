@@ -78,8 +78,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .from(config.image, { as: "runner", comment: "production runtime image" })
     .workdir("/app")
     .env({ NODE_ENV: "production", PORT: "3000" })
-    // Runtime defaults from the env registry, so the image runs standalone and this
-    // stage stays feature-agnostic. Secrets stay empty — compose overrides them.
+    // Add environment variables from the env registry
     .pipe((b) => {
       for (const group of serverEnvDefaults(props.env)) {
         b.env(group.vars, { comment: group.comment });

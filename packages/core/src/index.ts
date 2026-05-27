@@ -10,5 +10,4 @@ export * from "./print.js";
 export * from "./random.js";
 export * from "./runtime.js";
 export type * from "./types.js";
-export * from "./utils/env.js";
 export * from "./which.js";
