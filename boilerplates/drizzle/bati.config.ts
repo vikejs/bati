@@ -4,19 +4,6 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("drizzle");
   },
-  env: (meta) =>
-    meta.BATI.hasD1
-      ? []
-      : [
-          {
-            key: "DATABASE_URL",
-            scope: "server-default",
-            comment: "Path to the sqlite database",
-            default: "sqlite.db",
-            perSink: { compose: "/app/data/db.sqlite", dockerfile: "/app/database/sqlite.db" },
-            group: "non-D1 database",
-          },
-        ],
   nextSteps(_meta, packageManager, { bold }) {
     return [
       {

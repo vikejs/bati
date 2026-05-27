@@ -4,19 +4,6 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("kysely");
   },
-  env: (meta) =>
-    meta.BATI.hasD1
-      ? []
-      : [
-          {
-            key: "DATABASE_URL",
-            scope: "server-default",
-            comment: "Path to the sqlite database",
-            default: "sqlite.db",
-            perSink: { compose: "/app/data/db.sqlite", dockerfile: "/app/database/sqlite.db" },
-            group: "non-D1 database",
-          },
-        ],
   nextSteps(meta, packageManager, { bold }) {
     if (meta.BATI.hasD1) {
       // D1 migrations are handled differently via wrangler
