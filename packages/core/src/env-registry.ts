@@ -1,17 +1,13 @@
 /**
- * Single source of truth for environment variables across the boilerplates.
+ * Data model for the declarative env-var registry.
  *
- * Each feature declares the env vars it needs once (in its `bati.config.ts`),
- * and the various sinks — the generated `.env`, the docker-compose
- * `environment:` block, and the Dockerfile `ENV` instructions — are *derived*
- * from the merged registry rather than each re-declaring the same key, default,
- * comment and condition. This keeps ownership with the feature and removes the
- * cross-feature coupling that previously forced e.g. the docker-compose
- * boilerplate to know about auth0/sentry/database vars.
+ * Each feature declares the env vars it needs once (in its `bati.config.ts`);
+ * the registry is merged across all selected boilerplates and threaded to
+ * transformers via `TransformerProps.env`. Core owns only this shared shape —
+ * the actual rendering for each sink (`.env`, docker-compose, Dockerfile) lives
+ * in the boilerplate that owns that sink.
  */
-import type { EnvRecord } from "./dockerfile.js";
 import type { VikeMeta } from "./types.js";
-import { appendToEnv } from "./utils/env.js";
 
 /** Destinations a declared env var can be emitted to. */
 export type EnvSink = "dotenv" | "compose" | "dockerfile";
@@ -63,93 +59,7 @@ export interface EnvVarDef {
 
 export type EnvRegistry = EnvVarDef[];
 
-function applies(def: EnvVarDef, meta: VikeMeta, sink: EnvSink): boolean {
+/** Whether a declaration applies to the given sink under the current meta. */
+export function envVarApplies(def: EnvVarDef, meta: VikeMeta, sink: EnvSink): boolean {
   return def.when ? def.when({ meta, sink }) : true;
-}
-
-/** Value written to `.env` for a given declaration. */
-function dotenvValue(def: EnvVarDef): string {
-  if (def.perSink?.dotenv !== undefined) return def.perSink.dotenv;
-  if (def.scope === "secret") {
-    return def.devValueFrom ? (process.env[def.devValueFrom] ?? "") : "";
-  }
-  return def.default ?? "";
-}
-
-/**
- * Render the full `.env` file from the registry, reusing `appendToEnv` so the
- * formatting (quoting, comment prefixing, blank-line separation) is identical to
- * the per-feature transformers this replaces.
- *
- * Returns `undefined` when no var targets the `.env` sink, so the caller can
- * skip writing an empty file.
- */
-export function renderDotenv(registry: EnvRegistry | undefined, meta: VikeMeta): string | undefined {
-  if (!registry || registry.length === 0) return undefined;
-
-  let content: string | undefined;
-  let emitted = false;
-
-  for (const def of registry) {
-    if (!applies(def, meta, "dotenv")) continue;
-    content = appendToEnv(content, def.key, dotenvValue(def), def.comment);
-    emitted = true;
-  }
-
-  return emitted ? content : undefined;
-}
-
-/**
- * `KEY=<expr>` lines for the docker-compose `services.<app>.environment` list.
- * Secrets are pulled from the host (`${KEY}`); defaulted vars are host-overridable
- * (`${KEY:-<default>}`); public vars are skipped.
- */
-export function composeEnvEntries(registry: EnvRegistry | undefined, meta: VikeMeta): string[] {
-  if (!registry) return [];
-
-  const lines: string[] = [];
-  for (const def of registry) {
-    if (def.scope === "public") continue;
-    if (!applies(def, meta, "compose")) continue;
-
-    if (def.scope === "secret") {
-      lines.push(`${def.key}=\${${def.key}}`);
-    } else {
-      const fallback = def.perSink?.compose ?? def.default ?? "";
-      lines.push(`${def.key}=\${${def.key}:-${fallback}}`);
-    }
-  }
-  return lines;
-}
-
-/** A group of Dockerfile `ENV` defaults sharing a comment. */
-export interface DockerfileEnvGroup {
-  comment?: string;
-  vars: EnvRecord;
-}
-
-/**
- * Dockerfile `ENV` defaults grouped by `group` (preserving first-seen order), so
- * the caller can emit one `.env(vars, { comment })` per feature. Secrets default
- * to empty (compose overrides them at runtime); public vars are skipped.
- */
-export function serverEnvDefaults(registry: EnvRegistry | undefined, meta: VikeMeta): DockerfileEnvGroup[] {
-  if (!registry) return [];
-
-  const groups = new Map<string, DockerfileEnvGroup>();
-  for (const def of registry) {
-    if (def.scope === "public") continue;
-    if (!applies(def, meta, "dockerfile")) continue;
-
-    const value = def.scope === "secret" ? "" : (def.perSink?.dockerfile ?? def.default ?? "");
-    const groupKey = def.group ?? "";
-    let group = groups.get(groupKey);
-    if (!group) {
-      group = { comment: def.group, vars: {} };
-      groups.set(groupKey, group);
-    }
-    group.vars[def.key] = value;
-  }
-
-  return [...groups.values()];
 }

@@ -1,10 +1,5 @@
-import {
-  dockerfile,
-  dockerPackageManager,
-  packageManager,
-  serverEnvDefaults,
-  type TransformerProps,
-} from "@batijs/core";
+import { dockerfile, dockerPackageManager, packageManager, type TransformerProps } from "@batijs/core";
+import { serverEnvDefaults } from "../env";
 
 export default async function getDockerfile(props: TransformerProps): Promise<string> {
   const { meta } = props;

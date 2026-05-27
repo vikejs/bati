@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
+    "test": "vitest run",
     "build": "bati-compile-boilerplate"
   },
   "keywords": [],
@@ -14,7 +15,9 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/core": "workspace:",
-    "@types/node": "^20.19.37"
+    "@batijs/features": "workspace:",
+    "@types/node": "^20.19.37",
+    "vitest": "^4.1.7"
   },
   "nx": {
     "tags": [

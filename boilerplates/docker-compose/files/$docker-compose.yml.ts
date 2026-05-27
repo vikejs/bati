@@ -1,4 +1,5 @@
-import { composeEnvEntries, setComposeEnvironment, type TransformerProps } from "@batijs/core";
+import { setComposeEnvironment, type TransformerProps } from "@batijs/core";
+import { composeEnvEntries } from "../env";
 
 // Inject the selected features' env vars into services.app.environment from the
 // merged registry, so this boilerplate no longer hardcodes auth0/sentry/db vars.
