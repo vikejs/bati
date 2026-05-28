@@ -10,11 +10,12 @@
  *   - @batijs/elements (has its own release-widget flow)
  *   - packages marked `"private": true`
  */
-import { $ } from "bun";
+
 import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { $ } from "bun";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const EXCLUDE = new Set(["@batijs/elements"]);
@@ -28,9 +29,7 @@ async function findPublishablePackages(): Promise<{ name: string; dir: string }[
     const base = star ? glob.slice(0, -2) : glob;
     const dir = join(repoRoot, base);
     const candidates = star
-      ? (await readdir(dir, { withFileTypes: true }))
-          .filter((e) => e.isDirectory())
-          .map((e) => join(dir, e.name))
+      ? (await readdir(dir, { withFileTypes: true })).filter((e) => e.isDirectory()).map((e) => join(dir, e.name))
       : [dir];
 
     for (const pkgDir of candidates) {

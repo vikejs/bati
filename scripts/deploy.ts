@@ -10,11 +10,12 @@
  * `bun install --production` — Bati doesn't have any (all third-party deps
  * are bundled by tsdown), so install is skipped.
  */
-import { $ } from "bun";
+
 import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, rm } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { $ } from "bun";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -56,18 +57,13 @@ async function packInto(srcDir: string, destDir: string) {
   await rm(tmp, { recursive: true, force: true });
 }
 
-async function stageWorkspaceDeps(
-  srcDir: string,
-  nodeModulesDir: string,
-  ws: WorkspaceMap,
-  visited: Set<string>,
-) {
+async function stageWorkspaceDeps(srcDir: string, nodeModulesDir: string, ws: WorkspaceMap, visited: Set<string>) {
   const pkg = JSON.parse(await readFile(join(srcDir, "package.json"), "utf8"));
   const deps = { ...(pkg.dependencies ?? {}) };
   for (const name of Object.keys(deps)) {
-    if (!ws.has(name) || visited.has(name)) continue;
+    const depSrc = ws.get(name);
+    if (!depSrc || visited.has(name)) continue;
     visited.add(name);
-    const depSrc = ws.get(name)!;
     const depDest = join(nodeModulesDir, name);
     await mkdir(depDest, { recursive: true });
     await packInto(depSrc, depDest);
