@@ -166,7 +166,12 @@ async function execNxRunMany(context: GlobalContext, steps: string, projectsPatt
     cwd: context.tmpdir,
     env: {
       NX_DAEMON: "false",
-      ...(process.stdout.isTTY ? {} : { NX_TUI: "false" }),
+      // Suppress interactive prompts from tools spawned inside the generated app
+      // (e.g. `wrangler types` asking to install Cloudflare AI skills). Most CLIs
+      // honor `CI=true` via ci-info. Force NX_TUI explicitly so nx doesn't react
+      // to CI by disabling its TUI.
+      CI: "true",
+      NX_TUI: process.stdout.isTTY ? "true" : "false",
     },
   });
 }
