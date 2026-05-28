@@ -123,6 +123,17 @@ export async function extractPnpmOnlyBuiltDependencies(projectDir: string, onlyB
   try {
     const content = await readFile(join(projectDir, "pnpm-workspace.yaml"), "utf-8");
     const pnpmWorkspace = parseDocument(content);
+    const allowBuildsNode = pnpmWorkspace.get("allowBuilds");
+    if (isNode(allowBuildsNode)) {
+      const obj: Record<string, boolean> = allowBuildsNode.toJSON();
+      const arr = Object.entries(obj)
+        .filter(([, allowed]) => allowed)
+        .map(([dep]) => dep);
+      arr.forEach((dep) => {
+        onlyBuiltDependencies.add(dep);
+      });
+      return arr;
+    }
     const node = pnpmWorkspace.get("onlyBuiltDependencies");
     if (isNode(node)) {
       const arr: string[] = node.toJSON();
