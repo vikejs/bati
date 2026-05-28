@@ -60,11 +60,11 @@ bun run test:e2e --filter solid,authjs
 ```
 
 > [!NOTE]
-> End-to-end tests run thanks to turborepo, which will cache tests results.
+> End-to-end tests run thanks to Nx, which will cache tests results.
 > This means that even when running the full end-to-end test suite, only changed tests/code will actually be executed.
 
 > [!TIP]
-> Even with the help of turborepo, the end-to-end tests can take a lot of time. We therefore recommend the following:
+> Even with the help of Nx, the end-to-end tests can take a lot of time. We therefore recommend the following:
 > - Instead of running all end-to-end tests, run only the end-to-end tests of one example.
 > - Instead of running all end-to-end tests locally, run them on GitHub: push your changes to your Bati fork (`github.com/my-username/bati`) and see the result of all end-to-end tests on the GitHub actions of your fork.
 

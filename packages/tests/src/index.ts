@@ -166,7 +166,7 @@ async function execNxRunMany(context: GlobalContext, steps: string, projectsPatt
     cwd: context.tmpdir,
     env: {
       NX_DAEMON: "false",
-      NX_TUI: "false",
+      ...(process.stdout.isTTY ? {} : { NX_TUI: "false" }),
     },
   });
 }

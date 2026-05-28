@@ -5,7 +5,7 @@
 Bati is a next-generation scaffolding CLI tool for the Vike (Vite-based) ecosystem. It generates fully-functional starter apps by combining boilerplates for different features (React/Vue/Solid, servers, databases, auth, etc.).
 
 **Repository Structure:**
-- **TypeScript monorepo** managed with **bun workspaces** and **Turborepo**
+- **TypeScript monorepo** managed with **bun workspaces** and **Nx**
 - Node.js ≥22 required, Bun 1.3.11 (as specified in package.json `packageManager`)
 - Workspaces across `/packages/` (~11 packages) and `/boilerplates/` (~42 feature templates)
 
@@ -32,7 +32,7 @@ bun run lint
 
 **Important Notes:**
 - `bun run build` must be run after `bun install` and before tests or CLI
-- Build uses Turborepo caching; use `bun run build:force` to rebuild without cache
+- Build uses Nx caching; use `bun run build:force` to rebuild without cache
 - The `format` step runs automatically after build via Biome
 
 ## Testing
@@ -341,7 +341,7 @@ bun install && bun run build && bun run check-types && bun run lint && bun run t
 | Build fails with missing deps | Run `bun install` first |
 | Type errors after changes | Run `bun run build` to regenerate dist files |
 | Lint errors | Run `bun run check` to auto-fix (includes format) |
-| Stale turbo cache | Use `bun run build:force` |
+| Stale Nx cache | Use `bun run build:force` |
 | Full reset needed | Run `bun run reset` (cleans, reinstalls, rebuilds) |
 
 ## Code Style
