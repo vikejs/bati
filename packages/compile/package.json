@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "bun run build",
     "build": "tsdown"
   },
   "keywords": [],
@@ -15,6 +15,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.19.37",
+    "rolldown": "^1.0.2",
+    "rolldown-plugin-dts": "^0.25.0",
     "typescript": "^6.0.3",
     "unplugin-purge-polyfills": "^0.1.0"
   },

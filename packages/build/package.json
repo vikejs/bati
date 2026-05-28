@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "bun run build",
     "build": "tsdown"
   },
   "keywords": [],
@@ -14,13 +14,13 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/compile": "workspace:*",
-    "@batijs/core": "workspace:",
-    "@batijs/features": "workspace:",
+    "@batijs/core": "workspace:*",
+    "@batijs/features": "workspace:*",
     "@types/node": "^20.19.37",
     "tsdown": "^0.22.0"
   },
   "peerDependencies": {
-    "@batijs/core": "workspace:"
+    "@batijs/core": "workspace:*"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

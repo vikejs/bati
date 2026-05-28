@@ -1,36 +1,31 @@
 import { existsSync } from "node:fs";
-import { cp, mkdir, opendir, readFile, stat, writeFile } from "node:fs/promises";
+import { cp, mkdir, opendir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, join, parse, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { which } from "@batijs/core";
 import { cyan, green, yellow } from "colorette";
-import { $ } from "execa";
 import type { Plugin } from "rolldown";
 import type { BoilerplateDef, ToBeCopied } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-interface PnpmPackageInfo {
-  name: string;
-  version: string;
-  path: string;
-  private: boolean;
-}
-
-async function getRecursivePackages() {
-  const pnpmPath = await which("pnpm");
-  const { stdout } = await $`${pnpmPath} m ls --json --depth=-1`;
-
-  return JSON.parse(stdout) as PnpmPackageInfo[];
-}
+const repoRoot = join(__dirname, "..", "..");
 
 async function getBatiPackages() {
-  const batiPackages = (await getRecursivePackages()).filter(
-    (pkg) => pkg.name.startsWith("@batijs/") && pkg.path.includes("boilerplates"),
-  );
+  const boilerplatesDir = join(repoRoot, "boilerplates");
+  const entries = await readdir(boilerplatesDir, { withFileTypes: true });
+  const paths: string[] = [];
 
-  return batiPackages.map((pkg) => pkg.path);
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const pkgJsonPath = join(boilerplatesDir, entry.name, "package.json");
+    if (!existsSync(pkgJsonPath)) continue;
+    const pkg = JSON.parse(await readFile(pkgJsonPath, "utf-8")) as { name?: string };
+    if (pkg.name?.startsWith("@batijs/")) {
+      paths.push(join(boilerplatesDir, entry.name));
+    }
+  }
+
+  return paths;
 }
 
 async function* getBatiPackageJson() {
