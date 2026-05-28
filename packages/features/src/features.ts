@@ -562,7 +562,21 @@ export const features = [
       },
     ],
   },
-
+  {
+    category: "Hosting",
+    label: "Docker",
+    flag: "docker",
+    image:
+      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKYXJpYS1sYWJlbD0iRG9ja2VyIiByb2xlPSJpbWciCnZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdAp3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIKcng9IjE1JSIKZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIHN0cm9rZT0iIzA2NmRhNSIgc3Ryb2tlLXdpZHRoPSIzOCIgZD0iTTI5NiAyMjZoNDJtLTkyIDBoNDJtLTkxIDBoNDJtLTkxIDBoNDFtLTkxIDBoNDJtOC00Nmg0MW04IDBoNDJtNyAwaDQybS00Mi00Nmg0MiIvPjxwYXRoIGZpbGw9IiMwNjZkYTUiIGQ9Im00NzIgMjI4cy0xOC0xNy01NS0xMWMtNC0yOS0zNS00Ni0zNS00NnMtMjkgMzUtOCA3NGMtNiAzLTE2IDctMzEgN0g2OGMtNSAxOS01IDE0NSAxMzMgMTQ1IDk5IDAgMTczLTQ2IDIwOC0xMzAgNTIgNCA2My0zOSA2My0zOSIvPjwvc3ZnPg==",
+    url: "https://www.docker.com/",
+    tagline: " A safer container ecosystem, for everyone",
+    links: [
+      {
+        label: "Docs",
+        href: "https://https://docs.docker.com",
+      },
+    ],
+  },
   {
     category: "Hosting",
     label: "Dokploy",
