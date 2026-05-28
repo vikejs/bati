@@ -30,7 +30,7 @@
     "release:ci": "bun --filter '*' run prerelease && bumpp -y && bun run publish --no-git-checks",
     "release:beta": "bun --filter '*' run prerelease && bumpp --preid beta prerelease && bun run publish --no-git-checks --tag beta",
     "release:local": "bun --filter '*' run prerelease && bumpp -y --no-push --no-tag --no-commit --preid local prerelease && bun run publish --no-git-checks --tag local --registry http://localhost:4873",
-    "publish": "bun run build && bun --filter '!@batijs/elements' publish",
+    "publish": "bun run build && bun run scripts/publish.ts",
     "check-types": "nx run-many --target=check-types",
     "test": "nx run-many --target=test",
     "test:e2e": "bun run build && bun --filter '@batijs/tests' run test:e2e",
