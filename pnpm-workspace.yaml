@@ -3,6 +3,18 @@ packages:
   - boilerplates/*
   - website
 
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/engines': true
+  '@sentry/cli': true
+  better-sqlite3: true
+  esbuild: true
+  nx: true
+  prisma: true
+  puppeteer: true
+  sharp: true
+  workerd: true
+
 autoInstallPeers: false
 
 hoistPattern:
