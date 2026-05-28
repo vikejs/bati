@@ -14,6 +14,8 @@ allowBuilds:
   puppeteer: true
   sharp: true
   workerd: true
+  '@browserless/goto': true
+  re2: true
 
 autoInstallPeers: false
 
@@ -27,26 +29,6 @@ hoistPattern:
 injectWorkspacePackages: true
 
 linkWorkspacePackages: true
-
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - '@browserless/goto'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@sentry/cli'
-  - '@tailwindcss/oxide'
-  - aws-sdk
-  - better-sqlite3
-  - es5-ext
-  - esbuild
-  - nx
-  - oxc-resolver
-  - prisma
-  - protobufjs
-  - puppeteer
-  - re2
-  - sharp
-  - workerd
 
 packageManagerStrictVersion: false
 
