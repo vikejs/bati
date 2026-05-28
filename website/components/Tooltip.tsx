@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { createEffect, createMemo, createSignal, type JSX, onMount, Show } from "solid-js";
 import { useFloating } from "../lib/floating-solid.js";
 
-export function Tooltip(props: { children?: JSX.Element; class?: string; tip: string }) {
+export function Tooltip(props: { children?: JSX.Element; class?: string; tip?: string }) {
   return props.tip ? (
     <div class={clsx("tooltip", props.class)} data-tip={props.tip}>
       {props.children}

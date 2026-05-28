@@ -48,6 +48,7 @@ export class BatiSet extends Set<Flags> {
       this.has("cloudflare") ||
       this.has("vercel") ||
       this.has("netlify") ||
+      this.has("docker") ||
       this.has("dokploy") ||
       this.hasOneOf(this.#servers)
     );
