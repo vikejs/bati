@@ -2,7 +2,7 @@ import type { Category, CategoryLabels } from "@batijs/features";
 import { createMemo, createSignal, For, type JSX, Show, untrack, useContext } from "solid-js";
 import Messages from "#components/Messages";
 import { StoreContext } from "#components/Store";
-import { EnrichedTooltip } from "#components/Tooltip";
+import { Tooltip } from "#components/Tooltip";
 
 export function FormControl(props: {
   children: JSX.Element;
@@ -68,15 +68,7 @@ export function FormControl(props: {
                     <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (
-                          <EnrichedTooltip
-                            tip={feature.tooltip}
-                            placement="right"
-                            arrow={true}
-                            offset={8}
-                            tooltipClass="text-center w-64 p-2 text-sm shadow-md bg-primary text-primary-content"
-                            arrowClass="bg-primary"
-                            disabled={!feature.tooltip}
-                          >
+                          <Tooltip tip={feature.tooltip} class="tooltip-right tooltip-primary">
                             <button
                               type="button"
                               class="btn btn-sm rounded-md text-nowrap"
@@ -98,7 +90,7 @@ export function FormControl(props: {
                               </Show>
                               {feature.label}
                             </button>
-                          </EnrichedTooltip>
+                          </Tooltip>
                         )}
                       </For>
                     </div>

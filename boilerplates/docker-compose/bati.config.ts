@@ -2,7 +2,7 @@ import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {
-    return meta.BATI.has("dokploy");
+    return meta.BATI.has("docker");
   },
   enforce: "post",
 });
