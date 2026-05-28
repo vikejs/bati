@@ -5,18 +5,18 @@
 ```shell
 git clone git@github.com:vikejs/bati.git
 cd bati # Go to the monorepo root
-pnpm install
+bun install
 ```
 
 > [!NOTE]
-> See [System requirements](#system-requirements) for how to install pnpm.
+> See [System requirements](#system-requirements) for how to install Bun.
 
 **2. Build**
 
 Build Bati's source code:
 
 ```shell
-pnpm build # At the monorepo root
+bun run build # At the monorepo root
 ```
 
 > [!NOTE]
@@ -31,8 +31,8 @@ pnpm build # At the monorepo root
 ```shell
 # At the monorepo root
 
-pnpm run new-boilerplate <name_of_integration>
-pnpm i
+bun run new-boilerplate <name_of_integration>
+bun install
 ```
 
 This will create a new folder in `boilerplates/` folder.
@@ -47,16 +47,16 @@ or take inspiration from existing ones.
 # At the monorepo root
 
 # Run the unit tests /**/*.local.spec.ts
-pnpm run test
+bun run test
 # Run the end-to-end tests /packages/tests/tests/*.spec.ts
-pnpm run test-e2e
+bun run test:e2e
 ```
 
 Filter end-to-end tests:
 
 ```shell
 # Run all e2e tests containing --solid and --authjs flags
-pnpm run test-e2e --filter solid,authjs
+bun run test:e2e --filter solid,authjs
 ```
 
 > [!NOTE]
@@ -75,13 +75,13 @@ pnpm run test-e2e --filter solid,authjs
 > [!NOTE]
 > These requirements are only needed for developing the source code of Bati. `@bati/cli` itself can be used with Windows and with any package manager.
 
-- Node.js `>=20.0.0`
-- pnpm `>=10.11.1`
+- Node.js `>=22.0.0`
+- Bun `>=1.3.11`
 - Unix (Linux or macOS)
 
 > [!NOTE]
-> To install [pnpm](https://pnpm.io) run:
+> To install [Bun](https://bun.sh) run:
 > ```shell
-> npm install -g pnpm
+> curl -fsSL https://bun.sh/install | bash
 > ```
-> (Or see [pnpm Docs > Installation](https://pnpm.io/installation) for alternative methods.)
+> (Or see [Bun Docs > Installation](https://bun.sh/docs/installation) for alternative methods.)
