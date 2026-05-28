@@ -16,6 +16,7 @@ import { mkdir, readdir, readFile, rm } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { $ } from "bun";
+import { extract } from "tar";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -51,9 +52,9 @@ async function packInto(srcDir: string, destDir: string) {
   await rm(tmp, { recursive: true, force: true });
   await mkdir(tmp, { recursive: true });
   await $`bun pm pack --destination ${tmp}`.cwd(srcDir).quiet();
-  const tar = (await readdir(tmp)).find((f) => f.endsWith(".tgz"));
-  if (!tar) throw new Error(`bun pm pack produced no tarball for ${srcDir}`);
-  await $`tar -xzf ${join(tmp, tar)} -C ${destDir} --strip-components=1`.quiet();
+  const tarball = (await readdir(tmp)).find((f) => f.endsWith(".tgz"));
+  if (!tarball) throw new Error(`bun pm pack produced no tarball for ${srcDir}`);
+  await extract({ file: join(tmp, tarball), cwd: destDir, strip: 1 });
   await rm(tmp, { recursive: true, force: true });
 }
 
