@@ -578,9 +578,6 @@ export const features = [
         href: "https://docs.dokploy.com",
       },
     ],
-    // TODO needs further testing
-    disabled: true,
-    invisibleCli: true,
   },
 
   // Linter
