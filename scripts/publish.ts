@@ -1,7 +1,7 @@
-// Iterate publishable workspaces and invoke `bun publish` per package.
-// `bun --filter` doesn't apply to the `publish` subcommand, so we drive it manually.
+// Iterate publishable workspaces and publish each one via `bun pm pack` +
+// `npm publish <tarball>` (preserves OIDC trusted publishing + provenance).
 
-import { $ } from "bun";
+import { packAndPublish } from "./lib/publish.ts";
 import { loadWorkspaces } from "./lib/workspaces.ts";
 
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
 
   for (const { name, dir } of targets) {
     console.log(`\n=== ${name} ===`);
-    await $`bun publish ${forwardedArgs}`.cwd(dir);
+    await packAndPublish(dir, forwardedArgs);
   }
 }
 

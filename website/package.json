@@ -12,8 +12,8 @@
     "preview:widget": "http-server .",
     "check-types": "tsc --noEmit",
     "test": "tsc --noEmit",
-    "release-widget": "bumpp --no-tag && bun run build:widget && bun publish",
-    "release-widget:ci": "bumpp --no-tag -y && bun run build:widget && bun publish"
+    "release-widget": "bumpp --no-tag && bun run build:widget && bun run ../scripts/publish-widget.ts",
+    "release-widget:ci": "bumpp --no-tag -y && bun run build:widget && bun run ../scripts/publish-widget.ts --provenance"
   },
   "keywords": [
     "bati",
