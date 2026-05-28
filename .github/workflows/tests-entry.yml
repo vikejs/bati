@@ -77,7 +77,7 @@ jobs:
     needs: init-ubuntu
     strategy:
       matrix:
-        # pnpm run test:e2e workflow-write
+        # bun run test:e2e:workflow-write
         destination:
           - react--plausible.io--eslint--biome--oxlint
           - react--google-analytics--eslint--biome--oxlint
@@ -248,7 +248,7 @@ jobs:
           - react--ts-rest--hono--eslint
           - react--ts-rest--hono--biome
           - react--ts-rest--hono--oxlint
-        # pnpm run test:e2e workflow-write
+        # bun run test:e2e:workflow-write
         include:
           - destination: react--plausible.io--eslint--biome--oxlint
             flags: --react --plausible.io --eslint --biome --oxlint

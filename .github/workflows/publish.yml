@@ -31,11 +31,10 @@ jobs:
           git fetch --tags origin
           git pull origin ${{ github.ref_name }}
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        id: pnpm-install
+      - uses: oven-sh/setup-bun@v2
+        name: Install bun
         with:
-          run_install: false
+          bun-version: 1.3.11
 
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v6
@@ -43,14 +42,13 @@ jobs:
           # Note: Trusted publishing requires npm CLI version 11.5.1 or later and Node version 22.14.0 or higher.
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: Configure git before publish
         run: |
           git config --global user.name "Joël Charles"
           git config --global user.email "joel.charles91@gmail.com"
 
-      - run: pnpm run release:ci
+      - run: bun run release:ci
