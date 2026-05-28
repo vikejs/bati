@@ -29,7 +29,6 @@
     "release": "bumpp && bun run publish",
     "release:ci": "bumpp -y && bun run publish --no-git-checks",
     "release:beta": "bumpp --preid beta prerelease && bun run publish --no-git-checks --tag beta",
-    "release:local": "bumpp -y --no-push --no-tag --no-commit --preid local prerelease && bun run publish --no-git-checks --tag local --registry http://localhost:4873",
     "publish": "bun run build && bun run scripts/publish.ts",
     "check-types": "nx run-many --target=check-types",
     "test": "nx run-many --target=test",
