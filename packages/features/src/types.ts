@@ -19,6 +19,7 @@ export interface Feature<C = string> {
   // if true, cannot be toggled off (implies selected by default, otherwise use `disabled`)
   readonly?: boolean;
   selected?: boolean;
+  tooltip?: string;
 }
 
 export interface FeatureLink {

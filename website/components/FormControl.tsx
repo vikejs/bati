@@ -69,15 +69,13 @@ export function FormControl(props: {
                       <For each={fs()}>
                         {(feature) => (
                           <EnrichedTooltip
-                            tip={
-                              "Vike cannot be disabled. It is the foundation that allows all others tools to work cohesively"
-                            }
+                            tip={feature.tooltip}
                             placement="right"
                             arrow={true}
                             offset={8}
                             tooltipClass="text-center w-64 p-2 text-sm shadow-md bg-primary text-primary-content"
                             arrowClass="bg-primary"
-                            disabled={feature.flag !== "vike"}
+                            disabled={!feature.tooltip}
                           >
                             <button
                               type="button"
