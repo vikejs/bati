@@ -13,32 +13,18 @@ export async function execLocalBati(context: GlobalContext, flags: string[], mon
   // --knip generates knip.json for E2E tests
   const mappedFlags = ["skip-git", "knip", ...flags].map((f) => `--${f}`);
 
-  if (context.localRepository) {
-    // local verdaccio server is running.
-    // This is better than using the local dist build directly
-    // as we are also testing that the generated package dependencies are properly bundled.
-    await exec("npm", ["--registry", "http://localhost:4873", "create", "bati@local", "--", ...mappedFlags, digest], {
+  await exec(
+    bunExists ? "bun" : "node",
+    [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
+    {
       timeout,
       cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
       env: {
         BATI_TEST: "1",
       },
       stdio: ["ignore", "ignore", "inherit"],
-    });
-  } else {
-    await exec(
-      bunExists ? "bun" : "node",
-      [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
-      {
-        timeout,
-        cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
-        env: {
-          BATI_TEST: "1",
-        },
-        stdio: ["ignore", "ignore", "inherit"],
-      },
-    );
-  }
+    },
+  );
 
   return monorepo ? join(context.tmpdir, "packages", digest) : join(context.tmpdir, digest);
 }

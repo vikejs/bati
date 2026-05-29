@@ -1,5 +1,4 @@
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
-import http from "node:http";
 import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import * as process from "node:process";
@@ -166,20 +165,12 @@ async function execNxRunMany(context: GlobalContext, steps: string, projectsPatt
     cwd: context.tmpdir,
     env: {
       NX_DAEMON: "false",
-      NX_TUI: "false",
+      // CI=true suppresses interactive prompts inside the generated app (e.g.
+      // `wrangler types` asking to install Cloudflare skills). NX_TUI is forced
+      // so nx doesn't auto-disable its TUI when CI is set.
+      CI: "true",
+      NX_TUI: process.stdout.isTTY ? "true" : "false",
     },
-  });
-}
-
-function isVerdaccioRunning() {
-  return new Promise<boolean>((resolve) => {
-    const req = http.get("http://localhost:4873/registry", {
-      timeout: 4000,
-    });
-    req.on("error", () => resolve(false));
-    req.on("close", () => resolve(true));
-
-    req.end();
   });
 }
 
@@ -370,10 +361,9 @@ const argv = process.argv.slice(2);
 const args = mri<CliOptions>(argv);
 
 // init context
-const context: GlobalContext = { tmpdir: "", localRepository: false };
+const context: GlobalContext = { tmpdir: "" };
 
 try {
-  context.localRepository = await isVerdaccioRunning();
   await main(context, args);
 } catch (e) {
   console.error(e);

@@ -1,5 +1,4 @@
 import { type CategoryLabels, type Flags, features } from "@batijs/features";
-import { deepMerge } from "@typescript-eslint/utils/eslint-utils";
 import type { Nodes, Root } from "mdast";
 import { fromMarkdown, type Value } from "mdast-util-from-markdown";
 import { toMarkdown } from "mdast-util-to-markdown";
@@ -8,6 +7,22 @@ import { createTOC } from "./createTOC.js";
 import type { ClassConfig, ContentChanger, MarkdownOptions, ZoneHandler } from "./types.js";
 import { wrapWithComment } from "./utils.js";
 import { zone } from "./zone.js";
+
+function isObjectNotArray(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+function deepMerge<A extends object, B extends object>(first?: A, second?: B): A & B {
+  const a: Record<string, unknown> = first ?? {};
+  const b: Record<string, unknown> = second ?? {};
+  const out: Record<string, unknown> = {};
+  for (const key of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    const av = a[key];
+    const bv = b[key];
+    out[key] = isObjectNotArray(av) && isObjectNotArray(bv) ? deepMerge(av, bv) : key in b ? bv : av;
+  }
+  return out as A & B;
+}
 
 export function parseMarkdown(text: string, defaults?: MarkdownOptions) {
   const markdownText = /<!--\s*bati:start\s+section="document"\s*-->/.test(text)

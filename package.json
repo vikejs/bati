@@ -4,25 +4,43 @@
   "type": "module",
   "version": "0.0.632",
   "description": "@batijs monorepo",
+  "workspaces": [
+    "packages/*",
+    "boilerplates/*",
+    "website"
+  ],
+  "trustedDependencies": [
+    "@parcel/watcher",
+    "@prisma/engines",
+    "@sentry/cli",
+    "better-sqlite3",
+    "esbuild",
+    "nx",
+    "prisma",
+    "puppeteer",
+    "sharp",
+    "workerd",
+    "@browserless/goto",
+    "re2"
+  ],
   "scripts": {
     "new-boilerplate": "tsx ./scripts/new-boilerplate.ts",
     "screenshot": "node ./scripts/screenshot.js",
-    "release": "pnpm -r prerelease && bumpp && pnpm run publish",
-    "release:ci": "pnpm -r prerelease && bumpp -y && pnpm run publish --no-git-checks",
-    "release:beta": "pnpm -r prerelease && bumpp --preid beta prerelease && pnpm run publish --no-git-checks --tag beta",
-    "release:local": "pnpm -r prerelease && bumpp -y --no-push --no-tag --no-commit --preid local prerelease && pnpm run publish --no-git-checks --tag local --registry http://localhost:4873",
-    "publish": "pnpm run build && pnpm -r --filter \"!@batijs/elements\" publish",
+    "release": "bumpp && bun run publish",
+    "release:ci": "bumpp -y && bun run publish --provenance",
+    "release:beta": "bumpp --preid beta prerelease && bun run publish --tag beta --provenance",
+    "publish": "bun run build && bun run scripts/publish.ts",
     "check-types": "nx run-many --target=check-types",
     "test": "nx run-many --target=test",
-    "test:e2e": "pnpm run build && pnpm --filter \"@batijs/tests\" test:e2e",
-    "test:e2e:workflow-write": "pnpm test:e2e workflow-write",
-    "cli": "pnpm run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js --force /tmp/bati-app",
+    "test:e2e": "NX_TUI_AUTO_EXIT=0 bun run build && cd packages/tests && bun run test:e2e",
+    "test:e2e:workflow-write": "bun run test:e2e workflow-write",
+    "cli": "bun run build && rimraf /tmp/bati-app && node packages/cli/dist/index.js --force /tmp/bati-app",
     "build": "nx run-many --target=build",
     "build:force": "nx run-many --target=build --skip-nx-cache",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",
-    "reset": "git clean -Xdf && pnpm install && pnpm run build"
+    "reset": "git clean -Xdf && bun install && bun run build"
   },
   "keywords": [],
   "author": "Joël Charles <joel.charles91@gmail.com>",
@@ -35,6 +53,7 @@
     "globals": "^17.6.0",
     "nx": "^22.7.3",
     "rimraf": "^6.1.3",
+    "tar": "^7.5.1",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3"
   },
@@ -42,8 +61,12 @@
     "browserless": "^13.0.0",
     "puppeteer": "^24.43.1"
   },
-  "engines": {
-    "node": ">=22"
+  "overrides": {
+    "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@11.4.0"
+  "engines": {
+    "node": ">=22",
+    "bun": ">=1.3.11"
+  },
+  "packageManager": "bun@1.3.11"
 }

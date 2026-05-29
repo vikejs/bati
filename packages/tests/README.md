@@ -5,7 +5,7 @@ All other tests in `tests` folder follow these steps:
 - Copy necessary tests to the right _<temp folder>/packages/<repo hash>_ folder
 - Update package.json of those repos
 - Create a vitest config in each of those repos
-- Create package.json amd Turborepo config in workspace root
-- Call _pnpm/bun install_ in monorepo
-- Call `turborepo run test lint build` in monorepo
-- Handles Turborepo cache via _/tmp/bati-cache_ folder
+- Create package.json and Nx config in workspace root
+- Call _bun install_ in monorepo
+- Call `nx run-many --targets=test,lint,build` in monorepo
+- Handles Nx cache via _/tmp/bati-cache_ folder

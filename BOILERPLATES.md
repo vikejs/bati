@@ -14,7 +14,7 @@ some others are split into several ones.
 ## Anatomy of a boilerplate
 
 > [!TIP]
-> Create a new boilerplate with `pnpm run new-boilerplate <name>`
+> Create a new boilerplate with `bun run new-boilerplate <name>`
 
 Each boilerplate contains at least:
 - `files` folder, which contains files that will be used by Bati CLI to scaffold a new app. This is where all code related to features must be placed.

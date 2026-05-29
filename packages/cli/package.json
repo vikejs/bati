@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "bun run build",
     "build": "tsdown"
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "colorette": "^2.0.20",
     "esbuild": "^0.28.0",
     "execa": "^9.6.1",
+    "rolldown": "^1.0.2",
     "scule": "^1.3.0",
     "tsdown": "^0.22.0",
     "typescript": "^6.0.3",
@@ -29,8 +30,8 @@
     "vite": "^8.0.14"
   },
   "dependencies": {
-    "@batijs/core": "workspace:",
-    "@batijs/features": "workspace:"
+    "@batijs/core": "workspace:*",
+    "@batijs/features": "workspace:*"
   },
   "bin": "./cli.js",
   "exports": {
