@@ -13,7 +13,8 @@
     "check-types": "tsc --noEmit",
     "test": "tsc --noEmit",
     "release-widget": "bumpp --no-tag && bun run build:widget && bun run ../scripts/publish-widget.ts",
-    "release-widget:ci": "bumpp --no-tag -y && bun run build:widget && bun run ../scripts/publish-widget.ts --provenance"
+    "release-widget:ci": "bumpp --no-tag -y && bun run build:widget && bun run ../scripts/publish-widget.ts --provenance",
+    "deploy": "vike build && wrangler deploy"
   },
   "keywords": [
     "bati",
