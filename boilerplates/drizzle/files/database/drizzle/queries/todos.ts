@@ -29,6 +29,7 @@ export async function getAllTodos(
   if (BATI.has("postgres")) {
     // postgres-js driver resolves the query promise directly.
     return (db as BATI.Any).select().from(todoTable);
+  } else {
+    return (db as BATI.Any).select().from(todoTable).all();
   }
-  return (db as BATI.Any).select().from(todoTable).all();
 }
