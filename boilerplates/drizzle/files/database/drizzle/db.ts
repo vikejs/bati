@@ -4,7 +4,7 @@ import { drizzle as drizzleD1 } from "drizzle-orm/d1";
 import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-//# !BATI.hasD1 && !BATI.has("postgres")
+//# BATI.has("sqlite") && !BATI.hasD1
 export function dbSqlite() {
   const sqlite = new Database(process.env.DATABASE_URL);
   return drizzleSqlite(sqlite);

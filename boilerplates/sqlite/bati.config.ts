@@ -2,7 +2,8 @@ import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {
-    return meta.BATI.has("sqlite") && !meta.BATI.has("cloudflare");
+    // Raw better-sqlite3 client: the SQLite engine with no ORM/query builder, off Cloudflare (D1).
+    return meta.BATI.has("sqlite") && !meta.BATI.hasOrm && !meta.BATI.has("cloudflare");
   },
   nextSteps(_meta, packageManager) {
     return [

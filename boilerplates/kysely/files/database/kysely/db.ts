@@ -9,7 +9,7 @@ import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 import type { Database } from "./types";
 
-//# !BATI.hasD1 && !BATI.has("postgres")
+//# BATI.has("sqlite") && !BATI.hasD1
 export function dbKysely() {
   const dialect = new SqliteDialect({
     database: new SQLite(process.env.DATABASE_URL),
