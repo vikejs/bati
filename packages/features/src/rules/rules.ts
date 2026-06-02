@@ -61,9 +61,7 @@ export default [
     return false;
   }),
   filter(RulesMessage.INFO_STACKBLITZ_COMPAT, (fts) => {
-    return (
-      fts.has("drizzle") || fts.has("sqlite") || fts.has("kysely") || fts.has("postgres") || fts.has("cloudflare")
-    );
+    return fts.has("drizzle") || fts.has("sqlite") || fts.has("kysely") || fts.has("postgres") || fts.has("cloudflare");
   }),
   filter(RulesMessage.ERROR_STORYBOOK_R_UI_FRAMEWORK, (fts) => {
     if (fts.has("storybook")) {
