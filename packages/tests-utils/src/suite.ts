@@ -49,6 +49,7 @@ export const framework = categoryAxis("framework", "UI Framework");
 export const server = categoryAxis("server", "Server");
 export const data = categoryAxis("data", "Data fetching");
 export const db = categoryAxis("db", "Database");
+export const orm = categoryAxis("orm", "ORM / Query builder");
 export const deploy = categoryAxis("deploy", "Hosting");
 export const css = categoryAxis("css", "CSS");
 export const auth = categoryAxis("auth", "Auth");

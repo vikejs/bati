@@ -2,8 +2,9 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describeBati, framework, spread, suite } from "@batijs/tests-utils";
 
+// Prisma requires an explicit engine, and an engine requires a Server.
 export default suite()
-  .case({ framework: spread(framework), flags: "prisma" })
+  .matrix({ framework: spread(framework), server: "hono", flags: "prisma", db: ["sqlite", "postgres"] })
   .linters("eslint", "biome", "oxlint");
 
 await describeBati(({ test, expect, fetch }) => {

@@ -3,39 +3,51 @@ import path from "node:path";
 import { describeBati, describeMultipleBati, exec, npmCli, suite } from "@batijs/tests-utils";
 
 const tests = suite()
+  // SQLite engine: raw better-sqlite3 client plus Drizzle/Kysely on SQLite
   .matrix({
     framework: "solid",
     server: ["express", "h3", "hono", "fastify"],
     data: ["trpc", "telefunc", "ts-rest", null],
-    db: ["drizzle", "sqlite", "kysely", null],
+    db: "sqlite",
+    orm: ["drizzle", "kysely", null],
+  })
+  // No database
+  .matrix({
+    framework: "solid",
+    server: ["express", "h3", "hono", "fastify"],
+    data: ["trpc", "telefunc", "ts-rest", null],
   })
   .matrix({
     framework: ["react", "vue"],
     server: "hono",
     data: ["trpc", "telefunc", "ts-rest", null],
   })
+  // PostgreSQL engine: raw postgres.js client plus Drizzle/Kysely on Postgres.
+  // Needs a PostgreSQL server at the default DATABASE_URL (provided by CI).
+  .matrix({
+    framework: "solid",
+    server: ["express", "hono"],
+    data: ["telefunc", null],
+    db: "postgres",
+    orm: ["drizzle", "kysely", null],
+  })
+  // Cloudflare D1 (the SQLite engine on Workers)
   .matrix({
     framework: "solid",
     server: ["hono", "h3"],
     deploy: "cloudflare",
     data: ["trpc", "telefunc", "ts-rest", null],
-    db: ["drizzle", "sqlite", "kysely", null],
+    db: "sqlite",
+    orm: ["drizzle", "kysely", null],
   })
+  // Docker (dokploy): exercise both engines' compose services
   .matrix({
     framework: "react",
     server: "hono",
     deploy: "dokploy",
     data: "telefunc",
-    db: ["drizzle", "sqlite", "kysely", null],
-  })
-  // PostgreSQL engine: standalone postgres.js client, plus Drizzle/Kysely on Postgres.
-  // Requires a PostgreSQL server reachable at the default DATABASE_URL (provided by CI).
-  .matrix({
-    framework: "solid",
-    server: ["express", "hono"],
-    data: ["telefunc", null],
-    db: ["drizzle", "kysely", null],
-    engine: "postgres",
+    db: ["sqlite", "postgres"],
+    orm: ["drizzle", null],
   })
   .linters("eslint", "biome", "oxlint");
 
@@ -49,23 +61,24 @@ await describeMultipleBati([
   () =>
     describeBati(({ test, describe, expect, fetch, testMatch, context, beforeAll }) => {
       beforeAll(async () => {
+        // Match on the tool first: drizzle/kysely + sqlite both set the `sqlite` flag,
+        // so the raw-sqlite branch must come after the ORM branches.
         if (context.flags.includes("drizzle")) {
           await exec(npmCli, ["run", "drizzle:generate"]);
           await exec(npmCli, ["run", "drizzle:migrate"]);
-        } else if (context.flags.includes("sqlite")) {
-          if (context.flags.includes("cloudflare")) {
-            await exec(npmCli, ["run", "d1:migrate"]);
-          } else {
-            await exec(npmCli, ["run", "sqlite:migrate"]);
-          }
         } else if (context.flags.includes("kysely")) {
           if (context.flags.includes("cloudflare")) {
             await exec(npmCli, ["run", "d1:migrate"]);
           } else {
             await exec(npmCli, ["run", "kysely:migrate"]);
           }
+        } else if (context.flags.includes("sqlite")) {
+          if (context.flags.includes("cloudflare")) {
+            await exec(npmCli, ["run", "d1:migrate"]);
+          } else {
+            await exec(npmCli, ["run", "sqlite:migrate"]);
+          }
         } else if (context.flags.includes("postgres")) {
-          // Standalone postgres.js client (no ORM)
           await exec(npmCli, ["run", "postgres:migrate"]);
         }
       }, 70000);
