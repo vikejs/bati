@@ -6,5 +6,14 @@ export default async function getDockerCompose(props: TransformerProps): Promise
   const code = await props.readfile!();
 
   // Inject env vars
-  return setComposeEnvironment(code, composeEnvEntries(props.env));
+  let result = setComposeEnvironment(code, composeEnvEntries(props.env));
+
+  // Declare the named volume backing the `postgres` service. Added here rather than
+  // in the template because a YAML comment on the first child of a mapping attaches
+  // to the parent, so an inline `# BATI.has(...)` guard there can't be evaluated.
+  if (props.meta.BATI.has("postgres")) {
+    result = `${result.trimEnd()}\n\nvolumes:\n  postgres_data:\n`;
+  }
+
+  return result;
 }
