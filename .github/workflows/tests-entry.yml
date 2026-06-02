@@ -222,10 +222,22 @@ jobs:
           - solid--h3--cloudflare--sqlite--eslint--biome--oxlint
           - solid--h3--cloudflare--kysely--eslint--biome--oxlint
           - solid--h3--cloudflare--eslint--biome--oxlint
-          - react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--drizzle--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--sqlite--eslint--biome--oxlint
+          - react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--eslint--biome--oxlint
+          - solid--express--telefunc--drizzle--postgres--eslint--biome--oxlint
+          - solid--express--telefunc--kysely--postgres--eslint--biome--oxlint
+          - solid--express--telefunc--postgres--eslint--biome--oxlint
+          - solid--express--drizzle--postgres--eslint--biome--oxlint
+          - solid--express--kysely--postgres--eslint--biome--oxlint
+          - solid--express--postgres--eslint--biome--oxlint
+          - solid--hono--telefunc--drizzle--postgres--eslint--biome--oxlint
+          - solid--hono--telefunc--kysely--postgres--eslint--biome--oxlint
+          - solid--hono--telefunc--postgres--eslint--biome--oxlint
+          - solid--hono--drizzle--postgres--eslint--biome--oxlint
+          - solid--hono--kysely--postgres--eslint--biome--oxlint
+          - solid--hono--postgres--eslint--biome--oxlint
           - aws--react--hono--eslint--biome--oxlint
           - react--cloudflare--hono--eslint--biome--oxlint
           - react--cloudflare--h3--eslint--biome--oxlint
@@ -695,10 +707,6 @@ jobs:
           - destination: solid--h3--cloudflare--eslint--biome--oxlint
             flags: --solid --h3 --cloudflare --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
-            flags: --react --hono --dokploy --telefunc --kysely --eslint --biome
-              --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--dokploy--telefunc--drizzle--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --drizzle --eslint --biome
               --oxlint
@@ -707,8 +715,52 @@ jobs:
             flags: --react --hono --dokploy --telefunc --sqlite --eslint --biome
               --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--hono--dokploy--telefunc--kysely--eslint--biome--oxlint
+            flags: --react --hono --dokploy --telefunc --kysely --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--dokploy--telefunc--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--telefunc--drizzle--postgres--eslint--biome--oxlint
+            flags: --solid --express --telefunc --drizzle --postgres --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--telefunc--kysely--postgres--eslint--biome--oxlint
+            flags: --solid --express --telefunc --kysely --postgres --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--telefunc--postgres--eslint--biome--oxlint
+            flags: --solid --express --telefunc --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--drizzle--postgres--eslint--biome--oxlint
+            flags: --solid --express --drizzle --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--kysely--postgres--eslint--biome--oxlint
+            flags: --solid --express --kysely --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--express--postgres--eslint--biome--oxlint
+            flags: --solid --express --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--telefunc--drizzle--postgres--eslint--biome--oxlint
+            flags: --solid --hono --telefunc --drizzle --postgres --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--telefunc--kysely--postgres--eslint--biome--oxlint
+            flags: --solid --hono --telefunc --kysely --postgres --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--telefunc--postgres--eslint--biome--oxlint
+            flags: --solid --hono --telefunc --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--drizzle--postgres--eslint--biome--oxlint
+            flags: --solid --hono --drizzle --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--kysely--postgres--eslint--biome--oxlint
+            flags: --solid --hono --kysely --postgres --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--hono--postgres--eslint--biome--oxlint
+            flags: --solid --hono --postgres --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: aws--react--hono--eslint--biome--oxlint
             flags: --aws --react --hono --eslint --biome --oxlint
