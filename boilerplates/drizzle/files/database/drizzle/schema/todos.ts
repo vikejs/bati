@@ -3,7 +3,6 @@ import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Example of defining a schema in Drizzle ORM.
-// The table builder is chosen at scaffold time based on the selected engine.
 export const todoTable = BATI.has("postgres")
   ? pgTable("todos", {
       id: serial("id").primaryKey(),

@@ -3,7 +3,6 @@ import type { Kysely } from "kysely";
 import type { Database } from "../types";
 
 export async function up(db: Kysely<Database>): Promise<void> {
-  // PostgreSQL uses a `serial` auto-incrementing primary key; SQLite uses `integer` + autoincrement.
   const withId = BATI.has("postgres")
     ? db.schema.createTable("todos").addColumn("id", "serial", (col) => col.primaryKey())
     : db.schema.createTable("todos").addColumn("id", "integer", (col) => col.primaryKey().autoIncrement());
