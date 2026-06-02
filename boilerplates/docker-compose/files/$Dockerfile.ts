@@ -38,6 +38,11 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       from: "builder",
     });
   }
+  // Standalone postgres.js client (no ORM): run its schema script against the compose Postgres service.
+  if (meta.BATI.has("postgres") && !meta.BATI.has("drizzle") && !meta.BATI.has("kysely")) {
+    startupMigrations.push(`${run} postgres:migrate`);
+    migrationCopies.push({ sources: ["/app/database/postgres"], dest: "./database/postgres", from: "builder" });
+  }
 
   // Run migrations before the server when present; otherwise launch it directly.
   const startCmd =
