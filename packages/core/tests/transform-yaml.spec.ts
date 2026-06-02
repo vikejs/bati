@@ -108,6 +108,26 @@ volumes:
   );
 });
 
+describe("yaml: first mapping entry removal (hoisted comment)", () => {
+  // A comment before the first entry of a block mapping is parsed onto the map
+  // node, not the first key. It must still be evaluated and drop the entry.
+  testCondition(
+    `volumes:
+  # BATI.has("authjs")
+  first_data: {}
+  second_data: {}
+`,
+    `volumes:
+  first_data: {}
+  second_data: {}
+`,
+    `volumes:
+  second_data: {}
+`,
+    "authjs",
+  );
+});
+
 describe("yaml: keep non-bati comments", () => {
   testCondition(
     `services:

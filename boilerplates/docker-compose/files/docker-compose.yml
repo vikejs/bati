@@ -33,6 +33,9 @@ services:
       retries: 10
     restart: unless-stopped
 
-# BATI.hasDatabase && !BATI.has("postgres")
+# BATI.hasDatabase
 volumes:
-  sqlite_data:
+  # BATI.hasDatabase && !BATI.has("postgres")
+  sqlite_data: {}
+  # BATI.has("postgres")
+  postgres_data: {}
