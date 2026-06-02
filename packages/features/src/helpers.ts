@@ -30,11 +30,22 @@ export class BatiSet extends Set<Flags> {
   get hasDatabase(): boolean {
     // TODO replace with the following once prisma and edge are properly supported
     // return this.hasOneOf(this.#databases);
-    return this.has("sqlite") || this.has("drizzle") || this.has("kysely");
+    return this.has("sqlite") || this.has("drizzle") || this.has("kysely") || this.has("postgres");
+  }
+
+  /** PostgreSQL engine selected (standalone postgres.js client, or under Drizzle/Kysely). */
+  get hasPostgres(): boolean {
+    return this.has("postgres");
   }
 
   get hasD1(): boolean {
-    return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle") || this.has("kysely"));
+    // Cloudflare + a SQL tool means D1 — unless PostgreSQL is the chosen engine,
+    // in which case the app talks to Postgres over Workers sockets/Hyperdrive instead.
+    return (
+      this.has("cloudflare") &&
+      !this.has("postgres") &&
+      (this.has("sqlite") || this.has("drizzle") || this.has("kysely"))
+    );
   }
 
   get hasDotEnvSecrets(): boolean {

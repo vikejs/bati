@@ -431,6 +431,39 @@ export const features = [
     ],
   },
 
+  // Database engine
+  {
+    category: "Database engine",
+    label: "SQLite",
+    flag: "sqlite-engine",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBiN2ZjYyIgc3Ryb2tlLXdpZHRoPSIxLjYiPjxlbGxpcHNlIGN4PSIxMiIgY3k9IjUiIHJ4PSI3IiByeT0iMi42Ii8+PHBhdGggZD0iTTUgNXYxNGMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42VjUiLz48cGF0aCBkPSJNNSAxMmMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42Ii8+PC9nPjwvc3ZnPg==",
+    tagline: "Embedded SQLite engine (the default). Also used by Cloudflare D1.",
+    invisibleCli: true,
+    selected: true,
+    tooltip: "Default embedded SQLite engine — no separate database server required",
+  },
+  {
+    category: "Database engine",
+    label: "PostgreSQL",
+    flag: "postgres",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzNjc5MSIgc3Ryb2tlLXdpZHRoPSIxLjYiPjxlbGxpcHNlIGN4PSIxMiIgY3k9IjUiIHJ4PSI3IiByeT0iMi42Ii8+PHBhdGggZD0iTTUgNXYxNGMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42VjUiLz48cGF0aCBkPSJNNSAxMmMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42Ii8+PC9nPjwvc3ZnPg==",
+    url: "https://www.postgresql.org/",
+    tagline: "The world's most advanced open source relational database",
+    repo: "postgres/postgres",
+    links: [
+      {
+        label: "Docs",
+        href: "https://www.postgresql.org/docs/",
+      },
+      {
+        label: "postgres.js (client)",
+        href: "https://github.com/porsager/postgres",
+      },
+    ],
+  },
+
   // Analytics
   {
     category: "Analytics",

@@ -52,6 +52,12 @@ it's recommended to only install a Server if you really need to, as Vike doesn't
     description: `Helping you get started with a database solution.`,
   },
   {
+    label: "Database engine",
+    group: categoriesGroups.Data,
+    description: `The SQL engine your database tooling runs against.
+Defaults to embedded SQLite; choose PostgreSQL to target a Postgres server (also works alongside Drizzle or Kysely).`,
+  },
+  {
     label: "Hosting",
     group: categoriesGroups.Deployment,
     description: `Quickly host your Vike project with a Serverless or VPS (coming soon) solution.`,
