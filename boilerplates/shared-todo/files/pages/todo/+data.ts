@@ -14,7 +14,7 @@ export async function data(_pageContext: PageContextServer) {
     const todoItemsInitial = await drizzleQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.has("sqlite") && !BATI.hasD1) {
+  } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
     const todoItemsInitial = sqliteQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
@@ -22,11 +22,11 @@ export async function data(_pageContext: PageContextServer) {
     const todoItemsInitial = await kyselyQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.hasD1) {
+  } else if (BATI.hasD1 && !BATI.hasOrm) {
     const todoItemsInitial = await d1Queries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.has("postgres")) {
+  } else if (BATI.has("postgres") && !BATI.hasOrm) {
     const todoItemsInitial = await pgQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };

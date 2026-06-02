@@ -18,13 +18,13 @@ const t = initTRPC
     BATI.If<{
       'BATI.has("drizzle") && BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
       'BATI.has("kysely") && BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
-      'BATI.has("postgres")': { db: ReturnType<typeof pgDb> };
-      'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
+      'BATI.has("postgres") && !BATI.hasOrm': { db: ReturnType<typeof pgDb> };
+      'BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm': { db: ReturnType<typeof sqliteDb> };
       'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
       'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
       'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
-      "BATI.hasD1": { db: D1Database };
+      'BATI.hasD1 && !BATI.hasOrm': { db: D1Database };
       _: object;
     }>
   >()
@@ -51,13 +51,13 @@ export const appRouter = router({
     .mutation(async (opts) => {
       if (BATI.has("drizzle")) {
         await drizzleQueries.insertTodo(opts.ctx.db, opts.input);
-      } else if (BATI.has("sqlite") && !BATI.hasD1) {
+      } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
         sqliteQueries.insertTodo(opts.ctx.db, opts.input);
       } else if (BATI.has("kysely")) {
         await kyselyQueries.insertTodo(opts.ctx.db, opts.input);
-      } else if (BATI.hasD1) {
+      } else if (BATI.hasD1 && !BATI.hasOrm) {
         await d1Queries.insertTodo(opts.ctx.db, opts.input);
-      } else if (BATI.has("postgres")) {
+      } else if (BATI.has("postgres") && !BATI.hasOrm) {
         await pgQueries.insertTodo(opts.ctx.db, opts.input);
       } else {
         // This is where you'd persist the data

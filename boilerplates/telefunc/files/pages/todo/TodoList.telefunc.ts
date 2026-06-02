@@ -11,16 +11,16 @@ export async function onNewTodo({ text }: { text: string }) {
   if (BATI.has("drizzle")) {
     const context = getContext();
     await drizzleQueries.insertTodo(context.db, text);
-  } else if (BATI.has("sqlite") && !BATI.hasD1) {
+  } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
     const context = getContext();
     sqliteQueries.insertTodo(context.db, text);
   } else if (BATI.has("kysely")) {
     const context = getContext();
     await kyselyQueries.insertTodo(context.db, text);
-  } else if (BATI.hasD1) {
+  } else if (BATI.hasD1 && !BATI.hasOrm) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
-  } else if (BATI.has("postgres")) {
+  } else if (BATI.has("postgres") && !BATI.hasOrm) {
     const context = getContext();
     await pgQueries.insertTodo(context.db, text);
   } else {

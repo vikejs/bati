@@ -2,7 +2,8 @@ import { defineConfig } from "@batijs/core/config";
 
 export default defineConfig({
   if(meta) {
-    return meta.BATI.hasDatabase;
+    // The raw-client / ORM todo demo. Prisma is self-managed (own client + connection), so it opts out.
+    return meta.BATI.hasDatabase && !meta.BATI.has("prisma");
   },
   // DATABASE_URL is shared by every non-D1 database tool (sqlite/drizzle/kysely/postgres);
   // under D1 the binding replaces it. Prisma ships its own connection string.
