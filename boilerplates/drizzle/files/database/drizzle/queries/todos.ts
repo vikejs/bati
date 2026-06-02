@@ -24,9 +24,6 @@ export async function getAllTodos(
     "union"
   >,
 ) {
-  if (BATI.has("postgres")) {
-    return (db as BATI.Any).select().from(todoTable);
-  } else {
-    return (db as BATI.Any).select().from(todoTable).all();
-  }
+  const query = (db as BATI.Any).select().from(todoTable);
+  return BATI.has("postgres") ? query : query.all();
 }

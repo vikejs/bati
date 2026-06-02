@@ -27,11 +27,11 @@ export function dbKyselyD1(d1: D1Database) {
 }
 
 //# BATI.has("postgres")
-export function dbKyselyPostgres(connectionString: string | undefined = process.env.DATABASE_URL) {
-  if (!connectionString) {
+export function dbKyselyPostgres() {
+  if (!process.env.DATABASE_URL) {
     throw new Error("Missing DATABASE_URL in .env file");
   }
   return new Kysely<Database>({
-    dialect: new PostgresJSDialect({ postgres: postgres(connectionString) }),
+    dialect: new PostgresJSDialect({ postgres: postgres(process.env.DATABASE_URL) }),
   });
 }

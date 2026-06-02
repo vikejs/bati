@@ -69,10 +69,6 @@ export function transformYaml(code: string, meta: VikeMeta): string {
     // Sequence items carry it on the item node itself (map or scalar).
     Map(_key, node, path) {
       if (isSeq(path[path.length - 1])) return resolveBatiComment(node, meta);
-      // A comment before the *first* entry of a block mapping is parsed onto the
-      // map's own `commentBefore`, not the first key — so the Pair visitor never
-      // sees it. Hoist it down onto the first key so it's evaluated like any
-      // other entry guard (visit() reaches that Pair after this Map node).
       hoistFirstEntryComment(node);
     },
     Scalar(_key, node, path) {

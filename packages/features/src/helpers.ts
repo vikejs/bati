@@ -33,14 +33,8 @@ export class BatiSet extends Set<Flags> {
     return this.has("sqlite") || this.has("drizzle") || this.has("kysely") || this.has("postgres");
   }
 
-  /** PostgreSQL engine selected (standalone postgres.js client, or under Drizzle/Kysely). */
-  get hasPostgres(): boolean {
-    return this.has("postgres");
-  }
-
   get hasD1(): boolean {
-    // Cloudflare + a SQL tool means D1 — unless PostgreSQL is the chosen engine,
-    // in which case the app talks to Postgres over Workers sockets/Hyperdrive instead.
+    // Cloudflare + a SQL tool means D1, unless PostgreSQL is the chosen engine.
     return (
       this.has("cloudflare") &&
       !this.has("postgres") &&

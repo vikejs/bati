@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     // Standalone postgres.js client — only when no ORM/query-builder owns the engine
     // (Drizzle/Kysely ship their own Postgres connection code).
-    return meta.BATI.hasPostgres && !meta.BATI.has("drizzle") && !meta.BATI.has("kysely");
+    return meta.BATI.has("postgres") && !meta.BATI.has("drizzle") && !meta.BATI.has("kysely");
   },
   nextSteps(_meta, packageManager, { bold }) {
     return [

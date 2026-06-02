@@ -16,9 +16,9 @@ export function dbD1(d1: D1Database) {
 }
 
 //# BATI.has("postgres")
-export function dbPostgres(connectionString: string | undefined = process.env.DATABASE_URL) {
-  if (!connectionString) {
+export function dbPostgres() {
+  if (!process.env.DATABASE_URL) {
     throw new Error("Missing DATABASE_URL in .env file");
   }
-  return drizzlePostgres(postgres(connectionString));
+  return drizzlePostgres(postgres(process.env.DATABASE_URL));
 }
