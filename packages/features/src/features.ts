@@ -358,22 +358,6 @@ export const features = [
   // Database
   {
     category: "Database",
-    label: "Drizzle",
-    flag: "drizzle",
-    image:
-      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI4MHB4IiBoZWlnaHQ9IjI4MHB4IiBzdHlsZT0ic2hhcGUtcmVuZGVyaW5nOmdlb21ldHJpY1ByZWNpc2lvbjsgdGV4dC1yZW5kZXJpbmc6Z2VvbWV0cmljUHJlY2lzaW9uOyBpbWFnZS1yZW5kZXJpbmc6b3B0aW1pemVRdWFsaXR5OyBmaWxsLXJ1bGU6ZXZlbm9kZDsgY2xpcC1ydWxlOmV2ZW5vZGQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iIzAwMDAwMCIgZD0iTSAtMC41LC0wLjUgQyA5Mi44MzMzLC0wLjUgMTg2LjE2NywtMC41IDI3OS41LC0wLjVDIDI3OS41LDkyLjgzMzMgMjc5LjUsMTg2LjE2NyAyNzkuNSwyNzkuNUMgMTg2LjE2NywyNzkuNSA5Mi44MzMzLDI3OS41IC0wLjUsMjc5LjVDIC0wLjUsMTg2LjE2NyAtMC41LDkyLjgzMzMgLTAuNSwtMC41IFoiLz48L2c+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjEiIGZpbGw9IiNjMWYyNGQiIGQ9Ik0gMTMzLjUsODQuNSBDIDE0Mi44MTQsODIuNzI2OSAxNDYuNjQ3LDg2LjM5MzUgMTQ1LDk1LjVDIDEzNS45MDYsMTEyLjAyOCAxMjYuNTcyLDEyOC4zNjIgMTE3LDE0NC41QyAxMTEuMjQ5LDE0OS45ODQgMTA2LjI0OSwxNDkuMzE3IDEwMiwxNDIuNUMgMTAxLjMzMywxNDAuODMzIDEwMS4zMzMsMTM5LjE2NyAxMDIsMTM3LjVDIDExMS41NDcsMTE5LjA0MSAxMjIuMDQ3LDEwMS4zNzUgMTMzLjUsODQuNSBaIi8+PC9nPgo8Zz48cGF0aCBzdHlsZT0ib3BhY2l0eToxIiBmaWxsPSIjYzBmMTRkIiBkPSJNIDIyMy41LDg0LjUgQyAyMzMuNTM5LDgzLjY5NzIgMjM3LjAzOSw4OC4wMzA1IDIzNCw5Ny41QyAyMjUuMzQ3LDExMi44MDEgMjE2LjY4MSwxMjguMTM1IDIwOCwxNDMuNUMgMjAzLjM4NywxNDkuNzM3IDE5OC4zODcsMTUwLjA3MSAxOTMsMTQ0LjVDIDE5MS41NzgsMTQxLjk3IDE5MS4yNDUsMTM5LjMwMyAxOTIsMTM2LjVDIDIwMC41MiwxMjIuNzk0IDIwOC41MiwxMDguNzk0IDIxNiw5NC41QyAyMTguMjg5LDkwLjg4MTIgMjIwLjc4OSw4Ny41NDc5IDIyMy41LDg0LjUgWiIvPjwvZz4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iI2MwZjE0ZCIgZD0iTSA3NS41LDEyMC41IEMgODMuOTg4NSwxMTkuNjE4IDg3LjgyMTgsMTIzLjI4NSA4NywxMzEuNUMgNzcuOTA1NywxNDguMDI4IDY4LjU3MjQsMTY0LjM2MiA1OSwxODAuNUMgNTYuMDQ1MywxODQuMjc3IDUyLjIxMiwxODUuNDQzIDQ3LjUsMTg0QyA0My44Njk3LDE4MC45NSA0Mi43MDMsMTc3LjExNyA0NCwxNzIuNUMgNTMsMTU2LjUgNjIsMTQwLjUgNzEsMTI0LjVDIDcyLjM5NjgsMTIyLjkzIDczLjg5NjgsMTIxLjU5NiA3NS41LDEyMC41IFoiLz48L2c+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjEiIGZpbGw9IiNjMWYyNGQiIGQ9Ik0gMTY1LjUsMTIwLjUgQyAxNzQuMTY0LDExOS4zMzIgMTc3Ljk5NywxMjIuOTk5IDE3NywxMzEuNUMgMTY3LjQxNCwxNDcuNjcxIDE1OC4wOCwxNjQuMDA0IDE0OSwxODAuNUMgMTQ2LjM5OCwxODQuMjEyIDE0Mi44OTgsMTg1LjM3OCAxMzguNSwxODRDIDEzMy45MzEsMTgxLjQ1OSAxMzIuNDMxLDE3Ny42MjUgMTM0LDE3Mi41QyAxNDMuNTcyLDE1Ni4zNjIgMTUyLjkwNiwxNDAuMDI4IDE2MiwxMjMuNUMgMTYzLjE0NSwxMjIuMzY0IDE2NC4zMTIsMTIxLjM2NCAxNjUuNSwxMjAuNSBaIi8+PC9nPgo8L3N2Zz4K",
-    url: "https://orm.drizzle.team/",
-    tagline: "Headless TypeScript ORM that feels like SPA with SSR",
-    repo: "drizzle-team/drizzle-orm",
-    links: [
-      {
-        label: "Docs & Getting started",
-        href: "https://orm.drizzle.team/docs/overview",
-      },
-    ],
-  },
-  {
-    category: "Database",
     label: "SQLite",
     flag: "sqlite",
     image:
@@ -395,6 +379,44 @@ export const features = [
   },
   {
     category: "Database",
+    label: "PostgreSQL",
+    flag: "postgres",
+    image:
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzNjc5MSIgc3Ryb2tlLXdpZHRoPSIxLjYiPjxlbGxpcHNlIGN4PSIxMiIgY3k9IjUiIHJ4PSI3IiByeT0iMi42Ii8+PHBhdGggZD0iTTUgNXYxNGMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42VjUiLz48cGF0aCBkPSJNNSAxMmMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42Ii8+PC9nPjwvc3ZnPg==",
+    url: "https://www.postgresql.org/",
+    tagline: "The world's most advanced open source relational database",
+    repo: "postgres/postgres",
+    links: [
+      {
+        label: "Docs",
+        href: "https://www.postgresql.org/docs/",
+      },
+      {
+        label: "postgres.js (client)",
+        href: "https://github.com/porsager/postgres",
+      },
+    ],
+  },
+
+  // ORM / Query builder
+  {
+    category: "ORM / Query builder",
+    label: "Drizzle",
+    flag: "drizzle",
+    image:
+      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI4MHB4IiBoZWlnaHQ9IjI4MHB4IiBzdHlsZT0ic2hhcGUtcmVuZGVyaW5nOmdlb21ldHJpY1ByZWNpc2lvbjsgdGV4dC1yZW5kZXJpbmc6Z2VvbWV0cmljUHJlY2lzaW9uOyBpbWFnZS1yZW5kZXJpbmc6b3B0aW1pemVRdWFsaXR5OyBmaWxsLXJ1bGU6ZXZlbm9kZDsgY2xpcC1ydWxlOmV2ZW5vZGQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iIzAwMDAwMCIgZD0iTSAtMC41LC0wLjUgQyA5Mi44MzMzLC0wLjUgMTg2LjE2NywtMC41IDI3OS41LC0wLjVDIDI3OS41LDkyLjgzMzMgMjc5LjUsMTg2LjE2NyAyNzkuNSwyNzkuNUMgMTg2LjE2NywyNzkuNSA5Mi44MzMzLDI3OS41IC0wLjUsMjc5LjVDIC0wLjUsMTg2LjE2NyAtMC41LDkyLjgzMzMgLTAuNSwtMC41IFoiLz48L2c+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjEiIGZpbGw9IiNjMWYyNGQiIGQ9Ik0gMTMzLjUsODQuNSBDIDE0Mi44MTQsODIuNzI2OSAxNDYuNjQ3LDg2LjM5MzUgMTQ1LDk1LjVDIDEzNS45MDYsMTEyLjAyOCAxMjYuNTcyLDEyOC4zNjIgMTE3LDE0NC41QyAxMTEuMjQ5LDE0OS45ODQgMTA2LjI0OSwxNDkuMzE3IDEwMiwxNDIuNUMgMTAxLjMzMywxNDAuODMzIDEwMS4zMzMsMTM5LjE2NyAxMDIsMTM3LjVDIDExMS41NDcsMTE5LjA0MSAxMjIuMDQ3LDEwMS4zNzUgMTMzLjUsODQuNSBaIi8+PC9nPgo8Zz48cGF0aCBzdHlsZT0ib3BhY2l0eToxIiBmaWxsPSIjYzBmMTRkIiBkPSJNIDIyMy41LDg0LjUgQyAyMzMuNTM5LDgzLjY5NzIgMjM3LjAzOSw4OC4wMzA1IDIzNCw5Ny41QyAyMjUuMzQ3LDExMi44MDEgMjE2LjY4MSwxMjguMTM1IDIwOCwxNDMuNUMgMjAzLjM4NywxNDkuNzM3IDE5OC4zODcsMTUwLjA3MSAxOTMsMTQ0LjVDIDE5MS41NzgsMTQxLjk3IDE5MS4yNDUsMTM5LjMwMyAxOTIsMTM2LjVDIDIwMC41MiwxMjIuNzk0IDIwOC41MiwxMDguNzk0IDIxNiw5NC41QyAyMTguMjg5LDkwLjg4MTIgMjIwLjc4OSw4Ny41NDc5IDIyMy41LDg0LjUgWiIvPjwvZz4KPGc+PHBhdGggc3R5bGU9Im9wYWNpdHk6MSIgZmlsbD0iI2MwZjE0ZCIgZD0iTSA3NS41LDEyMC41IEMgODMuOTg4NSwxMTkuNjE4IDg3LjgyMTgsMTIzLjI4NSA4NywxMzEuNUMgNzcuOTA1NywxNDguMDI4IDY4LjU3MjQsMTY0LjM2MiA1OSwxODAuNUMgNTYuMDQ1MywxODQuMjc3IDUyLjIxMiwxODUuNDQzIDQ3LjUsMTg0QyA0My44Njk3LDE4MC45NSA0Mi43MDMsMTc3LjExNyA0NCwxNzIuNUMgNTMsMTU2LjUgNjIsMTQwLjUgNzEsMTI0LjVDIDcyLjM5NjgsMTIyLjkzIDczLjg5NjgsMTIxLjU5NiA3NS41LDEyMC41IFoiLz48L2c+CjxnPjxwYXRoIHN0eWxlPSJvcGFjaXR5OjEiIGZpbGw9IiNjMWYyNGQiIGQ9Ik0gMTY1LjUsMTIwLjUgQyAxNzQuMTY0LDExOS4zMzIgMTc3Ljk5NywxMjIuOTk5IDE3NywxMzEuNUMgMTY3LjQxNCwxNDcuNjcxIDE1OC4wOCwxNjQuMDA0IDE0OSwxODAuNUMgMTQ2LjM5OCwxODQuMjEyIDE0Mi44OTgsMTg1LjM3OCAxMzguNSwxODRDIDEzMy45MzEsMTgxLjQ1OSAxMzIuNDMxLDE3Ny42MjUgMTM0LDE3Mi41QyAxNDMuNTcyLDE1Ni4zNjIgMTUyLjkwNiwxNDAuMDI4IDE2MiwxMjMuNUMgMTYzLjE0NSwxMjIuMzY0IDE2NC4zMTIsMTIxLjM2NCAxNjUuNSwxMjAuNSBaIi8+PC9nPgo8L3N2Zz4K",
+    url: "https://orm.drizzle.team/",
+    tagline: "Headless TypeScript ORM that feels like SPA with SSR",
+    repo: "drizzle-team/drizzle-orm",
+    links: [
+      {
+        label: "Docs & Getting started",
+        href: "https://orm.drizzle.team/docs/overview",
+      },
+    ],
+  },
+  {
+    category: "ORM / Query builder",
     label: "Kysely",
     flag: "kysely",
     image:
@@ -410,7 +432,7 @@ export const features = [
     ],
   },
   {
-    category: "Database",
+    category: "ORM / Query builder",
     label: "Prisma",
     flag: "prisma",
     image:
@@ -427,39 +449,6 @@ export const features = [
       {
         label: "Docs",
         href: "https://www.prisma.io/docs",
-      },
-    ],
-  },
-
-  // Database engine
-  {
-    category: "Database engine",
-    label: "SQLite",
-    flag: "sqlite-engine",
-    image:
-      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBiN2ZjYyIgc3Ryb2tlLXdpZHRoPSIxLjYiPjxlbGxpcHNlIGN4PSIxMiIgY3k9IjUiIHJ4PSI3IiByeT0iMi42Ii8+PHBhdGggZD0iTTUgNXYxNGMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42VjUiLz48cGF0aCBkPSJNNSAxMmMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42Ii8+PC9nPjwvc3ZnPg==",
-    tagline: "Embedded SQLite engine (the default). Also used by Cloudflare D1.",
-    invisibleCli: true,
-    selected: true,
-    tooltip: "Default embedded SQLite engine — no separate database server required",
-  },
-  {
-    category: "Database engine",
-    label: "PostgreSQL",
-    flag: "postgres",
-    image:
-      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzNjc5MSIgc3Ryb2tlLXdpZHRoPSIxLjYiPjxlbGxpcHNlIGN4PSIxMiIgY3k9IjUiIHJ4PSI3IiByeT0iMi42Ii8+PHBhdGggZD0iTTUgNXYxNGMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42VjUiLz48cGF0aCBkPSJNNSAxMmMwIDEuNDQgMy4xMyAyLjYgNyAyLjZzNy0xLjE2IDctMi42Ii8+PC9nPjwvc3ZnPg==",
-    url: "https://www.postgresql.org/",
-    tagline: "The world's most advanced open source relational database",
-    repo: "postgres/postgres",
-    links: [
-      {
-        label: "Docs",
-        href: "https://www.postgresql.org/docs/",
-      },
-      {
-        label: "postgres.js (client)",
-        href: "https://github.com/porsager/postgres",
       },
     ],
   },

@@ -49,13 +49,13 @@ it's recommended to only install a Server if you really need to, as Vike doesn't
   {
     label: "Database",
     group: categoriesGroups.Data,
-    description: `Helping you get started with a database solution.`,
+    description: `The database your app talks to. SQLite runs embedded (and powers Cloudflare D1);
+PostgreSQL targets a Postgres server. Selected on its own you get a thin client; pair it with an ORM or query builder below.`,
   },
   {
-    label: "Database engine",
+    label: "ORM / Query builder",
     group: categoriesGroups.Data,
-    description: `The SQL engine your database tooling runs against.
-Defaults to embedded SQLite; choose PostgreSQL to target a Postgres server (also works alongside Drizzle or Kysely).`,
+    description: `Type-safe data access on top of your database. Requires choosing a Database above.`,
   },
   {
     label: "Hosting",
