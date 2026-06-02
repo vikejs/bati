@@ -1,8 +1,10 @@
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
-import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import type { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
-import type { dbKysely, dbKyselyD1 } from "@batijs/kysely/database/kysely/db";
+import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "@batijs/kysely/database/kysely/db";
 import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
+import type { db as pgDb } from "@batijs/postgres/database/postgres/db";
+import * as pgQueries from "@batijs/postgres/database/postgres/queries/todos";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { initTRPC } from "@trpc/server";
@@ -14,6 +16,9 @@ import { initTRPC } from "@trpc/server";
 const t = initTRPC
   .context<
     BATI.If<{
+      'BATI.has("drizzle") && BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
+      'BATI.has("kysely") && BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
+      'BATI.has("postgres")': { db: ReturnType<typeof pgDb> };
       'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
       'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
@@ -52,6 +57,8 @@ export const appRouter = router({
         await kyselyQueries.insertTodo(opts.ctx.db, opts.input);
       } else if (BATI.hasD1) {
         await d1Queries.insertTodo(opts.ctx.db, opts.input);
+      } else if (BATI.has("postgres")) {
+        await pgQueries.insertTodo(opts.ctx.db, opts.input);
       } else {
         // This is where you'd persist the data
         console.log("Received new todo", { text: opts.input });
