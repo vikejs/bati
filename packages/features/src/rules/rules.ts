@@ -13,7 +13,9 @@ export default [
   requires(RulesMessage.ERROR_KYSELY_R_SERVER, "kysely", ["Server"]),
   requires(RulesMessage.ERROR_POSTGRES_R_SERVER, "postgres", ["Server"]),
   exclusive(RulesMessage.ERROR_POSTGRES_X_SQLITE, ["postgres", "sqlite"]),
-  exclusive(RulesMessage.ERROR_POSTGRES_X_PRISMA, ["postgres", "prisma"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "drizzle", ["Database"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "kysely", ["Database"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "prisma", ["Database"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
   filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {
     if (fts.has("cloudflare")) {

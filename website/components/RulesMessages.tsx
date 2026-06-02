@@ -142,14 +142,19 @@ export const rulesMessages = {
       </span>
     );
   }),
-  [RulesMessage.ERROR_POSTGRES_X_PRISMA]: error(() => {
+  [RulesMessage.ERROR_ORM_R_DATABASE]: error(() => {
+    const { selectedFeatures } = useContext(StoreContext);
+
+    const selectedOrm = createMemo(
+      () => selectedFeatures().filter((f) => f.category === "ORM / Query builder")?.[0]?.label,
+    );
+
     return (
       <span class="inline-block">
-        The <span class="font-bold">PostgreSQL</span> engine is not combinable with{" "}
-        <span class="font-bold">Prisma</span>, which manages its own connection.
+        <span class="font-bold">{selectedOrm()}</span> requires a <span class="font-bold">Database</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either unselect <span class="font-bold">PostgreSQL</span> or unselect <span class="font-bold">Prisma</span>
+            Pick a database (<span class="font-bold">SQLite</span> or <span class="font-bold">PostgreSQL</span>)
           </li>
         </ul>
       </span>

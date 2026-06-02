@@ -12,9 +12,12 @@ const matrix = combinate([
 
 matrix.push(["react", "cloudflare", "express"]);
 matrix.push(["solid", "cloudflare", "fastify"]);
-// PostgreSQL engine conflicts (a server is present, so only the engine conflict can fail)
+// Two engines are mutually exclusive (a server is present, so only that conflict can fail)
 matrix.push(["react", "postgres", "sqlite", "express"]);
-matrix.push(["solid", "postgres", "prisma", "express"]);
+// An ORM / query builder requires an engine (a server is present, so only that rule can fail)
+matrix.push(["react", "drizzle", "express"]);
+matrix.push(["solid", "kysely", "express"]);
+matrix.push(["vue", "prisma", "express"]);
 
 function prepareAndExecute(flags: string[]) {
   const context = {
