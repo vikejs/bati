@@ -1,8 +1,10 @@
 import Database from "better-sqlite3";
 import { drizzle as drizzleSqlite } from "drizzle-orm/better-sqlite3";
 import { drizzle as drizzleD1 } from "drizzle-orm/d1";
+import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
-//# !BATI.hasD1
+//# !BATI.hasD1 && !BATI.has("postgres")
 export function dbSqlite() {
   const sqlite = new Database(process.env.DATABASE_URL);
   return drizzleSqlite(sqlite);
@@ -11,4 +13,12 @@ export function dbSqlite() {
 //# BATI.hasD1
 export function dbD1(d1: D1Database) {
   return drizzleD1(d1);
+}
+
+//# BATI.has("postgres")
+export function dbPostgres(connectionString: string | undefined = process.env.DATABASE_URL) {
+  if (!connectionString) {
+    throw new Error("Missing DATABASE_URL in .env file");
+  }
+  return drizzlePostgres(postgres(connectionString));
 }

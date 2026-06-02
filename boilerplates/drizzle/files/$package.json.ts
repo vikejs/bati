@@ -3,6 +3,10 @@ import { loadPackageJson, type TransformerProps } from "@batijs/core";
 export default async function getPackageJson(props: TransformerProps): Promise<unknown> {
   const packageJson = await loadPackageJson(props, await import("../package.json").then((x) => x.default));
 
+  const hasPostgres = props.meta.BATI.has("postgres");
+  // better-sqlite3 only for the embedded SQLite engine (not D1, not Postgres).
+  const hasSqliteEngine = !props.meta.BATI.hasD1 && !hasPostgres;
+
   return packageJson
     .setScript("drizzle:generate", {
       value: "drizzle-kit generate",
@@ -19,6 +23,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
       precedence: 20,
     })
     .addDependencies(["drizzle-kit", "drizzle-orm", "dotenv"])
-    .addDevDependencies(["@types/better-sqlite3"], !props.meta.BATI.hasD1)
-    .addDependencies(["better-sqlite3"], !props.meta.BATI.hasD1);
+    .addDevDependencies(["@types/better-sqlite3"], hasSqliteEngine)
+    .addDependencies(["better-sqlite3"], hasSqliteEngine)
+    .addDependencies(["postgres"], hasPostgres);
 }

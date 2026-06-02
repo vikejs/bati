@@ -8,7 +8,7 @@ if (!BATI.hasD1) {
 }
 
 export default defineConfig({
-  dialect: "sqlite",
+  dialect: BATI.has("postgres") ? "postgresql" : "sqlite",
   schema: "./database/drizzle/schema/*",
   out: "./database/migrations",
   //# !BATI.hasD1
