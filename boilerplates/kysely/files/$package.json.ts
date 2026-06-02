@@ -8,12 +8,16 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     return packageJson.addDependencies(["kysely", "kysely-d1"]);
   }
 
+  const hasPostgres = props.meta.BATI.has("postgres");
+
   return packageJson
     .setScript("kysely:migrate", {
       value: "tsx ./database/kysely/migrate.ts",
       precedence: 20,
     })
-    .addDevDependencies(["@types/better-sqlite3"])
+    .addDevDependencies(["@types/better-sqlite3"], !hasPostgres)
     .addDevDependencies(["tsx"], ["kysely:migrate"])
-    .addDependencies(["better-sqlite3", "dotenv", "kysely"]);
+    .addDependencies(["dotenv", "kysely"])
+    .addDependencies(["better-sqlite3"], !hasPostgres)
+    .addDependencies(["postgres", "kysely-postgres-js"], hasPostgres);
 }

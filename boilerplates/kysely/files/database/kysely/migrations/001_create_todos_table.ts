@@ -3,11 +3,11 @@ import type { Kysely } from "kysely";
 import type { Database } from "../types";
 
 export async function up(db: Kysely<Database>): Promise<void> {
-  await db.schema
-    .createTable("todos")
-    .addColumn("id", "integer", (col) => col.primaryKey().autoIncrement())
-    .addColumn("text", "text", (col) => col.notNull())
-    .execute();
+  // PostgreSQL uses a `serial` auto-incrementing primary key; SQLite uses `integer` + autoincrement.
+  const withId = BATI.has("postgres")
+    ? db.schema.createTable("todos").addColumn("id", "serial", (col) => col.primaryKey())
+    : db.schema.createTable("todos").addColumn("id", "integer", (col) => col.primaryKey().autoIncrement());
+  await withId.addColumn("text", "text", (col) => col.notNull()).execute();
 }
 
 export async function down(db: Kysely<Database>): Promise<void> {
