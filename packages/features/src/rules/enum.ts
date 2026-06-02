@@ -10,6 +10,12 @@ export enum RulesMessage {
   ERROR_KYSELY_R_SERVER,
   // A Server is required when using SQLite
   ERROR_SQLITE_R_SERVER,
+  // A Server is required when using PostgreSQL
+  ERROR_POSTGRES_R_SERVER,
+  // PostgreSQL and the raw SQLite tool are mutually exclusive database engines
+  ERROR_POSTGRES_X_SQLITE,
+  // Prisma manages its own database engine; not combinable with the PostgreSQL engine (yet)
+  ERROR_POSTGRES_X_PRISMA,
   // A Server is required when using Data fetching / RPC
   ERROR_DATA_R_SERVER,
   // A compabible Server (or no Server) is required when using Cloudflare

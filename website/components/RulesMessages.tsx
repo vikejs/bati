@@ -117,6 +117,44 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_POSTGRES_R_SERVER]: error(() => {
+    return (
+      <span class="inline-block">
+        A <span class="font-bold">Server</span> is required when using <span class="font-bold">PostgreSQL</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">PostgreSQL</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.ERROR_POSTGRES_X_SQLITE]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">PostgreSQL</span> and <span class="font-bold">SQLite</span> are mutually exclusive
+        database engines.
+        <ul class="list-custom list-dot">
+          <li>
+            Either unselect <span class="font-bold">PostgreSQL</span> or unselect <span class="font-bold">SQLite</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.ERROR_POSTGRES_X_PRISMA]: error(() => {
+    return (
+      <span class="inline-block">
+        The <span class="font-bold">PostgreSQL</span> engine is not combinable with{" "}
+        <span class="font-bold">Prisma</span>, which manages its own connection.
+        <ul class="list-custom list-dot">
+          <li>
+            Either unselect <span class="font-bold">PostgreSQL</span> or unselect <span class="font-bold">Prisma</span>
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(() => {
     const { selectedFeatures } = useContext(StoreContext);
 
@@ -203,7 +241,12 @@ export const rulesMessages = {
 
     const unsupported = createMemo(() =>
       selectedFeatures().filter(
-        (f) => f.flag === "drizzle" || f.flag === "sqlite" || f.flag === "kysely" || f.flag === "cloudflare",
+        (f) =>
+          f.flag === "drizzle" ||
+          f.flag === "sqlite" ||
+          f.flag === "kysely" ||
+          f.flag === "postgres" ||
+          f.flag === "cloudflare",
       ),
     );
 

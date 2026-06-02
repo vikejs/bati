@@ -7,11 +7,14 @@ import { execLocalBati } from "./src/exec-bati.js";
 
 const matrix = combinate([
   ["solid", "react", "vue"],
-  ["authjs", "auth0", "drizzle", "telefunc", "trpc", "ts-rest"],
+  ["authjs", "auth0", "drizzle", "telefunc", "trpc", "ts-rest", "postgres"],
 ]);
 
 matrix.push(["react", "cloudflare", "express"]);
 matrix.push(["solid", "cloudflare", "fastify"]);
+// PostgreSQL engine conflicts (a server is present, so only the engine conflict can fail)
+matrix.push(["react", "postgres", "sqlite", "express"]);
+matrix.push(["solid", "postgres", "prisma", "express"]);
 
 function prepareAndExecute(flags: string[]) {
   const context = {

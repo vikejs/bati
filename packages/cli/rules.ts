@@ -49,6 +49,15 @@ export const rulesMessages = {
   [RulesMessage.ERROR_KYSELY_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Kysely"))}`,
   ),
+  [RulesMessage.ERROR_POSTGRES_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("PostgreSQL"))}`,
+  ),
+  [RulesMessage.ERROR_POSTGRES_X_SQLITE]: error(
+    `${inverse(bold("PostgreSQL"))} and ${inverse(bold("SQLite"))} are mutually exclusive database engines. Pick only one`,
+  ),
+  [RulesMessage.ERROR_POSTGRES_X_PRISMA]: error(
+    `${inverse(bold("PostgreSQL"))} engine is not combinable with ${inverse(bold("Prisma"))} (Prisma manages its own connection). Pick only one`,
+  ),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,
   ),

@@ -28,6 +28,15 @@ const tests = suite()
     data: "telefunc",
     db: ["drizzle", "sqlite", "kysely", null],
   })
+  // PostgreSQL engine: standalone postgres.js client, plus Drizzle/Kysely on Postgres.
+  // Requires a PostgreSQL server reachable at the default DATABASE_URL (provided by CI).
+  .matrix({
+    framework: "solid",
+    server: ["express", "hono"],
+    data: ["telefunc", null],
+    db: ["drizzle", "kysely", null],
+    engine: "postgres",
+  })
   .linters("eslint", "biome", "oxlint");
 
 export default tests;
@@ -55,6 +64,9 @@ await describeMultipleBati([
           } else {
             await exec(npmCli, ["run", "kysely:migrate"]);
           }
+        } else if (context.flags.includes("postgres")) {
+          // Standalone postgres.js client (no ORM)
+          await exec(npmCli, ["run", "postgres:migrate"]);
         }
       }, 70000);
 
@@ -123,6 +135,11 @@ await describeMultipleBati([
             expect(res.status).toBe(200);
             expect(await res.text()).toContain(text);
           },
+          postgres: async () => {
+            const res = await fetch("/todo");
+            expect(res.status).toBe(200);
+            expect(await res.text()).toContain(text);
+          },
         });
 
         testMatch<TestFlags>("TODO.md presence", {
@@ -133,6 +150,9 @@ await describeMultipleBati([
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
           kysely: async () => {
+            expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
+          },
+          postgres: async () => {
             expect(existsSync(path.join(process.cwd(), "TODO.md"))).toBe(true);
           },
           cloudflare: async () => {
