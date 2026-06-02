@@ -23,7 +23,7 @@ export const createTodoHandler: UniversalHandler<
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
       'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
       'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
-      'BATI.hasD1 && !BATI.hasOrm': { db: D1Database };
+      "BATI.hasD1 && !BATI.hasOrm": { db: D1Database };
       _: object;
     }>
 > = enhance(

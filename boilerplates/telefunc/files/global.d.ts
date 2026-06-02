@@ -16,7 +16,7 @@ declare module "telefunc" {
         'BATI.has("drizzle")': ReturnType<typeof dbD1>;
         'BATI.has("kysely") && !BATI.hasD1': ReturnType<typeof dbKysely>;
         'BATI.has("kysely")': ReturnType<typeof dbKyselyD1>;
-        'BATI.hasD1 && !BATI.hasOrm': D1Database;
+        "BATI.hasD1 && !BATI.hasOrm": D1Database;
       }>;
     }
   }
