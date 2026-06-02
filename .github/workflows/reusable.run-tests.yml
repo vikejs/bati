@@ -140,7 +140,7 @@ jobs:
         run: |
           docker run -d --name bati-postgres \
             -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=app \
-            -p 5432:5432 postgres:17-alpine
+            -p 5432:5432 postgres:18-alpine
           for i in $(seq 1 30); do
             if docker exec bati-postgres pg_isready -U postgres -d app >/dev/null 2>&1; then
               echo "PostgreSQL is ready"; break
