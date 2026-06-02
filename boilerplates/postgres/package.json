@@ -1,0 +1,27 @@
+{
+  "name": "@batijs/postgres",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:",
+    "@types/node": "^20.19.37"
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  },
+  "files": [
+    "dist/"
+  ]
+}
