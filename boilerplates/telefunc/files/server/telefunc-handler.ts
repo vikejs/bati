@@ -21,6 +21,7 @@ export const telefuncHandler: UniversalHandler = enhance(
           'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
           'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
           'BATI.hasD1 && !BATI.hasOrm': { db: D1Database };
+          _: object;
         }>),
         ...(runtime as BATI.If<{
           "BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };
