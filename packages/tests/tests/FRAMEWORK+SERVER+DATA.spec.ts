@@ -14,7 +14,7 @@ const tests = suite()
   // No database
   .matrix({
     framework: "solid",
-    server: ["express", "h3", "hono", "fastify"],
+    server: ["express", "h3", "hono", "fastify", "elysia"],
     data: ["trpc", "telefunc", "ts-rest", null],
   })
   .matrix({

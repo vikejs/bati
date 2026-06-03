@@ -1,0 +1,59 @@
+{
+  "name": "@batijs/elysia",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@auth/core": "^0.41.2",
+    "@batijs/authjs": "workspace:*",
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "@batijs/shared-db": "workspace:*",
+    "@batijs/shared-server": "workspace:*",
+    "@batijs/telefunc": "workspace:*",
+    "@batijs/trpc": "workspace:*",
+    "@batijs/ts-rest": "workspace:*",
+    "@trpc/server": "^11.17.0",
+    "@types/node": "^20.19.37",
+    "@vikejs/elysia": "^0.2.0",
+    "dotenv": "^17.4.2",
+    "elysia": "^1.4.28",
+    "telefunc": "^0.2.20",
+    "vike": "0.4.259",
+    "vite": "^8.0.14"
+  },
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    "./+server": {
+      "types": "./dist/types/+server.d.mts"
+    },
+    "./server/elysia": {
+      "types": "./dist/types/server/elysia.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "+server": [
+        "./dist/types/+server.d.mts"
+      ],
+      "server/elysia": [
+        "./dist/types/server/elysia.d.mts"
+      ]
+    }
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  }
+}
