@@ -6,7 +6,7 @@ const tests = suite()
   // SQLite engine: raw better-sqlite3 client plus Drizzle/Kysely on SQLite
   .matrix({
     framework: "solid",
-    server: ["express", "h3", "hono", "fastify"],
+    server: ["express", "elysia", "hono", "fastify"],
     data: ["trpc", "telefunc", "ts-rest", null],
     db: "sqlite",
     orm: ["drizzle", "kysely", null],
@@ -14,7 +14,7 @@ const tests = suite()
   // No database
   .matrix({
     framework: "solid",
-    server: ["express", "h3", "hono", "fastify"],
+    server: ["express", "hono", "fastify", "elysia"],
     data: ["trpc", "telefunc", "ts-rest", null],
   })
   .matrix({
@@ -34,7 +34,7 @@ const tests = suite()
   // Cloudflare D1 (the SQLite engine on Workers)
   .matrix({
     framework: "solid",
-    server: ["hono", "h3"],
+    server: "hono",
     deploy: "cloudflare",
     data: ["trpc", "telefunc", "ts-rest", null],
     db: "sqlite",
@@ -48,6 +48,18 @@ const tests = suite()
     data: "telefunc",
     db: ["sqlite", "postgres"],
     orm: ["drizzle", null],
+  })
+  // Run the built Elysia server under BOTH runtimes via Docker: sqlite forces the
+  // Node runtime (better-sqlite3 has no Bun prebuild → node:alpine image), while
+  // postgres keeps the Bun image (oven/bun:alpine). The prod suites above only ever
+  // run the built server under Node, so this is the only Bun coverage for it.
+  .matrix({
+    framework: "react",
+    server: "elysia",
+    deploy: "dokploy",
+    data: "telefunc",
+    db: ["sqlite", "postgres"],
+    orm: "drizzle",
   })
   .linters("eslint", "biome", "oxlint");
 

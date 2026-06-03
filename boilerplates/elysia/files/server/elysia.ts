@@ -1,19 +1,14 @@
-// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
-import "dotenv/config";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
 import { trpcHandler } from "@batijs/trpc/server/trpc-handler";
 import { tsRestHandler } from "@batijs/ts-rest/server/ts-rest-handler";
-import vike from "@vikejs/h3";
-import { createApp, toWebHandler } from "h3";
-import type { Server } from "vike/types";
+import vike from "@vikejs/elysia";
+import { Elysia } from "elysia";
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-
-function getHandler() {
-  const app = createApp();
+function getApp() {
+  const app = new Elysia();
 
   vike(app, [
     //# BATI.hasDbDemo
@@ -38,13 +33,7 @@ function getHandler() {
     createTodoHandler,
   ]);
 
-  return toWebHandler(app);
+  return app;
 }
 
-// https://vike.dev/server
-export default {
-  fetch: getHandler(),
-  prod: {
-    port,
-  },
-} satisfies Server;
+export const app = getApp();

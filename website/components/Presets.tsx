@@ -67,8 +67,8 @@ export default function Presets() {
       />
       <Preset
         title="Nuxt"
-        features={["vue", "Auth", "Data fetching", "h3", "Linter"]}
-        description="Nuxt like app with Data Fetching, Auth and h3"
+        features={["vue", "Auth", "Data fetching", "elysia", "Linter"]}
+        description="Nuxt like app with Data Fetching, Auth and Elysia"
       />
       <Preset title="CMS" features={["UI Framework"]} disabled={true} description="" />
     </div>

@@ -3,7 +3,7 @@ import path from "node:path";
 import { describeBati, describeMultipleBati, suite } from "@batijs/tests-utils";
 
 export default suite()
-  .matrix({ framework: "react", deploy: "cloudflare", server: ["hono", "h3", null] })
+  .matrix({ framework: "react", deploy: "cloudflare", server: ["hono", null] })
   .linters("eslint", "biome", "oxlint");
 
 await describeMultipleBati([

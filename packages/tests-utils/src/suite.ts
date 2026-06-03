@@ -148,8 +148,8 @@ export class Suite<Flags extends string = never> {
    * "this dimension is absent in that combo" (replaces the `undefined`
    * sentinel from the old API).
    *
-   *   .matrix({ framework: "solid", server: ["hono", "h3"], data: ["trpc", null] })
-   *   → 4 combos: solid+hono+trpc, solid+hono, solid+h3+trpc, solid+h3
+   *   .matrix({ framework: "solid", server: ["hono", "express"], data: ["trpc", null] })
+   *   → 4 combos: solid+hono+trpc, solid+hono, solid+express+trpc, solid+express
    */
   matrix<S extends MatrixSpec>(spec: S): Suite<Flags | ExtractStrings<S[keyof S]>> {
     const dims = Object.values(spec).map((v) => toArray(v));

@@ -5,8 +5,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
 
   return packageJson
     .addDevDependencies(["@types/node", "vite"])
-    .addDependencies(["h3", "vike", "@vikejs/h3", "@universal-middleware/core"])
-    .addDependencies(["@auth/core"], props.meta.BATI.has("authjs") || props.meta.BATI.has("auth0"))
+    .addDependencies(["@vikejs/elysia", "elysia", "vike"])
     .addDependencies(
       ["dotenv"],
       (props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase) && !props.meta.BATI.has("cloudflare"),

@@ -7,7 +7,7 @@ const auths = ["authjs", ...(testAuth0 ? (["auth0"] as const) : [])] as const;
 
 const tests = suite()
   .matrix({ framework: framework.values, server: server.values, auth: auths })
-  .matrix({ framework: "react", server: ["hono", "h3"], deploy: "cloudflare", auth: "auth0" })
+  .matrix({ framework: "react", server: "hono", deploy: "cloudflare", auth: "auth0" })
   .matrix({ framework: "react", server: "hono", deploy: "dokploy", auth: auths })
   .linters("eslint", "biome", "oxlint");
 

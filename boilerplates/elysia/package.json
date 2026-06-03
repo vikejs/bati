@@ -1,5 +1,5 @@
 {
-  "name": "@batijs/h3",
+  "name": "@batijs/elysia",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -22,12 +22,10 @@
     "@batijs/trpc": "workspace:*",
     "@batijs/ts-rest": "workspace:*",
     "@trpc/server": "^11.17.0",
-    "@types/express": "^5.0.6",
     "@types/node": "^20.19.37",
-    "@universal-middleware/core": "^0.4.17",
-    "@vikejs/h3": "^0.2.0",
+    "@vikejs/elysia": "^0.2.0",
     "dotenv": "^17.4.2",
-    "h3": "~1.15.11",
+    "elysia": "^1.4.28",
     "telefunc": "^0.2.20",
     "vike": "0.4.259",
     "vite": "^8.0.14"
@@ -38,12 +36,18 @@
   "exports": {
     "./+server": {
       "types": "./dist/types/+server.d.mts"
+    },
+    "./server/elysia": {
+      "types": "./dist/types/server/elysia.d.mts"
     }
   },
   "typesVersions": {
     "*": {
       "+server": [
         "./dist/types/+server.d.mts"
+      ],
+      "server/elysia": [
+        "./dist/types/server/elysia.d.mts"
       ]
     }
   },
