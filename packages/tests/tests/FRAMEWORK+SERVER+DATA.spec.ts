@@ -49,6 +49,18 @@ const tests = suite()
     db: ["sqlite", "postgres"],
     orm: ["drizzle", null],
   })
+  // Run the built Elysia server under BOTH runtimes via Docker: sqlite forces the
+  // Node runtime (better-sqlite3 has no Bun prebuild → node:alpine image), while
+  // postgres keeps the Bun image (oven/bun:alpine). The prod suites above only ever
+  // run the built server under Node, so this is the only Bun coverage for it.
+  .matrix({
+    framework: "react",
+    server: "elysia",
+    deploy: "dokploy",
+    data: "telefunc",
+    db: ["sqlite", "postgres"],
+    orm: "drizzle",
+  })
   .linters("eslint", "biome", "oxlint");
 
 export default tests;

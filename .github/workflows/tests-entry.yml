@@ -217,6 +217,8 @@ jobs:
           - react--hono--dokploy--telefunc--sqlite--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--postgres--drizzle--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--postgres--eslint--biome--oxlint
+          - react--elysia--dokploy--telefunc--sqlite--drizzle--eslint--biome--oxlint
+          - react--elysia--dokploy--telefunc--postgres--drizzle--eslint--biome--oxlint
           - aws--react--hono--eslint--biome--oxlint
           - react--cloudflare--hono--eslint--biome--oxlint
           - react--cloudflare--eslint--biome--oxlint
@@ -694,6 +696,14 @@ jobs:
           - destination: react--hono--dokploy--telefunc--postgres--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --postgres --eslint --biome
               --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--elysia--dokploy--telefunc--sqlite--drizzle--eslint--biome--oxlint
+            flags: --react --elysia --dokploy --telefunc --sqlite --drizzle --eslint
+              --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: react--elysia--dokploy--telefunc--postgres--drizzle--eslint--biome--oxlint
+            flags: --react --elysia --dokploy --telefunc --postgres --drizzle
+              --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: aws--react--hono--eslint--biome--oxlint
             flags: --aws --react --hono --eslint --biome --oxlint
