@@ -27,29 +27,35 @@ function pmFromUserAgent(userAgent: string): PackageManagerInfo {
   const separatorPos = pmSpec.lastIndexOf("/");
   let name = pmSpec.substring(0, separatorPos);
   name = name === "npminstall" ? "cnpm" : name;
+  let run: string;
 
   let exec: string;
   switch (name) {
     case "pnpm":
       exec = "pnpm dlx";
+      run = "pnpm";
       break;
     case "yarn":
       exec = "yarn dlx";
+      run = "yarn";
       break;
     case "bun":
       exec = "bunx";
+      run = "bun run";
       break;
     case "cnpm":
       exec = "cnpx";
+      run = "cnpm";
       break;
     default:
       exec = "npx";
+      run = "npm run";
   }
 
   return {
     name,
     version: pmSpec.substring(separatorPos + 1),
-    run: name === "npm" ? "npm run" : name,
+    run,
     exec,
   };
 }
