@@ -170,7 +170,7 @@ export const features = [
     flag: "shadcn-ui",
     dependsOn: ["tailwindcss", "react"],
     image:
-      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBjbGFzcz0iaC02IHctNiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgyNTZ2MjU2SDB6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxNiIgZD0ibTIwOCAxMjgtODAgODBtNjQtMTY4TDQwIDE5MiIvPjwvc3ZnPg==",
+      "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48c3R5bGU+IHBhdGh7ZmlsbDpibGFjazt9QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTpkYXJrKXtwYXRoe2ZpbGw6d2hpdGU7fX08L3N0eWxlPjxwYXRoIGQ9Ik0yMi4yMTkgMTEuNzg0IDExLjc4NCAyMi4yMTljLS40MDcuNDA3LS40MDcgMS4wNjggMCAxLjQ3Ni40MDcuNDA3IDEuMDY4LjQwNyAxLjQ3NiAwTDIzLjY5NSAxMy4yNmMuNDA3LS40MDguNDA3LTEuMDY5IDAtMS40NzYtLjQwOC0uNDA3LTEuMDY5LS40MDctMS40NzYgMFpNMjAuMTMyLjMwNS4zMDUgMjAuMTMyYy0uNDA3LjQwNy0uNDA3IDEuMDY4IDAgMS40NzYuNDA4LjQwNyAxLjA2OS40MDcgMS40NzYgMEwyMS42MDggMS43ODFjLjQwNy0uNDA3LjQwNy0xLjA2OCAwLTEuNDc2LS40MDgtLjQwNy0xLjA2OS0uNDA3LTEuNDc2IDBaIi8+PC9zdmc+",
     url: "https://ui.shadcn.com",
     tagline: "Beautifully designed components that you can copy and paste into your apps.",
     repo: "shadcn-ui/ui",
