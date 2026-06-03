@@ -7,11 +7,17 @@ import { execLocalBati } from "./src/exec-bati.js";
 
 const matrix = combinate([
   ["solid", "react", "vue"],
-  ["authjs", "auth0", "drizzle", "telefunc", "trpc", "ts-rest"],
+  ["authjs", "auth0", "drizzle", "telefunc", "trpc", "ts-rest", "postgres"],
 ]);
 
 matrix.push(["react", "cloudflare", "express"]);
 matrix.push(["solid", "cloudflare", "fastify"]);
+// Two engines are mutually exclusive (a server is present, so only that conflict can fail)
+matrix.push(["react", "postgres", "sqlite", "express"]);
+// An ORM / query builder requires an engine (a server is present, so only that rule can fail)
+matrix.push(["react", "drizzle", "express"]);
+matrix.push(["solid", "kysely", "express"]);
+matrix.push(["vue", "prisma", "express"]);
 
 function prepareAndExecute(flags: string[]) {
   const context = {

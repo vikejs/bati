@@ -2,16 +2,17 @@ import { committedValue, type EnvRecord, type EnvRegistry, isServerVar } from "@
 
 /**
  * `KEY=<expr>` lines for the docker-compose `services.<app>.environment` list:
- * secrets are pulled from the host (`${KEY}`), defaulted vars are host-overridable
- * (`${KEY:-<default>}`).
+ * secrets are pulled from the host (`${KEY}`); defaulted vars are pinned to their
+ * compose value. Pinning (not `${KEY:-default}`) is deliberate: compose loads the
+ * project `.env` for interpolation, and `.env` carries the local-dev value (e.g.
+ * `DATABASE_URL` on `localhost`), which would otherwise shadow the in-container
+ * value (the app reaching the `postgres` service over the compose network).
  */
 export function composeEnvEntries(registry: EnvRegistry): string[] {
   return registry
     .filter(isServerVar)
     .map((def) =>
-      def.scope === "secret"
-        ? `${def.key}=\${${def.key}}`
-        : `${def.key}=\${${def.key}:-${committedValue(def, "compose")}}`,
+      def.scope === "secret" ? `${def.key}=\${${def.key}}` : `${def.key}=${committedValue(def, "compose")}`,
     );
 }
 

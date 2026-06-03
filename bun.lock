@@ -162,6 +162,7 @@
         "dotenv": "^17.4.2",
         "drizzle-kit": "^0.31.10",
         "drizzle-orm": "^0.45.2",
+        "postgres": "^3.4.7",
       },
     },
     "boilerplates/edgeone": {
@@ -313,6 +314,8 @@
         "dotenv": "^17.4.2",
         "kysely": "^0.29.2",
         "kysely-d1": "^0.4.0",
+        "kysely-postgres-js": "^2.0.0",
+        "postgres": "^3.4.7",
         "tsx": "^4.22.3",
         "vite": "^8.0.14",
       },
@@ -376,6 +379,18 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@types/node": "^20.19.37",
+      },
+    },
+    "boilerplates/postgres": {
+      "name": "@batijs/postgres",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@batijs/compile": "workspace:*",
+        "@batijs/core": "workspace:*",
+        "@types/node": "^20.19.37",
+        "dotenv": "^17.4.2",
+        "postgres": "^3.4.7",
+        "tsx": "^4.22.3",
       },
     },
     "boilerplates/prettier": {
@@ -493,6 +508,7 @@
         "@batijs/d1": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@types/node": "^20.19.37",
         "@universal-middleware/core": "^0.4.17",
@@ -507,6 +523,7 @@
         "@batijs/d1-sqlite": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@types/node": "^20.19.37",
         "@universal-middleware/core": "^0.4.17",
@@ -523,6 +540,7 @@
         "@batijs/d1-sqlite": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@types/node": "^20.19.37",
         "vike": "0.4.259",
@@ -607,6 +625,7 @@
         "@batijs/d1-sqlite": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@types/node": "^20.19.37",
         "@universal-middleware/core": "^0.4.17",
@@ -624,6 +643,7 @@
         "@batijs/d1-sqlite": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@trpc/client": "^11.17.0",
         "@trpc/server": "^11.17.0",
@@ -641,6 +661,7 @@
         "@batijs/d1-sqlite": "workspace:*",
         "@batijs/drizzle": "workspace:*",
         "@batijs/kysely": "workspace:*",
+        "@batijs/postgres": "workspace:*",
         "@batijs/sqlite": "workspace:*",
         "@ts-rest/core": "^3.52.1",
         "@ts-rest/serverless": "^3.52.1",
@@ -1045,6 +1066,8 @@
     "@batijs/plausible.io": ["@batijs/plausible.io@workspace:boilerplates/plausible.io"],
 
     "@batijs/pnpm": ["@batijs/pnpm@workspace:boilerplates/pnpm"],
+
+    "@batijs/postgres": ["@batijs/postgres@workspace:boilerplates/postgres"],
 
     "@batijs/prettier": ["@batijs/prettier@workspace:boilerplates/prettier"],
 
@@ -3127,6 +3150,8 @@
     "kysely": ["kysely@0.29.2", "", {}, "sha512-s6WVJyEZrbm6jhBpiKHsGHyePMrVQKJ85wZCFCr9W4QHv6WTjWIrdvTmO9hDEA3bNK0xkrE2DqrHsXMLWuZpQg=="],
 
     "kysely-d1": ["kysely-d1@0.4.0", "", { "peerDependencies": { "kysely": "*" } }, "sha512-wUcVvQNtm30OTfuo7Ad5vYJ1qHqPXOCZc+zWchVKNyuvqY3u8OuGw4gmUx1Ypdx2wRVFLHVQC9I7v0pTmF7Nkw=="],
+
+    "kysely-postgres-js": ["kysely-postgres-js@2.0.0", "", { "peerDependencies": { "kysely": ">= 0.24.0 < 1", "postgres": ">= 3.4.0 < 4" } }, "sha512-R1tWx6/x3tSatWvsmbHJxpBZYhNNxcnMw52QzZaHKg7ZOWtHib4iZyEaw4gb2hNKVctWQ3jfMxZT/ZaEMK6kBQ=="],
 
     "lambda-local": ["lambda-local@2.2.0", "", { "dependencies": { "commander": "^10.0.1", "dotenv": "^16.3.1", "winston": "^3.10.0" }, "bin": { "lambda-local": "build/cli.js" } }, "sha512-bPcgpIXbHnVGfI/omZIlgucDqlf4LrsunwoKue5JdZeGybt8L6KyJz2Zu19ffuZwIwLj2NAI2ZyaqNT6/cetcg=="],
 

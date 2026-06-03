@@ -8,11 +8,34 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-    # BATI.hasDatabase
+    # BATI.hasDatabase && !BATI.has("postgres")
     volumes:
       - sqlite_data:/app/data
+    # BATI.has("postgres")
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # BATI.has("postgres")
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-app}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
 # BATI.hasDatabase
 volumes:
-  sqlite_data:
+  # BATI.hasDatabase && !BATI.has("postgres")
+  sqlite_data: {}
+  # BATI.has("postgres")
+  postgres_data: {}

@@ -6,8 +6,8 @@ import type { Feature } from "./types.js";
  */
 export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: used
   readonly #databases: Set<Flags>;
+  readonly #orm: Set<Flags>;
 
   public pm: string;
 
@@ -16,6 +16,7 @@ export class BatiSet extends Set<Flags> {
     this.pm = pm;
     this.#servers = new Set(allFeatures.filter((f) => f.category === "Server").map((f) => f.flag as Flags));
     this.#databases = new Set(allFeatures.filter((f) => f.category === "Database").map((f) => f.flag as Flags));
+    this.#orm = new Set(allFeatures.filter((f) => f.category === "ORM / Query builder").map((f) => f.flag as Flags));
   }
 
   private hasOneOf(a: Set<Flags>) {
@@ -27,14 +28,25 @@ export class BatiSet extends Set<Flags> {
     return this.hasOneOf(this.#servers);
   }
 
+  /** A database engine is selected (SQLite or PostgreSQL). */
   get hasDatabase(): boolean {
-    // TODO replace with the following once prisma and edge are properly supported
-    // return this.hasOneOf(this.#databases);
-    return this.has("sqlite") || this.has("drizzle") || this.has("kysely");
+    return this.hasOneOf(this.#databases);
+  }
+
+  /** An ORM or query builder is selected (Drizzle, Kysely or Prisma). */
+  get hasOrm(): boolean {
+    return this.hasOneOf(this.#orm);
+  }
+
+  /** A database engine whose client and todo demo Bati scaffolds. Prisma is self-managed
+   * (it brings its own client and `DATABASE_URL`), so it opts out of the shared demo. */
+  get hasDbDemo(): boolean {
+    return this.hasDatabase && !this.has("prisma");
   }
 
   get hasD1(): boolean {
-    return this.has("cloudflare") && (this.has("sqlite") || this.has("drizzle") || this.has("kysely"));
+    // D1 is the SQLite engine running on Cloudflare.
+    return this.has("cloudflare") && this.has("sqlite");
   }
 
   get hasDotEnvSecrets(): boolean {

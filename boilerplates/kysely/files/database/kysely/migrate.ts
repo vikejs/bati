@@ -5,13 +5,13 @@ import * as path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FileMigrationProvider, Migrator } from "kysely/migration";
-import { dbKysely } from "./db";
+import { dbKysely, dbKyselyPostgres } from "./db";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 async function migrateToLatest() {
-  const db = dbKysely();
+  const db = BATI.has("postgres") ? dbKyselyPostgres() : dbKysely();
   const migrator = new Migrator({
     db,
     provider: new FileMigrationProvider({

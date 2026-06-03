@@ -4,29 +4,27 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("prisma");
   },
-  env: () => [
+  // Prisma owns its own connection string, shaped by the chosen engine.
+  env: (meta) => [
     {
       key: "DATABASE_URL",
       scope: "server-default",
-      default: "postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public",
-      comment: `Prisma
-
-Environment variables declared in this file are automatically made available to Prisma.
-See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
-
-Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
-See the documentation for all the connection string options: https://pris.ly/d/connection-strings`,
+      default: meta.BATI.has("postgres")
+        ? "postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+        : "file:./dev.db",
+      comment: `Prisma connection string — see https://pris.ly/d/connection-strings`,
     },
   ],
-  nextSteps(_meta, packageManager) {
+  nextSteps(meta, packageManager) {
+    const provider = meta.BATI.has("postgres") ? "postgresql" : "sqlite";
     return [
       {
         type: "command",
-        step: `${packageManager} prisma init --db`,
+        step: `${packageManager} prisma init --datasource-provider ${provider}`,
       },
       {
         type: "text",
-        step: `Then follow instructions at https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/prisma-postgres`,
+        step: `Then define your models and run ${packageManager} prisma migrate dev — https://www.prisma.io/docs/getting-started`,
       },
     ];
   },

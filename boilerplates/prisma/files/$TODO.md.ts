@@ -3,17 +3,18 @@ import { loadMarkdown, packageManager, type TransformerProps } from "@batijs/cor
 export default async function getTodo(props: TransformerProps): Promise<unknown> {
   const content = await loadMarkdown(props);
   const pmCmd = packageManager().run;
+  const provider = props.meta.BATI.has("postgres") ? "postgresql" : "sqlite";
 
   //language=Markdown
   const todo = `
 ## Prisma
 
-Run the following command once:
+Scaffold your Prisma schema (uses the \`DATABASE_URL\` already set in \`.env\`):
 \`\`\`sh
-${pmCmd} prisma init --db
+${pmCmd} prisma init --datasource-provider ${provider}
 \`\`\`
 
-then follow instructions at <https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/prisma-postgres#4-initialize-prisma-orm-and-create-a-prisma-postgres-database>`;
+Then define your models and run \`${pmCmd} prisma migrate dev\`. See <https://www.prisma.io/docs/getting-started>`;
 
   content.addMarkdownFeature(todo, "prisma");
 

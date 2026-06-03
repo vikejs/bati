@@ -1,4 +1,4 @@
-import { isScalar, isSeq, type Node, parseDocument, visit } from "yaml";
+import { isScalar, isSeq, type Node, parseDocument, visit, type YAMLMap } from "yaml";
 import { assert } from "../assert.js";
 import type { VikeMeta } from "../types.js";
 import { evalCondition } from "./eval.js";
@@ -33,6 +33,17 @@ function stripBatiLines(commentBefore: string | null | undefined): string | unde
   return remaining.trim() ? remaining : undefined;
 }
 
+// A comment before the first entry of a block mapping attaches to the map node's
+// `commentBefore` instead of the first key. When it's a BATI guard, move it onto
+// the first key so the regular Pair handling can evaluate (and possibly drop) it.
+function hoistFirstEntryComment(node: YAMLMap): void {
+  const first = node.items[0];
+  if (!first || !isScalar(first.key) || first.key.commentBefore) return;
+  if (extractBatiCondition(node.commentBefore) === null) return;
+  first.key.commentBefore = node.commentBefore;
+  node.commentBefore = undefined;
+}
+
 // Drops the node when its leading `# BATI...` comment evaluates falsy; otherwise
 // strips the BATI line(s) and keeps any surrounding comment. Clearing the comment
 // before removal stops it from re-attaching to the following sibling.
@@ -58,6 +69,7 @@ export function transformYaml(code: string, meta: VikeMeta): string {
     // Sequence items carry it on the item node itself (map or scalar).
     Map(_key, node, path) {
       if (isSeq(path[path.length - 1])) return resolveBatiComment(node, meta);
+      hoistFirstEntryComment(node);
     },
     Scalar(_key, node, path) {
       if (isSeq(path[path.length - 1])) return resolveBatiComment(node, meta);

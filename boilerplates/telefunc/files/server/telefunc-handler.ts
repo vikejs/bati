@@ -1,5 +1,6 @@
-import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
-import type { dbKysely, dbKyselyD1 } from "@batijs/kysely/database/kysely/db";
+import type { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "@batijs/kysely/database/kysely/db";
+import type { db as pgDb } from "@batijs/postgres/database/postgres/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
 import { telefunc } from "telefunc";
@@ -11,12 +12,16 @@ export const telefuncHandler: UniversalHandler = enhance(
       request,
       context: {
         ...(context as BATI.If<{
-          'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
+          'BATI.has("drizzle") && BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
+          'BATI.has("kysely") && BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
+          'BATI.has("postgres") && !BATI.hasOrm': { db: ReturnType<typeof pgDb> };
+          'BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm': { db: ReturnType<typeof sqliteDb> };
           'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
           'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
           'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
           'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
-          "BATI.hasD1": { db: D1Database };
+          "BATI.hasD1 && !BATI.hasOrm": { db: D1Database };
+          _: object;
         }>),
         ...(runtime as BATI.If<{
           "BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };

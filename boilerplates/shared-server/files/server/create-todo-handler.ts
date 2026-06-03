@@ -1,10 +1,12 @@
 /*# BATI include-if-imported #*/
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
-import type { dbD1, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import type { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import * as drizzleQueries from "@batijs/drizzle/database/drizzle/queries/todos";
-import type { dbKysely, dbKyselyD1 } from "@batijs/kysely/database/kysely/db";
+import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "@batijs/kysely/database/kysely/db";
 import * as kyselyQueries from "@batijs/kysely/database/kysely/queries/todos";
+import type { db as pgDb } from "@batijs/postgres/database/postgres/db";
+import * as pgQueries from "@batijs/postgres/database/postgres/queries/todos";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
@@ -13,12 +15,15 @@ import { enhance, type UniversalHandler } from "@universal-middleware/core";
 export const createTodoHandler: UniversalHandler<
   Universal.Context &
     BATI.If<{
-      'BATI.has("sqlite") && !BATI.hasD1': { db: ReturnType<typeof sqliteDb> };
+      'BATI.has("drizzle") && BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
+      'BATI.has("kysely") && BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
+      'BATI.has("postgres") && !BATI.hasOrm': { db: ReturnType<typeof pgDb> };
+      'BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm': { db: ReturnType<typeof sqliteDb> };
       'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
       'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
       'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
       'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
-      "BATI.hasD1": { db: D1Database };
+      "BATI.hasD1 && !BATI.hasOrm": { db: D1Database };
       _: object;
     }>
 > = enhance(
@@ -28,12 +33,14 @@ export const createTodoHandler: UniversalHandler<
 
     if (BATI.has("drizzle")) {
       await drizzleQueries.insertTodo(_context.db, newTodo.text);
-    } else if (BATI.has("sqlite") && !BATI.hasD1) {
+    } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
       sqliteQueries.insertTodo(_context.db, newTodo.text);
     } else if (BATI.has("kysely")) {
       await kyselyQueries.insertTodo(_context.db, newTodo.text);
-    } else if (BATI.hasD1) {
+    } else if (BATI.hasD1 && !BATI.hasOrm) {
       await d1Queries.insertTodo(_context.db, newTodo.text);
+    } else if (BATI.has("postgres") && !BATI.hasOrm) {
+      await pgQueries.insertTodo(_context.db, newTodo.text);
     } else {
       // This is where you'd persist the data
       console.log("Received new todo", newTodo);

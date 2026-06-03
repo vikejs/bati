@@ -49,12 +49,19 @@ it's recommended to only install a Server if you really need to, as Vike doesn't
   {
     label: "Database",
     group: categoriesGroups.Data,
-    description: `Helping you get started with a database solution.`,
+    description: `The database your app talks to. SQLite runs embedded (and powers Cloudflare D1);
+PostgreSQL targets a Postgres server. Selected on its own you get a thin client; pair it with an ORM or query builder below.`,
+  },
+  {
+    label: "ORM / Query builder",
+    group: categoriesGroups.Data,
+    description: `Type-safe data access on top of your database. Requires choosing a Database above.`,
   },
   {
     label: "Hosting",
     group: categoriesGroups.Deployment,
     description: `Quickly host your Vike project with a Serverless or VPS (coming soon) solution.`,
+    required: true,
   },
   {
     label: "Linter",

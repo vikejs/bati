@@ -1,0 +1,60 @@
+{
+  "name": "@batijs/postgres",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "@types/node": "^20.19.37",
+    "dotenv": "^17.4.2",
+    "postgres": "^3.4.7",
+    "tsx": "^4.22.3"
+  },
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    "./database/postgres/db": {
+      "types": "./dist/types/database/postgres/db.d.mts"
+    },
+    "./database/postgres/queries/todos": {
+      "types": "./dist/types/database/postgres/queries/todos.d.mts"
+    },
+    "./database/postgres/schema/all": {
+      "types": "./dist/types/database/postgres/schema/all.d.mts"
+    },
+    "./database/postgres/schema/todos": {
+      "types": "./dist/types/database/postgres/schema/todos.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "database/postgres/db": [
+        "./dist/types/database/postgres/db.d.mts"
+      ],
+      "database/postgres/queries/todos": [
+        "./dist/types/database/postgres/queries/todos.d.mts"
+      ],
+      "database/postgres/schema/all": [
+        "./dist/types/database/postgres/schema/all.d.mts"
+      ],
+      "database/postgres/schema/todos": [
+        "./dist/types/database/postgres/schema/todos.d.mts"
+      ]
+    }
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  }
+}

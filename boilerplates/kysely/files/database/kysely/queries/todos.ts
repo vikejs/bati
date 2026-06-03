@@ -1,7 +1,8 @@
-import type { dbKysely, dbKyselyD1 } from "../db";
+import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "../db";
 
 export async function insertTodo(
   db: BATI.If<{
+    'BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
     "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,
@@ -12,6 +13,7 @@ export async function insertTodo(
 
 export async function getAllTodos(
   db: BATI.If<{
+    'BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
     "!BATI.hasD1": ReturnType<typeof dbKysely>;
     "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,

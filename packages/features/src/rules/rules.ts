@@ -1,5 +1,5 @@
 import { RulesMessage } from "./enum.js";
-import { filter, type Rule, requires } from "./utils.js";
+import { exclusive, filter, type Rule, requires } from "./utils.js";
 
 // Defines all rules such as
 // - conflicts between packages
@@ -11,6 +11,11 @@ export default [
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_SQLITE_R_SERVER, "sqlite", ["Server"]),
   requires(RulesMessage.ERROR_KYSELY_R_SERVER, "kysely", ["Server"]),
+  requires(RulesMessage.ERROR_POSTGRES_R_SERVER, "postgres", ["Server"]),
+  exclusive(RulesMessage.ERROR_POSTGRES_X_SQLITE, ["postgres", "sqlite"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "drizzle", ["Database"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "kysely", ["Database"]),
+  requires(RulesMessage.ERROR_ORM_R_DATABASE, "prisma", ["Database"]),
   requires(RulesMessage.ERROR_DATA_R_SERVER, "Data fetching", ["Server"]),
   filter(RulesMessage.ERROR_CLOUDFLARE_R_COMPAT_SERVER, (fts) => {
     if (fts.has("cloudflare")) {
@@ -58,7 +63,7 @@ export default [
     return false;
   }),
   filter(RulesMessage.INFO_STACKBLITZ_COMPAT, (fts) => {
-    return fts.has("drizzle") || fts.has("sqlite") || fts.has("kysely") || fts.has("cloudflare");
+    return fts.has("drizzle") || fts.has("sqlite") || fts.has("kysely") || fts.has("postgres") || fts.has("cloudflare");
   }),
   filter(RulesMessage.ERROR_STORYBOOK_R_UI_FRAMEWORK, (fts) => {
     if (fts.has("storybook")) {

@@ -21,10 +21,8 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   // migrating — plus the source files each migration script must find in the runner.
   const startupMigrations: string[] = [];
   const migrationCopies: { sources: string[]; dest: string; from: string }[] = [];
-  if (meta.BATI.has("sqlite")) {
-    startupMigrations.push(`${run} sqlite:migrate`);
-    migrationCopies.push({ sources: ["/app/database/sqlite"], dest: "./database/sqlite", from: "builder" });
-  }
+  // Each ORM owns its migration; the raw-client engines (sqlite/postgres) run their
+  // own schema script, and only when no ORM is selected (Prisma is self-managed too).
   if (meta.BATI.has("drizzle")) {
     startupMigrations.push(`${run} drizzle:migrate`);
     migrationCopies.push({ sources: ["/app/database/migrations"], dest: "./database/migrations", from: "deps-dev" });
@@ -37,6 +35,14 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
       dest: "./dist/server/migrations",
       from: "builder",
     });
+  }
+  if (meta.BATI.has("sqlite") && !meta.BATI.hasOrm) {
+    startupMigrations.push(`${run} sqlite:migrate`);
+    migrationCopies.push({ sources: ["/app/database/sqlite"], dest: "./database/sqlite", from: "builder" });
+  }
+  if (meta.BATI.has("postgres") && !meta.BATI.hasOrm) {
+    startupMigrations.push(`${run} postgres:migrate`);
+    migrationCopies.push({ sources: ["/app/database/postgres"], dest: "./database/postgres", from: "builder" });
   }
 
   // Run migrations before the server when present; otherwise launch it directly.

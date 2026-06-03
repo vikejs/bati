@@ -49,6 +49,15 @@ export const rulesMessages = {
   [RulesMessage.ERROR_KYSELY_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Kysely"))}`,
   ),
+  [RulesMessage.ERROR_POSTGRES_R_SERVER]: error(
+    `A ${inverse(bold("Server"))} is required when using ${inverse(bold("PostgreSQL"))}`,
+  ),
+  [RulesMessage.ERROR_POSTGRES_X_SQLITE]: error(
+    `${inverse(bold("PostgreSQL"))} and ${inverse(bold("SQLite"))} are mutually exclusive database engines. Pick only one`,
+  ),
+  [RulesMessage.ERROR_ORM_R_DATABASE]: error(
+    `An ${inverse(bold("ORM / Query builder"))} requires a ${inverse(bold("Database"))} (SQLite or PostgreSQL)`,
+  ),
   [RulesMessage.ERROR_DATA_R_SERVER]: error(
     `A ${inverse(bold("Server"))} is required when using ${inverse(bold("Data fetching"))}`,
   ),
