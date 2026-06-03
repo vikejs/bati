@@ -17,9 +17,9 @@ const registry: EnvRegistry = [
 ];
 
 describe("composeEnvEntries", () => {
-  test("secrets pull from host, defaulted vars are host-overridable, public is omitted", () => {
+  test("secrets pull from host, defaulted vars are pinned to their compose value, public is omitted", () => {
     expect(composeEnvEntries(registry)).toEqual([
-      "DATABASE_URL=${DATABASE_URL:-/app/data/db.sqlite}",
+      "DATABASE_URL=/app/data/db.sqlite",
       "AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}",
       "SENTRY_DSN=${SENTRY_DSN}",
     ]);
