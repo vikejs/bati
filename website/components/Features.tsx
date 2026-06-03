@@ -47,9 +47,6 @@ function CategoryGroup(props: Category) {
     <>
       <div class="divider divider-start font-semibold">
         <span>{props.label}</span>
-        <Show when={props.required}>
-          <span class="-ml-1 text-xs opacity-60">(required)</span>
-        </Show>
       </div>
       <div class="flex flex-col lg:flex-row relative">
         <div class="basis-1/4 w-full gap-y-2">

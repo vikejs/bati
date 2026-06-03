@@ -61,6 +61,7 @@ PostgreSQL targets a Postgres server. Selected on its own you get a thin client;
     label: "Hosting",
     group: categoriesGroups.Deployment,
     description: `Quickly host your Vike project with a Serverless or VPS (coming soon) solution.`,
+    required: true,
   },
   {
     label: "Linter",
