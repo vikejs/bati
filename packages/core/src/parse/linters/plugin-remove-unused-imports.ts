@@ -2,10 +2,28 @@
 // Adapted from https://github.com/sweepline/eslint-plugin-unused-imports
 
 import tslint from "@typescript-eslint/eslint-plugin";
-import type { ESLint, Linter } from "eslint";
+import type { ESLint, Linter, Rule } from "eslint";
 // @ts-expect-error
 import ruleComposer from "eslint-rule-composer";
 import { getExtractor } from "./common.js";
+
+/**
+ * `eslint-rule-composer@0.3.0` is unmaintained and still calls the legacy
+ * `context.getFilename()` / `context.getSourceCode()` accessors that ESLint v10
+ * removed. Re-expose them on the rule context so the composer keeps working.
+ */
+function withLegacyContextAccessors(composedRule: Rule.RuleModule): Rule.RuleModule {
+  return {
+    ...composedRule,
+    create(context) {
+      const legacyContext = Object.create(context, {
+        getFilename: { value: () => context.filename },
+        getSourceCode: { value: () => context.sourceCode },
+      });
+      return composedRule.create(legacyContext);
+    },
+  };
+}
 
 const makePredicate = (isImport: boolean, addFixer: any) => (problem: any, context: any) => {
   const { parent } =
@@ -77,7 +95,7 @@ export default function pluginRemoveUnusedImports(): {
 
   const plugin: ESLint.Plugin = {
     rules: {
-      "unused-imports": ruleComposer.filterReports(rule, unusedImportsPredicate),
+      "unused-imports": withLegacyContextAccessors(ruleComposer.filterReports(rule, unusedImportsPredicate)),
     },
   };
 
