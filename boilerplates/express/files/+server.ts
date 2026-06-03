@@ -16,7 +16,7 @@ function getHandler() {
   const app = express();
 
   vike(app, [
-    //# BATI.hasDatabase
+    //# BATI.hasDbDemo
     // Make database available in Context as `context.db`
     dbMiddleware,
     //# BATI.has("authjs") || BATI.has("auth0")

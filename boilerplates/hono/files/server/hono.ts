@@ -11,7 +11,7 @@ function getApp() {
   const app = new Hono();
 
   vike(app, [
-    //# BATI.hasDatabase
+    //# BATI.hasDbDemo
     // Make database available in Context as `context.db`
     dbMiddleware,
     //# BATI.has("authjs") || BATI.has("auth0")

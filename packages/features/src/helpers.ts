@@ -38,6 +38,12 @@ export class BatiSet extends Set<Flags> {
     return this.hasOneOf(this.#orm);
   }
 
+  /** A database engine whose client and todo demo Bati scaffolds. Prisma is self-managed
+   * (it brings its own client and `DATABASE_URL`), so it opts out of the shared demo. */
+  get hasDbDemo(): boolean {
+    return this.hasDatabase && !this.has("prisma");
+  }
+
   get hasD1(): boolean {
     // D1 is the SQLite engine running on Cloudflare.
     return this.has("cloudflare") && this.has("sqlite");

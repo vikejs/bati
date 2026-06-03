@@ -3,7 +3,7 @@ import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "@batijs/kysely/data
 import type { db as pgDb } from "@batijs/postgres/database/postgres/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 
-//# BATI.hasDatabase && !BATI.has("prisma")
+//# BATI.hasDbDemo
 declare module "telefunc" {
   namespace Telefunc {
     interface Context {
