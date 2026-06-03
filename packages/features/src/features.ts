@@ -551,7 +551,7 @@ export const features = [
     label: "Vercel",
     flag: "vercel",
     image:
-      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxLjE2ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDIyMiI+PHBhdGggZD0ibTEyOCAwbDEyOCAyMjEuNzA1SDB6Ii8+PC9zdmc+",
+      "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48c3R5bGU+IHBhdGh7ZmlsbDpibGFjazt9QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTpkYXJrKXtwYXRoe2ZpbGw6d2hpdGU7fX08L3N0eWxlPjxwYXRoIGQ9Im0xMiAxLjYwOCAxMiAyMC43ODRIMFoiLz48L3N2Zz4=",
     url: "https://vercel.com",
     tagline: "Develop with your favorite tools. Launch globally, instantly. Keep pushing",
     repo: "vercel/vercel",
