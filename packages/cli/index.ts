@@ -113,7 +113,7 @@ async function generateKnipConfig(dist: string, boilerplates: BoilerplateDefWith
     join(dist, "knip.json"),
     JSON.stringify(
       {
-        $schema: "https://unpkg.com/knip@5/schema.json",
+        $schema: "https://unpkg.com/knip@6/schema.json",
         entry: aggregated.entry,
         ignore: aggregated.ignore,
         ignoreDependencies: aggregated.ignoreDependencies,
