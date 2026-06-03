@@ -1,7 +1,7 @@
 import { describeBati, describeMultipleBati, suite } from "@batijs/tests-utils";
 
 export default suite()
-  .matrix({ framework: "react", deploy: "vercel", server: ["hono", "h3", "express", "fastify", "elysia", null] })
+  .matrix({ framework: "react", deploy: "vercel", server: ["hono", "express", "fastify", "elysia", null] })
   .linters("eslint", "biome", "oxlint");
 
 await describeMultipleBati([

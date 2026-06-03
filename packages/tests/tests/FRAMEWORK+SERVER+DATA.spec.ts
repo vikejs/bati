@@ -6,7 +6,7 @@ const tests = suite()
   // SQLite engine: raw better-sqlite3 client plus Drizzle/Kysely on SQLite
   .matrix({
     framework: "solid",
-    server: ["express", "h3", "hono", "fastify"],
+    server: ["express", "elysia", "hono", "fastify"],
     data: ["trpc", "telefunc", "ts-rest", null],
     db: "sqlite",
     orm: ["drizzle", "kysely", null],
@@ -14,7 +14,7 @@ const tests = suite()
   // No database
   .matrix({
     framework: "solid",
-    server: ["express", "h3", "hono", "fastify", "elysia"],
+    server: ["express", "hono", "fastify", "elysia"],
     data: ["trpc", "telefunc", "ts-rest", null],
   })
   .matrix({
@@ -34,7 +34,7 @@ const tests = suite()
   // Cloudflare D1 (the SQLite engine on Workers)
   .matrix({
     framework: "solid",
-    server: ["hono", "h3"],
+    server: "hono",
     deploy: "cloudflare",
     data: ["trpc", "telefunc", "ts-rest", null],
     db: "sqlite",

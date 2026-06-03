@@ -275,31 +275,6 @@
         "@types/node": "^20.19.37",
       },
     },
-    "boilerplates/h3": {
-      "name": "@batijs/h3",
-      "version": "0.0.1",
-      "devDependencies": {
-        "@auth/core": "^0.41.2",
-        "@batijs/authjs": "workspace:*",
-        "@batijs/compile": "workspace:*",
-        "@batijs/core": "workspace:*",
-        "@batijs/shared-db": "workspace:*",
-        "@batijs/shared-server": "workspace:*",
-        "@batijs/telefunc": "workspace:*",
-        "@batijs/trpc": "workspace:*",
-        "@batijs/ts-rest": "workspace:*",
-        "@trpc/server": "^11.17.0",
-        "@types/express": "^5.0.6",
-        "@types/node": "^20.19.37",
-        "@universal-middleware/core": "^0.4.17",
-        "@vikejs/h3": "^0.2.0",
-        "dotenv": "^17.4.2",
-        "h3": "~1.15.11",
-        "telefunc": "^0.2.20",
-        "vike": "0.4.259",
-        "vite": "^8.0.14",
-      },
-    },
     "boilerplates/hono": {
       "name": "@batijs/hono",
       "version": "0.0.1",
@@ -709,7 +684,6 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@types/node": "^20.19.37",
-        "h3": "~1.15.11",
         "vike": "0.4.259",
         "vite": "^8.0.14",
         "vite-plugin-vercel": "^11.1.0",
@@ -1075,8 +1049,6 @@
     "@batijs/features": ["@batijs/features@workspace:packages/features"],
 
     "@batijs/google-analytics": ["@batijs/google-analytics@workspace:boilerplates/google-analytics"],
-
-    "@batijs/h3": ["@batijs/h3@workspace:boilerplates/h3"],
 
     "@batijs/hono": ["@batijs/hono@workspace:boilerplates/hono"],
 
@@ -2142,8 +2114,6 @@
 
     "@universal-middleware/fastify": ["@universal-middleware/fastify@0.5.26", "", { "dependencies": { "@universal-middleware/core": "^0.4.17", "@universal-middleware/node": "^0.2.0", "fastify-raw-body": "^5" } }, "sha512-DUImESs9taUeMOSvJcSB/gvK0M90wQXXwRNP5Rhjto5GTXiHair2yRjxhhjVqXAms63G/du5xrzoOIO1JBB3NQ=="],
 
-    "@universal-middleware/h3": ["@universal-middleware/h3@0.4.17", "", { "dependencies": { "@universal-middleware/core": "^0.4.17" } }, "sha512-Zx01aG9nt7DaQLEX7CarXFfJhafSDwNp6wHghCo2DZJqtX5lvfUix0ah76CFxKfpKfhaa4Fisx2evzYrZYn4rw=="],
-
     "@universal-middleware/hono": ["@universal-middleware/hono@0.4.21", "", { "dependencies": { "@universal-middleware/core": "^0.4.17" } }, "sha512-HvzvJ/4DIbj8z/OWzirZZGBhWbv/w/UTNUMLKt35U3wVUJRPDZVRm3SzJR55jQfoN4MBD6DvAT5jKFjdZzsPQg=="],
 
     "@universal-middleware/node": ["@universal-middleware/node@0.1.0", "", { "dependencies": { "@universal-middleware/core": "^0.4.17" } }, "sha512-I03mkOhw0Ka28MtALkpoGJYE8YYSJxmq/iambaqKGXxlFXgLI/VXlw0LmX9iansUzbolNq4hWFMfHyNp2xb4jA=="],
@@ -2163,8 +2133,6 @@
     "@vikejs/express": ["@vikejs/express@0.2.2", "", { "dependencies": { "@universal-middleware/express": "^0.4.26", "srvx": "^0.11.15" }, "peerDependencies": { "express": "^4.0.0 || ^5.0.0", "vike": "^0.4.255" } }, "sha512-wXM3s2p379JbxisBtYeKjD9lMUtKQL5g1ktZLrQ+K6g3KxDl3JnKjYS+zMwsT5Zm3v+ciWbik52/IzhBPVm8xg=="],
 
     "@vikejs/fastify": ["@vikejs/fastify@0.2.4", "", { "dependencies": { "@universal-middleware/fastify": "^0.5.25", "srvx": "^0.11.13" }, "peerDependencies": { "fastify": "^5.0.0", "vike": "^0.4.255" } }, "sha512-PWnd0zx3wdDPOQfDEpKezx8nR340tZCe4iQdkUwFbX6fMrw4+o4lAC731kMLki/N7MBlqiLenUlwwj82d1vylQ=="],
-
-    "@vikejs/h3": ["@vikejs/h3@0.2.0", "", { "dependencies": { "@universal-middleware/h3": "^0.4.17" }, "peerDependencies": { "h3": "^1.0.0", "vike": "^0.4.255" } }, "sha512-yAv903ZrZPJ9K2BzX/9gyVEnbVmWi2kxqfWmGKqjRxfW+E00Mh3nZzM2IMoJoqff9MqWYUw+jRD/3h/EbJOXhw=="],
 
     "@vikejs/hono": ["@vikejs/hono@0.2.0", "", { "dependencies": { "@universal-middleware/hono": "^0.4.21" }, "peerDependencies": { "hono": "^4.0.0", "vike": "^0.4.255" } }, "sha512-kM0CLN+qmjkJTvtHEHo7KiEbqnLAhibn7jqNWzlsfKXVjN0VIkY1U0E9hU7zIWYkxw6KCA2kNDt6IVRRixBsKw=="],
 

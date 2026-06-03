@@ -51,7 +51,7 @@ export const rulesMessages = {
         </a>
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">{selectedAuth()}</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">{selectedAuth()}</span>
           </li>
         </ul>
       </span>
@@ -87,7 +87,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Drizzle</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">Drizzle</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">Drizzle</span>
           </li>
         </ul>
       </span>
@@ -99,7 +99,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">SQLite</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">SQLite</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">SQLite</span>
           </li>
         </ul>
       </span>
@@ -111,7 +111,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Kysely</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">Kysely</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">Kysely</span>
           </li>
         </ul>
       </span>
@@ -123,7 +123,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">PostgreSQL</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">PostgreSQL</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">PostgreSQL</span>
           </li>
         </ul>
       </span>
@@ -170,7 +170,7 @@ export const rulesMessages = {
         A <span class="font-bold">Server</span> is required when using <span class="font-bold">Data fetching</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick a server (Express.js / H3 / ...) or unselect <span class="font-bold">{selectedData()}</span>
+            Either pick a server (Express.js / Hono / ...) or unselect <span class="font-bold">{selectedData()}</span>
           </li>
         </ul>
       </span>
@@ -187,7 +187,7 @@ export const rulesMessages = {
         <span class="font-bold">{selectedServer()}</span>.
         <ul class="list-custom list-dot">
           <li>
-            Either pick <span class="font-bold">Hono</span>, <span class="font-bold">H3</span>, or unselect{" "}
+            Either pick <span class="font-bold">Hono</span> or unselect{" "}
             <span class="font-bold">{selectedServer()}</span>
           </li>
         </ul>

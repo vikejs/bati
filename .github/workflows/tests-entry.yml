@@ -92,30 +92,29 @@ jobs:
           - vue--tailwindcss--daisyui--eslint--biome--oxlint
           - react--hono--authjs--eslint--biome--oxlint
           - react--hono--auth0--eslint--biome--oxlint
-          - react--h3--authjs--eslint--biome--oxlint
-          - react--h3--auth0--eslint--biome--oxlint
           - react--express--authjs--eslint--biome--oxlint
           - react--express--auth0--eslint--biome--oxlint
           - react--fastify--authjs--eslint--biome--oxlint
           - react--fastify--auth0--eslint--biome--oxlint
+          - react--elysia--authjs--eslint--biome--oxlint
+          - react--elysia--auth0--eslint--biome--oxlint
           - vue--hono--authjs--eslint--biome--oxlint
           - vue--hono--auth0--eslint--biome--oxlint
-          - vue--h3--authjs--eslint--biome--oxlint
-          - vue--h3--auth0--eslint--biome--oxlint
           - vue--express--authjs--eslint--biome--oxlint
           - vue--express--auth0--eslint--biome--oxlint
           - vue--fastify--authjs--eslint--biome--oxlint
           - vue--fastify--auth0--eslint--biome--oxlint
+          - vue--elysia--authjs--eslint--biome--oxlint
+          - vue--elysia--auth0--eslint--biome--oxlint
           - solid--hono--authjs--eslint--biome--oxlint
           - solid--hono--auth0--eslint--biome--oxlint
-          - solid--h3--authjs--eslint--biome--oxlint
-          - solid--h3--auth0--eslint--biome--oxlint
           - solid--express--authjs--eslint--biome--oxlint
           - solid--express--auth0--eslint--biome--oxlint
           - solid--fastify--authjs--eslint--biome--oxlint
           - solid--fastify--auth0--eslint--biome--oxlint
+          - solid--elysia--authjs--eslint--biome--oxlint
+          - solid--elysia--auth0--eslint--biome--oxlint
           - react--hono--cloudflare--auth0--eslint--biome--oxlint
-          - react--h3--cloudflare--auth0--eslint--biome--oxlint
           - react--hono--dokploy--authjs--eslint--biome--oxlint
           - react--hono--dokploy--auth0--eslint--biome--oxlint
           - solid--express--trpc--sqlite--drizzle--eslint--biome--oxlint
@@ -130,18 +129,18 @@ jobs:
           - solid--express--sqlite--drizzle--eslint--biome--oxlint
           - solid--express--sqlite--kysely--eslint--biome--oxlint
           - solid--express--sqlite--eslint--biome--oxlint
-          - solid--h3--trpc--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--trpc--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--trpc--sqlite--eslint--biome--oxlint
-          - solid--h3--telefunc--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--telefunc--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--telefunc--sqlite--eslint--biome--oxlint
-          - solid--h3--ts-rest--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--ts-rest--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--ts-rest--sqlite--eslint--biome--oxlint
-          - solid--h3--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--sqlite--eslint--biome--oxlint
+          - solid--elysia--trpc--sqlite--drizzle--eslint--biome--oxlint
+          - solid--elysia--trpc--sqlite--kysely--eslint--biome--oxlint
+          - solid--elysia--trpc--sqlite--eslint--biome--oxlint
+          - solid--elysia--telefunc--sqlite--drizzle--eslint--biome--oxlint
+          - solid--elysia--telefunc--sqlite--kysely--eslint--biome--oxlint
+          - solid--elysia--telefunc--sqlite--eslint--biome--oxlint
+          - solid--elysia--ts-rest--sqlite--drizzle--eslint--biome--oxlint
+          - solid--elysia--ts-rest--sqlite--kysely--eslint--biome--oxlint
+          - solid--elysia--ts-rest--sqlite--eslint--biome--oxlint
+          - solid--elysia--sqlite--drizzle--eslint--biome--oxlint
+          - solid--elysia--sqlite--kysely--eslint--biome--oxlint
+          - solid--elysia--sqlite--eslint--biome--oxlint
           - solid--hono--trpc--sqlite--drizzle--eslint--biome--oxlint
           - solid--hono--trpc--sqlite--kysely--eslint--biome--oxlint
           - solid--hono--trpc--sqlite--eslint--biome--oxlint
@@ -170,10 +169,6 @@ jobs:
           - solid--express--telefunc--eslint--biome--oxlint
           - solid--express--ts-rest--eslint--biome--oxlint
           - solid--express--eslint--biome--oxlint
-          - solid--h3--trpc--eslint--biome--oxlint
-          - solid--h3--telefunc--eslint--biome--oxlint
-          - solid--h3--ts-rest--eslint--biome--oxlint
-          - solid--h3--eslint--biome--oxlint
           - solid--hono--trpc--eslint--biome--oxlint
           - solid--hono--telefunc--eslint--biome--oxlint
           - solid--hono--ts-rest--eslint--biome--oxlint
@@ -182,6 +177,10 @@ jobs:
           - solid--fastify--telefunc--eslint--biome--oxlint
           - solid--fastify--ts-rest--eslint--biome--oxlint
           - solid--fastify--eslint--biome--oxlint
+          - solid--elysia--trpc--eslint--biome--oxlint
+          - solid--elysia--telefunc--eslint--biome--oxlint
+          - solid--elysia--ts-rest--eslint--biome--oxlint
+          - solid--elysia--eslint--biome--oxlint
           - react--hono--trpc--eslint--biome--oxlint
           - react--hono--telefunc--eslint--biome--oxlint
           - react--hono--ts-rest--eslint--biome--oxlint
@@ -214,25 +213,12 @@ jobs:
           - solid--hono--cloudflare--sqlite--drizzle--eslint--biome--oxlint
           - solid--hono--cloudflare--sqlite--kysely--eslint--biome--oxlint
           - solid--hono--cloudflare--sqlite--eslint--biome--oxlint
-          - solid--h3--cloudflare--trpc--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--cloudflare--trpc--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--cloudflare--trpc--sqlite--eslint--biome--oxlint
-          - solid--h3--cloudflare--telefunc--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--cloudflare--telefunc--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--cloudflare--telefunc--sqlite--eslint--biome--oxlint
-          - solid--h3--cloudflare--ts-rest--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--cloudflare--ts-rest--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--cloudflare--ts-rest--sqlite--eslint--biome--oxlint
-          - solid--h3--cloudflare--sqlite--drizzle--eslint--biome--oxlint
-          - solid--h3--cloudflare--sqlite--kysely--eslint--biome--oxlint
-          - solid--h3--cloudflare--sqlite--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--sqlite--drizzle--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--sqlite--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--postgres--drizzle--eslint--biome--oxlint
           - react--hono--dokploy--telefunc--postgres--eslint--biome--oxlint
           - aws--react--hono--eslint--biome--oxlint
           - react--cloudflare--hono--eslint--biome--oxlint
-          - react--cloudflare--h3--eslint--biome--oxlint
           - react--cloudflare--eslint--biome--oxlint
           - react--edgeone--eslint--biome--oxlint
           - vue--netlify--eslint--biome--oxlint
@@ -244,9 +230,9 @@ jobs:
           - solid--sentry--eslint--biome--oxlint
           - solid--storybook--eslint
           - react--vercel--hono--eslint--biome--oxlint
-          - react--vercel--h3--eslint--biome--oxlint
           - react--vercel--express--eslint--biome--oxlint
           - react--vercel--fastify--eslint--biome--oxlint
+          - react--vercel--elysia--eslint--biome--oxlint
           - react--vercel--eslint--biome--oxlint
           - react--compiled-css--eslint--biome
           - react--mantine--eslint--biome
@@ -294,12 +280,6 @@ jobs:
           - destination: react--hono--auth0--eslint--biome--oxlint
             flags: --react --hono --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: react--h3--authjs--eslint--biome--oxlint
-            flags: --react --h3 --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: react--h3--auth0--eslint--biome--oxlint
-            flags: --react --h3 --auth0 --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: react--express--authjs--eslint--biome--oxlint
             flags: --react --express --authjs --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
@@ -312,17 +292,17 @@ jobs:
           - destination: react--fastify--auth0--eslint--biome--oxlint
             flags: --react --fastify --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--elysia--authjs--eslint--biome--oxlint
+            flags: --react --elysia --authjs --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--elysia--auth0--eslint--biome--oxlint
+            flags: --react --elysia --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: vue--hono--authjs--eslint--biome--oxlint
             flags: --vue --hono --authjs --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: vue--hono--auth0--eslint--biome--oxlint
             flags: --vue --hono --auth0 --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: vue--h3--authjs--eslint--biome--oxlint
-            flags: --vue --h3 --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: vue--h3--auth0--eslint--biome--oxlint
-            flags: --vue --h3 --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: vue--express--authjs--eslint--biome--oxlint
             flags: --vue --express --authjs --eslint --biome --oxlint
@@ -336,17 +316,17 @@ jobs:
           - destination: vue--fastify--auth0--eslint--biome--oxlint
             flags: --vue --fastify --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--elysia--authjs--eslint--biome--oxlint
+            flags: --vue --elysia --authjs --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--elysia--auth0--eslint--biome--oxlint
+            flags: --vue --elysia --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--hono--authjs--eslint--biome--oxlint
             flags: --solid --hono --authjs --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--hono--auth0--eslint--biome--oxlint
             flags: --solid --hono --auth0 --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: solid--h3--authjs--eslint--biome--oxlint
-            flags: --solid --h3 --authjs --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: solid--h3--auth0--eslint--biome--oxlint
-            flags: --solid --h3 --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--express--authjs--eslint--biome--oxlint
             flags: --solid --express --authjs --eslint --biome --oxlint
@@ -360,11 +340,14 @@ jobs:
           - destination: solid--fastify--auth0--eslint--biome--oxlint
             flags: --solid --fastify --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--elysia--authjs--eslint--biome--oxlint
+            flags: --solid --elysia --authjs --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--elysia--auth0--eslint--biome--oxlint
+            flags: --solid --elysia --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: react--hono--cloudflare--auth0--eslint--biome--oxlint
             flags: --react --hono --cloudflare --auth0 --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
-          - destination: react--h3--cloudflare--auth0--eslint--biome--oxlint
-            flags: --react --h3 --cloudflare --auth0 --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: react--hono--dokploy--authjs--eslint--biome--oxlint
             flags: --react --hono --dokploy --authjs --eslint --biome --oxlint
@@ -414,42 +397,46 @@ jobs:
           - destination: solid--express--sqlite--eslint--biome--oxlint
             flags: --solid --express --sqlite --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--trpc--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --trpc --sqlite --drizzle --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--trpc--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --trpc --sqlite --kysely --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--trpc--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --trpc --sqlite --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--telefunc--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --telefunc --sqlite --drizzle --eslint --biome
+          - destination: solid--elysia--trpc--sqlite--drizzle--eslint--biome--oxlint
+            flags: --solid --elysia --trpc --sqlite --drizzle --eslint --biome
               --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--telefunc--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --telefunc --sqlite --kysely --eslint --biome --oxlint
+          - destination: solid--elysia--trpc--sqlite--kysely--eslint--biome--oxlint
+            flags: --solid --elysia --trpc --sqlite --kysely --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--telefunc--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --telefunc --sqlite --eslint --biome --oxlint
+          - destination: solid--elysia--trpc--sqlite--eslint--biome--oxlint
+            flags: --solid --elysia --trpc --sqlite --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--ts-rest--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --ts-rest --sqlite --drizzle --eslint --biome --oxlint
+          - destination: solid--elysia--telefunc--sqlite--drizzle--eslint--biome--oxlint
+            flags: --solid --elysia --telefunc --sqlite --drizzle --eslint --biome
+              --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--ts-rest--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --ts-rest --sqlite --kysely --eslint --biome --oxlint
+          - destination: solid--elysia--telefunc--sqlite--kysely--eslint--biome--oxlint
+            flags: --solid --elysia --telefunc --sqlite --kysely --eslint --biome
+              --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--ts-rest--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --ts-rest --sqlite --eslint --biome --oxlint
+          - destination: solid--elysia--telefunc--sqlite--eslint--biome--oxlint
+            flags: --solid --elysia --telefunc --sqlite --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --sqlite --drizzle --eslint --biome --oxlint
+          - destination: solid--elysia--ts-rest--sqlite--drizzle--eslint--biome--oxlint
+            flags: --solid --elysia --ts-rest --sqlite --drizzle --eslint --biome
+              --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --sqlite --kysely --eslint --biome --oxlint
+          - destination: solid--elysia--ts-rest--sqlite--kysely--eslint--biome--oxlint
+            flags: --solid --elysia --ts-rest --sqlite --kysely --eslint --biome
+              --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --sqlite --eslint --biome --oxlint
+          - destination: solid--elysia--ts-rest--sqlite--eslint--biome--oxlint
+            flags: --solid --elysia --ts-rest --sqlite --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--sqlite--drizzle--eslint--biome--oxlint
+            flags: --solid --elysia --sqlite --drizzle --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--sqlite--kysely--eslint--biome--oxlint
+            flags: --solid --elysia --sqlite --kysely --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--sqlite--eslint--biome--oxlint
+            flags: --solid --elysia --sqlite --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: solid--hono--trpc--sqlite--drizzle--eslint--biome--oxlint
             flags: --solid --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
@@ -545,18 +532,6 @@ jobs:
           - destination: solid--express--eslint--biome--oxlint
             flags: --solid --express --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--trpc--eslint--biome--oxlint
-            flags: --solid --h3 --trpc --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--telefunc--eslint--biome--oxlint
-            flags: --solid --h3 --telefunc --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--ts-rest--eslint--biome--oxlint
-            flags: --solid --h3 --ts-rest --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--eslint--biome--oxlint
-            flags: --solid --h3 --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: solid--hono--trpc--eslint--biome--oxlint
             flags: --solid --hono --trpc --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
@@ -580,6 +555,18 @@ jobs:
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: solid--fastify--eslint--biome--oxlint
             flags: --solid --fastify --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--trpc--eslint--biome--oxlint
+            flags: --solid --elysia --trpc --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--telefunc--eslint--biome--oxlint
+            flags: --solid --elysia --telefunc --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--ts-rest--eslint--biome--oxlint
+            flags: --solid --elysia --ts-rest --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+DATA.spec.ts
+          - destination: solid--elysia--eslint--biome--oxlint
+            flags: --solid --elysia --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--trpc--eslint--biome--oxlint
             flags: --react --hono --trpc --eslint --biome --oxlint
@@ -692,52 +679,6 @@ jobs:
           - destination: solid--hono--cloudflare--sqlite--eslint--biome--oxlint
             flags: --solid --hono --cloudflare --sqlite --eslint --biome --oxlint
             test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--trpc--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --trpc --sqlite --drizzle --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--trpc--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --trpc --sqlite --kysely --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--trpc--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --trpc --sqlite --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--telefunc--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --telefunc --sqlite --drizzle --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--telefunc--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --telefunc --sqlite --kysely --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--telefunc--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --telefunc --sqlite --eslint --biome
-              --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--ts-rest--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --ts-rest --sqlite --drizzle --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--ts-rest--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --ts-rest --sqlite --kysely --eslint
-              --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--ts-rest--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --ts-rest --sqlite --eslint --biome
-              --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--sqlite--drizzle--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --sqlite --drizzle --eslint --biome
-              --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--sqlite--kysely--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --sqlite --kysely --eslint --biome
-              --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
-          - destination: solid--h3--cloudflare--sqlite--eslint--biome--oxlint
-            flags: --solid --h3 --cloudflare --sqlite --eslint --biome --oxlint
-            test-files: FRAMEWORK+SERVER+DATA.spec.ts
           - destination: react--hono--dokploy--telefunc--sqlite--drizzle--eslint--biome--oxlint
             flags: --react --hono --dokploy --telefunc --sqlite --drizzle --eslint
               --biome --oxlint
@@ -759,9 +700,6 @@ jobs:
             test-files: FRAMEWORK+aws.spec.ts
           - destination: react--cloudflare--hono--eslint--biome--oxlint
             flags: --react --cloudflare --hono --eslint --biome --oxlint
-            test-files: FRAMEWORK+cloudflare.spec.ts
-          - destination: react--cloudflare--h3--eslint--biome--oxlint
-            flags: --react --cloudflare --h3 --eslint --biome --oxlint
             test-files: FRAMEWORK+cloudflare.spec.ts
           - destination: react--cloudflare--eslint--biome--oxlint
             flags: --react --cloudflare --eslint --biome --oxlint
@@ -796,14 +734,14 @@ jobs:
           - destination: react--vercel--hono--eslint--biome--oxlint
             flags: --react --vercel --hono --eslint --biome --oxlint
             test-files: FRAMEWORK+vercel.spec.ts
-          - destination: react--vercel--h3--eslint--biome--oxlint
-            flags: --react --vercel --h3 --eslint --biome --oxlint
-            test-files: FRAMEWORK+vercel.spec.ts
           - destination: react--vercel--express--eslint--biome--oxlint
             flags: --react --vercel --express --eslint --biome --oxlint
             test-files: FRAMEWORK+vercel.spec.ts
           - destination: react--vercel--fastify--eslint--biome--oxlint
             flags: --react --vercel --fastify --eslint --biome --oxlint
+            test-files: FRAMEWORK+vercel.spec.ts
+          - destination: react--vercel--elysia--eslint--biome--oxlint
+            flags: --react --vercel --elysia --eslint --biome --oxlint
             test-files: FRAMEWORK+vercel.spec.ts
           - destination: react--vercel--eslint--biome--oxlint
             flags: --react --vercel --eslint --biome --oxlint
