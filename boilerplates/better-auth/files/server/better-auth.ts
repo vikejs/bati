@@ -27,11 +27,8 @@ function getD1(runtime: RuntimeAdapter): D1Database {
   throw new Error("Cloudflare D1 binding (DB) is not available");
 }
 
-/**
- * Resolve the database Better Auth talks to. Better Auth manages its own tables (`user`, `session`,
- * `account`, `verification`) through its built-in Kysely adapter, so it works on top of whichever
- * database/ORM the app uses for the rest of its data: it only needs the underlying engine.
- */
+// Better Auth keeps its own tables (user/session/account/verification) via its built-in adapter,
+// so it only needs the engine — independent of whatever ORM the app uses for its own data.
 function getDatabase(_runtime?: RuntimeAdapter) {
   if (BATI.hasD1) {
     // Cloudflare D1 is the SQLite engine on Workers, reached through Kysely's D1 dialect.
@@ -52,21 +49,14 @@ function getDatabase(_runtime?: RuntimeAdapter) {
   }
 }
 
-/**
- * Better Auth configuration.
- * @link {@see https://better-auth.com/docs/reference/options}
- */
 export function getAuthConfig(runtime?: RuntimeAdapter): BetterAuthOptions {
   return {
-    // TODO: Replace the secret in production {@see https://better-auth.com/docs/reference/options#secret}
-    secret: env.BETTER_AUTH_SECRET ?? "dev-secret-please-change-me-in-production",
-    baseURL: env.BETTER_AUTH_URL,
+    secret: env.BETTER_AUTH_SECRET,
     database: getDatabase(runtime) as BetterAuthOptions["database"],
     emailAndPassword: {
       enabled: true,
     },
-    // The GitHub provider is only enabled when its credentials are set, so the app keeps working
-    // out of the box (and in CI) without OAuth secrets. {@see TODO.md}
+    // GitHub is only enabled once its credentials are set, so the app runs out of the box without them.
     socialProviders:
       env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
         ? {
