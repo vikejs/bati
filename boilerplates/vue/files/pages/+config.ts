@@ -9,7 +9,7 @@ const config: Config = {
   title: "My Vike App",
   description: "Demo showcasing Vike",
 
-  //# BATI.has("auth0") || BATI.has("authjs")
+  //# BATI.has("auth0") || BATI.has("authjs") || BATI.has("better-auth")
   passToClient: ["user"],
   extends: [vikeVue],
 

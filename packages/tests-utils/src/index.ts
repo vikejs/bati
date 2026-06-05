@@ -2,6 +2,7 @@ export * from "./combinate.js";
 export * from "./describe.js";
 export * from "./exec.js";
 export * from "./is-docker-available.js";
+export * from "./is-postgres-available.js";
 export * from "./package-manager.js";
 export * from "./port.js";
 export * from "./prepare.js";

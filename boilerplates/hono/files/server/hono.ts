@@ -1,4 +1,5 @@
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
+import { betterAuthHandler, betterAuthSessionMiddleware } from "@batijs/better-auth/server/better-auth-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";
 import { createTodoHandler } from "@batijs/shared-server/server/create-todo-handler";
 import { telefuncHandler } from "@batijs/telefunc/server/telefunc-handler";
@@ -20,6 +21,12 @@ function getApp() {
     //# BATI.has("authjs") || BATI.has("auth0")
     // Auth.js route. See https://authjs.dev/getting-started/installation
     authjsHandler,
+    //# BATI.has("better-auth")
+    // Append Better Auth user to context
+    betterAuthSessionMiddleware,
+    //# BATI.has("better-auth")
+    // Better Auth route. See https://better-auth.com/docs/installation
+    betterAuthHandler,
     //# BATI.has("trpc")
     // tRPC route. See https://trpc.io/docs/server/adapters
     trpcHandler("/api/trpc"),

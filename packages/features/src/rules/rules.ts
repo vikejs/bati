@@ -7,6 +7,13 @@ import { exclusive, filter, type Rule, requires } from "./utils.js";
 // - particular status of one or multiple package
 export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
+  requires(RulesMessage.ERROR_BETTER_AUTH_R_DATABASE, "better-auth", ["Database"]),
+  // TEMPORARY: better-auth's Kysely adapter imports migration constants from "kysely" that kysely 0.29
+  // moved to "kysely/migration". Until the fix ships (https://github.com/better-auth/better-auth/commit/0933c050),
+  // better-auth can't be paired with Kysely, and can't be bundled for Cloudflare/D1 (where the adapter's
+  // SQLite dialects get bundled into the Worker). Remove both rules once the fixed better-auth is adopted.
+  exclusive(RulesMessage.ERROR_BETTER_AUTH_X_KYSELY, ["better-auth", "kysely"]),
+  exclusive(RulesMessage.ERROR_BETTER_AUTH_X_CLOUDFLARE, ["better-auth", "cloudflare"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_SQLITE_R_SERVER, "sqlite", ["Server"]),

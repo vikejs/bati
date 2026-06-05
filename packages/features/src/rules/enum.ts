@@ -2,6 +2,12 @@ export enum RulesMessage {
   // --- ERROR
   // A Server is required when using Auth
   ERROR_AUTH_R_SERVER,
+  // A Database is required when using Better Auth
+  ERROR_BETTER_AUTH_R_DATABASE,
+  // TEMPORARY: Better Auth cannot be combined with Kysely (see rules.ts)
+  ERROR_BETTER_AUTH_X_KYSELY,
+  // TEMPORARY: Better Auth is not yet supported on Cloudflare (see rules.ts)
+  ERROR_BETTER_AUTH_X_CLOUDFLARE,
   // React is required when using Compiled CSS
   ERROR_COMPILED_R_REACT,
   // A Server is required when using Drizzle

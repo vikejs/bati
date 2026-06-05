@@ -57,6 +57,39 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_BETTER_AUTH_R_DATABASE]: error(() => {
+    return (
+      <span class="inline-block">
+        A <span class="font-bold">Database</span> is required when using <span class="font-bold">Better Auth</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Pick a database (<span class="font-bold">SQLite</span> or <span class="font-bold">PostgreSQL</span>) so
+            Better Auth can store users and sessions
+          </li>
+        </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.ERROR_BETTER_AUTH_X_KYSELY]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">Better Auth</span> cannot be combined with <span class="font-bold">Kysely</span> yet.
+        <ul class="list-custom list-dot">
+          <li>Pick another ORM / query builder (or none). This is temporary until an upcoming Better Auth release.</li>
+        </ul>
+      </span>
+    );
+  }),
+  [RulesMessage.ERROR_BETTER_AUTH_X_CLOUDFLARE]: error(() => {
+    return (
+      <span class="inline-block">
+        <span class="font-bold">Better Auth</span> is not supported on <span class="font-bold">Cloudflare</span> yet.
+        <ul class="list-custom list-dot">
+          <li>This is temporary until an upcoming Better Auth release.</li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(() => {
     return (
       <span class="inline-block">

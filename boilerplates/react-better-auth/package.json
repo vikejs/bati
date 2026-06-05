@@ -1,0 +1,68 @@
+{
+  "name": "@batijs/react-better-auth",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "bati-compile-boilerplate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@batijs/compile": "workspace:*",
+    "@batijs/core": "workspace:*",
+    "@types/node": "^20.19.37",
+    "@types/react": "^19.2.16",
+    "better-auth": "^1.6.14",
+    "react": "^19.2.7",
+    "vike": "0.4.259",
+    "vike-react": "^0.6.23"
+  },
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    "./components/AuthNav": {
+      "types": "./dist/types/components/AuthNav.d.mts"
+    },
+    "./pages/account/+Page": {
+      "types": "./dist/types/pages/account/+Page.d.mts"
+    },
+    "./pages/account/+guard": {
+      "types": "./dist/types/pages/account/+guard.d.mts"
+    },
+    "./pages/login/+Page": {
+      "types": "./dist/types/pages/login/+Page.d.mts"
+    },
+    "./pages/signup/+Page": {
+      "types": "./dist/types/pages/signup/+Page.d.mts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "components/AuthNav": [
+        "./dist/types/components/AuthNav.d.mts"
+      ],
+      "pages/account/+Page": [
+        "./dist/types/pages/account/+Page.d.mts"
+      ],
+      "pages/account/+guard": [
+        "./dist/types/pages/account/+guard.d.mts"
+      ],
+      "pages/login/+Page": [
+        "./dist/types/pages/login/+Page.d.mts"
+      ],
+      "pages/signup/+Page": [
+        "./dist/types/pages/signup/+Page.d.mts"
+      ]
+    }
+  },
+  "nx": {
+    "tags": [
+      "type:boilerplate"
+    ]
+  }
+}
