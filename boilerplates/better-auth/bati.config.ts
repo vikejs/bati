@@ -29,7 +29,9 @@ export default defineConfig({
   ],
   nextSteps(meta, packageManager, { bold }) {
     return [
-      ...(meta.BATI.hasD1
+      // With Drizzle or Cloudflare D1, Better Auth's tables are created by Drizzle's migrate flow or a
+      // wrangler D1 migration; only the standalone engines get a dedicated `better-auth:migrate` step.
+      ...(meta.BATI.hasD1 || meta.BATI.has("drizzle")
         ? []
         : [
             {

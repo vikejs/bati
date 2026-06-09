@@ -1,12 +1,13 @@
 import type { TransformerProps } from "@batijs/core";
 
-// Cloudflare D1 only: Better Auth's CLI cannot reach the D1 binding, so its core tables are shipped
-// as a wrangler D1 migration (applied by `d1:migrate` / `d1:deploy`). On every other database the
-// `better-auth:migrate` script creates these tables programmatically instead.
+// Cloudflare D1 without an ORM: Better Auth's CLI cannot reach the D1 binding, so its core tables are
+// shipped as a wrangler D1 migration (applied by `d1:migrate` / `d1:deploy`). With Drizzle the schema
+// owns these tables instead (see ../drizzle/schema/auth.ts); on other engines the `better-auth:migrate`
+// script creates them programmatically.
 // Column types follow Better Auth's SQLite mapping (string→text, boolean→integer, date→date).
 // Keep in sync with `npx @better-auth/cli generate` if you customize the Better Auth config.
 export default function getMigration(props: TransformerProps): string | undefined {
-  if (!props.meta.BATI.hasD1) return undefined;
+  if (!props.meta.BATI.hasD1 || props.meta.BATI.has("drizzle")) return undefined;
 
   //language=SQL
   return `CREATE TABLE IF NOT EXISTS "user" (

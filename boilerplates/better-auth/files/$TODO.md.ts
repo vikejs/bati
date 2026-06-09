@@ -5,9 +5,11 @@ export default async function getTodo(props: TransformerProps): Promise<unknown>
   const pmRun = packageManager().run;
   const { BATI } = props.meta;
 
-  const migrateStep = BATI.hasD1
-    ? `Create Better Auth's tables in your D1 database. Generate the SQL with \`npx @better-auth/cli generate\` and apply it as a [wrangler D1 migration](https://developers.cloudflare.com/d1/reference/migrations/).`
-    : `Create Better Auth's tables (run again whenever the schema changes):
+  const migrateStep = BATI.has("drizzle")
+    ? `Create Better Auth's tables — they live in your Drizzle schema (\`database/drizzle/schema/auth.ts\`), so the Drizzle migrate steps create them.`
+    : BATI.hasD1
+      ? `Create Better Auth's tables in your D1 database. Generate the SQL with \`npx @better-auth/cli generate\` and apply it as a [wrangler D1 migration](https://developers.cloudflare.com/d1/reference/migrations/).`
+      : `Create Better Auth's tables (run again whenever the schema changes):
 \`\`\`sh
 ${pmRun} better-auth:migrate
 \`\`\``;

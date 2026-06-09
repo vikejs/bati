@@ -24,7 +24,5 @@ type Bindings = {
 const lambdaApp = new Hono<{ Bindings: Bindings }>();
 
 lambdaApp.route("/", app as Hono);
-// hono's aws-lambda handler returns hono's own result shape, which is wider than @types/aws-lambda's
-// APIGatewayProxyResult; the permissive `Handler` defaults accept it without losing the Lambda entry type.
 export const handler: Handler = handle(lambdaApp);
 /*{ /if }*/
