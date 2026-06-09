@@ -611,4 +611,23 @@ export const x = 1;`;
     expect(output).toContain(`import "./server/load";`);
     expect([...context.imports]).toContain("./server/load");
   });
+
+  // Regression: when the gated import is the first statement, a file-level global
+  // comment is `comments[0]` until a later pass strips it, hiding the condition.
+  // `addImport` runs first; the retraction must still happen once the condition
+  // becomes visible — otherwise the imported file is wrongly kept.
+  const codeWithGlobalComment = `/*# BATI include-if-imported #*/
+//# BATI.has("react")
+import "@batijs/shared-env/server/load";
+export const x = 1;`;
+
+  test("dropped from the graph even when hidden behind a global comment", () => {
+    const { code: output, context } = transform(codeWithGlobalComment, "test.ts", {
+      BATI: new BatiSet([], features, "pnpm"),
+      BATI_TEST: false,
+    });
+
+    expect(output).not.toContain("server/load");
+    expect([...context.imports]).not.toContain("./server/load");
+  });
 });

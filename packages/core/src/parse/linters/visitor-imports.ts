@@ -44,16 +44,25 @@ export function visitorImportStatement(
   node: AST.ESLintImportDeclaration | ESTree.ImportDeclaration | TSESTree.ImportDeclaration,
   meta: VikeMeta,
 ) {
-  // When a BATI condition will strip this import statement, skip recording it in
-  // the `include-if-imported` graph (and skip the path rewrite). Side-effect
-  // imports are never caught by the unused-imports rule, so this is the only
-  // place to keep their bookkeeping correct.
+  const source = (node as TSESTree.ImportDeclaration).source;
+  const extractor = getExtractor(context);
+
+  // When a BATI condition will strip this import statement, it must not count
+  // towards the `include-if-imported` graph (and there is no point rewriting its
+  // path). Side-effect imports are never caught by the unused-imports rule, so
+  // this is the only place to keep their bookkeeping correct.
+  //
+  // The condition may only become detectable in a later fix pass: when the
+  // import is the first statement, a preceding file-level global comment (e.g.
+  // `/*# BATI include-if-imported #*/`) is `comments[0]` until it is stripped,
+  // hiding the `//#` condition behind it. By then `addImport` has already run in
+  // an earlier pass, so retract it explicitly with `deleteImport`.
   if (isRemovedByCondition(sourceCode, node, meta)) {
+    extractor?.deleteImport(source.value);
     return;
   }
 
-  const matches = getBatiImportMatch((node as TSESTree.ImportDeclaration).source.value);
-  const extractor = getExtractor(context);
+  const matches = getBatiImportMatch(source.value);
 
   if (matches) {
     const newImport = relative(context.filename, matches[1]);
