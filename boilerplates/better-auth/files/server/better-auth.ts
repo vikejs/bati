@@ -2,15 +2,10 @@
 import { env as cloudflareEnv } from "cloudflare:workers";
 import type { RuntimeAdapter } from "@universal-middleware/core";
 import type { BetterAuthOptions } from "better-auth";
-//# BATI.has("sqlite") && !BATI.hasD1
 import Database from "better-sqlite3";
-//# BATI.hasD1 || BATI.has("postgres")
 import { Kysely } from "kysely";
-//# BATI.hasD1
 import { D1Dialect } from "kysely-d1";
-//# BATI.has("postgres")
 import { PostgresJSDialect } from "kysely-postgres-js";
-//# BATI.has("postgres")
 import postgres from "postgres";
 
 const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefined> }> = BATI.has("cloudflare")
@@ -20,8 +15,8 @@ const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefine
     : {};
 
 //# BATI.hasD1
-function getD1(runtime: RuntimeAdapter): D1Database {
-  if (runtime.runtime === "workerd" && runtime.env) {
+function getD1(runtime?: RuntimeAdapter): D1Database {
+  if (runtime?.runtime === "workerd" && runtime.env) {
     return runtime.env.DB as D1Database;
   }
   throw new Error("Cloudflare D1 binding (DB) is not available");
@@ -29,11 +24,11 @@ function getD1(runtime: RuntimeAdapter): D1Database {
 
 // Better Auth keeps its own tables (user/session/account/verification) via its built-in adapter,
 // so it only needs the engine — independent of whatever ORM the app uses for its own data.
-function getDatabase(_runtime?: RuntimeAdapter) {
+function getDatabase(_runtime?: RuntimeAdapter): BetterAuthOptions["database"] {
   if (BATI.hasD1) {
     // Cloudflare D1 is the SQLite engine on Workers, reached through Kysely's D1 dialect.
     return {
-      db: new Kysely({ dialect: new D1Dialect({ database: getD1(_runtime!) }) }),
+      db: new Kysely({ dialect: new D1Dialect({ database: getD1(_runtime) }) }),
       type: "sqlite" as const,
     };
   } else if (BATI.has("postgres")) {
@@ -52,7 +47,7 @@ function getDatabase(_runtime?: RuntimeAdapter) {
 export function getAuthConfig(runtime?: RuntimeAdapter): BetterAuthOptions {
   return {
     secret: env.BETTER_AUTH_SECRET,
-    database: getDatabase(runtime) as BetterAuthOptions["database"],
+    database: getDatabase(runtime),
     emailAndPassword: {
       enabled: true,
     },

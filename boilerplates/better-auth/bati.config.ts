@@ -34,7 +34,7 @@ export default defineConfig({
         : [
             {
               type: "command" as const,
-              step: `${packageManager} run better-auth:migrate`,
+              step: `${packageManager} better-auth:migrate`,
             },
           ]),
       {
