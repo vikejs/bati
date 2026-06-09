@@ -78,7 +78,7 @@ export default function vueLinterConfig(meta: VikeMeta): {
             // script
             {
               ImportDeclaration(node) {
-                visitorImportStatement(context as Rule.RuleContext, node);
+                visitorImportStatement(context as Rule.RuleContext, sourceCode, node, meta);
               },
               ":statement"(node) {
                 visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);

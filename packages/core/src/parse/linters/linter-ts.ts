@@ -27,7 +27,7 @@ export default function tsLinterConfig(meta: VikeMeta): {
             },
 
             ImportDeclaration(node) {
-              visitorImportStatement(context as Rule.RuleContext, node);
+              visitorImportStatement(context as Rule.RuleContext, sourceCode, node, meta);
             },
             ":expression"(node) {
               visitorStatementWithComments(context as Rule.RuleContext, sourceCode, node, meta);

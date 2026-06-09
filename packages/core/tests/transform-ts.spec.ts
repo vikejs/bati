@@ -581,3 +581,34 @@ import "react";`,
     `import "react";`,
   );
 });
+
+describe("imports stripped by a BATI condition are not tracked", () => {
+  // An `include-if-imported` target relies on the import graph (`context.imports`)
+  // to decide whether to keep a file. A side-effect import gated by a falsy BATI
+  // condition is removed from the code, so it must also be removed from the graph
+  // — otherwise the imported file is wrongly kept (and later flagged unused).
+  const code = `//# BATI.has("react")
+import "@batijs/shared-env/server/load";
+export const x = 1;`;
+
+  test("dropped from the graph when the condition is false", () => {
+    const { code: output, context } = transform(code, "test.ts", {
+      BATI: new BatiSet([], features, "pnpm"),
+      BATI_TEST: false,
+    });
+
+    expect(output).not.toContain("shared-env");
+    expect(output).not.toContain("server/load");
+    expect([...context.imports]).not.toContain("./server/load");
+  });
+
+  test("kept in the graph when the condition is true", () => {
+    const { code: output, context } = transform(code, "test.ts", {
+      BATI: new BatiSet(["react"], features, "pnpm"),
+      BATI_TEST: false,
+    });
+
+    expect(output).toContain(`import "./server/load";`);
+    expect([...context.imports]).toContain("./server/load");
+  });
+});

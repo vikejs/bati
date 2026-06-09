@@ -1,5 +1,3 @@
-//# BATI.has("auth0")
-
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
