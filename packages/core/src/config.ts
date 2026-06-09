@@ -25,6 +25,8 @@ export interface BatiConfig {
   knip?: BatiKnipConfig;
   /** Env vars this feature contributes, gated on `meta` (see {@link EnvRegistryFactory}). */
   env?: EnvRegistryFactory;
+  /** Files (relative to the app root) this feature needs in the production runtime; collected by deploy targets like the Dockerfile generator. */
+  deploy?: string[] | ((meta: VikeMeta) => string[]);
 }
 
 // Small helper to provide type inference like Vite's defineConfig
@@ -58,6 +60,12 @@ export function defineConfig<T extends BatiConfig>(config: T): T {
   }
   if ("env" in config) {
     assert(typeof config.env === "function", `'env' must be a function of meta`);
+  }
+  if ("deploy" in config) {
+    assert(
+      Array.isArray(config.deploy) || typeof config.deploy === "function",
+      `'deploy' must be an array or a function of meta`,
+    );
   }
   return config;
 }

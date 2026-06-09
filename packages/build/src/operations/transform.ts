@@ -67,11 +67,13 @@ export async function executeOperationTransform(
     previousOperationSameDestination,
     packageJson,
     env,
+    deploy,
   }: {
     meta: VikeMeta;
     previousOperationSameDestination?: FileOperation & OperationReport;
     packageJson: PackageJson;
     env: EnvRegistry;
+    deploy: string[];
   },
 ): Promise<OperationReport> {
   const transformer = await importTransformer(op.sourceAbsolute);
@@ -87,6 +89,7 @@ export async function executeOperationTransform(
       target: op.destination,
       packageJson,
       env,
+      deploy,
     }),
   );
 

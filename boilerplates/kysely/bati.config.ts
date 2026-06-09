@@ -4,6 +4,8 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("kysely");
   },
+  // migrate.mjs reads these off disk at runtime (FileMigrationProvider), so the sources must ship.
+  deploy: ["database/kysely/migrations"],
   nextSteps(meta, packageManager, { bold }) {
     if (meta.BATI.hasD1) {
       // D1 migrations are handled differently via wrangler

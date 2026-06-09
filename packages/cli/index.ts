@@ -617,11 +617,21 @@ async function run() {
       // from which every env sink (.env, docker-compose, Dockerfile, wrangler) is derived.
       const env = filteredBoilerplates.flatMap((b) => b.config.env?.(meta) ?? []);
 
+      // Each selected boilerplate's runtime files, deduped into the list deploy targets ship.
+      const deploy = [
+        ...new Set(
+          filteredBoilerplates.flatMap((b) =>
+            typeof b.config.deploy === "function" ? b.config.deploy(meta) : (b.config.deploy ?? []),
+          ),
+        ),
+      ];
+
       await exec(
         {
           source: sources,
           dist: args.project,
           env,
+          deploy,
         },
         meta,
       );

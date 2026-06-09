@@ -5,6 +5,8 @@ export default defineConfig({
     // Raw postgres.js client: the PostgreSQL engine with no ORM/query builder.
     return meta.BATI.has("postgres") && !meta.BATI.hasOrm;
   },
+  // Schema script runs as raw source at container startup and imports server/load.ts.
+  deploy: ["database/postgres", "server/load.ts"],
   nextSteps(_meta, packageManager, { bold }) {
     return [
       {

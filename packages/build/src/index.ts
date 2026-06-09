@@ -59,11 +59,12 @@ export async function* walk(dir: string): AsyncGenerator<string> {
 }
 
 export default async function main(
-  options: { source: string | string[]; dist: string; env?: EnvRegistry },
+  options: { source: string | string[]; dist: string; env?: EnvRegistry; deploy?: string[] },
   meta: VikeMeta,
 ) {
   const sources = Array.isArray(options.source) ? options.source : [options.source];
   const env = options.env ?? [];
+  const deploy = options.deploy ?? [];
 
   function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
     const rf = new RelationFile(target, includeIfImported);
@@ -143,6 +144,7 @@ Please report this issue to https://github.com/vikejs/bati`,
         previousOperationSameDestination: previousOp,
         packageJson,
         env,
+        deploy,
       });
 
       // TODO: also call updateAllImports. Needs to compute report.context.imports

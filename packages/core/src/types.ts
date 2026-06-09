@@ -17,6 +17,7 @@ export type TransformerProps = {
   meta: VikeMeta;
   packageJson: PackageJson;
   env: EnvRegistry;
+  deploy: string[];
 };
 
 export type Transformer = (props: TransformerProps) => unknown;
