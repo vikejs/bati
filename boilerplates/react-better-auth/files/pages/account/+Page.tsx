@@ -1,4 +1,5 @@
 import { createAuthClient } from "better-auth/react";
+import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
 
 const authClient = createAuthClient();
@@ -17,7 +18,7 @@ export default function Page() {
         type="button"
         onClick={async () => {
           await authClient.signOut();
-          window.location.href = "/";
+          await navigate("/");
         }}
         //# BATI.has("tailwindcss")
         className={

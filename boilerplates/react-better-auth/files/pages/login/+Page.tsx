@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 import { useState } from "react";
+import { navigate } from "vike/client/router";
 
 const authClient = createAuthClient();
 
@@ -20,7 +21,7 @@ export default function Page() {
             setError(res.error.message ?? "Unable to sign in");
             return;
           }
-          window.location.href = "/account";
+          await navigate("/account");
         }}
       >
         <p>
