@@ -1,9 +1,10 @@
 {
-  "name": "@batijs/authjs",
+  "name": "@batijs/shared-env",
   "private": true,
   "version": "0.0.1",
   "description": "",
   "type": "module",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "check-types": "tsc --noEmit",
     "build": "bati-compile-boilerplate"
@@ -14,25 +15,26 @@
   "devDependencies": {
     "@batijs/compile": "workspace:*",
     "@batijs/core": "workspace:*",
-    "@batijs/shared-env": "workspace:*",
-    "@types/node": "^20.19.37",
-    "@universal-middleware/core": "^0.4.17"
-  },
-  "dependencies": {
-    "@auth/core": "^0.41.2"
+    "@types/node": "^20.19.37"
   },
   "files": [
     "dist/"
   ],
   "exports": {
-    "./server/authjs-handler": {
-      "types": "./dist/types/server/authjs-handler.d.mts"
+    "./server/env": {
+      "types": "./dist/types/server/env.d.mts"
+    },
+    "./server/load": {
+      "types": "./dist/types/server/load.d.mts"
     }
   },
   "typesVersions": {
     "*": {
-      "server/authjs-handler": [
-        "./dist/types/server/authjs-handler.d.mts"
+      "server/env": [
+        "./dist/types/server/env.d.mts"
+      ],
+      "server/load": [
+        "./dist/types/server/load.d.mts"
       ]
     }
   },

@@ -1,10 +1,11 @@
+import { readFileSync } from "node:fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { cpus } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import * as process from "node:process";
 import { fileURLToPath } from "node:url";
+import { parseEnv } from "node:util";
 import { Balancer, exec, npmCli, zx } from "@batijs/tests-utils";
-import dotenv from "dotenv";
 import mri from "mri";
 import pLimit from "p-limit";
 
@@ -175,9 +176,21 @@ async function execNxRunMany(context: GlobalContext, steps: string, projectsPatt
 }
 
 function loadDotEnvTest() {
-  dotenv.config({
-    path: join(root, ".env.test"),
-  });
+  // Native `.env` load (replaces `dotenv`): `process.loadEnvFile` on Node, the `parseEnv` fallback
+  // under Bun (which lacks it but auto-loads `.env`, not `.env.test`). Like dotenv, neither
+  // overrides an already-set var, so the shell / CI keeps precedence.
+  const path = join(root, ".env.test");
+  try {
+    if (typeof process.loadEnvFile === "function") {
+      process.loadEnvFile(path);
+    } else {
+      for (const [key, value] of Object.entries(parseEnv(readFileSync(path, "utf8")))) {
+        process.env[key] ??= value;
+      }
+    }
+  } catch {
+    // `.env.test` is optional.
+  }
   // Note: DATABASE_URL is intentionally NOT defaulted here. A global default (e.g. "sqlite.db")
   // leaks into postgres-backed apps and breaks them. The per-database default is applied per combo
   // in `prepare()` (tests-utils), which knows the selected flags.

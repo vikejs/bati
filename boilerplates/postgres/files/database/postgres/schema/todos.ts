@@ -1,5 +1,5 @@
 /*# BATI include-if-imported #*/
-import "dotenv/config";
+import "@batijs/shared-env/server/load";
 import { db } from "../db";
 
 const sql = db();

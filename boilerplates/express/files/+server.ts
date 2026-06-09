@@ -1,5 +1,5 @@
 // BATI.has("auth0") || BATI.hasDatabase
-import "dotenv/config";
+import "@batijs/shared-env/server/load";
 import { authjsHandler, authjsSessionMiddleware } from "@batijs/authjs/server/authjs-handler";
 import { betterAuthHandler, betterAuthSessionMiddleware } from "@batijs/better-auth/server/better-auth-handler";
 import { dbMiddleware } from "@batijs/shared-db/server/db-middleware";

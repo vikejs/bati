@@ -62,7 +62,7 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
   }
 
   // Per-database `DATABASE_URL` default. The e2e runner no longer sets a global one (a global
-  // "sqlite.db" leaks into postgres apps and breaks them — `dotenv` won't override an inherited var).
+  // "sqlite.db" leaks into postgres apps and breaks them — the native `.env` loader won't override an inherited var).
   // Anything already set (shell / .env.test / CI) wins via `??=`.
   if (context.flags.includes("postgres")) {
     process.env.DATABASE_URL ??= "postgresql://postgres:postgres@localhost:5432/app";

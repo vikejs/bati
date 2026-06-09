@@ -44,6 +44,13 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     startupMigrations.push(`${run} postgres:migrate`);
     migrationCopies.push({ sources: ["/app/database/postgres"], dest: "./database/postgres", from: "builder" });
   }
+  // drizzle-kit (drizzle.config.ts) and the raw-client schema scripts (sqlite/postgres
+  // without an ORM) run as raw source in the runner, and each imports the shared env
+  // loader (`./server/load`, resolved from the app root). Bundled migrations (kysely)
+  // already inline it, so they need nothing extra. Ship the loader source alongside.
+  if (meta.BATI.has("drizzle") || ((meta.BATI.has("sqlite") || meta.BATI.has("postgres")) && !meta.BATI.hasOrm)) {
+    migrationCopies.push({ sources: ["/app/server/load.ts"], dest: "./server/load.ts", from: "builder" });
+  }
 
   // Run migrations before the server when present; otherwise launch it directly.
   const startCmd =

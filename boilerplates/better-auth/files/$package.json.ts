@@ -30,7 +30,6 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
         precedence: 20,
       })
       .addDevDependencies(["tsx"], ["better-auth:migrate"], !bunDirect)
-      .addDependencies(["dotenv"])
       // postgres.js + Kysely's PostgresJSDialect (same driver as the rest of the app; Bun-friendly).
       .addDependencies(["postgres", "kysely", "kysely-postgres-js"], hasPostgres)
       .addDependencies(["better-sqlite3"], !hasPostgres)

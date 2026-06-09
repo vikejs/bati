@@ -10,7 +10,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
       value: `${bun ? "bun" : "tsx"} ./database/postgres/schema/all.ts`,
       precedence: 1,
     })
-    .addDependencies(["postgres", "dotenv"])
+    .addDependencies(["postgres"])
     .addDevDependencies(["tsx"], ["postgres:migrate"], !bun);
 
   return packageJson;

@@ -5,6 +5,5 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
 
   return packageJson
     .addDevDependencies(["@types/express", "@types/node", "vite"])
-    .addDependencies(["@vikejs/express", "express", "vike"])
-    .addDependencies(["dotenv"], props.meta.BATI.has("auth0") || props.meta.BATI.hasDatabase);
+    .addDependencies(["@vikejs/express", "express", "vike"]);
 }

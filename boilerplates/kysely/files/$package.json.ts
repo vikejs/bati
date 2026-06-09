@@ -20,7 +20,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     })
     .addDevDependencies(["@types/better-sqlite3"], !hasPostgres)
     .addDevDependencies(["tsx"], ["kysely:migrate"], !bunDirect)
-    .addDependencies(["dotenv", "kysely"])
+    .addDependencies(["kysely"])
     .addDependencies(["better-sqlite3"], !hasPostgres)
     .addDependencies(["postgres", "kysely-postgres-js"], hasPostgres);
 }
