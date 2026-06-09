@@ -52,13 +52,19 @@ function getDatabase(_runtime?: RuntimeAdapter): BetterAuthOptions["database"] {
     };
   } else if (BATI.has("postgres")) {
     // postgres.js via Kysely's dialect — the same driver the rest of the app uses (and Bun-friendly).
+    if (!env.DATABASE_URL) {
+      throw new Error("Missing DATABASE_URL in .env file");
+    }
     return {
-      db: new Kysely({ dialect: new PostgresJSDialect({ postgres: postgres(env.DATABASE_URL ?? "") }) }),
+      db: new Kysely({ dialect: new PostgresJSDialect({ postgres: postgres(env.DATABASE_URL) }) }),
       type: "postgres" as const,
     };
   } else {
     // SQLite via better-sqlite3. Prisma-style `file:` URLs are normalized to a plain path.
-    return new Database((env.DATABASE_URL ?? "").replace(/^file:/, ""));
+    if (!env.DATABASE_URL) {
+      throw new Error("Missing DATABASE_URL in .env file");
+    }
+    return new Database(env.DATABASE_URL.replace(/^file:/, ""));
   }
 }
 

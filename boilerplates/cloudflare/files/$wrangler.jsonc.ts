@@ -12,7 +12,8 @@ export default async function getWrangler(props: TransformerProps): Promise<unkn
   // only exposes with the nodejs_compat flag.
   if (props.meta.BATI.has("better-auth")) {
     wrangler.compatibility_flags ??= [];
-    (wrangler.compatibility_flags as string[]).push("nodejs_compat");
+    const flags = wrangler.compatibility_flags as string[];
+    if (!flags.includes("nodejs_compat")) flags.push("nodejs_compat");
   }
 
   return wrangler;
