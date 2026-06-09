@@ -1,7 +1,7 @@
 /*# BATI include-if-imported #*/
 
 //# !BATI.hasD1
-import "dotenv/config";
+import "@batijs/shared-env/server/load";
 import SQLite from "better-sqlite3";
 import { Kysely, SqliteDialect } from "kysely";
 import { D1Dialect } from "kysely-d1";

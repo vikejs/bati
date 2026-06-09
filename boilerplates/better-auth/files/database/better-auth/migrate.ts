@@ -1,6 +1,6 @@
 /*{ @if (!it.BATI.hasD1 && !it.BATI.has("drizzle")) }*/
 
-import "dotenv/config";
+import "@batijs/shared-env/server/load";
 import { getMigrations } from "better-auth/db/migration";
 import { getAuthConfig } from "../../server/better-auth";
 

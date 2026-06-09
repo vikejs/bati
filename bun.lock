@@ -39,6 +39,7 @@
       "devDependencies": {
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@types/node": "^20.19.37",
         "@universal-middleware/core": "^0.4.17",
       },
@@ -74,11 +75,11 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@batijs/drizzle": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^20.19.37",
         "@universal-middleware/core": "^0.4.17",
         "better-sqlite3": "^12.10.0",
-        "dotenv": "^17.4.2",
         "drizzle-orm": "^0.45.2",
         "kysely": "^0.29.2",
         "kysely-d1": "^0.4.0",
@@ -179,10 +180,10 @@
       "devDependencies": {
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^20.19.37",
         "better-sqlite3": "^12.10.0",
-        "dotenv": "^17.4.2",
         "drizzle-kit": "^0.31.10",
         "drizzle-orm": "^0.45.2",
         "postgres": "^3.4.9",
@@ -208,6 +209,7 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@batijs/shared-db": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@batijs/shared-server": "workspace:*",
         "@batijs/telefunc": "workspace:*",
         "@batijs/trpc": "workspace:*",
@@ -215,7 +217,6 @@
         "@trpc/server": "^11.17.0",
         "@types/node": "^20.19.37",
         "@vikejs/elysia": "^0.2.0",
-        "dotenv": "^17.4.2",
         "elysia": "^1.4.28",
         "telefunc": "^0.2.20",
         "vike": "0.4.259",
@@ -251,6 +252,7 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@batijs/shared-db": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@batijs/shared-server": "workspace:*",
         "@batijs/telefunc": "workspace:*",
         "@batijs/trpc": "workspace:*",
@@ -259,7 +261,6 @@
         "@types/express": "^5.0.6",
         "@types/node": "^20.19.37",
         "@vikejs/express": "^0.2.2",
-        "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "telefunc": "^0.2.20",
         "vike": "0.4.259",
@@ -276,6 +277,7 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@batijs/shared-db": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@batijs/shared-server": "workspace:*",
         "@batijs/telefunc": "workspace:*",
         "@batijs/trpc": "workspace:*",
@@ -284,7 +286,6 @@
         "@types/express": "^5.0.6",
         "@types/node": "^20.19.37",
         "@vikejs/fastify": "^0.2.4",
-        "dotenv": "^17.4.2",
         "fastify": "^5.8.5",
         "fastify-raw-body": "^5.0.0",
         "telefunc": "^0.2.20",
@@ -311,6 +312,7 @@
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
         "@batijs/shared-db": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@batijs/shared-server": "workspace:*",
         "@batijs/telefunc": "workspace:*",
         "@batijs/trpc": "workspace:*",
@@ -319,7 +321,6 @@
         "@types/aws-lambda": "^8.10.162",
         "@types/node": "^20.19.37",
         "@vikejs/hono": "^0.2.0",
-        "dotenv": "^17.4.2",
         "hono": "^4.12.23",
         "telefunc": "^0.2.20",
         "vike": "0.4.259",
@@ -332,11 +333,11 @@
       "devDependencies": {
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@cloudflare/workers-types": "^4.20260608.1",
         "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^20.19.37",
         "better-sqlite3": "^12.10.0",
-        "dotenv": "^17.4.2",
         "kysely": "^0.29.2",
         "kysely-d1": "^0.4.0",
         "kysely-postgres-js": "^3.0.0",
@@ -412,8 +413,8 @@
       "devDependencies": {
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@types/node": "^20.19.37",
-        "dotenv": "^17.4.2",
         "postgres": "^3.4.9",
         "tsx": "^4.22.4",
       },
@@ -554,6 +555,15 @@
         "@universal-middleware/core": "^0.4.17",
       },
     },
+    "boilerplates/shared-env": {
+      "name": "@batijs/shared-env",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@batijs/compile": "workspace:*",
+        "@batijs/core": "workspace:*",
+        "@types/node": "^20.19.37",
+      },
+    },
     "boilerplates/shared-server": {
       "name": "@batijs/shared-server",
       "version": "0.0.1",
@@ -639,10 +649,10 @@
       "devDependencies": {
         "@batijs/compile": "workspace:*",
         "@batijs/core": "workspace:*",
+        "@batijs/shared-env": "workspace:*",
         "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^20.19.37",
         "better-sqlite3": "^12.10.0",
-        "dotenv": "^17.4.2",
         "tsx": "^4.22.4",
       },
     },
@@ -934,7 +944,6 @@
         "@batijs/tests-utils": "workspace:*",
         "@types/node": "^20.19.37",
         "@types/which": "^3.0.4",
-        "dotenv": "^17.4.2",
         "fast-glob": "^3.3.3",
         "knip": "^6.16.1",
         "mri": "^1.2.0",
@@ -1149,6 +1158,8 @@
     "@batijs/shared": ["@batijs/shared@workspace:boilerplates/shared"],
 
     "@batijs/shared-db": ["@batijs/shared-db@workspace:boilerplates/shared-db"],
+
+    "@batijs/shared-env": ["@batijs/shared-env@workspace:boilerplates/shared-env"],
 
     "@batijs/shared-server": ["@batijs/shared-server@workspace:boilerplates/shared-server"],
 
@@ -2694,7 +2705,7 @@
 
     "dot-prop": ["dot-prop@9.0.0", "", { "dependencies": { "type-fest": "^4.18.2" } }, "sha512-1gxPBJpI/pcjQhKgIU91II6Wkay+dLcN3M6rf2uwP8hRur3HtQXjVrdAK3sjC0piaEuxzMwjXChcETiJl47lAQ=="],
 
-    "dotenv": ["dotenv@17.4.2", "", {}, "sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw=="],
+    "dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
 
     "dotenv-expand": ["dotenv-expand@12.0.3", "", { "dependencies": { "dotenv": "^16.4.5" } }, "sha512-uc47g4b+4k/M/SeaW1y4OApx+mtLWl92l5LMPP0GNXctZqELk+YGgOPIIC5elYmUH4OuoK3JLhuRUYegeySiFA=="],
 
@@ -4594,8 +4605,6 @@
 
     "@rollup/pluginutils/estree-walker": ["estree-walker@2.0.2", "", {}, "sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w=="],
 
-    "@sentry/bundler-plugin-core/dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
-
     "@sentry/cli/node-fetch": ["node-fetch@2.7.0", "", { "dependencies": { "whatwg-url": "^5.0.0" }, "peerDependencies": { "encoding": "^0.1.0" }, "optionalPeers": ["encoding"] }, "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A=="],
 
     "@sentry/cli/proxy-from-env": ["proxy-from-env@1.1.0", "", {}, "sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg=="],
@@ -4756,6 +4765,8 @@
 
     "c12/confbox": ["confbox@0.2.4", "", {}, "sha512-ysOGlgTFbN2/Y6Cg3Iye8YKulHw+R2fNXHrgSmXISQdMnomY6eNDprVdW9R5xBguEqI954+S6709UyiO7B+6OQ=="],
 
+    "c12/dotenv": ["dotenv@17.4.2", "", {}, "sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw=="],
+
     "c12/pkg-types": ["pkg-types@2.3.1", "", { "dependencies": { "confbox": "^0.2.4", "exsolve": "^1.0.8", "pathe": "^2.0.3" } }, "sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg=="],
 
     "cacheable-request/get-stream": ["get-stream@5.2.0", "", { "dependencies": { "pump": "^3.0.0" } }, "sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA=="],
@@ -4783,8 +4794,6 @@
     "dom-serializer/entities": ["entities@4.5.0", "", {}, "sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw=="],
 
     "dot-prop/type-fest": ["type-fest@4.41.0", "", {}, "sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA=="],
-
-    "dotenv-expand/dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
 
     "drizzle-kit/esbuild": ["esbuild@0.25.12", "", { "optionalDependencies": { "@esbuild/aix-ppc64": "0.25.12", "@esbuild/android-arm": "0.25.12", "@esbuild/android-arm64": "0.25.12", "@esbuild/android-x64": "0.25.12", "@esbuild/darwin-arm64": "0.25.12", "@esbuild/darwin-x64": "0.25.12", "@esbuild/freebsd-arm64": "0.25.12", "@esbuild/freebsd-x64": "0.25.12", "@esbuild/linux-arm": "0.25.12", "@esbuild/linux-arm64": "0.25.12", "@esbuild/linux-ia32": "0.25.12", "@esbuild/linux-loong64": "0.25.12", "@esbuild/linux-mips64el": "0.25.12", "@esbuild/linux-ppc64": "0.25.12", "@esbuild/linux-riscv64": "0.25.12", "@esbuild/linux-s390x": "0.25.12", "@esbuild/linux-x64": "0.25.12", "@esbuild/netbsd-arm64": "0.25.12", "@esbuild/netbsd-x64": "0.25.12", "@esbuild/openbsd-arm64": "0.25.12", "@esbuild/openbsd-x64": "0.25.12", "@esbuild/openharmony-arm64": "0.25.12", "@esbuild/sunos-x64": "0.25.12", "@esbuild/win32-arm64": "0.25.12", "@esbuild/win32-ia32": "0.25.12", "@esbuild/win32-x64": "0.25.12" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-bbPBYYrtZbkt6Os6FiTLCTFxvq4tt3JKall1vRwshA3fdVztsLAatFaZobhkBC8/BrPetoa0oksYoKXoG4ryJg=="],
 
@@ -4840,8 +4849,6 @@
 
     "knip/zod": ["zod@4.4.3", "", {}, "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="],
 
-    "lambda-local/dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
-
     "lazystream/readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
 
     "light-my-request/process-warning": ["process-warning@4.0.1", "", {}, "sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q=="],
@@ -4875,8 +4882,6 @@
     "nx/@emnapi/core": ["@emnapi/core@1.4.5", "", { "dependencies": { "@emnapi/wasi-threads": "1.0.4", "tslib": "^2.4.0" } }, "sha512-XsLw1dEOpkSX/WucdqUhPWP7hDxSvZiY+fsUC14h+FtQ2Ifni4znbBt8punRX+Uj2JG/uDb8nEHVKvrVlvdZ5Q=="],
 
     "nx/@emnapi/runtime": ["@emnapi/runtime@1.4.5", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg=="],
-
-    "nx/dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
 
     "nx/jsonc-parser": ["jsonc-parser@3.2.0", "", {}, "sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w=="],
 

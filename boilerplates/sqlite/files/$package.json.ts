@@ -10,6 +10,5 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
     })
     .addDevDependencies(["@types/better-sqlite3"])
     .addDependencies(["better-sqlite3"])
-    .addDevDependencies(["tsx"], ["sqlite:migrate"])
-    .addDependencies(["dotenv"]);
+    .addDevDependencies(["tsx"], ["sqlite:migrate"]);
 }

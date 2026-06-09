@@ -22,7 +22,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
       value: "drizzle-kit studio",
       precedence: 20,
     })
-    .addDependencies(["drizzle-kit", "drizzle-orm", "dotenv"])
+    .addDependencies(["drizzle-kit", "drizzle-orm"])
     .addDevDependencies(["@types/better-sqlite3"], hasSqliteEngine)
     .addDependencies(["better-sqlite3"], hasSqliteEngine)
     .addDependencies(["postgres"], hasPostgres);

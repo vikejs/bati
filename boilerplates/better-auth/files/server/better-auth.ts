@@ -1,4 +1,4 @@
-import { env as cloudflareEnv } from "cloudflare:workers";
+import { env } from "@batijs/shared-env/server/env";
 import { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
 import type { RuntimeAdapter } from "@universal-middleware/core";
 import type { BetterAuthOptions } from "better-auth";
@@ -9,12 +9,6 @@ import { D1Dialect } from "kysely-d1";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 import * as authSchema from "../database/drizzle/schema/auth";
-
-const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefined> }> = BATI.has("cloudflare")
-  ? (cloudflareEnv as BATI.Any)
-  : typeof process?.env !== "undefined"
-    ? process.env
-    : {};
 
 //# BATI.hasD1
 function getD1(runtime?: RuntimeAdapter): D1Database {

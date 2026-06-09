@@ -62,7 +62,7 @@ export async function createE2EWorkspace(options: E2EWorkspaceOptions) {
     build: `cd ${appRel} && bun run build`,
     // knip lives in the .e2e workspace's node_modules. We `cd` into the app
     // before invoking it so that config files loaded by knip plugins (notably
-    // drizzle.config.ts, which calls dotenv/config) resolve their `.env`
+    // drizzle.config.ts, which loads `.env` via `@batijs/shared-env`) resolve their `.env`
     // against the app dir. `bun run knip` augments PATH with the .e2e
     // `node_modules/.bin` *before* the script starts, so `cd` doesn't unset
     // the knip binary lookup.

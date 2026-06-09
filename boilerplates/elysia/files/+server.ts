@@ -1,5 +1,5 @@
 // (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
-import "dotenv/config";
+import "@batijs/shared-env/server/load";
 import type { Server } from "vike/types";
 import { app } from "./server/elysia";
 
