@@ -19,22 +19,29 @@ const tests = suite()
   .matrix({ framework: "react", server: "hono", deploy: "cloudflare", auth: "auth0" })
   .matrix({ framework: "react", server: "hono", deploy: "dokploy", auth: auths })
   // Better Auth requires a database. Cover each UI framework against the SQLite engine with Drizzle,
-  // Prisma, and raw, balanced across servers via spread().
-  // NOTE: Kysely and Cloudflare are temporarily excluded by rules (better-auth's Kysely adapter is
-  // incompatible with kysely 0.29 — see rules.ts). Re-add `kysely` and a cloudflare row once fixed.
+  // Prisma, Kysely, and raw, balanced across servers via spread().
   .matrix({
     framework: framework.values,
     server: spread(server),
     auth: "better-auth",
     db: "sqlite",
-    orm: ["drizzle", "prisma", null],
+    orm: ["drizzle", "prisma", "kysely", null],
   })
-  // PostgreSQL engine (raw + Drizzle). Needs a PostgreSQL server at the default DATABASE_URL (CI provides it).
+  // PostgreSQL engine (raw + Drizzle + Kysely). Needs a PostgreSQL server at the default DATABASE_URL (CI provides it).
   .matrix({
     framework: "solid",
     server: spread(server),
     auth: "better-auth",
     db: "postgres",
+    orm: ["drizzle", "kysely", null],
+  })
+  // Cloudflare D1 (SQLite on Workers), reached through Kysely's D1 dialect; tables created via wrangler migrations.
+  .matrix({
+    framework: "react",
+    server: "hono",
+    deploy: "cloudflare",
+    auth: "better-auth",
+    db: "sqlite",
     orm: ["drizzle", null],
   })
   .linters("eslint", "biome", "oxlint");

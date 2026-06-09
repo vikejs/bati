@@ -39,16 +39,6 @@ export const rulesMessages = {
       bold("Better Auth"),
     )}. Pick a database so Better Auth can store users and sessions`,
   ),
-  [RulesMessage.ERROR_BETTER_AUTH_X_KYSELY]: error(
-    `${inverse(bold("Better Auth"))} cannot be combined with ${inverse(
-      bold("Kysely"),
-    )} yet. Pick another ORM/query builder (or none) — this is temporary until an upcoming Better Auth release`,
-  ),
-  [RulesMessage.ERROR_BETTER_AUTH_X_CLOUDFLARE]: error(
-    `${inverse(bold("Better Auth"))} is not supported on ${inverse(
-      bold("Cloudflare"),
-    )} yet. This is temporary until an upcoming Better Auth release`,
-  ),
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(
     `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}`,
   ),
