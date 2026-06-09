@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/solid";
 import { createSignal, Show } from "solid-js";
+import { navigate } from "vike/client/router";
 
 const authClient = createAuthClient();
 
@@ -21,7 +22,7 @@ export default function Page() {
             setError(res.error.message ?? "Unable to sign up");
             return;
           }
-          window.location.href = "/account";
+          await navigate("/account");
         }}
       >
         <p>

@@ -1,4 +1,5 @@
 import { createAuthClient } from "better-auth/react";
+import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
 
 const authClient = createAuthClient();
@@ -23,7 +24,7 @@ export function AuthNav() {
         onClick={async (ev) => {
           ev.preventDefault();
           await authClient.signOut();
-          window.location.href = "/";
+          await navigate("/");
         }}
       >
         Sign out

@@ -26,6 +26,7 @@
 
 <script lang="ts" setup>
 import { createAuthClient } from "better-auth/vue";
+import { navigate } from "vike/client/router";
 import { ref } from "vue";
 
 const authClient = createAuthClient();
@@ -48,6 +49,6 @@ const onSubmit = async () => {
     error.value = res.error.message ?? "Unable to sign up";
     return;
   }
-  window.location.href = "/account";
+  await navigate("/account");
 };
 </script>

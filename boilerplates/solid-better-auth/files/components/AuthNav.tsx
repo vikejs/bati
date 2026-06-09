@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/solid";
 import { Show } from "solid-js";
+import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-solid/usePageContext";
 
 const authClient = createAuthClient();
@@ -25,7 +26,7 @@ export function AuthNav() {
             onClick={async (ev) => {
               ev.preventDefault();
               await authClient.signOut();
-              window.location.href = "/";
+              await navigate("/");
             }}
           >
             Sign out

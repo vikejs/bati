@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import { createAuthClient } from "better-auth/vue";
+import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-vue/usePageContext";
 
 const authClient = createAuthClient();
@@ -20,6 +21,6 @@ const buttonClass = BATI.has("tailwindcss")
 
 const onSignOut = async () => {
   await authClient.signOut();
-  window.location.href = "/";
+  await navigate("/");
 };
 </script>
