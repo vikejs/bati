@@ -2,6 +2,8 @@ export enum RulesMessage {
   // --- ERROR
   // A Server is required when using Auth
   ERROR_AUTH_R_SERVER,
+  // A Database is required when using Better Auth
+  ERROR_BETTER_AUTH_R_DATABASE,
   // React is required when using Compiled CSS
   ERROR_COMPILED_R_REACT,
   // A Server is required when using Drizzle

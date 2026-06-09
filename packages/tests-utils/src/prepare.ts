@@ -4,6 +4,7 @@ import nodeFetch, { type RequestInit } from "node-fetch";
 import { kill } from "zx";
 import { exec } from "./exec.js";
 import { isDockerAvailable } from "./is-docker-available.js";
+import { isPostgresAvailable } from "./is-postgres-available.js";
 import { npmCli } from "./package-manager.js";
 import { initPort } from "./port.js";
 import { runBuild } from "./run-build.js";
@@ -58,6 +59,26 @@ export async function prepare({ mode = "dev", retry, script }: PrepareOptions = 
     console.warn(
       `[tests-utils] Docker not available — skipping docker test: ${context.flags.join(", ") || "(no flags)"}`,
     );
+  }
+
+  // Per-database `DATABASE_URL` default. The e2e runner no longer sets a global one (a global
+  // "sqlite.db" leaks into postgres apps and breaks them — `dotenv` won't override an inherited var).
+  // Anything already set (shell / .env.test / CI) wins via `??=`.
+  if (context.flags.includes("postgres")) {
+    process.env.DATABASE_URL ??= "postgresql://postgres:postgres@localhost:5432/app";
+    // Skip postgres-backed tests when no PostgreSQL is reachable. CI starts a container before the
+    // run (so it's reachable there); locally it's skipped instead of failing. Note: the e2e runner
+    // sets CI="true" for nx, so we can't gate this on `process.env.CI` — reachability is the signal.
+    if (!skip && !(await isPostgresAvailable())) {
+      skip = true;
+      console.warn(
+        `[tests-utils] PostgreSQL not reachable — skipping postgres test: ${context.flags.join(", ") || "(no flags)"}`,
+      );
+    }
+  } else {
+    // SQLite-based apps (and feature combos without a database) use a local file. This is also read
+    // by migration scripts that don't load `.env` themselves.
+    process.env.DATABASE_URL ??= "sqlite.db";
   }
 
   function preHooks() {

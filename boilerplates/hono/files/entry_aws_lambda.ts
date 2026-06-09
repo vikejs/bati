@@ -9,7 +9,7 @@ Notes:
 
 */
 
-import type { APIGatewayProxyResult, Handler } from "aws-lambda";
+import type { Handler } from "aws-lambda";
 import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 import { handle } from "hono/aws-lambda";
@@ -24,7 +24,5 @@ type Bindings = {
 const lambdaApp = new Hono<{ Bindings: Bindings }>();
 
 lambdaApp.route("/", app as Hono);
-const awsHandler = handle(lambdaApp);
-
-export const handler: Handler<LambdaEvent, APIGatewayProxyResult> = awsHandler;
+export const handler: Handler = handle(lambdaApp);
 /*{ /if }*/

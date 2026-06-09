@@ -34,6 +34,11 @@ export const rulesMessages = {
       bold("Auth"),
     )}. Check https://vike.dev/integration#server-side-tools for details and https://batijs.dev for available servers`,
   ),
+  [RulesMessage.ERROR_BETTER_AUTH_R_DATABASE]: error(
+    `A ${inverse(bold("Database"))} (SQLite or PostgreSQL) is required when using ${inverse(
+      bold("Better Auth"),
+    )}. Pick a database so Better Auth can store users and sessions`,
+  ),
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(
     `${inverse(bold("React"))} is required when using ${inverse(bold("Compiled"))}`,
   ),

@@ -57,6 +57,19 @@ export const rulesMessages = {
       </span>
     );
   }),
+  [RulesMessage.ERROR_BETTER_AUTH_R_DATABASE]: error(() => {
+    return (
+      <span class="inline-block">
+        A <span class="font-bold">Database</span> is required when using <span class="font-bold">Better Auth</span>.
+        <ul class="list-custom list-dot">
+          <li>
+            Pick a database (<span class="font-bold">SQLite</span> or <span class="font-bold">PostgreSQL</span>) so
+            Better Auth can store users and sessions
+          </li>
+        </ul>
+      </span>
+    );
+  }),
   [RulesMessage.ERROR_COMPILED_R_REACT]: error(() => {
     return (
       <span class="inline-block">

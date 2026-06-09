@@ -1,6 +1,7 @@
 import "./Layout.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
+import { AuthNav } from "@batijs/react-better-auth/components/AuthNav";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link";
 
@@ -27,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Link href="/">Welcome</Link>
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
+        {BATI.has("better-auth") ? <AuthNav /> : null}
       </Sidebar>
       <Content>{children}</Content>
     </div>

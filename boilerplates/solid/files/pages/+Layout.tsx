@@ -3,6 +3,7 @@
 import "./Layout.css";
 //# BATI.has("tailwindcss")
 import "./tailwind.css";
+import { AuthNav } from "@batijs/solid-better-auth/components/AuthNav";
 import type { JSX } from "solid-js";
 import logoUrl from "../assets/logo.svg";
 import { Link } from "../components/Link";
@@ -24,6 +25,7 @@ export default function Layout(props: { children?: JSX.Element }) {
         <Link href="/">Welcome</Link>
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
+        {BATI.has("better-auth") ? <AuthNav /> : null}
       </Sidebar>
       <Content>{props.children}</Content>
     </div>

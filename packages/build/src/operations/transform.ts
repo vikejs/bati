@@ -35,6 +35,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".env.production.local":
       case ".html":
       case ".md":
+      case ".sql":
       case ".toml":
       case "Dockerfile":
       case ".dockerignore":

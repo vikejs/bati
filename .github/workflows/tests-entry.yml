@@ -117,6 +117,23 @@ jobs:
           - react--hono--cloudflare--auth0--eslint--biome--oxlint
           - react--hono--dokploy--authjs--eslint--biome--oxlint
           - react--hono--dokploy--auth0--eslint--biome--oxlint
+          - react--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+          - react--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+          - react--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+          - react--elysia--better-auth--sqlite--eslint--biome--oxlint
+          - vue--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+          - vue--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+          - vue--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+          - vue--elysia--better-auth--sqlite--eslint--biome--oxlint
+          - solid--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+          - solid--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+          - solid--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+          - solid--elysia--better-auth--sqlite--eslint--biome--oxlint
+          - solid--hono--better-auth--postgres--drizzle--eslint--biome--oxlint
+          - solid--express--better-auth--postgres--kysely--eslint--biome--oxlint
+          - solid--fastify--better-auth--postgres--eslint--biome--oxlint
+          - react--hono--cloudflare--better-auth--sqlite--drizzle--eslint--biome--oxlint
+          - react--hono--cloudflare--better-auth--sqlite--eslint--biome--oxlint
           - solid--express--trpc--sqlite--drizzle--eslint--biome--oxlint
           - solid--express--trpc--sqlite--kysely--eslint--biome--oxlint
           - solid--express--trpc--sqlite--eslint--biome--oxlint
@@ -356,6 +373,71 @@ jobs:
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: react--hono--dokploy--auth0--eslint--biome--oxlint
             flags: --react --hono --dokploy --auth0 --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+            flags: --react --hono --better-auth --sqlite --drizzle --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+            flags: --react --express --better-auth --sqlite --prisma --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+            flags: --react --fastify --better-auth --sqlite --kysely --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--elysia--better-auth--sqlite--eslint--biome--oxlint
+            flags: --react --elysia --better-auth --sqlite --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+            flags: --vue --hono --better-auth --sqlite --drizzle --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+            flags: --vue --express --better-auth --sqlite --prisma --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+            flags: --vue --fastify --better-auth --sqlite --kysely --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: vue--elysia--better-auth--sqlite--eslint--biome--oxlint
+            flags: --vue --elysia --better-auth --sqlite --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--hono--better-auth--sqlite--drizzle--eslint--biome--oxlint
+            flags: --solid --hono --better-auth --sqlite --drizzle --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--express--better-auth--sqlite--prisma--eslint--biome--oxlint
+            flags: --solid --express --better-auth --sqlite --prisma --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--fastify--better-auth--sqlite--kysely--eslint--biome--oxlint
+            flags: --solid --fastify --better-auth --sqlite --kysely --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--elysia--better-auth--sqlite--eslint--biome--oxlint
+            flags: --solid --elysia --better-auth --sqlite --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--hono--better-auth--postgres--drizzle--eslint--biome--oxlint
+            flags: --solid --hono --better-auth --postgres --drizzle --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--express--better-auth--postgres--kysely--eslint--biome--oxlint
+            flags: --solid --express --better-auth --postgres --kysely --eslint
+              --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: solid--fastify--better-auth--postgres--eslint--biome--oxlint
+            flags: --solid --fastify --better-auth --postgres --eslint --biome
+              --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--cloudflare--better-auth--sqlite--drizzle--eslint--biome--oxlint
+            flags: --react --hono --cloudflare --better-auth --sqlite --drizzle
+              --eslint --biome --oxlint
+            test-files: FRAMEWORK+SERVER+AUTH.spec.ts
+          - destination: react--hono--cloudflare--better-auth--sqlite--eslint--biome--oxlint
+            flags: --react --hono --cloudflare --better-auth --sqlite --eslint
+              --biome --oxlint
             test-files: FRAMEWORK+SERVER+AUTH.spec.ts
           - destination: solid--express--trpc--sqlite--drizzle--eslint--biome--oxlint
             flags: --solid --express --trpc --sqlite --drizzle --eslint --biome

@@ -7,6 +7,7 @@ import { exclusive, filter, type Rule, requires } from "./utils.js";
 // - particular status of one or multiple package
 export default [
   requires(RulesMessage.ERROR_AUTH_R_SERVER, "Auth", ["Server"]),
+  requires(RulesMessage.ERROR_BETTER_AUTH_R_DATABASE, "better-auth", ["Database"]),
   requires(RulesMessage.ERROR_COMPILED_R_REACT, "compiled-css", ["react"]),
   requires(RulesMessage.ERROR_DRIZZLE_R_SERVER, "drizzle", ["Server"]),
   requires(RulesMessage.ERROR_SQLITE_R_SERVER, "sqlite", ["Server"]),

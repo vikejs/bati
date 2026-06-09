@@ -178,8 +178,9 @@ function loadDotEnvTest() {
   dotenv.config({
     path: join(root, ".env.test"),
   });
-  // For sqlite tests
-  process.env.DATABASE_URL ??= "sqlite.db";
+  // Note: DATABASE_URL is intentionally NOT defaulted here. A global default (e.g. "sqlite.db")
+  // leaks into postgres-backed apps and breaks them. The per-database default is applied per combo
+  // in `prepare()` (tests-utils), which knows the selected flags.
 }
 
 function areAllElementsOfAIncludedInB(a: string[], b: string[]) {
