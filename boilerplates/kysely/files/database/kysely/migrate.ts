@@ -17,8 +17,10 @@ async function migrateToLatest() {
     provider: new FileMigrationProvider({
       fs,
       path,
-      // This needs to be an absolute path.
-      migrationFolder: path.join(__dirname, "migrations"),
+      // This needs to be an absolute path. Both runners sit two levels below the app root
+      // — database/kysely/migrate.ts in dev, the bundled dist/server/migrate.mjs in prod — so
+      // this resolves to the app-root migration sources, shipped as-is into the runtime image.
+      migrationFolder: path.join(__dirname, "../../database/kysely/migrations"),
     }),
   });
 

@@ -17,40 +17,19 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   // they install loosely; real users install against their committed lockfile.
   const config = dockerPackageManager(pm.name, { frozenLockfile: !meta.BATI_TEST });
 
-  // Commands run at container startup, before the server, when a database needs
-  // migrating — plus the source files each migration script must find in the runner.
+  // Commands run at container startup, before the server, when a database needs migrating.
+  // Each ORM owns its migration; the raw-client engines (sqlite/postgres) run their own
+  // schema script, and only when no ORM is selected (Prisma is self-managed too).
   const startupMigrations: string[] = [];
-  const migrationCopies: { sources: string[]; dest: string; from: string }[] = [];
-  // Each ORM owns its migration; the raw-client engines (sqlite/postgres) run their
-  // own schema script, and only when no ORM is selected (Prisma is self-managed too).
-  if (meta.BATI.has("drizzle")) {
-    startupMigrations.push(`${run} drizzle:migrate`);
-    migrationCopies.push({ sources: ["/app/database/migrations"], dest: "./database/migrations", from: "deps-dev" });
-    migrationCopies.push({ sources: ["/app/drizzle.config.ts"], dest: "./drizzle.config.ts", from: "builder" });
-  }
-  if (meta.BATI.has("kysely")) {
-    startupMigrations.push(`${nodeCli} ./dist/server/migrate.mjs`);
-    migrationCopies.push({
-      sources: ["/app/database/kysely/migrations"],
-      dest: "./dist/server/migrations",
-      from: "builder",
-    });
-  }
-  if (meta.BATI.has("sqlite") && !meta.BATI.hasOrm) {
-    startupMigrations.push(`${run} sqlite:migrate`);
-    migrationCopies.push({ sources: ["/app/database/sqlite"], dest: "./database/sqlite", from: "builder" });
-  }
-  if (meta.BATI.has("postgres") && !meta.BATI.hasOrm) {
-    startupMigrations.push(`${run} postgres:migrate`);
-    migrationCopies.push({ sources: ["/app/database/postgres"], dest: "./database/postgres", from: "builder" });
-  }
-  // drizzle-kit (drizzle.config.ts) and the raw-client schema scripts (sqlite/postgres
-  // without an ORM) run as raw source in the runner, and each imports the shared env
-  // loader (`./server/load`, resolved from the app root). Bundled migrations (kysely)
-  // already inline it, so they need nothing extra. Ship the loader source alongside.
-  if (meta.BATI.has("drizzle") || ((meta.BATI.has("sqlite") || meta.BATI.has("postgres")) && !meta.BATI.hasOrm)) {
-    migrationCopies.push({ sources: ["/app/server/load.ts"], dest: "./server/load.ts", from: "builder" });
-  }
+  if (meta.BATI.has("drizzle")) startupMigrations.push(`${run} drizzle:migrate`);
+  if (meta.BATI.has("kysely")) startupMigrations.push(`${nodeCli} ./dist/server/migrate.mjs`);
+  if (meta.BATI.has("sqlite") && !meta.BATI.hasOrm) startupMigrations.push(`${run} sqlite:migrate`);
+  if (meta.BATI.has("postgres") && !meta.BATI.hasOrm) startupMigrations.push(`${run} postgres:migrate`);
+
+  // The raw source each selected feature needs in the runner (migration scripts, configs, the
+  // shared env loader). Features declare these via `deploy` in their bati.config; we copy them
+  // from `deps-dev`, the superset stage holding all source plus install/generate artifacts.
+  const deployFiles = props.deploy;
 
   // Run migrations before the server when present; otherwise launch it directly.
   const startCmd =
@@ -102,7 +81,7 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .copy(["/app/node_modules"], "./node_modules", { from: "deps-prod" })
     .copy(["/app/dist"], "./dist", { from: "builder" })
     .pipe((b) => {
-      for (const { sources, dest, from } of migrationCopies) b.copy(sources, dest, { from });
+      for (const file of deployFiles) b.copy([`/app/${file}`], `./${file}`, { from: "deps-dev" });
     })
     .expose(3000)
     .cmd(startCmd);
