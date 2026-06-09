@@ -64,12 +64,18 @@ await describeMultipleBati([
     describeBati(({ test, expect, fetch, context, testMatch, beforeAll }) => {
       beforeAll(async () => {
         // Better Auth manages its own tables. Create them before the server starts.
-        if (context.flags.includes("better-auth")) {
-          if (context.flags.includes("cloudflare")) {
-            await exec(npmCli, ["run", "d1:migrate"]);
+        if (!context.flags.includes("better-auth")) return;
+        if (context.flags.includes("cloudflare")) {
+          // On D1, Better Auth's tables ship as a wrangler migration in database/migrations,
+          // applied together with the app's own tables by the app's D1 migrate command.
+          if (context.flags.includes("drizzle")) {
+            await exec(npmCli, ["run", "drizzle:generate"]);
+            await exec(npmCli, ["run", "drizzle:migrate"]);
           } else {
-            await exec(npmCli, ["run", "better-auth:migrate"]);
+            await exec(npmCli, ["run", "d1:migrate"]);
           }
+        } else {
+          await exec(npmCli, ["run", "better-auth:migrate"]);
         }
       }, 70000);
 

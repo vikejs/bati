@@ -2,10 +2,15 @@
 import { env as cloudflareEnv } from "cloudflare:workers";
 import type { RuntimeAdapter } from "@universal-middleware/core";
 import type { BetterAuthOptions } from "better-auth";
+//# BATI.has("sqlite") && !BATI.hasD1
 import Database from "better-sqlite3";
+//# BATI.hasD1 || BATI.has("postgres")
 import { Kysely } from "kysely";
+//# BATI.hasD1
 import { D1Dialect } from "kysely-d1";
+//# BATI.has("postgres")
 import { PostgresJSDialect } from "kysely-postgres-js";
+//# BATI.has("postgres")
 import postgres from "postgres";
 
 const env: BATI.If<{ '!BATI.has("cloudflare")': Record<string, string | undefined> }> = BATI.has("cloudflare")

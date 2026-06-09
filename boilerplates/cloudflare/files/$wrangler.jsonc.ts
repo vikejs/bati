@@ -7,5 +7,13 @@ export default async function getWrangler(props: TransformerProps): Promise<unkn
   // Inject environment variables
   const vars = wranglerEnv(props.env);
   if (Object.keys(vars).length > 0) wrangler.vars = { ...wrangler.vars, ...vars };
+
+  // Better Auth relies on Node built-ins (node:crypto) at runtime, which the Workers runtime
+  // only exposes with the nodejs_compat flag.
+  if (props.meta.BATI.has("better-auth")) {
+    wrangler.compatibility_flags ??= [];
+    (wrangler.compatibility_flags as string[]).push("nodejs_compat");
+  }
+
   return wrangler;
 }
