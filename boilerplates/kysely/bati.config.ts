@@ -4,8 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("kysely");
   },
-  // The runtime migration runner (dist/server/migrate.mjs) reads these off disk via
-  // FileMigrationProvider, so the migration sources must ship into the production runner.
+  // migrate.mjs reads these off disk at runtime (FileMigrationProvider), so the sources must ship.
   deploy: ["database/kysely/migrations"],
   nextSteps(meta, packageManager, { bold }) {
     if (meta.BATI.hasD1) {

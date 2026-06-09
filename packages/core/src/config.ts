@@ -25,12 +25,7 @@ export interface BatiConfig {
   knip?: BatiKnipConfig;
   /** Env vars this feature contributes, gated on `meta` (see {@link EnvRegistryFactory}). */
   env?: EnvRegistryFactory;
-  /**
-   * Files (relative to the app root) this feature needs present in the production runtime, e.g.
-   * migration scripts or config read at startup. Deploy targets (the Dockerfile generator) collect
-   * every selected boilerplate's list and ship them. Use the function form to vary the list by `meta`;
-   * a feature whose `if` gate already implies the list can use a plain array.
-   */
+  /** Files (relative to the app root) this feature needs in the production runtime; collected by deploy targets like the Dockerfile generator. */
   deploy?: string[] | ((meta: VikeMeta) => string[]);
 }
 

@@ -17,7 +17,6 @@ export type TransformerProps = {
   meta: VikeMeta;
   packageJson: PackageJson;
   env: EnvRegistry;
-  /** Files (relative to the app root) every selected feature needs present in the production runtime. */
   deploy: string[];
 };
 

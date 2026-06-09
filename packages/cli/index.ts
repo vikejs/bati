@@ -617,8 +617,7 @@ async function run() {
       // from which every env sink (.env, docker-compose, Dockerfile, wrangler) is derived.
       const env = filteredBoilerplates.flatMap((b) => b.config.env?.(meta) ?? []);
 
-      // Collect each selected boilerplate's runtime files into one deduped list, from which
-      // deploy targets (the Dockerfile generator) ship the files into the production image.
+      // Each selected boilerplate's runtime files, deduped into the list deploy targets ship.
       const deploy = [
         ...new Set(
           filteredBoilerplates.flatMap((b) =>

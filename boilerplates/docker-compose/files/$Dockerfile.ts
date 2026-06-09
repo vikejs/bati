@@ -26,11 +26,6 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
   if (meta.BATI.has("sqlite") && !meta.BATI.hasOrm) startupMigrations.push(`${run} sqlite:migrate`);
   if (meta.BATI.has("postgres") && !meta.BATI.hasOrm) startupMigrations.push(`${run} postgres:migrate`);
 
-  // The raw source each selected feature needs in the runner (migration scripts, configs, the
-  // shared env loader). Features declare these via `deploy` in their bati.config; we copy them
-  // from `deps-dev`, the superset stage holding all source plus install/generate artifacts.
-  const deployFiles = props.deploy;
-
   // Run migrations before the server when present; otherwise launch it directly.
   const startCmd =
     startupMigrations.length > 0
@@ -80,8 +75,10 @@ export default async function getDockerfile(props: TransformerProps): Promise<st
     .copy(installSources, "./")
     .copy(["/app/node_modules"], "./node_modules", { from: "deps-prod" })
     .copy(["/app/dist"], "./dist", { from: "builder" })
+    // Ship each feature's declared runtime files from deps-dev — the superset stage holding all
+    // source plus install/generate output (drizzle's generated migrations exist only there).
     .pipe((b) => {
-      for (const file of deployFiles) b.copy([`/app/${file}`], `./${file}`, { from: "deps-dev" });
+      for (const file of props.deploy) b.copy([`/app/${file}`], `./${file}`, { from: "deps-dev" });
     })
     .expose(3000)
     .cmd(startCmd);
