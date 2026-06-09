@@ -1,9 +1,10 @@
 //# BATI.has("auth0")
-import { env } from "@batijs/shared-env/server/env";
+
 import { Auth, type AuthConfig, createActionURL, setEnvDefaults } from "@auth/core";
 import Auth0 from "@auth/core/providers/auth0";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import type { Session } from "@auth/core/types";
+import { env } from "@batijs/shared-env/server/env";
 import { enhance, type UniversalHandler, type UniversalMiddleware } from "@universal-middleware/core";
 
 const authjsConfig = {

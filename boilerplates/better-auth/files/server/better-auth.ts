@@ -1,5 +1,5 @@
-import { env } from "@batijs/shared-env/server/env";
 import { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
+import { env } from "@batijs/shared-env/server/env";
 import type { RuntimeAdapter } from "@universal-middleware/core";
 import type { BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";

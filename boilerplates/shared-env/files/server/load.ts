@@ -1,8 +1,5 @@
 /*# BATI include-if-imported #*/
 import { readFileSync } from "node:fs";
-// Default import (not `import { loadEnvFile }`): Bun's `node:process` doesn't expose `loadEnvFile`
-// as a named export, and a missing named binding throws at module-link time. A property access on
-// the default export is just `undefined` there, so we fall through to `parseEnv`.
 import process from "node:process";
 import { parseEnv } from "node:util";
 
