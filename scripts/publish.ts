@@ -1,8 +1,8 @@
 // Iterate publishable workspaces and publish each one via `bun pm pack` +
 // `npm publish <tarball>` (preserves OIDC trusted publishing + provenance).
 
-import { packAndPublish } from "./lib/publish.ts";
-import { loadWorkspaces } from "./lib/workspaces.ts";
+import { packAndPublish } from "./lib/publish.js";
+import { loadWorkspaces } from "./lib/workspaces.js";
 
 async function main() {
   const forwardedArgs = process.argv.slice(2);
