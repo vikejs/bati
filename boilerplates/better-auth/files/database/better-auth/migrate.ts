@@ -13,4 +13,8 @@ const { runMigrations } = await getMigrations(getAuthConfig());
 await runMigrations();
 
 console.log("Better Auth tables are up to date");
+
+// The database driver keeps the event loop alive (e.g. Postgres connection pool); exit explicitly
+// so this one-shot script terminates instead of hanging.
+process.exit(0);
 /*{ /if }*/
