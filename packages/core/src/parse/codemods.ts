@@ -23,7 +23,7 @@ type Target = GrammarId | ZoneSplitter;
 
 /**
  * Run the Bati codemod pipeline over `code` for the grammar inferred from `filepath`, returning the
- * transformed source (no Prettier) and the {@link FileContext} the build reads back.
+ * transformed source (before the whitespace tidy) and the {@link FileContext} the build reads back.
  *
  * Collapse → prune → record: `batiCodemod` resolves `$$` and drops gated imports, `stripLintComments`
  * removes unwanted eslint/biome directives, then `removeUnusedImports`, then `batiImports` records the
@@ -49,16 +49,16 @@ export async function runCodemods(
 
   let out = code;
   if (target === "yaml") {
-    out = await pass("yaml", batiYaml, target, out, ctx);
+    out = await pass(batiYaml, target, out, ctx);
   } else if (target !== null) {
     const hasCommentBlocks = target === "css" || target === "html" || target === vueSplitter;
     const hasScript = target !== "css" && target !== "html"; // JS imports to prune then record
-    if (hasCommentBlocks) out = await pass("blocks", batiBlocks, target, out, ctx);
-    out = await pass("codemod", batiCodemod, target, out, ctx);
-    out = await pass("lint", stripLintComments, target, out, ctx);
+    if (hasCommentBlocks) out = await pass(batiBlocks, target, out, ctx);
+    out = await pass(batiCodemod, target, out, ctx);
+    out = await pass(stripLintComments, target, out, ctx);
     if (hasScript) {
-      out = await pass("prune", removeUnusedImports, target, out, {});
-      out = await pass("imports", batiImports, target, out, ctx);
+      out = await pass(removeUnusedImports, target, out, {});
+      out = await pass(batiImports, target, out, ctx);
     }
   }
 
@@ -82,22 +82,27 @@ export function extToTarget(filepath: string): Target | null {
   return null;
 }
 
-// `forTarget` loads grammar WASM once; cache one transformer per (codemod, target) and reuse it.
+// `forTarget` loads grammar WASM once; cache the transformer per (codemod, target) and reuse it,
+// keyed by codemod identity so no two passes can collide.
+type Codemod<Ctx extends Record<string, unknown>> = { forTarget(target: Target): Promise<Transformer<Ctx>> };
 // biome-ignore lint/suspicious/noExplicitAny: a heterogeneous transformer cache
-const transformers = new Map<string, Promise<Transformer<any>>>();
+const transformers = new Map<Codemod<any>, Map<string, Promise<Transformer<any>>>>();
 async function pass<Ctx extends Record<string, unknown>>(
-  name: string,
-  codemod: { forTarget(target: Target): Promise<Transformer<Ctx>> },
+  codemod: Codemod<Ctx>,
   target: Target,
   source: string,
   ctx: Ctx,
 ): Promise<string> {
-  const key = `${name}:${typeof target === "string" ? target : "vue"}`;
-  let transformer = transformers.get(key);
+  let byTarget = transformers.get(codemod);
+  if (!byTarget) {
+    byTarget = new Map();
+    transformers.set(codemod, byTarget);
+  }
+  const key = typeof target === "string" ? target : "vue";
+  let transformer = byTarget.get(key);
   if (!transformer) {
     transformer = codemod.forTarget(target);
-    transformers.set(key, transformer);
+    byTarget.set(key, transformer);
   }
   return (await transformer).transform(source, ctx);
 }
-

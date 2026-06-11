@@ -23,8 +23,8 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$", format:
   walkSiblings(root.children());
 
   /** `$$.includeIfImported` is a file-level flag, not a node gate. Record it and drop its line by
-   *  document position (like Bati's old global-comment visitor) — a blank line before the first
-   *  statement would otherwise detach it from any node's `leadingComments`. */
+   *  document position — a blank line before the first statement would otherwise detach it from any
+   *  node's `leadingComments`. */
   function recordIncludeFlag(): void {
     root.findComments().forEach((comment) => {
       if (extractDirective(comment.text) !== "$$.includeIfImported") return;
@@ -85,7 +85,7 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$", format:
   }
 
   /** Drop the directive line, keeping the node. A stacked run keeps the non-directive comments below
-   *  it (Prettier tidies the blank); a lone directive takes its whole line. */
+   *  it (the residual blank line is tidied afterward); a lone directive takes its whole line. */
   function dropDirectiveComment(col: Collection, leadCount: number): void {
     if (leadCount === 1) col.dropDirective(DIRECTIVE);
     else col.mapLeadingComment(() => "");
@@ -143,7 +143,7 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$", format:
     const keep = col.field("condition").evaluate(ctx) ? col.field("consequence") : col.field("alternative");
     // In a JSX child `{$$.… ? <C/> : undefined}`, act on the whole `{…}`: remove it for an
     // `undefined`/`null` branch (no empty braces left) or unwrap to a kept JSX element (drop the
-    // braces). Any other branch keeps its braces — only the ternary collapses — matching Bati.
+    // braces). Any other branch keeps its braces — only the ternary collapses.
     if (col.node.parent?.type === "jsx_expression") {
       if (keep.type === "undefined" || keep.type === "null") {
         col.parent().remove();

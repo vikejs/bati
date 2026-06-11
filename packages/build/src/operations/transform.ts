@@ -18,7 +18,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
 
   for (const ext of toTest) {
     switch (ext) {
-      // A dynamic `$x.ts` transformer returns code — tidy its whitespace, as the old Prettier pass did.
+      // A dynamic `$x.ts` transformer returns code — tidy its whitespace.
       case ".ts":
       case ".js":
       case ".tsx":

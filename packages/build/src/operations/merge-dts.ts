@@ -6,8 +6,8 @@ let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
 /**
  * Merge two already-`$$`-transformed `.d.ts` files into one: concatenate them and run the `mergeDts`
  * codemod, which hoists/dedupes imports and folds same-named `declare global` / `declare module` /
- * `namespace` / `interface` declarations together (the codegraft replacement for the old magicast
- * AST splice). Then tidy whitespace and strip a now-empty `export {}`.
+ * `namespace` / `interface` declarations together. Then tidy whitespace and strip a now-empty
+ * `export {}`.
  */
 export async function mergeDts({
   fileContent,

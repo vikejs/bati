@@ -1,8 +1,8 @@
 /**
- * Finalize transformed output. The codemods' `format: true` reindents their own edits; this does what
- * the (removed) Prettier pass did *beyond* reindentation — strip trailing whitespace, collapse runs of
- * blank lines to one, and end with a single newline. It deliberately does **not** reflow to a print
- * width, so source line layout is preserved. Empty input stays empty (the build then drops the file).
+ * Finalize transformed output. The codemods' `format: true` reindents their own edits; this cleans up
+ * what reindentation leaves behind — strip trailing whitespace, collapse runs of blank lines to one,
+ * end with a single newline. It deliberately does **not** reflow to a print width, so source line
+ * layout is preserved. Empty input stays empty (the build then drops the file).
  */
 export function tidyWhitespace(code: string): string {
   const tidied = code

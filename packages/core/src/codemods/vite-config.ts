@@ -2,13 +2,9 @@ import type { Collection } from "@codegraft/core";
 import { assert } from "../assert.js";
 import { unquote } from "./text.js";
 
-/**
- * Bati's magicast config edits, re-authored over codegraft's `Collection` — `addVitePlugin` and
- * `mergeObject` (magicast's `deepMergeObject`), plus the `defineConfigArg` locator (its
- * `mod.exports.default.$args[0]`). Compose them in a `defineCodemod` body, as Bati composed magicast
- * calls. Importing and statement injection need no helper here: use core's `ensureImport` and
- * `insertBefore`.
- */
+// Config-literal edits over a codegraft `Collection`: locate the `defineConfig({…})` argument
+// (`defineConfigArg`), register a Vite plugin (`addVitePlugin`), and deep-merge into an object
+// literal (`mergeObject`).
 
 /** A config value: raw code text for a leaf (`"true"`, `'"react-jsx"'`, `'new URL(…)'`), or a nested object. */
 export type ConfigValue = string | ConfigObject;
@@ -21,8 +17,8 @@ export function defineConfigArg(root: Collection): Collection {
   return root.find("call_expression", { function: "defineConfig" }).first().field("arguments").children().first();
 }
 
-/** Register a Vite plugin: append `constructor(options?)` to the `plugins` array — idempotently, and
- *  only when that array exists — and ensure its import. */
+/** Register a Vite plugin: append the plugin call `ctor(options?)` to the `plugins` array
+ *  (idempotently) and ensure its import. */
 export function addVitePlugin(
   root: Collection,
   { from, constructor: ctor, named, options }: { from: string; constructor: string; named?: boolean; options?: string },
@@ -35,8 +31,8 @@ export function addVitePlugin(
   root.ensureImport(named ? `import { ${ctor} } from "${from}";` : `import ${ctor} from "${from}";`);
 }
 
-/** Deep-merge `source` into an object literal (magicast's `deepMergeObject`): append absent keys,
- *  recurse into nested objects present on both sides, replace otherwise. */
+/** Deep-merge `source` into an object literal: append absent keys, recurse into nested objects
+ *  present on both sides, replace otherwise. */
 export function mergeObject(object: Collection, source: ConfigObject): void {
   for (const [key, value] of Object.entries(source)) {
     const pair = directPair(object, key);

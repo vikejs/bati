@@ -3,11 +3,10 @@ import type { Collection, GrammarId, RichNode } from "@codegraft/core";
 import type { BatiContext } from "./context.js";
 
 /**
- * Comment-delimited conditional blocks — Bati's SquirrellyJS `@if … /if` replacement for files that
- * can't use a JS `if` (CSS, and any grammar with comments). The markers `$$.if(cond)`,
- * `$$.elif(cond)`, `$$.else`, `$$.endif` live in comments; the live branch is kept and every other
- * branch plus all markers are removed. Grammar-agnostic (keys off `findComments`), so the delimiter
- * is whatever the grammar uses. Same-container nesting is supported.
+ * Comment-delimited conditional blocks for files that can't use a JS `if` (CSS, and any grammar with
+ * comments). The markers `$$.if(cond)`, `$$.elif(cond)`, `$$.else`, `$$.endif` live in comments; the
+ * live branch is kept and every other branch plus all markers are removed. Grammar-agnostic (keys off
+ * `findComments`), so the delimiter is whatever the grammar uses. Same-container nesting is supported.
  */
 export const batiBlocks = defineCodemod<BatiContext>({ namespace: "$$", format: true }, (root, ctx) => {
   // Markers sharing a parent form one sibling sequence; process each independently.

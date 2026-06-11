@@ -1,7 +1,7 @@
 /**
  * The run context every Bati codemod evaluates `$$` conditions against and reports back through: it
  * is the same object passed to `transform(source, ctx)`, so a caller reads `includeIfImported` /
- * `imports` out after the run. `BATI` / `BATI_TEST` mirror Bati's templating globals under `$$`.
+ * `imports` out after the run. `BATI` / `BATI_TEST` are the build-time globals `$$` conditions read.
  */
 export interface BatiContext extends Record<string, unknown> {
   /** Bati's feature set: `has(feature)` and its derived properties (`hasDatabase`, `hasD1`, …). */

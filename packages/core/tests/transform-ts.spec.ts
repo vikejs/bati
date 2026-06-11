@@ -1,7 +1,7 @@
 import { BatiSet, features } from "@batijs/features";
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { transformAndFormat } from "../src/index.js";
-import { transform } from "../src/parse.js";
+import { runCodemods } from "../src/parse/codemods.js";
 
 const ctx = { jsx: false };
 
@@ -478,7 +478,11 @@ describe("BATI. expressions", () => {
     assert.equal(renderedOutput.code.trim(), "const a = (options?.router || appRouter);");
   });
 
-  testIfElse(`const a = "a" as $$.If<{ '$$.BATI.has("react")':string }>;`, `const a = "a" as string;`, `const a = "a";`);
+  testIfElse(
+    `const a = "a" as $$.If<{ '$$.BATI.has("react")':string }>;`,
+    `const a = "a" as string;`,
+    `const a = "a";`,
+  );
 
   testIfElse(`const a: $$.If<{ '$$.BATI.has("react")': string }> = "a";`, `const a: string = "a";`, `const a = "a";`);
 
@@ -573,10 +577,8 @@ import "@batijs/shared-env/server/load";
 export const x = 1;`;
 
   test("dropped from the graph when the condition is false", async () => {
-    const { code: output, context } = await transform(code, "test.ts", {
-      BATI: new BatiSet([], features, "pnpm"),
-      BATI_TEST: false,
-    });
+    const meta = { BATI: new BatiSet([], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(code, meta, "test.ts");
 
     expect(output).not.toContain("shared-env");
     expect(output).not.toContain("server/load");
@@ -584,10 +586,8 @@ export const x = 1;`;
   });
 
   test("kept in the graph when the condition is true", async () => {
-    const { code: output, context } = await transform(code, "test.ts", {
-      BATI: new BatiSet(["react"], features, "pnpm"),
-      BATI_TEST: false,
-    });
+    const meta = { BATI: new BatiSet(["react"], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(code, meta, "test.ts");
 
     expect(output).toContain(`import "./server/load";`);
     expect([...context.imports]).toContain("./server/load");
@@ -603,10 +603,8 @@ import "@batijs/shared-env/server/load";
 export const x = 1;`;
 
   test("dropped from the graph even when hidden behind a global comment", async () => {
-    const { code: output, context } = await transform(codeWithGlobalComment, "test.ts", {
-      BATI: new BatiSet([], features, "pnpm"),
-      BATI_TEST: false,
-    });
+    const meta = { BATI: new BatiSet([], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(codeWithGlobalComment, meta, "test.ts");
 
     expect(output).not.toContain("server/load");
     expect([...context.imports]).not.toContain("./server/load");

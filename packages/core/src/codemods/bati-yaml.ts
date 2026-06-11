@@ -4,10 +4,9 @@ import type { BatiContext } from "./context.js";
 import { extractDirective } from "./directive.js";
 
 /**
- * YAML conditional-line transform — Bati's `yaml`-library pass over the `tree-sitter-yaml` grammar.
- * A `# $$.…` comment gates the YAML node (mapping pair / sequence item) on the next line: false drops
- * the node and its leading comment block, true strips only the directive line (keeping any
- * non-directive comments above it).
+ * YAML conditional-line transform over the `tree-sitter-yaml` grammar. A `# $$.…` comment gates the
+ * YAML node (mapping pair / sequence item) on the next line: false drops the node and its leading
+ * comment block, true strips only the directive line (keeping any non-directive comments above it).
  *
  * It works positionally, not via `leadingComments`: tree-sitter attaches a comment by structure,
  * which for YAML's indentation can nest a column-0 directive inside the previous deeper mapping — so
@@ -35,7 +34,7 @@ export const batiYaml = defineCodemod<BatiContext>({ namespace: "$$" }, (root, c
       comment.remove({ wholeLines: true }); // keep the node, strip only the directive line
     } else {
       // Drop the node and the comment run above it; the topmost removal also eats a blank-line
-      // separator, so the section leaves nothing blank behind (matching Bati's re-serialized output).
+      // separator, so the section leaves nothing blank behind.
       commentBlockAbove(target, comments).forEach((c, i) => {
         c.remove({ wholeLines: true, collapseBlankBefore: i === 0 });
       });

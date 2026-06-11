@@ -2,7 +2,7 @@ import { BatiSet, features } from "@batijs/features";
 import { assert, describe, test } from "vitest";
 import { tidyWhitespace } from "../src/format.js";
 import { transformAndFormat } from "../src/index.js";
-import { transform } from "../src/parse.js";
+import { runCodemods } from "../src/parse/codemods.js";
 
 function testIfElse(code: string, expectedIf: string, expectedElse: string) {
   const filename = "test.vue";
@@ -213,9 +213,7 @@ export default {
 </custom1>
 `;
 
-  const renderedOutput = await transform(code, "test.vue", {
-    BATI: new BatiSet(["vue"], features, "pnpm"),
-  });
+  const renderedOutput = await runCodemods(code, { BATI: new BatiSet(["vue"], features, "pnpm") }, "test.vue");
 
   assert.equal(tidyWhitespace(renderedOutput.code), code);
 });

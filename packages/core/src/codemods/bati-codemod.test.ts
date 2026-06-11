@@ -12,7 +12,7 @@ const bati = (features: string[] = [], extra: Partial<Omit<BatiContext, "BATI">>
 const on = (target: Parameters<typeof batiCodemod.forTarget>[0]) => batiCodemod.forTarget(target);
 
 /** Collapse runs of whitespace to a single space and trim — for asserting structure without
- *  pinning the residual blank lines/indent that Bati leaves to Prettier. */
+ *  pinning the residual blank lines/indent the codemod leaves for the whitespace tidy. */
 const norm = (s: string) => s.replace(/\s+/g, " ").trim();
 
 describe("bati codemod — if / else-if / else", () => {
