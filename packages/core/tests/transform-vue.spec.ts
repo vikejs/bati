@@ -50,22 +50,19 @@ describe("vue/template: comment", () => {
   );
 });
 
-describe("vue/template: interpolation is a known gap (left untouched)", () => {
-  // `{{ … }}` interpolations and v-if/binding expressions are raw text to the parser, so a `$$`
-  // condition inside them is NOT evaluated — boilerplate must gate the element via `<!-- $$… -->` or
-  // move the conditional into <script>. This locks that pass-through behavior.
-  test("passes the expression through unchanged", async () => {
-    const code = `<template>
+describe("vue/template: interpolation conditional", () => {
+  // A `$$` condition inside a `{{ … }}` interpolation is evaluated like any other.
+  testIfElse(
+    `<template>
   <div class="layout">{{ $$.BATI.has("vue") ? "a" : "b" }}</div>
-</template>`;
-    const renderedOutput = await transformAndFormat(
-      code,
-      { BATI: new BatiSet(["vue"], features, "pnpm") },
-      { filepath: "test.vue" },
-    );
-
-    assert.include(renderedOutput.code, `$$.BATI.has("vue") ? "a" : "b"`);
-  });
+</template>`,
+    `<template>
+  <div class="layout">{{ "a" }}</div>
+</template>`,
+    `<template>
+  <div class="layout">{{ "b" }}</div>
+</template>`,
+  );
 });
 
 describe("vue/script: if block", () => {

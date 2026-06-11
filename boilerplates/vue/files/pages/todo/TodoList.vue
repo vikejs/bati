@@ -20,11 +20,8 @@
 
 <script lang="ts" setup>
 import type { Data } from "@batijs/shared-todo/pages/todo/+data";
-// $$.BATI.has("telefunc")
 import { onNewTodo } from "@batijs/telefunc/pages/todo/TodoList.telefunc";
-// $$.BATI.has("trpc")
 import { trpc } from "@batijs/trpc/trpc/client";
-// $$.BATI.has("ts-rest")
 import { client } from "@batijs/ts-rest/ts-rest/client";
 import { useData } from "vike-vue/useData";
 import { ref } from "vue";
