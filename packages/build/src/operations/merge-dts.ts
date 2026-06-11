@@ -24,6 +24,9 @@ export async function mergeDts({
   return clearExports(tidyWhitespace(merged), meta);
 }
 
+const BIOME_IGNORE_EMPTY_EXPORT =
+  "// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module";
+
 export function clearExports(code: string, meta: VikeMeta) {
   if (code.trim() === "export {};") {
     return undefined;
@@ -32,12 +35,10 @@ export function clearExports(code: string, meta: VikeMeta) {
     const index = code.indexOf("\nexport {};");
     const foundImport = code.match(/^import .* from /gm);
 
-    if (index !== -1 && foundImport) {
-      return (
-        code.slice(0, index) +
-        "\n// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module" +
-        code.slice(index)
-      );
+    // Idempotent: a multi-file `.d.ts` merge runs this per step, and `mergeDts` preserves the comment
+    // it already added, so guard against a duplicate (an unused suppression biome would flag).
+    if (index !== -1 && foundImport && !code.includes(BIOME_IGNORE_EMPTY_EXPORT)) {
+      return `${code.slice(0, index)}\n${BIOME_IGNORE_EMPTY_EXPORT}${code.slice(index)}`;
     }
   }
   return code;
