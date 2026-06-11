@@ -546,27 +546,6 @@ function gitInit(cwd: string) {
   }
 }
 
-/**
- * Format the generated project with its own formatter (prettier, else biome), run through the
- * package manager's exec so it works before `install`. The codemods only reindent their own edits;
- * this normalizes the rest (collapsed-branch whitespace, line layout) so the scaffold passes its
- * own `lint`/`format` checks as generated.
- */
-function formatProject(cwd: string, meta: VikeMeta) {
-  const formatter = meta.BATI.has("prettier")
-    ? `${pm.exec} prettier --write --log-level warn .`
-    : meta.BATI.has("biome")
-      ? `${pm.exec} @biomejs/biome format --write .`
-      : undefined;
-  if (!formatter) return;
-
-  try {
-    execSync(formatter, { cwd, stdio: "ignore" });
-  } catch {
-    console.warn(`${yellow("⚠")} failed to format the generated project. Skipping.`);
-  }
-}
-
 async function run() {
   const dir = boilerplatesDir();
   const boilerplates = await loadBoilerplates(dir);
@@ -665,8 +644,6 @@ async function run() {
       if (args.knip) {
         await generateKnipConfig(args.project, filteredBoilerplates);
       }
-
-      formatProject(args.project, meta);
 
       if (!args["skip-git"]) {
         gitInit(args.project);
