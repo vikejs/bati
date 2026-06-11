@@ -50,6 +50,11 @@ export async function runCodemods(
   let out = code;
   if (target === "yaml") {
     out = await pass(batiYaml, target, out, ctx);
+    // `remove()` drops a node's byte range but leaves its line's indentation (the formatter's job to
+    // tidy). Prettier strips trailing whitespace but keeps the now-blank line; for YAML that surfaces
+    // as a stray blank, so drop the whitespace-only residue lines here. Genuine blank lines (zero
+    // width) are untouched.
+    out = out.replace(/^[ \t]+\n/gm, "");
   } else if (target !== null) {
     const hasCommentBlocks = target === "css" || target === "html" || target === vueSplitter;
     const hasScript = target !== "css" && target !== "html"; // JS imports to prune then record

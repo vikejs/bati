@@ -26,6 +26,7 @@ export async function executeOperationFile(
       fileContent = await mergeDts({
         fileContent,
         previousContent: previousOperationSameDestination.content,
+        filepath,
         meta,
       });
     } else {

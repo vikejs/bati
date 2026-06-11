@@ -1,4 +1,4 @@
-import { mergeDts as mergeDtsCodemod, tidyWhitespace, type VikeMeta } from "@batijs/core";
+import { formatCode, mergeDts as mergeDtsCodemod, type VikeMeta } from "@batijs/core";
 
 // Build the `.d.ts` merge transformer once (its grammar WASM loads on first use).
 let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
@@ -12,16 +12,18 @@ let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
 export async function mergeDts({
   fileContent,
   previousContent,
+  filepath,
   meta,
 }: {
   fileContent: string;
   previousContent: string;
+  filepath: string;
   meta: VikeMeta;
 }) {
   merger ??= mergeDtsCodemod.forTarget("tsx");
   const merged = (await merger).transform(`${previousContent}\n${fileContent}`, {});
 
-  return clearExports(tidyWhitespace(merged), meta);
+  return clearExports(await formatCode(merged, { filepath }), meta);
 }
 
 const BIOME_IGNORE_EMPTY_EXPORT =

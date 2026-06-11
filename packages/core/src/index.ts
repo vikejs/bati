@@ -2,7 +2,7 @@ export { mergeDts } from "./codemods/index.js";
 export * from "./config-codemod.js";
 export * from "./dockerfile.js";
 export * from "./env-registry.js";
-export { tidyWhitespace } from "./format.js";
+export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./markdown/markdown.js";
 export { setComposeEnvironment } from "./parse/compose-env.js";

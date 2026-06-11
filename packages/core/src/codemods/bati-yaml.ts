@@ -11,7 +11,8 @@ import { extractDirective } from "./directive.js";
  * It works positionally, not via `leadingComments`: tree-sitter attaches a comment by structure,
  * which for YAML's indentation can nest a column-0 directive inside the previous deeper mapping — so
  * the target is the next item in document order, and the block to drop is the contiguous comment run
- * directly above it. Removals take whole lines, so output is clean with no residual blanks.
+ * directly above it. `remove()` leaves each line's indentation behind; `runCodemods` strips those
+ * whitespace-only residue lines before Prettier reformats.
  */
 export const batiYaml = defineCodemod<BatiContext>({ namespace: "$$" }, (root, ctx) => {
   const byStart = (a: Collection, b: Collection) => a.node.documentStartIndex - b.node.documentStartIndex;
@@ -31,14 +32,14 @@ export const batiYaml = defineCodemod<BatiContext>({ namespace: "$$" }, (root, c
     if (target === undefined) continue; // a directive with nothing below to gate
 
     if (root.evaluateExpression(condition, ctx)) {
-      comment.remove({ wholeLines: true }); // keep the node, strip only the directive line
+      comment.remove({ separator: true }); // keep the node, strip only the directive line
     } else {
-      // Drop the node and the comment run above it; the topmost removal also eats a blank-line
-      // separator, so the section leaves nothing blank behind.
-      commentBlockAbove(target, comments).forEach((c, i) => {
-        c.remove({ wholeLines: true, collapseBlankBefore: i === 0 });
+      // Drop the node and the comment run above it; `separator` takes each line's trailing newline so
+      // the section leaves no residual blank behind.
+      commentBlockAbove(target, comments).forEach((c) => {
+        c.remove({ separator: true });
       });
-      target.remove({ wholeLines: true });
+      target.remove({ separator: true });
     }
   }
 });

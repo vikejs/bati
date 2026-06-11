@@ -1,8 +1,6 @@
 import { BatiSet, features } from "@batijs/features";
 import { assert, describe, test } from "vitest";
-import { tidyWhitespace } from "../src/format.js";
 import { transformAndFormat } from "../src/index.js";
-import { runCodemods } from "../src/parse/codemods.js";
 
 function testIfElse(code: string, expectedIf: string, expectedElse: string) {
   const filename = "test.vue";
@@ -45,8 +43,7 @@ describe("vue/template: comment", () => {
   <!-- This is another comment about the below component -->
   <Link href="/todo">Todo</Link>
 </template>`,
-    `<template>
-</template>`,
+    `<template></template>`,
   );
 });
 
@@ -75,8 +72,7 @@ if ($$.BATI.has("vue")) {
     `<script>
 console.log("vue");
 </script>`,
-    `<script>
-</script>`,
+    `<script></script>`,
   );
 });
 
@@ -138,8 +134,7 @@ console.log("vue");
     `<script>
 console.log("vue");
 </script>`,
-    `<script>
-</script>`,
+    `<script></script>`,
   );
 });
 
@@ -210,7 +205,11 @@ export default {
 </custom1>
 `;
 
-  const renderedOutput = await runCodemods(code, { BATI: new BatiSet(["vue"], features, "pnpm") }, "test.vue");
+  const renderedOutput = await transformAndFormat(
+    code,
+    { BATI: new BatiSet(["vue"], features, "pnpm") },
+    { filepath: "test.vue" },
+  );
 
-  assert.equal(tidyWhitespace(renderedOutput.code), code);
+  assert.equal(renderedOutput.code, code);
 });

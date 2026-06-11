@@ -1,6 +1,6 @@
 import { parse } from "node:path";
 import type { EnvRegistry, PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
-import { tidyWhitespace } from "@batijs/core";
+import { formatCode } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./common.js";
 
 const isWin = process.platform === "win32";
@@ -18,14 +18,14 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
 
   for (const ext of toTest) {
     switch (ext) {
-      // A dynamic `$x.ts` transformer returns code — tidy its whitespace.
+      // A dynamic `$x.ts` transformer returns code — Prettier-format it.
       case ".ts":
       case ".js":
       case ".tsx":
       case ".jsx":
-        return tidyWhitespace(fileContent as string);
+        return formatCode(fileContent as string, { filepath });
       // The transformer hands these back already-final, so emit verbatim. Static files (incl. `.html`)
-      // are tidied upstream by the codemod pipeline in `transformAndFormat`; this path only sees dynamic output.
+      // are formatted upstream by the codemod pipeline in `transformAndFormat`; this path only sees dynamic output.
       case ".env":
       case ".env.local":
       case ".env.development":

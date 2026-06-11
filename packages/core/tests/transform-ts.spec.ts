@@ -186,9 +186,7 @@ describe("ts: comment in array", () => {
     a: 4,
   },
 ];`,
-    `const a = [
-  1,
-];`,
+    `const a = [1];`,
   );
 
   testIfElse(
@@ -201,14 +199,10 @@ describe("ts: comment in array", () => {
   ],
 });`,
     `export default defineConfig({
-  plugins: [
-    process.env.NODE_ENV !== "production" ? hono() : undefined,
-  ],
+  plugins: [process.env.NODE_ENV !== "production" ? hono() : undefined],
 });`,
     `export default defineConfig({
-  plugins: [
-    hono(),
-  ],
+  plugins: [hono()],
 });`,
   );
 });
@@ -249,13 +243,8 @@ describe("ts: comment in function args", () => {
   // $$.BATI.has("react")
   REACT3,
 );`,
-    `export default tseslint.config(
-  REACT1,
-  ...REACT2,
-  REACT3,
-);`,
-    `export default tseslint.config(
-);`,
+    `export default tseslint.config(REACT1, ...REACT2, REACT3);`,
+    `export default tseslint.config();`,
   );
 });
 
@@ -287,10 +276,7 @@ describe("ts: jsx comments", () => {
 };`,
     `const x = () => {
   return (
-    <div
-      id="sidebar"
-      class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-    >
+    <div id="sidebar" class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200">
       {props.children}
     </div>
   );
@@ -329,18 +315,10 @@ describe("ts: jsx conditional", () => {
   );
 };`,
     `const x = () => {
-  return (
-    <div>
-      {"a"}
-    </div>
-  );
+  return <div>{"a"}</div>;
 };`,
     `const x = () => {
-  return (
-    <div>
-      {"b"}
-    </div>
-  );
+  return <div>{"b"}</div>;
 };`,
   );
 });
@@ -366,10 +344,7 @@ describe("ts: jsx conditional with component", () => {
   );
 };`,
     `const x = () => {
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 };`,
   );
 });
@@ -475,7 +450,7 @@ describe("BATI. expressions", () => {
       { filepath: "test-as.ts" },
     );
 
-    assert.equal(renderedOutput.code.trim(), "const a = (options?.router || appRouter);");
+    assert.equal(renderedOutput.code.trim(), "const a = options?.router || appRouter;");
   });
 
   testIfElse(
@@ -495,16 +470,8 @@ describe("BATI. expressions", () => {
   }>
 >()
 .create();`,
-    `const t = initTRPC
-.context<
-  { env: { DB: D1Database } }
->()
-.create();`,
-    `const t = initTRPC
-.context<
-  object
->()
-.create();`,
+    `const t = initTRPC.context<{ env: { DB: D1Database } }>().create();`,
+    `const t = initTRPC.context<object>().create();`,
   );
 
   testIfElse(

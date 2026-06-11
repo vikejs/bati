@@ -1,6 +1,7 @@
 import { removeUnusedImports } from "@codegraft/rules";
 import { vueSplitter } from "@codegraft/vue";
 import { describe, expect, it } from "vitest";
+import { formatCode } from "../format.js";
 import { type BatiContext, batiBlocks, batiCodemod, batiImports, batiYaml } from "./index.js";
 
 // A Bati context: enabled features + optional BATI_TEST / filename / import-graph sink.
@@ -342,8 +343,14 @@ describe("bati codemod — Vue SFC (multi-zone)", () => {
   });
 });
 
-describe("batiYaml — # $$.BATI… line gating (clean output, no residual blank lines)", () => {
-  const yaml = async (ctx: BatiContext, src: string) => (await batiYaml.forTarget("yaml")).transform(src, ctx);
+describe("batiYaml — # $$.BATI… line gating (clean multi-line output)", () => {
+  // batiYaml gates whole YAML lines; `remove()` leaves the gated line's indentation, which the pipeline
+  // strips before Prettier reformats. Mirror that finalize here so the assertions are the real, valid
+  // multi-line YAML a project receives.
+  const yaml = async (ctx: BatiContext, src: string) => {
+    const gated = (await batiYaml.forTarget("yaml")).transform(src, ctx).replace(/^[ \t]+\n/gm, "");
+    return formatCode(gated, { filepath: "docker-compose.yml" });
+  };
 
   it("drops a sequence item when false, keeps it when true", async () => {
     const src = 'environment:\n  - NODE_ENV=production\n  # $$.BATI.has("authjs")\n  - AUTH_SECRET=x\n';
@@ -359,7 +366,7 @@ describe("batiYaml — # $$.BATI… line gating (clean output, no residual blank
     expect(await yaml(bati(), src)).toBe("app:\n  build: .\n  restart: always\n");
   });
 
-  it("drops a top-level pair at column 0, eating the blank-line separator (indentation quirk)", async () => {
+  it("drops a top-level pair at column 0", async () => {
     const src = 'services:\n  app:\n    restart: always\n\n# $$.BATI.has("sqlite")\nvolumes:\n  sqlite_data:\n';
     expect(await yaml(bati(["sqlite"]), src)).toBe(
       "services:\n  app:\n    restart: always\n\nvolumes:\n  sqlite_data:\n",

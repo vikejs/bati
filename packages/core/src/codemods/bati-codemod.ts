@@ -28,7 +28,7 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root
     root.findComments().forEach((comment) => {
       if (extractDirective(comment.text) !== "$$.includeIfImported") return;
       ctx.includeIfImported = true;
-      comment.remove({ wholeLines: true });
+      comment.remove({ separator: true });
     });
   }
 
