@@ -84,8 +84,6 @@ export const batiBlocks = defineCodemod<BatiContext>({ namespace: "$$", format: 
   }
 });
 
-export default batiBlocks;
-
 export const targets: GrammarId[] = ["css", "html", "javascript", "typescript", "tsx"];
 
 const MARKER = /\$\$\.(if|elif|else|endif)\b/;

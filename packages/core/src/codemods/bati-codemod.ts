@@ -199,10 +199,9 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$", format:
   }
 });
 
-export default batiCodemod;
-
-/** The targets this codemod handles directly; `.vue` zones are reached via a `ZoneSplitter`. */
-export const targets: GrammarId[] = ["javascript", "typescript", "tsx", "html"];
+// The targets this codemod handles directly; `.vue` zones are reached via a `ZoneSplitter`. On CSS it
+// resolves single-comment gates above a rule; the `$$.if … $$.endif` block form is `batiBlocks`' job.
+export const targets: GrammarId[] = ["javascript", "typescript", "tsx", "html", "css"];
 
 /** Whether an `if`/ternary condition references the `$$` namespace (else it is left alone). */
 function usesNamespace(condition: Collection): boolean {

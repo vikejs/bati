@@ -16,9 +16,8 @@ export const mergeDts = defineCodemod({ format: true }, (root) => {
   mergeScope(top.filter((c) => c.type !== "import_statement"));
 });
 
-export default mergeDts;
-
-export const targets: GrammarId[] = ["typescript"];
+// `tsx` is a superset of TypeScript, so one grammar covers `.d.ts` too — matching the rest of the pipeline.
+export const targets: GrammarId[] = ["tsx"];
 
 /** Lift every import to the top, deduped by text — later files' imports would otherwise be stranded
  *  below the merged declarations once their own blocks are folded away. */

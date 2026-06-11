@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { mergeDts } from "./merge-dts.js";
 
-const merge = async (...files: string[]) => (await mergeDts.forTarget("typescript")).transform(files.join("\n"), {});
+const merge = async (...files: string[]) => (await mergeDts.forTarget("tsx")).transform(files.join("\n"), {});
 const norm = (s: string) => s.replace(/\s+/g, " ").trim();
 const count = (s: string, re: RegExp) => (s.match(re) ?? []).length;
 

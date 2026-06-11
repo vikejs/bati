@@ -18,11 +18,14 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
 
   for (const ext of toTest) {
     switch (ext) {
+      // A dynamic `$x.ts` transformer returns code — tidy its whitespace, as the old Prettier pass did.
       case ".ts":
       case ".js":
       case ".tsx":
       case ".jsx":
         return tidyWhitespace(fileContent as string);
+      // The transformer hands these back already-final, so emit verbatim. Static files (incl. `.html`)
+      // are tidied upstream by the codemod pipeline in `transformAndFormat`; this path only sees dynamic output.
       case ".env":
       case ".env.local":
       case ".env.development":

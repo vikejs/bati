@@ -37,10 +37,9 @@ describe("addVitePlugin", () => {
     expect(out).toContain('sentryVitePlugin({ org: "o" })');
   });
 
-  it("does nothing when there is no plugins array (no orphan import)", async () => {
+  it("asserts when the config has no plugins array", async () => {
     const t = await build((root) => addVitePlugin(root, { from: "@vitejs/plugin-react", constructor: "react" }));
-    const base = config("  build: {},");
-    expect(t.transform(base, {})).toBe(base);
+    expect(() => t.transform(config("  build: {},"), {})).toThrow(/no `plugins` array/);
   });
 });
 

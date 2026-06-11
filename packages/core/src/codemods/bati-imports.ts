@@ -28,8 +28,6 @@ export const batiImports = defineCodemod<BatiContext>((root, ctx) => {
   });
 });
 
-export default batiImports;
-
 export const targets: GrammarId[] = ["javascript", "typescript", "tsx"];
 
 /** A relative module specifier from `fromFile` to `target` (Bati's `relative`, inlined). */

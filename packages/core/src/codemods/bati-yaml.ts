@@ -44,8 +44,6 @@ export const batiYaml = defineCodemod<BatiContext>({ namespace: "$$" }, (root, c
   }
 });
 
-export default batiYaml;
-
 export const targets: GrammarId[] = ["yaml"];
 
 /** The contiguous run of comment lines directly above `target` (regular comments and the directive

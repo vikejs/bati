@@ -37,7 +37,6 @@ export async function loadPackageJson<U extends PackageJsonDeps>(
   return new PackageJsonTransformer(JSON.parse(content), scopedPackageJson);
 }
 
-
 export async function loadYaml(
   { readfile, source, target }: TransformerProps,
   options?: ParseOptions & DocumentOptions & SchemaOptions & { fallbackEmpty?: boolean },

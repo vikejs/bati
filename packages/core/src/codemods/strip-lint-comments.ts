@@ -13,6 +13,4 @@ export const stripLintComments = defineCodemod<BatiContext>((root, ctx) => {
   });
 });
 
-export default stripLintComments;
-
 export const targets: GrammarId[] = ["javascript", "typescript", "tsx", "css", "html"];

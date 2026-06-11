@@ -1,4 +1,5 @@
 import type { Collection } from "@codegraft/core";
+import { assert } from "../assert.js";
 import { unquote } from "./text.js";
 
 /**
@@ -27,7 +28,7 @@ export function addVitePlugin(
   { from, constructor: ctor, named, options }: { from: string; constructor: string; named?: boolean; options?: string },
 ): void {
   const pair = directPair(defineConfigArg(root), "plugins");
-  if (pair.size() === 0) return; // no plugins array to append to
+  assert(pair.size() > 0, `addVitePlugin(${ctor}): the config has no \`plugins\` array to append to`);
   const plugins = pair.field("value");
   if (plugins.find("call_expression", { function: ctor }).size() > 0) return; // already registered
   plugins.append(`${ctor}(${options ?? ""})`);
