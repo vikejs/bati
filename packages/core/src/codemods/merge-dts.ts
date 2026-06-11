@@ -10,7 +10,7 @@ import { unquote } from "./text.js";
  * by text. Two files merge exactly; with three or more, a declaration that is *absent* from the first
  * file but repeated in later ones is left as a duplicate for TypeScript's own declaration merging.
  */
-export const mergeDts = defineCodemod({ format: true }, (root) => {
+export const mergeDts = defineCodemod((root) => {
   const top = list(root.children());
   hoistImports(root, top);
   mergeScope(top.filter((c) => c.type !== "import_statement"));

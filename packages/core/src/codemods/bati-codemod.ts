@@ -17,7 +17,7 @@ const SEPARATOR_PARENTS = new Set(["array", "object", "arguments"]);
  * `@codegraft/rules` `removeUnusedImports` after it — they read the post-collapse tree and must not
  * be `$$`-scan-gated.
  */
-export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$", format: true }, (root, ctx) => {
+export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root, ctx) => {
   if (suppressWholeFile()) return;
   recordIncludeFlag();
   walkSiblings(root.children());

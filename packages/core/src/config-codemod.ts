@@ -16,5 +16,5 @@ export async function transformConfig(
 ): Promise<string> {
   const content = await props.readfile?.();
   assert(content !== undefined, "transformConfig: no existing config file to transform");
-  return (await defineCodemod({ format: true }, edit).forTarget("tsx")).transform(content, {});
+  return (await defineCodemod(edit).forTarget("tsx")).transform(content, {});
 }

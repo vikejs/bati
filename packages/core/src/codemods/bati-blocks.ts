@@ -8,7 +8,7 @@ import type { BatiContext } from "./context.js";
  * live branch is kept and every other branch plus all markers are removed. Grammar-agnostic (keys off
  * `findComments`), so the delimiter is whatever the grammar uses. Same-container nesting is supported.
  */
-export const batiBlocks = defineCodemod<BatiContext>({ namespace: "$$", format: true }, (root, ctx) => {
+export const batiBlocks = defineCodemod<BatiContext>({ namespace: "$$" }, (root, ctx) => {
   // Markers sharing a parent form one sibling sequence; process each independently.
   const groups = new Map<RichNode | null, Marker[]>();
   for (const marker of root.findComments(MARKER).map(toMarker)) {
