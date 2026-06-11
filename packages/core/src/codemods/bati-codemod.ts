@@ -1,6 +1,5 @@
 import { defineCodemod } from "@codegraft/codemod";
 import type { Collection, GrammarId } from "@codegraft/core";
-import { getConditionalBranches } from "@codegraft/core";
 import type { BatiContext } from "./context.js";
 import { extractDirective } from "./directive.js";
 import { unquote } from "./text.js";
@@ -176,13 +175,19 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root
     const asUnknown = isQualified(name, "IfAsUnknown");
     if (!asUnknown && !isQualified(name, "If")) return false;
 
+    // `$$.If<{ '<cond>': T; _: F }>`: pick the first branch whose key (a `$$` condition) is live, else
+    // the `_` fallback. A branch is a `property_signature`; its `type` field is the `: T` annotation,
+    // whose child is `T`.
+    const branches = col.field("type_arguments").children().first().children();
     let fallback: string | null = null;
     let chosen: string | null = null;
-    for (const branch of getConditionalBranches(col.field("type_arguments").children().first().node)) {
-      const key = unquote(branch.name);
-      if (key === "_") fallback = branch.type.text;
-      else if (chosen === null && col.evaluateExpression(key, ctx)) chosen = branch.type.text;
-    }
+    branches.forEach((branch) => {
+      if (!branch.isOfType("property_signature")) return;
+      const key = unquote(branch.field("name").text);
+      const branchType = branch.field("type").children().first().text;
+      if (key === "_") fallback = branchType;
+      else if (chosen === null && col.evaluateExpression(key, ctx)) chosen = branchType;
+    });
     const resolved = chosen ?? fallback;
 
     const parent = col.parent();
