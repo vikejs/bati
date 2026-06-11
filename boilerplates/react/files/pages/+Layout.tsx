@@ -1,5 +1,5 @@
 import "./Layout.css";
-//# $$.BATI.has("tailwindcss")
+// $$.BATI.has("tailwindcss")
 import "./tailwind.css";
 import { AuthNav } from "@batijs/react-better-auth/components/AuthNav";
 import logoUrl from "../assets/logo.svg";
@@ -8,15 +8,15 @@ import { Link } from "../components/Link";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      //# $$.BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       className={"flex max-w-5xl m-auto"}
-      //# $$.BATI.has("compiled-css")
+      // $$.BATI.has("compiled-css")
       css={{
         display: "flex",
         maxWidth: 1024,
         margin: "auto",
       }}
-      //# !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
+      // !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
       style={{
         display: "flex",
         maxWidth: 900,
@@ -39,9 +39,9 @@ function Sidebar({ children }: { children: React.ReactNode }) {
   return (
     <div
       id="sidebar"
-      //# $$.BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       className={"p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"}
-      //# $$.BATI.has("compiled-css")
+      // $$.BATI.has("compiled-css")
       css={{
         padding: 20,
         display: "flex",
@@ -50,7 +50,7 @@ function Sidebar({ children }: { children: React.ReactNode }) {
         lineHeight: "1.8em",
         borderRight: "2px solid #eee",
       }}
-      //# !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
+      // !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
       style={{
         padding: 20,
         flexShrink: 0,
@@ -70,15 +70,15 @@ function Content({ children }: { children: React.ReactNode }) {
     <div id="page-container">
       <div
         id="page-content"
-        //# $$.BATI.has("tailwindcss")
+        // $$.BATI.has("tailwindcss")
         className={"p-5 pb-12 min-h-screen"}
-        //# $$.BATI.has("compiled-css")
+        // $$.BATI.has("compiled-css")
         css={{
           padding: 20,
           paddingBottom: 48,
           minHeight: "100vh",
         }}
-        //# !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
+        // !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
         style={{
           padding: 20,
           paddingBottom: 50,
@@ -94,14 +94,14 @@ function Content({ children }: { children: React.ReactNode }) {
 function Logo() {
   return (
     <div
-      //# $$.BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       className={"p-5 mb-2"}
-      //# $$.BATI.has("compiled-css")
+      // $$.BATI.has("compiled-css")
       css={{
         padding: 20,
         marginBottom: 8,
       }}
-      //# !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
+      // !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
       style={{
         marginTop: 20,
         marginBottom: 10,

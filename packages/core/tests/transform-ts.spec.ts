@@ -128,7 +128,7 @@ describe("ts: conditional", () => {
 
 describe("ts: comment above import", () => {
   testIfElse(
-    `//# $$.BATI.has("react")
+    `// $$.BATI.has("react")
 import "react";`,
     `import "react";`,
     ``,
@@ -137,7 +137,7 @@ import "react";`,
 
 describe("ts: comment above comment", () => {
   testIfElse(
-    `//# $$.BATI.has("react")
+    `// $$.BATI.has("react")
 /// <reference types="vite-plugin-vercel/types" />
 const a = 1;`,
     `/// <reference types="vite-plugin-vercel/types" />
@@ -148,7 +148,7 @@ const a = 1;`,
 
 describe("ts: remove-comments-only", () => {
   testIfElse(
-    `//# $$.BATI.has("react") || "remove-comments-only"
+    `// $$.BATI.has("react") || "remove-comments-only"
 /// <reference types="vite-plugin-vercel/types" />
 const a = 1;`,
     `/// <reference types="vite-plugin-vercel/types" />
@@ -161,15 +161,15 @@ describe("ts: comment in array", () => {
   testIfElse(
     `const a = [
   1,
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   Object({
     a: 2,
   }),
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   new Object({
     a: 3,
   }),
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   {
     a: 4,
   },
@@ -194,9 +194,9 @@ describe("ts: comment in array", () => {
   testIfElse(
     `export default defineConfig({
   plugins: [
-    //# $$.BATI.has("react")
+    // $$.BATI.has("react")
     process.env.NODE_ENV !== "production" ? hono() : undefined,
-    //# !$$.BATI.has("react")
+    // !$$.BATI.has("react")
     hono(),
   ],
 });`,
@@ -216,9 +216,9 @@ describe("ts: comment in array", () => {
 describe("ts: comment in object", () => {
   testIfElse(
     `const a = {
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   key1: 1,
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   key2: new Object({
     a: 2,
   }),
@@ -240,13 +240,13 @@ describe("ts: comment in object", () => {
 describe("ts: comment in function args", () => {
   testIfElse(
     `export default tseslint.config(
-  //# $$.BATI.has("vue")
+  // $$.BATI.has("vue")
   VUE1,
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   REACT1,
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   ...REACT2,
-  //# $$.BATI.has("react")
+  // $$.BATI.has("react")
   REACT3,
 );`,
     `export default tseslint.config(
@@ -269,9 +269,9 @@ describe("ts: jsx comments", () => {
   return (
     <div
       id="sidebar"
-      //# $$.BATI.has("react")
+      // $$.BATI.has("react")
       class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-      //# !$$.BATI.has("react")
+      // !$$.BATI.has("react")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -438,7 +438,7 @@ describe("global meta comments", async () => {
 
   test("valid flags", async () => {
     const renderedOutput = await transformAndFormat(
-      `/*# $$.includeIfImported #*/      
+      `/* $$.includeIfImported */      
 const a = 1;`,
       {
         BATI: new BatiSet([], features, "pnpm"),
@@ -560,7 +560,7 @@ describe("$$.BATI_TEST + $$.BATI.has", () => {
 
 describe("$$.BATI_TEST: comment above import", () => {
   testIfElse(
-    `//# $$.BATI_TEST
+    `// $$.BATI_TEST
 import "react";`,
     ``,
     `import "react";`,
@@ -572,7 +572,7 @@ describe("imports stripped by a BATI condition are not tracked", () => {
   // to decide whether to keep a file. A side-effect import gated by a falsy BATI
   // condition is removed from the code, so it must also be removed from the graph
   // — otherwise the imported file is wrongly kept (and later flagged unused).
-  const code = `//# $$.BATI.has("react")
+  const code = `// $$.BATI.has("react")
 import "@batijs/shared-env/server/load";
 export const x = 1;`;
 
@@ -596,9 +596,9 @@ export const x = 1;`;
   // The `include-if-imported` flag sits a blank line above the gated first import (as in
   // database/kysely/db.ts), which detaches it from the import's leading comments. The flag must still
   // be recorded and the import dropped from the graph — otherwise the imported file is wrongly kept.
-  const codeWithGlobalComment = `/*# $$.includeIfImported #*/
+  const codeWithGlobalComment = `/* $$.includeIfImported */
 
-//# $$.BATI.has("react")
+// $$.BATI.has("react")
 import "@batijs/shared-env/server/load";
 export const x = 1;`;
 

@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 import "@batijs/shared-env/server/load";
 import { db } from "../db";
 

@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { enhance, type Get, type UniversalHandler } from "@universal-middleware/core";

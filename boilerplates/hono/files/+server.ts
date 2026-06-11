@@ -10,7 +10,7 @@ export default {
   fetch: app.fetch,
   prod: {
     port,
-    //# $$.BATI.has("aws")
+    // $$.BATI.has("aws")
     // We need to override static root config when deploying to AWS
     static: `${process.cwd()}/dist/client`,
   },

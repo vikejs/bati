@@ -118,7 +118,7 @@ nothing
 <td>
 
 ```ts
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 
 const a = 1;
 ```

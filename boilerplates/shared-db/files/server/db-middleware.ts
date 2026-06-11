@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 
 import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 import { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
@@ -7,7 +7,7 @@ import { db as pgDb } from "@batijs/postgres/database/postgres/db";
 import { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { enhance, type UniversalMiddleware } from "@universal-middleware/core";
 
-//# $$.BATI.hasDatabase
+// $$.BATI.hasDatabase
 declare global {
   namespace Universal {
     interface Context {

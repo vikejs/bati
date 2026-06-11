@@ -12,31 +12,31 @@ function getApp() {
   const app = new Elysia();
 
   vike(app, [
-    //# $$.BATI.hasDbDemo
+    // $$.BATI.hasDbDemo
     // Make database available in Context as `context.db`
     dbMiddleware,
-    //# $$.BATI.has("authjs") || $$.BATI.has("auth0")
+    // $$.BATI.has("authjs") || $$.BATI.has("auth0")
     // Append Auth.js session to context
     authjsSessionMiddleware,
-    //# $$.BATI.has("authjs") || $$.BATI.has("auth0")
+    // $$.BATI.has("authjs") || $$.BATI.has("auth0")
     // Auth.js route. See https://authjs.dev/getting-started/installation
     authjsHandler,
-    //# $$.BATI.has("better-auth")
+    // $$.BATI.has("better-auth")
     // Append Better Auth user to context
     betterAuthSessionMiddleware,
-    //# $$.BATI.has("better-auth")
+    // $$.BATI.has("better-auth")
     // Better Auth route. See https://better-auth.com/docs/installation
     betterAuthHandler,
-    //# $$.BATI.has("trpc")
+    // $$.BATI.has("trpc")
     // tRPC route. See https://trpc.io/docs/server/adapters
     trpcHandler("/api/trpc"),
-    //# $$.BATI.has("telefunc")
+    // $$.BATI.has("telefunc")
     // Telefunc route. See https://telefunc.com
     telefuncHandler,
-    //# $$.BATI.has("ts-rest")
+    // $$.BATI.has("ts-rest")
     // ts-rest route. See https://ts-rest.com
     tsRestHandler,
-    //# !$$.BATI.has("telefunc") && !$$.BATI.has("trpc") && !$$.BATI.has("ts-rest")
+    // !$$.BATI.has("telefunc") && !$$.BATI.has("trpc") && !$$.BATI.has("ts-rest")
     createTodoHandler,
   ]);
 

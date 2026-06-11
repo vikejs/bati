@@ -93,7 +93,7 @@ describe("bati codemod — ternary", () => {
 describe("bati codemod — comment-directive gate", () => {
   it("gates the next statement / import", async () => {
     const t = await on("tsx");
-    const src = '//# $$.BATI.has("a")\nimport "react"';
+    const src = '// $$.BATI.has("a")\nimport "react"';
     expect(t.transform(src, bati(["a"]))).toBe('import "react"');
     expect(t.transform(src, bati())).toBe("");
   });
@@ -107,14 +107,14 @@ describe("bati codemod — comment-directive gate", () => {
 
   it("gates $$.BATI_TEST", async () => {
     const t = await on("tsx");
-    const src = '//# $$.BATI_TEST\nimport "test-only"';
+    const src = '// $$.BATI_TEST\nimport "test-only"';
     expect(t.transform(src, bati([], { BATI_TEST: true }))).toBe('import "test-only"');
     expect(t.transform(src, bati([], { BATI_TEST: false }))).toBe("");
   });
 
   it("gates an array element and cleans the trailing comma (no array hole)", async () => {
     const t = await on("tsx");
-    const src = 'const a = [\n  1,\n  //# $$.BATI.has("a")\n  two(),\n  3,\n]';
+    const src = 'const a = [\n  1,\n  // $$.BATI.has("a")\n  two(),\n  3,\n]';
     expect(norm(t.transform(src, bati(["a"])))).toBe("const a = [ 1, two(), 3, ]");
     const off = t.transform(src, bati());
     expect(off).not.toContain("two()");
@@ -124,35 +124,35 @@ describe("bati codemod — comment-directive gate", () => {
 
   it("gates an object property", async () => {
     const t = await on("tsx");
-    const src = 'const a = {\n  //# $$.BATI.has("a")\n  k1: 1,\n  k2: 2,\n}';
+    const src = 'const a = {\n  // $$.BATI.has("a")\n  k1: 1,\n  k2: 2,\n}';
     expect(norm(t.transform(src, bati(["a"])))).toBe("const a = { k1: 1, k2: 2, }");
     expect(norm(t.transform(src, bati()))).toBe("const a = { k2: 2, }");
   });
 
   it("gates call arguments incl. a spread element", async () => {
     const t = await on("tsx");
-    const src = 'cfg(\n  //# $$.BATI.has("a")\n  A1,\n  //# $$.BATI.has("a")\n  ...A2,\n)';
+    const src = 'cfg(\n  // $$.BATI.has("a")\n  A1,\n  // $$.BATI.has("a")\n  ...A2,\n)';
     expect(norm(t.transform(src, bati(["a"])))).toBe("cfg( A1, ...A2, )");
     expect(norm(t.transform(src, bati()))).toBe("cfg( )");
   });
 
   it("gates a JSX attribute", async () => {
     const t = await on("tsx");
-    const src = 'const x = <div\n  id="s"\n  //# $$.BATI.has("a")\n  class="p"\n/>';
+    const src = 'const x = <div\n  id="s"\n  // $$.BATI.has("a")\n  class="p"\n/>';
     expect(norm(t.transform(src, bati(["a"])))).toBe('const x = <div id="s" class="p" />');
     expect(norm(t.transform(src, bati()))).toBe('const x = <div id="s" />');
   });
 
   it("keeps a stacked non-directive comment when the condition is true", async () => {
     const t = await on("tsx");
-    const src = '//# $$.BATI.has("a")\n/// <reference types="x" />\nconst a = 1';
+    const src = '// $$.BATI.has("a")\n/// <reference types="x" />\nconst a = 1';
     expect(norm(t.transform(src, bati(["a"])))).toBe('/// <reference types="x" /> const a = 1');
     expect(t.transform(src, bati())).toBe("");
   });
 
   it('"remove-comments-only": strips the comments but keeps the node', async () => {
     const t = await on("tsx");
-    const src = '//# $$.BATI.has("a") || "remove-comments-only"\n/// <reference types="x" />\nconst a = 1';
+    const src = '// $$.BATI.has("a") || "remove-comments-only"\n/// <reference types="x" />\nconst a = 1';
     expect(norm(t.transform(src, bati(["a"])))).toBe('/// <reference types="x" /> const a = 1');
     expect(norm(t.transform(src, bati()))).toBe("const a = 1");
   });
@@ -227,7 +227,7 @@ describe("bati codemod — file flag + @batijs imports (ctx out-channel)", () =>
   it("records $$.includeIfImported into ctx and strips the directive", async () => {
     const t = await on("typescript");
     const ctx = bati();
-    expect(t.transform("/*# $$.includeIfImported #*/\nconst a = 1", ctx)).toBe("const a = 1");
+    expect(t.transform("/* $$.includeIfImported */\nconst a = 1", ctx)).toBe("const a = 1");
     expect(ctx.includeIfImported).toBe(true);
   });
 
@@ -259,7 +259,7 @@ describe("bati codemod — file flag + @batijs imports (ctx out-channel)", () =>
     const rewrite = await batiImports.forTarget("tsx");
     const imports = new Set<string>();
     const ctx = bati([], { filename: "x.ts", imports });
-    const src = '//# $$.BATI.has("react")\nimport "@batijs/shared/server/load"\nexport const x = 1';
+    const src = '// $$.BATI.has("react")\nimport "@batijs/shared/server/load"\nexport const x = 1';
     const out = rewrite.transform(collapse.transform(src, ctx), ctx);
     expect(out).not.toContain("server/load");
     expect([...imports]).not.toContain("./server/load");

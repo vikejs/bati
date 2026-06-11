@@ -9,14 +9,14 @@ const config: Config = {
   title: "My Vike App",
   description: "Demo showcasing Vike",
 
-  //# $$.BATI.has("auth0") || $$.BATI.has("authjs") || $$.BATI.has("better-auth")
+  // $$.BATI.has("auth0") || $$.BATI.has("authjs") || $$.BATI.has("better-auth")
   passToClient: ["user"],
   extends: [vikeReact],
 
-  //# $$.BATI.has("vercel")
+  // $$.BATI.has("vercel")
   prerender: true,
 
-  //# $$.BATI.hasUD && !$$.BATI.hasServer
+  // $$.BATI.hasUD && !$$.BATI.hasServer
   // https://vike.dev/server
   server: true,
 };

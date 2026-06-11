@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 import postgres from "postgres";
 
 let singleton: postgres.Sql | undefined;

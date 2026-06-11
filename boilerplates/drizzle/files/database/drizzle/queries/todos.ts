@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 
 import type { dbD1, dbPostgres, dbSqlite } from "../db";
 import { todoTable } from "../schema/todos";

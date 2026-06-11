@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-//# $$.BATI.has("tailwindcss")
+// $$.BATI.has("tailwindcss")
 import "@batijs/tailwindcss/pages/tailwind.css";
 import logoUrl from "../assets/logo.svg";
 </script>

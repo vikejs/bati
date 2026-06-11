@@ -8,7 +8,7 @@ function Counter() {
   return (
     <button
       type="button"
-      //# $$.BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       class={
         $$.BATI.has("daisyui")
           ? "btn"

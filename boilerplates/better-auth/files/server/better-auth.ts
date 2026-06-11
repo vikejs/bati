@@ -10,7 +10,7 @@ import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 import * as authSchema from "../database/drizzle/schema/auth";
 
-//# $$.BATI.hasD1
+// $$.BATI.hasD1
 function getD1(runtime?: RuntimeAdapter): D1Database {
   if (runtime?.runtime === "workerd" && runtime.env) {
     return runtime.env.DB as D1Database;
@@ -18,7 +18,7 @@ function getD1(runtime?: RuntimeAdapter): D1Database {
   throw new Error("Cloudflare D1 binding (DB) is not available");
 }
 
-//# $$.BATI.has("drizzle")
+// $$.BATI.has("drizzle")
 function getDrizzleDb(_runtime?: RuntimeAdapter) {
   if ($$.BATI.hasD1) {
     return dbD1(getD1(_runtime));

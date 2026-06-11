@@ -135,7 +135,7 @@ const x = "b";
 describe("vue/script: comment", () => {
   testIfElse(
     `<script>
-//# $$.BATI.has("vue")
+// $$.BATI.has("vue")
 console.log("vue");
 </script>`,
     `<script>

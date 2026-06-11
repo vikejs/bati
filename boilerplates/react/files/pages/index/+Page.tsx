@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <>
       <h1
-        //# $$.BATI.has("compiled-css")
+        // $$.BATI.has("compiled-css")
         css={{ fontWeight: "700", fontSize: "1.875rem", paddingBottom: "1rem" }}
       >
         My Vike app

@@ -1,4 +1,4 @@
-/*# $$.includeIfImported #*/
+/* $$.includeIfImported */
 
 import * as d1Queries from "@batijs/d1-sqlite/database/d1/queries/todos";
 import type { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";
