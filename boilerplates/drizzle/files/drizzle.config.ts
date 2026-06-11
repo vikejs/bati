@@ -1,17 +1,17 @@
 import "@batijs/shared-env/server/load";
 import { defineConfig } from "drizzle-kit";
 
-if (!BATI.hasD1) {
+if (!$$.BATI.hasD1) {
   if (!process.env.DATABASE_URL) {
     throw new Error("Missing DATABASE_URL in .env file");
   }
 }
 
 export default defineConfig({
-  dialect: BATI.has("postgres") ? "postgresql" : "sqlite",
+  dialect: $$.BATI.has("postgres") ? "postgresql" : "sqlite",
   schema: "./database/drizzle/schema/*",
   out: "./database/migrations",
-  //# !BATI.hasD1
+  //# !$$.BATI.hasD1
   dbCredentials: {
     // biome-ignore lint/style/noNonNullAssertion: exists
     url: process.env.DATABASE_URL!,

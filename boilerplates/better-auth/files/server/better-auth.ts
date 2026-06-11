@@ -10,7 +10,7 @@ import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 import * as authSchema from "../database/drizzle/schema/auth";
 
-//# BATI.hasD1
+//# $$.BATI.hasD1
 function getD1(runtime?: RuntimeAdapter): D1Database {
   if (runtime?.runtime === "workerd" && runtime.env) {
     return runtime.env.DB as D1Database;
@@ -18,11 +18,11 @@ function getD1(runtime?: RuntimeAdapter): D1Database {
   throw new Error("Cloudflare D1 binding (DB) is not available");
 }
 
-//# BATI.has("drizzle")
+//# $$.BATI.has("drizzle")
 function getDrizzleDb(_runtime?: RuntimeAdapter) {
-  if (BATI.hasD1) {
+  if ($$.BATI.hasD1) {
     return dbD1(getD1(_runtime));
-  } else if (BATI.has("postgres")) {
+  } else if ($$.BATI.has("postgres")) {
     return dbPostgres();
   } else {
     return dbSqlite();
@@ -33,18 +33,18 @@ function getDrizzleDb(_runtime?: RuntimeAdapter) {
 // With Drizzle it reuses the app's instance (Drizzle owns the schema + migrations); otherwise it
 // opens its own connection and creates the tables via `better-auth:migrate` (or a D1 SQL migration).
 function getDatabase(_runtime?: RuntimeAdapter): BetterAuthOptions["database"] {
-  if (BATI.has("drizzle")) {
+  if ($$.BATI.has("drizzle")) {
     return drizzleAdapter(getDrizzleDb(_runtime), {
-      provider: BATI.has("postgres") ? "pg" : "sqlite",
+      provider: $$.BATI.has("postgres") ? "pg" : "sqlite",
       schema: authSchema,
     });
-  } else if (BATI.hasD1) {
+  } else if ($$.BATI.hasD1) {
     // Cloudflare D1 is the SQLite engine on Workers, reached through Kysely's D1 dialect.
     return {
       db: new Kysely({ dialect: new D1Dialect({ database: getD1(_runtime) }) }),
       type: "sqlite" as const,
     };
-  } else if (BATI.has("postgres")) {
+  } else if ($$.BATI.has("postgres")) {
     // postgres.js via Kysely's dialect — the same driver the rest of the app uses (and Bun-friendly).
     if (!env.DATABASE_URL) {
       throw new Error("Missing DATABASE_URL in .env file");

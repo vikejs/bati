@@ -1,4 +1,4 @@
-// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
+// ($$.BATI.has("auth0") || $$.BATI.hasDatabase) && !$$.BATI.has("cloudflare")
 import "@batijs/shared-env/server/load";
 import type { Server } from "vike/types";
 import { app } from "./server/elysia";

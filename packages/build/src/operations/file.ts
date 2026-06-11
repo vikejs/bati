@@ -29,7 +29,6 @@ export async function executeOperationFile(
         fileContent,
         previousContent: previousOperationSameDestination.content,
         meta,
-        filepath,
       });
     } else {
       fileContent = clearExports(fileContent, meta);

@@ -1,10 +1,11 @@
+export { mergeDts } from "./codemods/index.js";
+export * from "./config-codemod.js";
 export * from "./dockerfile.js";
 export * from "./env-registry.js";
-export { formatCode } from "./format.js";
+export { tidyWhitespace } from "./format.js";
 export * from "./loaders.js";
-export * from "./magicast.js";
 export * from "./markdown/markdown.js";
-export { setComposeEnvironment } from "./parse/yaml.js";
+export { setComposeEnvironment } from "./parse/compose-env.js";
 export { type FileContext, transformAndFormat } from "./parse.js";
 export * from "./print.js";
 export * from "./random.js";

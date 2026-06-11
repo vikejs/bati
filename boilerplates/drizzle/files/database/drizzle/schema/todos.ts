@@ -1,9 +1,9 @@
-/*# BATI include-if-imported #*/
+/*# $$.includeIfImported #*/
 import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Example of defining a schema in Drizzle ORM.
-export const todoTable = BATI.has("postgres")
+export const todoTable = $$.BATI.has("postgres")
   ? pgTable("todos", {
       id: serial("id").primaryKey(),
       text: varchar("text", { length: 50 }).notNull(),

@@ -7,7 +7,7 @@
       <Link href="/"> Welcome </Link>
       <Link href="/todo"> Todo </Link>
       <Link href="/star-wars"> Data Fetching </Link>
-      <!-- BATI.has("better-auth") -->
+      <!-- $$.BATI.has("better-auth") -->
       <AuthNav />
     </Sidebar>
     <Content><slot /></Content>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-//# BATI.has("better-auth")
+//# $$.BATI.has("better-auth")
 import AuthNav from "../components/AuthNav.vue";
 import Content from "../components/Content.vue";
 import Link from "../components/Link.vue";
@@ -23,7 +23,7 @@ import Logo from "../components/Logo.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { sentryBrowserConfig } from "../sentry.browser.config";
 
-//# BATI.has("sentry")
+//# $$.BATI.has("sentry")
 sentryBrowserConfig();
 </script>
 

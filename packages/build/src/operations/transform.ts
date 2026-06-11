@@ -1,6 +1,6 @@
 import { parse } from "node:path";
 import type { EnvRegistry, PackageJson, StringTransformer, Transformer, VikeMeta, YAMLDocument } from "@batijs/core";
-import { formatCode } from "@batijs/core";
+import { tidyWhitespace } from "@batijs/core";
 import type { FileOperation, OperationReport } from "./common.js";
 
 const isWin = process.platform === "win32";
@@ -22,9 +22,7 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
       case ".js":
       case ".tsx":
       case ".jsx":
-        return formatCode(fileContent as string, {
-          filepath,
-        });
+        return tidyWhitespace(fileContent as string);
       case ".env":
       case ".env.local":
       case ".env.development":

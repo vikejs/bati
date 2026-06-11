@@ -1,10 +1,10 @@
 import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "../db";
 
 export async function insertTodo(
-  db: BATI.If<{
-    'BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
-    "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
+  db: $$.If<{
+    '$$.BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
+    "!$$.BATI.hasD1": ReturnType<typeof dbKysely>;
+    "$$.BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,
   text: string,
 ) {
@@ -12,10 +12,10 @@ export async function insertTodo(
 }
 
 export async function getAllTodos(
-  db: BATI.If<{
-    'BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
-    "!BATI.hasD1": ReturnType<typeof dbKysely>;
-    "BATI.hasD1": ReturnType<typeof dbKyselyD1>;
+  db: $$.If<{
+    '$$.BATI.has("postgres")': ReturnType<typeof dbKyselyPostgres>;
+    "!$$.BATI.hasD1": ReturnType<typeof dbKysely>;
+    "$$.BATI.hasD1": ReturnType<typeof dbKyselyD1>;
   }>,
 ) {
   return await db.selectFrom("todos").selectAll().execute();

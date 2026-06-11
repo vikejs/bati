@@ -5,7 +5,7 @@
 import logoUrl from "../assets/logo.svg";
 
 export function Head() {
-  if (BATI.has("plausible.io")) {
+  if ($$.BATI.has("plausible.io")) {
     return (
       <>
         <link rel="icon" href={logoUrl} />
@@ -14,7 +14,7 @@ export function Head() {
         <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js" />
       </>
     );
-  } else if (BATI.has("google-analytics")) {
+  } else if ($$.BATI.has("google-analytics")) {
     return (
       <>
         <script

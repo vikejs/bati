@@ -1,5 +1,4 @@
-/*{ @if (!it.BATI.hasD1) }*/
-
+// $$.keepFileIf(!$$.BATI.hasD1)
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { dirname } from "node:path";
@@ -11,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 async function migrateToLatest() {
-  const db = BATI.has("postgres") ? dbKyselyPostgres() : dbKysely();
+  const db = $$.BATI.has("postgres") ? dbKyselyPostgres() : dbKysely();
   const migrator = new Migrator({
     db,
     provider: new FileMigrationProvider({
@@ -43,4 +42,3 @@ async function migrateToLatest() {
 }
 
 await migrateToLatest();
-/*{ /if }*/

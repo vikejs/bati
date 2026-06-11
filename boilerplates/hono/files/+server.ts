@@ -1,4 +1,4 @@
-// (BATI.has("auth0") || BATI.hasDatabase) && !BATI.has("cloudflare")
+// ($$.BATI.has("auth0") || $$.BATI.hasDatabase) && !$$.BATI.has("cloudflare")
 import "@batijs/shared-env/server/load";
 import type { Server } from "vike/types";
 import { app } from "./server/hono";
@@ -10,7 +10,7 @@ export default {
   fetch: app.fetch,
   prod: {
     port,
-    //# BATI.has("aws")
+    //# $$.BATI.has("aws")
     // We need to override static root config when deploying to AWS
     static: `${process.cwd()}/dist/client`,
   },

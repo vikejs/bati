@@ -3,14 +3,14 @@
 <template>
   <link rel="icon" :href="logoUrl" />
 
-  <!-- BATI.has("plausible.io") -->
+  <!-- $$.BATI.has("plausible.io") -->
   <!-- See https://plausible.io/docs/plausible-script -->
   <!-- TODO: update data-domain -->
   <component :is="'script'" defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js" />
 </template>
 
 <script setup lang="ts">
-//# BATI.has("tailwindcss")
+//# $$.BATI.has("tailwindcss")
 import "@batijs/tailwindcss/pages/tailwind.css";
 import logoUrl from "../assets/logo.svg";
 </script>

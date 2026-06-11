@@ -1,7 +1,7 @@
 <template>
-  <!-- BATI.has("daisyui") -->
+  <!-- $$.BATI.has("daisyui") -->
   <button type="button" class="btn" @click="state.count++">Counter {{ state.count }}</button>
-  <!-- BATI.has("tailwindcss") && !BATI.has("daisyui") -->
+  <!-- $$.BATI.has("tailwindcss") && !$$.BATI.has("daisyui") -->
   <button
     type="button"
     class="inline-block border border-black rounded bg-gray-200 px-2 py-1 text-xs font-medium uppercase leading-normal"
@@ -9,7 +9,7 @@
   >
     Counter {{ state.count }}
   </button>
-  <!-- !BATI.has("tailwindcss") -->
+  <!-- !$$.BATI.has("tailwindcss") -->
   <button type="button" @click="state.count++">Counter {{ state.count }}</button>
 </template>
 

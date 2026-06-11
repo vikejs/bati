@@ -6,13 +6,13 @@ export function Counter() {
   return (
     <button
       type="button"
-      //# BATI.has("tailwindcss")
+      //# $$.BATI.has("tailwindcss")
       className={
-        BATI.has("daisyui")
+        $$.BATI.has("daisyui")
           ? "btn"
           : "inline-block border border-black rounded bg-gray-200 px-2 py-1 text-xs font-medium uppercase leading-normal"
       }
-      //# BATI.has("compiled-css")
+      //# $$.BATI.has("compiled-css")
       css={{
         display: "inline-block",
         border: "1px solid black",

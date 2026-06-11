@@ -8,19 +8,19 @@ import * as sqliteQueries from "@batijs/sqlite/database/sqlite/queries/todos";
 import { getContext } from "telefunc";
 
 export async function onNewTodo({ text }: { text: string }) {
-  if (BATI.has("drizzle")) {
+  if ($$.BATI.has("drizzle")) {
     const context = getContext();
     await drizzleQueries.insertTodo(context.db, text);
-  } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
+  } else if ($$.BATI.has("sqlite") && !$$.BATI.hasD1 && !$$.BATI.hasOrm) {
     const context = getContext();
     sqliteQueries.insertTodo(context.db, text);
-  } else if (BATI.has("kysely")) {
+  } else if ($$.BATI.has("kysely")) {
     const context = getContext();
     await kyselyQueries.insertTodo(context.db, text);
-  } else if (BATI.hasD1 && !BATI.hasOrm) {
+  } else if ($$.BATI.hasD1 && !$$.BATI.hasOrm) {
     const context = getContext();
     await d1Queries.insertTodo(context.db, text);
-  } else if (BATI.has("postgres") && !BATI.hasOrm) {
+  } else if ($$.BATI.has("postgres") && !$$.BATI.hasOrm) {
     const context = getContext();
     await pgQueries.insertTodo(context.db, text);
   } else {

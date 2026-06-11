@@ -1,57 +1,27 @@
-import { parseModule, transformAndFormat, type VikeMeta } from "@batijs/core";
+import { mergeDts as mergeDtsCodemod, tidyWhitespace, type VikeMeta } from "@batijs/core";
 
-interface Node {
-  type: string;
-}
+// Build the `.d.ts` merge transformer once (its grammar WASM loads on first use).
+let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
 
-interface RootNode extends Node {
-  body: Node[];
-}
-
+/**
+ * Merge two already-`$$`-transformed `.d.ts` files into one: concatenate them and run the `mergeDts`
+ * codemod, which hoists/dedupes imports and folds same-named `declare global` / `declare module` /
+ * `namespace` / `interface` declarations together (the codegraft replacement for the old magicast
+ * AST splice). Then tidy whitespace and strip a now-empty `export {}`.
+ */
 export async function mergeDts({
   fileContent,
   previousContent,
-  filepath,
   meta,
 }: {
-  filepath: string;
   fileContent: string;
   previousContent: string;
   meta: VikeMeta;
 }) {
-  const previousAst = parseModule(previousContent);
-  const currentAst = parseModule(fileContent);
+  merger ??= mergeDtsCodemod.forTarget("tsx");
+  const merged = (await merger).transform(`${previousContent}\n${fileContent}`, {});
 
-  // Merge imports
-  for (const imp of previousAst.imports.$items) {
-    currentAst.imports[imp.local] = imp;
-  }
-
-  const index = (currentAst.$ast as RootNode).body.findIndex(
-    (node: Node) => node.type === "ExportNamedDeclaration" || node.type === "ExportDefaultDeclaration",
-  );
-
-  // Merge all non-imports/non-exports nodes
-  for (const node of (previousAst.$ast as RootNode).body) {
-    if (
-      node.type === "ImportDeclaration" ||
-      node.type === "ExportNamedDeclaration" ||
-      node.type === "ExportDefaultDeclaration"
-    ) {
-      continue;
-    }
-    if (index === -1) {
-      (currentAst.$ast as RootNode).body.push(node);
-    } else {
-      (currentAst.$ast as RootNode).body.splice(index, 0, node);
-    }
-  }
-
-  const res = await transformAndFormat(currentAst.generate().code, meta, {
-    filepath,
-  });
-
-  return clearExports(res.code, meta);
+  return clearExports(tidyWhitespace(merged), meta);
 }
 
 export function clearExports(code: string, meta: VikeMeta) {

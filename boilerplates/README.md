@@ -1,5 +1,7 @@
 > [!TIP]
-> `BATI` is a global available during the templating phase, which is a `Set` containing all chosen _features_
+> `$$` is the templating namespace available during the templating phase. `$$.BATI` is a `Set`
+> containing all chosen _features_, and `$$.BATI_TEST` is a boolean. They are resolved away when the
+> boilerplate is generated.
 
 ### Special file names
 
@@ -37,7 +39,7 @@ The global idea is to have templating as code, making it is easy to write and ma
 <td>
 
 ```ts
-if (BATI.has("feature")) {
+if ($$.BATI.has("feature")) {
   console.log("A");
 } else {
   console.log("B");
@@ -68,7 +70,7 @@ console.log("B");
 <td>
 
 ```ts
-const myvar = BATI.has("feature") ?
+const myvar = $$.BATI.has("feature") ?
   "A" : "B";
 ```
 
@@ -93,7 +95,7 @@ const myvar = "B";
 <td>
 
 ```ts
-// BATI.has("feature")
+// $$.BATI.has("feature")
 import "./mycss";
 ```
 
@@ -116,7 +118,7 @@ nothing
 <td>
 
 ```ts
-/*# BATI include-if-imported #*/
+/*# $$.includeIfImported #*/
 
 const a = 1;
 ```
@@ -141,8 +143,8 @@ nothing
 
 ```ts
 // Equivalent to `as any` but in Bati's codebase only. It is dropped entirely when compiled.
-// Only use this to bypass complex type mixing, but prefer using `BATI.If<...>` instead if possible.
-const a = 'react' as BATI.Any;
+// Only use this to bypass complex type mixing, but prefer using `$$.If<...>` instead if possible.
+const a = 'react' as $$.Any;
 ```
 
 </td>
@@ -167,10 +169,10 @@ const a = 'react';
 ```ts
 interface Context {
   // First valid match is the one that will be applied
-  ui: BATI.If<{
-    'BATI.has("react")': "react";
-    'BATI.has("vue")': "vue";
-    'BATI.has("solid")': "solid";
+  ui: $$.If<{
+    '$$.BATI.has("react")': "react";
+    '$$.BATI.has("vue")': "vue";
+    '$$.BATI.has("solid")': "solid";
     // fallback
     _: "other";
   }>;
@@ -212,9 +214,9 @@ interface Context {
 const Component = () => {
   return (
     <div
-      // BATI.has("feature")
+      // $$.BATI.has("feature")
       class="p-5"
-      // !BATI.has("feature")
+      // !$$.BATI.has("feature")
       style={{
         padding: "20px",
       }}
@@ -271,7 +273,7 @@ const Component = () => {
 
 ```html
 <div>
-  <!-- BATI.has("feature") -->
+  <!-- $$.BATI.has("feature") -->
   <div>
     <span>my text</span>
   </div>
@@ -313,12 +315,13 @@ any extension
 <td>
 
 ```css
-/*{ @if (it.BATI.has("feature")) }*/
+/* $$.if($$.BATI.has("feature")) */
 @import "./feature.css";
-/*{ /if }*/
+/* $$.endif */
 ```
 
-We use [SquirellyJS](https://squirrelly.js.org/docs/syntax/overview) with a custom `/*{ ... }*/` tag
+Comment-delimited `/* $$.if(cond) */ … /* $$.elif(cond) */ … /* $$.else */ … /* $$.endif */` blocks
+work in any file that has comments (CSS, and more)
 
 </td>
 <td>
@@ -339,12 +342,12 @@ nothing
 > [!NOTE]
 > Using this kind of condition in a templates is **not supported!**
 > ```jsx
-> {BATI.has("feature") && <div>show me</div>}
+> {$$.BATI.has("feature") && <div>show me</div>}
 > ```
 
 #### Details
 
-- `BATI` is a global var available at compile time. It is also defined in typings so that it is considered valid in your IDE
+- `$$` is a global namespace available at compile time. It is also defined in typings so that it is considered valid in your IDE
 - After compilation, any unused imports are removed
 - After compilation, code is formatted with prettier
 

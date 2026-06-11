@@ -1,22 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
 /** biome-ignore-all lint/suspicious/noExplicitAny: type definitions */
 import type { BatiSet } from "@batijs/features";
 import type { UnionToIntersection, Values } from "./type-utils.js";
 
 declare global {
-  const BATI: BatiSet;
-  const BATI_TEST: boolean | undefined;
+  // Build-time marker the codemods resolve away; ambient so boilerplate source type-checks against
+  // `$$.BATI.has(...)` / `$$.BATI_TEST` before generation. Never exists at runtime.
+  const $$: {
+    BATI: BatiSet;
+    BATI_TEST: boolean;
+  };
 
-  namespace NodeJS {
-    interface Global {
-      // Reference our above type,
-      // this allows global.debug to be used anywhere in our code.
-      BATI: BatiSet;
-      BATI_TEST: boolean | undefined;
-    }
-  }
-
-  namespace BATI {
+  // Merged namespace for the erased-at-build type constructs (`x as $$.Any`, `$$.If<…>`).
+  namespace $$ {
     type Any = any;
 
     type If<

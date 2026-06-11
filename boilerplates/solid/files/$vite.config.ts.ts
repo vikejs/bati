@@ -1,12 +1,10 @@
-import { addVitePlugin, loadAsMagicast, type TransformerProps } from "@batijs/core";
+import { addVitePlugin, transformConfig, type TransformerProps } from "@batijs/core";
 
-export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
-  const mod = await loadAsMagicast(props);
-
-  addVitePlugin(mod, {
-    from: "vike-solid/vite",
-    constructor: "vikeSolid",
+export default function getViteConfig(props: TransformerProps): Promise<unknown> {
+  return transformConfig(props, (root) => {
+    addVitePlugin(root, {
+      from: "vike-solid/vite",
+      constructor: "vikeSolid",
+    });
   });
-
-  return mod.generate().code;
 }

@@ -1,4 +1,4 @@
-/*# BATI include-if-imported #*/
+/*# $$.includeIfImported #*/
 import "@batijs/shared-env/server/load";
 import { db } from "../db";
 

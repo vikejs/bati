@@ -5,13 +5,13 @@
     </li>
     <li>
       <form @submit.prevent="submitNewTodo()">
-        <!-- BATI.has("tailwindcss") -->
+        <!-- $$.BATI.has("tailwindcss") -->
         <input v-model="newTodo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1" />
-        <!-- !BATI.has("tailwindcss") -->
+        <!-- !$$.BATI.has("tailwindcss") -->
         <input v-model="newTodo" type="text" />
-        <!-- BATI.has("tailwindcss") -->
+        <!-- $$.BATI.has("tailwindcss") -->
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2">Add to-do</button>
-        <!-- !BATI.has("tailwindcss") -->
+        <!-- !$$.BATI.has("tailwindcss") -->
         <button type="submit">Add to-do</button>
       </form>
     </li>
@@ -34,12 +34,12 @@ const submitNewTodo = async () => {
   const text = newTodo.value;
   todoItems.value.push({ text });
   newTodo.value = "";
-  if (BATI.hasServer) {
-    if (BATI.has("telefunc")) {
+  if ($$.BATI.hasServer) {
+    if ($$.BATI.has("telefunc")) {
       await onNewTodo({ text });
-    } else if (BATI.has("trpc")) {
+    } else if ($$.BATI.has("trpc")) {
       await trpc.onNewTodo.mutate(text);
-    } else if (BATI.has("ts-rest")) {
+    } else if ($$.BATI.has("ts-rest")) {
       await client.createTodo({ body: { text } });
     } else {
       const response = await fetch("/api/todo/create", {

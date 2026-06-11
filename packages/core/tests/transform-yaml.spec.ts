@@ -39,7 +39,7 @@ describe("yaml: sequence item removal", () => {
   app:
     environment:
       - NODE_ENV=production
-      # BATI.has("authjs")
+      # $$.BATI.has("authjs")
       - AUTH_SECRET=\${AUTH_SECRET}
 `,
     `services:
@@ -62,7 +62,7 @@ describe("yaml: mapping pair removal", () => {
     `services:
   app:
     build: .
-    # BATI.has("sqlite")
+    # $$.BATI.has("sqlite")
     volumes:
       - sqlite_data:/app/data
     restart: unless-stopped
@@ -89,7 +89,7 @@ describe("yaml: top-level pair removal", () => {
   app:
     restart: unless-stopped
 
-# BATI.has("sqlite")
+# $$.BATI.has("sqlite")
 volumes:
   sqlite_data:
 `,
@@ -113,7 +113,7 @@ describe("yaml: first mapping entry removal (hoisted comment)", () => {
   // node, not the first key. It must still be evaluated and drop the entry.
   testCondition(
     `volumes:
-  # BATI.has("authjs")
+  # $$.BATI.has("authjs")
   first_data: {}
   second_data: {}
 `,
@@ -135,7 +135,7 @@ describe("yaml: keep non-bati comments", () => {
     environment:
       - NODE_ENV=production
       # regular comment
-      # BATI.has("authjs")
+      # $$.BATI.has("authjs")
       - AUTH_SECRET=\${AUTH_SECRET}
 `,
     `services:
@@ -160,7 +160,7 @@ describe("yaml: .yaml extension also works", () => {
   app:
     environment:
       - NODE_ENV=production
-      # BATI.has("authjs")
+      # $$.BATI.has("authjs")
       - AUTH_SECRET=\${AUTH_SECRET}
 `,
     `services:

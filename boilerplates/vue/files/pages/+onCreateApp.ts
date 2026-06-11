@@ -1,7 +1,7 @@
 import type { OnCreateAppSync } from "vike-vue/types";
 import { createGtag } from "vue-gtag";
 
-// BATI.has("google-analytics")
+// $$.BATI.has("google-analytics")
 export const onCreateApp: OnCreateAppSync = (pageContext): ReturnType<OnCreateAppSync> => {
   const { app } = pageContext;
 

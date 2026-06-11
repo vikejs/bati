@@ -17,36 +17,24 @@
   "license": "MIT",
   "devDependencies": {
     "@batijs/features": "workspace:*",
-    "@types/estree": "^1.0.9",
     "@types/mdast": "^4.0.4",
     "@types/node": "^20.19.37",
     "@types/which": "^3.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.60.1",
-    "@typescript-eslint/parser": "^8.60.1",
-    "@typescript-eslint/utils": "^8.60.1",
     "attributes-parser": "^2.2.3",
     "colorette": "^2.0.20",
     "esbuild": "^0.28.0",
-    "eslint": "^10.4.1",
-    "eslint-plugin-solid": "^0.14.5",
-    "eslint-rule-composer": "^0.3.0",
-    "espree": "^11.2.0",
-    "magicast": "^0.5.3",
     "mdast-builder": "^1.1.1",
     "mdast-util-from-markdown": "^2.0.3",
     "mdast-util-to-markdown": "^2.1.2",
     "mdast-util-to-string": "^4.0.0",
     "mdast-util-toc": "^7.1.0",
-    "prettier": "^3.8.3",
     "rolldown": "^1.1.0",
     "rolldown-plugin-dts": "^0.25.2",
-    "squirrelly": "^9.1.0",
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
     "unist-util-visit": "^5.1.0",
     "unplugin-purge-polyfills": "^0.1.0",
     "vitest": "^4.1.8",
-    "vue-eslint-parser": "^10.4.1",
     "which": "^7.0.0",
     "yaml": "^2.9.0"
   },
@@ -69,5 +57,14 @@
   },
   "files": [
     "dist/"
-  ]
+  ],
+  "dependencies": {
+    "@codegraft/codemod": "^0.1.0-beta.8",
+    "@codegraft/core": "^0.1.0-beta.8",
+    "@codegraft/rules": "^0.1.0-beta.8",
+    "@codegraft/vue": "^0.1.0-beta.8",
+    "tree-sitter-css": "^0.25.0",
+    "tree-sitter-html": "^0.23.2",
+    "tree-sitter-javascript": "^0.25.0"
+  }
 }

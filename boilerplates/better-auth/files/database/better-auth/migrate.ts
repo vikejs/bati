@@ -1,5 +1,4 @@
-/*{ @if (!it.BATI.hasD1 && !it.BATI.has("drizzle")) }*/
-
+// $$.keepFileIf(!$$.BATI.hasD1 && !$$.BATI.has("drizzle"))
 import "@batijs/shared-env/server/load";
 import { getMigrations } from "better-auth/db/migration";
 import { getAuthConfig } from "../../server/better-auth";
@@ -17,4 +16,3 @@ console.log("Better Auth tables are up to date");
 // The database driver keeps the event loop alive (e.g. Postgres connection pool); exit explicitly
 // so this one-shot script terminates instead of hanging.
 process.exit(0);
-/*{ /if }*/

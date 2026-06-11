@@ -1,4 +1,4 @@
-/*# BATI include-if-imported #*/
+/*# $$.includeIfImported #*/
 
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { enhance, type Get, type UniversalHandler } from "@universal-middleware/core";
@@ -14,9 +14,9 @@ export const trpcHandler = ((endpoint) =>
         router: appRouter,
         createContext({ req, resHeaders }) {
           return {
-            ...(context as BATI.Any),
-            ...(runtime as BATI.If<{
-              "BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };
+            ...(context as $$.Any),
+            ...(runtime as $$.If<{
+              "$$.BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };
             }>),
             req,
             resHeaders,

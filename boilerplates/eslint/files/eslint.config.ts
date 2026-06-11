@@ -13,17 +13,17 @@ export default tseslint.config(
       "dist/*",
       // Temporary compiled files
       "**/*.ts.build-*.mjs",
-      //# BATI.has("vercel")
+      //# $$.BATI.has("vercel")
       ".vercel/*",
-      //# BATI.has("aws")
+      //# $$.BATI.has("aws")
       "cdk.out/*",
-      //# BATI.has("edgeone")
+      //# $$.BATI.has("edgeone")
       ".edgeone",
-      //# BATI.has("netlify")
+      //# $$.BATI.has("netlify")
       ".netlify",
-      //# BATI.has("cloudflare")
+      //# $$.BATI.has("cloudflare")
       "worker-configuration.d.ts",
-      //# BATI.has("storybook")
+      //# $$.BATI.has("storybook")
       "stories/*",
       // JS files at the root of the project
       "*.js",
@@ -53,7 +53,7 @@ export default tseslint.config(
       "@typescript-eslint/no-namespace": 0,
     },
   },
-  //# BATI.has("vue")
+  //# $$.BATI.has("vue")
   {
     files: ["**/*.vue"],
     languageOptions: {
@@ -65,7 +65,7 @@ export default tseslint.config(
       },
     },
   },
-  //# BATI.has("react")
+  //# $$.BATI.has("react")
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     ...react.configs.flat.recommended,
@@ -83,9 +83,9 @@ export default tseslint.config(
       },
     },
   } as ConfigArray[number],
-  //# BATI.has("react")
+  //# $$.BATI.has("react")
   react.configs.flat["jsx-runtime"] as ConfigArray[number],
-  //# BATI.has("solid")
+  //# $$.BATI.has("solid")
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
     ...solid,
@@ -97,9 +97,9 @@ export default tseslint.config(
       },
     },
   },
-  //# BATI.has("vue")
+  //# $$.BATI.has("vue")
   ...(pluginVue.configs["flat/recommended"] as ConfigArray),
-  //# BATI.has("vue")
+  //# $$.BATI.has("vue")
   {
     rules: {
       "vue/multi-word-component-names": "off",
@@ -114,7 +114,7 @@ export default tseslint.config(
       },
     },
   },
-  //# BATI.has("compiled-css")
+  //# $$.BATI.has("compiled-css")
   {
     rules: {
       "react/no-unknown-property": [
@@ -125,6 +125,6 @@ export default tseslint.config(
       ],
     },
   },
-  //# BATI.has("prettier")
+  //# $$.BATI.has("prettier")
   prettier as ConfigArray[number],
 );
