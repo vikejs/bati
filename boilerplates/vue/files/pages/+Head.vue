@@ -2,7 +2,6 @@
 
 <template>
   <link rel="icon" :href="logoUrl" />
-
   <!-- $$.BATI.has("plausible.io") -->
   <!-- See https://plausible.io/docs/plausible-script -->
   <!-- TODO: update data-domain -->

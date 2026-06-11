@@ -51,13 +51,16 @@ export async function runCodemods(
   if (target === "yaml") {
     out = await pass(batiYaml, target, out, ctx);
   } else if (target !== null) {
-    const hasCommentBlocks = target === "css" || target === "html" || target === vueSplitter;
-    const hasScript = target !== "css" && target !== "html"; // JS imports to prune then record
+    const isVue = target === vueSplitter;
+    const hasCommentBlocks = target === "css" || target === "html" || isVue;
+    const hasScript = target !== "css" && target !== "html"; // imports to record (and, except Vue, prune)
     if (hasCommentBlocks) out = await pass(batiBlocks, target, out, ctx);
     out = await pass(batiCodemod, target, out, ctx);
     out = await pass(stripLintComments, target, out, ctx);
     if (hasScript) {
-      out = await pass(removeUnusedImports, target, out, {});
+      // A Vue `<script setup>` import is consumed by the `<template>`, which the split-out script
+      // zone can't see, so pruning would wrongly drop it; other JS/TS targets have no hidden use.
+      if (!isVue) out = await pass(removeUnusedImports, target, out, {});
       out = await pass(batiImports, target, out, ctx);
     }
   }

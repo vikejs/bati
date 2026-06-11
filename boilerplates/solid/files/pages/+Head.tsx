@@ -1,5 +1,3 @@
-/* eslint-disable solid/no-innerhtml */
-
 // https://vike.dev/Head
 
 import logoUrl from "../assets/logo.svg";
@@ -22,6 +20,7 @@ export function Head() {
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
         />
         <script
+          // eslint-disable-next-line solid/no-innerhtml
           innerHTML={`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
