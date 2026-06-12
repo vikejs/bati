@@ -22,6 +22,6 @@ declare module "telefunc" {
   }
 }
 
-// $$.BATI.has("REMOVE-COMMENT") || "remove-comments-only"
+// $$.keepCommentsIf(false)
 // biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module
 export {};

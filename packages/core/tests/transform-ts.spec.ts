@@ -146,9 +146,9 @@ const a = 1;`,
   );
 });
 
-describe("ts: remove-comments-only", () => {
+describe("ts: keepCommentsIf", () => {
   testIfElse(
-    `// $$.BATI.has("react") || "remove-comments-only"
+    `// $$.keepCommentsIf($$.BATI.has("react"))
 /// <reference types="vite-plugin-vercel/types" />
 const a = 1;`,
     `/// <reference types="vite-plugin-vercel/types" />

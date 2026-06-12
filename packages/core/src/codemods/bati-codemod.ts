@@ -67,15 +67,18 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root
     if (directive === null || directive.startsWith("$$.keepFileIf") || directive === "$$.includeIfImported")
       return false;
 
-    const value = col.evaluateExpression(directive, ctx);
-    if (value === true) {
-      dropDirectiveComment(col, lead.length);
+    // `$$.keepCommentsIf(<cond>)` gates only the comment block stacked below the directive — the node
+    // itself always stays. True keeps those comments (dropping just the directive line); false drops
+    // them along with it.
+    const keepCommentsCond = directive.match(/^\$\$\.keepCommentsIf\((.*)\)$/)?.[1];
+    if (keepCommentsCond !== undefined) {
+      if (col.evaluateExpression(keepCommentsCond, ctx)) dropDirectiveComment(col, lead.length);
+      else col.dropDirective(DIRECTIVE);
       return false;
     }
-    // `… || "remove-comments-only"` with a comment below the directive keeps the node, dropping only
-    // the comments; with the directive alone it falls through and behaves like a false condition.
-    if (value === "remove-comments-only" && lead.length > 1) {
-      col.dropDirective(DIRECTIVE);
+
+    if (col.evaluateExpression(directive, ctx) === true) {
+      dropDirectiveComment(col, lead.length);
       return false;
     }
     col.dropDirective(DIRECTIVE); // removes the directive and any comments below it, up to the node

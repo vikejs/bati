@@ -151,11 +151,18 @@ describe("bati codemod — comment-directive gate", () => {
     expect(t.transform(src, bati())).toBe("");
   });
 
-  it('"remove-comments-only": strips the comments but keeps the node', async () => {
+  it("$$.keepCommentsIf(<cond>): gates the comments below, always keeps the node", async () => {
     const t = await on("tsx");
-    const src = '// $$.BATI.has("a") || "remove-comments-only"\n/// <reference types="x" />\nconst a = 1';
+    const src = '// $$.keepCommentsIf($$.BATI.has("a"))\n/// <reference types="x" />\nconst a = 1';
     expect(norm(t.transform(src, bati(["a"])))).toBe('/// <reference types="x" /> const a = 1');
     expect(norm(t.transform(src, bati()))).toBe("const a = 1");
+  });
+
+  it("$$.keepCommentsIf(false): always strips the comments, keeps the node", async () => {
+    const t = await on("tsx");
+    const src = "// $$.keepCommentsIf(false)\n// @ts-expect-error generated later\nconst a = 1";
+    expect(norm(t.transform(src, bati()))).toBe("const a = 1");
+    expect(norm(t.transform(src, bati(["a"])))).toBe("const a = 1");
   });
 });
 
