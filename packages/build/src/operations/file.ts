@@ -30,7 +30,7 @@ export async function executeOperationFile(
         meta,
       });
     } else {
-      fileContent = clearExports(fileContent, meta);
+      fileContent = await clearExports(fileContent, meta);
     }
   }
 

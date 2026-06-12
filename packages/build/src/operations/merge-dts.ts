@@ -1,7 +1,8 @@
-import { formatCode, mergeDts as mergeDtsCodemod, type VikeMeta } from "@batijs/core";
+import { formatCode, markEmptyExport, mergeDts as mergeDtsCodemod, type VikeMeta } from "@batijs/core";
 
-// Build the `.d.ts` merge transformer once (its grammar WASM loads on first use).
+// Build the `.d.ts` transformers once (each grammar WASM loads on first use).
 let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
+let emptyExportMarker: ReturnType<typeof markEmptyExport.forTarget> | undefined;
 
 /**
  * Merge two already-`$$`-transformed `.d.ts` files into one: concatenate them and run the `mergeDts`
@@ -26,22 +27,14 @@ export async function mergeDts({
   return clearExports(await formatCode(merged, { filepath }), meta);
 }
 
-const BIOME_IGNORE_EMPTY_EXPORT =
-  "// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module";
-
-export function clearExports(code: string, meta: VikeMeta) {
+export async function clearExports(code: string, meta: VikeMeta): Promise<string | undefined> {
   if (code.trim() === "export {};") {
     return undefined;
   }
-  if (meta.BATI.has("biome")) {
-    const index = code.indexOf("\nexport {};");
-    const foundImport = code.match(/^import .* from /gm);
-
-    // Idempotent: a multi-file `.d.ts` merge runs this per step, and `mergeDts` preserves the comment
-    // it already added, so guard against a duplicate (an unused suppression biome would flag).
-    if (index !== -1 && foundImport && !code.includes(BIOME_IGNORE_EMPTY_EXPORT)) {
-      return `${code.slice(0, index)}\n${BIOME_IGNORE_EMPTY_EXPORT}${code.slice(index)}`;
-    }
-  }
-  return code;
+  // When biome is selected, annotate a surviving `export {}` module marker so biome's
+  // `noUselessEmptyExport` doesn't flag it. The codemod no-ops (and is idempotent across the per-step
+  // merge) when there's nothing to mark, so it returns `code` untouched in every other case.
+  if (!meta.BATI.has("biome")) return code;
+  emptyExportMarker ??= markEmptyExport.forTarget("tsx");
+  return (await emptyExportMarker).transform(code, {});
 }

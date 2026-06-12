@@ -1,4 +1,4 @@
-export { mergeDts } from "./codemods/index.js";
+export { markEmptyExport, mergeDts } from "./codemods/index.js";
 export * from "./config-codemod.js";
 export * from "./dockerfile.js";
 export * from "./env-registry.js";

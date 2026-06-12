@@ -3,6 +3,7 @@ export { batiCodemod } from "./bati-codemod.js";
 export { batiImports } from "./bati-imports.js";
 export { batiYaml } from "./bati-yaml.js";
 export type { BatiContext } from "./context.js";
+export { BIOME_IGNORE_EMPTY_EXPORT, markEmptyExport } from "./mark-empty-export.js";
 export { mergeDts } from "./merge-dts.js";
 export { stripLintComments } from "./strip-lint-comments.js";
 export type { ConfigObject, ConfigValue } from "./vite-config.js";
