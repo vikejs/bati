@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 
 // !$$.BATI.hasD1
 import "@batijs/shared-env/server/load";

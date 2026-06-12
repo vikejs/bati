@@ -118,7 +118,7 @@ nothing
 <td>
 
 ```ts
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 
 const a = 1;
 ```

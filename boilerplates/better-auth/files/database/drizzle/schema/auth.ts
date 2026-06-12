@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 import { boolean, pgTable, text as pgText, timestamp } from "drizzle-orm/pg-core";
 import { integer, sqliteTable, text as sqliteText } from "drizzle-orm/sqlite-core";
 

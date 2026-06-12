@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 import { readFileSync } from "node:fs";
 import process from "node:process";
 import { parseEnv } from "node:util";

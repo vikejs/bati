@@ -413,7 +413,7 @@ describe("global meta comments", async () => {
 
   test("valid flags", async () => {
     const renderedOutput = await transformAndFormat(
-      `/* $$.includeIfImported */      
+      `/* $$.keepFileIfImported */
 const a = 1;`,
       {
         BATI: new BatiSet([], features, "pnpm"),
@@ -422,7 +422,7 @@ const a = 1;`,
     );
 
     assert.equal(renderedOutput.code.trim(), `const a = 1;`);
-    assert.isTrue(renderedOutput.context?.flags.has("include-if-imported"));
+    assert.isTrue(renderedOutput.context?.flags.has("keep-file-if-imported"));
   });
 });
 
@@ -535,7 +535,7 @@ import "react";`,
 });
 
 describe("imports stripped by a BATI condition are not tracked", () => {
-  // An `include-if-imported` target relies on the import graph (`context.imports`)
+  // A `keep-file-if-imported` target relies on the import graph (`context.imports`)
   // to decide whether to keep a file. A side-effect import gated by a falsy BATI
   // condition is removed from the code, so it must also be removed from the graph
   // — otherwise the imported file is wrongly kept (and later flagged unused).
@@ -560,10 +560,10 @@ export const x = 1;`;
     expect([...context.imports]).toContain("./server/load");
   });
 
-  // The `include-if-imported` flag sits a blank line above the gated first import (as in
+  // The `keep-file-if-imported` flag sits a blank line above the gated first import (as in
   // database/kysely/db.ts), which detaches it from the import's leading comments. The flag must still
   // be recorded and the import dropped from the graph — otherwise the imported file is wrongly kept.
-  const codeWithGlobalComment = `/* $$.includeIfImported */
+  const codeWithGlobalComment = `/* $$.keepFileIfImported */
 
 // $$.BATI.has("react")
 import "@batijs/shared-env/server/load";

@@ -232,18 +232,18 @@ describe("bati codemod — TS type constructs", () => {
 });
 
 describe("bati codemod — file flag + @batijs imports (ctx out-channel)", () => {
-  it("records $$.includeIfImported into ctx and strips the directive", async () => {
+  it("records $$.keepFileIfImported into ctx and strips the directive", async () => {
     const t = await on("typescript");
     const ctx = bati();
-    expect(t.transform("/* $$.includeIfImported */\nconst a = 1", ctx)).toBe("const a = 1");
-    expect(ctx.includeIfImported).toBe(true);
+    expect(t.transform("/* $$.keepFileIfImported */\nconst a = 1", ctx)).toBe("const a = 1");
+    expect(ctx.keepFileIfImported).toBe(true);
   });
 
   it("does not set the flag when absent", async () => {
     const t = await on("typescript");
     const ctx = bati();
     t.transform('const a = 1\nconst b = $$.BATI.has("x")', ctx);
-    expect(ctx.includeIfImported).toBeUndefined();
+    expect(ctx.keepFileIfImported).toBeUndefined();
   });
 
   it("rewrites @batijs/ imports to a relative path and records them (batiImports, no $$ needed)", async () => {

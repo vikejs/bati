@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 

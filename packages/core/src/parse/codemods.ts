@@ -11,7 +11,7 @@ import {
 } from "../codemods/index.js";
 import type { VikeMeta } from "../types.js";
 
-export type AllowedContextFlags = "include-if-imported";
+export type AllowedContextFlags = "keep-file-if-imported";
 
 /** The transform out-channel the build reads back: the surviving import graph and file-level flags. */
 export interface FileContext {
@@ -69,7 +69,7 @@ export async function runCodemods(
 
   return {
     code: out,
-    context: { imports, flags: new Set<AllowedContextFlags>(ctx.includeIfImported ? ["include-if-imported"] : []) },
+    context: { imports, flags: new Set<AllowedContextFlags>(ctx.keepFileIfImported ? ["keep-file-if-imported"] : []) },
   };
 }
 

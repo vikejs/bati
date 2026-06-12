@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 
 import { getDbFromRuntime } from "@batijs/d1/database/d1/helpers";
 import { dbD1, dbPostgres, dbSqlite } from "@batijs/drizzle/database/drizzle/db";

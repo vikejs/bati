@@ -18,16 +18,16 @@ const SEPARATOR_PARENTS = new Set(["array", "object", "arguments"]);
  */
 export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root, ctx) => {
   if (suppressWholeFile()) return;
-  recordIncludeFlag();
+  recordKeepFileIfImported();
   walkSiblings(root.children());
 
-  /** `$$.includeIfImported` is a file-level flag, not a node gate. Record it and drop its line by
+  /** `$$.keepFileIfImported` is a file-level flag, not a node gate. Record it and drop its line by
    *  document position — a blank line before the first statement would otherwise detach it from any
    *  node's `leadingComments`. */
-  function recordIncludeFlag(): void {
+  function recordKeepFileIfImported(): void {
     root.findComments().forEach((comment) => {
-      if (extractDirective(comment.text) !== "$$.includeIfImported") return;
-      ctx.includeIfImported = true;
+      if (extractDirective(comment.text) !== "$$.keepFileIfImported") return;
+      ctx.keepFileIfImported = true;
       comment.remove({ separator: true });
     });
   }
@@ -63,9 +63,9 @@ export const batiCodemod = defineCodemod<BatiContext>({ namespace: "$$" }, (root
     const lead = col.node.leadingComments;
     if (lead.length === 0) return false;
     const directive = extractDirective(lead[0].text);
-    // `keepFileIf` / `includeIfImported` are file-level (handled above); a plain comment isn't a gate.
-    if (directive === null || directive.startsWith("$$.keepFileIf") || directive === "$$.includeIfImported")
-      return false;
+    // `keepFileIf(…)` / `keepFileIfImported` are file-level (handled above); a plain comment isn't a
+    // gate. The `keepFileIf` prefix covers both.
+    if (directive === null || directive.startsWith("$$.keepFileIf")) return false;
 
     // `$$.keepCommentsIf(<cond>)` gates only the comment block stacked below the directive — the node
     // itself always stays. True keeps those comments (dropping just the directive line); false drops

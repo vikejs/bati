@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 import sqlite, { type Database } from "better-sqlite3";
 
 let singleton: Database | undefined;

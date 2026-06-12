@@ -259,7 +259,7 @@ import "./other";
 
 **Include file only if imported:**
 ```ts
-/*# BATI include-if-imported #*/
+/* $$.keepFileIfImported */
 const a = 1;
 ```
 

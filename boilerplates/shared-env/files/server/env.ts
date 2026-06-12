@@ -1,4 +1,4 @@
-/* $$.includeIfImported */
+/* $$.keepFileIfImported */
 import { env as cloudflareEnv } from "cloudflare:workers";
 // !$$.BATI.has("cloudflare")
 import "./load.js";
