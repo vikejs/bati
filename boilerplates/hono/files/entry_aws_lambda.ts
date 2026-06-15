@@ -1,4 +1,4 @@
-/*{ @if (it.BATI.has("aws")) }*/
+// $$.keepFileIf($$.BATI.has("aws"))
 /*
 entry_aws_lambda.ts
 
@@ -8,7 +8,6 @@ Notes:
 * The file name must not have any special characters or dots except for the extension. https://docs.aws.amazon.com/lambda/latest/api/API_CreateFunction.html#API_CreateFunction_RequestSyntax
 
 */
-
 import type { Handler } from "aws-lambda";
 import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
@@ -25,4 +24,3 @@ const lambdaApp = new Hono<{ Bindings: Bindings }>();
 
 lambdaApp.route("/", app as Hono);
 export const handler: Handler = handle(lambdaApp);
-/*{ /if }*/

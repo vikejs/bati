@@ -10,23 +10,23 @@ import type { PageContextServer } from "vike/types";
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export async function data(_pageContext: PageContextServer) {
-  if (BATI.has("drizzle")) {
+  if ($$.BATI.has("drizzle")) {
     const todoItemsInitial = await drizzleQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm) {
+  } else if ($$.BATI.has("sqlite") && !$$.BATI.hasD1 && !$$.BATI.hasOrm) {
     const todoItemsInitial = sqliteQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.has("kysely")) {
+  } else if ($$.BATI.has("kysely")) {
     const todoItemsInitial = await kyselyQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.hasD1 && !BATI.hasOrm) {
+  } else if ($$.BATI.hasD1 && !$$.BATI.hasOrm) {
     const todoItemsInitial = await d1Queries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };
-  } else if (BATI.has("postgres") && !BATI.hasOrm) {
+  } else if ($$.BATI.has("postgres") && !$$.BATI.hasOrm) {
     const todoItemsInitial = await pgQueries.getAllTodos(_pageContext.db);
 
     return { todoItemsInitial };

@@ -19,7 +19,7 @@ export default function Page() {
           await authClient.signOut();
           await navigate("/");
         }}
-        //# BATI.has("tailwindcss")
+        // $$.BATI.has("tailwindcss")
         class={
           "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
         }

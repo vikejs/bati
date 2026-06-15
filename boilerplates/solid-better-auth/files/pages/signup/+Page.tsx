@@ -33,7 +33,7 @@ export default function Page() {
             required
             value={name()}
             onInput={(ev) => setName(ev.currentTarget.value)}
-            //# BATI.has("tailwindcss")
+            // $$.BATI.has("tailwindcss")
             class={
               "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1"
             }
@@ -47,7 +47,7 @@ export default function Page() {
             required
             value={email()}
             onInput={(ev) => setEmail(ev.currentTarget.value)}
-            //# BATI.has("tailwindcss")
+            // $$.BATI.has("tailwindcss")
             class={
               "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1"
             }
@@ -62,7 +62,7 @@ export default function Page() {
             minLength={8}
             value={password()}
             onInput={(ev) => setPassword(ev.currentTarget.value)}
-            //# BATI.has("tailwindcss")
+            // $$.BATI.has("tailwindcss")
             class={
               "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto p-2 mr-1 mb-1"
             }
@@ -70,7 +70,7 @@ export default function Page() {
         </p>
         <button
           type="submit"
-          //# BATI.has("tailwindcss")
+          // $$.BATI.has("tailwindcss")
           class={
             "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
           }

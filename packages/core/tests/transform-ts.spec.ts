@@ -1,7 +1,7 @@
 import { BatiSet, features } from "@batijs/features";
 import { afterEach, assert, beforeEach, describe, expect, test } from "vitest";
 import { transformAndFormat } from "../src/index.js";
-import { transform } from "../src/parse/linters/index.js";
+import { runCodemods } from "../src/parse/codemods.js";
 
 const ctx = { jsx: false };
 
@@ -64,7 +64,7 @@ function testIfElse(code: string, expectedIf: string, expectedElseIf?: string, e
 
 describe("ts: if block", () => {
   testIfElse(
-    `if (BATI.has("react")) {
+    `if ($$.BATI.has("react")) {
     content = { ...content, jsx: "react" };
   }`,
     `content = { ...content, jsx: "react" };`,
@@ -74,7 +74,7 @@ describe("ts: if block", () => {
 
 describe("ts: if-else block", () => {
   testIfElse(
-    `if (BATI.has("react")) {
+    `if ($$.BATI.has("react")) {
     content = { ...content, jsx: "react" };
   } else {
     console.log("NOTHING TO DO");
@@ -86,9 +86,9 @@ describe("ts: if-else block", () => {
 
 describe("ts: if-elseif-else block", () => {
   testIfElse(
-    `if (BATI.has("react")) {
+    `if ($$.BATI.has("react")) {
     content = { ...content, jsx: "react" };
-  } else if (BATI.has("solid")) {
+  } else if ($$.BATI.has("solid")) {
     content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };
   } else {
     console.log("NOTHING TO DO");
@@ -101,9 +101,9 @@ describe("ts: if-elseif-else block", () => {
 
 describe("ts: if-elseif-else statement", () => {
   testIfElse(
-    `if (BATI.has("react"))
+    `if ($$.BATI.has("react"))
     content = { ...content, jsx: "react" };
-  else if (BATI.has("solid"))
+  else if ($$.BATI.has("solid"))
     content = { ...content, jsx: "react-jsx", jsxImportSource: "solid-js" };
   else
     console.log("NOTHING TO DO");`,
@@ -115,9 +115,9 @@ describe("ts: if-elseif-else statement", () => {
 
 describe("ts: conditional", () => {
   testIfElse(
-    `BATI.has("react")
+    `$$.BATI.has("react")
     ? 1
-    : BATI.has("solid")
+    : $$.BATI.has("solid")
     ? 2
     : null;`,
     `1;`,
@@ -128,7 +128,7 @@ describe("ts: conditional", () => {
 
 describe("ts: comment above import", () => {
   testIfElse(
-    `//# BATI.has("react")
+    `// $$.BATI.has("react")
 import "react";`,
     `import "react";`,
     ``,
@@ -137,7 +137,7 @@ import "react";`,
 
 describe("ts: comment above comment", () => {
   testIfElse(
-    `//# BATI.has("react")
+    `// $$.BATI.has("react")
 /// <reference types="vite-plugin-vercel/types" />
 const a = 1;`,
     `/// <reference types="vite-plugin-vercel/types" />
@@ -146,9 +146,9 @@ const a = 1;`,
   );
 });
 
-describe("ts: remove-comments-only", () => {
+describe("ts: keepCommentsIf", () => {
   testIfElse(
-    `//# BATI.has("react") || "remove-comments-only"
+    `// $$.keepCommentsIf($$.BATI.has("react"))
 /// <reference types="vite-plugin-vercel/types" />
 const a = 1;`,
     `/// <reference types="vite-plugin-vercel/types" />
@@ -161,30 +161,27 @@ describe("ts: comment in array", () => {
   testIfElse(
     `const a = [
   1,
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   Object({
     a: 2,
   }),
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   new Object({
     a: 3,
   }),
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   {
     a: 4,
   },
 ];`,
     `const a = [
   1,
-
   Object({
     a: 2,
   }),
-
   new Object({
     a: 3,
   }),
-
   {
     a: 4,
   },
@@ -195,9 +192,9 @@ describe("ts: comment in array", () => {
   testIfElse(
     `export default defineConfig({
   plugins: [
-    //# BATI.has("react")
+    // $$.BATI.has("react")
     process.env.NODE_ENV !== "production" ? hono() : undefined,
-    //# !BATI.has("react")
+    // !$$.BATI.has("react")
     hono(),
   ],
 });`,
@@ -213,9 +210,9 @@ describe("ts: comment in array", () => {
 describe("ts: comment in object", () => {
   testIfElse(
     `const a = {
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   key1: 1,
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   key2: new Object({
     a: 2,
   }),
@@ -223,7 +220,6 @@ describe("ts: comment in object", () => {
 };`,
     `const a = {
   key1: 1,
-
   key2: new Object({
     a: 2,
   }),
@@ -238,22 +234,16 @@ describe("ts: comment in object", () => {
 describe("ts: comment in function args", () => {
   testIfElse(
     `export default tseslint.config(
-  //# BATI.has("vue")
+  // $$.BATI.has("vue")
   VUE1,
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   REACT1,
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   ...REACT2,
-  //# BATI.has("react")
+  // $$.BATI.has("react")
   REACT3,
 );`,
-    `export default tseslint.config(
-  REACT1,
-
-  ...REACT2,
-
-  REACT3,
-);`,
+    `export default tseslint.config(REACT1, ...REACT2, REACT3);`,
     `export default tseslint.config();`,
   );
 });
@@ -268,9 +258,9 @@ describe("ts: jsx comments", () => {
   return (
     <div
       id="sidebar"
-      //# BATI.has("react")
+      // $$.BATI.has("react")
       class="p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"
-      //# !BATI.has("react")
+      // !$$.BATI.has("react")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -320,7 +310,7 @@ describe("ts: jsx conditional", () => {
     `const x = () => {
   return (
     <div>
-      {BATI.has("react") ? "a" : "b"}
+      {$$.BATI.has("react") ? "a" : "b"}
     </div>
   );
 };`,
@@ -342,7 +332,7 @@ describe("ts: jsx conditional with component", () => {
     `const x = () => {
   return (
     <div>
-      {BATI.has("react") ? <MyComponentA /> : undefined}
+      {$$.BATI.has("react") ? <MyComponentA /> : undefined}
     </div>
   );
 };`,
@@ -359,30 +349,14 @@ describe("ts: jsx conditional with component", () => {
   );
 });
 
-test("ts: if throws", () => {
-  assert.throws(
-    () =>
-      transform(
-        `if (BATI.has(someVar)) {
-    content = { ...content, jsx: "react" };
-  }`,
-        "test.ts",
-        {
-          BATI: new BatiSet(["react"], features, "pnpm"),
-        },
-      ),
-    ReferenceError,
-  );
-});
-
 describe("remove unused imports", async () => {
   testIfElse(
     `import { solid } from "solid";
 import react from "react";
 
-export const framework = BATI.has("react")
+export const framework = $$.BATI.has("react")
 ? react()
-: BATI.has("solid")
+: $$.BATI.has("solid")
 ? solid()
 : null;`,
     `import react from "react";
@@ -439,7 +413,7 @@ describe("global meta comments", async () => {
 
   test("valid flags", async () => {
     const renderedOutput = await transformAndFormat(
-      `/*# BATI include-if-imported #*/      
+      `/* $$.keepFileIfImported */
 const a = 1;`,
       {
         BATI: new BatiSet([], features, "pnpm"),
@@ -448,40 +422,14 @@ const a = 1;`,
     );
 
     assert.equal(renderedOutput.code.trim(), `const a = 1;`);
-    assert.isTrue(renderedOutput.context?.flags.has("include-if-imported"));
-  });
-
-  test("invalid flags", async () => {
-    await expect(
-      transformAndFormat(
-        `/*# BATI invalid #*/      
-const a = 1;`,
-        {
-          BATI: new BatiSet([], features, "pnpm"),
-        },
-        options,
-      ),
-    ).rejects.toThrow(`Unknown BATI file flag invalid`);
-  });
-
-  test("mix valid and invalid flags", async () => {
-    await expect(
-      transformAndFormat(
-        `/*# BATI include-if-imported,invalid #*/      
-const a = 1;`,
-        {
-          BATI: new BatiSet([], features, "pnpm"),
-        },
-        options,
-      ),
-    ).rejects.toThrow(`Unknown BATI file flag invalid`);
+    assert.isTrue(renderedOutput.context?.flags.has("keep-file-if-imported"));
   });
 });
 
 describe("BATI. expressions", () => {
-  test("BATI.Any", async () => {
+  test("$$.Any", async () => {
     const renderedOutput = await transformAndFormat(
-      `const a = "a" as BATI.Any;`,
+      `const a = "a" as $$.Any;`,
       {
         BATI: new BatiSet([], features, "pnpm"),
         BATI_TEST: false,
@@ -492,9 +440,9 @@ describe("BATI. expressions", () => {
     assert.equal(renderedOutput.code.trim(), 'const a = "a";');
   });
 
-  test("BATI.Any with ()", async () => {
+  test("$$.Any with ()", async () => {
     const renderedOutput = await transformAndFormat(
-      `const a = (options?.router || appRouter) as BATI.Any;`,
+      `const a = (options?.router || appRouter) as $$.Any;`,
       {
         BATI: new BatiSet([], features, "pnpm"),
         BATI_TEST: false,
@@ -505,15 +453,19 @@ describe("BATI. expressions", () => {
     assert.equal(renderedOutput.code.trim(), "const a = options?.router || appRouter;");
   });
 
-  testIfElse(`const a = "a" as BATI.If<{ 'BATI.has("react")':string }>;`, `const a = "a" as string;`, `const a = "a";`);
+  testIfElse(
+    `const a = "a" as $$.If<{ '$$.BATI.has("react")':string }>;`,
+    `const a = "a" as string;`,
+    `const a = "a";`,
+  );
 
-  testIfElse(`const a: BATI.If<{ 'BATI.has("react")': string }> = "a";`, `const a: string = "a";`, `const a = "a";`);
+  testIfElse(`const a: $$.If<{ '$$.BATI.has("react")': string }> = "a";`, `const a: string = "a";`, `const a = "a";`);
 
   testIfElse(
     `const t = initTRPC
 .context<
-  BATI.If<{
-    'BATI.has("react")': { env: { DB: D1Database } };
+  $$.If<{
+    '$$.BATI.has("react")': { env: { DB: D1Database } };
     _: object;
   }>
 >()
@@ -526,8 +478,8 @@ describe("BATI. expressions", () => {
     `declare global {
   namespace Universal {
     interface Context {
-      db: BATI.If<{
-        'BATI.has("react")': ReturnType<typeof sqliteDb>;
+      db: $$.If<{
+        '$$.BATI.has("react")': ReturnType<typeof sqliteDb>;
         _: object;
       }>;
     }
@@ -550,9 +502,9 @@ describe("BATI. expressions", () => {
   );
 });
 
-describe("BATI_TEST", () => {
+describe("$$.BATI_TEST", () => {
   testIfElse(
-    `if (BATI_TEST) {
+    `if ($$.BATI_TEST) {
     content = "test";
   }`,
     ``,
@@ -560,11 +512,11 @@ describe("BATI_TEST", () => {
   );
 });
 
-describe("BATI_TEST + BATI.has", () => {
+describe("$$.BATI_TEST + $$.BATI.has", () => {
   testIfElse(
-    `if (BATI_TEST || BATI.has("react")) {
+    `if ($$.BATI_TEST || $$.BATI.has("react")) {
     content = "test";
-  } else if (BATI.has("solid")) {
+  } else if ($$.BATI.has("solid")) {
     content = "solid";
   }`,
     `content = "test";`,
@@ -573,9 +525,9 @@ describe("BATI_TEST + BATI.has", () => {
   );
 });
 
-describe("BATI_TEST: comment above import", () => {
+describe("$$.BATI_TEST: comment above import", () => {
   testIfElse(
-    `//# BATI_TEST
+    `// $$.BATI_TEST
 import "react";`,
     ``,
     `import "react";`,
@@ -583,49 +535,43 @@ import "react";`,
 });
 
 describe("imports stripped by a BATI condition are not tracked", () => {
-  // An `include-if-imported` target relies on the import graph (`context.imports`)
+  // A `keep-file-if-imported` target relies on the import graph (`context.imports`)
   // to decide whether to keep a file. A side-effect import gated by a falsy BATI
   // condition is removed from the code, so it must also be removed from the graph
   // — otherwise the imported file is wrongly kept (and later flagged unused).
-  const code = `//# BATI.has("react")
+  const code = `// $$.BATI.has("react")
 import "@batijs/shared-env/server/load";
 export const x = 1;`;
 
-  test("dropped from the graph when the condition is false", () => {
-    const { code: output, context } = transform(code, "test.ts", {
-      BATI: new BatiSet([], features, "pnpm"),
-      BATI_TEST: false,
-    });
+  test("dropped from the graph when the condition is false", async () => {
+    const meta = { BATI: new BatiSet([], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(code, meta, "test.ts");
 
     expect(output).not.toContain("shared-env");
     expect(output).not.toContain("server/load");
     expect([...context.imports]).not.toContain("./server/load");
   });
 
-  test("kept in the graph when the condition is true", () => {
-    const { code: output, context } = transform(code, "test.ts", {
-      BATI: new BatiSet(["react"], features, "pnpm"),
-      BATI_TEST: false,
-    });
+  test("kept in the graph when the condition is true", async () => {
+    const meta = { BATI: new BatiSet(["react"], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(code, meta, "test.ts");
 
     expect(output).toContain(`import "./server/load";`);
     expect([...context.imports]).toContain("./server/load");
   });
 
-  // Regression: when the gated import is the first statement, a file-level global
-  // comment is `comments[0]` until a later pass strips it, hiding the condition.
-  // `addImport` runs first; the retraction must still happen once the condition
-  // becomes visible — otherwise the imported file is wrongly kept.
-  const codeWithGlobalComment = `/*# BATI include-if-imported #*/
-//# BATI.has("react")
+  // The `keep-file-if-imported` flag sits a blank line above the gated first import (as in
+  // database/kysely/db.ts), which detaches it from the import's leading comments. The flag must still
+  // be recorded and the import dropped from the graph — otherwise the imported file is wrongly kept.
+  const codeWithGlobalComment = `/* $$.keepFileIfImported */
+
+// $$.BATI.has("react")
 import "@batijs/shared-env/server/load";
 export const x = 1;`;
 
-  test("dropped from the graph even when hidden behind a global comment", () => {
-    const { code: output, context } = transform(codeWithGlobalComment, "test.ts", {
-      BATI: new BatiSet([], features, "pnpm"),
-      BATI_TEST: false,
-    });
+  test("dropped from the graph even when hidden behind a global comment", async () => {
+    const meta = { BATI: new BatiSet([], features, "pnpm"), BATI_TEST: false };
+    const { code: output, context } = await runCodemods(codeWithGlobalComment, meta, "test.ts");
 
     expect(output).not.toContain("server/load");
     expect([...context.imports]).not.toContain("./server/load");

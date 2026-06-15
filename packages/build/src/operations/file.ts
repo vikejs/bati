@@ -23,16 +23,14 @@ export async function executeOperationFile(
 
   if (op.sourceAbsolute.endsWith(".d.ts")) {
     if (previousOperationSameDestination?.content) {
-      // console.log("MERGING .d.ts", op.sourceAbsolute, previousOperationSameDestination.sourceAbsolute);
-      // Merging .d.ts files here
       fileContent = await mergeDts({
         fileContent,
         previousContent: previousOperationSameDestination.content,
-        meta,
         filepath,
+        meta,
       });
     } else {
-      fileContent = clearExports(fileContent, meta);
+      fileContent = await clearExports(fileContent, meta);
     }
   }
 

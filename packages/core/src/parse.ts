@@ -1,79 +1,16 @@
 import { formatCode } from "./format.js";
-import type { FileContext } from "./parse/linters/common.js";
-import { transform } from "./parse/linters/index.js";
-import { renderSquirrelly, tags } from "./parse/squirelly.js";
-import { transformYaml } from "./parse/yaml.js";
+import { type FileContext, runCodemods } from "./parse/codemods.js";
 import type { VikeMeta } from "./types.js";
 
-function isYamlFile(filepath: string) {
-  return filepath.endsWith(".yml") || filepath.endsWith(".yaml");
-}
-
-function guessCodeFormatters(code: string, filepath: string) {
-  const yaml = isYamlFile(filepath);
-  return {
-    eslint:
-      !yaml &&
-      (code.includes("BATI.has") ||
-        code.includes("BATI_TEST") ||
-        code.includes("/*# BATI ") ||
-        code.includes("@batijs/") ||
-        filepath.endsWith(".ts") ||
-        filepath.endsWith(".tsx")) &&
-      !filepath.endsWith(".css"),
-    squirelly: code.includes(tags[0]),
-    yaml,
-  };
-}
-
-// Single-line comment patterns
-const eslintSingleLineRegex = /\/\/\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n]*/gim;
-const biomeSingleLineRegex = /\/\/\s*biome-ignore[^\n]*/gim;
-
-// Multi-line comment patterns (on one line)
-const eslintMultiLineRegex = /\/\*+\s*eslint(?:-disable|-enable|-disable-next-line|-disable-line)?[^\n*]*\*+\//gim;
-const biomeMultiLineRegex = /\/\*+\s*biome-ignore[^\n*]*\*+\//gim;
-
-// Combined patterns
-const eslintRegex = new RegExp(`${eslintSingleLineRegex.source}|${eslintMultiLineRegex.source}`, "gim");
-const biomeRegex = new RegExp(`${biomeSingleLineRegex.source}|${biomeMultiLineRegex.source}`, "gim");
-
 export async function transformAndFormat(code: string, meta: VikeMeta, options: { filepath: string }) {
-  const { eslint, squirelly, yaml } = guessCodeFormatters(code, options.filepath);
-  let c = code;
-  let context: FileContext | undefined;
-  let format = false;
-  if (squirelly) {
-    c = renderSquirrelly(c, meta);
-    format = true;
-  }
-  if (yaml) {
-    c = transformYaml(c, meta);
-    // yaml.toString() already produces clean output -- no need for prettier
-  }
-  if (eslint) {
-    const res = transform(c, options.filepath, meta);
-    c = res.code;
-    context = res.context;
-    format = true;
-  }
+  const { code: transformed, context } = await runCodemods(code, meta, options.filepath);
 
-  // Remove eslint comments
-  if (!meta.BATI.has("eslint") && eslintRegex.test(c)) {
-    c = c.replace(eslintRegex, "");
-    format = true;
-  }
+  // Prettier-format the result when the codemods touched the file, and always for `.ts`/`.tsx`. The
+  // codemods leave their edits' indentation for the formatter to tidy (incl. YAML, which Prettier
+  // reparses); a verbatim-copy file (e.g. `.md`, where blank lines are meaningful) is left untouched.
+  const format = transformed !== code || options.filepath.endsWith(".ts") || options.filepath.endsWith(".tsx");
 
-  // Remove biome comments
-  if (!meta.BATI.has("biome") && biomeRegex.test(c)) {
-    c = c.replace(biomeRegex, "");
-    format = true;
-  }
-
-  return {
-    code: format ? await formatCode(c, options) : c,
-    context,
-  };
+  return { code: format ? await formatCode(transformed, options) : transformed, context };
 }
 
 export type { FileContext };

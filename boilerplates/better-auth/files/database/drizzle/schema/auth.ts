@@ -1,4 +1,4 @@
-/*# BATI include-if-imported #*/
+/* $$.keepFileIfImported */
 import { boolean, pgTable, text as pgText, timestamp } from "drizzle-orm/pg-core";
 import { integer, sqliteTable, text as sqliteText } from "drizzle-orm/sqlite-core";
 
@@ -6,7 +6,7 @@ import { integer, sqliteTable, text as sqliteText } from "drizzle-orm/sqlite-cor
 // Regenerate with `npx @better-auth/cli generate` if you customize the Better Auth config.
 // Column names are snake_case to match Better Auth's Drizzle adapter defaults.
 
-export const user = BATI.has("postgres")
+export const user = $$.BATI.has("postgres")
   ? pgTable("user", {
       id: pgText("id").primaryKey(),
       name: pgText("name").notNull(),
@@ -26,7 +26,7 @@ export const user = BATI.has("postgres")
       updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
     });
 
-export const session = BATI.has("postgres")
+export const session = $$.BATI.has("postgres")
   ? pgTable("session", {
       id: pgText("id").primaryKey(),
       expiresAt: timestamp("expires_at").notNull(),
@@ -48,7 +48,7 @@ export const session = BATI.has("postgres")
       userId: sqliteText("user_id").notNull(),
     });
 
-export const account = BATI.has("postgres")
+export const account = $$.BATI.has("postgres")
   ? pgTable("account", {
       id: pgText("id").primaryKey(),
       accountId: pgText("account_id").notNull(),
@@ -80,7 +80,7 @@ export const account = BATI.has("postgres")
       updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
     });
 
-export const verification = BATI.has("postgres")
+export const verification = $$.BATI.has("postgres")
   ? pgTable("verification", {
       id: pgText("id").primaryKey(),
       identifier: pgText("identifier").notNull(),

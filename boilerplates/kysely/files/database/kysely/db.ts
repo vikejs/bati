@@ -1,6 +1,6 @@
-/*# BATI include-if-imported #*/
+/* $$.keepFileIfImported */
 
-//# !BATI.hasD1
+// !$$.BATI.hasD1
 import "@batijs/shared-env/server/load";
 import SQLite from "better-sqlite3";
 import { Kysely, SqliteDialect } from "kysely";
@@ -9,7 +9,7 @@ import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 import type { Database } from "./types";
 
-//# BATI.has("sqlite") && !BATI.hasD1
+// $$.BATI.has("sqlite") && !$$.BATI.hasD1
 export function dbKysely() {
   const dialect = new SqliteDialect({
     database: new SQLite(process.env.DATABASE_URL),
@@ -19,14 +19,14 @@ export function dbKysely() {
   });
 }
 
-//# BATI.hasD1
+// $$.BATI.hasD1
 export function dbKyselyD1(d1: D1Database) {
   return new Kysely<Database>({
     dialect: new D1Dialect({ database: d1 }),
   });
 }
 
-//# BATI.has("postgres")
+// $$.BATI.has("postgres")
 export function dbKyselyPostgres() {
   if (!process.env.DATABASE_URL) {
     throw new Error("Missing DATABASE_URL in .env file");

@@ -1,26 +1,20 @@
-import { builders, generateCode, loadAsMagicast, parseModule, type TransformerProps } from "@batijs/core";
+import { type TransformerProps, transformConfig } from "@batijs/core";
 
-export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
-  let mod: Awaited<ReturnType<typeof loadAsMagicast>>;
-  try {
-    mod = await loadAsMagicast(props);
-  } catch {
-    // create an empty module if the file is empty
-    mod = parseModule("");
-  }
+const IMPORT = `import { sentryBrowserConfig } from "../sentry.browser.config";`;
+const CALL = `sentryBrowserConfig();`;
 
-  if (!props.meta.BATI.has("vue")) {
-    // add `import { sentryBrowserConfig } from "../sentry.browser.config";` to the top of the file
-    mod.imports.$prepend({
-      from: "../sentry.browser.config",
-      imported: "sentryBrowserConfig",
-    });
+export default async function getClientEntry(props: TransformerProps): Promise<unknown> {
+  // Vue initializes Sentry elsewhere — no browser-config injection in the client entry.
+  if (props.meta.BATI.has("vue")) return undefined;
 
-    // add `sentryBrowserConfig()` function call to initialize Sentry to the end of the file
-    const e = builders.functionCall("sentryBrowserConfig");
-    const c = generateCode(e).code;
-    //@ts-expect-error
-    mod.$ast.body.splice(mod.$ast.body.length - 1, 0, c);
-  }
-  return mod.generate().code;
+  const previous = (await props.readfile?.()) ?? "";
+  // No existing client entry: create one that initializes Sentry's browser SDK.
+  if (previous.trim() === "") return `${IMPORT}\n\n${CALL}\n`;
+
+  // Otherwise inject the import and the init call before the entry's default export.
+  return transformConfig(props, (root) => {
+    root.ensureImport(IMPORT);
+    const exp = root.find("export_statement").first();
+    if (exp.size() > 0) exp.insertBefore(`${CALL}\n\n`);
+  });
 }

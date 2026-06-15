@@ -1,74 +1,40 @@
-import { parseModule, transformAndFormat, type VikeMeta } from "@batijs/core";
+import { formatCode, markEmptyExport, mergeDts as mergeDtsCodemod, type VikeMeta } from "@batijs/core";
 
-interface Node {
-  type: string;
-}
+// Build the `.d.ts` transformers once (each grammar WASM loads on first use).
+let merger: ReturnType<typeof mergeDtsCodemod.forTarget> | undefined;
+let emptyExportMarker: ReturnType<typeof markEmptyExport.forTarget> | undefined;
 
-interface RootNode extends Node {
-  body: Node[];
-}
-
+/**
+ * Merge two already-`$$`-transformed `.d.ts` files into one: concatenate them and run the `mergeDts`
+ * codemod, which hoists/dedupes imports and folds same-named `declare global` / `declare module` /
+ * `namespace` / `interface` declarations together. Then tidy whitespace and strip a now-empty
+ * `export {}`.
+ */
 export async function mergeDts({
   fileContent,
   previousContent,
   filepath,
   meta,
 }: {
-  filepath: string;
   fileContent: string;
   previousContent: string;
+  filepath: string;
   meta: VikeMeta;
 }) {
-  const previousAst = parseModule(previousContent);
-  const currentAst = parseModule(fileContent);
+  merger ??= mergeDtsCodemod.forTarget("tsx");
+  const merged = (await merger).transform(`${previousContent}\n${fileContent}`, {});
 
-  // Merge imports
-  for (const imp of previousAst.imports.$items) {
-    currentAst.imports[imp.local] = imp;
-  }
-
-  const index = (currentAst.$ast as RootNode).body.findIndex(
-    (node: Node) => node.type === "ExportNamedDeclaration" || node.type === "ExportDefaultDeclaration",
-  );
-
-  // Merge all non-imports/non-exports nodes
-  for (const node of (previousAst.$ast as RootNode).body) {
-    if (
-      node.type === "ImportDeclaration" ||
-      node.type === "ExportNamedDeclaration" ||
-      node.type === "ExportDefaultDeclaration"
-    ) {
-      continue;
-    }
-    if (index === -1) {
-      (currentAst.$ast as RootNode).body.push(node);
-    } else {
-      (currentAst.$ast as RootNode).body.splice(index, 0, node);
-    }
-  }
-
-  const res = await transformAndFormat(currentAst.generate().code, meta, {
-    filepath,
-  });
-
-  return clearExports(res.code, meta);
+  return clearExports(await formatCode(merged, { filepath }), meta);
 }
 
-export function clearExports(code: string, meta: VikeMeta) {
+export async function clearExports(code: string, meta: VikeMeta): Promise<string | undefined> {
   if (code.trim() === "export {};") {
     return undefined;
   }
-  if (meta.BATI.has("biome")) {
-    const index = code.indexOf("\nexport {};");
-    const foundImport = code.match(/^import .* from /gm);
-
-    if (index !== -1 && foundImport) {
-      return (
-        code.slice(0, index) +
-        "\n// biome-ignore lint/complexity/noUselessEmptyExport: ensure that the file is considered as a module" +
-        code.slice(index)
-      );
-    }
-  }
-  return code;
+  // When biome is selected, annotate a surviving `export {}` module marker so biome's
+  // `noUselessEmptyExport` doesn't flag it. The codemod no-ops (and is idempotent across the per-step
+  // merge) when there's nothing to mark, so it returns `code` untouched in every other case.
+  if (!meta.BATI.has("biome")) return code;
+  emptyExportMarker ??= markEmptyExport.forTarget("tsx");
+  return (await emptyExportMarker).transform(code, {});
 }

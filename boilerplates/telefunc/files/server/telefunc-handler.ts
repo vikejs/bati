@@ -11,20 +11,20 @@ export const telefuncHandler: UniversalHandler = enhance(
     const httpResponse = await telefunc({
       request,
       context: {
-        ...(context as BATI.If<{
-          'BATI.has("drizzle") && BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
-          'BATI.has("kysely") && BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
-          'BATI.has("postgres") && !BATI.hasOrm': { db: ReturnType<typeof pgDb> };
-          'BATI.has("sqlite") && !BATI.hasD1 && !BATI.hasOrm': { db: ReturnType<typeof sqliteDb> };
-          'BATI.has("drizzle") && !BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
-          'BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
-          'BATI.has("kysely") && !BATI.hasD1': { db: ReturnType<typeof dbKysely> };
-          'BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
-          "BATI.hasD1 && !BATI.hasOrm": { db: D1Database };
+        ...(context as $$.If<{
+          '$$.BATI.has("drizzle") && $$.BATI.has("postgres")': { db: ReturnType<typeof dbPostgres> };
+          '$$.BATI.has("kysely") && $$.BATI.has("postgres")': { db: ReturnType<typeof dbKyselyPostgres> };
+          '$$.BATI.has("postgres") && !$$.BATI.hasOrm': { db: ReturnType<typeof pgDb> };
+          '$$.BATI.has("sqlite") && !$$.BATI.hasD1 && !$$.BATI.hasOrm': { db: ReturnType<typeof sqliteDb> };
+          '$$.BATI.has("drizzle") && !$$.BATI.hasD1': { db: ReturnType<typeof dbSqlite> };
+          '$$.BATI.has("drizzle")': { db: ReturnType<typeof dbD1> };
+          '$$.BATI.has("kysely") && !$$.BATI.hasD1': { db: ReturnType<typeof dbKysely> };
+          '$$.BATI.has("kysely")': { db: ReturnType<typeof dbKyselyD1> };
+          "$$.BATI.hasD1 && !$$.BATI.hasOrm": { db: D1Database };
           _: object;
         }>),
-        ...(runtime as BATI.If<{
-          "BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };
+        ...(runtime as $$.If<{
+          "$$.BATI.hasD1": { runtime: "workerd"; env?: { DB: D1Database } };
         }>),
       },
     });

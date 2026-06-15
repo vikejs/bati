@@ -7,12 +7,12 @@ import {
 import { betterAuth } from "better-auth";
 import { getAuthConfig } from "./better-auth";
 
-//# !BATI.hasD1
+// !$$.BATI.hasD1
 let authSingleton: ReturnType<typeof betterAuth> | undefined;
 
 // On Cloudflare the D1 binding is request-scoped (fresh instance per request); elsewhere it's memoized.
 function getAuth(runtime: RuntimeAdapter) {
-  if (BATI.hasD1) {
+  if ($$.BATI.hasD1) {
     return betterAuth(getAuthConfig(runtime));
   } else {
     authSingleton ??= betterAuth(getAuthConfig(runtime));

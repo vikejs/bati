@@ -1,20 +1,15 @@
-import { addVitePlugin, deepMergeObject, loadAsMagicast, type TransformerProps } from "@batijs/core";
+import { addVitePlugin, defineConfigArg, mergeObject, type TransformerProps, transformConfig } from "@batijs/core";
 
-export default async function getViteConfig(props: TransformerProps): Promise<unknown> {
-  const mod = await loadAsMagicast(props);
+export default function getViteConfig(props: TransformerProps): Promise<unknown> {
+  return transformConfig(props, (root) => {
+    addVitePlugin(root, {
+      from: "@sentry/vite-plugin",
+      constructor: "sentryVitePlugin",
+      named: true,
+      options: `{ sourcemaps: { disable: false } }`,
+    });
 
-  addVitePlugin(mod, {
-    from: "@sentry/vite-plugin",
-    constructor: "sentryVitePlugin",
-    imported: "sentryVitePlugin",
-    options: {
-      sourcemaps: { disable: false },
-    },
+    // activate sourcemaps
+    mergeObject(defineConfigArg(root), { build: { sourcemap: "true" } });
   });
-
-  // activate sourcemaps
-  //@ts-expect-error
-  deepMergeObject(mod.exports.default.$args[0], { build: { sourcemap: true } });
-
-  return mod.generate().code;
 }

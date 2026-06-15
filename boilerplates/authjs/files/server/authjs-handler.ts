@@ -28,7 +28,7 @@ const authjsConfig = {
         return user ?? null;
       },
     }),
-    //# BATI.has("auth0")
+    // $$.BATI.has("auth0")
     Auth0({
       issuer: env.AUTH0_ISSUER_BASE_URL,
       clientId: env.AUTH0_CLIENT_ID,

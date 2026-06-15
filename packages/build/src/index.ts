@@ -66,8 +66,8 @@ export default async function main(
   const env = options.env ?? [];
   const deploy = options.deploy ?? [];
 
-  function updateAllImports(target: string, imports: Set<string> | undefined, includeIfImported: boolean) {
-    const rf = new RelationFile(target, includeIfImported);
+  function updateAllImports(target: string, imports: Set<string> | undefined, keepFileIfImported: boolean) {
+    const rf = new RelationFile(target, keepFileIfImported);
     if (!imports) return;
 
     for (const imp of imports.values()) {
@@ -136,7 +136,7 @@ Please report this issue to https://github.com/vikejs/bati`,
       updateAllImports(
         op.destinationAbsolute,
         report.context?.imports,
-        Boolean(report.context?.flags.has("include-if-imported")),
+        Boolean(report.context?.flags.has("keep-file-if-imported")),
       );
     } else if (op.kind === "transform") {
       report = await executeOperationTransform(op, {

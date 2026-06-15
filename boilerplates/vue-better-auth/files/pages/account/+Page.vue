@@ -15,7 +15,7 @@ import { usePageContext } from "vike-vue/usePageContext";
 const authClient = createAuthClient();
 const pageContext = usePageContext();
 
-const buttonClass = BATI.has("tailwindcss")
+const buttonClass = $$.BATI.has("tailwindcss")
   ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto p-2"
   : "";
 

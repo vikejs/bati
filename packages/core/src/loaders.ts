@@ -1,6 +1,3 @@
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { loadFile, type ProxifiedModule, parseModule } from "magicast";
 import {
   type DocumentOptions,
   type ParseOptions,
@@ -38,28 +35,6 @@ export async function loadPackageJson<U extends PackageJsonDeps>(
   assert(typeof content === "string", `Unable to load previous JSON module ("${source}" -> "${target}")`);
 
   return new PackageJsonTransformer(JSON.parse(content), scopedPackageJson);
-}
-
-export async function loadAsMagicast<Exports extends object>({
-  readfile,
-  source,
-  target,
-}: TransformerProps): Promise<ProxifiedModule<Exports>> {
-  const content = await readfile?.();
-
-  assert(typeof content === "string", `Unable to load previous module ("${source}" -> "${target}")`);
-
-  return parseModule(content);
-}
-
-export async function loadRelativeFileAsMagicast<Exports extends object>(
-  relativePath: string,
-  meta: Pick<ImportMeta, "url">,
-): Promise<ProxifiedModule<Exports>> {
-  const __filename = fileURLToPath(meta.url);
-  const __dirname = dirname(__filename);
-
-  return loadFile(join(__dirname, relativePath));
 }
 
 export async function loadYaml(

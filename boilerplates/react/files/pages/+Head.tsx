@@ -4,21 +4,21 @@ import { ColorSchemeScript } from "@mantine/core";
 import logoUrl from "../assets/logo.svg";
 
 export function Head() {
-  if (BATI.has("plausible.io")) {
+  if ($$.BATI.has("plausible.io")) {
     return (
       <>
         <link rel="icon" href={logoUrl} />
-        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
+        {$$.BATI.has("mantine") ? <ColorSchemeScript /> : null}
         {/* See https://plausible.io/docs/plausible-script */}
         {/* TODO: update data-domain */}
         <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
       </>
     );
-  } else if (BATI.has("google-analytics")) {
+  } else if ($$.BATI.has("google-analytics")) {
     return (
       <>
         <link rel="icon" href={logoUrl} />
-        {BATI.has("mantine") ? <ColorSchemeScript /> : null}
+        {$$.BATI.has("mantine") ? <ColorSchemeScript /> : null}
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_ENV__GOOGLE_ANALYTICS}`}
@@ -36,11 +36,11 @@ export function Head() {
       </>
     );
   } else {
-    if (BATI.has("mantine")) {
+    if ($$.BATI.has("mantine")) {
       return (
         <>
           <link rel="icon" href={logoUrl} />
-          {BATI.has("mantine") ? <ColorSchemeScript /> : null}
+          {$$.BATI.has("mantine") ? <ColorSchemeScript /> : null}
         </>
       );
     } else {

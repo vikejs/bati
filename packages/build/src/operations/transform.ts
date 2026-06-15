@@ -18,13 +18,14 @@ async function transformFileAfterExec(filepath: string, fileContent: unknown): P
 
   for (const ext of toTest) {
     switch (ext) {
+      // A dynamic `$x.ts` transformer returns code — Prettier-format it.
       case ".ts":
       case ".js":
       case ".tsx":
       case ".jsx":
-        return formatCode(fileContent as string, {
-          filepath,
-        });
+        return formatCode(fileContent as string, { filepath });
+      // The transformer hands these back already-final, so emit verbatim. Static files (incl. `.html`)
+      // are formatted upstream by the codemod pipeline in `transformAndFormat`; this path only sees dynamic output.
       case ".env":
       case ".env.local":
       case ".env.development":

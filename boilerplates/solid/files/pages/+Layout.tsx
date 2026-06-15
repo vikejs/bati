@@ -1,7 +1,7 @@
 // https://vike.dev/Layout
 
 import "./Layout.css";
-//# BATI.has("tailwindcss")
+// $$.BATI.has("tailwindcss")
 import "./tailwind.css";
 import { AuthNav } from "@batijs/solid-better-auth/components/AuthNav";
 import type { JSX } from "solid-js";
@@ -11,9 +11,9 @@ import { Link } from "../components/Link";
 export default function Layout(props: { children?: JSX.Element }) {
   return (
     <div
-      //# BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       class={"flex max-w-5xl m-auto"}
-      //# !BATI.has("tailwindcss")
+      // !$$.BATI.has("tailwindcss")
       style={{
         display: "flex",
         "max-width": "900px",
@@ -25,7 +25,7 @@ export default function Layout(props: { children?: JSX.Element }) {
         <Link href="/">Welcome</Link>
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
-        {BATI.has("better-auth") ? <AuthNav /> : null}
+        {$$.BATI.has("better-auth") ? <AuthNav /> : null}
       </Sidebar>
       <Content>{props.children}</Content>
     </div>
@@ -36,9 +36,9 @@ function Sidebar(props: { children: JSX.Element }) {
   return (
     <div
       id="sidebar"
-      //# BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       class={"p-5 flex flex-col shrink-0 border-r-2 border-r-gray-200"}
-      //# !BATI.has("tailwindcss")
+      // !$$.BATI.has("tailwindcss")
       style={{
         padding: "20px",
         "flex-shrink": 0,
@@ -58,9 +58,9 @@ function Content(props: { children: JSX.Element }) {
     <div id="page-container">
       <div
         id="page-content"
-        //# BATI.has("tailwindcss")
+        // $$.BATI.has("tailwindcss")
         class={"p-5 pb-12 min-h-screen"}
-        //# !BATI.has("tailwindcss")
+        // !$$.BATI.has("tailwindcss")
         style={{
           padding: "20px",
           "padding-bottom": "50px",
@@ -76,9 +76,9 @@ function Content(props: { children: JSX.Element }) {
 function Logo() {
   return (
     <div
-      //# BATI.has("tailwindcss")
+      // $$.BATI.has("tailwindcss")
       class={"p-5 mb-2"}
-      //# !BATI.has("tailwindcss")
+      // !$$.BATI.has("tailwindcss")
       style={{
         "margin-top": "20px",
         "margin-bottom": "10px",

@@ -2,15 +2,15 @@ import { extname } from "node:path";
 
 export class RelationFile {
   public static allPathAbsolute: Map<string, RelationFile> = new Map();
-  public static allIncludeIfImported: RelationFile[] = [];
+  public static allKeepFileIfImported: RelationFile[] = [];
 
   constructor(
     public pathAbsolute: string,
-    public includeIfImported: boolean,
+    public keepFileIfImported: boolean,
   ) {
     RelationFile.allPathAbsolute.set(pathAbsolute, this);
-    if (includeIfImported) {
-      RelationFile.allIncludeIfImported.push(this);
+    if (keepFileIfImported) {
+      RelationFile.allKeepFileIfImported.push(this);
     }
   }
 }
@@ -40,11 +40,11 @@ export class RelationImport {
   static computeUnimportedFiles(): RelationFile[] {
     const unimportedFiles: RelationFile[] = [];
     const importedByVolatileFile: RelationImport[] = [];
-    for (const file of RelationFile.allIncludeIfImported) {
+    for (const file of RelationFile.allKeepFileIfImported) {
       const importedFile = RelationImport.allImports.find((ai) => ai.importTargetRelationFile === file);
       if (!importedFile) {
         unimportedFiles.push(file);
-      } else if (importedFile.source.includeIfImported) {
+      } else if (importedFile.source.keepFileIfImported) {
         importedByVolatileFile.push(importedFile);
       }
     }

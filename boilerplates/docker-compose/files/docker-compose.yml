@@ -8,16 +8,16 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-    # BATI.hasDatabase && !BATI.has("postgres")
+    # $$.BATI.hasDatabase && !$$.BATI.has("postgres")
     volumes:
       - sqlite_data:/app/data
-    # BATI.has("postgres")
+    # $$.BATI.has("postgres")
     depends_on:
       postgres:
         condition: service_healthy
     restart: unless-stopped
 
-  # BATI.has("postgres")
+  # $$.BATI.has("postgres")
   postgres:
     image: postgres:18-alpine
     environment:
@@ -33,9 +33,9 @@ services:
       retries: 10
     restart: unless-stopped
 
-# BATI.hasDatabase
+# $$.BATI.hasDatabase
 volumes:
-  # BATI.hasDatabase && !BATI.has("postgres")
+  # $$.BATI.hasDatabase && !$$.BATI.has("postgres")
   sqlite_data: {}
-  # BATI.has("postgres")
+  # $$.BATI.has("postgres")
   postgres_data: {}
