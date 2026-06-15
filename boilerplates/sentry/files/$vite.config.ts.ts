@@ -1,4 +1,4 @@
-import { addVitePlugin, defineConfigArg, mergeObject, transformConfig, type TransformerProps } from "@batijs/core";
+import { addVitePlugin, defineConfigArg, mergeObject, type TransformerProps, transformConfig } from "@batijs/core";
 
 export default function getViteConfig(props: TransformerProps): Promise<unknown> {
   return transformConfig(props, (root) => {

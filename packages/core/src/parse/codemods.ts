@@ -2,8 +2,8 @@ import type { GrammarId, Transformer, ZoneSplitter } from "@codegraft/core";
 import { removeUnusedImports } from "@codegraft/rules";
 import { vueSplitter } from "@codegraft/vue";
 import {
-  batiBlocks,
   type BatiContext,
+  batiBlocks,
   batiCodemod,
   batiImports,
   batiYaml,

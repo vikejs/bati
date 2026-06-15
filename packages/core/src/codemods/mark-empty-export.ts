@@ -7,7 +7,7 @@ export const BIOME_IGNORE_EMPTY_EXPORT =
 
 /**
  * Tag a `.d.ts`'s bare `export {}` — the marker that keeps a declaration-only file a module — with a
- * biome-ignore so biome's `noUselessEmptyExport` rule doesn't flag it. The AST-aware replacement for
+ * biome_ignore so biome's `noUselessEmptyExport` rule doesn't flag it. The AST-aware replacement for
  * Bati's old `indexOf`/`slice` injection: it edits the real `export {}` statement, never a string
  * that happens to read `export {};`.
  *

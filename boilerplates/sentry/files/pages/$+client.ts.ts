@@ -1,4 +1,4 @@
-import { transformConfig, type TransformerProps } from "@batijs/core";
+import { type TransformerProps, transformConfig } from "@batijs/core";
 
 const IMPORT = `import { sentryBrowserConfig } from "../sentry.browser.config";`;
 const CALL = `sentryBrowserConfig();`;
