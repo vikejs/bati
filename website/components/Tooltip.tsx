@@ -120,6 +120,7 @@ export function EnrichedTooltip(props: {
             setReference(x);
           }
         }}
+        role="none"
         class={clsx(props.class)}
         onclick={(e) => "blur" in e.target && typeof e.target.blur === "function" && e.target.blur()}
       >

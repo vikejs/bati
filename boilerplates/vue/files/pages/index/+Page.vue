@@ -3,10 +3,10 @@
   <p>This page is:</p>
   <ul>
     <li>Rendered to HTML.</li>
-    <li>Interactive. <Counter /></li>
+    <li>Interactive. <CounterButton /></li>
   </ul>
 </template>
 
 <script setup lang="ts">
-import Counter from "../../components/Counter.vue";
+import CounterButton from "../../components/CounterButton.vue";
 </script>
