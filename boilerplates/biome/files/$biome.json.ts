@@ -92,11 +92,11 @@ export default async function getBiomeJson(props: TransformerProps): Promise<unk
     },
     linter: {
       enabled: true,
+      ...additionalLinter,
       rules: {
-        recommended: true,
+        preset: "recommended",
         ...additionalLinter.rules,
       },
-      ...additionalLinter,
     },
     files: {
       ...additionalConfig.files,

@@ -4,9 +4,9 @@
   <div class="layout">
     <Sidebar>
       <Logo />
-      <Link href="/"> Welcome </Link>
-      <Link href="/todo"> Todo </Link>
-      <Link href="/star-wars"> Data Fetching </Link>
+      <NavLink href="/"> Welcome </NavLink>
+      <NavLink href="/todo"> Todo </NavLink>
+      <NavLink href="/star-wars"> Data Fetching </NavLink>
       <!-- $$.BATI.has("better-auth") -->
       <AuthNav />
     </Sidebar>
@@ -18,8 +18,8 @@
 // $$.BATI.has("better-auth")
 import AuthNav from "../components/AuthNav.vue";
 import Content from "../components/Content.vue";
-import Link from "../components/Link.vue";
 import Logo from "../components/Logo.vue";
+import NavLink from "../components/NavLink.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { sentryBrowserConfig } from "../sentry.browser.config";
 
