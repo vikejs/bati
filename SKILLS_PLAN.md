@@ -378,7 +378,9 @@ Still open:
       (hono/express/fastify/elysia) + data-fetching (telefunc/trpc/ts-rest) + ORM (drizzle/kysely/prisma,
       engine-aware) + auth (better-auth/authjs/auth0).
 - [x] Documented the authoring convention in Bati's own `AGENTS.md` ("Authoring AI-agent skills").
-- [ ] E2E: assert correct skill / instruction files per flag combo via file-check mode (`mode: "none"`). **← next**
+- [x] E2E: `FRAMEWORK+skills.spec.ts` asserts the skill / instruction files per flag combo
+      (`mode: "none"`); workflow matrix regenerated. Verified locally (claude + codex/gemini combos pass
+      test + typecheck + knip — the agent files don't break the generated app).
 - [ ] Later: agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate `skills/` dir option (§8),
       remaining catalog skills (css, component libs, deploy-per-host, analytics, error tracking, storybook).
 

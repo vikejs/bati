@@ -247,6 +247,10 @@ jobs:
           - react--sentry--eslint--biome--oxlint
           - vue--sentry--eslint--biome--oxlint
           - solid--sentry--eslint--biome--oxlint
+          - react--claude
+          - vue--claude
+          - solid--claude
+          - react--hono--trpc--sqlite--drizzle--codex--gemini
           - solid--storybook--eslint
           - react--vercel--hono--eslint--biome--oxlint
           - react--vercel--express--eslint--biome--oxlint
@@ -820,6 +824,18 @@ jobs:
           - destination: solid--sentry--eslint--biome--oxlint
             flags: --solid --sentry --eslint --biome --oxlint
             test-files: FRAMEWORK+sentry.spec.ts
+          - destination: react--claude
+            flags: --react --claude
+            test-files: FRAMEWORK+skills.spec.ts
+          - destination: vue--claude
+            flags: --vue --claude
+            test-files: FRAMEWORK+skills.spec.ts
+          - destination: solid--claude
+            flags: --solid --claude
+            test-files: FRAMEWORK+skills.spec.ts
+          - destination: react--hono--trpc--sqlite--drizzle--codex--gemini
+            flags: --react --hono --trpc --sqlite --drizzle --codex --gemini
+            test-files: FRAMEWORK+skills.spec.ts
           - destination: solid--storybook--eslint
             flags: --solid --storybook --eslint
             test-files: FRAMEWORK+storybook.spec.ts
