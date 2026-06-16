@@ -15,4 +15,21 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["playwright", "@vitest/coverage-v8"],
   },
+  // Tooling skill (SKILLS_PLAN.md §6.O).
+  skills(meta) {
+    const pm = meta.BATI.pm;
+    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    return [
+      {
+        name: "storybook",
+        description: "How to use Storybook in this app. Use when adding a story or running Storybook.",
+        body: `Storybook is configured for component development.
+
+- **Run it:** \`${run} storybook\`.
+- **Add a story:** create a \`*.stories.tsx\` file next to a component, exporting a default \`meta\` and named story exports.
+
+See https://storybook.js.org/docs.`,
+      },
+    ];
+  },
 });
