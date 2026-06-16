@@ -25,7 +25,11 @@ export default function Description() {
 
   const formattedLabels = createMemo(() =>
     lf
-      .formatToParts(selectedFeatures().map((x) => x.label))
+      .formatToParts(
+        selectedFeatures()
+          .filter((x) => !x.invisibleDescription)
+          .map((x) => x.label),
+      )
       .map((p) =>
         p.type === "literal" ? p.value : <FeatureWord feature={selectedFeatures().find((x) => x.label === p.value)!} />,
       ),
