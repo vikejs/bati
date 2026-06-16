@@ -48,4 +48,29 @@ export default defineConfig({
   knip: {
     entry: ["server/better-auth-handler.ts", "database/better-auth/migrate.ts"],
   },
+  // Auth skill (SKILLS_PLAN.md §6.J).
+  skills(meta) {
+    const pm = meta.BATI.pm;
+    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const tablesNote = meta.BATI.has("drizzle")
+      ? "they're created by Drizzle's migrate flow"
+      : meta.BATI.hasD1
+        ? "they're applied via a wrangler D1 migration"
+        : `run \`${run} better-auth:migrate\` to create them`;
+    return [
+      {
+        name: "auth",
+        description:
+          "How authentication works in this app (Better Auth). Use when reading the signed-in user, protecting a route, or configuring providers.",
+        body: `Better Auth. Server config + providers live in \`server/better-auth.ts\`; the route and session middleware are in \`server/better-auth-handler.ts\` (the middleware populates \`pageContext.user\`). Login/signup/account pages and the \`AuthNav\` component are framework-specific (under \`pages/\` and \`components/\`).
+
+- **Read the user:** \`pageContext.user\` (on the server and during client-side navigation).
+- **Protect a route:** add a \`+guard.ts\` beside the page — \`if (!pageContext.user) throw redirect("/login")\` (see \`pages/account/+guard.ts\`).
+- **Add a provider:** configure it in \`server/better-auth.ts\`; OAuth credentials go in \`.env\`.
+- **Tables:** Better Auth owns its user/session tables — ${tablesNote}.
+
+See https://better-auth.com/docs.`,
+      },
+    ];
+  },
 });
