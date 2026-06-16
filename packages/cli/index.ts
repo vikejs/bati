@@ -1,11 +1,19 @@
 import { execSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
-import { access, constants, lstat, readdir, readFile, writeFile } from "node:fs/promises";
+import { access, constants, lstat, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, normalize, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 import exec, { walk } from "@batijs/build";
-import { getVersion, packageManager, type VikeMeta, which, withIcon } from "@batijs/core";
+import {
+  buildAgentsMd,
+  composeAgentFiles,
+  getVersion,
+  packageManager,
+  type VikeMeta,
+  which,
+  withIcon,
+} from "@batijs/core";
 import type { BatiConfig, BatiConfigStep, BatiKnipConfig } from "@batijs/core/config";
 import { BatiSet, type CategoryLabels, cliFlags, type Feature, type Flags, features } from "@batijs/features";
 import { execRules } from "@batijs/features/rules";
@@ -638,6 +646,18 @@ async function run() {
 
       for (const onafter of hooksMap.get("after") ?? []) {
         await onafter(args.project, meta);
+      }
+
+      // When an AI agent is selected, compose its skills + instruction files into the project
+      // (gated on hasAiAgent; written before gitInit so they land in the initial commit).
+      if (meta.BATI.hasAiAgent) {
+        const skills = filteredBoilerplates.flatMap((b) => b.config.skills?.(meta) ?? []);
+        const agentFiles = composeAgentFiles(meta, skills, buildAgentsMd(meta, pm.run));
+        for (const file of agentFiles) {
+          const dest = join(args.project, file.path);
+          await mkdir(dirname(dest), { recursive: true });
+          await writeFile(dest, file.content, "utf-8");
+        }
       }
 
       // Generate knip.json when --knip flag is set (used by E2E tests)
