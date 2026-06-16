@@ -14,7 +14,7 @@ export function Widget(props: { theme?: string; widget: boolean }) {
     <RootProvider>
       <div
         data-theme={props.theme}
-        class="flex flex-col bg-base-300 p-6 rounded-xl shadow-2xl font-sans bati-widget"
+        class="flex flex-col max-w-screen bg-base-300 p-6 rounded-xl shadow-2xl font-sans bati-widget"
         classList={{
           "w-11/12": !props.widget,
         }}
