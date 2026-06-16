@@ -1,8 +1,8 @@
-import { BatiSet, features } from "@batijs/features";
+import { BatiSet, type Flags, features } from "@batijs/features";
 import { expect, test } from "vitest";
 import { type BatiSkill, composeAgentFiles, renderSkillMd } from "../src/skills.js";
 
-function meta(flags: string[]) {
+function meta(flags: Flags[]) {
   return { BATI: new BatiSet(flags, features, "npm"), BATI_TEST: false };
 }
 
