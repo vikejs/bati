@@ -15,4 +15,22 @@ export default defineConfig({
       },
     ];
   },
+  // Raw DB-engine skill (SKILLS_PLAN.md §6.H) — only emitted when no ORM is selected (see `if`).
+  skills(meta) {
+    const pm = meta.BATI.pm;
+    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    return [
+      {
+        name: "database",
+        description:
+          "How to work with the database in this app (raw SQLite / better-sqlite3). Use when querying, adding a table, or migrating.",
+        body: `Raw SQLite via better-sqlite3 (no ORM). The client is in \`database/sqlite/db.ts\`, schema in \`database/sqlite/schema/\`, queries in \`database/sqlite/queries/\`.
+
+- **Add a table:** add it to \`database/sqlite/schema/\` and migrate with \`${run} sqlite:migrate\`.
+- **Write queries:** add functions in \`database/sqlite/queries/\` using the \`db\` client; on the server it's available as \`context.db\`.
+
+See https://github.com/WiseLibs/better-sqlite3.`,
+      },
+    ];
+  },
 });
