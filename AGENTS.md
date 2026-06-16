@@ -6,8 +6,8 @@ Bati is a next-generation scaffolding CLI tool for the Vike (Vite-based) ecosyst
 
 **Repository Structure:**
 - **TypeScript monorepo** managed with **bun workspaces** and **Nx**
-- Node.js ≥22 required, Bun 1.3.11 (as specified in package.json `packageManager`)
-- Workspaces across `/packages/` (~11 packages) and `/boilerplates/` (~42 feature templates)
+- Node.js ≥22 required, Bun ≥1.3.11 (`packageManager` pins `bun@1.3.11`)
+- Workspaces across `/packages/` (10 packages) and `/boilerplates/` (~50 folders, ~42 user-facing features)
 
 ## Build Commands (Execute in Order)
 
@@ -65,31 +65,35 @@ Existing test files and their purposes:
 - `FRAMEWORK+prisma.spec.ts` - Prisma ORM
 - `FRAMEWORK+cloudflare.spec.ts` - Cloudflare deployment
 - `FRAMEWORK+vercel.spec.ts` - Vercel deployment
+- `FRAMEWORK+netlify.spec.ts` - Netlify deployment
+- `FRAMEWORK+edgeone.spec.ts` - EdgeOne Pages deployment
 - `FRAMEWORK+aws.spec.ts` - AWS Lambda deployment
 - `FRAMEWORK+prettier.spec.ts` - Prettier formatter
+- `FRAMEWORK+storybook.spec.ts` - Storybook
 - `react+UI.spec.ts` - React-specific UI libs (compiled-css, mantine)
 - `remove-linter-comments.spec.ts` - Linter comment cleanup verification
 
 ### Test File Structure
 
-Each test file exports a `matrix` array and optionally an `exclude` array:
+Each test file builds a `suite()` (from `@batijs/tests-utils`, defined in `packages/tests-utils/src/suite.ts`) and exports it as `default`. This **include-only** builder replaced the old `matrix` + `exclude` exports:
 
 ```ts
-import { describeBati } from "@batijs/tests-utils";
+import { describeBati, suite } from "@batijs/tests-utils";
 
-// Matrix defines feature combinations to test
-// Arrays create permutations, single values are always included
-export const matrix = [
-  ["solid", "react", "vue"],  // One of these UI frameworks
-  ["feature1", "feature2", undefined],  // Optional features (undefined = without)
-  "eslint", "biome", "oxlint"  // Always included
-];
+const tests = suite()
+  // Cross product of named axes. `null` = "this axis is absent in that combo".
+  // `.matrix(...)` can be called multiple times — each call unions in more combos.
+  .matrix({
+    framework: ["react", "vue"],          // one combo per listed value
+    server: "hono",                        // single value = always present
+    data: ["trpc", "telefunc", "ts-rest", null],
+  })
+  .linters("eslint", "biome");             // flags appended to every combo
 
-// Exclude specific combinations to reduce test count
-export const exclude = [
-  ["react", "feature1"],  // Don't test react + feature1
-  ["vue", "feature2"],    // Don't test vue + feature2
-];
+export default tests;
+
+// Derive the flag union for `testMatch` from the suite's phantom type.
+type TestFlags = readonly [(typeof tests)["__flagsType"]];
 
 await describeBati(({ test, expect, fetch, testMatch }) => {
   test("home", async () => {
@@ -97,29 +101,38 @@ await describeBati(({ test, expect, fetch, testMatch }) => {
     expect(res.status).toBe(200);
   });
 
-  // Conditional tests based on matrix
-  testMatch<typeof matrix>("feature-specific test", {
-    feature1: async () => { /* test for feature1 */ },
-    feature2: async () => { /* test for feature2 */ },
+  // Conditional tests; `_` is the fallback when no listed flag is present.
+  testMatch<TestFlags>("feature-specific test", {
+    trpc: async () => { /* test for trpc */ },
+    telefunc: async () => { /* test for telefunc */ },
     _: async () => { /* default/fallback test */ },
   });
 });
 ```
 
+Key `suite()` API (see `suite.ts` for the full surface):
+- **Axes** are derived from feature categories and stay in sync with `features.ts`: `framework`, `server`, `data`, `db`, `orm`, `deploy`, `css`, `auth`, `analytics`.
+- `.matrix({...})` — cross product of named axes; call it repeatedly to add unions of combos (this is how you express "exclusions" — enumerate exactly the combos you want instead of subtracting). `null` replaces the old `undefined` "without" sentinel.
+- `.case({...})` — one explicit combo (values can be arrays, e.g. `flags: ["sentry", "logrocket"]`).
+- `.linters(...)` — flags added to every combo.
+- `spread(axis)` — picks a single value for that axis per combo, **round-robin balanced across the whole repo** so react/vue/solid get roughly equal coverage. Use it when a test is framework-agnostic.
+- On load, combos that violate a feature rule (`ERROR_*` in `@batijs/features/rules`) are dropped with a warning, so invalid combinations never reach the CLI.
+
 ### Adding Tests - Key Rules
 
 1. **Avoid duplicate combinations**: Check `.github/workflows/tests-entry.yml` to ensure your test combinations don't overlap with existing ones
-2. **Use `exclude` array**: Reduce test permutations by excluding unnecessary combinations
-3. **Add to existing matrix when possible**: If your feature fits an existing test category
+2. **Enumerate include-only combos**: Express what you want via one or more `.matrix(...)`/`.case(...)` calls rather than subtracting — there is no `exclude` anymore
+3. **Add to existing suite when possible**: If your feature fits an existing test category
 4. **Create new spec file only if needed**: For truly unique features
 5. **Regenerate workflow matrix**: Run `bun run test:e2e workflow-write` to auto-generate entries in `tests-entry.yml` (do NOT edit manually)
 
 ### Test Modes
 
-Tests can run in different modes via `describeBati` options:
+Tests can run in different modes via `describeBati`'s second `options` argument (`mode` may be a constant or a `(context) => Modes` function):
 - `mode: "dev"` (default) - Development server
 - `mode: "prod"` - Production build + preview
 - `mode: "build"` - Build only, no server
+- `mode: "docker"` - Build the Docker image and run the container (skipped locally when Docker is unavailable and not on CI)
 - `mode: "none"` - No build, no server (file checks only)
 
 ### Workflow Entry Generation
@@ -135,20 +148,21 @@ This auto-generates the matrix entries in `.github/workflows/tests-entry.yml`. N
 ```
 /
 ├── packages/
-│   ├── cli/           # Main Bati CLI (@batijs/cli)
-│   ├── core/          # Core utilities for boilerplate processing
-│   ├── compile/       # Boilerplate compilation tools
-│   ├── build/         # Build orchestration
-│   ├── features/      # Feature definitions and rules
-│   ├── tests/         # E2E test infrastructure
-│   └── tests-utils/   # Test utilities
-├── boilerplates/      # Feature boilerplates (~40 folders)
-│   ├── shared/        # Base shared boilerplate (processed first via `enforce: "pre"`)
-│   ├── react/         # React UI framework
-│   ├── vue/           # Vue UI framework
-│   ├── solid/         # SolidJS UI framework
-│   ├── hono/          # Hono server
-│   └── ...            # Other features (auth, db, hosting, etc.)
+│   ├── cli/                # Main Bati CLI (@batijs/cli)
+│   ├── core/               # Core utilities + codegraft codemods for boilerplate processing
+│   ├── compile/            # Boilerplate compilation tools (@batijs/compile)
+│   ├── build/              # Build orchestration (@batijs/build)
+│   ├── features/           # Feature definitions, categories and compatibility rules
+│   ├── batijs/             # The published `batijs` CLI package
+│   ├── create-bati/        # `create-vike` entry point (npm create vike)
+│   ├── create-batijs-app/  # `@batijs/create-app` entry point (npm create batijs-app)
+│   ├── tests/              # E2E test infrastructure
+│   └── tests-utils/        # Test utilities (@batijs/tests-utils)
+├── boilerplates/      # Feature boilerplates (~50 folders)
+│   ├── shared*/       # Base shared boilerplates (shared/-env/-server/-db/-todo); `enforce: "pre"`
+│   ├── react/         # React UI framework (also vue/, solid/)
+│   ├── hono/          # Hono server (also express/, fastify/, elysia/)
+│   └── ...            # Other features (auth, db/orm, hosting, analytics, linters, etc.)
 ├── website/           # batijs.dev website
 ├── nx.json            # Nx task definitions and caching
 ├── biome.json         # Biome linter/formatter config
@@ -181,12 +195,12 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 ### When to Edit Existing Boilerplates (Instead of Creating New Ones)
 
 **Prefer editing existing boilerplates** when creating a new one would add too much complexity or duplication:
-- Example: `tailwindcss` doesn't duplicate all components; it uses BATI compiler syntax to conditionally add classes in `react/`, `vue/`, `solid/` boilerplates:
+- Example: `tailwindcss` doesn't duplicate all components; it uses Bati templating syntax to conditionally add classes in `react/`, `vue/`, `solid/` boilerplates:
   ```tsx
   <div
-    //# BATI.has("tailwindcss")
+    // $$.BATI.has("tailwindcss")
     className={"flex max-w-5xl m-auto"}
-    //# !BATI.has("tailwindcss") && !BATI.has("compiled-css")
+    // !$$.BATI.has("tailwindcss") && !$$.BATI.has("compiled-css")
     style={{ display: "flex", maxWidth: 900, margin: "auto" }}
   >
   ```
@@ -205,22 +219,42 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 3. Add files to `boilerplates/<name>/files/`
 4. Use `$*.ts` prefix for dynamic files (e.g., `$package.json.ts`)
 
+#### `bati.config.ts` options
+
+`defineConfig` (typed in `packages/core/src/config.ts`) accepts:
+- `if(meta, packageManager?)` - include/exclude this boilerplate (omit it for an always-included one like `shared`)
+- `enforce: "pre" | "post"` - ordering relative to other boilerplates (`shared`, `shared-env`, `shared-todo` use `"pre"` so later boilerplates can build on their files)
+- `env(meta) => EnvVar[]` - **shared env** (#756): declare environment variables this feature contributes, with `key`, `scope`, `default`, `comment`, `group`, and `perSink` overrides (e.g. different `DATABASE_URL` for `compose`/`dockerfile`). Composed centrally via `packages/core/src/env-registry.ts` + `parse/compose-env.ts` into `.env` / `wrangler.jsonc`, so individual boilerplates no longer template env files themselves. See `boilerplates/shared-db/bati.config.ts`.
+- `deploy: string[] | (meta) => string[]` - **deploy files** (#757): files (relative to app root) this feature needs in the production runtime; collected by deploy targets such as the Dockerfile generator (`packages/core/src/dockerfile.ts`)
+- `nextSteps(meta, pm, colorette) => Step[]` - CLI "next steps" lines printed after scaffolding
+- `knip: { entry?, ignoreDependencies?, ignore?, vite? }` - per-boilerplate knip overrides
+
+> The `shared` feature is split into several boilerplates: `shared` (base app shell), `shared-env` (env loading/typing), `shared-server` (`hasServer`), `shared-db` (`hasDbDemo`), and `shared-todo` (the todo demo). Put cross-cutting code in the matching one rather than duplicating it per framework.
+
 ### BatiSet Helpers
 
-The `packages/features/src/helpers.ts` file provides `BatiSet` with useful helpers:
-- `BATI.has("feature")` - Check if feature is enabled
-- `BATI.hasServer` - Check if any server feature is enabled
-- `BATI.hasDatabase` - Check if database features (sqlite/drizzle) are enabled
-- `BATI.hasD1` - Check if Cloudflare D1 is used
-- `BATI.hasUD` - Check if Universal Deploy must be used
+`bati.config.ts`, `$*.ts` transformers and `hooks/` receive a `BatiSet` instance as `meta.BATI` / `props.meta.BATI`. It is a `Set` subclass defined in `packages/features/src/helpers.ts`, with cross-cutting getters derived from feature categories:
+- `BATI.has("feature")` - A given feature flag is enabled
+- `BATI.hasServer` - A Server feature (hono/express/fastify/elysia) is selected
+- `BATI.hasDatabase` - A Database engine (sqlite/postgres) is selected
+- `BATI.hasOrm` - An ORM / query builder (drizzle/kysely/prisma) is selected
+- `BATI.hasDbDemo` - A database whose todo demo Bati scaffolds (`hasDatabase` minus prisma, which is self-managed)
+- `BATI.hasD1` - Cloudflare D1 (cloudflare + sqlite) is used
+- `BATI.hasDotEnvSecrets` - Secrets live in `.env` (true unless cloudflare, which uses `wrangler.jsonc`)
+- `BATI.hasUD` - Universal Deploy must be used (any server, or cloudflare/vercel/netlify/docker/dokploy)
+- `BATI.pm` - The chosen package manager string (npm/pnpm/yarn/bun)
 
-**Update helpers** when adding features that need cross-cutting detection logic.
+**Update helpers** when adding features that need cross-cutting detection logic. The `#servers`/`#databases`/`#orm` sets are built from the `Server` / `Database` / `ORM / Query builder` feature categories, so getting a feature's `category` right in `features.ts` is what wires these up.
 
 ### Boilerplate File Syntax
 
 For detailed syntax documentation, see [boilerplates/README.md](https://github.com/vikejs/bati/blob/main/boilerplates/README.md).
 
-**Key Concept:** `BATI` is a global `Set` available during the templating phase, containing all chosen features.
+**Key Concept:** `$$` is the templating namespace available inside scaffolded `files/`. `$$.BATI` is a `Set` containing all chosen features, and `$$.BATI_TEST` is a boolean. The whole `$$.*` surface is resolved away (conditions evaluated, markers removed) when the app is generated.
+
+> **`$$.BATI` vs `meta.BATI`:** `$$.BATI` is templating sugar that only exists inside `files/`. The build-time scripts — `bati.config.ts`, `$*.ts` transformers and `hooks/` — run as real TypeScript and instead receive a `BatiSet` instance as `meta.BATI` / `props.meta.BATI` (see [BatiSet Helpers](#batiset-helpers)). Don't mix the two: `$$.BATI` in a `.config`/`$*.ts` file, or `meta.BATI` inside a templated `files/` file, is a bug.
+
+> **Engine:** transformations run through [codegraft](https://www.npmjs.com/org/codegraft) codemods (`packages/core/src/codemods/`, orchestrated by `packages/core/src/parse/codemods.ts`). This replaced the previous ESLint-based transformers and SquirrellyJS. The per-file pipeline is **collapse → prune → record**: `batiCodemod` resolves `$$` and drops gated imports, `stripLintComments` removes unwanted eslint/biome directives, `removeUnusedImports` prunes, then `batiImports` records the surviving import graph.
 
 #### Special File Names
 
@@ -235,7 +269,7 @@ For detailed syntax documentation, see [boilerplates/README.md](https://github.c
 
 **If/else statements:**
 ```ts
-if (BATI.has("feature")) {
+if ($$.BATI.has("feature")) {
   console.log("A");
 } else {
   console.log("B");
@@ -245,16 +279,13 @@ if (BATI.has("feature")) {
 
 **Ternary expressions:**
 ```ts
-const myvar = BATI.has("feature") ? "A" : "B";
+const myvar = $$.BATI.has("feature") ? "A" : "B";
 ```
 
-**Comment-based conditional (next line only):**
+**Comment-based conditional (applies to the next line only):**
 ```ts
-// BATI.has("feature")
+// $$.BATI.has("feature")
 import "./mycss";
-
-//# BATI.has("feature")  // Alternative with # (commonly used for JSX attributes)
-import "./other";
 ```
 
 **Include file only if imported:**
@@ -266,16 +297,16 @@ const a = 1;
 **Type casting helper:**
 ```ts
 // Equivalent to `as any` but dropped entirely when compiled
-const a = 'react' as BATI.Any;
+const a = 'react' as $$.Any;
 ```
 
-**Conditional types with BATI.If:**
+**Conditional types with `$$.If` (first matching condition wins):**
 ```ts
 interface Context {
-  ui: BATI.If<{
-    'BATI.has("react")': "react";
-    'BATI.has("vue")': "vue";
-    'BATI.has("solid")': "solid";
+  ui: $$.If<{
+    '$$.BATI.has("react")': "react";
+    '$$.BATI.has("vue")': "vue";
+    '$$.BATI.has("solid")': "solid";
     _: "other";  // fallback
   }>;
 }
@@ -283,12 +314,12 @@ interface Context {
 
 #### JSX/TSX Syntax
 
-**Conditional attributes (use `//# ` comment before attribute):**
+**Conditional attributes (put a `// $$.BATI...` comment before the attribute — note: a single `//`, not `//#`):**
 ```tsx
 <div
-  //# BATI.has("feature")
+  // $$.BATI.has("feature")
   class="p-5"
-  //# !BATI.has("feature")
+  // !$$.BATI.has("feature")
   style={{ padding: "20px" }}
 >
   {props.children}
@@ -297,36 +328,37 @@ interface Context {
 
 #### HTML/JSX/TSX/Vue Template Syntax
 
-**Conditional elements (next sibling only):**
+**Conditional elements (applies to the next sibling only):**
 ```html
-<!-- BATI.has("feature") -->
+<!-- $$.BATI.has("feature") -->
 <div>
   <span>my text</span>
 </div>
 <span>my other text</span>
 ```
 
-#### Universal Syntax (Any File Extension)
+#### Universal Syntax (Any File With Comments — CSS, etc.)
 
-Uses [SquirellyJS](https://squirrelly.js.org/docs/syntax/overview) with custom `/*{ ... }*/` tags:
+Comment-delimited `/* $$.if(cond) */ … /* $$.elif(cond) */ … /* $$.else */ … /* $$.endif */` blocks work in any file that has comments:
 ```css
-/*{ @if (it.BATI.has("feature")) }*/
+/* $$.if($$.BATI.has("feature")) */
 @import "./feature.css";
-/*{ /if }*/
+/* $$.endif */
 ```
 
 #### Important Notes
 
-- **Unsupported JSX pattern:** `{BATI.has("feature") && <div>show me</div>}` is NOT supported
-- Unused imports are automatically removed after compilation
+- **Unsupported JSX pattern:** `{$$.BATI.has("feature") && <div>show me</div>}` is NOT supported
+- Unused imports are automatically removed after compilation (so prefer **unconditional imports + conditional usage** over `//`-marked imports). The pruner abstains on any file containing `declare global`, leaving unused imports there — harmless because generated tsconfigs set `skipLibCheck: true`
 - Code is automatically formatted with prettier after compilation
 - Empty files are not deployed; if an empty file overrides another file, the original is deleted
 
 ## CI Validation (GitHub Actions)
 
 **On Pull Requests:**
-1. **Checks workflow** (`checks.yml`): Runs on Node 20 & 22
+1. **Checks workflow** (`checks.yml`): Runs on Node 22 & 24
    - `bun install` → `bun run build` → `bun run check-types` → `bun run lint`
+   - A `check-tests-matrix` job regenerates `tests-entry.yml` and fails if it is out of date — always commit the result of `bun run test:e2e workflow-write`
 2. **Tests workflow** (`tests-entry.yml`): Matrix of E2E tests across OS/features
 
 **To replicate CI locally:**
