@@ -3,7 +3,7 @@ import { isServer } from "solid-js/web";
 import { StoreContext } from "#components/Store";
 import { formatFeatureFlags, track } from "../lib/track";
 import { Cli } from "./Cli";
-import Stackblitz from "./Stackblitz";
+// import Stackblitz from "./Stackblitz";
 
 export function CliGroup(
   props: {
@@ -17,7 +17,7 @@ export function CliGroup(
         <Cli onMouseEnter={props.onMouseEnter} onClick={props.onClick} tooltipText={props.tooltipText}>
           {props.children}
         </Cli>
-        <Stackblitz flags={props.flags} class="join-item hidden sm:flex font-normal" />
+        {/*<Stackblitz flags={props.flags} class="join-item hidden sm:flex font-normal" />*/}
       </div>
     </div>
   );
