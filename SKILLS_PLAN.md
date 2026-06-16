@@ -374,11 +374,13 @@ Still open:
 - [x] Composer implemented (copy-only, v1): `core/src/skills.ts` (`renderSkillMd`, `composeAgentFiles`),
       `core/src/agents-md.ts` (`buildAgentsMd`), `skills?(meta)` field in `BatiConfig`, wired into the CLI
       (writes files when `hasAiAgent`). Unit tests + manual e2e verified (AGENTS.md + CLAUDE/GEMINI shims).
-- [ ] Author the v1 skill set (§12) via `skills(meta)` producers in the relevant boilerplates
-      (Vike core + server/RPC/db-orm/auth). **← current**
-- [ ] E2E: assert correct skill / instruction files per flag combo via file-check mode (`mode: "none"`).
-- [ ] Add an "Authoring AI-agent skills" section to Bati's own `AGENTS.md` (AI maintains the skills, §13).
-- [ ] Later: agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate `skills/` dir option (§8).
+- [x] Authored the v1 skill set (§12) via `skills(meta)` producers: Vike core (shared) + server
+      (hono/express/fastify/elysia) + data-fetching (telefunc/trpc/ts-rest) + ORM (drizzle/kysely/prisma,
+      engine-aware) + auth (better-auth/authjs/auth0).
+- [x] Documented the authoring convention in Bati's own `AGENTS.md` ("Authoring AI-agent skills").
+- [ ] E2E: assert correct skill / instruction files per flag combo via file-check mode (`mode: "none"`). **← next**
+- [ ] Later: agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate `skills/` dir option (§8),
+      remaining catalog skills (css, component libs, deploy-per-host, analytics, error tracking, storybook).
 
 ---
 
