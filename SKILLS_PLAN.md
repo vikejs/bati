@@ -381,8 +381,12 @@ Still open:
 - [x] E2E: `FRAMEWORK+skills.spec.ts` asserts the skill / instruction files per flag combo
       (`mode: "none"`); workflow matrix regenerated. Verified locally (claude + codex/gemini combos pass
       test + typecheck + knip — the agent files don't break the generated app).
-- [ ] Later: agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate `skills/` dir option (§8),
-      remaining catalog skills (css, component libs, deploy-per-host, analytics, error tracking, storybook).
+- [x] v2 long-tail skills authored: CSS (tailwind/compiled/daisyui), component libs (shadcn-ui/mantine),
+      deploy (cloudflare/vercel/netlify/aws/docker/dokploy/edgeone/self-host), analytics (plausible/google),
+      error tracking (sentry), tooling (storybook), and raw DB engine (sqlite/postgres). E2E extended to
+      cover styling/deploy/analytics.
+- [ ] Still later (optional): agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate
+      `skills/` dir option (§8). Disabled features (segment, logrocket) are intentionally skipped.
 
 ---
 
