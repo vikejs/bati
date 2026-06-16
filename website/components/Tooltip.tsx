@@ -6,7 +6,7 @@ import { useFloating } from "../lib/floating-solid.js";
 
 export function Tooltip(props: { children?: JSX.Element; class?: string; tip?: string }) {
   return props.tip ? (
-    <div class={clsx("tooltip", props.class)} data-tip={props.tip}>
+    <div class={clsx("lg:tooltip", props.class)} data-tip={props.tip}>
       {props.children}
     </div>
   ) : (
