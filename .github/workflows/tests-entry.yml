@@ -251,6 +251,7 @@ jobs:
           - vue--claude
           - solid--claude
           - react--hono--trpc--sqlite--drizzle--codex--gemini
+          - vue--tailwindcss--vercel--plausible.io--cursor
           - solid--storybook--eslint
           - react--vercel--hono--eslint--biome--oxlint
           - react--vercel--express--eslint--biome--oxlint
@@ -835,6 +836,9 @@ jobs:
             test-files: FRAMEWORK+skills.spec.ts
           - destination: react--hono--trpc--sqlite--drizzle--codex--gemini
             flags: --react --hono --trpc --sqlite --drizzle --codex --gemini
+            test-files: FRAMEWORK+skills.spec.ts
+          - destination: vue--tailwindcss--vercel--plausible.io--cursor
+            flags: --vue --tailwindcss --vercel --plausible.io --cursor
             test-files: FRAMEWORK+skills.spec.ts
           - destination: solid--storybook--eslint
             flags: --solid --storybook --eslint
