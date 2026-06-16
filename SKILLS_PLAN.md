@@ -274,36 +274,32 @@ Legend:
 
 ## 8. Authoring API & composer design (decided 2026-06-16)
 
-**New special dir `skills/` per boilerplate** (sibling to `files/`). Unlike `files/` (copied to app root),
-`skills/` content is *routed by the composer* to each selected agent's skills dir — so skills can't be
-plain `files/`.
+**Implemented (v1): a `skills(meta)` config function** in `bati.config.ts`, parallel to
+`env`/`deploy`/`nextSteps`. Each boilerplate returns `BatiSkill[]` (`{ name, description, body,
+allowedTools? }`), gated on `meta`. Rationale: it needs no new file-discovery in the compile pipeline,
+matches the existing config surface, and suits the **lean, reference-upstream-docs** skills decided in
+§10/§13 (short bodies as inline strings are fine; the dir convention's ergonomic win only matters for long
+prose, which we're deliberately avoiding). Lives in `packages/core/src/skills.ts` (`BatiSkillFactory`).
 
-- **Static skill:** `boilerplates/<feature>/skills/<skill-name>/SKILL.md` (+ optional `reference.md`; later
-  `scripts/`). Auto-included when the boilerplate's existing `if()` passes — no extra gating to write.
-- **Dynamic skill:** `boilerplates/<feature>/skills/<skill-name>/$SKILL.md.ts` (the existing `$*.ts`
-  dynamic-file convention, same as `$README.md.ts`) when the body needs programmatic composition from
-  `meta.BATI`. Used for the Vike-core skills and combination-sensitive ORM skills (§9).
-- Light `$$.BATI` conditionals are fine inside a static `SKILL.md` for small variations; heavy prose
-  branching → use the dynamic form (per §5; never mechanism **(b)**).
-- A `bati.config.ts` `skills` field is **not** added unless a boilerplate must contribute a skill without
-  owning a folder (rare). The convention dir is primary, parallel to `files/`.
+**Deferred option — a `skills/` dir per boilerplate** (sibling to `files/`) with static `SKILL.md` /
+dynamic `$SKILL.md.ts`. Revisit only if skill bodies outgrow inline strings; the composer contract (below)
+wouldn't change, only how content is sourced.
 
 **Frontmatter authored once, normalized per agent by the composer.** Source = `name`, `description`,
 optional `allowed-tools`. The composer strips/translates fields an agent doesn't support, so one source
 serves all agents and "format portability" is a composer concern, not an authoring one.
 
-**Composer pipeline** (new module, parallels `env-registry.ts` / `dockerfile.ts`):
-1. Collect `skills/` trees from all included boilerplates (resolve `$$.BATI`, run `$*.ts`).
-2. Validate: unique skill `name`s across boilerplates (no collisions), non-empty `description`.
-3. Assemble canonical **`AGENTS.md`** from the core fragments (§6.A) — reusing `$README.md.ts` /
-   `nextSteps()` source (§10).
-4. Per selected agent flag: materialize its skills dir (symlink-or-copy per §4) and instruction file
-   (native `AGENTS.md` for the canonical agent; import-shim for the rest, §3).
-5. Skip everything when `!hasAiAgent`.
+**Composer pipeline** (`packages/core/src/skills.ts` + `agents-md.ts`, parallels `env-registry.ts`):
+1. Collect `skills(meta)` from all selected boilerplates (`filteredBoilerplates.flatMap(b => b.config.skills?.(meta))`).
+2. Validate: unique skill `name`s across boilerplates (`composeAgentFiles` throws on collision).
+3. Generate the canonical **`AGENTS.md`** body centrally via `buildAgentsMd(meta, pmRun)` (§6.A).
+4. `composeAgentFiles` writes each skill to the minimal dir set (`resolveSkillDirs`) + the instruction
+   files (`resolveInstructionFiles`): native `AGENTS.md` + `@AGENTS.md` shims. v1 = copy (symlink later, §4).
+5. Skip everything when `!hasAiAgent` (enforced in the CLI + `composeAgentFiles`).
 
-These conventions (the `skills/` dir, static vs `$SKILL.md.ts`, frontmatter rules, composer routing) are
-**documented in Bati's own `AGENTS.md`** — a new "Authoring AI-agent skills" section — since the skills are
-AI-maintained (§13) and `AGENTS.md` is the existing home for boilerplate/codegraft conventions.
+These conventions (the `skills(meta)` config field, `BatiSkill` shape, frontmatter rules, composer routing)
+are **documented in Bati's own `AGENTS.md`** — a new "Authoring AI-agent skills" section — since the skills
+are AI-maintained (§13) and `AGENTS.md` is the existing home for boilerplate/codegraft conventions.
 
 ## 9. Combination handling (resolved)
 
@@ -375,11 +371,14 @@ Still open:
 - [x] Implemented: "AI Agent" `features.ts` category + 5 flags (claude/codex/gemini/cursor/copilot) with
       links; `BatiSet.hasAiAgent` + `aiAgents`; and `ai-agents.ts` (per-agent metadata + `resolveSkillDirs`
       / `resolveInstructionFiles` encoding the §3/§4 rules) with unit tests. Agent icons (`image`) still TODO.
-- [ ] Implement the composer (§8 pipeline) — copy-only first (v1, §12).
-- [ ] Author the v1 skill set (§12) as `skills/` dirs in the relevant boilerplates.
+- [x] Composer implemented (copy-only, v1): `core/src/skills.ts` (`renderSkillMd`, `composeAgentFiles`),
+      `core/src/agents-md.ts` (`buildAgentsMd`), `skills?(meta)` field in `BatiConfig`, wired into the CLI
+      (writes files when `hasAiAgent`). Unit tests + manual e2e verified (AGENTS.md + CLAUDE/GEMINI shims).
+- [ ] Author the v1 skill set (§12) via `skills(meta)` producers in the relevant boilerplates
+      (Vike core + server/RPC/db-orm/auth). **← current**
 - [ ] E2E: assert correct skill / instruction files per flag combo via file-check mode (`mode: "none"`).
-- [ ] Define `SKILL.md` / `AGENTS.md` template conventions (frontmatter, body structure, composition).
 - [ ] Add an "Authoring AI-agent skills" section to Bati's own `AGENTS.md` (AI maintains the skills, §13).
+- [ ] Later: agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate `skills/` dir option (§8).
 
 ---
 
