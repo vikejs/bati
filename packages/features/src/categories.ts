@@ -85,6 +85,13 @@ tailored for Vike.`,
     group: categoriesGroups.Utilities,
     description: `Additional tooling to improve your developer experience.`,
   },
+  {
+    label: "AI Agent",
+    multiple: true,
+    group: categoriesGroups.Utilities,
+    description: `Generate agent skills and instruction files (SKILL.md, AGENTS.md, CLAUDE.md, …) tailored to your
+selected stack, so AI coding agents understand this project's conventions out of the box. Select every agent you use.`,
+  },
 ] as const satisfies ReadonlyArray<Category>;
 
 export type CategoryLabels = (typeof categories)[number]["label"];

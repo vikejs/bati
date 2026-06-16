@@ -747,6 +747,74 @@ export const features = [
       },
     ],
   },
+
+  // AI Agent — generate stack-tailored skills + instruction files for these coding agents.
+  // Destination paths/instruction files per agent live in `ai-agents.ts` (see SKILLS_PLAN.md).
+  {
+    category: "AI Agent",
+    label: "Claude Code",
+    flag: "claude",
+    url: "https://claude.com/claude-code",
+    tagline: "Anthropic's agentic coding tool in your terminal",
+    links: [
+      {
+        label: "Skills docs",
+        href: "https://code.claude.com/docs/en/skills",
+      },
+    ],
+  },
+  {
+    category: "AI Agent",
+    label: "OpenAI Codex",
+    flag: "codex",
+    url: "https://developers.openai.com/codex",
+    tagline: "OpenAI's coding agent",
+    links: [
+      {
+        label: "Skills docs",
+        href: "https://developers.openai.com/codex/skills",
+      },
+    ],
+  },
+  {
+    category: "AI Agent",
+    label: "Gemini CLI",
+    flag: "gemini",
+    url: "https://github.com/google-gemini/gemini-cli",
+    tagline: "Google's open-source AI agent for the terminal",
+    links: [
+      {
+        label: "Repo",
+        href: "https://github.com/google-gemini/gemini-cli",
+      },
+    ],
+  },
+  {
+    category: "AI Agent",
+    label: "Cursor",
+    flag: "cursor",
+    url: "https://cursor.com",
+    tagline: "The AI code editor",
+    links: [
+      {
+        label: "Skills docs",
+        href: "https://cursor.com/docs/skills",
+      },
+    ],
+  },
+  {
+    category: "AI Agent",
+    label: "GitHub Copilot",
+    flag: "copilot",
+    url: "https://github.com/features/copilot",
+    tagline: "AI pair programmer",
+    links: [
+      {
+        label: "Agent skills",
+        href: "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      },
+    ],
+  },
 ] as const satisfies ReadonlyArray<Feature<CategoryLabels>>;
 
 export const flags = features.map((f) => f.flag);
