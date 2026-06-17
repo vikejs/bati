@@ -47,7 +47,14 @@ await describeBati(({ test, expect, testMatch }) => {
   });
 
   test("Vike-core skills are always present", () => {
-    for (const name of ["vike-routing", "vike-data-fetching", "vike-config"]) {
+    for (const name of [
+      "vike-routing",
+      "vike-data-fetching",
+      "vike-config",
+      "vike-navigation",
+      "vike-render-modes",
+      "vike-pagecontext",
+    ]) {
       expect(skillExists(name)).toBe(true);
     }
   });

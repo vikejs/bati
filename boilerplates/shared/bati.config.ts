@@ -49,6 +49,39 @@ See https://vike.dev/data.`,
 
 See https://vike.dev/config.`,
       },
+      {
+        name: "vike-navigation",
+        description:
+          "How to navigate between pages in this Vike app. Use when adding links, redirecting, navigating programmatically, or prefetching.",
+        body: `- **Links:** plain \`<a href="/...">\` works — Vike intercepts it for client-side navigation. Highlight the active link by comparing \`pageContext.urlPathname\` (see the \`vike-pagecontext\` skill).
+- **Programmatic:** \`import { navigate } from "vike/client/router"\`, then \`await navigate("/path", { keepScrollPosition })\`.
+- **Redirect:** in a \`+guard.ts\` or \`+data.ts\`, \`import { redirect } from "vike/abort"\`, then \`throw redirect("/login")\`.
+- **Prefetch:** set \`+prefetchStaticAssets\` to \`"hover"\` / \`"viewport"\` in config, or call \`prefetch("/path")\` from \`vike/client/router\`.
+
+See https://vike.dev/navigate.`,
+      },
+      {
+        name: "vike-render-modes",
+        description:
+          "How rendering modes work in this Vike app (SSR / SSG / SPA / streaming). Use when changing how a page is rendered or pre-rendered.",
+        body: `Set these in a \`+config.ts\` (global under \`pages/\`, or per-route):
+- **\`ssr\`** — \`true\` (default) renders on the server then hydrates; \`false\` makes the page client-only (SPA).
+- **\`prerender\`** — \`true\` builds the page to static HTML at build time (SSG). For parameterized routes (\`/movie/@id\`), add a \`+onBeforePrerenderStart.ts\` returning the list of URLs to pre-render.
+- **\`stream\`** — toggle HTML streaming.
+
+See https://vike.dev/pre-rendering.`,
+      },
+      {
+        name: "vike-pagecontext",
+        description:
+          "How to use pageContext in this Vike app. Use when reading request/route info in a component or passing custom values to the client.",
+        body: `\`pageContext\` carries request + render info — common props: \`routeParams\`, \`urlPathname\` / \`urlParsed\`, \`data\` (from \`+data\`), \`isClientSide\`.
+- **Read it in a component:** \`import { usePageContext } from "${uiPkg}/usePageContext"\`, then \`const pageContext = usePageContext()\`.
+- **Custom values:** set them on \`pageContext\` from a hook (\`+onBeforeRender\` or \`+data\`), and add their names to \`+passToClient\` so they reach the browser.
+- **Types:** \`PageContext\` / \`PageContextServer\` / \`PageContextClient\` from \`vike/types\`.
+
+See https://vike.dev/pageContext.`,
+      },
     ];
   },
 });

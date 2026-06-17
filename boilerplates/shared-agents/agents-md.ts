@@ -29,6 +29,7 @@ Use \`${meta.BATI.pm}\` for package management. See \`package.json\` for the ful
 
 - Respect the selected stack above; prefer its idioms over introducing new libraries.
 - Task-specific how-tos are provided as skills under \`.agents/skills/\` (and \`.claude/skills/\`) — consult them when relevant.
+- This is a Vike app: for anything Vike-specific, fetch https://vike.dev/llms.txt — an LLM-friendly index of the docs.
 - See \`README.md\` for setup and feature-specific notes.`);
 
   return `${sections.join("\n\n")}\n`;

@@ -16,6 +16,7 @@ test("buildAgentsMd — lists the selected stack and commands", () => {
   expect(md).toContain("- **Data fetching:** Telefunc");
   expect(md).toContain("`npm run dev`");
   expect(md).toContain("pages/");
+  expect(md).toContain("https://vike.dev/llms.txt");
   // The agents themselves are not part of the listed stack.
   expect(md).not.toContain("Claude Code");
 });
