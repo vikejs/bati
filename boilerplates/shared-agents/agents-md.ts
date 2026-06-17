@@ -1,16 +1,14 @@
-/**
- * Generator for the canonical `AGENTS.md` body (SKILLS_PLAN.md §3, §6.A).
- *
- * This is the always-loaded project guide an agent reads every session: orientation, dev commands,
- * structure, and a pointer to the deeper skills. It is composed centrally from the resolved
- * `BatiSet` and stays deliberately lean — pointing at `README.md` and upstream docs rather than
- * duplicating volatile detail, to keep it cheap for an AI to maintain (§10).
- */
+import type { VikeMeta } from "@batijs/core/config";
 import { categories, features } from "@batijs/features";
-import type { VikeMeta } from "./types.js";
 
-export function buildAgentsMd(meta: VikeMeta, pmRun: string, hasEnv = false): string {
-  const sections: string[] = [
+/**
+ * The canonical `AGENTS.md` body (SKILLS_PLAN.md §3/§6.A): the always-loaded project guide —
+ * orientation, commands, env, structure — composed from the resolved stack. Kept lean, pointing at
+ * `README.md` and upstream docs rather than duplicating volatile detail.
+ */
+export function buildAgentsMd(meta: VikeMeta, hasEnv: boolean): string {
+  const run = meta.BATI.pmRun;
+  const sections = [
     `# AGENTS.md
 
 Guidance for AI coding agents working in this repository. This is a [Vike](https://vike.dev) app
@@ -18,9 +16,9 @@ scaffolded with [Bati](https://batijs.dev). Match the existing conventions and t
     stackSection(meta),
     `## Commands
 
-- \`${pmRun} dev\` — start the development server
-- \`${pmRun} build\` — build for production
-- \`${pmRun} preview\` — preview the production build
+- \`${run} dev\` — start the development server
+- \`${run} build\` — build for production
+- \`${run} preview\` — preview the production build
 
 Use \`${meta.BATI.pm}\` for package management. See \`package.json\` for the full list of scripts.`,
   ];
@@ -34,6 +32,21 @@ Use \`${meta.BATI.pm}\` for package management. See \`package.json\` for the ful
 - See \`README.md\` for setup and feature-specific notes.`);
 
   return `${sections.join("\n\n")}\n`;
+}
+
+/** Selected features grouped by category (excluding the AI agents themselves), in category order. */
+function stackSection(meta: VikeMeta): string {
+  const byCategory = new Map<string, string[]>();
+  for (const f of features) {
+    if (f.category === "AI Agent" || !meta.BATI.has(f.flag)) continue;
+    byCategory.set(f.category, [...(byCategory.get(f.category) ?? []), f.label]);
+  }
+
+  const lines = categories
+    .filter((c) => byCategory.has(c.label))
+    .map((c) => `- **${c.label}:** ${byCategory.get(c.label)!.join(", ")}`);
+
+  return `## Stack\n\n${lines.join("\n")}`;
 }
 
 function environmentSection(meta: VikeMeta): string {
@@ -50,28 +63,6 @@ function environmentSection(meta: VikeMeta): string {
     );
   }
   return `## Environment\n\n${lines.join("\n")}`;
-}
-
-/** Selected features grouped by category (excluding the AI agents themselves), in category order. */
-function stackSection(meta: VikeMeta): string {
-  const byCategory = new Map<string, string[]>();
-  for (const f of features) {
-    if (f.category === "AI Agent") continue;
-    if (!meta.BATI.has(f.flag)) continue;
-    const list = byCategory.get(f.category) ?? [];
-    list.push(f.label);
-    byCategory.set(f.category, list);
-  }
-
-  const lines: string[] = [];
-  for (const category of categories) {
-    const labels = byCategory.get(category.label);
-    if (labels && labels.length > 0) {
-      lines.push(`- **${category.label}:** ${labels.join(", ")}`);
-    }
-  }
-
-  return `## Stack\n\n${lines.join("\n")}`;
 }
 
 function structureSection(meta: VikeMeta): string {

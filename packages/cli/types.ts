@@ -1,5 +1,5 @@
 import type { VikeMeta } from "@batijs/core";
-import type { BatiConfig } from "@batijs/core/config";
+import type { BatiConfig, HookContext } from "@batijs/core/config";
 
 export interface BoilerplateDef {
   folder: string;
@@ -16,4 +16,4 @@ export interface ToBeCopied extends BoilerplateDef {
   source?: string;
 }
 
-export type Hook = (cwd: string, meta: VikeMeta) => Promise<void> | void;
+export type Hook = (cwd: string, meta: VikeMeta, ctx: HookContext) => Promise<void> | void;

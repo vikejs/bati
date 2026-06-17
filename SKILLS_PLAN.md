@@ -279,7 +279,8 @@ Legend:
 allowedTools? }`), gated on `meta`. Rationale: it needs no new file-discovery in the compile pipeline,
 matches the existing config surface, and suits the **lean, reference-upstream-docs** skills decided in
 §10/§13 (short bodies as inline strings are fine; the dir convention's ergonomic win only matters for long
-prose, which we're deliberately avoiding). Lives in `packages/core/src/skills.ts` (`BatiSkillFactory`).
+prose, which we're deliberately avoiding). The `BatiSkill`/`BatiSkillFactory` types live in
+`@batijs/core/config` (the authoring API, like `EnvRegistry`).
 
 **Deferred option — a `skills/` dir per boilerplate** (sibling to `files/`) with static `SKILL.md` /
 dynamic `$SKILL.md.ts`. Revisit only if skill bodies outgrow inline strings; the composer contract (below)
@@ -289,13 +290,18 @@ wouldn't change, only how content is sourced.
 optional `allowed-tools`. The composer strips/translates fields an agent doesn't support, so one source
 serves all agents and "format portability" is a composer concern, not an authoring one.
 
-**Composer pipeline** (`packages/core/src/skills.ts` + `agents-md.ts`, parallels `env-registry.ts`):
-1. Collect `skills(meta)` from all selected boilerplates (`filteredBoilerplates.flatMap(b => b.config.skills?.(meta))`).
-2. Validate: unique skill `name`s across boilerplates (`composeAgentFiles` throws on collision).
-3. Generate the canonical **`AGENTS.md`** body centrally via `buildAgentsMd(meta, pmRun)` (§6.A).
-4. `composeAgentFiles` writes each skill to the minimal dir set (`resolveSkillDirs`) + the instruction
-   files (`resolveInstructionFiles`): native `AGENTS.md` + `@AGENTS.md` shims. v1 = copy (symlink later, §4).
-5. Skip everything when `!hasAiAgent` (enforced in the CLI + `composeAgentFiles`).
+**Architecture — the `shared-agents` boilerplate.** Mirrors the env-sink split: core owns the
+*declaration* (`skills` field + `BatiSkill`, like `EnvRegistry`); the **`shared-agents` boilerplate** owns
+the *composition + writing* (like `cloudflare/env.ts` owns the wrangler sink). Per-agent path resolution
+(`resolveSkillDirs`/`resolveInstructionFiles`) stays in `@batijs/features`.
+1. **CLI collects** `skills(meta)` from all selected boilerplates (only the CLI sees every one) and passes
+   them — with the env registry — to the `after` hooks via a `HookContext`.
+2. **`shared-agents/hooks/after.ts`** runs only when included (`if: hasAiAgent`), calling `composeAgentFiles`
+   (`boilerplates/shared-agents/compose.ts`) + `buildAgentsMd` (`agents-md.ts`).
+3. `composeAgentFiles` validates unique names (throws on collision), writes each skill to the minimal dir
+   set (`resolveSkillDirs`), and emits the canonical `AGENTS.md` + `@AGENTS.md` shims (`resolveInstructionFiles`).
+   v1 = copy (symlink later, §4).
+4. Nothing is generated when no agent is selected — the boilerplate isn't included, so its hook never runs.
 
 These conventions (the `skills(meta)` config field, `BatiSkill` shape, frontmatter rules, composer routing)
 are **documented in Bati's own `AGENTS.md`** — a new "Authoring AI-agent skills" section — since the skills
@@ -371,9 +377,11 @@ Still open:
 - [x] Implemented: "AI Agent" `features.ts` category + 5 flags (claude/codex/gemini/cursor/copilot) with
       links; `BatiSet.hasAiAgent` + `aiAgents`; and `ai-agents.ts` (per-agent metadata + `resolveSkillDirs`
       / `resolveInstructionFiles` encoding the §3/§4 rules) with unit tests. Agent icons (`image`) still TODO.
-- [x] Composer implemented (copy-only, v1): `core/src/skills.ts` (`renderSkillMd`, `composeAgentFiles`),
-      `core/src/agents-md.ts` (`buildAgentsMd`), `skills?(meta)` field in `BatiConfig`, wired into the CLI
-      (writes files when `hasAiAgent`). Unit tests + manual e2e verified (AGENTS.md + CLAUDE/GEMINI shims).
+- [x] Composer implemented (copy-only, v1) in the **`shared-agents` boilerplate**: `compose.ts`
+      (`renderSkillMd`, `composeAgentFiles`) + `agents-md.ts` (`buildAgentsMd`), written by its
+      `hooks/after.ts`. Core owns only the `skills?(meta)` field + `BatiSkill`/`HookContext` types; the CLI
+      collects skills and passes them via `HookContext`. Pm-command derivation centralized as
+      `BatiSet.pmRun`/`pmExec`/`pmDlx`. Unit tests + e2e verified (AGENTS.md + CLAUDE/GEMINI shims).
 - [x] Authored the v1 skill set (§12) via `skills(meta)` producers: Vike core (shared) + server
       (hono/express/fastify/elysia) + data-fetching (telefunc/trpc/ts-rest) + ORM (drizzle/kysely/prisma,
       engine-aware) + auth (better-auth/authjs/auth0).

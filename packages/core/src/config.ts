@@ -1,10 +1,29 @@
 import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
-import type { EnvRegistryFactory } from "./env-registry.js";
-import type { BatiSkillFactory } from "./skills.js";
+import type { EnvRegistry, EnvRegistryFactory } from "./env-registry.js";
 import type { VikeMeta } from "./types.js";
 
 export type { VikeMeta };
+
+export interface BatiSkill {
+  /** Unique skill name across all boilerplates → `<skills-dir>/<name>/SKILL.md`. */
+  name: string;
+  /** Auto-trigger description: what the skill does and when to use it. */
+  description: string;
+  /** Markdown body, without frontmatter (the composer adds it). */
+  body: string;
+  /** Optional `allowed-tools` frontmatter (Claude/Copilot); ignored by agents that don't support it. */
+  allowedTools?: string[];
+}
+
+/** A feature's skill producer; meta-gating lives here, like `env`. */
+export type BatiSkillFactory = (meta: VikeMeta) => BatiSkill[];
+
+/** Build aggregates passed to `after` hooks alongside `(cwd, meta)`. */
+export interface HookContext {
+  skills: BatiSkill[];
+  env: EnvRegistry;
+}
 
 export interface BatiConfigStep {
   order?: number;

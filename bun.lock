@@ -540,6 +540,17 @@
         "vitest": "^4.1.9",
       },
     },
+    "boilerplates/shared-agents": {
+      "name": "@batijs/shared-agents",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@batijs/compile": "workspace:*",
+        "@batijs/core": "workspace:*",
+        "@batijs/features": "workspace:*",
+        "@types/node": "^20.19.37",
+        "vitest": "^4.1.9",
+      },
+    },
     "boilerplates/shared-db": {
       "name": "@batijs/shared-db",
       "version": "0.0.1",
@@ -1151,6 +1162,8 @@
     "@batijs/shadcn-ui": ["@batijs/shadcn-ui@workspace:boilerplates/shadcn-ui"],
 
     "@batijs/shared": ["@batijs/shared@workspace:boilerplates/shared"],
+
+    "@batijs/shared-agents": ["@batijs/shared-agents@workspace:boilerplates/shared-agents"],
 
     "@batijs/shared-db": ["@batijs/shared-db@workspace:boilerplates/shared-db"],
 

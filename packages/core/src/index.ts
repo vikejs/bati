@@ -1,4 +1,3 @@
-export * from "./agents-md.js";
 export { markEmptyExport, mergeDts } from "./codemods/index.js";
 export * from "./config-codemod.js";
 export * from "./dockerfile.js";
@@ -9,7 +8,6 @@ export * from "./markdown/markdown.js";
 export { setComposeEnvironment } from "./parse/compose-env.js";
 export { type FileContext, transformAndFormat } from "./parse.js";
 export * from "./print.js";
-export * from "./skills.js";
 export * from "./random.js";
 export * from "./runtime.js";
 export type * from "./types.js";
