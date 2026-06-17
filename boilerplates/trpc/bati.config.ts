@@ -14,7 +14,7 @@ export default defineConfig({
         body: `The router lives in \`trpc/server.ts\` (\`appRouter\`); the typed client is \`trpc/client.ts\`. The route is mounted at \`/api/trpc\`.
 
 - **Add a procedure:** add a key to \`appRouter\` in \`trpc/server.ts\` using \`publicProcedure.query(...)\` or \`.mutation(...)\`; add \`.input(...)\` to validate. The exported \`AppRouter\` type flows to the client automatically.
-- **Call it:** from a component, \`import { trpc } from "../trpc/client"\` then \`await trpc.<name>.query(...)\` / \`.mutate(...)\`.
+- **Call it:** import the \`trpc\` client from \`trpc/client.ts\`, then \`await trpc.<name>.query(...)\` / \`.mutate(...)\`.
 - **Server context** (e.g. \`ctx.db\`) is configured via \`initTRPC.context<...>()\` in \`trpc/server.ts\`.
 
 See https://trpc.io/docs.`,
