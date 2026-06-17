@@ -54,6 +54,8 @@ await describeBati(({ test, expect, testMatch }) => {
       "vike-navigation",
       "vike-render-modes",
       "vike-pagecontext",
+      "vike-hooks",
+      "vike-error-pages",
     ]) {
       expect(skillExists(name)).toBe(true);
     }

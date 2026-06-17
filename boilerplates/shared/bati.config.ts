@@ -82,6 +82,32 @@ See https://vike.dev/pre-rendering.`,
 
 See https://vike.dev/pageContext.`,
       },
+      {
+        name: "vike-hooks",
+        description:
+          "The Vike hook system in this app. Use when you need a lifecycle hook — data orchestration, page-transition effects, post-hydration setup, or global init.",
+        body: `Hooks are \`+<name>.ts\` files (or keys in \`+config.ts\`) placed beside a page or globally under \`pages/\`. App-level hooks:
+- **\`+onBeforeRender\`** (server) — advanced data orchestration; can set any \`pageContext\` prop.
+- **\`+onPageTransitionStart\` / \`+onPageTransitionEnd\`** (client) — run around client-side navigation (e.g. a loading indicator); \`pageContext.isBackwardNavigation\` is available.
+- **\`+onHydrationEnd\`** (client) — runs once after the first page hydrates; good for third-party / DOM-only init.
+- **\`+onCreateGlobalContext\`** (server & client) — runs once when the global context is created; global / auth / store init.
+- \`+data\` and \`+guard\` are the common data/auth hooks (see the \`vike-data-fetching\` skill); \`+onBeforePrerenderStart\` lists URLs for SSG (see \`vike-render-modes\`).
+- \`+onRenderHtml\` / \`+onRenderClient\` / \`+onCreateApp\` are provided by \`${uiPkg}\` — you rarely write these.
+
+See https://vike.dev/hooks.`,
+      },
+      {
+        name: "vike-error-pages",
+        description:
+          "How error pages work in this Vike app. Use when handling 404s, access errors, or rendering an error page by status code.",
+        body: `The error page is \`pages/_error/${pageFile}\` — Vike renders it for 404s and uncaught errors.
+- **Trigger it:** \`import { render } from "vike/abort"\`, then \`throw render(404)\` (or \`401\` / \`403\` / \`500\`), optionally \`throw render(403, "Forbidden")\` to pass a reason. Use \`throw redirect("/login")\` (from \`vike/abort\`) to redirect instead.
+- **Read the error** in \`_error\`: \`const { abortStatusCode, abortReason, is404 } = usePageContext()\` (from \`${uiPkg}/usePageContext\`).
+- **Custom reason type:** augment \`Vike.PageContext\` with \`abortReason\` in a \`.d.ts\`.
+- Pre-rendering emits the error page as \`dist/client/404.html\`.
+
+See https://vike.dev/error-page.`,
+      },
     ];
   },
 });
