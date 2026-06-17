@@ -21,8 +21,7 @@ export default defineConfig({
   },
   // Raw DB-engine skill (SKILLS_PLAN.md §6.H) — only emitted when no ORM is selected (see `if`).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     return [
       {
         name: "database",

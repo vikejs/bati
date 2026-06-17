@@ -26,6 +26,39 @@ export class BatiSet extends Set<Flags> {
     return false;
   }
 
+  /** Prefix to run a package.json script (`npm run`, `pnpm`, `yarn`, `bun run`). */
+  get pmRun(): string {
+    return this.pm === "pnpm" || this.pm === "yarn" ? this.pm : `${this.pm} run`;
+  }
+
+  /** Prefix to run an installed dependency's binary (`npx`, `pnpm exec`, `yarn`, `bunx`). */
+  get pmExec(): string {
+    switch (this.pm) {
+      case "pnpm":
+        return "pnpm exec";
+      case "yarn":
+        return "yarn";
+      case "bun":
+        return "bunx";
+      default:
+        return "npx";
+    }
+  }
+
+  /** Prefix to fetch-and-run a package's binary, for `@latest` (`npx`, `pnpm dlx`, `yarn dlx`, `bunx`). */
+  get pmDlx(): string {
+    switch (this.pm) {
+      case "pnpm":
+        return "pnpm dlx";
+      case "yarn":
+        return "yarn dlx";
+      case "bun":
+        return "bunx";
+      default:
+        return "npx";
+    }
+  }
+
   get hasServer(): boolean {
     return this.hasOneOf(this.#servers);
   }

@@ -8,8 +8,7 @@ export default defineConfig({
   // Raw DB-engine skill (SKILLS_PLAN.md §6.H) — Cloudflare D1, no ORM (the sqlite boilerplate's
   // 'database' skill is off-Cloudflare, so D1 needs its own).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     return [
       {
         name: "database",

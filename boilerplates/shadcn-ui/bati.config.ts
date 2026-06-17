@@ -6,8 +6,7 @@ export default defineConfig({
   },
   // UI component library skill (SKILLS_PLAN.md §6.E).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const exec = pm === "pnpm" ? "pnpm dlx" : pm === "yarn" ? "yarn dlx" : pm === "bun" ? "bunx" : "npx";
+    const exec = meta.BATI.pmDlx;
     return [
       {
         name: "shadcn-ui",

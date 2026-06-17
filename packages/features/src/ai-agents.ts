@@ -1,8 +1,6 @@
 import { features, type Flags } from "./features.js";
 
-/**
- * The flags in the "AI Agent" category, kept in sync with `features.ts`.
- */
+/** The flags in the "AI Agent" category, kept in sync with `features.ts`. */
 export type AiAgentFlag = Extract<(typeof features)[number], { category: "AI Agent" }>["flag"];
 
 export const aiAgentFlags = features
@@ -10,24 +8,18 @@ export const aiAgentFlags = features
   .map((f) => f.flag);
 
 export interface AiAgentMeta {
-  /**
-   * Project directory this agent reads skills from. `.agents/skills` is the cross-tool standard
-   * read natively by Codex, Gemini, Cursor and Copilot; only Claude is limited to `.claude/skills`.
-   */
+  /** Project dir this agent reads skills from. */
   skillsDir: string;
   /** Project instruction file this agent reads. */
   instructionFile: string;
-  /**
-   * When set, the instruction file is a one-line import of the canonical `AGENTS.md`
-   * (e.g. `@AGENTS.md`). When `null`, the agent reads `AGENTS.md` natively.
-   */
+  /** One-line `@AGENTS.md` import for agents that can't read AGENTS.md natively; `null` otherwise. */
   instructionImport: string | null;
 }
 
 /**
- * Per-agent skill + instruction-file targets, verified against each agent's official docs
- * (see SKILLS_PLAN.md §15). The two agents that don't read `AGENTS.md` natively — Claude and
- * Gemini — are exactly the two that support an `@`-import, so a one-line shim covers them.
+ * Per-agent skill + instruction-file targets, verified against each agent's docs (SKILLS_PLAN.md §15):
+ * `.agents/skills` is the cross-tool standard (Codex/Gemini/Cursor/Copilot), only Claude needs
+ * `.claude/skills`; AGENTS.md is native everywhere except Claude and Gemini, which take an `@`-import.
  */
 export const aiAgents = {
   claude: { skillsDir: ".claude/skills", instructionFile: "CLAUDE.md", instructionImport: "@AGENTS.md" },
@@ -38,44 +30,38 @@ export const aiAgents = {
 } as const satisfies Record<AiAgentFlag, AiAgentMeta>;
 
 /**
- * Minimal set of skill directories covering the selected agents (SKILLS_PLAN.md §4):
- * `.agents/skills` for any of Codex/Gemini/Cursor/Copilot, plus `.claude/skills` for Claude.
- * Returns at most two dirs regardless of how many agents are selected.
+ * Minimal set of skill directories covering the selected agents (SKILLS_PLAN.md §4) — at most two:
+ * `.agents/skills` for Codex/Gemini/Cursor/Copilot, `.claude/skills` for Claude.
  */
-export function resolveSkillDirs(selected: Iterable<Flags | string>): string[] {
+export function resolveSkillDirs(selected: Iterable<Flags>): string[] {
   const sel = new Set(selected);
   const dirs = new Set<string>();
   for (const flag of aiAgentFlags) {
-    if (sel.has(flag)) dirs.add(aiAgents[flag as AiAgentFlag].skillsDir);
+    if (sel.has(flag)) dirs.add(aiAgents[flag].skillsDir);
   }
   return [...dirs];
 }
 
 export interface InstructionFileTarget {
-  /** File path relative to the app root, e.g. `AGENTS.md`, `CLAUDE.md`. */
+  /** Path relative to the app root. */
   path: string;
-  /** A one-line import directive when this is a shim; `null` means write the full canonical content here. */
+  /** Import directive for a shim; `null` means write the canonical content here. */
   import: string | null;
 }
 
 /**
- * Instruction files to emit for the selected agents (SKILLS_PLAN.md §3). The canonical `AGENTS.md`
- * is always emitted when any agent is selected (the Claude/Gemini shims import it); the rest read it
- * natively. Deduped by path. Returns `[]` when no agent is selected.
+ * Instruction files for the selected agents (SKILLS_PLAN.md §3): the canonical `AGENTS.md` (always,
+ * since the shims import it) plus each agent's file, deduped. Empty when no agent is selected.
  */
-export function resolveInstructionFiles(selected: Iterable<Flags | string>): InstructionFileTarget[] {
+export function resolveInstructionFiles(selected: Iterable<Flags>): InstructionFileTarget[] {
   const sel = new Set(selected);
   if (!aiAgentFlags.some((flag) => sel.has(flag))) return [];
 
-  const byPath = new Map<string, InstructionFileTarget>();
-  // Canonical instruction content always lives in AGENTS.md — the shims point at it.
-  byPath.set("AGENTS.md", { path: "AGENTS.md", import: null });
+  const byPath = new Map<string, InstructionFileTarget>([["AGENTS.md", { path: "AGENTS.md", import: null }]]);
   for (const flag of aiAgentFlags) {
     if (!sel.has(flag)) continue;
-    const { instructionFile, instructionImport } = aiAgents[flag as AiAgentFlag];
-    if (!byPath.has(instructionFile)) {
-      byPath.set(instructionFile, { path: instructionFile, import: instructionImport });
-    }
+    const { instructionFile, instructionImport } = aiAgents[flag];
+    byPath.set(instructionFile, { path: instructionFile, import: instructionImport });
   }
   return [...byPath.values()];
 }

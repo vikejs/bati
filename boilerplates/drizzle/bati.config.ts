@@ -24,8 +24,7 @@ export default defineConfig({
   },
   // ORM skill (SKILLS_PLAN.md §6.I) — dynamic on the selected engine (§9).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     const engine = meta.BATI.has("postgres") ? "PostgreSQL" : meta.BATI.hasD1 ? "Cloudflare D1 (SQLite)" : "SQLite";
     const apply = meta.BATI.hasD1
       ? "wrangler d1 migrations apply MY_VIKE_DEMO_DATABASE --local"

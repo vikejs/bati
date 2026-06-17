@@ -9,8 +9,7 @@ export default defineConfig({
   },
   // Formatter skill (SKILLS_PLAN.md §6.L).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const exec = pm === "pnpm" ? "pnpm exec" : pm === "yarn" ? "yarn" : pm === "bun" ? "bunx" : "npx";
+    const exec = meta.BATI.pmExec;
     return [
       {
         name: "prettier",

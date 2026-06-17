@@ -14,8 +14,7 @@ export default defineConfig({
   },
   // Linter skill (SKILLS_PLAN.md §6.L).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     return [
       {
         name: "oxlint",

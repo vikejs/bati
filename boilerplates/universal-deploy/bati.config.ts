@@ -8,8 +8,7 @@ export default defineConfig({
   // (cloudflare/vercel/…) emit their own 'deploy' skill, so this stays empty there to avoid a clash.
   skills(meta) {
     if (!meta.BATI.has("hosting-diy")) return [];
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     const serverNote = meta.BATI.hasServer
       ? "runs as a Node server (the `prod` script boots it)"
       : "served as static assets";

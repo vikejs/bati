@@ -33,10 +33,9 @@ export default defineConfig({
   },
   // ORM skill (SKILLS_PLAN.md §6.I) — dynamic on the selected engine (§9).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     // `prisma init` / `prisma migrate dev` run the CLI binary (not a package.json script) → use exec.
-    const exec = pm === "pnpm" ? "pnpm exec" : pm === "yarn" ? "yarn" : pm === "bun" ? "bunx" : "npx";
+    const exec = meta.BATI.pmExec;
     const provider = meta.BATI.has("postgres") ? "postgresql" : "sqlite";
     return [
       {

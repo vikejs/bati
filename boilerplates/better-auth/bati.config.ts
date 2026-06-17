@@ -50,8 +50,7 @@ export default defineConfig({
   },
   // Auth skill (SKILLS_PLAN.md §6.J).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     const tablesNote = meta.BATI.has("drizzle")
       ? "they're created by Drizzle's migrate flow"
       : meta.BATI.hasD1

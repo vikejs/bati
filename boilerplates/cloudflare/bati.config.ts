@@ -19,8 +19,7 @@ export default defineConfig({
   },
   // Deploy skill (SKILLS_PLAN.md §6.K).
   skills(meta) {
-    const pm = meta.BATI.pm;
-    const run = pm === "pnpm" || pm === "yarn" ? pm : `${pm} run`;
+    const run = meta.BATI.pmRun;
     const d1Note = meta.BATI.hasD1
       ? " D1 is bound as `DB`; apply migrations with `wrangler d1 migrations apply`."
       : "";
