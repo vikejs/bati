@@ -387,8 +387,12 @@ Still open:
       (cloudflare/vercel/netlify/aws/docker/dokploy/edgeone/self-host), analytics (plausible/google),
       error tracking (sentry), tooling (storybook), and raw DB engine (sqlite/postgres). E2E extended to
       cover styling/deploy/analytics.
+- [x] Audit pass (coverage + accuracy): closed two gaps — raw-D1 `database` skill (d1-sqlite) and the
+      `AGENTS.md` Environment section — and two accuracy fixes (prisma CLI exec form; trpc client import).
+      Verified all other command/path references resolve to real scripts/files.
 - [ ] Still later (optional): agent icons (`image`), symlink optimization (§4, v1.1), per-boilerplate
       `skills/` dir option (§8). Disabled features (segment, logrocket) are intentionally skipped.
+      Demo-only `db-todo-demo` skill (shared-db/shared-todo) intentionally omitted (low value).
 
 ---
 
