@@ -652,7 +652,7 @@ async function run() {
       // (gated on hasAiAgent; written before gitInit so they land in the initial commit).
       if (meta.BATI.hasAiAgent) {
         const skills = filteredBoilerplates.flatMap((b) => b.config.skills?.(meta) ?? []);
-        const agentFiles = composeAgentFiles(meta, skills, buildAgentsMd(meta, pm.run));
+        const agentFiles = composeAgentFiles(meta, skills, buildAgentsMd(meta, pm.run, env.length > 0));
         for (const file of agentFiles) {
           const dest = join(args.project, file.path);
           await mkdir(dirname(dest), { recursive: true });

@@ -29,3 +29,16 @@ test("buildAgentsMd — server/db structure lines are conditional", () => {
   expect(full).toContain("the server entry boots Vike");
   expect(full).toContain("Database access");
 });
+
+test("buildAgentsMd — Environment section only when hasEnv", () => {
+  expect(buildAgentsMd(meta(["react"]), "npm run")).not.toContain("## Environment");
+
+  const withEnv = buildAgentsMd(meta(["react", "hono", "drizzle", "sqlite"]), "npm run", true);
+  expect(withEnv).toContain("## Environment");
+  expect(withEnv).toContain("PUBLIC_ENV__");
+  expect(withEnv).toContain("`.env`");
+
+  // Cloudflare keeps vars in wrangler.jsonc, not .env secrets.
+  const cf = buildAgentsMd(meta(["react", "hono", "cloudflare", "sqlite"]), "npm run", true);
+  expect(cf).toContain("wrangler secret put");
+});

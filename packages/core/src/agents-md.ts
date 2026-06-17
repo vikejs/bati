@@ -9,7 +9,7 @@
 import { categories, features } from "@batijs/features";
 import type { VikeMeta } from "./types.js";
 
-export function buildAgentsMd(meta: VikeMeta, pmRun: string): string {
+export function buildAgentsMd(meta: VikeMeta, pmRun: string, hasEnv = false): string {
   const sections: string[] = [
     `# AGENTS.md
 
@@ -23,15 +23,33 @@ scaffolded with [Bati](https://batijs.dev). Match the existing conventions and t
 - \`${pmRun} preview\` — preview the production build
 
 Use \`${meta.BATI.pm}\` for package management. See \`package.json\` for the full list of scripts.`,
-    structureSection(meta),
-    `## Notes for agents
+  ];
+
+  if (hasEnv) sections.push(environmentSection(meta));
+  sections.push(structureSection(meta));
+  sections.push(`## Notes for agents
 
 - Respect the selected stack above; prefer its idioms over introducing new libraries.
 - Task-specific how-tos are provided as skills under \`.agents/skills/\` (and \`.claude/skills/\`) — consult them when relevant.
-- See \`README.md\` for setup and feature-specific notes.`,
-  ];
+- See \`README.md\` for setup and feature-specific notes.`);
 
   return `${sections.join("\n\n")}\n`;
+}
+
+function environmentSection(meta: VikeMeta): string {
+  const lines = [
+    "- Client/build-time vars use the `PUBLIC_ENV__*` prefix (read via `import.meta.env`); everything else is server-only.",
+  ];
+  if (meta.BATI.hasDotEnvSecrets) {
+    lines.unshift(
+      "- Environment variables are configured in `.env` (dev defaults are committed there); keep real secrets out of version control.",
+    );
+  } else {
+    lines.unshift(
+      "- Non-secret vars live in `wrangler.jsonc` (`vars`); set secrets with `wrangler secret put <NAME>`. `.env` holds public/dev values only.",
+    );
+  }
+  return `## Environment\n\n${lines.join("\n")}`;
 }
 
 /** Selected features grouped by category (excluding the AI agents themselves), in category order. */
