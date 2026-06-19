@@ -62,7 +62,13 @@ function stackSection(meta: VikeMeta): string {
 
   const lines = categories
     .filter((c) => byCategory.has(c.label))
-    .map((c) => `- **${c.label}:** ${byCategory.get(c.label)!.join(", ")}`);
+    .map(
+      (c) =>
+        `- **${c.label}:** ${
+          // biome-ignore lint/style/noNonNullAssertion: byCategory.has(c.label) above
+          byCategory.get(c.label)!.join(", ")
+        }`,
+    );
 
   return `## Stack\n\n${lines.join("\n")}`;
 }
@@ -92,7 +98,9 @@ function structureSection(meta: VikeMeta): string {
     lines.push("- The app runs behind a server; the server entry boots Vike (see the `dev` script in `package.json`).");
   }
   if (meta.BATI.hasDatabase || meta.BATI.hasOrm) {
-    lines.push("- Database access lives in the project's db modules; check the schema/migration files and `package.json`.");
+    lines.push(
+      "- Database access lives in the project's db modules; check the schema/migration files and `package.json`.",
+    );
   }
   return `## Project structure\n\n${lines.join("\n")}`;
 }

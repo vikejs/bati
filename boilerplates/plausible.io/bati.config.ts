@@ -9,8 +9,7 @@ export default defineConfig({
     return [
       {
         name: "analytics",
-        description:
-          "How analytics works in this app (Plausible). Use when configuring analytics or tracking events.",
+        description: "How analytics works in this app (Plausible). Use when configuring analytics or tracking events.",
         body: `Plausible analytics. The tracking script lives in \`pages/+Head.*\`.
 
 - **Configure:** set the \`data-domain\` attribute on the Plausible \`<script>\` to your domain.

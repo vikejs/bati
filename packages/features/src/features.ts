@@ -778,7 +778,7 @@ export const features = [
   // Destination paths/instruction files per agent live in `ai-agents.ts` (see SKILLS_PLAN.md).
   {
     category: "AI Agent",
-    label: "Claude Code",
+    label: "Claude",
     flag: "claude",
     url: "https://claude.com/claude-code",
     tagline: "Anthropic's agentic coding tool in your terminal",
@@ -791,7 +791,7 @@ export const features = [
   },
   {
     category: "AI Agent",
-    label: "OpenAI Codex",
+    label: "Codex",
     flag: "codex",
     url: "https://developers.openai.com/codex",
     tagline: "OpenAI's coding agent",
@@ -804,7 +804,7 @@ export const features = [
   },
   {
     category: "AI Agent",
-    label: "Gemini CLI",
+    label: "Gemini",
     flag: "gemini",
     url: "https://github.com/google-gemini/gemini-cli",
     tagline: "Google's open-source AI agent for the terminal",
@@ -830,7 +830,7 @@ export const features = [
   },
   {
     category: "AI Agent",
-    label: "GitHub Copilot",
+    label: "Copilot",
     flag: "copilot",
     url: "https://github.com/features/copilot",
     tagline: "AI pair programmer",

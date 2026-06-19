@@ -40,57 +40,60 @@ function skillExists(name: string): boolean {
   return exists(".agents", "skills", name, "SKILL.md") || exists(".claude", "skills", name, "SKILL.md");
 }
 
-await describeBati(({ test, expect, testMatch }) => {
-  test("AGENTS.md is generated with the stack", () => {
-    expect(exists("AGENTS.md")).toBe(true);
-    expect(read("AGENTS.md")).toContain("## Stack");
-  });
+await describeBati(
+  ({ test, expect, testMatch }) => {
+    test("AGENTS.md is generated with the stack", () => {
+      expect(exists("AGENTS.md")).toBe(true);
+      expect(read("AGENTS.md")).toContain("## Stack");
+    });
 
-  test("Vike-core skills are always present", () => {
-    for (const name of [
-      "vike-routing",
-      "vike-data-fetching",
-      "vike-config",
-      "vike-navigation",
-      "vike-render-modes",
-      "vike-pagecontext",
-      "vike-hooks",
-      "vike-error-pages",
-    ]) {
-      expect(skillExists(name)).toBe(true);
-    }
-  });
+    test("Vike-core skills are always present", () => {
+      for (const name of [
+        "vike-routing",
+        "vike-data-fetching",
+        "vike-config",
+        "vike-navigation",
+        "vike-render-modes",
+        "vike-pagecontext",
+        "vike-hooks",
+        "vike-error-pages",
+      ]) {
+        expect(skillExists(name)).toBe(true);
+      }
+    });
 
-  // The instruction-file shim per agent (SKILLS_PLAN §3).
-  testMatch<TestFlags>("instruction shim", {
-    claude: () => {
-      expect(read("CLAUDE.md").trim()).toBe("@AGENTS.md");
-      expect(exists(".claude", "skills", "vike-routing", "SKILL.md")).toBe(true);
-    },
-    gemini: () => {
-      expect(read("GEMINI.md").trim()).toBe("@./AGENTS.md");
-      expect(exists(".agents", "skills", "vike-routing", "SKILL.md")).toBe(true);
-    },
-    _: () => {},
-  });
+    // The instruction-file shim per agent (SKILLS_PLAN §3).
+    testMatch<TestFlags>("instruction shim", {
+      claude: () => {
+        expect(read("CLAUDE.md").trim()).toBe("@AGENTS.md");
+        expect(exists(".claude", "skills", "vike-routing", "SKILL.md")).toBe(true);
+      },
+      gemini: () => {
+        expect(read("GEMINI.md").trim()).toBe("@./AGENTS.md");
+        expect(exists(".agents", "skills", "vike-routing", "SKILL.md")).toBe(true);
+      },
+      _: () => {},
+    });
 
-  // Backend feature skills (only the trpc/drizzle combo).
-  testMatch<TestFlags>("backend skills", {
-    drizzle: () => {
-      expect(skillExists("server")).toBe(true);
-      expect(skillExists("trpc")).toBe(true);
-      expect(read(".agents", "skills", "drizzle", "SKILL.md")).toContain("Drizzle ORM on SQLite");
-    },
-    _: () => {},
-  });
+    // Backend feature skills (only the trpc/drizzle combo).
+    testMatch<TestFlags>("backend skills", {
+      drizzle: () => {
+        expect(skillExists("server")).toBe(true);
+        expect(skillExists("trpc")).toBe(true);
+        expect(read(".agents", "skills", "drizzle", "SKILL.md")).toContain("Drizzle ORM on SQLite");
+      },
+      _: () => {},
+    });
 
-  // Long-tail feature skills (only the tailwind/vercel/plausible combo).
-  testMatch<TestFlags>("frontend + deploy skills", {
-    tailwindcss: () => {
-      expect(skillExists("styling")).toBe(true);
-      expect(skillExists("deploy")).toBe(true);
-      expect(skillExists("analytics")).toBe(true);
-    },
-    _: () => {},
-  });
-}, { mode: "none" });
+    // Long-tail feature skills (only the tailwind/vercel/plausible combo).
+    testMatch<TestFlags>("frontend + deploy skills", {
+      tailwindcss: () => {
+        expect(skillExists("styling")).toBe(true);
+        expect(skillExists("deploy")).toBe(true);
+        expect(skillExists("analytics")).toBe(true);
+      },
+      _: () => {},
+    });
+  },
+  { mode: "none" },
+);

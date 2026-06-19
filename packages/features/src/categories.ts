@@ -64,6 +64,13 @@ PostgreSQL targets a Postgres server. Selected on its own you get a thin client;
     required: true,
   },
   {
+    label: "AI Agent",
+    multiple: true,
+    group: categoriesGroups.Utilities,
+    description: `Generate agent skills and instruction files (SKILL.md, AGENTS.md, CLAUDE.md, …) tailored to your
+selected stack, so AI coding agents understand this project's conventions out of the box. Select every agent you use.`,
+  },
+  {
     label: "Linter",
     multiple: true,
     group: categoriesGroups.Utilities,
@@ -84,13 +91,6 @@ tailored for Vike.`,
     label: "Tooling",
     group: categoriesGroups.Utilities,
     description: `Additional tooling to improve your developer experience.`,
-  },
-  {
-    label: "AI Agent",
-    multiple: true,
-    group: categoriesGroups.Utilities,
-    description: `Generate agent skills and instruction files (SKILL.md, AGENTS.md, CLAUDE.md, …) tailored to your
-selected stack, so AI coding agents understand this project's conventions out of the box. Select every agent you use.`,
   },
 ] as const satisfies ReadonlyArray<Category>;
 

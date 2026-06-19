@@ -33,8 +33,7 @@ export default defineConfig({
     return [
       {
         name: "sentry",
-        description:
-          "How error tracking works in this app (Sentry). Use when capturing errors or configuring Sentry.",
+        description: "How error tracking works in this app (Sentry). Use when capturing errors or configuring Sentry.",
         body: `Sentry error tracking. Browser init is in \`sentry.browser.config.ts\` (using \`${sdk}\`); the \`sentryVitePlugin\` (source maps) is in \`vite.config.ts\`.
 
 - **Configure:** set \`SENTRY_DSN\` + \`PUBLIC_ENV__SENTRY_DSN\` in \`.env\`, and the org/project in \`.env.sentry-build-plugin\`.

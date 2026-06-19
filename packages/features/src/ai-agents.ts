@@ -1,4 +1,4 @@
-import { features, type Flags } from "./features.js";
+import { type Flags, features } from "./features.js";
 
 /** The flags in the "AI Agent" category, kept in sync with `features.ts`. */
 export type AiAgentFlag = Extract<(typeof features)[number], { category: "AI Agent" }>["flag"];
