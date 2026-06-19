@@ -18,6 +18,7 @@ export default defineConfig({
   // Tooling skill (SKILLS_PLAN.md §6.O).
   skills(meta) {
     const run = meta.BATI.pmRun;
+    const ext = meta.BATI.has("vue") ? "ts" : "tsx";
     return [
       {
         name: "storybook",
@@ -25,7 +26,7 @@ export default defineConfig({
         body: `Storybook is configured for component development.
 
 - **Run it:** \`${run} storybook\`.
-- **Add a story:** create a \`*.stories.tsx\` file next to a component, exporting a default \`meta\` and named story exports.
+- **Add a story:** create a \`*.stories.${ext}\` file next to a component, exporting a default \`meta\` and named story exports.
 
 See https://storybook.js.org/docs.`,
       },
