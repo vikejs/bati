@@ -38,13 +38,6 @@ export default function Page() {
           </svg>
         </a>
       </div>
-      <footer class="footer footer-center p-4 bg-base-200 text-base-content">
-        <div class="flex">
-          <a href="https://www.flaticon.com/free-icons/wall" target="_blank" title="wall icons" rel="noopener">
-            Wall icons created by Freepik - Flaticon
-          </a>
-        </div>
-      </footer>
     </>
   );
 }
