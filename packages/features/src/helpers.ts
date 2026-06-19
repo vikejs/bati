@@ -8,6 +8,7 @@ export class BatiSet extends Set<Flags> {
   readonly #servers: Set<Flags>;
   readonly #databases: Set<Flags>;
   readonly #orm: Set<Flags>;
+  readonly #aiAgents: Set<Flags>;
 
   public pm: string;
 
@@ -17,6 +18,7 @@ export class BatiSet extends Set<Flags> {
     this.#servers = new Set(allFeatures.filter((f) => f.category === "Server").map((f) => f.flag as Flags));
     this.#databases = new Set(allFeatures.filter((f) => f.category === "Database").map((f) => f.flag as Flags));
     this.#orm = new Set(allFeatures.filter((f) => f.category === "ORM / Query builder").map((f) => f.flag as Flags));
+    this.#aiAgents = new Set(allFeatures.filter((f) => f.category === "AI Agent").map((f) => f.flag as Flags));
   }
 
   private hasOneOf(a: Set<Flags>) {
@@ -24,8 +26,51 @@ export class BatiSet extends Set<Flags> {
     return false;
   }
 
+  /** Prefix to run a package.json script (`npm run`, `pnpm`, `yarn`, `bun run`). */
+  get pmRun(): string {
+    return this.pm === "pnpm" || this.pm === "yarn" ? this.pm : `${this.pm} run`;
+  }
+
+  /** Prefix to run an installed dependency's binary (`npx`, `pnpm exec`, `yarn`, `bunx`). */
+  get pmExec(): string {
+    switch (this.pm) {
+      case "pnpm":
+        return "pnpm exec";
+      case "yarn":
+        return "yarn";
+      case "bun":
+        return "bunx";
+      default:
+        return "npx";
+    }
+  }
+
+  /** Prefix to fetch-and-run a package's binary, for `@latest` (`npx`, `pnpm dlx`, `yarn dlx`, `bunx`). */
+  get pmDlx(): string {
+    switch (this.pm) {
+      case "pnpm":
+        return "pnpm dlx";
+      case "yarn":
+        return "yarn dlx";
+      case "bun":
+        return "bunx";
+      default:
+        return "npx";
+    }
+  }
+
   get hasServer(): boolean {
     return this.hasOneOf(this.#servers);
+  }
+
+  /** At least one AI coding agent is selected — gates skill / instruction-file generation. */
+  get hasAiAgent(): boolean {
+    return this.hasOneOf(this.#aiAgents);
+  }
+
+  /** The selected AI agent flags (subset of claude/codex/gemini/cursor/copilot), in selection order. */
+  get aiAgents(): Flags[] {
+    return [...this].filter((f) => this.#aiAgents.has(f));
   }
 
   /** A database engine is selected (SQLite or PostgreSQL). */

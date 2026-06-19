@@ -65,7 +65,7 @@ export function FormControl(props: {
                     <div class="flex flex-row flex-wrap gap-2">
                       <For each={fs()}>
                         {(feature) => (
-                          <Tooltip tip={feature.tooltip} class="tooltip-right tooltip-primary">
+                          <Tooltip tip={feature.tooltip} class="lg:tooltip-right tooltip-primary">
                             <button
                               type="button"
                               class="btn btn-sm rounded-md text-nowrap"

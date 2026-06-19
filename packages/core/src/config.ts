@@ -1,9 +1,29 @@
 import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
-import type { EnvRegistryFactory } from "./env-registry.js";
+import type { EnvRegistry, EnvRegistryFactory } from "./env-registry.js";
 import type { VikeMeta } from "./types.js";
 
 export type { VikeMeta };
+
+export interface BatiSkill {
+  /** Unique skill name across all boilerplates → `<skills-dir>/<name>/SKILL.md`. */
+  name: string;
+  /** Auto-trigger description: what the skill does and when to use it. */
+  description: string;
+  /** Markdown body, without frontmatter (the composer adds it). */
+  body: string;
+  /** Optional `allowed-tools` frontmatter (Claude/Copilot); ignored by agents that don't support it. */
+  allowedTools?: string[];
+}
+
+/** A feature's skill producer; meta-gating lives here, like `env`. */
+export type BatiSkillFactory = (meta: VikeMeta) => BatiSkill[];
+
+/** Build aggregates passed to `after` hooks alongside `(cwd, meta)`. */
+export interface HookContext {
+  skills: BatiSkill[];
+  env: EnvRegistry;
+}
 
 export interface BatiConfigStep {
   order?: number;
@@ -27,6 +47,8 @@ export interface BatiConfig {
   env?: EnvRegistryFactory;
   /** Files (relative to the app root) this feature needs in the production runtime; collected by deploy targets like the Dockerfile generator. */
   deploy?: string[] | ((meta: VikeMeta) => string[]);
+  /** Agent skills this feature contributes, gated on `meta` (see {@link BatiSkillFactory}); composed into `.agents/skills` / `.claude/skills` when an AI agent is selected. */
+  skills?: BatiSkillFactory;
 }
 
 // Small helper to provide type inference like Vite's defineConfig
@@ -66,6 +88,9 @@ export function defineConfig<T extends BatiConfig>(config: T): T {
       Array.isArray(config.deploy) || typeof config.deploy === "function",
       `'deploy' must be an array or a function of meta`,
     );
+  }
+  if ("skills" in config) {
+    assert(typeof config.skills === "function", `'skills' must be a function of meta`);
   }
   return config;
 }
