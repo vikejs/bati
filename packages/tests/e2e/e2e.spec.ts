@@ -8,16 +8,10 @@ import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { exec, npmCli } from "@batijs/tests-utils";
 import { beforeAll, describe, expect } from "vitest";
-import { appDir, appUrl, expectHome, flags, mode, runScript, smoke, smokeMode, test, useApp, useAppFor } from "./fixtures.js";
+import { BATI, appDir, appUrl, expectHome, flags, kind, mode, runScript, smoke, smokeMode, test, useApp, useAppFor } from "./fixtures.js";
 
 const server = mode !== "none";
-const hasOrm = ["drizzle", "kysely", "prisma"].some((f) => flags.includes(f));
-const needsSetup =
-  flags.includes("cloudflare") ||
-  flags.includes("drizzle") ||
-  flags.includes("kysely") ||
-  flags.includes("better-auth") ||
-  (!hasOrm && (flags.includes("sqlite") || flags.includes("postgres")));
+const needsSetup = BATI.has("cloudflare") || kind === "data" || kind === "auth";
 
 describe.sequential(flags.join("+"), () => {
   describe(mode, () => {
@@ -57,38 +51,38 @@ describe.sequential(flags.join("+"), () => {
 
 // Tables / worker types must exist before the dev server starts. Match on the tool first.
 async function prepareApp() {
-  if (flags.includes("cloudflare")) await runScript("generate-types");
-  if (flags.includes("drizzle")) {
+  if (BATI.has("cloudflare")) await runScript("generate-types");
+  if (BATI.has("drizzle")) {
     await runScript("drizzle:generate");
     await runScript("drizzle:migrate");
-  } else if (flags.includes("cloudflare") && flags.includes("sqlite")) await runScript("d1:migrate"); // D1 = sqlite on Workers
-  else if (flags.includes("better-auth")) await runScript("better-auth:migrate");
-  else if (flags.includes("kysely")) await runScript("kysely:migrate");
-  else if (flags.includes("sqlite")) await runScript("sqlite:migrate");
-  else if (flags.includes("postgres")) await runScript("postgres:migrate");
+  } else if (kind === "auth" && BATI.has("better-auth")) await runScript(BATI.has("cloudflare") ? "d1:migrate" : "better-auth:migrate");
+  else if (BATI.hasD1) await runScript("d1:migrate");
+  else if (BATI.has("kysely")) await runScript("kysely:migrate");
+  else if (BATI.has("sqlite")) await runScript("sqlite:migrate");
+  else if (BATI.has("postgres")) await runScript("postgres:migrate");
 }
 
 function uiLibraries() {
-  test.runIf(flags.includes("compiled-css"))("ui: @compiled/react", async () => {
+  test.runIf(BATI.has("compiled-css"))("ui: @compiled/react", async () => {
     expect(await readFile("package.json", "utf-8")).toContain("@compiled/react");
   });
-  test.runIf(flags.includes("mantine"))("ui: @mantine/core styles", async () => {
+  test.runIf(BATI.has("mantine"))("ui: @mantine/core styles", async () => {
     expect(await readFile("pages/+Layout.tsx", "utf-8")).toContain("@mantine/core/styles.css");
   });
 }
 
 function css() {
-  test.runIf(flags.includes("daisyui"))("css: tailwind.css includes daisyui", async () => {
+  test.runIf(BATI.has("daisyui"))("css: tailwind.css includes daisyui", async () => {
     expect(await readFile("pages/tailwind.css", "utf-8")).toContain("daisyui");
   });
-  test.runIf(flags.includes("tailwindcss") && !flags.includes("daisyui"))("css: tailwind.css without daisyui", async () => {
+  test.runIf(BATI.has("tailwindcss") && !BATI.has("daisyui"))("css: tailwind.css without daisyui", async () => {
     expect(await readFile("pages/tailwind.css", "utf-8")).not.toContain("daisyui");
   });
 }
 
 function sentry() {
-  if (!flags.includes("sentry")) return;
-  const fw = (f: string) => flags.includes(f);
+  if (!BATI.has("sentry")) return;
+  const fw = (f: string) => BATI.has(f);
 
   test("sentry: pages/+client.ts by framework", () => {
     expect(existsSync("pages/+client.ts")).toBe(!fw("vue"));
@@ -126,7 +120,7 @@ function sentry() {
 }
 
 function storybook() {
-  if (!flags.includes("storybook")) return;
+  if (!BATI.has("storybook")) return;
   test("storybook: config file", () => {
     expect(["ts", "js", "mjs", "cjs"].some((e) => existsSync(`.storybook/main.${e}`))).toBe(true);
   });
@@ -138,8 +132,7 @@ function storybook() {
 }
 
 function skills() {
-  const agent = ["claude", "codex", "gemini", "cursor"].some((f) => flags.includes(f));
-  if (!agent) return;
+  if (!BATI.hasAiAgent) return;
   const has = (name: string) =>
     existsSync(join(".agents", "skills", name, "SKILL.md")) || existsSync(join(".claude", "skills", name, "SKILL.md"));
 
@@ -150,49 +143,49 @@ function skills() {
     const core = ["vike-routing", "vike-data-fetching", "vike-config", "vike-navigation", "vike-render-modes", "vike-pagecontext", "vike-hooks", "vike-error-pages"];
     for (const name of core) expect(has(name), name).toBe(true);
   });
-  test.runIf(flags.includes("claude"))("skills: claude shim", () => {
+  test.runIf(BATI.has("claude"))("skills: claude shim", () => {
     expect(readFileSync("CLAUDE.md", "utf-8")).toContain("@AGENTS.md");
     expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
   });
-  test.runIf(flags.includes("gemini"))("skills: gemini shim", () => {
+  test.runIf(BATI.has("gemini"))("skills: gemini shim", () => {
     expect(readFileSync("GEMINI.md", "utf-8")).toContain("@./AGENTS.md");
     expect(existsSync(join(".agents", "skills", "vike-routing", "SKILL.md"))).toBe(true);
   });
-  test.runIf(flags.includes("drizzle"))("skills: backend skills", () => {
+  test.runIf(BATI.has("drizzle"))("skills: backend skills", () => {
     expect(has("server") && has("trpc")).toBe(true);
     expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain("Drizzle ORM on SQLite");
   });
-  test.runIf(flags.includes("tailwindcss"))("skills: frontend skills", () => {
+  test.runIf(BATI.has("tailwindcss"))("skills: frontend skills", () => {
     expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
   });
 }
 
 function linterComments() {
   const onlyLinter = (l: string) =>
-    flags.includes(l) && ["eslint", "biome", "oxlint"].filter((x) => flags.includes(x)).length === 1;
+    BATI.has(l) && ["eslint", "biome", "oxlint"].filter((x) => BATI.has(x)).length === 1;
   test.runIf(onlyLinter("eslint"))("no biome/oxlint directives", () => assertAbsent("biome-", "oxlint-"));
   test.runIf(onlyLinter("biome"))("no eslint directives", () => assertAbsent("eslint-"));
   test.runIf(onlyLinter("oxlint"))("no biome directives", () => assertAbsent("biome-"));
 }
 
 function prismaTodo() {
-  test.runIf(flags.includes("prisma"))("prisma: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
+  test.runIf(BATI.has("prisma"))("prisma: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
 }
 
 function dokployArtifacts() {
-  if (!flags.includes("dokploy")) return;
+  if (!BATI.has("dokploy")) return;
   const compose = () => readFileSync(join(appDir, "docker-compose.yml"), "utf8");
   test("dokploy: Dockerfile", () => expect(existsSync(join(appDir, "Dockerfile"))).toBe(true));
   test("dokploy: docker-compose serves on 3000", () => {
     expect(compose()).toContain("Dockerfile");
     expect(compose()).toContain("3000");
   });
-  test.runIf(flags.includes("drizzle"))("dokploy: compose passes DATABASE_URL", () => expect(compose()).toContain("DATABASE_URL"));
-  test.runIf(flags.includes("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () => expect(compose()).toContain("AUTH0_CLIENT_ID"));
+  test.runIf(BATI.has("drizzle"))("dokploy: compose passes DATABASE_URL", () => expect(compose()).toContain("DATABASE_URL"));
+  test.runIf(BATI.has("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () => expect(compose()).toContain("AUTH0_CLIENT_ID"));
 }
 
 function aws() {
-  if (!flags.includes("aws")) return;
+  if (!BATI.has("aws")) return;
   beforeAll(() => {
     if (existsSync(join(appDir, "cdk.out"))) rmSync(join(appDir, "cdk.out"), { recursive: true });
     execSync(`${npmCli} cdk --json --build "${npmCli} run build" synth`, { encoding: "utf8", maxBuffer: 50 * 1024 * 1024, timeout: 90_000, cwd: appDir });
@@ -212,16 +205,16 @@ function aws() {
 }
 
 function analytics() {
-  test.runIf(flags.includes("plausible.io"))("analytics: plausible script", async ({ fetch }) => {
+  test.runIf(BATI.has("plausible.io"))("analytics: plausible script", async ({ fetch }) => {
     const html = await (await fetch("/")).text();
     expect(html).toContain("plausible.io");
     expect(html).not.toContain("googletagmanager");
     expect(existsSync("TODO.md")).toBe(true);
   });
-  test.runIf(flags.includes("google-analytics"))("analytics: google tag", async ({ fetch }) => {
+  test.runIf(BATI.has("google-analytics"))("analytics: google tag", async ({ fetch }) => {
     const html = await (await fetch("/")).text();
     expect(html).not.toContain("plausible.io");
-    if (flags.includes("vue")) {
+    if (BATI.has("vue")) {
       expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(200);
     } else {
       expect(html).toContain("googletagmanager");
@@ -232,11 +225,8 @@ function analytics() {
 }
 
 function dataRoundTrip() {
-  const hasAuth = ["authjs", "auth0", "better-auth"].some((f) => flags.includes(f));
-  const data = ["trpc", "telefunc", "ts-rest"].some((f) => flags.includes(f));
-  const db = ["sqlite", "drizzle", "kysely", "postgres"].some((f) => flags.includes(f));
-  // auth apps carry a db for their own tables but have no todo feature.
-  if (hasAuth || (!data && !db)) return;
+  if (kind !== "data") return;
+  const db = BATI.hasDatabase;
 
   test("todo route", async ({ fetch }) => {
     const res = await fetch("/todo");
@@ -246,15 +236,15 @@ function dataRoundTrip() {
 
   describe.sequential("create a todo", () => {
     const text = "__BATI_TEST_VALUE";
-    test.runIf(flags.includes("telefunc"))("post via telefunc", async ({ fetch }) => {
+    test.runIf(BATI.has("telefunc"))("post via telefunc", async ({ fetch }) => {
       const res = await fetch("/_telefunc", { method: "POST", body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }) });
       expect(res.status).toBe(200);
     });
-    test.runIf(flags.includes("trpc"))("post via trpc", async ({ fetch }) => {
+    test.runIf(BATI.has("trpc"))("post via trpc", async ({ fetch }) => {
       const res = await fetch("/api/trpc/onNewTodo", { method: "POST", body: JSON.stringify(text), headers: { "content-type": "application/json" } });
       expect(res.status).toBe(200);
     });
-    test.runIf(data && !flags.includes("telefunc") && !flags.includes("trpc"))("post via rest", async ({ fetch }) => {
+    test.runIf(!BATI.has("telefunc") && !BATI.has("trpc"))("post via rest", async ({ fetch }) => {
       const res = await fetch("/api/todo/create", { method: "POST", body: JSON.stringify({ text }), headers: { "content-type": "application/json" } });
       expect(res.status).toBe(200);
     });
@@ -262,16 +252,16 @@ function dataRoundTrip() {
       expect(await (await fetch("/todo")).text()).toContain(text);
     });
     test("TODO.md presence", () => {
-      const expected = ["sqlite", "drizzle", "kysely", "postgres", "cloudflare", "dokploy"].some((f) => flags.includes(f));
+      const expected = BATI.hasDatabase || BATI.has("cloudflare") || BATI.has("dokploy");
       expect(existsSync("TODO.md")).toBe(expected);
     });
   });
 }
 
 function auth() {
-  const auth0Untested = flags.includes("auth0") && !process.env.TEST_AUTH0_CLIENT_ID;
-  const betterAuth = flags.includes("better-auth");
-  if (!flags.includes("authjs") && !flags.includes("auth0") && !betterAuth) return;
+  if (kind !== "auth") return;
+  const auth0Untested = BATI.has("auth0") && !process.env.TEST_AUTH0_CLIENT_ID;
+  const betterAuth = BATI.has("better-auth");
 
   // Auth.js / Auth0 ship a built-in signin page; Better Auth ships its own pages.
   test.runIf(!betterAuth && !auth0Untested)("auth: signin page", async ({ fetch }) => {
@@ -307,16 +297,16 @@ function auth() {
 function checks() {
   const TIMEOUT = 120_000;
   const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });
-  test.runIf(flags.includes("eslint"))("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
-  test.runIf(flags.includes("biome"))("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
-  test.runIf(flags.includes("oxlint"))("oxlint", () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."), TIMEOUT);
+  test.runIf(BATI.has("eslint"))("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
+  test.runIf(BATI.has("biome"))("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
+  test.runIf(BATI.has("oxlint"))("oxlint", () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."), TIMEOUT);
   // tsc rejects .ts files importing .vue modules, so storybook+vue has no typecheck (as upstream).
-  test.runIf(!(flags.includes("storybook") && flags.includes("vue")))("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
+  test.runIf(!(BATI.has("storybook") && BATI.has("vue")))("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
   test("knip", () => exec(npmCli, ["x", "knip", "--no-config-hints"], { cwd: appDir, timeout: TIMEOUT, env: { VITE_CJS_IGNORE_WARNING: "1" } }), TIMEOUT);
 }
 
 function cloudflare() {
-  if (!flags.includes("cloudflare")) return;
+  if (kind !== "cloudflare") return;
   test("cloudflare: TODO.md", () => expect(existsSync(join(appDir, "TODO.md"))).toBe(true));
   test("cloudflare: deploy --dry-run", { retry: 3 }, () => runScript("deploy", "--dry-run"));
 }

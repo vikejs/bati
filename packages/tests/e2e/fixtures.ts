@@ -1,3 +1,4 @@
+import { BatiSet, type Flags, features } from "@batijs/features";
 import {
   exec,
   type GlobalContext,
@@ -13,9 +14,12 @@ import { afterAll, beforeAll, expect, inject, test as base } from "vitest";
 import type { Mode } from "./matrix.js";
 
 export const flags = inject("flags");
+// The same semantic feature-query helper the boilerplates use (BATI.hasDatabase, .has(), …).
+export const BATI = new BatiSet(flags as Flags[], features, npmCli);
 export const appDir = inject("appDir");
 export const mode = inject("mode");
-export const smoke = inject("smoke");
+export const kind = inject("kind");
+export const smoke = kind !== undefined; // data/auth/cloudflare combos get a smoke pass
 
 // The built/containerized mode a combo is re-run in after its primary (dev) pass.
 export const smokeMode: Mode = flags.includes("dokploy") ? "docker" : flags.includes("cloudflare") ? "preview" : "prod";

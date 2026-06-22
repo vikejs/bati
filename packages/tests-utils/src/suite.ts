@@ -136,12 +136,19 @@ function cartesian<T>(dims: readonly (readonly T[])[]): T[][] {
   return acc;
 }
 
+export type SuiteMode = "dev" | "prod" | "preview" | "docker" | "none";
+export type SuiteKind = "data" | "auth" | "cloudflare";
+
 export class Suite<Flags extends string = never> {
   /** Phantom type carrier — used to derive a flag union for `testMatch`. */
   declare readonly __flagsType: Flags;
 
   private combos: RawCombo[] = [];
   private constants: string[] = [];
+
+  /** Primary run mode (default "dev") + the optional kind (drives kind-scoped tests + a smoke pass). */
+  runMode?: SuiteMode;
+  suiteKind?: SuiteKind;
 
   /**
    * Cross product of named dimensions. `null` in a dimension list means
@@ -180,6 +187,16 @@ export class Suite<Flags extends string = never> {
   linters<F extends string>(...flags: F[]): Suite<Flags | F> {
     this.constants.push(...flags);
     return this as unknown as Suite<Flags | F>;
+  }
+
+  mode(m: SuiteMode): this {
+    this.runMode = m;
+    return this;
+  }
+
+  kind(k: SuiteKind): this {
+    this.suiteKind = k;
+    return this;
   }
 
   /**

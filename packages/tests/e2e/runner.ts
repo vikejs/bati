@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Balancer, exec, isPostgresAvailable, npmCli } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
-import matrix, { type Mode } from "./matrix.js";
+import matrix, { type Kind, type Mode } from "./matrix.js";
 import { execLocalBati } from "../src/exec-bati.js";
 import { initTmpDir } from "../src/tmp.js";
 import type { GlobalContext } from "../src/types.js";
@@ -18,7 +18,13 @@ const PG_URL = "postgresql://postgres:postgres@localhost:5432/app";
 interface Combo {
   flags: string[];
   mode: Mode;
-  smoke: boolean; // also re-run "/" in the built/containerized mode
+  kind?: Kind; // suite identity; its presence also triggers a smoke pass
+}
+
+// `--list` emits the matrix as JSON for the CI job-per-combo fan-out, then exits.
+if (process.argv.includes("--list")) {
+  process.stdout.write(JSON.stringify(buildCombos().map((c) => ({ flags: c.flags.join(","), name: c.flags.join("--") }))));
+  process.exit(0);
 }
 
 const combos = selectCombos(buildCombos());
@@ -45,7 +51,7 @@ try {
       name: combo.flags.join("--"),
       root: SPEC_ROOT,
       include: ["e2e.spec.ts"],
-      provide: { flags: combo.flags, appDir, mode: combo.mode, smoke: combo.smoke },
+      provide: { flags: combo.flags, appDir, mode: combo.mode, kind: combo.kind },
       testTimeout: 100_000,
     },
   }));
@@ -64,10 +70,10 @@ function buildCombos(): Combo[] {
   const balancer = new Balancer();
   const seen = new Set<string>();
   const combos: Combo[] = [];
-  for (const entry of matrix) {
-    for (const flags of entry.suite.flatten(balancer)) {
-      const combo: Combo = { flags, mode: entry.mode ?? "dev", smoke: entry.smoke ?? false };
-      const key = JSON.stringify([[...flags].sort(), combo.mode, combo.smoke]);
+  for (const s of matrix) {
+    for (const flags of s.flatten(balancer)) {
+      const combo: Combo = { flags, mode: s.runMode ?? "dev", kind: s.suiteKind };
+      const key = JSON.stringify([[...flags].sort(), combo.mode, combo.kind ?? ""]);
       if (!seen.has(key)) {
         seen.add(key);
         combos.push(combo);

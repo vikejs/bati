@@ -1,4 +1,4 @@
-import type { Mode } from "./matrix.js";
+import type { Kind, Mode } from "./matrix.js";
 import "vitest";
 
 // Per-project values passed via `test.provide`, read with `inject(...)` — replaces
@@ -8,6 +8,6 @@ declare module "vitest" {
     flags: string[];
     appDir: string;
     mode: Mode;
-    smoke: boolean;
+    kind: Kind | undefined;
   }
 }
