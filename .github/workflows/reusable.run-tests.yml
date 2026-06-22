@@ -51,6 +51,10 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: bati-dist-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          # upload-artifact roots the archive at the least-common-ancestor of the
+          # uploaded paths (packages/), so its entries are cli/dist, tests-utils/dist,
+          # features/dist — restore them back under packages/, where the harness looks.
+          path: packages
 
       # Generates the app, installs it, migrates, boots, runs every assertion +
       # the smoke pass + lint/typecheck/knip — and starts/stops postgres + docker

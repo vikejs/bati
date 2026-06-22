@@ -6,10 +6,10 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Balancer, exec, isPostgresAvailable, npmCli } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
-import matrix, { type Kind, type Mode } from "./matrix.js";
 import { execLocalBati } from "../src/exec-bati.js";
 import { initTmpDir } from "../src/tmp.js";
 import type { RunnerContext } from "../src/types.js";
+import matrix, { type Kind, type Mode } from "./matrix.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
 const SPEC_ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
@@ -23,7 +23,9 @@ interface Combo {
 
 // `--list` emits the matrix as JSON for the CI job-per-combo fan-out, then exits.
 if (process.argv.includes("--list")) {
-  process.stdout.write(JSON.stringify(buildCombos().map((c) => ({ flags: c.flags.join(","), name: c.flags.join("--") }))));
+  process.stdout.write(
+    JSON.stringify(buildCombos().map((c) => ({ flags: c.flags.join(","), name: c.flags.join("--") }))),
+  );
   process.exit(0);
 }
 
@@ -94,7 +96,11 @@ function selectCombos(all: Combo[]): Combo[] {
 
 async function generateApp(flags: string[]): Promise<string> {
   const appDir = await execLocalBati(context, flags, false);
-  await exec(npmCli, ["install", "--prefer-offline"], { cwd: appDir, timeout: 300_000, stdio: ["ignore", "ignore", "inherit"] });
+  await exec(npmCli, ["install", "--prefer-offline"], {
+    cwd: appDir,
+    timeout: 300_000,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
   return appDir;
 }
 
@@ -103,8 +109,21 @@ async function startPostgres() {
   await stopPostgres();
   await exec(
     "docker",
-    ["run", "-d", "--name", "bati-pg", "-e", "POSTGRES_USER=postgres", "-e", "POSTGRES_PASSWORD=postgres",
-     "-e", "POSTGRES_DB=app", "-p", "5432:5432", "postgres:18-alpine"],
+    [
+      "run",
+      "-d",
+      "--name",
+      "bati-pg",
+      "-e",
+      "POSTGRES_USER=postgres",
+      "-e",
+      "POSTGRES_PASSWORD=postgres",
+      "-e",
+      "POSTGRES_DB=app",
+      "-p",
+      "5432:5432",
+      "postgres:18-alpine",
+    ],
     { timeout: 120_000, stdio: ["ignore", "ignore", "inherit"] },
   );
   for (let i = 0; i < 60; i++) {

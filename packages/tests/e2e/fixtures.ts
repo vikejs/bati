@@ -1,7 +1,7 @@
 import { BatiSet, type Flags, features } from "@batijs/features";
 import {
-  exec,
   type AppContext,
+  exec,
   initPort,
   npmCli,
   runDevServer,
@@ -10,7 +10,7 @@ import {
   stopDockerCompose,
   zx,
 } from "@batijs/tests-utils";
-import { afterAll, beforeAll, expect, inject, test as base } from "vitest";
+import { afterAll, test as base, beforeAll, expect, inject } from "vitest";
 import type { Mode } from "./matrix.js";
 
 export const flags = inject("flags");
@@ -33,6 +33,7 @@ export const appUrl = () => `http://localhost:${ctx.port}`;
 type Fetch = (path: string, init?: RequestInit) => Promise<Response>;
 
 export const test = base.extend<{ fetch: Fetch }>({
+  // biome-ignore lint/correctness/noEmptyPattern: vitest passes fixture deps as the first arg; this fixture needs none
   fetch: ({}, use) => use((path, init) => fetch(path.startsWith("http") ? path : `${appUrl()}${path}`, init)),
 });
 
@@ -56,7 +57,8 @@ async function bootApp(m: Mode) {
   if (m === "none") return; // file-only assertions, no server
   await initPort(ctx);
   if (m === "dev") await runDevServer(ctx);
-  else if (m === "prod") await runProd(ctx); // the generated `prod` script self-builds
+  else if (m === "prod")
+    await runProd(ctx); // the generated `prod` script self-builds
   else if (m === "preview") await runProd(ctx, "preview");
   else if (m === "docker") await runDockerCompose(ctx);
   else m satisfies never;

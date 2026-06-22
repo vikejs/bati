@@ -9,7 +9,21 @@ import { join } from "node:path";
 import type { Flags } from "@batijs/features";
 import { exec, npmCli } from "@batijs/tests-utils";
 import { beforeAll, describe, expect } from "vitest";
-import { BATI, appDir, appUrl, expectHome, flags, kind, mode, runScript, smoke, smokeMode, test, useApp, useAppFor } from "./fixtures.js";
+import {
+  appDir,
+  appUrl,
+  BATI,
+  expectHome,
+  flags,
+  kind,
+  mode,
+  runScript,
+  smoke,
+  smokeMode,
+  test,
+  useApp,
+  useAppFor,
+} from "./fixtures.js";
 
 const server = mode !== "none";
 const needsSetup = BATI.has("cloudflare") || kind === "data" || kind === "auth";
@@ -56,7 +70,8 @@ async function prepareApp() {
   if (BATI.has("drizzle")) {
     await runScript("drizzle:generate");
     await runScript("drizzle:migrate");
-  } else if (kind === "auth" && BATI.has("better-auth")) await runScript(BATI.has("cloudflare") ? "d1:migrate" : "better-auth:migrate");
+  } else if (kind === "auth" && BATI.has("better-auth"))
+    await runScript(BATI.has("cloudflare") ? "d1:migrate" : "better-auth:migrate");
   else if (BATI.hasD1) await runScript("d1:migrate");
   else if (BATI.has("kysely")) await runScript("kysely:migrate");
   else if (BATI.has("sqlite")) await runScript("sqlite:migrate");
@@ -141,7 +156,16 @@ function skills() {
     expect(readFileSync("AGENTS.md", "utf-8")).toContain("## Stack");
   });
   test("skills: vike-core skills present", () => {
-    const core = ["vike-routing", "vike-data-fetching", "vike-config", "vike-navigation", "vike-render-modes", "vike-pagecontext", "vike-hooks", "vike-error-pages"];
+    const core = [
+      "vike-routing",
+      "vike-data-fetching",
+      "vike-config",
+      "vike-navigation",
+      "vike-render-modes",
+      "vike-pagecontext",
+      "vike-hooks",
+      "vike-error-pages",
+    ];
     for (const name of core) expect(has(name), name).toBe(true);
   });
   test.runIf(BATI.has("claude"))("skills: claude shim", () => {
@@ -181,15 +205,24 @@ function dokployArtifacts() {
     expect(compose()).toContain("Dockerfile");
     expect(compose()).toContain("3000");
   });
-  test.runIf(BATI.has("drizzle"))("dokploy: compose passes DATABASE_URL", () => expect(compose()).toContain("DATABASE_URL"));
-  test.runIf(BATI.has("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () => expect(compose()).toContain("AUTH0_CLIENT_ID"));
+  test.runIf(BATI.has("drizzle"))("dokploy: compose passes DATABASE_URL", () =>
+    expect(compose()).toContain("DATABASE_URL"),
+  );
+  test.runIf(BATI.has("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () =>
+    expect(compose()).toContain("AUTH0_CLIENT_ID"),
+  );
 }
 
 function aws() {
   if (!BATI.has("aws")) return;
   beforeAll(() => {
     if (existsSync(join(appDir, "cdk.out"))) rmSync(join(appDir, "cdk.out"), { recursive: true });
-    execSync(`${npmCli} cdk --json --build "${npmCli} run build" synth`, { encoding: "utf8", maxBuffer: 50 * 1024 * 1024, timeout: 90_000, cwd: appDir });
+    execSync(`${npmCli} cdk --json --build "${npmCli} run build" synth`, {
+      encoding: "utf8",
+      maxBuffer: 50 * 1024 * 1024,
+      timeout: 90_000,
+      cwd: appDir,
+    });
   }, 120_000);
 
   test("aws: entry_aws_lambda.ts wired", () => {
@@ -238,15 +271,26 @@ function dataRoundTrip() {
   describe.sequential("create a todo", () => {
     const text = "__BATI_TEST_VALUE";
     test.runIf(BATI.has("telefunc"))("post via telefunc", async ({ fetch }) => {
-      const res = await fetch("/_telefunc", { method: "POST", body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }) });
+      const res = await fetch("/_telefunc", {
+        method: "POST",
+        body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }),
+      });
       expect(res.status).toBe(200);
     });
     test.runIf(BATI.has("trpc"))("post via trpc", async ({ fetch }) => {
-      const res = await fetch("/api/trpc/onNewTodo", { method: "POST", body: JSON.stringify(text), headers: { "content-type": "application/json" } });
+      const res = await fetch("/api/trpc/onNewTodo", {
+        method: "POST",
+        body: JSON.stringify(text),
+        headers: { "content-type": "application/json" },
+      });
       expect(res.status).toBe(200);
     });
     test.runIf(!BATI.has("telefunc") && !BATI.has("trpc"))("post via rest", async ({ fetch }) => {
-      const res = await fetch("/api/todo/create", { method: "POST", body: JSON.stringify({ text }), headers: { "content-type": "application/json" } });
+      const res = await fetch("/api/todo/create", {
+        method: "POST",
+        body: JSON.stringify({ text }),
+        headers: { "content-type": "application/json" },
+      });
       expect(res.status).toBe(200);
     });
     test.runIf(db)("todo is persisted", async ({ fetch }) => {
@@ -300,10 +344,23 @@ function checks() {
   const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });
   test.runIf(BATI.has("eslint"))("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
   test.runIf(BATI.has("biome"))("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
-  test.runIf(BATI.has("oxlint"))("oxlint", () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."), TIMEOUT);
+  test.runIf(BATI.has("oxlint"))(
+    "oxlint",
+    () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."),
+    TIMEOUT,
+  );
   // tsc rejects .ts files importing .vue modules, so storybook+vue has no typecheck (as upstream).
   test.runIf(!(BATI.has("storybook") && BATI.has("vue")))("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
-  test("knip", () => exec(npmCli, ["x", "knip", "--no-config-hints"], { cwd: appDir, timeout: TIMEOUT, env: { VITE_CJS_IGNORE_WARNING: "1" } }), TIMEOUT);
+  test(
+    "knip",
+    () =>
+      exec(npmCli, ["x", "knip", "--no-config-hints"], {
+        cwd: appDir,
+        timeout: TIMEOUT,
+        env: { VITE_CJS_IGNORE_WARNING: "1" },
+      }),
+    TIMEOUT,
+  );
 }
 
 function cloudflare() {
@@ -334,8 +391,8 @@ function requestHandlerAsset(): string {
   const cdkOut = join(appDir, "cdk.out");
   const template = readdirSync(cdkOut).find((f) => f.startsWith("VikeStack-") && f.endsWith(".template.json"));
   expect(template, "synthesized VikeStack template").toBeDefined();
-  // biome-ignore lint/suspicious/noExplicitAny: arbitrary CloudFormation JSON
   let asset: string | undefined;
+  // biome-ignore lint/suspicious/noExplicitAny: arbitrary CloudFormation JSON
   const visit = (node: any) => {
     if (typeof node !== "object" || node === null) return;
     if (node["aws:cdk:path"]?.endsWith("/RequestHandler/Resource")) asset = node["aws:asset:path"];
