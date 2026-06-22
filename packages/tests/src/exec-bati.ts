@@ -1,12 +1,12 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { bunExists, exec } from "@batijs/tests-utils";
-import type { GlobalContext } from "./types.js";
+import type { RunnerContext } from "./types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export async function execLocalBati(context: GlobalContext, flags: string[], monorepo = true) {
+export async function execLocalBati(context: RunnerContext, flags: string[], monorepo = true) {
   const digest = flags.join("--") || "empty";
   const timeout = flags.includes("storybook") ? 120_000 : 30_000;
   // --skip-git prevents git init in generated projects

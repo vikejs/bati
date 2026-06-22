@@ -1,3 +1,3 @@
-export interface GlobalContext {
+export interface RunnerContext {
   tmpdir: string;
 }

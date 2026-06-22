@@ -6,6 +6,7 @@ import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import type { Flags } from "@batijs/features";
 import { exec, npmCli } from "@batijs/tests-utils";
 import { beforeAll, describe, expect } from "vitest";
 import { BATI, appDir, appUrl, expectHome, flags, kind, mode, runScript, smoke, smokeMode, test, useApp, useAppFor } from "./fixtures.js";
@@ -82,7 +83,7 @@ function css() {
 
 function sentry() {
   if (!BATI.has("sentry")) return;
-  const fw = (f: string) => BATI.has(f);
+  const fw = (f: Flags) => BATI.has(f);
 
   test("sentry: pages/+client.ts by framework", () => {
     expect(existsSync("pages/+client.ts")).toBe(!fw("vue"));
@@ -161,8 +162,8 @@ function skills() {
 }
 
 function linterComments() {
-  const onlyLinter = (l: string) =>
-    BATI.has(l) && ["eslint", "biome", "oxlint"].filter((x) => BATI.has(x)).length === 1;
+  const onlyLinter = (l: Flags) =>
+    BATI.has(l) && (["eslint", "biome", "oxlint"] as const).filter((x) => BATI.has(x)).length === 1;
   test.runIf(onlyLinter("eslint"))("no biome/oxlint directives", () => assertAbsent("biome-", "oxlint-"));
   test.runIf(onlyLinter("biome"))("no eslint directives", () => assertAbsent("eslint-"));
   test.runIf(onlyLinter("oxlint"))("no biome directives", () => assertAbsent("biome-"));

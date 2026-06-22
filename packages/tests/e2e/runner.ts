@@ -9,7 +9,7 @@ import { createVitest } from "vitest/node";
 import matrix, { type Kind, type Mode } from "./matrix.js";
 import { execLocalBati } from "../src/exec-bati.js";
 import { initTmpDir } from "../src/tmp.js";
-import type { GlobalContext } from "../src/types.js";
+import type { RunnerContext } from "../src/types.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
 const SPEC_ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
@@ -30,7 +30,7 @@ if (process.argv.includes("--list")) {
 const combos = selectCombos(buildCombos());
 console.log(`[e2e] ${combos.length} combo(s): ${combos.map((c) => c.flags.join("+")).join(", ")}`);
 
-const context: GlobalContext = { tmpdir: "" };
+const context: RunnerContext = { tmpdir: "" };
 await initTmpDir(context);
 
 const hasPostgres = combos.some((c) => c.flags.includes("postgres"));

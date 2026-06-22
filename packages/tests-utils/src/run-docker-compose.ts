@@ -1,9 +1,9 @@
 import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
-import type { GlobalContext } from "./types.js";
+import type { AppContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
-export async function runDockerCompose(context: GlobalContext) {
+export async function runDockerCompose(context: AppContext) {
   // docker compose up -d --build exits once containers are started (detached)
   // We run it synchronously (waiting for the build+start to complete),
   // then wait for the container's HTTP port to become accessible.

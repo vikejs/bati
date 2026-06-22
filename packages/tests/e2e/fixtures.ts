@@ -1,7 +1,7 @@
 import { BatiSet, type Flags, features } from "@batijs/features";
 import {
   exec,
-  type GlobalContext,
+  type AppContext,
   initPort,
   npmCli,
   runDevServer,
@@ -22,11 +22,11 @@ export const kind = inject("kind");
 export const smoke = kind !== undefined; // data/auth/cloudflare combos get a smoke pass
 
 // The built/containerized mode a combo is re-run in after its primary (dev) pass.
-export const smokeMode: Mode = flags.includes("dokploy") ? "docker" : flags.includes("cloudflare") ? "preview" : "prod";
+export const smokeMode: Mode = BATI.has("dokploy") ? "docker" : BATI.has("cloudflare") ? "preview" : "prod";
 
 export const runScript = (...args: string[]) => exec(npmCli, ["run", ...args], { cwd: appDir, timeout: 120_000 });
 
-const ctx: GlobalContext = { port: 0, port_1: 0, server: undefined, flags };
+const ctx: AppContext = { port: 0, server: undefined };
 
 export const appUrl = () => `http://localhost:${ctx.port}`;
 

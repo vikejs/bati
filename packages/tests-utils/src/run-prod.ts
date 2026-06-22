@@ -1,9 +1,9 @@
 import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
-import type { GlobalContext, PrepareOptions } from "./types.js";
+import type { AppContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
-export async function runProd(context: GlobalContext, script?: PrepareOptions["script"]) {
+export async function runProd(context: AppContext, script?: "preview") {
   const cmd = ["run", script ?? "prod", "--port", String(context.port)];
   context.server = exec(npmCli, cmd, {
     env: {

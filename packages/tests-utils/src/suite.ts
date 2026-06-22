@@ -5,8 +5,8 @@
  * picks a single framework per combo with global round-robin balancing so
  * vue / react / solid each get roughly equal coverage across the whole repo.
  *
- * Spec files export a `Suite` as default; the loader calls `flatten(balancer)`
- * to resolve spread markers and produce `string[][]` combos.
+ * `matrix.ts` exports an array of `Suite`s; the runner calls `flatten(balancer)`
+ * on each to resolve spread markers into the final `string[][]` combos.
  */
 
 import { type CategoryLabels, features } from "@batijs/features";
@@ -108,17 +108,6 @@ type Dimension = DimensionValue | readonly DimensionValue[];
 type MatrixSpec = Record<string, Dimension>;
 type CaseSpec = Record<string, DimensionValue | readonly DimensionValue[]>;
 
-// Walks the spec object and yields the string union of every flag it
-// can possibly produce (literal strings + values inside spread axes).
-type ExtractStrings<V> = V extends string
-  ? V
-  : V extends SpreadMarker<infer S>
-    ? S
-    : V extends readonly (infer U)[]
-      ? ExtractStrings<U>
-      : never;
-type SpecFlags<S> = ExtractStrings<S[keyof S]>;
-
 function toArray<T>(v: T | readonly T[]): readonly T[] {
   return Array.isArray(v) ? (v as readonly T[]) : [v as T];
 }
@@ -139,10 +128,7 @@ function cartesian<T>(dims: readonly (readonly T[])[]): T[][] {
 export type SuiteMode = "dev" | "prod" | "preview" | "docker" | "none";
 export type SuiteKind = "data" | "auth" | "cloudflare";
 
-export class Suite<Flags extends string = never> {
-  /** Phantom type carrier — used to derive a flag union for `testMatch`. */
-  declare readonly __flagsType: Flags;
-
+export class Suite {
   private combos: RawCombo[] = [];
   private constants: string[] = [];
 
@@ -158,19 +144,19 @@ export class Suite<Flags extends string = never> {
    *   .matrix({ framework: "solid", server: ["hono", "express"], data: ["trpc", null] })
    *   → 4 combos: solid+hono+trpc, solid+hono, solid+express+trpc, solid+express
    */
-  matrix<S extends MatrixSpec>(spec: S): Suite<Flags | ExtractStrings<S[keyof S]>> {
+  matrix(spec: MatrixSpec): this {
     const dims = Object.values(spec).map((v) => toArray(v));
     for (const row of cartesian(dims)) {
       this.combos.push(row.filter((v): v is ComboEntry => v !== null && v !== undefined));
     }
-    return this as unknown as Suite<Flags | ExtractStrings<S[keyof S]>>;
+    return this;
   }
 
   /**
    * One explicit combo. Values may be a string, a spread marker, or an array
    * of either (e.g. `flags: ["sentry", "logrocket"]`).
    */
-  case<S extends CaseSpec>(spec: S): Suite<Flags | SpecFlags<S>> {
+  case(spec: CaseSpec): this {
     const combo: ComboEntry[] = [];
     for (const v of Object.values(spec)) {
       if (v === null || v === undefined) continue;
@@ -180,13 +166,13 @@ export class Suite<Flags extends string = never> {
       }
     }
     this.combos.push(combo);
-    return this as unknown as Suite<Flags | SpecFlags<S>>;
+    return this;
   }
 
   /** Flags appended to every combo (linters are the canonical use). */
-  linters<F extends string>(...flags: F[]): Suite<Flags | F> {
+  linters(...flags: string[]): this {
     this.constants.push(...flags);
-    return this as unknown as Suite<Flags | F>;
+    return this;
   }
 
   mode(m: SuiteMode): this {
@@ -251,6 +237,3 @@ const ruleMessageMap = (() => {
 export function suite(): Suite {
   return new Suite();
 }
-
-/** Extract the flag union from a Suite, for use with `testMatch<Flags<typeof t>>(…)`. */
-export type Flags<S> = S extends Suite<infer F> ? F : never;

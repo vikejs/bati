@@ -1,9 +1,9 @@
 import { exec } from "./exec.js";
 import { npmCli } from "./package-manager.js";
-import type { GlobalContext } from "./types.js";
+import type { AppContext } from "./types.js";
 import { waitForLocalhost } from "./wait-for-localhost.js";
 
-export async function runDevServer(context: GlobalContext) {
+export async function runDevServer(context: AppContext) {
   const cmd = ["run", "dev", "--port", String(context.port)];
   context.server = exec(npmCli, cmd, {
     env: {

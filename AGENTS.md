@@ -54,60 +54,38 @@ When adding a new feature, **add E2E tests** to verify it works correctly.
 
 ### E2E Test Structure
 
-Tests are in `packages/tests/tests/` with naming convention: `FRAMEWORK+<feature>.spec.ts`
+All E2E tests live in `packages/tests/e2e/` — one code path for local and CI:
 
-Existing test files and their purposes:
-- `FRAMEWORK+ANALYTICS.spec.ts` - Analytics (plausible.io, google-analytics)
-- `FRAMEWORK+CSS.spec.ts` - CSS frameworks (tailwindcss, daisyui)
-- `FRAMEWORK+SERVER+AUTH.spec.ts` - Server + auth combinations (authjs, auth0)
-- `FRAMEWORK+SERVER+DATA.spec.ts` - Server + data fetching (trpc, telefunc, ts-rest, drizzle, sqlite)
-- `FRAMEWORK+sentry.spec.ts` - Sentry error tracking
-- `FRAMEWORK+prisma.spec.ts` - Prisma ORM
-- `FRAMEWORK+cloudflare.spec.ts` - Cloudflare deployment
-- `FRAMEWORK+vercel.spec.ts` - Vercel deployment
-- `FRAMEWORK+netlify.spec.ts` - Netlify deployment
-- `FRAMEWORK+edgeone.spec.ts` - EdgeOne Pages deployment
-- `FRAMEWORK+aws.spec.ts` - AWS Lambda deployment
-- `FRAMEWORK+prettier.spec.ts` - Prettier formatter
-- `FRAMEWORK+storybook.spec.ts` - Storybook
-- `react+UI.spec.ts` - React-specific UI libs (compiled-css, mantine)
-- `remove-linter-comments.spec.ts` - Linter comment cleanup verification
+| File | Responsibility |
+|---|---|
+| `matrix.ts` | the single declaration of which combos exist — an array of `suite()` builders |
+| `runner.ts` | matrix → generate an app per combo → run them all as Vitest projects (`createVitest`) |
+| `fixtures.ts` | boot/teardown the app in a mode, the `fetch` test fixture, shared helpers |
+| `e2e.spec.ts` | every assertion, shared by all projects (each self-gates on flags via `BATI.has(...)`) |
 
-### Test File Structure
+A combo runs in up to three passes (`e2e.spec.ts`): a **primary** pass (boot in its `mode`, run every assertion), an optional **smoke** pass (re-run `/` once built/containerized — `.kind(...)` combos), and **checks** (lint / typecheck / knip).
 
-Each test file builds a `suite()` (from `@batijs/tests-utils`, defined in `packages/tests-utils/src/suite.ts`) and exports it as `default`. This **include-only** builder replaced the old `matrix` + `exclude` exports:
+### Declaring combos
+
+`matrix.ts` exports an array of `suite()` builders (from `@batijs/tests-utils`, defined in `packages/tests-utils/src/suite.ts`). This **include-only** builder replaced the old `matrix` + `exclude` exports:
 
 ```ts
-import { describeBati, suite } from "@batijs/tests-utils";
+import { framework, server, spread, suite } from "@batijs/tests-utils";
 
-const tests = suite()
+const matrix = [
   // Cross product of named axes. `null` = "this axis is absent in that combo".
   // `.matrix(...)` can be called multiple times — each call unions in more combos.
-  .matrix({
-    framework: ["react", "vue"],          // one combo per listed value
-    server: "hono",                        // single value = always present
-    data: ["trpc", "telefunc", "ts-rest", null],
-  })
-  .linters("eslint", "biome");             // flags appended to every combo
+  suite()
+    .matrix({
+      framework: ["react", "vue"],          // one combo per listed value
+      server: "hono",                        // single value = always present
+      data: ["trpc", "telefunc", "ts-rest", null],
+    })
+    .linters("eslint", "biome")              // flags appended to every combo
+    .kind("data"),                           // tags the suite (see below)
+];
 
-export default tests;
-
-// Derive the flag union for `testMatch` from the suite's phantom type.
-type TestFlags = readonly [(typeof tests)["__flagsType"]];
-
-await describeBati(({ test, expect, fetch, testMatch }) => {
-  test("home", async () => {
-    const res = await fetch("/");
-    expect(res.status).toBe(200);
-  });
-
-  // Conditional tests; `_` is the fallback when no listed flag is present.
-  testMatch<TestFlags>("feature-specific test", {
-    trpc: async () => { /* test for trpc */ },
-    telefunc: async () => { /* test for telefunc */ },
-    _: async () => { /* default/fallback test */ },
-  });
-});
+export default matrix;
 ```
 
 Key `suite()` API (see `suite.ts` for the full surface):
@@ -115,33 +93,16 @@ Key `suite()` API (see `suite.ts` for the full surface):
 - `.matrix({...})` — cross product of named axes; call it repeatedly to add unions of combos (this is how you express "exclusions" — enumerate exactly the combos you want instead of subtracting). `null` replaces the old `undefined` "without" sentinel.
 - `.case({...})` — one explicit combo (values can be arrays, e.g. `flags: ["sentry", "logrocket"]`).
 - `.linters(...)` — flags added to every combo.
+- `.mode(m)` — the combo's primary run mode: `"dev"` (default), `"prod"`, `"preview"`, `"docker"`, or `"none"` (file checks only, no server).
+- `.kind(k)` — tags a suite as `"data"`, `"auth"`, or `"cloudflare"`; this enables the kind-scoped assertions in `e2e.spec.ts` and a built/containerized smoke pass (`docker` for dokploy, `preview` for cloudflare, else `prod`).
 - `spread(axis)` — picks a single value for that axis per combo, **round-robin balanced across the whole repo** so react/vue/solid get roughly equal coverage. Use it when a test is framework-agnostic.
 - On load, combos that violate a feature rule (`ERROR_*` in `@batijs/features/rules`) are dropped with a warning, so invalid combinations never reach the CLI.
 
-### Adding Tests - Key Rules
+### Adding tests
 
-1. **Avoid duplicate combinations**: Check `.github/workflows/tests-entry.yml` to ensure your test combinations don't overlap with existing ones
-2. **Enumerate include-only combos**: Express what you want via one or more `.matrix(...)`/`.case(...)` calls rather than subtracting — there is no `exclude` anymore
-3. **Add to existing suite when possible**: If your feature fits an existing test category
-4. **Create new spec file only if needed**: For truly unique features
-5. **Regenerate workflow matrix**: Run `bun run test:e2e workflow-write` to auto-generate entries in `tests-entry.yml` (do NOT edit manually)
-
-### Test Modes
-
-Tests can run in different modes via `describeBati`'s second `options` argument (`mode` may be a constant or a `(context) => Modes` function):
-- `mode: "dev"` (default) - Development server
-- `mode: "prod"` - Production build + preview
-- `mode: "build"` - Build only, no server
-- `mode: "docker"` - Build the Docker image and run the container (skipped locally when Docker is unavailable and not on CI)
-- `mode: "none"` - No build, no server (file checks only)
-
-### Workflow Entry Generation
-
-After adding a new test file or modifying matrices, regenerate workflow entries:
-```bash
-bun run test:e2e workflow-write
-```
-This auto-generates the matrix entries in `.github/workflows/tests-entry.yml`. Never edit this file manually.
+1. **A new flag combination** → an entry in `matrix.ts`. Express what you want via `.matrix(...)`/`.case(...)` (include-only; there is no `exclude`). `runner.ts` de-dupes identical `(flags, mode, kind)`, but check `matrix.ts` so you don't add a redundant suite.
+2. **A new assertion** → a function in `e2e.spec.ts` + a call in the composition; gate it with `test.runIf(BATI.has(...))`.
+3. **No matrix regeneration**: the CI test matrix is generated from `matrix.ts` at runtime (`runner.ts --list`) — nothing to regenerate or commit.
 
 ## Project Layout
 
@@ -369,8 +330,7 @@ Comment-delimited `/* $$.if(cond) */ … /* $$.elif(cond) */ … /* $$.else */ �
 **On Pull Requests:**
 1. **Checks workflow** (`checks.yml`): Runs on Node 22 & 24
    - `bun install` → `bun run build` → `bun run check-types` → `bun run lint`
-   - A `check-tests-matrix` job regenerates `tests-entry.yml` and fails if it is out of date — always commit the result of `bun run test:e2e workflow-write`
-2. **Tests workflow** (`tests-entry.yml`): Matrix of E2E tests across OS/features
+2. **Tests workflow** (`tests-entry.yml`): the E2E matrix is generated from `packages/tests/e2e/matrix.ts` at runtime and fanned out across OS/features
 
 **To replicate CI locally:**
 ```bash

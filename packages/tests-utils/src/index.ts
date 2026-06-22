@@ -4,7 +4,6 @@ export * from "./is-docker-available.js";
 export * from "./is-postgres-available.js";
 export * from "./package-manager.js";
 export * from "./port.js";
-export * from "./run-build.js";
 export * from "./run-dev.js";
 export * from "./run-docker-compose.js";
 export * from "./run-prod.js";
