@@ -1,0 +1,376 @@
+// The single E2E spec, shared by every project. A combo runs in three passes:
+//   1. primary — boot the app in its `mode`, run every assertion (each self-gates on flags)
+//   2. smoke   — re-run "/" once the app is built/containerized (multi-mode combos only)
+//   3. checks  — lint / typecheck / knip (and cloudflare's deploy --dry-run), last so builds exist
+import { execSync } from "node:child_process";
+import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { exec, npmCli } from "@batijs/tests-utils";
+import { beforeAll, describe, expect } from "vitest";
+import { appDir, appUrl, expectHome, flags, mode, runScript, smoke, smokeMode, test, useApp, useAppFor } from "./fixtures.js";
+
+const server = mode !== "none";
+const hasOrm = ["drizzle", "kysely", "prisma"].some((f) => flags.includes(f));
+const needsSetup =
+  flags.includes("cloudflare") ||
+  flags.includes("drizzle") ||
+  flags.includes("kysely") ||
+  flags.includes("better-auth") ||
+  (!hasOrm && (flags.includes("sqlite") || flags.includes("postgres")));
+
+describe.sequential(flags.join("+"), () => {
+  describe(mode, () => {
+    if (server && needsSetup) beforeAll(prepareApp, 70_000);
+    useApp();
+
+    uiLibraries();
+    css();
+    sentry();
+    storybook();
+    skills();
+    linterComments();
+    prismaTodo();
+    dokployArtifacts();
+    aws();
+
+    if (server) {
+      test("/ responds 200", ({ fetch }) => expectHome(fetch));
+      analytics();
+      dataRoundTrip();
+      auth();
+    }
+  });
+
+  if (smoke) {
+    describe(`smoke (${smokeMode})`, () => {
+      useAppFor(smokeMode);
+      test("/ responds 200", { retry: smokeMode === "preview" ? 3 : 0 }, ({ fetch }) => expectHome(fetch));
+    });
+  }
+
+  describe("checks", () => {
+    checks();
+    cloudflare();
+  });
+});
+
+// Tables / worker types must exist before the dev server starts. Match on the tool first.
+async function prepareApp() {
+  if (flags.includes("cloudflare")) await runScript("generate-types");
+  if (flags.includes("drizzle")) {
+    await runScript("drizzle:generate");
+    await runScript("drizzle:migrate");
+  } else if (flags.includes("cloudflare") && flags.includes("sqlite")) await runScript("d1:migrate"); // D1 = sqlite on Workers
+  else if (flags.includes("better-auth")) await runScript("better-auth:migrate");
+  else if (flags.includes("kysely")) await runScript("kysely:migrate");
+  else if (flags.includes("sqlite")) await runScript("sqlite:migrate");
+  else if (flags.includes("postgres")) await runScript("postgres:migrate");
+}
+
+function uiLibraries() {
+  test.runIf(flags.includes("compiled-css"))("ui: @compiled/react", async () => {
+    expect(await readFile("package.json", "utf-8")).toContain("@compiled/react");
+  });
+  test.runIf(flags.includes("mantine"))("ui: @mantine/core styles", async () => {
+    expect(await readFile("pages/+Layout.tsx", "utf-8")).toContain("@mantine/core/styles.css");
+  });
+}
+
+function css() {
+  test.runIf(flags.includes("daisyui"))("css: tailwind.css includes daisyui", async () => {
+    expect(await readFile("pages/tailwind.css", "utf-8")).toContain("daisyui");
+  });
+  test.runIf(flags.includes("tailwindcss") && !flags.includes("daisyui"))("css: tailwind.css without daisyui", async () => {
+    expect(await readFile("pages/tailwind.css", "utf-8")).not.toContain("daisyui");
+  });
+}
+
+function sentry() {
+  if (!flags.includes("sentry")) return;
+  const fw = (f: string) => flags.includes(f);
+
+  test("sentry: pages/+client.ts by framework", () => {
+    expect(existsSync("pages/+client.ts")).toBe(!fw("vue"));
+  });
+  test("sentry: .env DSN keys", () => {
+    const env = readFileSync(".env", "utf-8");
+    expect(env).toContain("SENTRY_DSN=");
+    expect(env).toContain("PUBLIC_ENV__SENTRY_DSN=");
+  });
+  test("sentry: .env.sentry-build-plugin keys", () => {
+    const env = readFileSync(".env.sentry-build-plugin", "utf-8");
+    for (const key of ["SENTRY_ORG=", "SENTRY_PROJECT=", "SENTRY_AUTH_TOKEN="]) expect(env).toContain(key);
+  });
+  test("sentry: vite plugin wired", () => {
+    const cfg = readFileSync("vite.config.ts", "utf-8");
+    expect(cfg).toContain('from "@sentry/vite-plugin"');
+    expect(cfg).toContain("sentryVitePlugin");
+  });
+  test("sentry: browser config import", () => {
+    const c = readFileSync("sentry.browser.config.ts", "utf-8");
+    if (fw("react")) expect(c).toContain('from "@sentry/react"');
+    else if (fw("solid")) expect(c).toContain('from "@sentry/solid"');
+    else if (fw("vue")) {
+      expect(c).toContain('from "@sentry/vue"');
+      expect(c).toContain("app: getCurrentInstance()");
+      expect(readFileSync("pages/+Layout.vue", "utf-8")).toContain("sentryBrowserConfig");
+    } else expect(c).toContain('from "@sentry/browser"');
+  });
+  test("sentry: +Page by framework", () => {
+    if (fw("vue")) expect(existsSync("pages/sentry/+Page.vue")).toBe(true);
+    else if (fw("react") || fw("solid")) expect(existsSync("pages/sentry/+Page.tsx")).toBe(true);
+    else expect(existsSync("pages/sentry/+Page.js") && existsSync("pages/sentry/+client.js")).toBe(true);
+  });
+  test("sentry: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
+}
+
+function storybook() {
+  if (!flags.includes("storybook")) return;
+  test("storybook: config file", () => {
+    expect(["ts", "js", "mjs", "cjs"].some((e) => existsSync(`.storybook/main.${e}`))).toBe(true);
+  });
+  test("storybook: package.json scripts", async () => {
+    const pkg = JSON.parse(await readFile("package.json", "utf-8"));
+    expect(pkg.scripts?.storybook).toBeTruthy();
+    expect(pkg.scripts?.["build-storybook"]).toBeTruthy();
+  });
+}
+
+function skills() {
+  const agent = ["claude", "codex", "gemini", "cursor"].some((f) => flags.includes(f));
+  if (!agent) return;
+  const has = (name: string) =>
+    existsSync(join(".agents", "skills", name, "SKILL.md")) || existsSync(join(".claude", "skills", name, "SKILL.md"));
+
+  test("skills: AGENTS.md has stack", () => {
+    expect(readFileSync("AGENTS.md", "utf-8")).toContain("## Stack");
+  });
+  test("skills: vike-core skills present", () => {
+    const core = ["vike-routing", "vike-data-fetching", "vike-config", "vike-navigation", "vike-render-modes", "vike-pagecontext", "vike-hooks", "vike-error-pages"];
+    for (const name of core) expect(has(name), name).toBe(true);
+  });
+  test.runIf(flags.includes("claude"))("skills: claude shim", () => {
+    expect(readFileSync("CLAUDE.md", "utf-8")).toContain("@AGENTS.md");
+    expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
+  });
+  test.runIf(flags.includes("gemini"))("skills: gemini shim", () => {
+    expect(readFileSync("GEMINI.md", "utf-8")).toContain("@./AGENTS.md");
+    expect(existsSync(join(".agents", "skills", "vike-routing", "SKILL.md"))).toBe(true);
+  });
+  test.runIf(flags.includes("drizzle"))("skills: backend skills", () => {
+    expect(has("server") && has("trpc")).toBe(true);
+    expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain("Drizzle ORM on SQLite");
+  });
+  test.runIf(flags.includes("tailwindcss"))("skills: frontend skills", () => {
+    expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
+  });
+}
+
+function linterComments() {
+  const onlyLinter = (l: string) =>
+    flags.includes(l) && ["eslint", "biome", "oxlint"].filter((x) => flags.includes(x)).length === 1;
+  test.runIf(onlyLinter("eslint"))("no biome/oxlint directives", () => assertAbsent("biome-", "oxlint-"));
+  test.runIf(onlyLinter("biome"))("no eslint directives", () => assertAbsent("eslint-"));
+  test.runIf(onlyLinter("oxlint"))("no biome directives", () => assertAbsent("biome-"));
+}
+
+function prismaTodo() {
+  test.runIf(flags.includes("prisma"))("prisma: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
+}
+
+function dokployArtifacts() {
+  if (!flags.includes("dokploy")) return;
+  const compose = () => readFileSync(join(appDir, "docker-compose.yml"), "utf8");
+  test("dokploy: Dockerfile", () => expect(existsSync(join(appDir, "Dockerfile"))).toBe(true));
+  test("dokploy: docker-compose serves on 3000", () => {
+    expect(compose()).toContain("Dockerfile");
+    expect(compose()).toContain("3000");
+  });
+  test.runIf(flags.includes("drizzle"))("dokploy: compose passes DATABASE_URL", () => expect(compose()).toContain("DATABASE_URL"));
+  test.runIf(flags.includes("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () => expect(compose()).toContain("AUTH0_CLIENT_ID"));
+}
+
+function aws() {
+  if (!flags.includes("aws")) return;
+  beforeAll(() => {
+    if (existsSync(join(appDir, "cdk.out"))) rmSync(join(appDir, "cdk.out"), { recursive: true });
+    execSync(`${npmCli} cdk --json --build "${npmCli} run build" synth`, { encoding: "utf8", maxBuffer: 50 * 1024 * 1024, timeout: 90_000, cwd: appDir });
+  }, 120_000);
+
+  test("aws: entry_aws_lambda.ts wired", () => {
+    expect(readFileSync(join(appDir, "entry_aws_lambda.ts"), "utf-8")).toContain('from "hono/aws-lambda"');
+  });
+  test("aws: Lambda handler serves a page", async () => {
+    const { handler } = await import(join(appDir, "cdk.out", requestHandlerAsset(), "index.mjs"));
+    const response = await handler(GET_ROOT_EVENT, {});
+    expect(response.statusCode).toBe(200);
+    const body = response.isBase64Encoded ? Buffer.from(response.body, "base64").toString("utf8") : response.body;
+    expect(body).toContain("My Vike App");
+  });
+  test("aws: TODO.md", () => expect(existsSync(join(appDir, "TODO.md"))).toBe(true));
+}
+
+function analytics() {
+  test.runIf(flags.includes("plausible.io"))("analytics: plausible script", async ({ fetch }) => {
+    const html = await (await fetch("/")).text();
+    expect(html).toContain("plausible.io");
+    expect(html).not.toContain("googletagmanager");
+    expect(existsSync("TODO.md")).toBe(true);
+  });
+  test.runIf(flags.includes("google-analytics"))("analytics: google tag", async ({ fetch }) => {
+    const html = await (await fetch("/")).text();
+    expect(html).not.toContain("plausible.io");
+    if (flags.includes("vue")) {
+      expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(200);
+    } else {
+      expect(html).toContain("googletagmanager");
+      expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(404);
+    }
+    expect(existsSync("TODO.md")).toBe(false);
+  });
+}
+
+function dataRoundTrip() {
+  const hasAuth = ["authjs", "auth0", "better-auth"].some((f) => flags.includes(f));
+  const data = ["trpc", "telefunc", "ts-rest"].some((f) => flags.includes(f));
+  const db = ["sqlite", "drizzle", "kysely", "postgres"].some((f) => flags.includes(f));
+  // auth apps carry a db for their own tables but have no todo feature.
+  if (hasAuth || (!data && !db)) return;
+
+  test("todo route", async ({ fetch }) => {
+    const res = await fetch("/todo");
+    expect(res.status).toBe(200);
+    expect(await res.text()).not.toContain('{"is404":true}');
+  });
+
+  describe.sequential("create a todo", () => {
+    const text = "__BATI_TEST_VALUE";
+    test.runIf(flags.includes("telefunc"))("post via telefunc", async ({ fetch }) => {
+      const res = await fetch("/_telefunc", { method: "POST", body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }) });
+      expect(res.status).toBe(200);
+    });
+    test.runIf(flags.includes("trpc"))("post via trpc", async ({ fetch }) => {
+      const res = await fetch("/api/trpc/onNewTodo", { method: "POST", body: JSON.stringify(text), headers: { "content-type": "application/json" } });
+      expect(res.status).toBe(200);
+    });
+    test.runIf(data && !flags.includes("telefunc") && !flags.includes("trpc"))("post via rest", async ({ fetch }) => {
+      const res = await fetch("/api/todo/create", { method: "POST", body: JSON.stringify({ text }), headers: { "content-type": "application/json" } });
+      expect(res.status).toBe(200);
+    });
+    test.runIf(db)("todo is persisted", async ({ fetch }) => {
+      expect(await (await fetch("/todo")).text()).toContain(text);
+    });
+    test("TODO.md presence", () => {
+      const expected = ["sqlite", "drizzle", "kysely", "postgres", "cloudflare", "dokploy"].some((f) => flags.includes(f));
+      expect(existsSync("TODO.md")).toBe(expected);
+    });
+  });
+}
+
+function auth() {
+  const auth0Untested = flags.includes("auth0") && !process.env.TEST_AUTH0_CLIENT_ID;
+  const betterAuth = flags.includes("better-auth");
+  if (!flags.includes("authjs") && !flags.includes("auth0") && !betterAuth) return;
+
+  // Auth.js / Auth0 ship a built-in signin page; Better Auth ships its own pages.
+  test.runIf(!betterAuth && !auth0Untested)("auth: signin page", async ({ fetch }) => {
+    const res = await fetch("/api/auth/signin");
+    expect(res.status).toBe(200);
+    expect(await res.text()).not.toContain('{"is404":true}');
+  });
+
+  test.runIf(betterAuth)("auth: better-auth pages", async ({ fetch }) => {
+    for (const route of ["/login", "/signup", "/account"]) {
+      const res = await fetch(route);
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
+    }
+  });
+
+  test.runIf(betterAuth)("auth: email/password flow", async ({ fetch }) => {
+    const email = `e2e_${Date.now()}@example.com`;
+    const password = "Password123!";
+    const headers = { "content-type": "application/json", origin: appUrl() };
+    const post = (path: string, body: object) => fetch(path, { method: "POST", headers, body: JSON.stringify(body) });
+    expect((await post("/api/auth/sign-up/email", { name: "E2E User", email, password })).status).toBe(200);
+    expect((await post("/api/auth/sign-in/email", { email, password })).status).toBe(200);
+    expect((await post("/api/auth/sign-in/email", { email, password: "wrong-password" })).status).toBe(401);
+  });
+
+  test.runIf(betterAuth)("auth: telefunc disabled", async ({ fetch }) => {
+    expect((await fetch("/_telefunc", { method: "post" })).status).toBe(404);
+  });
+}
+
+// lint/typecheck/knip — the targets the old nx pipeline ran per app.
+function checks() {
+  const TIMEOUT = 120_000;
+  const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });
+  test.runIf(flags.includes("eslint"))("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
+  test.runIf(flags.includes("biome"))("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
+  test.runIf(flags.includes("oxlint"))("oxlint", () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."), TIMEOUT);
+  // tsc rejects .ts files importing .vue modules, so storybook+vue has no typecheck (as upstream).
+  test.runIf(!(flags.includes("storybook") && flags.includes("vue")))("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
+  test("knip", () => exec(npmCli, ["x", "knip", "--no-config-hints"], { cwd: appDir, timeout: TIMEOUT, env: { VITE_CJS_IGNORE_WARNING: "1" } }), TIMEOUT);
+}
+
+function cloudflare() {
+  if (!flags.includes("cloudflare")) return;
+  test("cloudflare: TODO.md", () => expect(existsSync(join(appDir, "TODO.md"))).toBe(true));
+  test("cloudflare: deploy --dry-run", { retry: 3 }, () => runScript("deploy", "--dry-run"));
+}
+
+async function assertAbsent(...prefixes: string[]) {
+  for await (const file of sourceFiles(".")) {
+    const content = await readFile(file, "utf-8");
+    for (const prefix of prefixes) expect(content, `${file} should not contain "${prefix}"`).not.toContain(prefix);
+  }
+}
+
+const IGNORED_DIRS = new Set(["node_modules", ".git", "dist", "build", ".vike", ".vercel", ".netlify", ".wrangler"]);
+async function* sourceFiles(dir: string): AsyncGenerator<string> {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (!IGNORED_DIRS.has(entry.name)) yield* sourceFiles(full);
+    } else if (/\.(js|ts|jsx|tsx)$/.test(entry.name)) yield full;
+  }
+}
+
+// The Lambda bundle is named by asset hash; find it via the CloudFormation template.
+function requestHandlerAsset(): string {
+  const cdkOut = join(appDir, "cdk.out");
+  const template = readdirSync(cdkOut).find((f) => f.startsWith("VikeStack-") && f.endsWith(".template.json"));
+  expect(template, "synthesized VikeStack template").toBeDefined();
+  // biome-ignore lint/suspicious/noExplicitAny: arbitrary CloudFormation JSON
+  let asset: string | undefined;
+  const visit = (node: any) => {
+    if (typeof node !== "object" || node === null) return;
+    if (node["aws:cdk:path"]?.endsWith("/RequestHandler/Resource")) asset = node["aws:asset:path"];
+    else for (const key in node) visit(node[key]);
+  };
+  visit(JSON.parse(readFileSync(join(cdkOut, template!), "utf8")));
+  expect(asset, "RequestHandler asset path").toBeDefined();
+  return asset!;
+}
+
+const GET_ROOT_EVENT = {
+  version: "2.0",
+  routeKey: "$default",
+  rawPath: "/",
+  rawQueryString: "",
+  headers: { accept: "*/*", "content-length": "0", host: "example.com", "user-agent": "PostmanRuntime/7.26.8" },
+  requestContext: {
+    accountId: "123456789012",
+    apiId: "api-id",
+    domainName: "example.com",
+    http: { method: "GET", path: "/", protocol: "HTTP/1.1", sourceIp: "127.0.0.1", userAgent: "PostmanRuntime/7.26.8" },
+    requestId: "id",
+    routeKey: "$default",
+    stage: "$default",
+    time: "12/Mar/2021:19:03:58 +0000",
+    timeEpoch: 1615578238000,
+  },
+  isBase64Encoded: false,
+};
