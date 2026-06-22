@@ -52,8 +52,9 @@ jobs:
         shell: bash
         run: echo "combos=$(bun packages/tests/e2e/runner.ts --list)" >> "$GITHUB_OUTPUT"
 
-      # The run jobs only need the built CLI (to generate apps) + the two packages
-      # the harness imports. No more tarball pack / prepare.js / spec-file copy.
+      # Ship every built package dist. The CLI + harness resolve their @batijs/*
+      # workspace deps (core, features, …) from these at runtime; that set is
+      # transitive and easy to under-specify, so upload them all rather than list.
       - name: Archive built dists
         uses: actions/upload-artifact@v7
         with:
@@ -63,6 +64,4 @@ jobs:
           overwrite: true
           include-hidden-files: true
           path: |
-            packages/cli/dist
-            packages/tests-utils/dist
-            packages/features/dist
+            packages/*/dist
