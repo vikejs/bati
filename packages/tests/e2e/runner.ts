@@ -73,11 +73,12 @@ console.log(`[e2e] ${selected.length} combo(s): ${selected.map((c) => c.flags.jo
 const context: RunnerContext = { tmpdir: "" };
 await initTmpDir(context);
 
+// Postgres combos reach this container through their own generated `.env` (which defaults to the same
+// localhost URL). We must NOT set process.env.DATABASE_URL here: it is inherited by every combo's
+// migrate/build/dev child — sqlite ones included — and shared-env's loader won't override an already-set
+// var, so better-sqlite3 would get the postgres URL as a file path ("directory does not exist").
 const hasPostgres = selected.some((c) => c.flags.includes("postgres"));
-if (hasPostgres) {
-  await startPostgres();
-  process.env.DATABASE_URL = PG_URL;
-}
+if (hasPostgres) await startPostgres();
 
 try {
   const apps: { combo: Combo; appDir: string }[] = [];
