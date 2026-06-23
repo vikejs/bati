@@ -1,12 +1,10 @@
 /**
- * Chainable suite API — replaces the `matrix` + `exclude` exports.
+ * Chainable suite API: authors describe what they DO want to test (include-only), and `.spread()`
+ * picks a single framework per combo with global round-robin balancing so vue / react / solid each
+ * get roughly equal coverage across the whole repo.
  *
- * Authors describe what they DO want to test (include-only), and `.spread()`
- * picks a single framework per combo with global round-robin balancing so
- * vue / react / solid each get roughly equal coverage across the whole repo.
- *
- * `matrix.ts` exports an array of `Suite`s; the runner calls `flatten(balancer)`
- * on each to resolve spread markers into the final `string[][]` combos.
+ * `matrix.ts` exports an array of `Suite`s; the runner calls `flatten(balancer)` on each to resolve
+ * spread markers into the final `string[][]` combos.
  */
 
 import { type CategoryLabels, features } from "@batijs/features";
@@ -194,9 +192,8 @@ export class Suite {
   suiteKind?: SuiteKind;
 
   /**
-   * Cross product of named dimensions. `null` in a dimension list means
-   * "this dimension is absent in that combo" (replaces the `undefined`
-   * sentinel from the old API).
+   * Cross product of named dimensions. `null` in a dimension list means "this dimension is absent in
+   * that combo".
    *
    *   .matrix({ framework: "solid", server: ["hono", "express"], data: ["trpc", null] })
    *   → 4 combos: solid+hono+trpc, solid+hono, solid+express+trpc, solid+express

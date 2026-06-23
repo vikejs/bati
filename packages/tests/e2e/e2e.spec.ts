@@ -13,6 +13,7 @@ import {
   appDir,
   appUrl,
   BATI,
+  dockerAvailable,
   expectHome,
   flags,
   kind,
@@ -27,9 +28,13 @@ import {
 
 const server = mode !== "none";
 const needsSetup = BATI.has("cloudflare") || kind === "data" || kind === "auth";
+// Locally with Docker down, skip (not drop) the passes that need it — shown as skipped in the report.
+// The primary pass migrates to bati-pg for postgres; the smoke also needs the dokploy compose stack.
+const skipPrimary = BATI.has("postgres") && !dockerAvailable;
+const skipSmoke = (smokeMode === "docker" || BATI.has("postgres")) && !dockerAvailable;
 
 describe.sequential(flags.join("+"), () => {
-  describe(mode, () => {
+  describe.skipIf(skipPrimary)(mode, () => {
     if (server && needsSetup) beforeAll(prepareApp, 70_000);
     useApp();
 
@@ -52,7 +57,7 @@ describe.sequential(flags.join("+"), () => {
   });
 
   if (smoke) {
-    describe(`smoke (${smokeMode})`, () => {
+    describe.skipIf(skipSmoke)(`smoke (${smokeMode})`, () => {
       useAppFor(smokeMode);
       test("/ responds 200", { retry: smokeMode === "preview" ? 3 : 0 }, ({ fetch }) => expectHome(fetch));
     });
@@ -361,7 +366,7 @@ function auth() {
   });
 }
 
-// lint/typecheck/knip — the targets the old nx pipeline ran per app.
+// lint / typecheck / knip — the static checks, run per app after its build.
 function checks() {
   const TIMEOUT = 120_000;
   const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });

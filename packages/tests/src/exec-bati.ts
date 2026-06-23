@@ -6,7 +6,7 @@ import type { RunnerContext } from "./types.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export async function execLocalBati(context: RunnerContext, flags: string[], monorepo = true) {
+export async function execLocalBati(context: RunnerContext, flags: string[]) {
   const digest = flags.join("--") || "empty";
   const timeout = flags.includes("storybook") ? 120_000 : 30_000;
   // --skip-git prevents git init in generated projects
@@ -18,7 +18,7 @@ export async function execLocalBati(context: RunnerContext, flags: string[], mon
     [...(bunExists ? ["--bun"] : []), join(__dirname, "..", "..", "cli", "dist", "index.js"), ...mappedFlags, digest],
     {
       timeout,
-      cwd: monorepo ? join(context.tmpdir, "packages") : context.tmpdir,
+      cwd: context.tmpdir,
       env: {
         BATI_TEST: "1",
       },
@@ -26,5 +26,5 @@ export async function execLocalBati(context: RunnerContext, flags: string[], mon
     },
   );
 
-  return monorepo ? join(context.tmpdir, "packages", digest) : join(context.tmpdir, digest);
+  return join(context.tmpdir, digest);
 }

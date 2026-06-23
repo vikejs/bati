@@ -13,7 +13,6 @@ export async function initTmpDir(context: RunnerContext) {
   context.tmpdir = join(base, "bati");
   await removeTmpDir(context); // a previous run killed mid-flight may have left it behind
   await mkdir(context.tmpdir);
-  await mkdir(join(context.tmpdir, "packages"));
 }
 
 export function removeTmpDir(context: RunnerContext) {

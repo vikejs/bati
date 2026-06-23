@@ -2,8 +2,8 @@ import net from "node:net";
 
 /**
  * Best-effort TCP check that a PostgreSQL server is reachable at the given connection string
- * (defaults to `DATABASE_URL`, then `localhost:5432`). Used to skip postgres-backed tests locally
- * when no server is running — CI always provides one.
+ * (defaults to `DATABASE_URL`, then `localhost:5432`) — used to poll the container for readiness
+ * before the run starts.
  */
 export function isPostgresAvailable(connectionString = process.env.DATABASE_URL): Promise<boolean> {
   let host = "localhost";

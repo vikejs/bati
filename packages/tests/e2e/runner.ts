@@ -2,7 +2,7 @@
 // Vitest projects. See `USAGE` below (or `runner.ts --help`) for the commands and options.
 import { readFileSync, writeFileSync } from "node:fs";
 import { rm } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import {
@@ -11,6 +11,7 @@ import {
   data as dataAxis,
   db as dbAxis,
   exec,
+  isDockerAvailable,
   isPostgresAvailable,
   npmCli,
   orm as ormAxis,
@@ -35,7 +36,7 @@ const USAGE = `Usage: runner.ts <command> [--flag …] [--check=names] [--dry-ru
 
 Commands:
   list             emit the matrix as JSON for the CI fan-out (sorted by name)
-  all [--flag …]   run every combo, or only those whose flags are a superset of the given ones
+  all [--flag …]   (default) run every combo, or only those whose flags are a superset of the given ones
   exact --flag …   run exactly one combo — generated even if matrix.ts doesn't list it
   failed           rerun the combos that failed in the previous run
 
@@ -57,7 +58,8 @@ const options = {
   help: { type: "boolean", short: "h" },
 } satisfies Record<string, { type: "boolean" | "string"; short?: string }>;
 const { positionals, values } = parseArgs({ allowPositionals: true, strict: false, options });
-const command = positionals[0];
+// Bare invocation (e.g. `bun run test:e2e`) runs the whole matrix; an explicit word picks another command.
+const command = positionals[0] ?? "all";
 if (values.help) {
   console.log(USAGE);
   process.exit(0);
@@ -87,43 +89,51 @@ if (command === "list") {
 
 // Every subcommand reduces to the same two levers: which combos, and which tests within them. `all` /
 // `exact` pick combos and (with `--check`) a test filter; `failed` replays the previous run's failures.
-const { combos: selected, testNames } = resolveRun(command, flags, checks);
+const { combos, testNames } = resolveRun(command, flags, checks);
+
 // Check names sit at the end of a test's full name (e.g. "… > checks > knip"), so anchor to avoid
 // matching unrelated tests like "no biome/oxlint directives".
 const testNamePattern = testNames ? `(${testNames.map(escapeRegex).join("|")})$` : undefined;
 
 if (dryRun) {
-  for (const c of selected) {
+  for (const c of combos) {
     const tags = [c.kind, c.mode === "dev" ? undefined : c.mode].filter(Boolean).join(", ");
     console.log(`${c.flags.join("--")}${tags ? `  [${tags}]` : ""}`);
   }
   if (testNames) console.log(`[e2e] tests: ${testNames.join(", ")}`);
-  console.log(`[e2e] ${selected.length} combo(s)`);
+  console.log(`[e2e] ${combos.length} combo(s)`);
   process.exit(0);
 }
 
-console.log(`[e2e] ${selected.length} combo(s): ${selected.map((c) => c.flags.join("+")).join(", ")}`);
+console.log(`[e2e] ${combos.length} combo(s): ${combos.map((c) => c.flags.join("+")).join(", ")}`);
 
 const context: RunnerContext = { tmpdir: "" };
+
+// Combos whose infra needs Docker (postgres → bati-pg, dokploy → compose) skip their server passes when
+// Docker is down locally — via Vitest's skipIf in the spec, so they show as skipped rather than vanish.
+// CI always has Docker. Checked once here and handed to every project.
+const needsDocker = (c: Combo) => c.flags.includes("postgres") || c.flags.includes("dokploy");
+const dockerAvailable = !combos.some(needsDocker) || !!process.env.CI || (await isDockerAvailable());
 
 // Postgres combos reach this container through their own generated `.env` (which defaults to the same
 // localhost URL). We must NOT set process.env.DATABASE_URL here: it is inherited by every combo's
 // migrate/build/dev child — sqlite ones included — and shared-env's loader won't override an already-set
 // var, so better-sqlite3 would get the postgres URL as a file path ("directory does not exist").
-const hasPostgres = selected.some((c) => c.flags.includes("postgres"));
+const hasPostgres = combos.some((c) => c.flags.includes("postgres"));
 // Bring it up alongside app generation; only awaited right before the run, so non-postgres runs never
 // wait on docker. The catch defers a docker failure to that `await pgReady`, in order.
-const pgReady = hasPostgres ? startPostgres() : Promise.resolve();
+const pgReady = hasPostgres && dockerAvailable ? startPostgres() : Promise.resolve();
 pgReady.catch(() => {});
 
 await initTmpDir(context);
 
-// Each combo's app dir is deleted as soon as its tests finish, overlapping the slow per-app
-// node_modules removal with the run; the end-of-run rm then only mops up the small remainder.
+// As each combo's tests finish, delete its node_modules — the slow, bulky part — overlapping that
+// with the rest of the run. The app dir itself is kept: it is a worker's cwd, and deleting a live cwd
+// breaks reused workers (macOS). The end-of-run rm then only mops up the light app sources.
 const removals: Promise<void>[] = [];
 try {
   const apps: { combo: Combo; appDir: string }[] = [];
-  for (const combo of selected) {
+  for (const combo of combos) {
     console.log(`[e2e] generating ${combo.flags.join("+")}`);
     apps.push({ combo, appDir: await generateApp(combo.flags) });
   }
@@ -133,33 +143,37 @@ try {
       name: combo.flags.join("--"),
       root: SPEC_ROOT,
       include: ["e2e.spec.ts"],
-      provide: { flags: combo.flags, appDir, mode: combo.mode, kind: combo.kind },
+      provide: { flags: combo.flags, appDir, mode: combo.mode, kind: combo.kind, dockerAvailable },
       testTimeout: 100_000,
     },
   }));
 
   const appDirByName = new Map(apps.map((a) => [a.combo.flags.join("--"), a.appDir]));
-  const reapApp = {
+  const reaper = {
     onTestModuleEnd(module: { project: { name: string } }) {
       const dir = appDirByName.get(module.project.name);
-      // best-effort: the end-of-run rm is the guarantee (e.g. Windows won't delete a worker's cwd)
-      if (dir) removals.push(rm(dir, { recursive: true, force: true, maxRetries: 2 }).catch(() => {}));
+      // best-effort: the end-of-run rm is the guarantee
+      if (dir)
+        removals.push(rm(join(dir, "node_modules"), { recursive: true, force: true, maxRetries: 2 }).catch(() => {}));
     },
   };
-  const reporters = keep ? ["default"] : ["default", reapApp];
+  const reporters = keep ? ["default"] : ["default", reaper];
 
   const vitest = await createVitest("test", { watch: false, testNamePattern }, { test: { projects, reporters } });
   await pgReady; // ready by the time the first combo boots
+  if (hasPostgres && dockerAvailable) await isolatePostgresDatabases(apps);
   await vitest.start();
   const failures = failedCombos(vitest.state.getFiles(), apps);
-  await vitest.close();
-  // Record failures so `failed` can replay them — but not when `--check` narrowed the run to a subset,
-  // which would forget the checks it didn't run.
+  // Record failures before teardown so a flaky close (e.g. a dokploy container that won't stop) can't
+  // leave the file stale. Skip it when `--check` narrowed the run to a subset of the checks.
   if (checks === undefined) writeFailures(failures);
   process.exitCode = failures.length > 0 ? 1 : 0;
+  await vitest.close();
 } finally {
-  if (hasPostgres) await stopPostgres();
-  if (!keep) {
+  if (hasPostgres && dockerAvailable) await stopPostgres();
+  if (keep) {
+    console.log(`[e2e] kept generated apps in ${context.tmpdir}`);
+  } else {
     await Promise.all(removals); // mostly already deleted during the run
     await removeTmpDir(context); // the light remainder, off the next run's critical path
   }
@@ -175,8 +189,18 @@ function resolveRun(
   if (cmd === "failed") {
     const recorded = readFailures();
     if (recorded.length === 0) {
-      console.log("[e2e] no recorded failures to rerun");
-      process.exit(0);
+      fail(`no failures recorded to rerun — run \`all\` (or \`exact\`) first.\n  file: ${failuresFile}`);
+    }
+    // More than half the matrix "failing" is never a real rerun set — it's a stale or cascaded file.
+    const total = buildCombos().length;
+    if (recorded.length * 2 > total) {
+      fail(
+        `${recorded.length}/${total} combos recorded as failed — more than half, so aborting: this is almost\n` +
+          `certainly a stale or cascaded failures file rather than a genuine rerun set.\n` +
+          `  file:  ${failuresFile}\n` +
+          `  clear: rm "${failuresFile}"  then re-run \`all\` to record real failures\n` +
+          `  recorded: ${recorded.map((c) => c.flags.join("--")).join(", ")}`,
+      );
     }
     return { combos: recorded, testNames: only };
   }
@@ -270,7 +294,7 @@ function buildCombos(): Combo[] {
 }
 
 async function generateApp(flags: string[]): Promise<string> {
-  const appDir = await execLocalBati(context, flags, false);
+  const appDir = await execLocalBati(context, flags);
   await exec(npmCli, ["install", "--prefer-offline"], {
     cwd: appDir,
     timeout: 300_000,
@@ -310,4 +334,19 @@ async function startPostgres() {
 
 function stopPostgres() {
   return exec("docker", ["rm", "-f", "bati-pg"], { timeout: 30_000, stdio: "ignore" }).catch(() => {});
+}
+
+// Every postgres combo shares the one bati-pg container, so give each its own database — otherwise
+// their drizzle migrations collide creating the same tables. (CI runs one combo per job, never this.)
+async function isolatePostgresDatabases(apps: { combo: Combo; appDir: string }[]) {
+  let n = 0;
+  for (const { combo, appDir } of apps) {
+    if (!combo.flags.includes("postgres")) continue;
+    const db = `bati_${n++}`;
+    await exec("docker", ["exec", "bati-pg", "psql", "-U", "postgres", "-c", `CREATE DATABASE "${db}"`], {
+      timeout: 30_000,
+    });
+    const envPath = join(appDir, ".env");
+    writeFileSync(envPath, readFileSync(envPath, "utf8").replaceAll("localhost:5432/app", `localhost:5432/${db}`));
+  }
 }

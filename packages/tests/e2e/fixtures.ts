@@ -20,6 +20,8 @@ export const appDir = inject("appDir");
 export const mode = inject("mode");
 export const kind = inject("kind");
 export const smoke = kind !== undefined; // data/auth/cloudflare combos get a smoke pass
+// False only locally when Docker can't run: the spec then skips the passes that need it (see e2e.spec).
+export const dockerAvailable = inject("dockerAvailable");
 
 // The built/containerized mode a combo is re-run in after its primary (dev) pass.
 export const smokeMode: Mode = BATI.has("dokploy") ? "docker" : BATI.has("cloudflare") ? "preview" : "prod";
