@@ -1,15 +1,5 @@
 // One path for local and CI: aggregate matrix.ts → generate an app per combo → run them all as
-// Vitest projects. Subcommands:
-//   list                  emit the matrix as JSON for the CI fan-out (sorted by name), then exit
-//   all [--flag …]        run every combo, or only those whose flags are a superset of the given ones
-//   exact --flag …        run exactly one combo — generated and run even if matrix.ts doesn't list it
-//   failed                rerun the combos that failed in the previous run
-// `--check=knip,oxlint` narrows a run to those named checks; `--dry-run` prints the selection instead
-// of running it. Examples:
-//   bun packages/tests/e2e/runner.ts all
-//   bun packages/tests/e2e/runner.ts all --react --trpc --check=typecheck,knip
-//   bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
-//   bun packages/tests/e2e/runner.ts failed
+// Vitest projects. See `USAGE` below (or `runner.ts --help`) for the commands and options.
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -40,16 +30,42 @@ interface Combo {
   kind?: Kind; // suite identity; its presence also triggers a smoke pass
 }
 
+const USAGE = `Usage: runner.ts <command> [--flag …] [--check=names] [--dry-run]
+
+Commands:
+  list             emit the matrix as JSON for the CI fan-out (sorted by name)
+  all [--flag …]   run every combo, or only those whose flags are a superset of the given ones
+  exact --flag …   run exactly one combo — generated even if matrix.ts doesn't list it
+  failed           rerun the combos that failed in the previous run
+
+Options:
+  --check=a,b      run only the named checks (e.g. typecheck,knip); skips the server boot
+  --dry-run        print the selection instead of running it
+  -h, --help       show this help
+
+Examples:
+  runner.ts all --react --trpc --check=typecheck,knip
+  runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
+  runner.ts failed`;
+
 const { positionals, values } = parseArgs({
   allowPositionals: true,
   strict: false,
-  options: { "dry-run": { type: "boolean" }, check: { type: "string" } },
+  options: {
+    "dry-run": { type: "boolean" },
+    check: { type: "string" },
+    help: { type: "boolean", short: "h" },
+  },
 });
 const command = positionals[0];
+if (values.help) {
+  console.log(USAGE);
+  process.exit(0);
+}
 const dryRun = values["dry-run"] === true;
 // Every other `--flag` is a Bati feature flag. parseArgs keeps them verbatim (`compiled-css`,
 // `plausible.io`), unlike parsers that camelCase or nest on dots.
-const flags = Object.keys(values).filter((k) => k !== "dry-run" && k !== "check");
+const flags = Object.keys(values).filter((k) => k !== "dry-run" && k !== "check" && k !== "help");
 const checkList = values.check
   ? String(values.check)
       .split(",")
@@ -165,13 +181,7 @@ function select(cmd: string | undefined, want: string[]): Combo[] {
     const match = all.find((c) => c.flags.length === set.size && c.flags.every((f) => set.has(f)));
     return [match ?? { flags: want, mode: "dev", kind: inferKind(want) }];
   }
-  fail(
-    `unknown command ${cmd ? `"${cmd}"` : "(none)"}. Usage:\n` +
-      `  all [--flag …]   run every combo, or those whose flags are a superset of the given ones\n` +
-      `  exact --flag …   run exactly one combo (generated even if not in matrix.ts)\n` +
-      `  failed           rerun the combos that failed in the previous run\n` +
-      `  list             emit the matrix as JSON for the CI fan-out`,
-  );
+  fail(`unknown command ${cmd ? `"${cmd}"` : "(none)"}\n\n${USAGE}`);
 }
 
 function fail(msg: string): never {
