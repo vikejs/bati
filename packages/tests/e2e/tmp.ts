@@ -2,7 +2,7 @@ import { mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
-import type { RunnerContext } from "./types.js";
+import type { RunnerContext } from "../src/types.js";
 
 const base = process.env.CI ? process.env.RUNNER_TEMP || tmpdir() : tmpdir();
 

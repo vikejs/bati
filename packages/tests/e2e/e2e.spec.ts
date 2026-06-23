@@ -30,6 +30,7 @@ const server = mode !== "none";
 const needsSetup = BATI.has("cloudflare") || kind === "data" || kind === "auth";
 // Locally with Docker down, skip (not drop) the passes that need it — shown as skipped in the report.
 // The primary pass migrates to bati-pg for postgres; the smoke also needs the dokploy compose stack.
+// Mirrors `needsDocker` in runner.ts (which decides whether to probe Docker at all) — keep them in sync.
 const skipPrimary = BATI.has("postgres") && !dockerAvailable;
 const skipSmoke = (smokeMode === "docker" || BATI.has("postgres")) && !dockerAvailable;
 
@@ -107,10 +108,9 @@ function css() {
 
 function sentry() {
   if (!BATI.has("sentry")) return;
-  const fw = (f: Flags) => BATI.has(f);
 
   test("sentry: pages/+client.ts by framework", () => {
-    expect(existsSync("pages/+client.ts")).toBe(!fw("vue"));
+    expect(existsSync("pages/+client.ts")).toBe(!BATI.has("vue"));
   });
   test("sentry: .env DSN keys", () => {
     const env = readFileSync(".env", "utf-8");
@@ -128,17 +128,17 @@ function sentry() {
   });
   test("sentry: browser config import", () => {
     const c = readFileSync("sentry.browser.config.ts", "utf-8");
-    if (fw("react")) expect(c).toContain('from "@sentry/react"');
-    else if (fw("solid")) expect(c).toContain('from "@sentry/solid"');
-    else if (fw("vue")) {
+    if (BATI.has("react")) expect(c).toContain('from "@sentry/react"');
+    else if (BATI.has("solid")) expect(c).toContain('from "@sentry/solid"');
+    else if (BATI.has("vue")) {
       expect(c).toContain('from "@sentry/vue"');
       expect(c).toContain("app: getCurrentInstance()");
       expect(readFileSync("pages/+Layout.vue", "utf-8")).toContain("sentryBrowserConfig");
     } else expect(c).toContain('from "@sentry/browser"');
   });
   test("sentry: +Page by framework", () => {
-    if (fw("vue")) expect(existsSync("pages/sentry/+Page.vue")).toBe(true);
-    else if (fw("react") || fw("solid")) expect(existsSync("pages/sentry/+Page.tsx")).toBe(true);
+    if (BATI.has("vue")) expect(existsSync("pages/sentry/+Page.vue")).toBe(true);
+    else if (BATI.has("react") || BATI.has("solid")) expect(existsSync("pages/sentry/+Page.tsx")).toBe(true);
     else expect(existsSync("pages/sentry/+Page.js") && existsSync("pages/sentry/+client.js")).toBe(true);
   });
   test("sentry: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
@@ -369,27 +369,19 @@ function auth() {
 // lint / typecheck / knip — the static checks, run per app after its build.
 function checks() {
   const TIMEOUT = 120_000;
-  const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });
-  if (BATI.has("eslint")) test("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
-  if (BATI.has("biome")) test("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
+  const cli = (cmd: string[], env?: Record<string, string>) =>
+    exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT, env });
+  if (BATI.has("eslint")) test("eslint", () => cli(["eslint", "--max-warnings", "0", "."]), TIMEOUT);
+  if (BATI.has("biome")) test("biome", () => cli(["biome", "lint", "--error-on-warnings"]), TIMEOUT);
   if (BATI.has("oxlint"))
     test(
       "oxlint",
-      () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."),
+      () => cli(["oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."]),
       TIMEOUT,
     );
   // tsc rejects .ts files importing .vue modules, so storybook+vue has no typecheck (as upstream).
-  if (!(BATI.has("storybook") && BATI.has("vue"))) test("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
-  test(
-    "knip",
-    () =>
-      exec(npmCli, ["x", "knip", "--no-config-hints"], {
-        cwd: appDir,
-        timeout: TIMEOUT,
-        env: { VITE_CJS_IGNORE_WARNING: "1" },
-      }),
-    TIMEOUT,
-  );
+  if (!(BATI.has("storybook") && BATI.has("vue"))) test("typecheck", () => cli(["tsc", "--noEmit"]), TIMEOUT);
+  test("knip", () => cli(["knip", "--no-config-hints"], { VITE_CJS_IGNORE_WARNING: "1" }), TIMEOUT);
 }
 
 function cloudflare() {

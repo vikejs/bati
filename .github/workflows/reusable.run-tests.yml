@@ -47,14 +47,14 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      # Restore packages/{cli,tests-utils,features}/dist built by the init job.
+      # Restore the packages/*/dist built by the init job.
       - name: Restore built dists
         uses: actions/download-artifact@v8
         with:
           name: bati-dist-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          # upload-artifact roots the archive at the least-common-ancestor of the
-          # uploaded paths (packages/), so its entries are cli/dist, tests-utils/dist,
-          # features/dist — restore them back under packages/, where the harness looks.
+          # init uploads every packages/*/dist, so upload-artifact roots the archive at
+          # packages/ and its entries are <pkg>/dist — restore them back under packages/,
+          # where the CLI + harness resolve their @batijs/* workspace deps at runtime.
           path: packages
 
       # Generates the app, installs it, migrates, boots, runs every assertion +

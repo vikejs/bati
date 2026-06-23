@@ -23,6 +23,7 @@ export function waitForLocalhost({
     // holding the socket open forever and starving the overall `timeout`.
     const attempt = (ipVersion: 4 | 6) => {
       let settled = false;
+      let timer: ReturnType<typeof setTimeout> | undefined;
       const done = (fn: () => void) => {
         if (settled) return;
         settled = true;
@@ -48,7 +49,7 @@ export function waitForLocalhost({
         },
       );
 
-      const timer = setTimeout(
+      timer = setTimeout(
         () =>
           done(() => {
             request.destroy();

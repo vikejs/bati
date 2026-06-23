@@ -17,9 +17,9 @@ import {
 } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
-import { failuresFile, initTmpDir, removeTmpDir } from "../src/tmp.js";
 import type { RunnerContext } from "../src/types.js";
 import matrix, { type Kind, type Mode } from "./matrix.js";
+import { failuresFile, initTmpDir, removeTmpDir } from "./tmp.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
 const SPEC_ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
@@ -109,7 +109,8 @@ const context: RunnerContext = { tmpdir: "" };
 
 // Combos whose infra needs Docker (postgres → bati-pg, dokploy → compose) skip their server passes when
 // Docker is down locally — via Vitest's skipIf in the spec, so they show as skipped rather than vanish.
-// CI always has Docker. Checked once here and handed to every project.
+// CI always has Docker. Checked once here and handed to every project. The matching skip condition lives
+// in `skipPrimary`/`skipSmoke` (e2e.spec.ts); keep the two in sync if a new feature grows a Docker need.
 const needsDocker = (c: Combo) => c.flags.includes("postgres") || c.flags.includes("dokploy");
 const dockerAvailable = !combos.some(needsDocker) || !!process.env.CI || (await isDockerAvailable());
 
