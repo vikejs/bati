@@ -87,10 +87,6 @@ if (command === "list") {
 // Every subcommand reduces to the same two levers: which combos, and which tests within them. `all` /
 // `exact` pick combos and (with `--check`) a test filter; `failed` replays the previous run's failures.
 const { combos: selected, testNames } = resolveRun(command, flags, checks);
-if (testNames?.length === 0) {
-  console.log("[e2e] nothing matches the selection");
-  process.exit(0);
-}
 // Check names sit at the end of a test's full name (e.g. "… > checks > knip"), so anchor to avoid
 // matching unrelated tests like "no biome/oxlint directives".
 const testNamePattern = testNames ? `(${testNames.map(escapeRegex).join("|")})$` : undefined;
@@ -205,13 +201,8 @@ function inferKind(flags: string[]): Kind | undefined {
   return undefined;
 }
 
-interface FailureRecord {
-  flags: string[];
-  mode: Mode;
-  kind?: Kind;
-}
-
-function readFailures(): FailureRecord[] {
+// A failure record is just a serialized combo (so `failed` can regenerate and rerun it).
+function readFailures(): Combo[] {
   try {
     return JSON.parse(readFileSync(failuresFile, "utf8"));
   } catch {
@@ -219,8 +210,8 @@ function readFailures(): FailureRecord[] {
   }
 }
 
-function writeFailures(records: FailureRecord[]): void {
-  writeFileSync(failuresFile, JSON.stringify(records));
+function writeFailures(combos: Combo[]): void {
+  writeFileSync(failuresFile, JSON.stringify(combos));
 }
 
 // The combos whose spec failed — keyed on the file result, so a failed beforeAll (which Vitest reports
@@ -228,15 +219,15 @@ function writeFailures(records: FailureRecord[]): void {
 function failedCombos(
   files: { projectName?: string; name: string; result?: { state?: string } }[],
   apps: { combo: Combo }[],
-): FailureRecord[] {
+): Combo[] {
   const comboByName = new Map(apps.map((a) => [a.combo.flags.join("--"), a.combo]));
-  const records: FailureRecord[] = [];
+  const failed: Combo[] = [];
   for (const file of files) {
     if (file.result?.state !== "fail") continue;
     const combo = comboByName.get(file.projectName ?? file.name);
-    if (combo) records.push({ flags: combo.flags, mode: combo.mode, kind: combo.kind });
+    if (combo) failed.push(combo);
   }
-  return records;
+  return failed;
 }
 
 function escapeRegex(s: string): string {

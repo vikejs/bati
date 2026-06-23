@@ -129,7 +129,7 @@ function cartesian<T>(dims: readonly (readonly T[])[]): T[][] {
 // pair of axes, every value-combination appears in at least one row. Each row anchors on a still-
 // uncovered pair (so every row makes progress → termination), then fills the remaining axes to cover
 // the most new pairs. Deterministic: ties resolve to the earliest-declared value, so a fixed input
-// yields a fixed combo set (the `--list` output stays stable across runs).
+// yields a fixed combo set (the `list` output stays stable across runs).
 function coveringArray<T>(axes: readonly (readonly T[])[]): T[][] {
   const n = axes.length;
   if (n < 2 || axes.some((a) => a.length === 0)) return cartesian(axes);

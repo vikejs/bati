@@ -312,7 +312,7 @@ function dataRoundTrip() {
         expect(await (await fetch("/todo")).text()).toContain(text);
       });
     test("TODO.md presence", () => {
-      const expected = BATI.hasDatabase || BATI.has("cloudflare") || BATI.has("dokploy");
+      const expected = db || BATI.has("cloudflare") || BATI.has("dokploy");
       expect(existsSync("TODO.md")).toBe(expected);
     });
   });

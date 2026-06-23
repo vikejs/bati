@@ -6,9 +6,10 @@ project, via the programmatic Vitest API. One code path for local and CI.
 ## Run
 
 ```bash
-bun run build                                   # build the CLI + tests-utils first
-bun packages/tests/e2e/runner.ts                # the whole matrix
-bun packages/tests/e2e/runner.ts --only react,mantine,eslint,biome   # one combo (a CI job)
+bun run build                                                # build the CLI + tests-utils first
+bun packages/tests/e2e/runner.ts all                         # the whole matrix
+bun packages/tests/e2e/runner.ts exact --react --mantine --eslint --biome   # one combo (a CI job)
+bun packages/tests/e2e/runner.ts --help                      # commands and options
 ```
 
 ## Layout
@@ -29,5 +30,6 @@ cloudflare→preview, else prod).
 ## Adding coverage
 
 - A new flag combination → an entry in `matrix.ts`.
-- A new assertion → a function in `e2e.spec.ts` + a call in the composition; gate
-  it with `test.runIf(BATI.has(...))`.
+- A new assertion → a function in `e2e.spec.ts` + a call in the composition; register
+  it conditionally — `if (BATI.has(...)) test(...)`, not `test.runIf(...)` (which would
+  register a skipped test for every combo it doesn't apply to).
