@@ -12,7 +12,6 @@ import {
   db as dbAxis,
   exec,
   isDockerAvailable,
-  isPostgresAvailable,
   npmCli,
   orm as ormAxis,
 } from "@batijs/tests-utils";
@@ -24,7 +23,6 @@ import matrix, { type Kind, type Mode } from "./matrix.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
 const SPEC_ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
-const PG_URL = "postgresql://postgres:postgres@localhost:5432/app";
 
 interface Combo {
   flags: string[];
@@ -326,10 +324,24 @@ async function startPostgres() {
     { timeout: 120_000, stdio: ["ignore", "ignore", "inherit"] },
   );
   for (let i = 0; i < 60; i++) {
-    if (await isPostgresAvailable(PG_URL)) return;
+    if (await postgresAccepts()) return;
     await new Promise((r) => setTimeout(r, 1000));
   }
   throw new Error("[e2e] postgres did not become ready");
+}
+
+// Readiness probe via pg_isready over TCP *inside* the container. The image's init phase runs a temp
+// server on the unix socket only (no TCP), and Docker's host port-proxy answers a connection before
+// postgres is up — so only an in-container TCP probe reliably waits for the real server. Otherwise the
+// CREATE DATABASE below races the socket, which briefly vanishes during the temp→real server handoff.
+function postgresAccepts(): Promise<boolean> {
+  return exec("docker", ["exec", "bati-pg", "pg_isready", "-h", "127.0.0.1", "-U", "postgres"], {
+    timeout: 10_000,
+    stdio: "ignore",
+  }).then(
+    () => true,
+    () => false,
+  );
 }
 
 function stopPostgres() {
