@@ -50,7 +50,7 @@ jobs:
       - name: Compute matrix
         id: list
         shell: bash
-        run: echo "combos=$(bun packages/tests/e2e/runner.ts --list)" >> "$GITHUB_OUTPUT"
+        run: echo "combos=$(bun packages/tests/e2e/runner.ts list)" >> "$GITHUB_OUTPUT"
 
       # Ship every built package dist. The CLI + harness resolve their @batijs/*
       # workspace deps (core, features, …) from these at runtime; that set is

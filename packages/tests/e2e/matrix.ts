@@ -34,7 +34,7 @@ const matrix = [
     .case({ flags: ["react", "edgeone"] })
     .linters("eslint", "biome", "oxlint"),
   suite()
-    .matrix({ framework: "react", deploy: "vercel", server: ["hono", "express", "fastify", "elysia", null] })
+    .matrix({ framework: spread(framework), deploy: "vercel", server: ["hono", "express", "fastify", "elysia", null] })
     .linters("eslint", "biome", "oxlint"),
   // prisma
   suite()
@@ -61,7 +61,7 @@ const matrix = [
     .mode("none"),
   // linter-comment stripping (no server)
   suite()
-    .matrix({ framework: "react", data: "ts-rest", server: "hono", linter: ["eslint", "biome", "oxlint"] })
+    .matrix({ framework: spread(framework), data: "ts-rest", server: "hono", linter: ["eslint", "biome", "oxlint"] })
     .mode("none"),
   // aws (cdk synth + Lambda; the assertion owns its setup)
   suite()
@@ -73,38 +73,41 @@ const matrix = [
     .matrix({ framework: "react", deploy: "cloudflare", server: ["hono", null] })
     .linters("eslint", "biome", "oxlint")
     .kind("cloudflare"),
-  // server + data — full round-trip in dev, smoke in prod/docker
+  // server + data — full round-trip in dev, smoke in prod/docker. server/data/orm interact pairwise
+  // (the data handler + ORM register as middleware on each server), so cover every pair without the
+  // redundant full cube; framework rides along as a real axis so each framework's data-layer client
+  // glue is exercised, balanced across react/vue/solid.
   suite()
-    .matrix({
-      framework: "solid",
-      server: ["express", "elysia", "hono", "fastify"],
+    // sqlite — the core backend matrix
+    .pairwise({
+      framework: framework.values,
+      server: server.values,
       data: ["trpc", "telefunc", "ts-rest", null],
       db: "sqlite",
       orm: ["drizzle", "kysely", null],
     })
+    // no persistence — each data layer wired without a database (the in-memory storage path)
+    .matrix({ framework: spread(framework), server: spread(server), data: ["trpc", "telefunc", "ts-rest"] })
+    // postgres — the postgres ORM dialects, one round-trip each
     .matrix({
-      framework: "solid",
-      server: ["express", "hono", "fastify", "elysia"],
-      data: ["trpc", "telefunc", "ts-rest", null],
-    })
-    .matrix({ framework: ["react", "vue"], server: "hono", data: ["trpc", "telefunc", "ts-rest", null] })
-    .matrix({
-      framework: "solid",
-      server: ["express", "hono"],
-      data: ["telefunc", null],
+      framework: spread(framework),
+      server: spread(server),
+      data: "telefunc",
       db: "postgres",
       orm: ["drizzle", "kysely", null],
     })
-    .matrix({
-      framework: "solid",
+    // cloudflare (D1) — worker runtime across the data layers
+    .pairwise({
+      framework: framework.values,
       server: "hono",
       deploy: "cloudflare",
       data: ["trpc", "telefunc", "ts-rest", null],
       db: "sqlite",
       orm: ["drizzle", "kysely", null],
     })
+    // dokploy — container build + telefunc round-trip (docker smoke; kept small)
     .matrix({
-      framework: "react",
+      framework: spread(framework),
       server: "hono",
       deploy: "dokploy",
       data: "telefunc",
@@ -112,7 +115,7 @@ const matrix = [
       orm: ["drizzle", null],
     })
     .matrix({
-      framework: "react",
+      framework: spread(framework),
       server: "elysia",
       deploy: "dokploy",
       data: "telefunc",
@@ -134,7 +137,7 @@ const matrix = [
       orm: ["drizzle", "prisma", "kysely", null],
     })
     .matrix({
-      framework: "solid",
+      framework: spread(framework),
       server: spread(server),
       auth: "better-auth",
       db: "postgres",

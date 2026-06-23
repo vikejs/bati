@@ -6,7 +6,7 @@ on:
         type: string
       flags:
         required: true
-        type: string # comma-separated, e.g. "react,hono,drizzle,sqlite,eslint,biome,oxlint"
+        type: string # --flag list, e.g. "--react --hono --drizzle --sqlite --eslint --biome --oxlint"
       name:
         required: true
         type: string
@@ -22,7 +22,8 @@ env:
 jobs:
   run:
     runs-on: ${{ inputs.os }}
-    name: ${{ inputs.name }}
+    # The combo is the caller job's name; this nested name only adds the OS (UI shows "<combo> / <os>").
+    name: ${{ inputs.os }}
     env:
       BATI_TEST: true
       TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
@@ -60,4 +61,4 @@ jobs:
       # the smoke pass + lint/typecheck/knip — and starts/stops postgres + docker
       # as the combo needs. Replaces the whole .e2e / prepare.js / 6-check-step dance.
       - name: Run e2e
-        run: bun packages/tests/e2e/runner.ts --only ${{ inputs.flags }}
+        run: bun packages/tests/e2e/runner.ts exact ${{ inputs.flags }}

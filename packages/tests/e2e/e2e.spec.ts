@@ -79,21 +79,25 @@ async function prepareApp() {
 }
 
 function uiLibraries() {
-  test.runIf(BATI.has("compiled-css"))("ui: @compiled/react", async () => {
-    expect(await readFile("package.json", "utf-8")).toContain("@compiled/react");
-  });
-  test.runIf(BATI.has("mantine"))("ui: @mantine/core styles", async () => {
-    expect(await readFile("pages/+Layout.tsx", "utf-8")).toContain("@mantine/core/styles.css");
-  });
+  if (BATI.has("compiled-css"))
+    test("ui: @compiled/react", async () => {
+      expect(await readFile("package.json", "utf-8")).toContain("@compiled/react");
+    });
+  if (BATI.has("mantine"))
+    test("ui: @mantine/core styles", async () => {
+      expect(await readFile("pages/+Layout.tsx", "utf-8")).toContain("@mantine/core/styles.css");
+    });
 }
 
 function css() {
-  test.runIf(BATI.has("daisyui"))("css: tailwind.css includes daisyui", async () => {
-    expect(await readFile("pages/tailwind.css", "utf-8")).toContain("daisyui");
-  });
-  test.runIf(BATI.has("tailwindcss") && !BATI.has("daisyui"))("css: tailwind.css without daisyui", async () => {
-    expect(await readFile("pages/tailwind.css", "utf-8")).not.toContain("daisyui");
-  });
+  if (BATI.has("daisyui"))
+    test("css: tailwind.css includes daisyui", async () => {
+      expect(await readFile("pages/tailwind.css", "utf-8")).toContain("daisyui");
+    });
+  if (BATI.has("tailwindcss") && !BATI.has("daisyui"))
+    test("css: tailwind.css without daisyui", async () => {
+      expect(await readFile("pages/tailwind.css", "utf-8")).not.toContain("daisyui");
+    });
 }
 
 function sentry() {
@@ -168,33 +172,39 @@ function skills() {
     ];
     for (const name of core) expect(has(name), name).toBe(true);
   });
-  test.runIf(BATI.has("claude"))("skills: claude shim", () => {
-    expect(readFileSync("CLAUDE.md", "utf-8")).toContain("@AGENTS.md");
-    expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
-  });
-  test.runIf(BATI.has("gemini"))("skills: gemini shim", () => {
-    expect(readFileSync("GEMINI.md", "utf-8")).toContain("@./AGENTS.md");
-    expect(existsSync(join(".agents", "skills", "vike-routing", "SKILL.md"))).toBe(true);
-  });
-  test.runIf(BATI.has("drizzle"))("skills: backend skills", () => {
-    expect(has("server") && has("trpc")).toBe(true);
-    expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain("Drizzle ORM on SQLite");
-  });
-  test.runIf(BATI.has("tailwindcss"))("skills: frontend skills", () => {
-    expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
-  });
+  if (BATI.has("claude"))
+    test("skills: claude shim", () => {
+      expect(readFileSync("CLAUDE.md", "utf-8")).toContain("@AGENTS.md");
+      expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
+    });
+  if (BATI.has("gemini"))
+    test("skills: gemini shim", () => {
+      expect(readFileSync("GEMINI.md", "utf-8")).toContain("@./AGENTS.md");
+      expect(existsSync(join(".agents", "skills", "vike-routing", "SKILL.md"))).toBe(true);
+    });
+  if (BATI.has("drizzle"))
+    test("skills: backend skills", () => {
+      expect(has("server") && has("trpc")).toBe(true);
+      expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain(
+        "Drizzle ORM on SQLite",
+      );
+    });
+  if (BATI.has("tailwindcss"))
+    test("skills: frontend skills", () => {
+      expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
+    });
 }
 
 function linterComments() {
   const onlyLinter = (l: Flags) =>
     BATI.has(l) && (["eslint", "biome", "oxlint"] as const).filter((x) => BATI.has(x)).length === 1;
-  test.runIf(onlyLinter("eslint"))("no biome/oxlint directives", () => assertAbsent("biome-", "oxlint-"));
-  test.runIf(onlyLinter("biome"))("no eslint directives", () => assertAbsent("eslint-"));
-  test.runIf(onlyLinter("oxlint"))("no biome directives", () => assertAbsent("biome-"));
+  if (onlyLinter("eslint")) test("no biome/oxlint directives", () => assertAbsent("biome-", "oxlint-"));
+  if (onlyLinter("biome")) test("no eslint directives", () => assertAbsent("eslint-"));
+  if (onlyLinter("oxlint")) test("no biome directives", () => assertAbsent("biome-"));
 }
 
 function prismaTodo() {
-  test.runIf(BATI.has("prisma"))("prisma: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
+  if (BATI.has("prisma")) test("prisma: TODO.md", () => expect(existsSync("TODO.md")).toBe(true));
 }
 
 function dokployArtifacts() {
@@ -205,12 +215,10 @@ function dokployArtifacts() {
     expect(compose()).toContain("Dockerfile");
     expect(compose()).toContain("3000");
   });
-  test.runIf(BATI.has("drizzle"))("dokploy: compose passes DATABASE_URL", () =>
-    expect(compose()).toContain("DATABASE_URL"),
-  );
-  test.runIf(BATI.has("auth0"))("dokploy: compose passes AUTH0_CLIENT_ID", () =>
-    expect(compose()).toContain("AUTH0_CLIENT_ID"),
-  );
+  if (BATI.has("drizzle"))
+    test("dokploy: compose passes DATABASE_URL", () => expect(compose()).toContain("DATABASE_URL"));
+  if (BATI.has("auth0"))
+    test("dokploy: compose passes AUTH0_CLIENT_ID", () => expect(compose()).toContain("AUTH0_CLIENT_ID"));
 }
 
 function aws() {
@@ -239,23 +247,25 @@ function aws() {
 }
 
 function analytics() {
-  test.runIf(BATI.has("plausible.io"))("analytics: plausible script", async ({ fetch }) => {
-    const html = await (await fetch("/")).text();
-    expect(html).toContain("plausible.io");
-    expect(html).not.toContain("googletagmanager");
-    expect(existsSync("TODO.md")).toBe(true);
-  });
-  test.runIf(BATI.has("google-analytics"))("analytics: google tag", async ({ fetch }) => {
-    const html = await (await fetch("/")).text();
-    expect(html).not.toContain("plausible.io");
-    if (BATI.has("vue")) {
-      expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(200);
-    } else {
-      expect(html).toContain("googletagmanager");
-      expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(404);
-    }
-    expect(existsSync("TODO.md")).toBe(false);
-  });
+  if (BATI.has("plausible.io"))
+    test("analytics: plausible script", async ({ fetch }) => {
+      const html = await (await fetch("/")).text();
+      expect(html).toContain("plausible.io");
+      expect(html).not.toContain("googletagmanager");
+      expect(existsSync("TODO.md")).toBe(true);
+    });
+  if (BATI.has("google-analytics"))
+    test("analytics: google tag", async ({ fetch }) => {
+      const html = await (await fetch("/")).text();
+      expect(html).not.toContain("plausible.io");
+      if (BATI.has("vue")) {
+        expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(200);
+      } else {
+        expect(html).toContain("googletagmanager");
+        expect((await fetch("/pages/+onCreateApp.ts")).status).toBe(404);
+      }
+      expect(existsSync("TODO.md")).toBe(false);
+    });
 }
 
 function dataRoundTrip() {
@@ -270,33 +280,37 @@ function dataRoundTrip() {
 
   describe.sequential("create a todo", () => {
     const text = "__BATI_TEST_VALUE";
-    test.runIf(BATI.has("telefunc"))("post via telefunc", async ({ fetch }) => {
-      const res = await fetch("/_telefunc", {
-        method: "POST",
-        body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }),
-        headers: { "content-type": "application/json" },
+    if (BATI.has("telefunc"))
+      test("post via telefunc", async ({ fetch }) => {
+        const res = await fetch("/_telefunc", {
+          method: "POST",
+          body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }),
+          headers: { "content-type": "application/json" },
+        });
+        expect(res.status).toBe(200);
       });
-      expect(res.status).toBe(200);
-    });
-    test.runIf(BATI.has("trpc"))("post via trpc", async ({ fetch }) => {
-      const res = await fetch("/api/trpc/onNewTodo", {
-        method: "POST",
-        body: JSON.stringify(text),
-        headers: { "content-type": "application/json" },
+    if (BATI.has("trpc"))
+      test("post via trpc", async ({ fetch }) => {
+        const res = await fetch("/api/trpc/onNewTodo", {
+          method: "POST",
+          body: JSON.stringify(text),
+          headers: { "content-type": "application/json" },
+        });
+        expect(res.status).toBe(200);
       });
-      expect(res.status).toBe(200);
-    });
-    test.runIf(!BATI.has("telefunc") && !BATI.has("trpc"))("post via rest", async ({ fetch }) => {
-      const res = await fetch("/api/todo/create", {
-        method: "POST",
-        body: JSON.stringify({ text }),
-        headers: { "content-type": "application/json" },
+    if (!BATI.has("telefunc") && !BATI.has("trpc"))
+      test("post via rest", async ({ fetch }) => {
+        const res = await fetch("/api/todo/create", {
+          method: "POST",
+          body: JSON.stringify({ text }),
+          headers: { "content-type": "application/json" },
+        });
+        expect(res.status).toBe(200);
       });
-      expect(res.status).toBe(200);
-    });
-    test.runIf(db)("todo is persisted", async ({ fetch }) => {
-      expect(await (await fetch("/todo")).text()).toContain(text);
-    });
+    if (db)
+      test("todo is persisted", async ({ fetch }) => {
+        expect(await (await fetch("/todo")).text()).toContain(text);
+      });
     test("TODO.md presence", () => {
       const expected = BATI.hasDatabase || BATI.has("cloudflare") || BATI.has("dokploy");
       expect(existsSync("TODO.md")).toBe(expected);
@@ -306,17 +320,25 @@ function dataRoundTrip() {
 
 function auth() {
   if (kind !== "auth") return;
-  const auth0Untested = BATI.has("auth0") && !process.env.TEST_AUTH0_CLIENT_ID;
-  const betterAuth = BATI.has("better-auth");
 
-  // Auth.js / Auth0 ship a built-in signin page; Better Auth ships its own pages.
-  test.runIf(!betterAuth && !auth0Untested)("auth: signin page", async ({ fetch }) => {
-    const res = await fetch("/api/auth/signin");
-    expect(res.status).toBe(200);
-    expect(await res.text()).not.toContain('{"is404":true}');
-  });
+  // Auth.js / Auth0 ship a built-in signin page; Better Auth ships its own login/signup/account pages.
+  if (!BATI.has("better-auth")) {
+    // Auth0's probe needs real credentials, which only CI provides. The matrix only emits auth0 combos
+    // when the creds exist, but CI computes the combo list and runs combos in separate jobs whose env
+    // can diverge — so a credential-less run is surfaced as an explained skip, not a silent gap.
+    if (BATI.has("auth0") && !process.env.TEST_AUTH0_CLIENT_ID) {
+      test.skip("auth: signin page — needs TEST_AUTH0_CLIENT_ID", () => {});
+      return;
+    }
+    test("auth: signin page", async ({ fetch }) => {
+      const res = await fetch("/api/auth/signin");
+      expect(res.status).toBe(200);
+      expect(await res.text()).not.toContain('{"is404":true}');
+    });
+    return;
+  }
 
-  test.runIf(betterAuth)("auth: better-auth pages", async ({ fetch }) => {
+  test("auth: better-auth pages", async ({ fetch }) => {
     for (const route of ["/login", "/signup", "/account"]) {
       const res = await fetch(route);
       expect(res.status).toBe(200);
@@ -324,7 +346,7 @@ function auth() {
     }
   });
 
-  test.runIf(betterAuth)("auth: email/password flow", async ({ fetch }) => {
+  test("auth: email/password flow", async ({ fetch }) => {
     const email = `e2e_${Date.now()}@example.com`;
     const password = "Password123!";
     const headers = { "content-type": "application/json", origin: appUrl() };
@@ -334,7 +356,7 @@ function auth() {
     expect((await post("/api/auth/sign-in/email", { email, password: "wrong-password" })).status).toBe(401);
   });
 
-  test.runIf(betterAuth)("auth: telefunc disabled", async ({ fetch }) => {
+  test("auth: telefunc disabled", async ({ fetch }) => {
     expect((await fetch("/_telefunc", { method: "post" })).status).toBe(404);
   });
 }
@@ -343,15 +365,16 @@ function auth() {
 function checks() {
   const TIMEOUT = 120_000;
   const cli = (...cmd: string[]) => exec(npmCli, ["x", ...cmd], { cwd: appDir, timeout: TIMEOUT });
-  test.runIf(BATI.has("eslint"))("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
-  test.runIf(BATI.has("biome"))("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
-  test.runIf(BATI.has("oxlint"))(
-    "oxlint",
-    () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."),
-    TIMEOUT,
-  );
+  if (BATI.has("eslint")) test("eslint", () => cli("eslint", "--max-warnings", "0", "."), TIMEOUT);
+  if (BATI.has("biome")) test("biome", () => cli("biome", "lint", "--error-on-warnings"), TIMEOUT);
+  if (BATI.has("oxlint"))
+    test(
+      "oxlint",
+      () => cli("oxlint", "--max-warnings", "0", "--type-aware", "--ignore-path", ".gitignore", "."),
+      TIMEOUT,
+    );
   // tsc rejects .ts files importing .vue modules, so storybook+vue has no typecheck (as upstream).
-  test.runIf(!(BATI.has("storybook") && BATI.has("vue")))("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
+  if (!(BATI.has("storybook") && BATI.has("vue"))) test("typecheck", () => cli("tsc", "--noEmit"), TIMEOUT);
   test(
     "knip",
     () =>

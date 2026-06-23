@@ -28,13 +28,14 @@ jobs:
       os: windows-latest
 
   tests-windows:
+    name: react--hono--authjs
     needs: init-windows
     uses: ./.github/workflows/reusable.run-tests.yml
     secrets: inherit
     with:
       os: windows-latest
-      flags: react,hono,authjs,eslint,biome,oxlint
-      name: react--hono--authjs (windows)
+      flags: --react --hono --authjs --eslint --biome --oxlint
+      name: react--hono--authjs
 
   # Fast MacOS — one representative combo
   init-macos:
@@ -45,13 +46,14 @@ jobs:
       os: macos-latest
 
   tests-macos:
+    name: react--hono--authjs
     needs: init-macos
     uses: ./.github/workflows/reusable.run-tests.yml
     secrets: inherit
     with:
       os: macos-latest
-      flags: react,hono,authjs,eslint,biome,oxlint
-      name: react--hono--authjs (mac)
+      flags: --react --hono --authjs --eslint --biome --oxlint
+      name: react--hono--authjs
 
   # Full Ubuntu — the matrix is generated from matrix.ts by the init job
   init-ubuntu:
@@ -62,6 +64,7 @@ jobs:
       os: ubuntu-latest
 
   tests-ubuntu:
+    name: ${{ matrix.name }}
     needs: init-ubuntu
     strategy:
       fail-fast: false

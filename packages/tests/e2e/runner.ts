@@ -1,10 +1,25 @@
-// One path for local and CI: aggregate matrix.ts → generate an app per combo →
-// run them all as Vitest projects. Replaces src/index.ts + nx + the .e2e workspace.
-//   local:   bun packages/tests/e2e/runner.ts
-//   one job: bun packages/tests/e2e/runner.ts --only react,mantine,eslint,biome
+// One path for local and CI: aggregate matrix.ts → generate an app per combo → run them all as
+// Vitest projects. Subcommands:
+//   list                  emit the matrix as JSON for the CI fan-out (sorted by name), then exit
+//   all [--flag …]        run every combo, or only those whose flags are a superset of the given ones
+//   exact --flag …        run exactly one combo — generated and run even if matrix.ts doesn't list it
+// Add --dry-run to `all`/`exact` to print the selection instead of running it. Examples:
+//   bun packages/tests/e2e/runner.ts all
+//   bun packages/tests/e2e/runner.ts all --react --trpc
+//   bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Balancer, exec, isPostgresAvailable, npmCli } from "@batijs/tests-utils";
+import { parseArgs } from "node:util";
+import {
+  auth as authAxis,
+  Balancer,
+  data as dataAxis,
+  db as dbAxis,
+  exec,
+  isPostgresAvailable,
+  npmCli,
+  orm as ormAxis,
+} from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
 import { initTmpDir } from "../src/tmp.js";
@@ -21,21 +36,44 @@ interface Combo {
   kind?: Kind; // suite identity; its presence also triggers a smoke pass
 }
 
-// `--list` emits the matrix as JSON for the CI job-per-combo fan-out, then exits.
-if (process.argv.includes("--list")) {
-  process.stdout.write(
-    JSON.stringify(buildCombos().map((c) => ({ flags: c.flags.join(","), name: c.flags.join("--") }))),
-  );
+const { positionals, values } = parseArgs({
+  allowPositionals: true,
+  strict: false,
+  options: { "dry-run": { type: "boolean" } },
+});
+const command = positionals[0];
+const dryRun = values["dry-run"] === true;
+// Every other `--flag` is a Bati feature flag. parseArgs keeps them verbatim (`compiled-css`,
+// `plausible.io`), unlike parsers that camelCase or nest on dots.
+const flags = Object.keys(values).filter((k) => k !== "dry-run");
+
+// `list` feeds the CI job-per-combo fan-out: sorted by name so the matrix diffs cleanly between PRs,
+// and `flags` is the ready-to-pass `--flag` string the run job hands to `exact`.
+if (command === "list") {
+  const out = buildCombos()
+    .map((c) => ({ name: c.flags.join("--"), flags: c.flags.map((f) => `--${f}`).join(" ") }))
+    .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  process.stdout.write(JSON.stringify(out));
   process.exit(0);
 }
 
-const combos = selectCombos(buildCombos());
-console.log(`[e2e] ${combos.length} combo(s): ${combos.map((c) => c.flags.join("+")).join(", ")}`);
+const selected = select(command, flags);
+
+if (dryRun) {
+  for (const c of selected) {
+    const tags = [c.kind, c.mode === "dev" ? undefined : c.mode].filter(Boolean).join(", ");
+    console.log(`${c.flags.join("--")}${tags ? `  [${tags}]` : ""}`);
+  }
+  console.log(`[e2e] ${selected.length} combo(s)`);
+  process.exit(0);
+}
+
+console.log(`[e2e] ${selected.length} combo(s): ${selected.map((c) => c.flags.join("+")).join(", ")}`);
 
 const context: RunnerContext = { tmpdir: "" };
 await initTmpDir(context);
 
-const hasPostgres = combos.some((c) => c.flags.includes("postgres"));
+const hasPostgres = selected.some((c) => c.flags.includes("postgres"));
 if (hasPostgres) {
   await startPostgres();
   process.env.DATABASE_URL = PG_URL;
@@ -43,7 +81,7 @@ if (hasPostgres) {
 
 try {
   const apps: { combo: Combo; appDir: string }[] = [];
-  for (const combo of combos) {
+  for (const combo of selected) {
     console.log(`[e2e] generating ${combo.flags.join("+")}`);
     apps.push({ combo, appDir: await generateApp(combo.flags) });
   }
@@ -67,6 +105,46 @@ try {
   if (hasPostgres) await stopPostgres();
 }
 
+// `all` → every combo, or those that are a superset of the requested flags (e.g. `all --react --trpc`
+// runs every react+trpc combo). `exact` → the single combo with exactly those flags, synthesized
+// (dev mode + inferred kind) when matrix.ts doesn't declare it, so any combination can be run ad hoc.
+function select(cmd: string | undefined, want: string[]): Combo[] {
+  const all = buildCombos();
+  if (cmd === "all") {
+    if (want.length === 0) return all;
+    const hits = all.filter((c) => want.every((f) => c.flags.includes(f)));
+    if (hits.length === 0) fail(`no matrix combo is a superset of: ${want.join(", ")}`);
+    return hits;
+  }
+  if (cmd === "exact") {
+    if (want.length === 0) fail("`exact` needs at least one --flag");
+    const set = new Set(want);
+    const match = all.find((c) => c.flags.length === set.size && c.flags.every((f) => set.has(f)));
+    return [match ?? { flags: want, mode: "dev", kind: inferKind(want) }];
+  }
+  fail(
+    `unknown command ${cmd ? `"${cmd}"` : "(none)"}. Usage:\n` +
+      `  all [--flag …]   run every combo, or those whose flags are a superset of the given ones\n` +
+      `  exact --flag …   run exactly one combo (generated even if not in matrix.ts)\n` +
+      `  list             emit the matrix as JSON for the CI fan-out`,
+  );
+}
+
+function fail(msg: string): never {
+  console.error(`[e2e] ${msg}`);
+  process.exit(1);
+}
+
+// An off-matrix `exact` combo still needs a kind so the right assertion pass runs (data round-trip /
+// auth flows / cloudflare deploy). Infer it from the feature axes the flags touch.
+function inferKind(flags: string[]): Kind | undefined {
+  const touches = (axis: { values: readonly string[] }) => flags.some((f) => axis.values.includes(f));
+  if (touches(authAxis)) return "auth";
+  if (touches(dataAxis) || touches(dbAxis) || touches(ormAxis)) return "data";
+  if (flags.includes("cloudflare")) return "cloudflare";
+  return undefined;
+}
+
 // The shared Balancer keeps `.spread()` round-robin global across suites.
 function buildCombos(): Combo[] {
   const balancer = new Balancer();
@@ -83,15 +161,6 @@ function buildCombos(): Combo[] {
     }
   }
   return combos;
-}
-
-function selectCombos(all: Combo[]): Combo[] {
-  const i = process.argv.indexOf("--only");
-  if (i === -1) return all;
-  const want = new Set(process.argv[i + 1].split(","));
-  const match = all.find((c) => c.flags.length === want.size && c.flags.every((f) => want.has(f)));
-  if (!match) throw new Error(`--only ${[...want].join(",")} matches no combo in matrix.ts`);
-  return [match];
 }
 
 async function generateApp(flags: string[]): Promise<string> {

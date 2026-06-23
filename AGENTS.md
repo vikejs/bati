@@ -41,11 +41,18 @@ bun run lint
 # Unit tests (fast, ~15s)
 bun run test
 
-# E2E tests (extensive, run on CI - not recommended locally due to time)
+# E2E tests — every combo (extensive; CI runs these, slow locally)
 bun run test:e2e
 
-# Filter E2E tests
-bun run test:e2e --filter solid,authjs
+# Run only the combos whose flags match (superset filter)
+bun run test:e2e --react --trpc
+
+# Run one exact combo — generated and run even if matrix.ts doesn't list it
+bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
+
+# Print the selection without running it; or emit the matrix JSON the CI fan-out consumes
+bun packages/tests/e2e/runner.ts all --react --dry-run
+bun packages/tests/e2e/runner.ts list
 ```
 
 ## Adding E2E Tests for New Features
@@ -101,8 +108,8 @@ Key `suite()` API (see `suite.ts` for the full surface):
 ### Adding tests
 
 1. **A new flag combination** → an entry in `matrix.ts`. Express what you want via `.matrix(...)`/`.case(...)` (include-only; there is no `exclude`). `runner.ts` de-dupes identical `(flags, mode, kind)`, but check `matrix.ts` so you don't add a redundant suite.
-2. **A new assertion** → a function in `e2e.spec.ts` + a call in the composition; gate it with `test.runIf(BATI.has(...))`.
-3. **No matrix regeneration**: the CI test matrix is generated from `matrix.ts` at runtime (`runner.ts --list`) — nothing to regenerate or commit.
+2. **A new assertion** → a function in `e2e.spec.ts` + a call in the composition; gate it by registering the test only when it applies — `if (BATI.has(...)) test(...)`, not `test.runIf(...)`. A `runIf` registers a *skipped* test for every combo the assertion doesn't apply to, which buries the rare genuine skip under thousands of not-applicable ones. Reserve `test.skip` for an intentionally-not-run case, with the reason in the test name.
+3. **No matrix regeneration**: the CI test matrix is generated from `matrix.ts` at runtime (`runner.ts list`) — nothing to regenerate or commit.
 
 ## Project Layout
 
