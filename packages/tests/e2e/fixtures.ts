@@ -10,7 +10,7 @@ import {
   stopDockerCompose,
   zx,
 } from "@batijs/tests-utils";
-import { afterAll, test as base, beforeAll, expect, inject } from "vitest";
+import { afterAll, afterEach, test as base, beforeAll, expect, inject } from "vitest";
 import type { Mode } from "./matrix.js";
 
 export const flags = inject("flags");
@@ -43,6 +43,14 @@ export async function expectHome(fetch: Fetch) {
   expect(await res.text()).not.toContain('{"is404":true}');
 }
 
+// exec buffers a server's output (silent unless it crashes). Replay it at teardown only when a test
+// failed; reset per server so the smoke pass doesn't inherit the primary's verdict.
+let sawFailure = false;
+// Vitest parses the first arg for fixture injection, so it must be a destructuring pattern.
+afterEach(({ task }) => {
+  if (task.result?.state === "fail") sawFailure = true;
+});
+
 export function useApp() {
   useAppFor(mode);
 }
@@ -55,6 +63,7 @@ export function useAppFor(m: Mode) {
 async function bootApp(m: Mode) {
   process.chdir(appDir); // race-free: each project×file runs in its own forked worker
   if (m === "none") return; // file-only assertions, no server
+  sawFailure = false;
   await initPort(ctx);
   if (m === "dev") await runDevServer(ctx);
   else if (m === "prod")
@@ -65,6 +74,10 @@ async function bootApp(m: Mode) {
 }
 
 async function teardown(m: Mode) {
-  if (m === "docker") await stopDockerCompose();
-  else if (ctx.server?.pid) await zx.kill(ctx.server.pid);
+  if (m === "docker") {
+    await stopDockerCompose();
+  } else if (ctx.server) {
+    if (sawFailure) ctx.server.flushOutput();
+    if (ctx.server.pid) await zx.kill(ctx.server.pid);
+  }
 }

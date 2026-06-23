@@ -50,6 +50,10 @@ bun run test:e2e --react --trpc
 # Run one exact combo — generated and run even if matrix.ts doesn't list it
 bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
 
+# Restrict any run to specific checks (skips the server boot) — and rerun what last failed
+bun packages/tests/e2e/runner.ts exact --react --hono … --check=typecheck,knip
+bun packages/tests/e2e/runner.ts failed
+
 # Print the selection without running it; or emit the matrix JSON the CI fan-out consumes
 bun packages/tests/e2e/runner.ts all --react --dry-run
 bun packages/tests/e2e/runner.ts list

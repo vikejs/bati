@@ -1,8 +1,8 @@
-import type { ChildProcess } from "node:child_process";
+import type { ExecHandle } from "./exec.js";
 
 export interface AppContext {
   port: number;
-  server: (Promise<void> & ChildProcess) | undefined;
+  server: ExecHandle | undefined;
 }
 
 // Raw flag combinations for `combinate()` (used by the rules unit test).

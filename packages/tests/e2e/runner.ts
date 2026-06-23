@@ -3,10 +3,14 @@
 //   list                  emit the matrix as JSON for the CI fan-out (sorted by name), then exit
 //   all [--flag …]        run every combo, or only those whose flags are a superset of the given ones
 //   exact --flag …        run exactly one combo — generated and run even if matrix.ts doesn't list it
-// Add --dry-run to `all`/`exact` to print the selection instead of running it. Examples:
+//   failed                rerun the combos that failed in the previous run
+// `--check=knip,oxlint` narrows a run to those named checks; `--dry-run` prints the selection instead
+// of running it. Examples:
 //   bun packages/tests/e2e/runner.ts all
-//   bun packages/tests/e2e/runner.ts all --react --trpc
+//   bun packages/tests/e2e/runner.ts all --react --trpc --check=typecheck,knip
 //   bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
+//   bun packages/tests/e2e/runner.ts failed
+import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
@@ -22,7 +26,7 @@ import {
 } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
-import { initTmpDir } from "../src/tmp.js";
+import { failuresFile, initTmpDir } from "../src/tmp.js";
 import type { RunnerContext } from "../src/types.js";
 import matrix, { type Kind, type Mode } from "./matrix.js";
 
@@ -39,13 +43,20 @@ interface Combo {
 const { positionals, values } = parseArgs({
   allowPositionals: true,
   strict: false,
-  options: { "dry-run": { type: "boolean" } },
+  options: { "dry-run": { type: "boolean" }, check: { type: "string" } },
 });
 const command = positionals[0];
 const dryRun = values["dry-run"] === true;
 // Every other `--flag` is a Bati feature flag. parseArgs keeps them verbatim (`compiled-css`,
 // `plausible.io`), unlike parsers that camelCase or nest on dots.
-const flags = Object.keys(values).filter((k) => k !== "dry-run");
+const flags = Object.keys(values).filter((k) => k !== "dry-run" && k !== "check");
+const checkList = values.check
+  ? String(values.check)
+      .split(",")
+      .map((c) => c.trim())
+      .filter(Boolean)
+  : [];
+const checks = checkList.length > 0 ? checkList : undefined;
 
 // `list` feeds the CI job-per-combo fan-out: sorted by name so the matrix diffs cleanly between PRs,
 // and `flags` is the ready-to-pass `--flag` string the run job hands to `exact`.
@@ -57,13 +68,23 @@ if (command === "list") {
   process.exit(0);
 }
 
-const selected = select(command, flags);
+// Every subcommand reduces to the same two levers: which combos, and which tests within them. `all` /
+// `exact` pick combos and (with `--check`) a test filter; `failed` replays the previous run's failures.
+const { combos: selected, testNames } = resolveRun(command, flags, checks);
+if (testNames?.length === 0) {
+  console.log("[e2e] nothing matches the selection");
+  process.exit(0);
+}
+// Check names sit at the end of a test's full name (e.g. "… > checks > knip"), so anchor to avoid
+// matching unrelated tests like "no biome/oxlint directives".
+const testNamePattern = testNames ? `(${testNames.map(escapeRegex).join("|")})$` : undefined;
 
 if (dryRun) {
   for (const c of selected) {
     const tags = [c.kind, c.mode === "dev" ? undefined : c.mode].filter(Boolean).join(", ");
     console.log(`${c.flags.join("--")}${tags ? `  [${tags}]` : ""}`);
   }
+  if (testNames) console.log(`[e2e] tests: ${testNames.join(", ")}`);
   console.log(`[e2e] ${selected.length} combo(s)`);
   process.exit(0);
 }
@@ -97,13 +118,34 @@ try {
     },
   }));
 
-  const vitest = await createVitest("test", { watch: false }, { test: { projects } });
+  const vitest = await createVitest("test", { watch: false, testNamePattern }, { test: { projects } });
   await vitest.start();
-  const failed = vitest.state.getFiles().some((f) => f.result?.state === "fail");
+  const failures = failedCombos(vitest.state.getFiles(), apps);
   await vitest.close();
-  process.exitCode = failed ? 1 : 0;
+  // Record failures so `failed` can replay them — but not when `--check` narrowed the run to a subset,
+  // which would forget the checks it didn't run.
+  if (checks === undefined) writeFailures(failures);
+  process.exitCode = failures.length > 0 ? 1 : 0;
 } finally {
   if (hasPostgres) await stopPostgres();
+}
+
+// `failed` reruns the combos that failed in the previous run; `all` / `exact` pick combos from the
+// matrix. In every case `--check` is the within-combo test filter (none → run every test).
+function resolveRun(
+  cmd: string | undefined,
+  want: string[],
+  only?: string[],
+): { combos: Combo[]; testNames?: string[] } {
+  if (cmd === "failed") {
+    const recorded = readFailures();
+    if (recorded.length === 0) {
+      console.log("[e2e] no recorded failures to rerun");
+      process.exit(0);
+    }
+    return { combos: recorded, testNames: only };
+  }
+  return { combos: select(cmd, want), testNames: only };
 }
 
 // `all` → every combo, or those that are a superset of the requested flags (e.g. `all --react --trpc`
@@ -127,6 +169,7 @@ function select(cmd: string | undefined, want: string[]): Combo[] {
     `unknown command ${cmd ? `"${cmd}"` : "(none)"}. Usage:\n` +
       `  all [--flag …]   run every combo, or those whose flags are a superset of the given ones\n` +
       `  exact --flag …   run exactly one combo (generated even if not in matrix.ts)\n` +
+      `  failed           rerun the combos that failed in the previous run\n` +
       `  list             emit the matrix as JSON for the CI fan-out`,
   );
 }
@@ -144,6 +187,44 @@ function inferKind(flags: string[]): Kind | undefined {
   if (touches(dataAxis) || touches(dbAxis) || touches(ormAxis)) return "data";
   if (flags.includes("cloudflare")) return "cloudflare";
   return undefined;
+}
+
+interface FailureRecord {
+  flags: string[];
+  mode: Mode;
+  kind?: Kind;
+}
+
+function readFailures(): FailureRecord[] {
+  try {
+    return JSON.parse(readFileSync(failuresFile, "utf8"));
+  } catch {
+    return []; // absent on the first run
+  }
+}
+
+function writeFailures(records: FailureRecord[]): void {
+  writeFileSync(failuresFile, JSON.stringify(records));
+}
+
+// The combos whose spec failed — keyed on the file result, so a failed beforeAll (which Vitest reports
+// as a suite failure with its tests skipped, not failed) is caught alongside ordinary test failures.
+function failedCombos(
+  files: { projectName?: string; name: string; result?: { state?: string } }[],
+  apps: { combo: Combo }[],
+): FailureRecord[] {
+  const comboByName = new Map(apps.map((a) => [a.combo.flags.join("--"), a.combo]));
+  const records: FailureRecord[] = [];
+  for (const file of files) {
+    if (file.result?.state !== "fail") continue;
+    const combo = comboByName.get(file.projectName ?? file.name);
+    if (combo) records.push({ flags: combo.flags, mode: combo.mode, kind: combo.kind });
+  }
+  return records;
+}
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 // The shared Balancer keeps `.spread()` round-robin global across suites.
