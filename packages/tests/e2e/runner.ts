@@ -1,6 +1,7 @@
 // One path for local and CI: aggregate matrix.ts → generate an app per combo → run them all as
 // Vitest projects. See `USAGE` below (or `runner.ts --help`) for the commands and options.
 import { readFileSync, writeFileSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
@@ -117,6 +118,9 @@ pgReady.catch(() => {});
 
 await initTmpDir(context);
 
+// Each combo's app dir is deleted as soon as its tests finish, overlapping the slow per-app
+// node_modules removal with the run; the end-of-run rm then only mops up the small remainder.
+const removals: Promise<void>[] = [];
 try {
   const apps: { combo: Combo; appDir: string }[] = [];
   for (const combo of selected) {
@@ -134,7 +138,17 @@ try {
     },
   }));
 
-  const vitest = await createVitest("test", { watch: false, testNamePattern }, { test: { projects } });
+  const appDirByName = new Map(apps.map((a) => [a.combo.flags.join("--"), a.appDir]));
+  const reapApp = {
+    onTestModuleEnd(module: { project: { name: string } }) {
+      const dir = appDirByName.get(module.project.name);
+      // best-effort: the end-of-run rm is the guarantee (e.g. Windows won't delete a worker's cwd)
+      if (dir) removals.push(rm(dir, { recursive: true, force: true, maxRetries: 2 }).catch(() => {}));
+    },
+  };
+  const reporters = keep ? ["default"] : ["default", reapApp];
+
+  const vitest = await createVitest("test", { watch: false, testNamePattern }, { test: { projects, reporters } });
   await pgReady; // ready by the time the first combo boots
   await vitest.start();
   const failures = failedCombos(vitest.state.getFiles(), apps);
@@ -145,7 +159,10 @@ try {
   process.exitCode = failures.length > 0 ? 1 : 0;
 } finally {
   if (hasPostgres) await stopPostgres();
-  if (!keep) await removeTmpDir(context); // off the next run's critical path; `--keep` to inspect apps
+  if (!keep) {
+    await Promise.all(removals); // mostly already deleted during the run
+    await removeTmpDir(context); // the light remainder, off the next run's critical path
+  }
 }
 
 // `failed` reruns the combos that failed in the previous run; `all` / `exact` pick combos from the
