@@ -54,6 +54,9 @@ bun packages/tests/e2e/runner.ts exact --react --hono --trpc --sqlite --drizzle 
 bun packages/tests/e2e/runner.ts exact --react --hono … --check=typecheck,knip
 bun packages/tests/e2e/runner.ts failed
 
+# The generated apps are removed when a run ends; pass --keep to inspect them afterwards
+bun packages/tests/e2e/runner.ts exact --react --hono … --keep
+
 # Print the selection without running it; or emit the matrix JSON the CI fan-out consumes
 bun packages/tests/e2e/runner.ts all --react --dry-run
 bun packages/tests/e2e/runner.ts list

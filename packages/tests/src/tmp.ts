@@ -11,7 +11,11 @@ export const failuresFile = join(base, "bati-e2e-failures.json");
 
 export async function initTmpDir(context: RunnerContext) {
   context.tmpdir = join(base, "bati");
-  await rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
+  await removeTmpDir(context); // a previous run killed mid-flight may have left it behind
   await mkdir(context.tmpdir);
   await mkdir(join(context.tmpdir, "packages"));
+}
+
+export function removeTmpDir(context: RunnerContext) {
+  return rm(context.tmpdir, { recursive: true, force: true, maxRetries: 2 });
 }

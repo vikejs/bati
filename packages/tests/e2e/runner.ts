@@ -16,7 +16,7 @@ import {
 } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
-import { failuresFile, initTmpDir } from "../src/tmp.js";
+import { failuresFile, initTmpDir, removeTmpDir } from "../src/tmp.js";
 import type { RunnerContext } from "../src/types.js";
 import matrix, { type Kind, type Mode } from "./matrix.js";
 
@@ -41,6 +41,7 @@ Commands:
 Options:
   --check=a,b      run only the named checks (e.g. typecheck,knip); skips the server boot
   --dry-run        print the selection instead of running it
+  --keep           keep the generated apps on disk (default: removed when the run ends)
   -h, --help       show this help
 
 Examples:
@@ -48,24 +49,23 @@ Examples:
   runner.ts exact --react --hono --trpc --sqlite --drizzle --eslint --biome --oxlint
   runner.ts failed`;
 
-const { positionals, values } = parseArgs({
-  allowPositionals: true,
-  strict: false,
-  options: {
-    "dry-run": { type: "boolean" },
-    check: { type: "string" },
-    help: { type: "boolean", short: "h" },
-  },
-});
+const options = {
+  "dry-run": { type: "boolean" },
+  check: { type: "string" },
+  keep: { type: "boolean" },
+  help: { type: "boolean", short: "h" },
+} satisfies Record<string, { type: "boolean" | "string"; short?: string }>;
+const { positionals, values } = parseArgs({ allowPositionals: true, strict: false, options });
 const command = positionals[0];
 if (values.help) {
   console.log(USAGE);
   process.exit(0);
 }
 const dryRun = values["dry-run"] === true;
-// Every other `--flag` is a Bati feature flag. parseArgs keeps them verbatim (`compiled-css`,
-// `plausible.io`), unlike parsers that camelCase or nest on dots.
-const flags = Object.keys(values).filter((k) => k !== "dry-run" && k !== "check" && k !== "help");
+const keep = values.keep === true;
+// Every flag that isn't one of the runner's own options is a Bati feature flag. parseArgs keeps them
+// verbatim (`compiled-css`, `plausible.io`), unlike parsers that camelCase or nest on dots.
+const flags = Object.keys(values).filter((k) => !(k in options));
 const checkList = values.check
   ? String(values.check)
       .split(",")
@@ -108,14 +108,18 @@ if (dryRun) {
 console.log(`[e2e] ${selected.length} combo(s): ${selected.map((c) => c.flags.join("+")).join(", ")}`);
 
 const context: RunnerContext = { tmpdir: "" };
-await initTmpDir(context);
 
 // Postgres combos reach this container through their own generated `.env` (which defaults to the same
 // localhost URL). We must NOT set process.env.DATABASE_URL here: it is inherited by every combo's
 // migrate/build/dev child — sqlite ones included — and shared-env's loader won't override an already-set
 // var, so better-sqlite3 would get the postgres URL as a file path ("directory does not exist").
 const hasPostgres = selected.some((c) => c.flags.includes("postgres"));
-if (hasPostgres) await startPostgres();
+// Bring it up alongside app generation; only awaited right before the run, so non-postgres runs never
+// wait on docker. The catch defers a docker failure to that `await pgReady`, in order.
+const pgReady = hasPostgres ? startPostgres() : Promise.resolve();
+pgReady.catch(() => {});
+
+await initTmpDir(context);
 
 try {
   const apps: { combo: Combo; appDir: string }[] = [];
@@ -135,6 +139,7 @@ try {
   }));
 
   const vitest = await createVitest("test", { watch: false, testNamePattern }, { test: { projects } });
+  await pgReady; // ready by the time the first combo boots
   await vitest.start();
   const failures = failedCombos(vitest.state.getFiles(), apps);
   await vitest.close();
@@ -144,6 +149,7 @@ try {
   process.exitCode = failures.length > 0 ? 1 : 0;
 } finally {
   if (hasPostgres) await stopPostgres();
+  if (!keep) await removeTmpDir(context); // off the next run's critical path; `--keep` to inspect apps
 }
 
 // `failed` reruns the combos that failed in the previous run; `all` / `exact` pick combos from the
