@@ -7,20 +7,4 @@ export default defineConfig({
   knip: {
     ignore: [".edgeone/**"],
   },
-  // Deploy skill.
-  skills(meta) {
-    const run = meta.BATI.pmRun;
-    return [
-      {
-        name: "deploy",
-        description: "How to deploy this app to EdgeOne Pages. Use when deploying or managing environment variables.",
-        body: `Deploys to Tencent EdgeOne Pages.
-
-- **Deploy:** push to an EdgeOne-connected Git repo (or use the EdgeOne CLI). \`${run} build\` builds locally.
-- **Env vars:** set them in the EdgeOne Pages dashboard; locally they're in \`.env\`.
-
-See https://edgeone.ai/document/pages and \`TODO.md\`.`,
-      },
-    ];
-  },
 });

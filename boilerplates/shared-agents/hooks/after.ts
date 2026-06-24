@@ -1,11 +1,11 @@
 import { cp, mkdir, symlink, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
-import type { HookContext, VikeMeta } from "@batijs/core/config";
+import type { VikeMeta } from "@batijs/core/config";
 import { CLAUDE_SKILLS_DIR, SKILLS_DIR } from "@batijs/features";
 import { composeSkills } from "../compose.js";
 
-export default async function onafter(cwd: string, _meta: VikeMeta, { skills }: HookContext): Promise<void> {
-  for (const { path, content } of composeSkills(skills)) {
+export default async function onafter(cwd: string, meta: VikeMeta): Promise<void> {
+  for (const { path, content } of composeSkills((flag) => meta.BATI.has(flag))) {
     const dest = join(cwd, path);
     await mkdir(dirname(dest), { recursive: true });
     await writeFile(dest, content, "utf-8");

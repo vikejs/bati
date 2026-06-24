@@ -1,37 +1,44 @@
-import type { BatiSkill } from "@batijs/core/config";
 import { expect, test } from "vitest";
 import { composeSkills, renderSkillMd } from "./compose.js";
 
-const skill: BatiSkill = {
-  name: "vike-routing",
-  description: "Add pages and routes. Use when creating a page or changing routing.",
-  body: "In this project, pages live in `pages/`.",
-};
-
-test("renderSkillMd — frontmatter + body", () => {
-  expect(renderSkillMd(skill)).toBe(
+test("renderSkillMd — frontmatter + URL-only body", () => {
+  expect(
+    renderSkillMd("react", "React", {
+      description: "React + Vike conventions. Use when writing components or handling SSR/hydration.",
+      llms: "https://react.dev/llms.txt",
+    }),
+  ).toBe(
     `---
-name: "vike-routing"
-description: "Add pages and routes. Use when creating a page or changing routing."
+name: "react"
+description: "React + Vike conventions. Use when writing components or handling SSR/hydration."
 ---
 
-In this project, pages live in \`pages/\`.
+Up-to-date React documentation for this project. Read it before working with React:
+
+https://react.dev/llms.txt
 `,
   );
 });
 
-test("renderSkillMd — allowed-tools when present", () => {
-  expect(renderSkillMd({ ...skill, allowedTools: ["Read", "Edit"] })).toContain(`allowed-tools: ["Read", "Edit"]`);
-});
-
-test("composeSkills — one SKILL.md per skill under the canonical dir, sorted by name", () => {
-  const second: BatiSkill = { name: "auth-guards", description: "Protect routes.", body: "..." };
-  expect(composeSkills([skill, second]).map((f) => f.path)).toEqual([
-    ".agents/skills/auth-guards/SKILL.md",
-    ".agents/skills/vike-routing/SKILL.md",
+test("composeSkills — one SKILL.md per selected feature that has a skill, sorted by flag", () => {
+  const composed = composeSkills((flag) => (["vike", "react", "drizzle"] as string[]).includes(flag));
+  expect(composed.map((c) => c.path)).toEqual([
+    ".agents/skills/drizzle/SKILL.md",
+    ".agents/skills/react/SKILL.md",
+    ".agents/skills/vike/SKILL.md",
   ]);
+  const react = composed.find((c) => c.path.includes("/react/"));
+  expect(react?.content).toContain(`name: "react"`);
+  expect(react?.content).toContain("https://react.dev/llms.txt");
 });
 
-test("composeSkills — duplicate skill names throw", () => {
-  expect(() => composeSkills([skill, skill])).toThrow(/Duplicate skill name/);
+test("composeSkills — features without a skill are never emitted, even when selected", () => {
+  // `eslint` has no `skill` field (no llms.txt), so it must produce no skill.
+  const paths = composeSkills((flag) => flag === "eslint").map((c) => c.path);
+  expect(paths).not.toContain(".agents/skills/eslint/SKILL.md");
+});
+
+test("composeSkills — readonly features (vike) are emitted even when nothing is selected", () => {
+  // Vike is `readonly` (always in the stack), so its skill ships regardless of selection.
+  expect(composeSkills(() => false).map((c) => c.path)).toEqual([".agents/skills/vike/SKILL.md"]);
 });

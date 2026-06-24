@@ -19,21 +19,4 @@ export default defineConfig({
       },
     ];
   },
-  // Raw DB-engine skill — only emitted when no ORM is selected (see `if`).
-  skills(meta) {
-    const run = meta.BATI.pmRun;
-    return [
-      {
-        name: "database",
-        description:
-          "How to work with the database in this app (raw PostgreSQL / postgres.js). Use when querying, adding a table, or migrating.",
-        body: `Raw PostgreSQL via postgres.js (no ORM). The client is in \`database/postgres/db.ts\`, schema in \`database/postgres/schema/\`, queries in \`database/postgres/queries/\`. Connection comes from \`DATABASE_URL\` in \`.env\`.
-
-- **Add a table:** add it to \`database/postgres/schema/\` and migrate with \`${run} postgres:migrate\`.
-- **Write queries:** add functions in \`database/postgres/queries/\` using the \`sql\` client; on the server it's available as \`context.db\`.
-
-See https://github.com/porsager/postgres.`,
-      },
-    ];
-  },
 });

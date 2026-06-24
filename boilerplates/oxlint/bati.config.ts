@@ -12,20 +12,4 @@ export default defineConfig({
     // needs an explicit ignore.
     ignoreDependencies: ["oxlint", "oxlint-tsgolint"],
   },
-  // Linter skill.
-  skills(meta) {
-    const run = meta.BATI.pmRun;
-    return [
-      {
-        name: "oxlint",
-        description: "How linting works in this app (Oxlint). Use when running the linter or adjusting lint rules.",
-        body: `Oxlint — a fast Rust-based linter (config in \`.oxlintrc.json\`).
-
-- **Lint:** \`${run} lint\` (\`oxlint --type-aware\`).
-- **Rules:** edit \`.oxlintrc.json\`.
-
-See https://oxc.rs/docs/guide/usage/linter.html.`,
-      },
-    ];
-  },
 });

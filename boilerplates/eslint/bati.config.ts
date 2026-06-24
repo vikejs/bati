@@ -7,20 +7,4 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["eslint"],
   },
-  // Linter skill.
-  skills(meta) {
-    const run = meta.BATI.pmRun;
-    return [
-      {
-        name: "eslint",
-        description: "How linting works in this app (ESLint). Use when running the linter or adjusting lint rules.",
-        body: `ESLint with a flat config in \`eslint.config.ts\`.
-
-- **Lint:** \`${run} lint\` (\`eslint .\`).
-- **Rules:** edit \`eslint.config.ts\`.
-
-See https://eslint.org.`,
-      },
-    ];
-  },
 });

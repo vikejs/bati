@@ -66,8 +66,8 @@ PostgreSQL targets a Postgres server. Selected on its own you get a thin client;
   {
     label: "AI Agent",
     group: categoriesGroups.Utilities,
-    description: `Generate agent skills (SKILL.md) tailored to your selected stack,
-so AI coding agents understand this project's conventions out of the box.`,
+    description: `Generate agent skills (SKILL.md) for your selected stack — each one points AI coding
+agents at the tool's official llms.txt, so they always read current docs.`,
   },
   {
     label: "Linter",

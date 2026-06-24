@@ -6,7 +6,7 @@ import { execSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Flags } from "@batijs/features";
+import { type Feature, type Flags, features } from "@batijs/features";
 import { exec, npmCli } from "@batijs/tests-utils";
 import { beforeAll, describe, expect } from "vitest";
 import {
@@ -157,40 +157,29 @@ function storybook() {
 }
 
 function skills() {
-  const has = (name: string) => existsSync(join(".agents", "skills", name, "SKILL.md"));
+  const skillFile = (flag: string) => join(".agents", "skills", flag, "SKILL.md");
+  const has = (flag: string) => existsSync(skillFile(flag));
 
-  test("skills: vike-core skills present", () => {
-    const core = [
-      "vike-routing",
-      "vike-data-fetching",
-      "vike-config",
-      "vike-navigation",
-      "vike-render-modes",
-      "vike-pagecontext",
-      "vike-hooks",
-      "vike-error-pages",
-    ];
-    for (const name of core) expect(has(name), name).toBe(true);
-  });
-  test("skills: Claude dir mirrors the canonical skills", () => {
-    expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
-  });
-  test("skills: selected-stack skills present", () => {
-    expect(has("ui-framework")).toBe(true);
+  // Single source of truth (mirrors composeSkills): a skill exists iff the feature publishes an llms.txt
+  // (`skill`) AND is in the stack — selected, or `readonly` like Vike. Skills are named by flag, so a flag
+  // never collides with another feature's skill dir.
+  const all = features as ReadonlyArray<Feature>;
+  const inStack = (f: Feature) => f.readonly || BATI.has(f.flag as Flags);
+  const withSkill = all.filter((f) => f.skill && inStack(f));
+  const withoutSkill = all.filter((f) => !f.skill && inStack(f));
 
-    const expectations: [boolean, string][] = [
-      [BATI.hasServer, "server"],
-      [BATI.has("telefunc"), "telefunc"],
-      [BATI.has("trpc"), "trpc"],
-      [BATI.has("ts-rest"), "ts-rest"],
-      [BATI.has("drizzle"), "drizzle"],
-      [BATI.has("kysely"), "kysely"],
-      [BATI.has("prisma"), "prisma"],
-      [BATI.has("tailwindcss"), "styling"],
-      [BATI.has("plausible.io") || BATI.has("google-analytics"), "analytics"],
-      [BATI.has("vercel") || BATI.has("dokploy"), "deploy"],
-    ];
-    for (const [selected, name] of expectations) if (selected) expect(has(name), name).toBe(true);
+  test("skills: vike skill present + mirrored to the Claude dir", () => {
+    expect(has("vike")).toBe(true);
+    expect(existsSync(join(".claude", "skills", "vike", "SKILL.md"))).toBe(true);
+  });
+  test("skills: one skill per in-stack llms-feature, pointing at its llms.txt", () => {
+    for (const f of withSkill) {
+      expect(has(f.flag), f.flag).toBe(true);
+      expect(readFileSync(skillFile(f.flag), "utf-8"), f.flag).toContain(f.skill!.llms);
+    }
+  });
+  test("skills: no skill for in-stack features without an llms.txt", () => {
+    for (const f of withoutSkill) expect(has(f.flag), f.flag).toBe(false);
   });
 }
 
