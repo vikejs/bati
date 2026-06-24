@@ -21,7 +21,7 @@
 - [x] **Phase 2** — Graph CLI (text / JSON / DOT / SVG)
 - [x] **Phase 3** — Matrix generator (`tests/e2e/generate.ts`) — constraint-aware, no coverage holes
 - [x] **Phase 4** — `verify` semantics (`tests/e2e/verify.ts`, sync-guarded)
-- [ ] **Phase 5** — Cutover (`matrix.ts` → `generateMatrix(buildGraph(), verify)`)
+- [x] **Phase 5** — Cutover (`matrix.ts` → generated backend core + explicit residue)
 - [ ] **Final self-review** (see end of file)
 - [ ] **Delete this file**
 
@@ -82,6 +82,17 @@ _Progress log (append dated notes per step):_
   the suites); (2) far leaner — deploy/cloudflare/dokploy/postgres-specific variants are the
   intended explicit residue; (3) `inferKind` labels auth+data combos "auth", so their data
   round-trip assertions wouldn't run — an assertion-layer follow-up.
+- **2026-06-24 · Phase 5 cutover done (user: full cutover).** `matrix.ts` is now the single `Combo[]`
+  source: `buildMatrix(await generateMatrix())` (generated backend core) + a `residue` of suites the
+  generator doesn't produce — all peripheral feature suites, plus the deploy-specific backend
+  variants (Cloudflare D1, dokploy, auth0/better-auth cloud) extracted from the old data/auth suites.
+  `buildCombos` removed (logic folded into matrix.ts, breaking the import cycle); `runner.ts` consumes
+  `matrix` directly; `matrix-diff` spec → `matrix.local.spec.ts` (no-dups + no-holes). **73 combos**
+  (was 106; the 40 pairwise-redundant home combos dropped, same t=2 coverage); deploy-specifics
+  preserved (cloudflare 17, dokploy 7, vercel 6). check-types + 7 specs green; `runner list` emits 73.
+  **Validation gate (not run here):** generated combos include some the author didn't hand-pick
+  (prisma+data, auth+data crossings); their assertions self-gate (e.g. `hasDbDemo`), but a full
+  **`bun run test:e2e`** is the real confirmation before merge. Revertible if it surfaces failures.
 
 ---
 

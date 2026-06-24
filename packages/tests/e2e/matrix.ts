@@ -1,7 +1,10 @@
-// The single declaration of which combos exist — the `suite()` builder with
-// `.mode()` (primary run mode, default "dev") and `.kind()` (suite identity, which
-// drives the kind-scoped assertions and a built/containerized smoke pass).
-import { framework, type SuiteKind, type SuiteMode, server, spread, suite } from "@batijs/tests-utils";
+// The combos the E2E suite runs. The backend core (server / data / db / orm / auth on the home
+// deploy) is generated from the boilerplate interaction graph — see `generate.ts`. The `residue`
+// below is everything the generator doesn't produce: the peripheral feature suites, and the
+// deploy-specific backend variants (Cloudflare D1, dokploy) that ride on a non-home runtime.
+import { Balancer, framework, type SuiteKind, type SuiteMode, spread, suite } from "@batijs/tests-utils";
+import { type Combo, comboKey } from "./combos.js";
+import { generateMatrix } from "./generate.js";
 
 export type Mode = SuiteMode;
 export type Kind = SuiteKind;
@@ -9,7 +12,7 @@ export type Kind = SuiteKind;
 // auth0 only when its credentials are present (CI provides them).
 const auths = ["authjs", ...(process.env.TEST_AUTH0_CLIENT_ID ? ["auth0"] : [])];
 
-const matrix = [
+const residue = [
   // UI libraries
   suite()
     .matrix({ framework: "react", ui: ["compiled-css", "mantine"] })
@@ -23,7 +26,7 @@ const matrix = [
   suite()
     .matrix({ framework: framework.values, analytics: ["plausible.io", "google-analytics", null] })
     .linters("eslint", "biome", "oxlint"),
-  // deploy targets (home only)
+  // deploy targets (home + serverless)
   suite()
     .case({ framework: spread(framework), flags: "prettier" })
     .linters("eslint", "biome", "oxlint"),
@@ -36,7 +39,7 @@ const matrix = [
   suite()
     .matrix({ framework: spread(framework), deploy: "vercel", server: ["hono", "express", "fastify", "elysia", null] })
     .linters("eslint", "biome", "oxlint"),
-  // prisma
+  // prisma — build-check only; prisma opts out of the shared data demo
   suite()
     .matrix({ framework: spread(framework), server: "hono", flags: "prisma", db: ["sqlite", "postgres"] })
     .linters("eslint", "biome", "oxlint"),
@@ -46,7 +49,7 @@ const matrix = [
   suite()
     .case({ framework: spread(framework), flags: "storybook" })
     .linters("eslint"),
-  // agent skills — generated for every scaffold; cover the feature-gated branches cheaply (no server)
+  // agent skills — cover the feature-gated branches cheaply (no server)
   suite()
     .case({ framework: "react", server: "hono", data: "trpc", db: "sqlite", orm: "drizzle" })
     .case({ framework: "vue", css: "tailwindcss", deploy: "vercel", analytics: "plausible.io" })
@@ -65,30 +68,8 @@ const matrix = [
     .matrix({ framework: "react", deploy: "cloudflare", server: ["hono", null] })
     .linters("eslint", "biome", "oxlint")
     .kind("cloudflare"),
-  // server + data — full round-trip in dev, smoke in prod/docker. server/data/orm interact pairwise
-  // (the data handler + ORM register as middleware on each server), so cover every pair without the
-  // redundant full cube; framework rides along as a real axis so each framework's data-layer client
-  // glue is exercised, balanced across react/vue/solid.
+  // data — Cloudflare D1 (worker runtime) + dokploy (container smoke); the home-deploy core is generated
   suite()
-    // sqlite — the core backend matrix
-    .pairwise({
-      framework: framework.values,
-      server: server.values,
-      data: ["trpc", "telefunc", "ts-rest", null],
-      db: "sqlite",
-      orm: ["drizzle", "kysely", null],
-    })
-    // no persistence — each data layer wired without a database (the in-memory storage path)
-    .matrix({ framework: spread(framework), server: spread(server), data: ["trpc", "telefunc", "ts-rest"] })
-    // postgres — the postgres ORM dialects, one round-trip each
-    .matrix({
-      framework: spread(framework),
-      server: spread(server),
-      data: "telefunc",
-      db: "postgres",
-      orm: ["drizzle", "kysely", null],
-    })
-    // cloudflare (D1) — worker runtime across the data layers
     .pairwise({
       framework: framework.values,
       server: "hono",
@@ -97,7 +78,6 @@ const matrix = [
       db: "sqlite",
       orm: ["drizzle", "kysely", null],
     })
-    // dokploy — container build + telefunc round-trip (docker smoke; kept small)
     .matrix({
       framework: spread(framework),
       server: "hono",
@@ -116,25 +96,10 @@ const matrix = [
     })
     .linters("eslint", "biome", "oxlint")
     .kind("data"),
-  // server + auth — auth flows in dev, smoke in prod/docker
+  // auth — Cloudflare + dokploy variants; the home-deploy core is generated
   suite()
-    .matrix({ framework: framework.values, server: server.values, auth: auths })
     .matrix({ framework: "react", server: "hono", deploy: "cloudflare", auth: "auth0" })
     .matrix({ framework: "react", server: "hono", deploy: "dokploy", auth: auths })
-    .matrix({
-      framework: framework.values,
-      server: spread(server),
-      auth: "better-auth",
-      db: "sqlite",
-      orm: ["drizzle", "prisma", "kysely", null],
-    })
-    .matrix({
-      framework: spread(framework),
-      server: spread(server),
-      auth: "better-auth",
-      db: "postgres",
-      orm: ["drizzle", "kysely", null],
-    })
     .matrix({
       framework: "react",
       server: "hono",
@@ -147,4 +112,22 @@ const matrix = [
     .kind("auth"),
 ];
 
-export default matrix;
+export default buildMatrix(await generateMatrix());
+
+// Generated backend core first, then the residue suites, deduped — the generator and a hand suite can
+// land on the same combo.
+function buildMatrix(generated: Combo[]): Combo[] {
+  const balancer = new Balancer();
+  const seen = new Set<string>();
+  const combos: Combo[] = [];
+  const add = (combo: Combo) => {
+    const key = comboKey(combo);
+    if (seen.has(key)) return;
+    seen.add(key);
+    combos.push(combo);
+  };
+
+  for (const combo of generated) add(combo);
+  for (const s of residue) for (const flags of s.flatten(balancer)) add({ flags, mode: s.runMode ?? "dev", kind: s.suiteKind });
+  return combos;
+}

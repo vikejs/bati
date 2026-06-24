@@ -9,7 +9,8 @@ import { exec, isDockerAvailable, npmCli } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
 import type { RunnerContext } from "../src/types.js";
-import { buildCombos, type Combo, inferKind } from "./combos.js";
+import { type Combo, inferKind } from "./combos.js";
+import matrix from "./matrix.js";
 import { failuresFile, initTmpDir, removeTmpDir } from "./tmp.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
@@ -63,7 +64,7 @@ const checks = checkList.length > 0 ? checkList : undefined;
 // `list` feeds the CI job-per-combo fan-out: sorted by name so the matrix diffs cleanly between PRs,
 // and `flags` is the ready-to-pass `--flag` string the run job hands to `exact`.
 if (command === "list") {
-  const out = buildCombos()
+  const out = matrix
     .map((c) => ({ name: c.flags.join("--"), flags: c.flags.map((f) => `--${f}`).join(" ") }))
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
   process.stdout.write(JSON.stringify(out));
@@ -175,7 +176,7 @@ function resolveRun(
       fail(`no failures recorded to rerun — run \`all\` (or \`exact\`) first.\n  file: ${failuresFile}`);
     }
     // More than half the matrix "failing" is never a real rerun set — it's a stale or cascaded file.
-    const total = buildCombos().length;
+    const total = matrix.length;
     if (recorded.length * 2 > total) {
       fail(
         `${recorded.length}/${total} combos recorded as failed — more than half, so aborting: this is almost\n` +
@@ -193,7 +194,7 @@ function resolveRun(
 // `all` matches every combo that's a superset of the requested flags (empty → all). `exact` finds the
 // one combo with exactly those flags, or synthesizes it (dev mode + inferred kind) when off-matrix.
 function select(cmd: string | undefined, want: string[]): Combo[] {
-  const all = buildCombos();
+  const all = matrix;
   if (cmd === "all") {
     if (want.length === 0) return all;
     const hits = all.filter((c) => want.every((f) => c.flags.includes(f)));
