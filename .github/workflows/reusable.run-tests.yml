@@ -4,18 +4,15 @@ on:
       os:
         required: true
         type: string
-      destination:
-        required: true
-        type: string
       flags:
         required: true
-        type: string
-      test-files:
+        type: string # --flag list, e.g. "--react --hono --drizzle --sqlite --eslint --biome --oxlint"
+      name:
         required: true
         type: string
 
 concurrency:
-  group: tests-generated-${{ inputs.os }}-${{ inputs.destination }}-${{ github.ref }}
+  group: tests-run-${{ inputs.os }}-${{ inputs.name }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -23,164 +20,44 @@ env:
   BUN_VERSION: "1.3.11"
 
 jobs:
-  reusable_workflow_job:
+  run:
     runs-on: ${{ inputs.os }}
-
-    name: Run ${{ inputs.flags }}
-
+    # The combo is the caller job's name; this nested name only adds the OS (UI shows "<combo> / <os>").
+    name: ${{ inputs.os }}
     env:
       BATI_TEST: true
       TEST_AUTH0_CLIENT_ID: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
       TEST_AUTH0_ISSUER_BASE_URL: ${{ secrets.TEST_AUTH0_ISSUER_BASE_URL }}
       TEST_GITHUB_CLIENT_ID: ${{ secrets.TEST_GITHUB_CLIENT_ID }}
       TEST_GITHUB_CLIENT_SECRET: ${{ secrets.TEST_GITHUB_CLIENT_SECRET }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
 
       - uses: oven-sh/setup-bun@v2
         name: Install bun
         with:
           bun-version: ${{ env.BUN_VERSION }}
 
-      - name: Download Bati CLI
-        uses: actions/download-artifact@v8
+      - name: Install Node.js
+        uses: actions/setup-node@v6
         with:
-          name: bati-cli-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          path: ./bati-cli
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Download Bati tests
-        uses: actions/download-artifact@v8
-        with:
-          name: bati-tests-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          path: ./bati-tests
-
-      - name: Download tests-utils
-        uses: actions/download-artifact@v8
-        with:
-          name: tests-utils-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          path: ./bati-tests-utils
-
-      - name: Download tests-files
-        uses: actions/download-artifact@v8
-        with:
-          name: tests-files-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          path: ./bati-tests-files
-
-      - name: Run Bati CLI
-        shell: bash
-        # Run the CLI with the destination outside the checkout to prevent tools
-        # like Storybook from walking up and detecting nx.json in the repo root.
-        # Use $GITHUB_WORKSPACE/$RUNNER_TEMP env vars (not ${{ }} expressions) so bash
-        # does not interpret backslashes in Windows paths as escape sequences.
-        run: bun "$GITHUB_WORKSPACE/bati-cli/dist/index.js" --knip ${{ inputs.flags }} "$RUNNER_TEMP/${{ inputs.destination }}"
-
-      # Every matrix keeps the generated app pristine and hosts all e2e
-      # artefacts in a sibling `<destination>.e2e/` workspace. TEST_DIR is
-      # where Link tests-utils, Link tests files, Prepare Bati tests, lint
-      # and test all run.
-      - name: Resolve test working dir
-        shell: bash
-        run: |
-          mkdir -p "$RUNNER_TEMP/${{ inputs.destination }}.e2e"
-          echo "TEST_DIR=$RUNNER_TEMP/${{ inputs.destination }}.e2e" >> "$GITHUB_ENV"
-
-      - name: Link tests-utils
-        shell: bash
-        run: cp -s "$GITHUB_WORKSPACE/bati-tests-utils/"* .
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Link tests files
-        shell: bash
-        run: cp -s "$GITHUB_WORKSPACE/bati-tests-files/"* .
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Prepare Bati tests
-        shell: bash
-        run:
-          bun "$GITHUB_WORKSPACE/bati-tests/prepare.js" --test-files='${{ inputs.test-files }}' ${{
-          inputs.flags }}
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Install dependencies (app)
-        shell: bash
+      - name: Install dependencies
         run: bun install
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
 
-      - name: Install dependencies (e2e workspace)
-        shell: bash
-        run: bun install
-        working-directory: ${{ env.TEST_DIR }}
+      - name: Restore built dists
+        uses: actions/download-artifact@v8
+        with:
+          name: bati-dist-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          # init uploads every packages/*/dist, so upload-artifact roots the archive at
+          # packages/ and its entries are <pkg>/dist — restore them back under packages/,
+          # where the CLI + harness resolve their @batijs/* workspace deps at runtime.
+          path: packages
 
-      - name: Generate types
-        if: contains(inputs.flags, '--cloudflare')
-        shell: bash
-        run: bun run generate-types
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
-
-      # For dokploy the build happens inside `docker compose up --build` during
-      # the test step; a separate local build would duplicate the work.
-      - name: Run build
-        if: "!contains(inputs.flags, '--dokploy')"
-        shell: bash
-        run: bun run build
-        working-directory: ${{ runner.temp }}/${{ inputs.destination }}
-
-      # PostgreSQL-backed apps connect to the default DATABASE_URL
-      # (postgresql://postgres:postgres@localhost:5432/app). Spin up a matching server.
-      - name: Start PostgreSQL
-        if: contains(inputs.flags, '--postgres')
-        shell: bash
-        run: |
-          docker run -d --name bati-postgres \
-            -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=app \
-            -p 5432:5432 postgres:18-alpine
-          for i in $(seq 1 30); do
-            if docker exec bati-postgres pg_isready -U postgres -d app >/dev/null 2>&1; then
-              echo "PostgreSQL is ready"; break
-            fi
-            sleep 1
-          done
-
-      - name: Run tests
-        shell: bash
-        # Bun hangs on Windows
-        run: ${{ runner.os == 'Windows' && 'npm run test' || 'bun run test' }}
-        working-directory: ${{ env.TEST_DIR }}
-
-      # Lint / typecheck / knip scripts live on the .e2e/ workspace and proxy
-      # to the sibling app via `cd ../<app>`. They run for every matrix that
-      # selected the corresponding flag — including --dokploy.
-      - name: Run lint:eslint
-        if: contains(inputs.flags, '--eslint')
-        shell: bash
-        run: bun run lint:eslint
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Run lint:biome
-        if: contains(inputs.flags, '--biome')
-        shell: bash
-        run: bun run lint:biome
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Run lint:oxlint
-        if: contains(inputs.flags, '--oxlint')
-        shell: bash
-        run: bun run lint:oxlint
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Run typecheck
-        shell: bash
-        run: bun run typecheck
-        working-directory: ${{ env.TEST_DIR }}
-
-      - name: Run knip
-        shell: bash
-        run: bun run knip
-        working-directory: ${{ env.TEST_DIR }}
+      # Generates the app, installs it, migrates, boots, runs every assertion + the
+      # smoke pass + lint/typecheck/knip — starting/stopping postgres + docker as the
+      # combo needs.
+      - name: Run e2e
+        run: bun packages/tests/e2e/runner.ts exact ${{ inputs.flags }}

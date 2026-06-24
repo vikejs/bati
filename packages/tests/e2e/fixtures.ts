@@ -1,0 +1,85 @@
+import { BatiSet, type Flags, features } from "@batijs/features";
+import {
+  type AppContext,
+  exec,
+  initPort,
+  npmCli,
+  runDevServer,
+  runDockerCompose,
+  runProd,
+  stopDockerCompose,
+  zx,
+} from "@batijs/tests-utils";
+import { afterAll, afterEach, test as base, beforeAll, expect, inject } from "vitest";
+import type { Mode } from "./matrix.js";
+
+export const flags = inject("flags");
+// The same semantic feature-query helper the boilerplates use (BATI.hasDatabase, .has(), …).
+export const BATI = new BatiSet(flags as Flags[], features, npmCli);
+export const appDir = inject("appDir");
+export const mode = inject("mode");
+export const kind = inject("kind");
+export const smoke = kind !== undefined; // data/auth/cloudflare combos get a smoke pass
+// False only locally when Docker can't run: the spec then skips the passes that need it (see e2e.spec).
+export const dockerAvailable = inject("dockerAvailable");
+
+// The built/containerized mode a combo is re-run in after its primary (dev) pass.
+export const smokeMode: Mode = BATI.has("dokploy") ? "docker" : BATI.has("cloudflare") ? "preview" : "prod";
+
+export const runScript = (...args: string[]) => exec(npmCli, ["run", ...args], { cwd: appDir, timeout: 120_000 });
+
+const ctx: AppContext = { port: 0, server: undefined };
+
+export const appUrl = () => `http://localhost:${ctx.port}`;
+
+type Fetch = (path: string, init?: RequestInit) => Promise<Response>;
+
+export const test = base.extend<{ fetch: Fetch }>({
+  // biome-ignore lint/correctness/noEmptyPattern: vitest passes fixture deps as the first arg; this fixture needs none
+  fetch: ({}, use) => use((path, init) => fetch(path.startsWith("http") ? path : `${appUrl()}${path}`, init)),
+});
+
+export async function expectHome(fetch: Fetch) {
+  const res = await fetch("/");
+  expect(res.status).toBe(200);
+  expect(await res.text()).not.toContain('{"is404":true}');
+}
+
+// exec buffers a server's output (silent unless it crashes). Replay it at teardown only when a test
+// failed; reset per server so the smoke pass doesn't inherit the primary's verdict.
+let sawFailure = false;
+// Vitest parses the first arg for fixture injection, so it must be a destructuring pattern.
+afterEach(({ task }) => {
+  if (task.result?.state === "fail") sawFailure = true;
+});
+
+export function useApp() {
+  useAppFor(mode);
+}
+
+export function useAppFor(m: Mode) {
+  beforeAll(() => bootApp(m), 600_000);
+  afterAll(() => teardown(m), m === "docker" ? 60_000 : 30_000);
+}
+
+async function bootApp(m: Mode) {
+  process.chdir(appDir); // race-free: each project×file runs in its own forked worker
+  if (m === "none") return; // file-only assertions, no server
+  sawFailure = false;
+  await initPort(ctx);
+  if (m === "dev") await runDevServer(ctx);
+  else if (m === "prod")
+    await runProd(ctx); // the generated `prod` script self-builds
+  else if (m === "preview") await runProd(ctx, "preview");
+  else if (m === "docker") await runDockerCompose(ctx);
+  else m satisfies never;
+}
+
+async function teardown(m: Mode) {
+  if (m === "docker") {
+    await stopDockerCompose();
+  } else if (ctx.server) {
+    if (sawFailure) ctx.server.flushOutput();
+    if (ctx.server.pid) await zx.kill(ctx.server.pid);
+  }
+}

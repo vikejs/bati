@@ -1,7 +1,6 @@
 import getPort from "get-port";
-import type { GlobalContext } from "./types.js";
+import type { AppContext } from "./types.js";
 
-export async function initPort(context: GlobalContext) {
+export async function initPort(context: AppContext) {
   context.port = await getPort();
-  context.port_1 = await getPort();
 }

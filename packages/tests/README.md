@@ -1,11 +1,6 @@
-This repo doesn't run tests directly unless they are `*.local.spec.ts` files.
-All other tests in `tests` folder follow these steps:
-- Create temp folder for a monorepo basis (usually _/tmp/bati_)
-- Call Bati CLI for all combinations defined by tests `matrix` exports in _<temp folder>/packages/_
-- Copy necessary tests to the right _<temp folder>/packages/<repo hash>_ folder
-- Update package.json of those repos
-- Create a vitest config in each of those repos
-- Create package.json and Nx config in workspace root
-- Call _bun install_ in monorepo
-- Call `nx run-many --targets=test,lint,build` in monorepo
-- Handles Nx cache via _/tmp/bati-cache_ folder
+# tests
+
+- **`*.local.spec.ts`** — plain unit tests, run directly by `bun run test` (Vitest).
+- **`e2e/`** — the end-to-end suite: every feature-flag combo is generated into a real app and
+  run as a Vitest project. One code path for local and CI, driven by `e2e/runner.ts`. See
+  [`e2e/README.md`](./e2e/README.md).

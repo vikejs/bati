@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "start": "bun src/index.ts",
     "test": "vitest run",
-    "test:e2e": "bun src/index.ts",
-    "build": "tsdown"
+    "test:e2e": "bun e2e/runner.ts"
   },
   "keywords": [],
   "description": "Next-gen scaffolder. Get started with fully-functional apps, and choose any tool you want",
@@ -21,13 +19,8 @@
     "@batijs/tests-utils": "workspace:*",
     "@types/node": "^20.19.37",
     "@types/which": "^3.0.4",
-    "fast-glob": "^3.3.3",
     "knip": "^6.17.1",
-    "mri": "^1.2.0",
-    "p-limit": "^7.3.0",
-    "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.9",
-    "yaml": "^2.9.0"
+    "vitest": "^4.1.9"
   }
 }

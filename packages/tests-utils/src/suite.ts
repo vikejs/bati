@@ -1,12 +1,10 @@
 /**
- * Chainable suite API — replaces the `matrix` + `exclude` exports.
+ * Chainable suite API: authors describe what they DO want to test (include-only), and `.spread()`
+ * picks a single framework per combo with global round-robin balancing so vue / react / solid each
+ * get roughly equal coverage across the whole repo.
  *
- * Authors describe what they DO want to test (include-only), and `.spread()`
- * picks a single framework per combo with global round-robin balancing so
- * vue / react / solid each get roughly equal coverage across the whole repo.
- *
- * Spec files export a `Suite` as default; the loader calls `flatten(balancer)`
- * to resolve spread markers and produce `string[][]` combos.
+ * `matrix.ts` exports an array of `Suite`s; the runner calls `flatten(balancer)` on each to resolve
+ * spread markers into the final `string[][]` combos.
  */
 
 import { type CategoryLabels, features } from "@batijs/features";
@@ -108,17 +106,6 @@ type Dimension = DimensionValue | readonly DimensionValue[];
 type MatrixSpec = Record<string, Dimension>;
 type CaseSpec = Record<string, DimensionValue | readonly DimensionValue[]>;
 
-// Walks the spec object and yields the string union of every flag it
-// can possibly produce (literal strings + values inside spread axes).
-type ExtractStrings<V> = V extends string
-  ? V
-  : V extends SpreadMarker<infer S>
-    ? S
-    : V extends readonly (infer U)[]
-      ? ExtractStrings<U>
-      : never;
-type SpecFlags<S> = ExtractStrings<S[keyof S]>;
-
 function toArray<T>(v: T | readonly T[]): readonly T[] {
   return Array.isArray(v) ? (v as readonly T[]) : [v as T];
 }
@@ -136,34 +123,109 @@ function cartesian<T>(dims: readonly (readonly T[])[]): T[][] {
   return acc;
 }
 
-export class Suite<Flags extends string = never> {
-  /** Phantom type carrier — used to derive a flag union for `testMatch`. */
-  declare readonly __flagsType: Flags;
+// Greedy all-pairs (pairwise) covering array: the smallest practical set of rows such that, for every
+// pair of axes, every value-combination appears in at least one row. Each row anchors on a still-
+// uncovered pair (so every row makes progress → termination), then fills the remaining axes to cover
+// the most new pairs. Deterministic: ties resolve to the earliest-declared value, so a fixed input
+// yields a fixed combo set (the `list` output stays stable across runs).
+function coveringArray<T>(axes: readonly (readonly T[])[]): T[][] {
+  const n = axes.length;
+  if (n < 2 || axes.some((a) => a.length === 0)) return cartesian(axes);
 
+  const key = (i: number, ai: number, j: number, aj: number) => `${i},${ai},${j},${aj}`;
+  const uncovered = new Set<string>();
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      for (let ai = 0; ai < axes[i].length; ai++) {
+        for (let aj = 0; aj < axes[j].length; aj++) uncovered.add(key(i, ai, j, aj));
+      }
+    }
+  }
+
+  // Per-axis usage counts, so when several values cover equally many new pairs we prefer the
+  // least-used one — the covering array stays minimal but spreads each axis's values evenly (e.g.
+  // react/vue/solid get roughly equal representation) rather than front-loading the first-declared.
+  const used = axes.map((a) => new Array<number>(a.length).fill(0));
+  const rows: T[][] = [];
+  while (uncovered.size > 0) {
+    const [ai, vi, aj, vj] = (uncovered.values().next().value as string).split(",").map(Number);
+    const choice = new Array<number>(n).fill(-1);
+    choice[ai] = vi;
+    choice[aj] = vj;
+    for (let k = 0; k < n; k++) {
+      if (choice[k] !== -1) continue;
+      let bestIdx = 0;
+      let bestGain = -1;
+      for (let vk = 0; vk < axes[k].length; vk++) {
+        let gain = 0;
+        for (let m = 0; m < n; m++) {
+          if (m === k || choice[m] === -1) continue;
+          const [lo, loV, hi, hiV] = m < k ? [m, choice[m], k, vk] : [k, vk, m, choice[m]];
+          if (uncovered.has(key(lo, loV, hi, hiV))) gain++;
+        }
+        // Higher gain wins; ties go to the least-used value, then to declaration order.
+        if (gain > bestGain || (gain === bestGain && used[k][vk] < used[k][bestIdx])) {
+          bestGain = gain;
+          bestIdx = vk;
+        }
+      }
+      choice[k] = bestIdx;
+    }
+    for (let i = 0; i < n; i++) {
+      used[i][choice[i]]++;
+      for (let j = i + 1; j < n; j++) uncovered.delete(key(i, choice[i], j, choice[j]));
+    }
+    rows.push(choice.map((idx, i) => axes[i][idx]));
+  }
+  return rows;
+}
+
+export type SuiteMode = "dev" | "prod" | "preview" | "docker" | "none";
+export type SuiteKind = "data" | "auth" | "cloudflare";
+
+export class Suite {
   private combos: RawCombo[] = [];
   private constants: string[] = [];
 
+  /** Primary run mode (default "dev") + the optional kind (drives kind-scoped tests + a smoke pass). */
+  runMode?: SuiteMode;
+  suiteKind?: SuiteKind;
+
   /**
-   * Cross product of named dimensions. `null` in a dimension list means
-   * "this dimension is absent in that combo" (replaces the `undefined`
-   * sentinel from the old API).
+   * Cross product of named dimensions. `null` in a dimension list means "this dimension is absent in
+   * that combo".
    *
    *   .matrix({ framework: "solid", server: ["hono", "express"], data: ["trpc", null] })
    *   → 4 combos: solid+hono+trpc, solid+hono, solid+express+trpc, solid+express
    */
-  matrix<S extends MatrixSpec>(spec: S): Suite<Flags | ExtractStrings<S[keyof S]>> {
+  matrix(spec: MatrixSpec): this {
     const dims = Object.values(spec).map((v) => toArray(v));
     for (const row of cartesian(dims)) {
       this.combos.push(row.filter((v): v is ComboEntry => v !== null && v !== undefined));
     }
-    return this as unknown as Suite<Flags | ExtractStrings<S[keyof S]>>;
+    return this;
+  }
+
+  /**
+   * All-pairs covering array over the named dimensions: the smallest practical set of combos such
+   * that every value-pair across any two dimensions appears in at least one combo. Same value
+   * semantics as `.matrix()` (string | spread | null; null = dimension absent in that combo). Use it
+   * instead of `.matrix()` when the dimensions interact pairwise but the full cross product is
+   * redundant — e.g. server × data × ORM, where each pair matters but the exhaustive triples do not.
+   */
+  pairwise(spec: MatrixSpec): this {
+    const dims = Object.values(spec).map((v) => toArray(v));
+    for (const row of coveringArray(dims)) {
+      this.combos.push(row.filter((v): v is ComboEntry => v !== null && v !== undefined));
+    }
+    return this;
   }
 
   /**
    * One explicit combo. Values may be a string, a spread marker, or an array
    * of either (e.g. `flags: ["sentry", "logrocket"]`).
    */
-  case<S extends CaseSpec>(spec: S): Suite<Flags | SpecFlags<S>> {
+  case(spec: CaseSpec): this {
     const combo: ComboEntry[] = [];
     for (const v of Object.values(spec)) {
       if (v === null || v === undefined) continue;
@@ -173,13 +235,23 @@ export class Suite<Flags extends string = never> {
       }
     }
     this.combos.push(combo);
-    return this as unknown as Suite<Flags | SpecFlags<S>>;
+    return this;
   }
 
   /** Flags appended to every combo (linters are the canonical use). */
-  linters<F extends string>(...flags: F[]): Suite<Flags | F> {
+  linters(...flags: string[]): this {
     this.constants.push(...flags);
-    return this as unknown as Suite<Flags | F>;
+    return this;
+  }
+
+  mode(m: SuiteMode): this {
+    this.runMode = m;
+    return this;
+  }
+
+  kind(k: SuiteKind): this {
+    this.suiteKind = k;
+    return this;
   }
 
   /**
@@ -234,6 +306,3 @@ const ruleMessageMap = (() => {
 export function suite(): Suite {
   return new Suite();
 }
-
-/** Extract the flag union from a Suite, for use with `testMatch<Flags<typeof t>>(…)`. */
-export type Flags<S> = S extends Suite<infer F> ? F : never;

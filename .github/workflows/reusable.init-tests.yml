@@ -4,9 +4,13 @@ on:
       os:
         required: true
         type: string
+    outputs:
+      combos:
+        description: "The e2e matrix as JSON — one entry per combo, for the run fan-out."
+        value: ${{ jobs.init.outputs.combos }}
 
 concurrency:
-  group: tests-entry-os-${{ inputs.os }}-${{ github.ref }}
+  group: tests-init-${{ inputs.os }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -14,11 +18,11 @@ env:
   BUN_VERSION: "1.3.11"
 
 jobs:
-  suite:
+  init:
     runs-on: ${{ inputs.os }}
-
     name: ${{ inputs.os }}
-
+    outputs:
+      combos: ${{ steps.list.outputs.combos }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -39,55 +43,25 @@ jobs:
       - name: Build packages
         run: bun run build
 
-      - name: Run tests
+      - name: Unit tests
         run: bun run test
 
-      - name: Deploy CLI locally
-        run: bun run scripts/deploy.ts ./packages/cli ./bati-cli
+      # The runner reads matrix.ts and emits the combos the run jobs fan out over.
+      - name: Compute matrix
+        id: list
+        shell: bash
+        run: echo "combos=$(bun packages/tests/e2e/runner.ts list)" >> "$GITHUB_OUTPUT"
 
-      - name: Archive Bati CLI
+      # Ship every built package dist. The CLI + harness resolve their @batijs/*
+      # workspace deps (core, features, …) from these at runtime; that set is
+      # transitive and easy to under-specify, so upload them all rather than list.
+      - name: Archive built dists
         uses: actions/upload-artifact@v7
         with:
-          name: bati-cli-${{ inputs.os }}-${{ env.NODE_VERSION }}
+          name: bati-dist-${{ inputs.os }}-${{ env.NODE_VERSION }}
           if-no-files-found: error
           retention-days: 1
           overwrite: true
           include-hidden-files: true
-          path: ./bati-cli/*
-
-      - name: Deploy tests locally
-        run: bun run scripts/deploy.ts ./packages/tests ./bati-tests
-
-      - name: Archive Bati tests
-        uses: actions/upload-artifact@v7
-        with:
-          name: bati-tests-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          if-no-files-found: error
-          retention-days: 1
-          overwrite: true
-          include-hidden-files: true
-          path: ./bati-tests/dist/*
-
-      - name: Pack tests-utils
-        run: bun pm pack
-        working-directory: ./packages/tests-utils
-
-      - name: Archive tests-utils
-        uses: actions/upload-artifact@v7
-        with:
-          name: tests-utils-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          if-no-files-found: error
-          retention-days: 1
-          overwrite: true
-          include-hidden-files: true
-          path: ./packages/tests-utils/batijs-tests-utils-*.tgz
-
-      - name: Archive tests files
-        uses: actions/upload-artifact@v7
-        with:
-          name: tests-files-${{ inputs.os }}-${{ env.NODE_VERSION }}
-          if-no-files-found: error
-          retention-days: 1
-          overwrite: true
-          include-hidden-files: true
-          path: ./packages/tests/tests/*
+          path: |
+            packages/*/dist
