@@ -13,9 +13,9 @@ export type Kind = SuiteKind;
 const auths = ["authjs", ...(process.env.TEST_AUTH0_CLIENT_ID ? ["auth0"] : [])];
 
 const residue = [
-  // UI libraries
+  // UI libraries (shadcn-ui dependsOn tailwindcss + react, resolved by the CLI)
   suite()
-    .matrix({ framework: "react", ui: ["compiled-css", "mantine"] })
+    .matrix({ framework: "react", ui: ["compiled-css", "mantine", "shadcn-ui"] })
     .linters("eslint", "biome"),
   // CSS
   suite()
