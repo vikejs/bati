@@ -1,6 +1,6 @@
 export enum categoriesGroups {
   Frontend = "Frontend",
-  Data = "Data",
+  Backend = "Backend",
   Deployment = "Deployment",
   Utilities = "Utilities",
 }
