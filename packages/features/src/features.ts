@@ -878,9 +878,9 @@ export const features = [
     ],
   },
 
-  // AI Agent — llms.txt-pointer skills generated into every scaffold (one per selected feature that has a
-  // `skill`). Always on and hidden everywhere (no CLI flag, not shown in the Web UI); the shared-agents
-  // boilerplate composes the SKILL.md files.
+  // AI Agent — llms.txt-pointer skills generated into every scaffold (one per in-stack feature that has a
+  // `skill` — selected, or always-on like Vike). Always on and hidden everywhere (no CLI flag, not shown
+  // in the Web UI); the shared-agents boilerplate composes the SKILL.md files.
   {
     category: "AI Agent",
     label: "Agent Skills",

@@ -13,8 +13,9 @@ export interface Feature<C = string> {
   links?: FeatureLink[];
   /**
    * When set, BATI generates one agent skill for this feature: a pointer to `llms` (the live docs),
-   * triggered by `description`. Only emitted when the feature is selected. The body stores no how-to,
-   * so it never goes stale; `description` says *when* to read the docs, not *how*, so it doesn't either.
+   * triggered by `description`. Emitted when the feature is in the generated stack — selected, or
+   * always-on (`readonly`, like Vike). The body stores no how-to, so it never goes stale; `description`
+   * says *when* to read the docs, not *how*, so it doesn't either.
    */
   skill?: { description: string; llms: string };
   repo?: string;
