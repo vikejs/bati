@@ -30,31 +30,31 @@ They showcase their respective recommended usage and how they integrate with Vit
   },
   {
     label: "Auth",
-    group: categoriesGroups.Data,
+    group: categoriesGroups.Backend,
     description: `Ready to use self-hosted or cloud-based Auth solutions.
 Requires to also select a Server of your choosing.`,
   },
   {
     label: "Data fetching",
-    group: categoriesGroups.Data,
+    group: categoriesGroups.Backend,
     description: `Data fetching libraries to help you interact with your backend.
 Selecting one of those usually requires you to also choose a Server.`,
   },
   {
     label: "Server",
-    group: categoriesGroups.Data,
+    group: categoriesGroups.Backend,
     description: `Mostly required by other integrations such as Auth or RPC,
 it's recommended to only install a Server if you really need to, as Vike doesn't require one to operate.`,
   },
   {
     label: "Database",
-    group: categoriesGroups.Data,
+    group: categoriesGroups.Backend,
     description: `The database your app talks to. SQLite runs embedded (and powers Cloudflare D1);
 PostgreSQL targets a Postgres server. Selected on its own you get a thin client; pair it with an ORM or query builder below.`,
   },
   {
     label: "ORM / Query builder",
-    group: categoriesGroups.Data,
+    group: categoriesGroups.Backend,
     description: `Type-safe data access on top of your database. Requires choosing a Database above.`,
   },
   {

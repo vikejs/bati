@@ -41,6 +41,7 @@ export const features = [
     ],
     tooltip: "Vike cannot be disabled. It is the foundation that allows all others tools to work cohesively",
     invisibleCli: true,
+    invisibleWeb: true,
     readonly: true,
   },
   // UI Framework
