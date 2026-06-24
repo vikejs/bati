@@ -1,37 +1,30 @@
-import type { BatiSkill } from "@batijs/core/config";
-import { SKILLS_DIR } from "@batijs/features";
+import type { Feature, Flags } from "@batijs/features";
+import { features, SKILLS_DIR } from "@batijs/features";
 
 export interface ComposedSkill {
   path: string;
   content: string;
 }
 
-/** One `SKILL.md` per skill under {@link SKILLS_DIR}, sorted by name so the output is deterministic. */
-export function composeSkills(skills: BatiSkill[]): ComposedSkill[] {
-  assertUniqueNames(skills);
-  return [...skills]
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((skill) => ({ path: `${SKILLS_DIR}/${skill.name}/SKILL.md`, content: renderSkillMd(skill) }));
+type Skill = { description: string; llms: string };
+
+/**
+ * One `SKILL.md` per in-stack feature that publishes an `llms.txt`, under {@link SKILLS_DIR}, sorted by
+ * flag (deterministic output). Each skill is a pointer to the live docs — no how-to is stored, so it never
+ * goes stale. Flags are unique, so names never collide. `readonly` features (e.g. Vike) are always in the
+ * stack, so their skill is emitted regardless of selection.
+ */
+export function composeSkills(isSelected: (flag: Flags) => boolean): ComposedSkill[] {
+  return (features as ReadonlyArray<Feature>)
+    .filter((f): f is Feature & { skill: Skill } => Boolean(f.skill) && (f.readonly || isSelected(f.flag as Flags)))
+    .sort((a, b) => a.flag.localeCompare(b.flag))
+    .map((f) => ({ path: `${SKILLS_DIR}/${f.flag}/SKILL.md`, content: renderSkillMd(f.flag, f.label, f.skill) }));
 }
 
-export function renderSkillMd(skill: BatiSkill): string {
-  const frontmatter = [`name: ${yamlString(skill.name)}`, `description: ${yamlString(skill.description)}`];
-  if (skill.allowedTools?.length) {
-    frontmatter.push(`allowed-tools: [${skill.allowedTools.map(yamlString).join(", ")}]`);
-  }
-  return `---\n${frontmatter.join("\n")}\n---\n\n${ensureTrailingNewline(skill.body)}`;
-}
-
-function assertUniqueNames(skills: BatiSkill[]): void {
-  const seen = new Set<string>();
-  for (const { name } of skills) {
-    if (seen.has(name)) throw new Error(`Duplicate skill name '${name}' — skill names must be unique.`);
-    seen.add(name);
-  }
-}
-
-function ensureTrailingNewline(s: string): string {
-  return s.endsWith("\n") ? s : `${s}\n`;
+export function renderSkillMd(flag: string, label: string, skill: Skill): string {
+  const frontmatter = `name: ${yamlString(flag)}\ndescription: ${yamlString(skill.description)}`;
+  const body = `Up-to-date ${label} documentation for this project. Read it before working with ${label}:\n\n${skill.llms}`;
+  return `---\n${frontmatter}\n---\n\n${body}\n`;
 }
 
 // Double-quote and escape so the colons/brackets common in descriptions stay YAML-safe.

@@ -11,8 +11,13 @@ export interface Feature<C = string> {
   spectrum?: "beaten_path" | "bleeding_edge";
   tagline?: string;
   links?: FeatureLink[];
-  /** LLM-friendly docs index (`llms.txt`), referenced in the generated AGENTS.md when this feature is selected. */
-  llms?: string;
+  /**
+   * When set, BATI generates one agent skill for this feature: a pointer to `llms` (the live docs),
+   * triggered by `description`. Emitted when the feature is in the generated stack — selected, or
+   * always-on (`readonly`, like Vike). The body stores no how-to, so it never goes stale; `description`
+   * says *when* to read the docs, not *how*, so it doesn't either.
+   */
+  skill?: { description: string; llms: string };
   repo?: string;
   // if true, it means that the feature is not yet implemented, but could be displayed in the UI
   disabled?: boolean;

@@ -31,27 +31,4 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["@prisma/client", "prisma"],
   },
-  // ORM skill — dynamic on the selected engine.
-  skills(meta) {
-    const run = meta.BATI.pmRun;
-    // `prisma init` / `prisma migrate dev` run the CLI binary (not a package.json script) → use exec.
-    const exec = meta.BATI.pmExec;
-    const provider = meta.BATI.has("postgres") ? "postgresql" : "sqlite";
-    return [
-      {
-        name: "prisma",
-        description:
-          "How to work with the database via Prisma in this app. Use when defining a model, running a migration, or querying with the Prisma client.",
-        body: `Prisma (self-managed) on ${provider}. It uses the \`DATABASE_URL\` in \`.env\`.
-
-- **First-time setup:** \`${exec} prisma init --datasource-provider ${provider}\` (creates \`prisma/schema.prisma\`).
-- **Add or change a model:** edit \`prisma/schema.prisma\`.
-- **Create & apply a migration:** \`${exec} prisma migrate dev\`.
-- **Generate the client / inspect data:** \`${run} prisma:generate\` / \`${run} prisma:studio\`.
-- **Query:** \`import { PrismaClient } from "@prisma/client"\`.
-
-See https://www.prisma.io/docs.`,
-      },
-    ];
-  },
 });
