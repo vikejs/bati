@@ -47,7 +47,6 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      # Restore the packages/*/dist built by the init job.
       - name: Restore built dists
         uses: actions/download-artifact@v8
         with:
@@ -57,8 +56,8 @@ jobs:
           # where the CLI + harness resolve their @batijs/* workspace deps at runtime.
           path: packages
 
-      # Generates the app, installs it, migrates, boots, runs every assertion +
-      # the smoke pass + lint/typecheck/knip — and starts/stops postgres + docker
-      # as the combo needs. Replaces the whole .e2e / prepare.js / 6-check-step dance.
+      # Generates the app, installs it, migrates, boots, runs every assertion + the
+      # smoke pass + lint/typecheck/knip — starting/stopping postgres + docker as the
+      # combo needs.
       - name: Run e2e
         run: bun packages/tests/e2e/runner.ts exact ${{ inputs.flags }}

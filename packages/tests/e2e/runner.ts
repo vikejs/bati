@@ -107,10 +107,9 @@ console.log(`[e2e] ${combos.length} combo(s): ${combos.map((c) => c.flags.join("
 
 const context: RunnerContext = { tmpdir: "" };
 
-// Combos whose infra needs Docker (postgres → bati-pg, dokploy → compose) skip their server passes when
-// Docker is down locally — via Vitest's skipIf in the spec, so they show as skipped rather than vanish.
-// CI always has Docker. Checked once here and handed to every project. The matching skip condition lives
-// in `skipPrimary`/`skipSmoke` (e2e.spec.ts); keep the two in sync if a new feature grows a Docker need.
+// Probe Docker once and hand the verdict to every project. `needsDocker` lists the infra that requires
+// it (postgres → bati-pg, dokploy → compose); CI always has Docker, so we only probe locally. The skip
+// itself lives in `skipPrimary`/`skipSmoke` (e2e.spec.ts) — keep the two flag lists in sync.
 const needsDocker = (c: Combo) => c.flags.includes("postgres") || c.flags.includes("dokploy");
 const dockerAvailable = !combos.some(needsDocker) || !!process.env.CI || (await isDockerAvailable());
 
@@ -178,8 +177,8 @@ try {
   }
 }
 
-// `failed` reruns the combos that failed in the previous run; `all` / `exact` pick combos from the
-// matrix. In every case `--check` is the within-combo test filter (none → run every test).
+// `failed` regenerates the previous run's recorded combos; `all` / `exact` defer to `select`. In every
+// case `--check` is the within-combo test filter (none → run every test).
 function resolveRun(
   cmd: string | undefined,
   want: string[],
@@ -206,9 +205,8 @@ function resolveRun(
   return { combos: select(cmd, want), testNames: only };
 }
 
-// `all` → every combo, or those that are a superset of the requested flags (e.g. `all --react --trpc`
-// runs every react+trpc combo). `exact` → the single combo with exactly those flags, synthesized
-// (dev mode + inferred kind) when matrix.ts doesn't declare it, so any combination can be run ad hoc.
+// `all` matches every combo that's a superset of the requested flags (empty → all). `exact` finds the
+// one combo with exactly those flags, or synthesizes it (dev mode + inferred kind) when off-matrix.
 function select(cmd: string | undefined, want: string[]): Combo[] {
   const all = buildCombos();
   if (cmd === "all") {

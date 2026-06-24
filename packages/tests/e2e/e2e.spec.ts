@@ -70,7 +70,7 @@ describe.sequential(flags.join("+"), () => {
   });
 });
 
-// Tables / worker types must exist before the dev server starts. Match on the tool first.
+// Tables / worker types must exist before the dev server starts.
 async function prepareApp() {
   if (BATI.has("cloudflare")) await runScript("generate-types");
   if (BATI.has("drizzle")) {
@@ -328,9 +328,8 @@ function auth() {
 
   // Auth.js / Auth0 ship a built-in signin page; Better Auth ships its own login/signup/account pages.
   if (!BATI.has("better-auth")) {
-    // Auth0's probe needs real credentials, which only CI provides. The matrix only emits auth0 combos
-    // when the creds exist, but CI computes the combo list and runs combos in separate jobs whose env
-    // can diverge — so a credential-less run is surfaced as an explained skip, not a silent gap.
+    // Auth0's probe needs real credentials that only CI provides, and CI builds the combo list and each
+    // job's env separately — so surface a credential-less run as an explained skip, not a silent gap.
     if (BATI.has("auth0") && !process.env.TEST_AUTH0_CLIENT_ID) {
       test.skip("auth: signin page — needs TEST_AUTH0_CLIENT_ID", () => {});
       return;
@@ -366,7 +365,6 @@ function auth() {
   });
 }
 
-// lint / typecheck / knip — the static checks, run per app after its build.
 function checks() {
   const TIMEOUT = 120_000;
   const cli = (cmd: string[], env?: Record<string, string>) =>
