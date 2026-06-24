@@ -175,17 +175,23 @@ function skills() {
   test("skills: Claude dir mirrors the canonical skills", () => {
     expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
   });
-  if (BATI.has("drizzle"))
-    test("skills: backend skills", () => {
-      expect(has("server") && has("trpc")).toBe(true);
-      expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain(
-        "Drizzle ORM on SQLite",
-      );
-    });
-  if (BATI.has("tailwindcss"))
-    test("skills: frontend skills", () => {
-      expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
-    });
+  test("skills: selected-stack skills present", () => {
+    expect(has("ui-framework")).toBe(true);
+
+    const expectations: [boolean, string][] = [
+      [BATI.hasServer, "server"],
+      [BATI.has("telefunc"), "telefunc"],
+      [BATI.has("trpc"), "trpc"],
+      [BATI.has("ts-rest"), "ts-rest"],
+      [BATI.has("drizzle"), "drizzle"],
+      [BATI.has("kysely"), "kysely"],
+      [BATI.has("prisma"), "prisma"],
+      [BATI.has("tailwindcss"), "styling"],
+      [BATI.has("plausible.io") || BATI.has("google-analytics"), "analytics"],
+      [BATI.has("vercel") || BATI.has("dokploy"), "deploy"],
+    ];
+    for (const [selected, name] of expectations) if (selected) expect(has(name), name).toBe(true);
+  });
 }
 
 function linterComments() {

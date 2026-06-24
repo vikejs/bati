@@ -5,8 +5,9 @@ export default defineConfig({
     return meta.BATI.has("docker");
   },
   enforce: "post",
-  // Deploy skill.
-  skills() {
+  // Docker deploy skill — yields to Dokploy, which builds on Docker (dependsOn) and owns the 'deploy' skill.
+  skills(meta) {
+    if (meta.BATI.has("dokploy")) return [];
     return [
       {
         name: "deploy",
