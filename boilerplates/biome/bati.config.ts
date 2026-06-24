@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["@biomejs/biome"],
   },
-  // Linter/formatter skill (SKILLS_PLAN.md §6.L).
+  // Linter/formatter skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     return [

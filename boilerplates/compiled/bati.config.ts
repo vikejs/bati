@@ -9,7 +9,7 @@ export default defineConfig({
     ignoreDependencies: ["@compiled/react", "@vitejs/plugin-react", "vite-plugin-compiled-react"],
     vite: false,
   },
-  // Styling skill (SKILLS_PLAN.md §6.D).
+  // Styling skill.
   skills() {
     return [
       {

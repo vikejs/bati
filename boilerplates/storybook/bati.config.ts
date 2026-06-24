@@ -15,7 +15,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["playwright", "@vitest/coverage-v8"],
   },
-  // Tooling skill (SKILLS_PLAN.md §6.O).
+  // Tooling skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     const ext = meta.BATI.has("vue") ? "ts" : "tsx";

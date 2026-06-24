@@ -13,7 +13,7 @@ export default defineConfig({
     ];
   },
   enforce: "post",
-  // Deploy skill (SKILLS_PLAN.md §6.K).
+  // Deploy skill.
   skills() {
     return [
       {

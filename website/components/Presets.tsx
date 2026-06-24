@@ -62,8 +62,8 @@ export default function Presets() {
       />
       <Preset
         title="Next.js"
-        features={["react", "Auth", "Data fetching", "hono", "vercel", "Linter"]}
-        description="Next.js like app with Data Fetching, Auth, Hono and Vercel"
+        features={["react", "authjs", "Data fetching", "hono", "vercel", "Linter"]}
+        description="Next.js like app with Data Fetching, Auth.js, Hono and Vercel"
       />
       <Preset
         title="Nuxt"

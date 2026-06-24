@@ -31,7 +31,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["@prisma/client", "prisma"],
   },
-  // ORM skill (SKILLS_PLAN.md §6.I) — dynamic on the selected engine (§9).
+  // ORM skill — dynamic on the selected engine.
   skills(meta) {
     const run = meta.BATI.pmRun;
     // `prisma init` / `prisma migrate dev` run the CLI binary (not a package.json script) → use exec.

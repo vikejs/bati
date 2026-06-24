@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("shadcn-ui");
   },
-  // UI component library skill (SKILLS_PLAN.md §6.E).
+  // UI component library skill.
   skills(meta) {
     const exec = meta.BATI.pmDlx;
     return [

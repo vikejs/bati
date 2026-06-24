@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.hasUD;
   },
-  // Self-host deploy skill (SKILLS_PLAN.md §6.K) — only for the DIY hosting option; managed hosts
+  // Self-host deploy skill — only for the DIY hosting option; managed hosts
   // (cloudflare/vercel/…) emit their own 'deploy' skill, so this stays empty there to avoid a clash.
   skills(meta) {
     if (!meta.BATI.has("hosting-diy")) return [];

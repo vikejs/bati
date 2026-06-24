@@ -637,10 +637,10 @@ async function run() {
       );
 
       // Skills are collected here (only the CLI sees every boilerplate) and handed to the after hooks;
-      // the shared-agents boilerplate's hook composes + writes them when an AI agent is selected.
-      const skills = meta.BATI.hasAiAgent ? filteredBoilerplates.flatMap((b) => b.config.skills?.(meta) ?? []) : [];
+      // the shared-agents boilerplate's hook composes + writes them.
+      const skills = filteredBoilerplates.flatMap((b) => b.config.skills?.(meta) ?? []);
       for (const onafter of hooksMap.get("after") ?? []) {
-        await onafter(args.project, meta, { skills, env });
+        await onafter(args.project, meta, { skills });
       }
 
       // Generate knip.json when --knip flag is set (used by E2E tests)

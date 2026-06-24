@@ -6,7 +6,7 @@ export default defineConfig({
     ignore: ["*.spec.ts"],
     ignoreDependencies: ["@batijs/tests-utils", "turbo"],
   },
-  // Always-present Vike-core skills (SKILLS_PLAN.md §6.B) — the framework conventions agents most
+  // Always-present Vike-core skills — the framework conventions agents most
   // often get wrong. Kept lean and pointed at vike.dev so they're cheap to keep current.
   skills(meta) {
     const pageFile = meta.BATI.has("vue") ? "+Page.vue" : "+Page.tsx";

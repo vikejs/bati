@@ -157,13 +157,8 @@ function storybook() {
 }
 
 function skills() {
-  if (!BATI.hasAiAgent) return;
-  const has = (name: string) =>
-    existsSync(join(".agents", "skills", name, "SKILL.md")) || existsSync(join(".claude", "skills", name, "SKILL.md"));
+  const has = (name: string) => existsSync(join(".agents", "skills", name, "SKILL.md"));
 
-  test("skills: AGENTS.md has stack", () => {
-    expect(readFileSync("AGENTS.md", "utf-8")).toContain("## Stack");
-  });
   test("skills: vike-core skills present", () => {
     const core = [
       "vike-routing",
@@ -177,27 +172,26 @@ function skills() {
     ];
     for (const name of core) expect(has(name), name).toBe(true);
   });
-  if (BATI.has("claude"))
-    test("skills: claude shim", () => {
-      expect(readFileSync("CLAUDE.md", "utf-8")).toContain("@AGENTS.md");
-      expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
-    });
-  if (BATI.has("gemini"))
-    test("skills: gemini shim", () => {
-      expect(readFileSync("GEMINI.md", "utf-8")).toContain("@./AGENTS.md");
-      expect(existsSync(join(".agents", "skills", "vike-routing", "SKILL.md"))).toBe(true);
-    });
-  if (BATI.has("drizzle"))
-    test("skills: backend skills", () => {
-      expect(has("server") && has("trpc")).toBe(true);
-      expect(readFileSync(join(".agents", "skills", "drizzle", "SKILL.md"), "utf-8")).toContain(
-        "Drizzle ORM on SQLite",
-      );
-    });
-  if (BATI.has("tailwindcss"))
-    test("skills: frontend skills", () => {
-      expect(has("styling") && has("deploy") && has("analytics")).toBe(true);
-    });
+  test("skills: Claude dir mirrors the canonical skills", () => {
+    expect(existsSync(join(".claude", "skills", "vike-routing", "SKILL.md"))).toBe(true);
+  });
+  test("skills: selected-stack skills present", () => {
+    expect(has("ui-framework")).toBe(true);
+
+    const expectations: [boolean, string][] = [
+      [BATI.hasServer, "server"],
+      [BATI.has("telefunc"), "telefunc"],
+      [BATI.has("trpc"), "trpc"],
+      [BATI.has("ts-rest"), "ts-rest"],
+      [BATI.has("drizzle"), "drizzle"],
+      [BATI.has("kysely"), "kysely"],
+      [BATI.has("prisma"), "prisma"],
+      [BATI.has("tailwindcss"), "styling"],
+      [BATI.has("plausible.io") || BATI.has("google-analytics"), "analytics"],
+      [BATI.has("vercel") || BATI.has("dokploy"), "deploy"],
+    ];
+    for (const [selected, name] of expectations) if (selected) expect(has(name), name).toBe(true);
+  });
 }
 
 function linterComments() {

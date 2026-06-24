@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["eslint"],
   },
-  // Linter skill (SKILLS_PLAN.md §6.L).
+  // Linter skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     return [

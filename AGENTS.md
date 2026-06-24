@@ -201,21 +201,20 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 - `enforce: "pre" | "post"` - ordering relative to other boilerplates (`shared`, `shared-env`, `shared-todo` use `"pre"` so later boilerplates can build on their files)
 - `env(meta) => EnvVar[]` - **shared env** (#756): declare environment variables this feature contributes, with `key`, `scope`, `default`, `comment`, `group`, and `perSink` overrides (e.g. different `DATABASE_URL` for `compose`/`dockerfile`). Composed centrally via `packages/core/src/env-registry.ts` + `parse/compose-env.ts` into `.env` / `wrangler.jsonc`, so individual boilerplates no longer template env files themselves. See `boilerplates/shared-db/bati.config.ts`.
 - `deploy: string[] | (meta) => string[]` - **deploy files** (#757): files (relative to app root) this feature needs in the production runtime; collected by deploy targets such as the Dockerfile generator (`packages/core/src/dockerfile.ts`)
-- `skills(meta) => BatiSkill[]` - **agent skills** (see `SKILLS_PLAN.md`): SKILL.md skills this feature contributes (`name`, `description`, `body`, optional `allowedTools`). Collected by the CLI and composed by the `shared-agents` boilerplate into `.agents/skills` / `.claude/skills` (plus a generated `AGENTS.md`) only when an AI agent is selected. See `boilerplates/hono/bati.config.ts`.
+- `skills(meta) => BatiSkill[]` - **agent skills**: SKILL.md skills this feature contributes (`name`, `description`, `body`, optional `allowedTools`). Collected by the CLI and composed by the `shared-agents` boilerplate into `.agents/skills` (mirrored to `.claude/skills` for Claude). See `boilerplates/hono/bati.config.ts`.
 - `nextSteps(meta, pm, colorette) => Step[]` - CLI "next steps" lines printed after scaffolding
 - `knip: { entry?, ignoreDependencies?, ignore?, vite? }` - per-boilerplate knip overrides
 
 > The `shared` feature is split into several boilerplates: `shared` (base app shell), `shared-env` (env loading/typing), `shared-server` (`hasServer`), `shared-db` (`hasDbDemo`), and `shared-todo` (the todo demo). Put cross-cutting code in the matching one rather than duplicating it per framework.
 
-### Authoring AI-agent skills
+### Authoring agent skills
 
-When a user selects an **AI Agent** feature (`--claude`, `--codex`, `--gemini`, `--cursor`, `--copilot`), Bati generates agent **skills** + **instruction files** tailored to the chosen stack. These are **AI-maintained** — keep them lean and link upstream docs rather than duplicating volatile detail.
+Bati generates stack-tailored agent **skills** into every scaffold — the `skills` feature is always on and hidden (no CLI flag, not shown in the Web UI), so there is nothing to select. Skills are **AI-maintained** — keep them lean and link upstream docs rather than duplicating volatile detail.
 
 - **Add a skill:** return it from a boilerplate's `skills(meta)` in `bati.config.ts`. A `BatiSkill` is `{ name, description, body, allowedTools? }`. `description` is the auto-trigger (state *what* + *when*); `body` is the Markdown body (the composer adds the frontmatter). The function is meta-gated like `env`/`deploy`.
-- **Naming:** `name` becomes the folder `<dir>/<name>/SKILL.md` and must be unique across all *selected* boilerplates (the composer throws on collisions). Single-select categories can share a generic name (e.g. all servers use `"server"`); features that can co-exist must not collide.
+- **Naming:** `name` becomes the folder `.agents/skills/<name>/SKILL.md` and must be unique across all *selected* boilerplates (the composer throws on collisions). Single-select categories can share a generic name (e.g. all servers use `"server"`); features that can co-exist must not collide.
 - **Variants:** branch on `meta.BATI` inside `body` for combination-sensitive content (ORM × engine, auth × framework) — see `boilerplates/drizzle/bati.config.ts`.
-- **Composition** (`boilerplates/shared-agents/compose.ts` + `agents-md.ts`, written by its `hooks/after.ts`): skills fan out to the minimal dir set (`.agents/skills` covers Codex/Gemini/Cursor/Copilot; `.claude/skills` covers Claude); the canonical `AGENTS.md` is generated from the stack, with `@AGENTS.md` import shims for `CLAUDE.md`/`GEMINI.md`. All gated on `BatiSet.hasAiAgent`. Per-agent paths live in `packages/features/src/ai-agents.ts`.
-- See **`SKILLS_PLAN.md`** for the full design + verified per-agent support.
+- **Composition** (`boilerplates/shared-agents/compose.ts`, written by its `hooks/after.ts`): skills are written to `.agents/skills` (the cross-tool standard) and mirrored to `.claude/skills` (symlink, copy fallback) since Claude Code reads only the latter. Dir constants live in `packages/features/src/skills.ts`.
 
 ### BatiSet Helpers
 

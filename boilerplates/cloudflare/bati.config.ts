@@ -17,7 +17,7 @@ export default defineConfig({
     entry: ["cloudflare-entry.ts"],
     ignoreDependencies: ["wrangler", "cloudflare", "@cloudflare/vite-plugin"],
   },
-  // Deploy skill (SKILLS_PLAN.md §6.K).
+  // Deploy skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     const d1Note = meta.BATI.hasD1 ? " D1 is bound as `DB`; apply migrations with `wrangler d1 migrations apply`." : "";

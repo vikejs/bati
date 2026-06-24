@@ -46,18 +46,10 @@ const matrix = [
   suite()
     .case({ framework: spread(framework), flags: "storybook" })
     .linters("eslint"),
-  // agent skills (no server)
+  // agent skills — generated for every scaffold; cover the feature-gated branches cheaply (no server)
   suite()
-    .matrix({ framework: framework.values, flags: "claude" })
-    .case({
-      framework: "react",
-      server: "hono",
-      data: "trpc",
-      db: "sqlite",
-      orm: "drizzle",
-      flags: ["codex", "gemini"],
-    })
-    .case({ framework: "vue", css: "tailwindcss", deploy: "vercel", analytics: "plausible.io", flags: ["cursor"] })
+    .case({ framework: "react", server: "hono", data: "trpc", db: "sqlite", orm: "drizzle" })
+    .case({ framework: "vue", css: "tailwindcss", deploy: "vercel", analytics: "plausible.io" })
     .mode("none"),
   // linter-comment stripping (no server)
   suite()

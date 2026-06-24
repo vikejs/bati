@@ -5,7 +5,7 @@ export default defineConfig({
     // Raw D1 queries: the SQLite engine on Cloudflare with no ORM/query builder.
     return meta.BATI.hasD1 && !meta.BATI.hasOrm;
   },
-  // Raw DB-engine skill (SKILLS_PLAN.md §6.H) — Cloudflare D1, no ORM (the sqlite boilerplate's
+  // Raw DB-engine skill — Cloudflare D1, no ORM (the sqlite boilerplate's
   // 'database' skill is off-Cloudflare, so D1 needs its own).
   skills(meta) {
     const run = meta.BATI.pmRun;

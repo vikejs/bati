@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["prettier", "eslint-config-prettier"],
   },
-  // Formatter skill (SKILLS_PLAN.md §6.L).
+  // Formatter skill.
   skills(meta) {
     const exec = meta.BATI.pmExec;
     return [

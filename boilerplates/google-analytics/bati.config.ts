@@ -14,7 +14,7 @@ export default defineConfig({
 See the documentation https://support.google.com/analytics/answer/9304153?hl=en#zippy=%2Cweb`,
     },
   ],
-  // Analytics skill (SKILLS_PLAN.md §6.N).
+  // Analytics skill.
   skills() {
     return [
       {

@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     entry: ["+server.ts"],
   },
-  // Server skill (SKILLS_PLAN.md §6.G) — how to add routes/middleware to this server's Vike entry.
+  // Server skill — how to add routes/middleware to this server's Vike entry.
   skills() {
     return [
       {
