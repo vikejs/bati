@@ -10,7 +10,7 @@ import { RelationFile, RelationImport } from "./relations.js";
 
 const reIgnoreFile = /^(chunk-|asset-|#)/gi;
 
-function toDist(filepath: string, source: string, dist: string) {
+export function toDist(filepath: string, source: string, dist: string) {
   const split = filepath.split(path.sep);
   split[split.length - 1] = split[split.length - 1].replace(/^\$\$?(.*)\.m?[tj]sx?$/, "$1").replace(/^!(.*)$/, "$1");
   return split.join(path.sep).replace(source, dist);

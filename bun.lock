@@ -941,6 +941,21 @@
         "vitest": "^4.1.9",
       },
     },
+    "packages/graft-graph": {
+      "name": "@batijs/graft-graph",
+      "version": "0.0.657",
+      "dependencies": {
+        "@batijs/build": "workspace:*",
+        "@batijs/core": "workspace:*",
+        "@batijs/features": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^20.19.37",
+        "tsdown": "^0.22.3",
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.9",
+      },
+    },
     "packages/tests": {
       "name": "@batijs/tests",
       "version": "0.0.659",
@@ -1125,6 +1140,8 @@
     "@batijs/features": ["@batijs/features@workspace:packages/features"],
 
     "@batijs/google-analytics": ["@batijs/google-analytics@workspace:boilerplates/google-analytics"],
+
+    "@batijs/graft-graph": ["@batijs/graft-graph@workspace:packages/graft-graph"],
 
     "@batijs/hono": ["@batijs/hono@workspace:boilerplates/hono"],
 

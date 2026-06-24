@@ -14,10 +14,10 @@
 - [ ] **Phase 1** — Extraction → `InteractionGraph` (in-memory)
   - [x] 1a `batiExtract` codemod (`core/codemods/bati-extract.ts`) + `parse/extract.ts`
   - [ ] 1b generator-ref collector (`$`-files)
-  - [ ] 1c `resolve.ts` (condition → flags; getter table + sync test)
-  - [ ] 1d co-write grouping (reuse `walk`/`toDist`)
-  - [ ] 1e `owners.ts` (`if()` probing; assert ≥1 owner)
-  - [ ] `buildGraph()` assembles `InteractionGraph`
+  - [x] 1c `resolve.ts` (condition → flags; getter→flags derived by probing BatiSet)
+  - [x] ~~1d co-write grouping~~ — **DROPPED** (measured: all co-write-only edges spurious; see log)
+  - [x] 1e `owners.ts` (owners = `resolveFlags(config.if.toString())`; any arity, reuses resolve)
+  - [x] `buildGraph()` assembles `InteractionGraph` (conditional edges only)
 - [ ] **Phase 2** — Graph CLI (text / JSON / DOT / SVG)
 - [ ] **Phase 3** — Matrix generator (`tests-utils/generate-matrix.ts`)
 - [ ] **Phase 4** — `verify` semantics (`tests/e2e/verify.ts`, sync-guarded)
@@ -41,6 +41,23 @@ _Progress log (append dated notes per step):_
   real boilerplates: drizzle `db.ts` → 3 directives, `$package.json.ts` → 2 generator refs,
   trpc handler → `$$.If` key. Refs stay raw (e.g. `$$.keepFileIfImported` is collected but yields no
   flags) — `resolve` (Phase 1c) mines them.
+- **2026-06-24 · Phase 1c/1d/1e written (verification BLOCKED on `bun install`).** New package
+  `@batijs/graft-graph`: `resolve.ts` (raw ref → flags; getter→flags derived by *probing BatiSet*,
+  no hand-table/duplicate intent), `owners.ts` (boilerplate → activating flags by probing
+  `bati.config.ts` `if()`, single + genuine-pairwise, asserts ≥1 owner), `index.ts` `buildGraph()`
+  (per-dest conditional cliques + bounded co-write; `package.json`-style universal merge files
+  excluded above `CO_WRITE_MAX_CONTRIBUTORS=8` and surfaced in `universalFiles`). Exported `toDist`
+  from `@batijs/build` (reused, not duplicated) + rebuilt build/core dist. Tests written
+  (resolve.test, graph.test). **Cannot run yet**: new package has no linked `node_modules` —
+  needs `bun install`. build/core/features check-types green.
+- **2026-06-24 · Phase 1 verified + simplified (graft-graph done).** After `bun install`: 5 tests +
+  check-types green. The `if()`-probing in owners hit its assertion on `d1-kysely`
+  (`hasD1 && has("kysely")`, a 3-flag conjunction) — which drove a **better design**: owners =
+  `resolveFlags(config.if.toString())`, reading flags straight off the predicate source (any arity,
+  reuses `resolve`, no probing). Measured co-write and **dropped it** (11 spurious-only edges).
+  Final graph: **38 flags, 318 edges, 93 interaction files**; spot-checks pass (drizzle↔sqlite/
+  postgres/cloudflare, telefunc↔hono, mantine↔react, tailwindcss↔daisyui, sentry↔vue). Single
+  connected component (framework/deploy hubs) → recorded as Phase-3 clustering input.
 
 ---
 
@@ -64,18 +81,30 @@ Acceptance criteria, not aspirations — each phase's review checks them against
 
 ---
 
-## Conceptual model — the destination file is the unit of interaction
+## Conceptual model — a file's logic ties its owner(s) to what it branches on
 
-Two features **interact** iff they jointly determine the content of some generated output file, in
-exactly two ways, both keyed on the `toDist` destination:
+Two features **interact** iff they jointly determine the content of some generated file. For each
+boilerplate file, the interacting set = `owners(boilerplate) ∪ referenced(flags its logic branches
+on)`; every pair within it is an edge. Union across all files = the interaction graph.
 
-- **Co-write**: two boilerplates contribute to the same destination (the rearranger merges them).
-- **Conditional**: a boilerplate's template/generator for a destination branches on another
-  feature's flag.
+> **Revised (Phase 1, evidence-based):** the model originally also had a **co-write** signal (two
+> boilerplates merging into the same destination → edge among their owners). Measured against the
+> real boilerplates, co-write produced **11 co-write-only edges, every one spurious** (`aws–mantine`,
+> the rule-invalid `mantine–vue`/`mantine–solid`, `react–sqlite` from mere demo-page co-location).
+> In Bati, features that genuinely interact **reference each other** via `$$`/`BATI.has`, so the
+> conditional edges already capture every real interaction. Co-write was dropped — it only added
+> noise (fails "every line earns its place"). The graph is **conditional-edge only**.
 
-Per destination, the meeting flag-set = `owners(contributors) ∪ referenced(conditionals)`; every
-pair within it is an edge. Union across all destinations = the interaction graph. Connected
-components = clusters to cover.
+**Clustering is the graph's job, not combo selection.** A direct edge isn't needed for a combo to be
+generated — e.g. there is no `better-auth–kysely` edge (better-auth's files never name kysely), yet
+both sit in the same data cluster, so the covering array over the auth×orm axes still produces that
+combo. The graph defines *which axes cross*, the covering array fills in the values.
+
+> **Phase-3 input:** the raw graph is a **single connected component** — framework (react/vue/solid,
+> degree 33) and deploy hubs wire everything together. Naive "connected components = clusters" yields
+> one blob. The generator must treat ubiquitous high-degree axes (framework, linter, deploy) as
+> balanced ride-alongs and cluster the *remaining* cross-category structure. Degree + category are
+> the signals; both are available (category from `@batijs/features`).
 
 ## Architecture / data flow
 
