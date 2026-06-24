@@ -37,7 +37,7 @@ describe("batiExtract — reference harvesting", () => {
   });
 
   it("collects `$$.If<>` conditional-type keys", async () => {
-    const src = "type T = $$.If<{\n  '$$.BATI.has(\"kysely\") && $$.BATI.has(\"postgres\")': number;\n  _: string;\n}>;";
+    const src = 'type T = $$.If<{\n  \'$$.BATI.has("kysely") && $$.BATI.has("postgres")\': number;\n  _: string;\n}>;';
     const refs = await extract("tsx", src);
     expect(mentions(refs, 'has("kysely")')).toBe(true);
     expect(mentions(refs, 'has("postgres")')).toBe(true);

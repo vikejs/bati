@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { readFile, readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { toDist, walk } from "@batijs/build";
@@ -62,7 +62,10 @@ function aggregate(
   referenced: Set<string>,
 ): void {
   let acc = byDest.get(dest);
-  if (!acc) byDest.set(dest, (acc = { owners: new Set(), referenced: new Set() }));
+  if (!acc) {
+    acc = { owners: new Set(), referenced: new Set() };
+    byDest.set(dest, acc);
+  }
   for (const o of owners) acc.owners.add(o);
   for (const r of referenced) acc.referenced.add(r);
 }

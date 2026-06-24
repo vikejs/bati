@@ -23,7 +23,13 @@ export const batiExtract = defineCodemod<ExtractContext>((root, { refs }) => {
     const directive = extractDirective(comment.text);
     if (directive) refs.add(directive);
   });
-  root.find("call_expression", { function: HAS_CALL }).forEach((call) => refs.add(call.text));
-  root.find("member_expression", { text: HAS_GETTER }).forEach((member) => refs.add(member.text));
-  root.find("string", { text: IF_TYPE_KEY }).forEach((key) => refs.add(key.text));
+  root.find("call_expression", { function: HAS_CALL }).forEach((call) => {
+    refs.add(call.text);
+  });
+  root.find("member_expression", { text: HAS_GETTER }).forEach((member) => {
+    refs.add(member.text);
+  });
+  root.find("string", { text: IF_TYPE_KEY }).forEach((key) => {
+    refs.add(key.text);
+  });
 });

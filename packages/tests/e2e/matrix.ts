@@ -128,6 +128,7 @@ function buildMatrix(generated: Combo[]): Combo[] {
   };
 
   for (const combo of generated) add(combo);
-  for (const s of residue) for (const flags of s.flatten(balancer)) add({ flags, mode: s.runMode ?? "dev", kind: s.suiteKind });
+  for (const s of residue)
+    for (const flags of s.flatten(balancer)) add({ flags, mode: s.runMode ?? "dev", kind: s.suiteKind });
   return combos;
 }

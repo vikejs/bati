@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 import { resolveFlags } from "./resolve.js";
 
 describe("resolveFlags", () => {
-  it("reads literal has(\"flag\") references", () => {
+  it('reads literal has("flag") references', () => {
     expect(resolveFlags('$$.BATI.has("drizzle")')).toEqual(new Set(["drizzle"]));
-    expect([...resolveFlags('$$.BATI.has("kysely") && $$.BATI.has("postgres")')].sort()).toEqual(["kysely", "postgres"]);
+    expect([...resolveFlags('$$.BATI.has("kysely") && $$.BATI.has("postgres")')].sort()).toEqual([
+      "kysely",
+      "postgres",
+    ]);
   });
 
   it("expands a getter to the flags it depends on", () => {

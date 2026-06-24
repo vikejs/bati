@@ -67,7 +67,10 @@ function backendCategories(graph: InteractionGraph): string[] {
   const adjacency = new Map<string, Set<string>>();
   const link = (a: string, b: string) => {
     let neighbors = adjacency.get(a);
-    if (!neighbors) adjacency.set(a, (neighbors = new Set()));
+    if (!neighbors) {
+      neighbors = new Set();
+      adjacency.set(a, neighbors);
+    }
     neighbors.add(b);
   };
   for (const [key, n] of weight) {
@@ -112,7 +115,8 @@ function crossProduct<T>(axes: T[][]): T[][] {
 export const pairKeys = (flags: string[]): string[] => {
   const sorted = [...flags].sort();
   const keys: string[] = [];
-  for (let i = 0; i < sorted.length; i++) for (let j = i + 1; j < sorted.length; j++) keys.push(`${sorted[i]}\t${sorted[j]}`);
+  for (let i = 0; i < sorted.length; i++)
+    for (let j = i + 1; j < sorted.length; j++) keys.push(`${sorted[i]}\t${sorted[j]}`);
   return keys;
 };
 

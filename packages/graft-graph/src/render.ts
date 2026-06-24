@@ -25,7 +25,10 @@ export function toDot(graph: InteractionGraph): string {
   for (const f of graph.flags) {
     const category = categoryOf.get(f)!;
     let members = byCategory.get(category);
-    if (!members) byCategory.set(category, (members = []));
+    if (!members) {
+      members = [];
+      byCategory.set(category, members);
+    }
     members.push(f);
   }
 

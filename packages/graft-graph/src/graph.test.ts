@@ -18,7 +18,9 @@ describe("buildGraph", () => {
 
   it("is deterministic and canonical", async () => {
     const g = await graph;
-    expect(g.edges).toEqual([...g.edges].sort((a, b) => (a[0] === b[0] ? a[1].localeCompare(b[1]) : a[0].localeCompare(b[0]))));
+    expect(g.edges).toEqual(
+      [...g.edges].sort((a, b) => (a[0] === b[0] ? a[1].localeCompare(b[1]) : a[0].localeCompare(b[0]))),
+    );
     for (const [a, b] of g.edges) expect(a < b).toBe(true); // each pair stored low→high
   });
 });
