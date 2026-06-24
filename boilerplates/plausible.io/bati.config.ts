@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("plausible.io");
   },
-  // Analytics skill (SKILLS_PLAN.md §6.N).
+  // Analytics skill.
   skills() {
     return [
       {

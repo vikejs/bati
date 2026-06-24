@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["@vue/.+"],
   },
-  // UI-framework conventions skill (SKILLS_PLAN.md §6.C).
+  // UI-framework conventions skill.
   skills() {
     return [
       {

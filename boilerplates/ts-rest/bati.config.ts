@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["zod"],
   },
-  // Data-fetching/RPC skill (SKILLS_PLAN.md §6.F).
+  // Data-fetching/RPC skill.
   skills() {
     return [
       {

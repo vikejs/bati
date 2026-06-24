@@ -27,7 +27,7 @@ export default defineConfig({
       },
     ];
   },
-  // Error-tracking skill (SKILLS_PLAN.md §6.M) — framework-aware SDK.
+  // Error-tracking skill — framework-aware SDK.
   skills(meta) {
     const sdk = meta.BATI.has("vue") ? "@sentry/vue" : meta.BATI.has("solid") ? "@sentry/solid" : "@sentry/react";
     return [

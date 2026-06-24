@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["react-dom", "@types/react-dom"],
   },
-  // UI-framework conventions skill (SKILLS_PLAN.md §6.C).
+  // UI-framework conventions skill.
   skills() {
     return [
       {

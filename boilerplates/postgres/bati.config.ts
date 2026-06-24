@@ -19,7 +19,7 @@ export default defineConfig({
       },
     ];
   },
-  // Raw DB-engine skill (SKILLS_PLAN.md §6.H) — only emitted when no ORM is selected (see `if`).
+  // Raw DB-engine skill — only emitted when no ORM is selected (see `if`).
   skills(meta) {
     const run = meta.BATI.pmRun;
     return [

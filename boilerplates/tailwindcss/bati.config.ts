@@ -9,7 +9,7 @@ export default defineConfig({
     // so this config is always active when daisyui is used
     ignoreDependencies: ["tailwindcss", "daisyui"],
   },
-  // Styling skill (SKILLS_PLAN.md §6.D).
+  // Styling skill.
   skills(meta) {
     const daisy = meta.BATI.has("daisyui");
     const daisyNote = daisy

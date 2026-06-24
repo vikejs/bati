@@ -27,7 +27,7 @@ export default function Description() {
     lf
       .formatToParts(
         selectedFeatures()
-          .filter((x) => !x.invisibleDescription)
+          .filter((x) => !x.invisibleDescription && !x.invisibleWeb)
           .map((x) => x.label),
       )
       .map((p) =>

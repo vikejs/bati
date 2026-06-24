@@ -18,6 +18,8 @@ export interface Feature<C = string> {
   disabled?: boolean;
   // if true, do not display in the CLI
   invisibleCli?: boolean;
+  // if true, do not display in the Web UI
+  invisibleWeb?: boolean;
   // if true, do not display in the description on top of the Widget
   invisibleDescription?: boolean;
   // if true, cannot be toggled off (implies selected by default, otherwise use `disabled`)

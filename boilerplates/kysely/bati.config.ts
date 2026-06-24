@@ -25,7 +25,7 @@ export default defineConfig({
   knip: {
     entry: ["database/kysely/migrations/*.ts"],
   },
-  // ORM skill (SKILLS_PLAN.md §6.I) — dynamic on the selected engine (§9).
+  // ORM skill — dynamic on the selected engine.
   skills(meta) {
     const run = meta.BATI.pmRun;
     const engine = meta.BATI.has("postgres") ? "PostgreSQL" : meta.BATI.hasD1 ? "Cloudflare D1 (SQLite)" : "SQLite";

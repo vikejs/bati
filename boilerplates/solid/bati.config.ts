@@ -4,7 +4,7 @@ export default defineConfig({
   if(meta) {
     return meta.BATI.has("solid");
   },
-  // UI-framework conventions skill (SKILLS_PLAN.md §6.C).
+  // UI-framework conventions skill.
   skills() {
     return [
       {

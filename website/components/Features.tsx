@@ -1,4 +1,11 @@
-import { type Category, type CategoryLabels, categories, categoriesGroups, type FeatureLink } from "@batijs/features";
+import {
+  type Category,
+  type CategoryLabels,
+  categories,
+  categoriesGroups,
+  type FeatureLink,
+  features,
+} from "@batijs/features";
 import type { VirtualElement } from "@floating-ui/dom";
 import { type Accessor, createMemo, createSignal, For, type JSX, Match, Show, Switch, useContext } from "solid-js";
 import { Motion } from "solid-motionone";
@@ -17,7 +24,9 @@ export default function Features() {
     >
       <For each={Object.values(categoriesGroups)}>
         {(group) => {
-          const currentCategories = createMemo(() => categories.filter((c) => c.group === group));
+          const currentCategories = createMemo(() =>
+            categories.filter((c) => c.group === group && hasVisibleFeature(c)),
+          );
 
           return (
             <FormControl
@@ -35,6 +44,10 @@ export default function Features() {
       </For>
     </div>
   );
+}
+
+function hasVisibleFeature(category: Category): boolean {
+  return features.some((f: Feature) => f.category === category.label && !f.invisibleWeb);
 }
 
 function CategoryGroup(props: Category) {

@@ -12,7 +12,7 @@ export default defineConfig({
     // needs an explicit ignore.
     ignoreDependencies: ["oxlint", "oxlint-tsgolint"],
   },
-  // Linter skill (SKILLS_PLAN.md §6.L).
+  // Linter skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     return [

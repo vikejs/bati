@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     entry: ["server/authjs-handler.ts"],
   },
-  // Auth skill (SKILLS_PLAN.md §6.J) — covers Auth.js and the Auth0 provider.
+  // Auth skill — covers Auth.js and the Auth0 provider.
   skills(meta) {
     const auth0 = meta.BATI.has("auth0");
     return [

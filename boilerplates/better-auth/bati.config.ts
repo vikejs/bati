@@ -48,7 +48,7 @@ export default defineConfig({
   knip: {
     entry: ["server/better-auth-handler.ts", "database/better-auth/migrate.ts"],
   },
-  // Auth skill (SKILLS_PLAN.md §6.J).
+  // Auth skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     const tablesNote = meta.BATI.has("drizzle")

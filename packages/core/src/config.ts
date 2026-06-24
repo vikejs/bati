@@ -1,6 +1,6 @@
 import type * as Colorette from "colorette";
 import { assert } from "./assert.js";
-import type { EnvRegistry, EnvRegistryFactory } from "./env-registry.js";
+import type { EnvRegistryFactory } from "./env-registry.js";
 import type { VikeMeta } from "./types.js";
 
 export type { VikeMeta };
@@ -22,7 +22,6 @@ export type BatiSkillFactory = (meta: VikeMeta) => BatiSkill[];
 /** Build aggregates passed to `after` hooks alongside `(cwd, meta)`. */
 export interface HookContext {
   skills: BatiSkill[];
-  env: EnvRegistry;
 }
 
 export interface BatiConfigStep {
@@ -47,7 +46,7 @@ export interface BatiConfig {
   env?: EnvRegistryFactory;
   /** Files (relative to the app root) this feature needs in the production runtime; collected by deploy targets like the Dockerfile generator. */
   deploy?: string[] | ((meta: VikeMeta) => string[]);
-  /** Agent skills this feature contributes, gated on `meta` (see {@link BatiSkillFactory}); composed into `.agents/skills` / `.claude/skills` when an AI agent is selected. */
+  /** Agent skills this feature contributes, gated on `meta` (see {@link BatiSkillFactory}); composed into `.agents/skills` by the `shared-agents` boilerplate. */
   skills?: BatiSkillFactory;
 }
 

@@ -5,7 +5,7 @@ export default defineConfig({
     return meta.BATI.has("docker");
   },
   enforce: "post",
-  // Deploy skill (SKILLS_PLAN.md §6.K).
+  // Deploy skill.
   skills() {
     return [
       {

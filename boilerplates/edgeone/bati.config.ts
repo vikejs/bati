@@ -7,7 +7,7 @@ export default defineConfig({
   knip: {
     ignore: [".edgeone/**"],
   },
-  // Deploy skill (SKILLS_PLAN.md §6.K).
+  // Deploy skill.
   skills(meta) {
     const run = meta.BATI.pmRun;
     return [

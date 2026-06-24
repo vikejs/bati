@@ -8,7 +8,7 @@ export default defineConfig({
   knip: {
     ignoreDependencies: ["postcss"],
   },
-  // UI component library skill (SKILLS_PLAN.md §6.E).
+  // UI component library skill.
   skills() {
     return [
       {
