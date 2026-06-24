@@ -7,7 +7,6 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import {
   auth as authAxis,
-  Balancer,
   data as dataAxis,
   db as dbAxis,
   exec,
@@ -18,17 +17,12 @@ import {
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
 import type { RunnerContext } from "../src/types.js";
-import matrix, { type Kind, type Mode } from "./matrix.js";
+import { buildCombos, type Combo } from "./combos.js";
+import { type Kind } from "./matrix.js";
 import { failuresFile, initTmpDir, removeTmpDir } from "./tmp.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
 const SPEC_ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
-
-interface Combo {
-  flags: string[];
-  mode: Mode;
-  kind?: Kind; // suite identity; its presence also triggers a smoke pass
-}
 
 const USAGE = `Usage: runner.ts <command> [--flag …] [--check=names] [--dry-run]
 
@@ -270,24 +264,6 @@ function failedCombos(
 
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-// The shared Balancer keeps `.spread()` round-robin global across suites.
-function buildCombos(): Combo[] {
-  const balancer = new Balancer();
-  const seen = new Set<string>();
-  const combos: Combo[] = [];
-  for (const s of matrix) {
-    for (const flags of s.flatten(balancer)) {
-      const combo: Combo = { flags, mode: s.runMode ?? "dev", kind: s.suiteKind };
-      const key = JSON.stringify([[...flags].sort(), combo.mode, combo.kind ?? ""]);
-      if (!seen.has(key)) {
-        seen.add(key);
-        combos.push(combo);
-      }
-    }
-  }
-  return combos;
 }
 
 async function generateApp(flags: string[]): Promise<string> {
