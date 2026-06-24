@@ -6,6 +6,7 @@ export { formatCode } from "./format.js";
 export * from "./loaders.js";
 export * from "./markdown/markdown.js";
 export { setComposeEnvironment } from "./parse/compose-env.js";
+export { extractReferences } from "./parse/extract.js";
 export { type FileContext, transformAndFormat } from "./parse.js";
 export * from "./print.js";
 export * from "./random.js";

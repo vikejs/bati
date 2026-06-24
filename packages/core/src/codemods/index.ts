@@ -1,5 +1,6 @@
 export { batiBlocks } from "./bati-blocks.js";
 export { batiCodemod } from "./bati-codemod.js";
+export { batiExtract, type ExtractContext } from "./bati-extract.js";
 export { batiImports } from "./bati-imports.js";
 export { batiYaml } from "./bati-yaml.js";
 export type { BatiContext } from "./context.js";

@@ -12,7 +12,7 @@
 
 - [x] **Phase 0** — Validation harness (`matrix-diff` diff test)
 - [ ] **Phase 1** — Extraction → `InteractionGraph` (in-memory)
-  - [ ] 1a `batiExtract` codemod (`core/codemods/bati-extract.ts`) + `parse/extract.ts`
+  - [x] 1a `batiExtract` codemod (`core/codemods/bati-extract.ts`) + `parse/extract.ts`
   - [ ] 1b generator-ref collector (`$`-files)
   - [ ] 1c `resolve.ts` (condition → flags; getter table + sync test)
   - [ ] 1d co-write grouping (reuse `walk`/`toDist`)
@@ -32,6 +32,15 @@ _Progress log (append dated notes per step):_
   `missing`/`extra`, asserts harness soundness, `test.todo` reserves the Phase-5 cutover gate.
   Baseline measured: **106 current combos** (data 40, auth 31, none 33, cloudflare 2), all unique.
   `check-types` + `vitest run matrix-diff` green.
+- **2026-06-24 · Phase 1a done.** Added `batiExtract` codemod (`core/codemods/bati-extract.ts`) —
+  read-only twin of `batiCodemod`, **no namespace gate** (so `$`-generators using bare
+  `meta.BATI.has` aren't skipped). Harvests four site kinds via codegraft `find`/`findComments`:
+  `$$` directive comments, `BATI.has(...)` calls, `BATI.hasX` getters, `$$.If<>` string keys.
+  `parse/extract.ts` exposes `extractReferences(code, filepath)` (per-target transformer cache),
+  exported from core. 6 unit tests + full core suite (230) green; check-types clean. Smoke-tested on
+  real boilerplates: drizzle `db.ts` → 3 directives, `$package.json.ts` → 2 generator refs,
+  trpc handler → `$$.If` key. Refs stay raw (e.g. `$$.keepFileIfImported` is collected but yields no
+  flags) — `resolve` (Phase 1c) mines them.
 
 ---
 
