@@ -12,10 +12,14 @@
   "author": "Joël Charles <joel.charles91@gmail.com>",
   "repository": "https://github.com/vikejs/bati",
   "license": "MIT",
+  "bin": {
+    "bati-graph": "./dist/cli.js"
+  },
   "dependencies": {
     "@batijs/build": "workspace:*",
     "@batijs/core": "workspace:*",
-    "@batijs/features": "workspace:*"
+    "@batijs/features": "workspace:*",
+    "@viz-js/viz": "^3.2.2"
   },
   "devDependencies": {
     "@types/node": "^20.19.37",

@@ -18,7 +18,7 @@
   - [x] ~~1d co-write grouping~~ — **DROPPED** (measured: all co-write-only edges spurious; see log)
   - [x] 1e `owners.ts` (owners = `resolveFlags(config.if.toString())`; any arity, reuses resolve)
   - [x] `buildGraph()` assembles `InteractionGraph` (conditional edges only)
-- [ ] **Phase 2** — Graph CLI (text / JSON / DOT / SVG)
+- [x] **Phase 2** — Graph CLI (text / JSON / DOT / SVG)
 - [ ] **Phase 3** — Matrix generator (`tests-utils/generate-matrix.ts`)
 - [ ] **Phase 4** — `verify` semantics (`tests/e2e/verify.ts`, sync-guarded)
 - [ ] **Phase 5** — Cutover (`matrix.ts` → `generateMatrix(buildGraph(), verify)`)
@@ -58,6 +58,11 @@ _Progress log (append dated notes per step):_
   Final graph: **38 flags, 318 edges, 93 interaction files**; spot-checks pass (drizzle↔sqlite/
   postgres/cloudflare, telefunc↔hono, mantine↔react, tailwindcss↔daisyui, sentry↔vue). Single
   connected component (framework/deploy hubs) → recorded as Phase-3 clustering input.
+- **2026-06-24 · Phase 2 done.** `render.ts` (pure: `toText` adjacency, `toJson`, `toDot` with nodes
+  boxed into per-category `subgraph cluster_*`, `toSvg` via lazy `@viz-js/viz` WASM) + `cli.ts` shell
+  (`bati-graph --format text|json|dot|svg [--out file]`). Pure renderers vs the single I/O shell —
+  the architectural split. Verified all four formats; SVG is a valid 120 KB file. Built the package
+  (dist + `bati-graph` bin). `@viz-js/viz@^3.2.2` added (loaded only when SVG is requested).
 
 ---
 
