@@ -5,20 +5,11 @@ import { rm } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import {
-  auth as authAxis,
-  data as dataAxis,
-  db as dbAxis,
-  exec,
-  isDockerAvailable,
-  npmCli,
-  orm as ormAxis,
-} from "@batijs/tests-utils";
+import { exec, isDockerAvailable, npmCli } from "@batijs/tests-utils";
 import { createVitest } from "vitest/node";
 import { execLocalBati } from "../src/exec-bati.js";
 import type { RunnerContext } from "../src/types.js";
-import { buildCombos, type Combo } from "./combos.js";
-import { type Kind } from "./matrix.js";
+import { buildCombos, type Combo, inferKind } from "./combos.js";
 import { failuresFile, initTmpDir, removeTmpDir } from "./tmp.js";
 
 // Specs resolve vitest + tests-utils from this package, not the generated apps.
@@ -221,16 +212,6 @@ function select(cmd: string | undefined, want: string[]): Combo[] {
 function fail(msg: string): never {
   console.error(`[e2e] ${msg}`);
   process.exit(1);
-}
-
-// An off-matrix `exact` combo still needs a kind so the right assertion pass runs (data round-trip /
-// auth flows / cloudflare deploy). Infer it from the feature axes the flags touch.
-function inferKind(flags: string[]): Kind | undefined {
-  const touches = (axis: { values: readonly string[] }) => flags.some((f) => axis.values.includes(f));
-  if (touches(authAxis)) return "auth";
-  if (touches(dataAxis) || touches(dbAxis) || touches(ormAxis)) return "data";
-  if (flags.includes("cloudflare")) return "cloudflare";
-  return undefined;
 }
 
 // A failure record is just a serialized combo (so `failed` can regenerate and rerun it).

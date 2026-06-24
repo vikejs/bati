@@ -274,12 +274,7 @@ export class Suite {
         seen.add(flag);
         combo.push(flag);
       }
-      // Cast: combo strings are flag names (or any plain string passed to
-      // `.case({ flags: "..." })`). execRules treats unknown strings as
-      // category-or-flag and just won't match any rule.
-      const errors = execRules(combo as Parameters<typeof execRules>[0], ruleMessageMap)
-        .filter((m) => m.isError)
-        .map((m) => m.name);
+      const errors = comboErrors(combo);
       if (errors.length > 0) {
         console.warn(`[suite] dropping invalid combo [${combo.join(", ")}]: ${errors.join(", ")}`);
         continue;
@@ -302,6 +297,14 @@ const ruleMessageMap = (() => {
   }
   return map;
 })();
+
+/** The names of the `ERROR_*` feature rules a combo trips — empty when the combo is valid. Unknown
+ *  strings match no rule, so a plain `.case({ flags })` string is simply ignored. */
+export function comboErrors(flags: readonly string[]): string[] {
+  return execRules(flags as Parameters<typeof execRules>[0], ruleMessageMap)
+    .filter((m) => m.isError)
+    .map((m) => m.name);
+}
 
 export function suite(): Suite {
   return new Suite();

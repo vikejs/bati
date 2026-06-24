@@ -1,12 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { buildCombos, type Combo, comboKey } from "./e2e/combos.js";
-
-// Phase 3 replaces this stub with `generateMatrix(buildGraph(), verify)`. Until then it returns no
-// combos, so the diff reports the whole current matrix as "not yet generated" — the baseline the
-// generator shrinks against as it comes online.
-function generateMatrix(): Combo[] {
-  return [];
-}
+import { backendValidCombos, generateMatrix, pairKeys } from "./e2e/generate.js";
 
 function delta(current: Combo[], generated: Combo[]) {
   const cur = new Set(current.map(comboKey));
@@ -20,25 +14,35 @@ function delta(current: Combo[], generated: Combo[]) {
 const label = (c: Combo) =>
   [c.flags.join("+"), c.kind, c.mode === "dev" ? undefined : c.mode].filter(Boolean).join(" ");
 
-describe("matrix generation parity", () => {
-  const current = buildCombos();
-  const generated = generateMatrix();
-  const { missing, extra } = delta(current, generated);
+const current = buildCombos();
+const generated = await generateMatrix();
+const { missing, extra } = delta(current, generated);
 
+describe("matrix generation parity", () => {
   test("reports the delta between generated and current", () => {
     console.log(`[matrix-diff] current=${current.length} generated=${generated.length}`);
     console.log(`[matrix-diff] missing (current − generated): ${missing.length}`);
-    for (const c of missing.slice(0, 10)) console.log(`  - ${label(c)}`);
-    if (missing.length > 10) console.log(`  … ${missing.length - 10} more`);
+    for (const c of missing.slice(0, 15)) console.log(`  - ${label(c)}`);
+    if (missing.length > 15) console.log(`  … ${missing.length - 15} more`);
     console.log(`[matrix-diff] extra (generated − current): ${extra.length}`);
-    for (const c of extra.slice(0, 10)) console.log(`  + ${label(c)}`);
+    for (const c of extra.slice(0, 15)) console.log(`  + ${label(c)}`);
+    if (extra.length > 15) console.log(`  … ${extra.length - 15} more`);
 
-    // The harness itself must be sound: a non-empty, fully-deduped current matrix.
-    expect(current.length).toBeGreaterThan(0);
-    expect(new Set(current.map(comboKey)).size).toBe(current.length);
+    expect(generated.length).toBeGreaterThan(0);
+    expect(new Set(generated.map(comboKey)).size).toBe(generated.length); // generator emits no duplicates
   });
 
-  // Phase 5 flips this on: once the generator is authoritative, both deltas are empty (or an
-  // explicit, reviewed allowlist).
-  test.todo("generated matrix equals current (cutover gate)");
+  test("covers every satisfiable backend interaction pair (t=2, no holes)", async () => {
+    const satisfiable = new Set<string>();
+    for (const combo of await backendValidCombos()) for (const key of pairKeys(combo)) satisfiable.add(key);
+    const covered = new Set<string>();
+    for (const c of generated) for (const key of pairKeys(c.flags)) covered.add(key);
+
+    const uncovered = [...satisfiable].filter((p) => !covered.has(p));
+    expect(uncovered, `uncovered pairs: ${uncovered.join(", ")}`).toEqual([]);
+  });
+
+  // Phase 5 flips this on: once the generator is authoritative for the backend, its combos are all
+  // valid coverage (the residue is reviewed and explicit).
+  test.todo("generated backend matrix is reconciled with current (cutover gate)");
 });

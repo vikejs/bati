@@ -19,8 +19,8 @@
   - [x] 1e `owners.ts` (owners = `resolveFlags(config.if.toString())`; any arity, reuses resolve)
   - [x] `buildGraph()` assembles `InteractionGraph` (conditional edges only)
 - [x] **Phase 2** — Graph CLI (text / JSON / DOT / SVG)
-- [ ] **Phase 3** — Matrix generator (`tests-utils/generate-matrix.ts`)
-- [ ] **Phase 4** — `verify` semantics (`tests/e2e/verify.ts`, sync-guarded)
+- [x] **Phase 3** — Matrix generator (`tests/e2e/generate.ts`) — constraint-aware, no coverage holes
+- [x] **Phase 4** — `verify` semantics (`tests/e2e/verify.ts`, sync-guarded)
 - [ ] **Phase 5** — Cutover (`matrix.ts` → `generateMatrix(buildGraph(), verify)`)
 - [ ] **Final self-review** (see end of file)
 - [ ] **Delete this file**
@@ -63,6 +63,25 @@ _Progress log (append dated notes per step):_
   (`bati-graph --format text|json|dot|svg [--out file]`). Pure renderers vs the single I/O shell —
   the architectural split. Verified all four formats; SVG is a valid 120 KB file. Built the package
   (dist + `bati-graph` bin). `@viz-js/viz@^3.2.2` added (loaded only when SVG is requested).
+- **2026-06-24 · Phase 3+4 written (verify BLOCKED on `bun install`).** Direction (user): **backend-
+  generated + explicit residue**, ride-alongs DECLARED (framework/linter/deploy). `e2e/generate.ts`:
+  derives the backend cluster from the graph (category edges ≥ `INTERACTION_WEIGHT_MIN=5`, excluding
+  ride-alongs → largest component = server/data/db/orm/auth), then reuses the **Suite API**
+  (`pairwise` covering array + `execRules` validity filter + `Balancer`) — the generator's only novel
+  job is *which axes*. `e2e/verify.ts`: `requiresEnv` (auth0 → TEST_AUTH0_CLIENT_ID) + sync-guard
+  test. Extracted `inferKind` into `combos.ts` (shared with runner, no dup). Wired the real generator
+  into `matrix-diff.local.spec.ts`. Added `@batijs/graft-graph` dep to `tests` → needs install.
+- **2026-06-24 · Phase 3+4 verified + corrected.** After install: the naive flat-pairwise generator
+  had real **coverage holes** — an audit found 9 genuine uncovered satisfiable pairs (24%), because
+  the covering array generated invalid combos (`prisma` without a db) that `execRules` then dropped.
+  Rewrote the generator to be **constraint-aware**: enumerate the valid backend space, then greedily
+  t=2-cover only valid combos → **16 combos, 0 holes** (audit now clean). Extracted a shared
+  `comboErrors` validity helper from `Suite.flatten` (no duplicate rule-map). Added a permanent
+  no-holes coverage test. check-types + 7 specs green. **Known divergences from the hand matrix
+  (for Phase-5 review):** (1) generator crosses auth×data (graph clusters them; hand matrix splits
+  the suites); (2) far leaner — deploy/cloudflare/dokploy/postgres-specific variants are the
+  intended explicit residue; (3) `inferKind` labels auth+data combos "auth", so their data
+  round-trip assertions wouldn't run — an assertion-layer follow-up.
 
 ---
 
