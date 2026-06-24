@@ -21,7 +21,7 @@ export const features = [
     flag: "vike",
     skill: {
       description:
-        "Vike framework docs. Use for routing, data fetching, +config, navigation, render modes (SSR/SSG/SPA), pageContext, hooks, and error pages.",
+        "Vike — the full-stack framework this app runs on. Use when working with pages and file-based routing (`+Page`/`+route`/`+config`/`+data`/`+guard`), data fetching, navigation, rendering modes (SSR/SSG/SPA/streaming), `pageContext`, lifecycle hooks, `<head>`/SEO, or error pages.",
       llms: "https://vike.dev/llms.txt",
     },
     image:
@@ -49,7 +49,8 @@ export const features = [
     label: "React",
     flag: "react",
     skill: {
-      description: "React + Vike conventions. Use when writing components or handling SSR/hydration.",
+      description:
+        "React (via `vike-react`) — the UI library this app renders with. Use when writing or debugging components, hooks (`useState`/`useEffect`/`useContext`), refs, context, or fixing SSR/hydration mismatches.",
       llms: "https://react.dev/llms.txt",
     },
     image:
@@ -75,7 +76,8 @@ export const features = [
     label: "Vue",
     flag: "vue",
     skill: {
-      description: "Vue + Vike conventions. Use when writing components (SFCs) or handling SSR/hydration.",
+      description:
+        "Vue 3 (via `vike-vue`) — the UI framework this app renders with. Use when writing Single-File Components, using the Composition API (`ref`/`reactive`/`computed`/`watch`), lifecycle, or fixing SSR/hydration mismatches.",
       llms: "https://vuejs.org/llms.txt",
     },
     image:
@@ -103,7 +105,8 @@ export const features = [
     label: "SolidJS",
     flag: "solid",
     skill: {
-      description: "SolidJS + Vike conventions. Use when writing components or handling SSR/hydration.",
+      description:
+        "SolidJS (via `vike-solid`) — the UI framework this app renders with. Use when writing components with signals/stores, fine-grained reactivity (`createSignal`/`createEffect`/`createMemo`), control flow (`<Show>`/`<For>`), or fixing SSR/hydration issues.",
       llms: "https://docs.solidjs.com/llms.txt",
     },
     image:
@@ -169,7 +172,8 @@ export const features = [
     label: "daisyUI",
     flag: "daisyui",
     skill: {
-      description: "daisyUI docs. Use when adding daisyUI components or themes.",
+      description:
+        "daisyUI — semantic component classes on top of Tailwind (`btn`, `card`, `modal`, `alert`, …). Use when building UI with daisyUI components, using its color names, or configuring and switching themes.",
       llms: "https://daisyui.com/llms.txt",
     },
     dependsOn: ["tailwindcss"],
@@ -190,7 +194,8 @@ export const features = [
     label: "shadcn/ui",
     flag: "shadcn-ui",
     skill: {
-      description: "shadcn/ui docs. Use when adding a shadcn/ui component or working with its styling.",
+      description:
+        "shadcn/ui — accessible Radix-based components copied into the app via its CLI. Use when adding a component (`shadcn add`), building forms, theming or dark mode, or working with `components.json` / the registry.",
       llms: "https://ui.shadcn.com/llms.txt",
     },
     dependsOn: ["tailwindcss", "react"],
@@ -211,7 +216,8 @@ export const features = [
     label: "Mantine",
     flag: "mantine",
     skill: {
-      description: "Mantine docs. Use when building UI with Mantine components.",
+      description:
+        "Mantine — a React components and hooks library. Use when building UI with `@mantine/*` components, using Mantine hooks, `@mantine/form`, dates or charts, or customizing the theme via `MantineProvider`.",
       llms: "https://mantine.dev/llms.txt",
     },
     dependsOn: ["react"],
@@ -235,7 +241,7 @@ export const features = [
     flag: "better-auth",
     skill: {
       description:
-        "Better Auth docs. Use when reading the signed-in user, protecting a route, or configuring auth providers.",
+        "Better Auth — the authentication framework this app uses. Use when reading the signed-in user or session, protecting routes, building sign-in/sign-up flows, configuring providers (email/password, OAuth/social), or adding plugins (2FA, organizations, magic link).",
       llms: "https://www.better-auth.com/llms.txt",
     },
     image:
@@ -314,7 +320,8 @@ export const features = [
     label: "tRPC",
     flag: "trpc",
     skill: {
-      description: "tRPC docs. Use when adding a typesafe query or mutation, or wiring a router endpoint.",
+      description:
+        "tRPC — end-to-end typesafe APIs between this app's server and client. Use when adding a procedure (query/mutation) to the router, validating inputs, calling procedures from the client, or wiring server context.",
       llms: "https://trpc.io/llms.txt",
     },
     image:
@@ -361,7 +368,8 @@ export const features = [
     label: "Hono",
     flag: "hono",
     skill: {
-      description: "Hono docs. Use when adding an API endpoint or middleware, or changing server behavior.",
+      description:
+        "Hono — the Web-Standards server framework powering this app's backend. Use when adding API routes or middleware, validating requests, handling cookies/headers, or changing server and runtime behavior.",
       llms: "https://hono.dev/llms.txt",
     },
     image:
@@ -385,7 +393,8 @@ export const features = [
     label: "Express",
     flag: "express",
     skill: {
-      description: "Express docs. Use when adding an API endpoint or middleware, or changing server behavior.",
+      description:
+        "Express — the Node.js server framework powering this app's backend. Use when adding API routes or middleware, handling requests and responses, or changing server behavior.",
       llms: "https://expressjs.com/llms.txt",
     },
     image:
@@ -410,7 +419,8 @@ export const features = [
     label: "Fastify",
     flag: "fastify",
     skill: {
-      description: "Fastify docs. Use when adding an API endpoint or middleware, or changing server behavior.",
+      description:
+        "Fastify — the high-performance Node.js server framework powering this app's backend. Use when adding routes, plugins or hooks, validating with schemas, or changing server and lifecycle behavior.",
       llms: "https://fastify.dev/llms.txt",
     },
     image:
@@ -434,7 +444,8 @@ export const features = [
     label: "Elysia",
     flag: "elysia",
     skill: {
-      description: "Elysia docs. Use when adding an API endpoint or middleware, or changing server behavior.",
+      description:
+        "Elysia — the Bun-first, end-to-end typesafe server framework powering this app's backend. Use when adding routes or plugins, validating and typing requests, or changing server behavior.",
       llms: "https://elysiajs.com/llms.txt",
     },
     image:
@@ -499,7 +510,8 @@ export const features = [
     label: "Drizzle",
     flag: "drizzle",
     skill: {
-      description: "Drizzle ORM docs. Use when adding or changing a table, writing a query, or running a migration.",
+      description:
+        "Drizzle ORM — the typed SQL ORM for this app's database. Use when defining or changing the schema/tables, generating and running migrations, or writing queries (select/insert/update, joins, relations).",
       llms: "https://orm.drizzle.team/llms.txt",
     },
     image:
@@ -519,7 +531,8 @@ export const features = [
     label: "Kysely",
     flag: "kysely",
     skill: {
-      description: "Kysely query builder docs. Use when adding a table, writing a query, or running a migration.",
+      description:
+        "Kysely — the typesafe SQL query builder for this app's database. Use when adding a table or migration, writing typed queries (joins, subqueries, transactions), or updating the generated database types.",
       llms: "https://kysely.dev/llms.txt",
     },
     image:
@@ -539,7 +552,8 @@ export const features = [
     label: "Prisma",
     flag: "prisma",
     skill: {
-      description: "Prisma docs. Use when defining a model, running a migration, or querying with the Prisma client.",
+      description:
+        "Prisma — the ORM for this app's database. Use when defining models in `schema.prisma`, creating or running migrations, or querying through the Prisma Client (CRUD, relations, transactions).",
       llms: "https://www.prisma.io/docs/llms.txt",
     },
     image:
@@ -606,7 +620,8 @@ export const features = [
     label: "Cloudflare",
     flag: "cloudflare",
     skill: {
-      description: "Cloudflare Workers docs. Use when deploying, configuring bindings, or managing secrets.",
+      description:
+        "Cloudflare Workers — the platform this app deploys to. Use when deploying, editing `wrangler.jsonc`, adding bindings (KV, D1, R2, secrets/env), using Workers runtime APIs, or debugging the build and deploy.",
       llms: "https://developers.cloudflare.com/workers/llms.txt",
     },
     image:
@@ -630,7 +645,8 @@ export const features = [
     label: "EdgeOne Pages",
     flag: "edgeone",
     skill: {
-      description: "Tencent EdgeOne Pages docs. Use when deploying or managing environment variables.",
+      description:
+        "Tencent EdgeOne Pages — the platform this app deploys to. Use when deploying, configuring the project, managing environment variables, or working with edge functions and KV storage.",
       llms: "https://edgeone.ai/llms.txt",
     },
     image:
@@ -653,7 +669,8 @@ export const features = [
     label: "Vercel",
     flag: "vercel",
     skill: {
-      description: "Vercel docs. Use when deploying or managing environment variables.",
+      description:
+        "Vercel — the platform this app deploys to. Use when deploying, configuring the project (build output, routing, regions), managing environment variables, or using the Vercel CLI.",
       llms: "https://vercel.com/llms.txt",
     },
     image:
@@ -677,7 +694,8 @@ export const features = [
     label: "Netlify",
     flag: "netlify",
     skill: {
-      description: "Netlify docs. Use when deploying or managing environment variables.",
+      description:
+        "Netlify — the platform this app deploys to. Use when deploying, configuring the build, managing environment variables, redirects and headers, serverless/edge functions, or domains.",
       llms: "https://docs.netlify.com/llms.txt",
     },
     image:
@@ -713,7 +731,8 @@ export const features = [
     label: "Docker",
     flag: "docker",
     skill: {
-      description: "Docker docs. Use when containerizing or deploying the app with Docker.",
+      description:
+        "Docker — used to containerize and run this app. Use when editing the `Dockerfile` or Compose file, building or running images, managing env and volumes, or debugging the container build.",
       llms: "https://docs.docker.com/llms.txt",
     },
     image:
@@ -732,7 +751,8 @@ export const features = [
     label: "Dokploy",
     flag: "dokploy",
     skill: {
-      description: "Dokploy docs. Use when deploying to a Dokploy server.",
+      description:
+        "Dokploy — the self-hosted PaaS this app deploys to (it builds the app's Docker image). Use when deploying, configuring the application or environment variables, setting up domains, or auto-deploy from Git.",
       llms: "https://docs.dokploy.com/llms.txt",
     },
     dependsOn: ["docker"],
@@ -771,7 +791,8 @@ export const features = [
     label: "Oxlint",
     flag: "oxlint",
     skill: {
-      description: "Oxlint docs. Use when running the linter or adjusting lint rules.",
+      description:
+        "Oxlint — the fast Rust-based linter for this project. Use when running the linter, fixing lint errors, configuring `.oxlintrc.json`, or enabling and disabling rules or plugins.",
       llms: "https://oxc.rs/llms.txt",
     },
     image:
@@ -793,7 +814,8 @@ export const features = [
     label: "Prettier",
     flag: "prettier",
     skill: {
-      description: "Prettier docs. Use when formatting code or adjusting formatting rules.",
+      description:
+        "Prettier — the code formatter for this project. Use when formatting code, configuring `prettier.config.js` options, ignoring files, or adding a Prettier plugin.",
       llms: "https://prettier.io/llms.txt",
     },
     image:
@@ -815,7 +837,8 @@ export const features = [
     label: "Sentry",
     flag: "sentry",
     skill: {
-      description: "Sentry docs. Use when capturing errors or configuring Sentry.",
+      description:
+        "Sentry — error and performance monitoring for this app. Use when capturing or handling exceptions, configuring the SDK and DSN, or setting up tracing, session replay, or source maps.",
       llms: "https://docs.sentry.io/llms.txt",
     },
     image:
@@ -838,7 +861,8 @@ export const features = [
     label: "Storybook",
     flag: "storybook",
     skill: {
-      description: "Storybook docs. Use when adding a story or running Storybook.",
+      description:
+        "Storybook — a workshop for building and testing UI components in isolation. Use when writing or updating stories (`*.stories.*`), configuring Storybook, or documenting and testing components.",
       llms: "https://storybook.js.org/llms.txt",
     },
     image:
