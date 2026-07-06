@@ -38,7 +38,7 @@ jobs:
       - name: mkdir temp folder
         run: mkdir -p ${{ runner.temp }}/bati-cache
 
-      - uses: actions/cache/restore@v5
+      - uses: actions/cache/restore@v6
         name: Setup Nx cache
         with:
           path: .nx/cache
