@@ -65,6 +65,11 @@ export async function runCodemods(
       out = await pass(removeUnusedImports, target, out, {});
       out = await pass(batiImports, target, out, ctx);
     }
+    // Same as the YAML branch: `remove()` leaves its line's indentation behind. Prettier reformats
+    // JS/TS/JSX/TSX but no longer collapses those residue lines (changed in Prettier 3.9). Drop
+    // whitespace-only lines here before the formatter sees them. Genuine blank lines (zero width,
+    // i.e. `\n\n`) are untouched.
+    out = out.replace(/^[ \t]+\n/gm, "");
   }
 
   return {
