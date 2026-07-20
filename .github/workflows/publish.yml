@@ -37,7 +37,7 @@ jobs:
           bun-version: 1.3.11
 
       # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           # Note: Trusted publishing requires npm CLI version 11.5.1 or later and Node version 22.14.0 or higher.
           node-version: '24'
