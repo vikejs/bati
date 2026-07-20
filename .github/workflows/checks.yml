@@ -31,7 +31,7 @@ jobs:
           bun-version: 1.3.11
 
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
 
