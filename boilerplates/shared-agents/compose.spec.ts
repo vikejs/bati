@@ -32,7 +32,7 @@ test("composeSkills — one SKILL.md per selected feature that has a skill, sort
 });
 
 test("composeSkills — features without a skill are never emitted, even when selected", () => {
-  // `eslint` has no `skill` field (no llms.txt), so it must produce no skill.
+  // `eslint` has no `skill` URL (no llms.txt), so it must produce no skill.
   const paths = composeSkills((flag) => flag === "eslint").map((c) => c.path);
   expect(paths).not.toContain(".agents/skills/eslint/SKILL.md");
 });

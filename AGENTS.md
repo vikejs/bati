@@ -210,7 +210,7 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 
 Bati generates stack-tailored agent **skills** into every scaffold — the `skills` feature is always on and hidden (no CLI flag, not shown in the Web UI), so there is nothing to select. A skill carries **no how-to at all**: it is a pointer to the tool's official `llms.txt`, so it can never go stale.
 
-- **Add a skill:** set `skill: { llms: "https://…/llms.txt" }` on the feature in `packages/features/src/features.ts`. That URL is the only per-feature input — `renderSkillMd` derives the skill's `name` from the feature's `flag` and its `description` from the feature's `label`.
+- **Add a skill:** set `skill: "https://…/llms.txt"` on the feature in `packages/features/src/features.ts`. That URL is the only per-feature input — `renderSkillMd` derives the skill's `name` from the feature's `flag` and its `description` from the feature's `label`. `skill` is typed `` `https://${string}` ``, so a malformed URL fails `check-types`.
 - **Keep it a pointer:** no prose, no per-stack variants, no `meta.BATI` branching. Anything worth saying about the tool belongs in that tool's own docs, which the skill already links to.
 - **Naming:** the feature's `flag` becomes the folder `.agents/skills/<flag>/SKILL.md`. Flags are unique, so skill names never collide.
 - **Composition** (`boilerplates/shared-agents/compose.ts`, written by its `hooks/after.ts`): skills are written to `.agents/skills` (the cross-tool standard) and mirrored to `.claude/skills` (symlink, copy fallback) since Claude Code reads only the latter. Dir constants live in `packages/features/src/skills.ts`.

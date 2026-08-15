@@ -12,11 +12,11 @@ export interface Feature<C = string> {
   tagline?: string;
   links?: FeatureLink[];
   /**
-   * When set, BATI generates one agent skill for this feature: a pointer to `llms` (the live docs).
-   * Emitted when the feature is in the generated stack — selected, or always-on (`readonly`, like Vike).
-   * The skill holds nothing but the URL, so it never goes stale.
+   * The feature's `llms.txt`. When set, BATI generates one agent skill pointing at it, emitted when the
+   * feature is in the generated stack — selected, or always-on (`readonly`, like Vike). The skill holds
+   * nothing but this URL, so it never goes stale.
    */
-  skill?: { llms: string };
+  skill?: `https://${string}`;
   repo?: string;
   // if true, it means that the feature is not yet implemented, but could be displayed in the UI
   disabled?: boolean;

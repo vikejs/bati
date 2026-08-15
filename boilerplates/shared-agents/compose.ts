@@ -6,8 +6,6 @@ export interface ComposedSkill {
   content: string;
 }
 
-type Skill = { llms: string };
-
 /**
  * One `SKILL.md` per in-stack feature that publishes an `llms.txt`, under {@link SKILLS_DIR}, sorted by
  * flag (deterministic output). Each skill is a pointer to the live docs — no how-to is stored, so it never
@@ -16,9 +14,9 @@ type Skill = { llms: string };
  */
 export function composeSkills(isSelected: (flag: Flags) => boolean): ComposedSkill[] {
   return (features as ReadonlyArray<Feature>)
-    .filter((f): f is Feature & { skill: Skill } => Boolean(f.skill) && (f.readonly || isSelected(f.flag as Flags)))
+    .filter((f): f is Feature & { skill: string } => Boolean(f.skill) && (f.readonly || isSelected(f.flag as Flags)))
     .sort((a, b) => a.flag.localeCompare(b.flag))
-    .map((f) => ({ path: `${SKILLS_DIR}/${f.flag}/SKILL.md`, content: renderSkillMd(f.flag, f.label, f.skill.llms) }));
+    .map((f) => ({ path: `${SKILLS_DIR}/${f.flag}/SKILL.md`, content: renderSkillMd(f.flag, f.label, f.skill) }));
 }
 
 export function renderSkillMd(flag: string, label: string, llms: string): string {
