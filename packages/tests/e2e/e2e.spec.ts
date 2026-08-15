@@ -175,7 +175,7 @@ function skills() {
   test("skills: one skill per in-stack llms-feature, pointing at its llms.txt", () => {
     for (const f of withSkill) {
       expect(has(f.flag), f.flag).toBe(true);
-      expect(readFileSync(skillFile(f.flag), "utf-8"), f.flag).toContain(f.skill!.llms);
+      expect(readFileSync(skillFile(f.flag), "utf-8"), f.flag).toContain(f.skill!);
     }
   });
   test("skills: no skill for in-stack features without an llms.txt", () => {
