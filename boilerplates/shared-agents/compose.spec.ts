@@ -8,7 +8,7 @@ name: "react"
 description: "React documentation — consider reading it, e.g. when using uncommon React APIs or when stuck on a React problem"
 ---
 
-Read https://react.dev/llms.txt
+See https://react.dev/llms.txt
 `,
   );
 });

@@ -22,7 +22,7 @@ export function composeSkills(isSelected: (flag: Flags) => boolean): ComposedSki
 export function renderSkillMd(flag: string, label: string, llms: string): string {
   // Deliberately vague: the agent should reach for the docs when it's unsure, not on every edit.
   const description = `${label} documentation — consider reading it, e.g. when using uncommon ${label} APIs or when stuck on ${article(label)} ${label} problem`;
-  return `---\nname: ${yamlString(flag)}\ndescription: ${yamlString(description)}\n---\n\nRead ${llms}\n`;
+  return `---\nname: ${yamlString(flag)}\ndescription: ${yamlString(description)}\n---\n\nSee ${llms}\n`;
 }
 
 function article(label: string): string {
