@@ -201,7 +201,6 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 - `enforce: "pre" | "post"` - ordering relative to other boilerplates (`shared`, `shared-env`, `shared-todo` use `"pre"` so later boilerplates can build on their files)
 - `env(meta) => EnvVar[]` - **shared env** (#756): declare environment variables this feature contributes, with `key`, `scope`, `default`, `comment`, `group`, and `perSink` overrides (e.g. different `DATABASE_URL` for `compose`/`dockerfile`). Composed centrally via `packages/core/src/env-registry.ts` + `parse/compose-env.ts` into `.env` / `wrangler.jsonc`, so individual boilerplates no longer template env files themselves. See `boilerplates/shared-db/bati.config.ts`.
 - `deploy: string[] | (meta) => string[]` - **deploy files** (#757): files (relative to app root) this feature needs in the production runtime; collected by deploy targets such as the Dockerfile generator (`packages/core/src/dockerfile.ts`)
-- `skills(meta) => BatiSkill[]` - **agent skills**: SKILL.md skills this feature contributes (`name`, `description`, `body`, optional `allowedTools`). Collected by the CLI and composed by the `shared-agents` boilerplate into `.agents/skills` (mirrored to `.claude/skills` for Claude). See `boilerplates/hono/bati.config.ts`.
 - `nextSteps(meta, pm, colorette) => Step[]` - CLI "next steps" lines printed after scaffolding
 - `knip: { entry?, ignoreDependencies?, ignore?, vite? }` - per-boilerplate knip overrides
 
@@ -209,11 +208,11 @@ Create **UI-specific boilerplates** when the feature requires framework-specific
 
 ### Authoring agent skills
 
-Bati generates stack-tailored agent **skills** into every scaffold — the `skills` feature is always on and hidden (no CLI flag, not shown in the Web UI), so there is nothing to select. Skills are **AI-maintained** — keep them lean and link upstream docs rather than duplicating volatile detail.
+Bati generates stack-tailored agent **skills** into every scaffold — the `skills` feature is always on and hidden (no CLI flag, not shown in the Web UI), so there is nothing to select. A skill carries **no how-to at all**: it is a pointer to the tool's official `llms.txt`, so it can never go stale.
 
-- **Add a skill:** return it from a boilerplate's `skills(meta)` in `bati.config.ts`. A `BatiSkill` is `{ name, description, body, allowedTools? }`. `description` is the auto-trigger (state *what* + *when*); `body` is the Markdown body (the composer adds the frontmatter). The function is meta-gated like `env`/`deploy`.
-- **Naming:** `name` becomes the folder `.agents/skills/<name>/SKILL.md` and must be unique across all *selected* boilerplates (the composer throws on collisions). Single-select categories can share a generic name (e.g. all servers use `"server"`); features that can co-exist must not collide.
-- **Variants:** branch on `meta.BATI` inside `body` for combination-sensitive content (ORM × engine, auth × framework) — see `boilerplates/drizzle/bati.config.ts`.
+- **Add a skill:** set `skill: { llms: "https://…/llms.txt" }` on the feature in `packages/features/src/features.ts`. That URL is the only per-feature input — `renderSkillMd` derives the skill's `name` from the feature's `flag` and its `description` from the feature's `label`.
+- **Keep it a pointer:** no prose, no per-stack variants, no `meta.BATI` branching. Anything worth saying about the tool belongs in that tool's own docs, which the skill already links to.
+- **Naming:** the feature's `flag` becomes the folder `.agents/skills/<flag>/SKILL.md`. Flags are unique, so skill names never collide.
 - **Composition** (`boilerplates/shared-agents/compose.ts`, written by its `hooks/after.ts`): skills are written to `.agents/skills` (the cross-tool standard) and mirrored to `.claude/skills` (symlink, copy fallback) since Claude Code reads only the latter. Dir constants live in `packages/features/src/skills.ts`.
 
 ### BatiSet Helpers

@@ -6,7 +6,7 @@ export interface ComposedSkill {
   content: string;
 }
 
-type Skill = { description: string; llms: string };
+type Skill = { llms: string };
 
 /**
  * One `SKILL.md` per in-stack feature that publishes an `llms.txt`, under {@link SKILLS_DIR}, sorted by
@@ -18,13 +18,17 @@ export function composeSkills(isSelected: (flag: Flags) => boolean): ComposedSki
   return (features as ReadonlyArray<Feature>)
     .filter((f): f is Feature & { skill: Skill } => Boolean(f.skill) && (f.readonly || isSelected(f.flag as Flags)))
     .sort((a, b) => a.flag.localeCompare(b.flag))
-    .map((f) => ({ path: `${SKILLS_DIR}/${f.flag}/SKILL.md`, content: renderSkillMd(f.flag, f.label, f.skill) }));
+    .map((f) => ({ path: `${SKILLS_DIR}/${f.flag}/SKILL.md`, content: renderSkillMd(f.flag, f.label, f.skill.llms) }));
 }
 
-export function renderSkillMd(flag: string, label: string, skill: Skill): string {
-  const frontmatter = `name: ${yamlString(flag)}\ndescription: ${yamlString(skill.description)}`;
-  const body = `Up-to-date ${label} documentation for this project. Read it before working with ${label}:\n\n${skill.llms}`;
-  return `---\n${frontmatter}\n---\n\n${body}\n`;
+export function renderSkillMd(flag: string, label: string, llms: string): string {
+  // Deliberately vague: the agent should reach for the docs when it's unsure, not on every edit.
+  const description = `${label} documentation — consider reading it, e.g. when using uncommon ${label} APIs or when stuck on ${article(label)} ${label} problem`;
+  return `---\nname: ${yamlString(flag)}\ndescription: ${yamlString(description)}\n---\n\nRead ${llms}\n`;
+}
+
+function article(label: string): string {
+  return /^[aeiou]/i.test(label) ? "an" : "a";
 }
 
 // Double-quote and escape so the colons/brackets common in descriptions stay YAML-safe.

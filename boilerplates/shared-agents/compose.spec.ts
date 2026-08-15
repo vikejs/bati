@@ -2,21 +2,20 @@ import { expect, test } from "vitest";
 import { composeSkills, renderSkillMd } from "./compose.js";
 
 test("renderSkillMd — frontmatter + URL-only body", () => {
-  expect(
-    renderSkillMd("react", "React", {
-      description: "React + Vike conventions. Use when writing components or handling SSR/hydration.",
-      llms: "https://react.dev/llms.txt",
-    }),
-  ).toBe(
+  expect(renderSkillMd("react", "React", "https://react.dev/llms.txt")).toBe(
     `---
 name: "react"
-description: "React + Vike conventions. Use when writing components or handling SSR/hydration."
+description: "React documentation — consider reading it, e.g. when using uncommon React APIs or when stuck on a React problem"
 ---
 
-Up-to-date React documentation for this project. Read it before working with React:
-
-https://react.dev/llms.txt
+Read https://react.dev/llms.txt
 `,
+  );
+});
+
+test("renderSkillMd — a label starting with a vowel gets the right article", () => {
+  expect(renderSkillMd("express", "Express", "https://expressjs.com/llms.txt")).toContain(
+    "when stuck on an Express problem",
   );
 });
 
