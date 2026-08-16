@@ -5,7 +5,7 @@ test("renderSkillMd — frontmatter + URL-only body", () => {
   expect(renderSkillMd("react", "React", "https://react.dev/llms.txt")).toBe(
     `---
 name: "react"
-description: "React documentation — consider reading it, e.g. when using uncommon React APIs or when stuck on a React problem"
+description: "React documentation index — a compact overview of React's docs. Consider consulting it, e.g. when using uncommon React APIs or when stuck on a React problem."
 ---
 
 See https://react.dev/llms.txt
@@ -16,6 +16,12 @@ See https://react.dev/llms.txt
 test("renderSkillMd — a label starting with a vowel gets the right article", () => {
   expect(renderSkillMd("express", "Express", "https://expressjs.com/llms.txt")).toContain(
     "when stuck on an Express problem",
+  );
+});
+
+test("renderSkillMd — a label ending in s takes a bare possessive apostrophe", () => {
+  expect(renderSkillMd("edgeone", "EdgeOne Pages", "https://edgeone.ai/llms.txt")).toContain(
+    "overview of EdgeOne Pages' docs",
   );
 });
 
