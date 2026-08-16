@@ -21,12 +21,17 @@ export function composeSkills(isSelected: (flag: Flags) => boolean): ComposedSki
 
 export function renderSkillMd(flag: string, label: string, llms: string): string {
   // Deliberately vague: the agent should reach for the docs when it's unsure, not on every edit.
-  const description = `${label} documentation — consider reading it, e.g. when using uncommon ${label} APIs or when stuck on ${article(label)} ${label} problem`;
+  const description = `${label} documentation index — a compact overview of ${possessive(label)} docs. Consider consulting it, e.g. when using uncommon ${label} APIs or when stuck on ${article(label)} ${label} problem.`;
   return `---\nname: ${yamlString(flag)}\ndescription: ${yamlString(description)}\n---\n\nSee ${llms}\n`;
 }
 
 function article(label: string): string {
   return /^[aeiou]/i.test(label) ? "an" : "a";
+}
+
+// `Vike` → `Vike's`, but `EdgeOne Pages` → `EdgeOne Pages'` (no doubled sibilant).
+function possessive(label: string): string {
+  return /s$/i.test(label) ? `${label}'` : `${label}'s`;
 }
 
 // Double-quote and escape so the colons/brackets common in descriptions stay YAML-safe.
