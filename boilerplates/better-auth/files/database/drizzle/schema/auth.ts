@@ -1,9 +1,9 @@
 /* $$.keepFileIfImported */
-import { boolean, pgTable, text as pgText, timestamp } from "drizzle-orm/pg-core";
-import { integer, sqliteTable, text as sqliteText } from "drizzle-orm/sqlite-core";
+import { boolean, pgTable, text as pgText, timestamp, uniqueIndex as pgUniqueIndex } from "drizzle-orm/pg-core";
+import { integer, sqliteTable, text as sqliteText, uniqueIndex as sqliteUniqueIndex } from "drizzle-orm/sqlite-core";
 
 // Better Auth's tables, owned by Drizzle so its migrations create them.
-// Regenerate with `npx @better-auth/cli generate` if you customize the Better Auth config.
+// Regenerate with `npx auth generate` if you customize the Better Auth config.
 // Column names are snake_case to match Better Auth's Drizzle adapter defaults.
 
 export const user = $$.BATI.has("postgres")
@@ -48,37 +48,49 @@ export const session = $$.BATI.has("postgres")
       userId: sqliteText("user_id").notNull(),
     });
 
+// Since Better Auth 1.7 account identity is scoped by `issuer`: the column is required and
+// (issuer, accountId) must be unique. https://better-auth.com/docs/guides/1-7-upgrade-guide
 export const account = $$.BATI.has("postgres")
-  ? pgTable("account", {
-      id: pgText("id").primaryKey(),
-      accountId: pgText("account_id").notNull(),
-      providerId: pgText("provider_id").notNull(),
-      userId: pgText("user_id").notNull(),
-      accessToken: pgText("access_token"),
-      refreshToken: pgText("refresh_token"),
-      idToken: pgText("id_token"),
-      accessTokenExpiresAt: timestamp("access_token_expires_at"),
-      refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
-      scope: pgText("scope"),
-      password: pgText("password"),
-      createdAt: timestamp("created_at").notNull(),
-      updatedAt: timestamp("updated_at").notNull(),
-    })
-  : sqliteTable("account", {
-      id: sqliteText("id").primaryKey(),
-      accountId: sqliteText("account_id").notNull(),
-      providerId: sqliteText("provider_id").notNull(),
-      userId: sqliteText("user_id").notNull(),
-      accessToken: sqliteText("access_token"),
-      refreshToken: sqliteText("refresh_token"),
-      idToken: sqliteText("id_token"),
-      accessTokenExpiresAt: integer("access_token_expires_at", { mode: "timestamp_ms" }),
-      refreshTokenExpiresAt: integer("refresh_token_expires_at", { mode: "timestamp_ms" }),
-      scope: sqliteText("scope"),
-      password: sqliteText("password"),
-      createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
-      updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
-    });
+  ? pgTable(
+      "account",
+      {
+        id: pgText("id").primaryKey(),
+        accountId: pgText("account_id").notNull(),
+        providerId: pgText("provider_id").notNull(),
+        issuer: pgText("issuer").notNull(),
+        userId: pgText("user_id").notNull(),
+        accessToken: pgText("access_token"),
+        refreshToken: pgText("refresh_token"),
+        idToken: pgText("id_token"),
+        accessTokenExpiresAt: timestamp("access_token_expires_at"),
+        refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+        scope: pgText("scope"),
+        password: pgText("password"),
+        createdAt: timestamp("created_at").notNull(),
+        updatedAt: timestamp("updated_at").notNull(),
+      },
+      (table) => [pgUniqueIndex("account_issuer_accountId_uidx").on(table.issuer, table.accountId)],
+    )
+  : sqliteTable(
+      "account",
+      {
+        id: sqliteText("id").primaryKey(),
+        accountId: sqliteText("account_id").notNull(),
+        providerId: sqliteText("provider_id").notNull(),
+        issuer: sqliteText("issuer").notNull(),
+        userId: sqliteText("user_id").notNull(),
+        accessToken: sqliteText("access_token"),
+        refreshToken: sqliteText("refresh_token"),
+        idToken: sqliteText("id_token"),
+        accessTokenExpiresAt: integer("access_token_expires_at", { mode: "timestamp_ms" }),
+        refreshTokenExpiresAt: integer("refresh_token_expires_at", { mode: "timestamp_ms" }),
+        scope: sqliteText("scope"),
+        password: sqliteText("password"),
+        createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+        updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
+      },
+      (table) => [sqliteUniqueIndex("account_issuer_accountId_uidx").on(table.issuer, table.accountId)],
+    );
 
 export const verification = $$.BATI.has("postgres")
   ? pgTable("verification", {

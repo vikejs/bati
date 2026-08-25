@@ -1,21 +1,21 @@
 import * as Sentry from "@sentry/react";
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
 
 export default function ReactSentryErrorPage() {
-  const [sentryClientStatus, setSentryClientStatus] = useState({
-    client_not_loaded: false,
-    enabled: true,
-    dsn_missing: false,
-  });
+  // Sentry is initialized in the browser only, so read its client via useSyncExternalStore:
+  // the server (and hydration) snapshot has no client, and the page re-renders with the real
+  // client state right after hydration — without a setState inside an effect.
+  const options = useSyncExternalStore(subscribe, () => Sentry?.getClient()?.getOptions(), () => undefined);
+  const sentryClientStatus = {
+    client_not_loaded: !options,
+    dsn_missing: (options?.dsn?.length ?? 0) < 2,
+    enabled: options?.enabled ?? true,
+  };
   useEffect(() => {
-    const options = Sentry?.getClient()?.getOptions();
-    setSentryClientStatus({
-      client_not_loaded: !options,
-      dsn_missing: (options?.dsn?.length ?? 0) < 2,
-      enabled: options?.enabled ?? true,
-    });
     console.log("Sentry DSN: ", options?.dsn);
-  }, []);
+  }, [options]);
 
   return (
     <>
