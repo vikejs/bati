@@ -5,7 +5,7 @@ import type { TransformerProps } from "@batijs/core";
 // owns these tables instead (see ../drizzle/schema/auth.ts); on other engines the `better-auth:migrate`
 // script creates them programmatically.
 // Column types follow Better Auth's SQLite mapping (string→text, boolean→integer, date→date).
-// Keep in sync with `npx @better-auth/cli generate` if you customize the Better Auth config.
+// Keep in sync with `npx auth generate` if you customize the Better Auth config.
 export default function getMigration(props: TransformerProps): string | undefined {
   if (!props.meta.BATI.hasD1 || props.meta.BATI.has("drizzle")) return undefined;
 
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS "account" (
   "id" text NOT NULL PRIMARY KEY,
   "accountId" text NOT NULL,
   "providerId" text NOT NULL,
+  "issuer" text NOT NULL,
   "userId" text NOT NULL REFERENCES "user" ("id"),
   "accessToken" text,
   "refreshToken" text,
@@ -46,6 +47,8 @@ CREATE TABLE IF NOT EXISTS "account" (
   "createdAt" date NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updatedAt" date NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS "account_issuer_accountId_uidx" ON "account" ("issuer", "accountId");
 
 CREATE TABLE IF NOT EXISTS "verification" (
   "id" text NOT NULL PRIMARY KEY,
