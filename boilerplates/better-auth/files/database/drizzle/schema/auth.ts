@@ -51,6 +51,7 @@ export const session = $$.BATI.has("postgres")
 export const account = $$.BATI.has("postgres")
   ? pgTable("account", {
       id: pgText("id").primaryKey(),
+      issuer: pgText("issuer").notNull(),
       accountId: pgText("account_id").notNull(),
       providerId: pgText("provider_id").notNull(),
       userId: pgText("user_id").notNull(),
@@ -66,6 +67,7 @@ export const account = $$.BATI.has("postgres")
     })
   : sqliteTable("account", {
       id: sqliteText("id").primaryKey(),
+      issuer: sqliteText("issuer").notNull(),
       accountId: sqliteText("account_id").notNull(),
       providerId: sqliteText("provider_id").notNull(),
       userId: sqliteText("user_id").notNull(),

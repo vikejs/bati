@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS "session" (
 
 CREATE TABLE IF NOT EXISTS "account" (
   "id" text NOT NULL PRIMARY KEY,
+  "issuer" text NOT NULL,
   "accountId" text NOT NULL,
   "providerId" text NOT NULL,
   "userId" text NOT NULL REFERENCES "user" ("id"),
