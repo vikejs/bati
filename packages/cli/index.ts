@@ -527,8 +527,8 @@ function gitInit(cwd: string) {
     execSync(
       [
         "git",
-        '-c user.name="Bati"',
-        '-c user.email="no-reply@batijs.dev"',
+        '-c user.name="Vike"',
+        '-c user.email="no-reply@vike.dev"',
         "commit",
         "--no-gpg-sign",
         '--message="scaffold Vike app with Bati"',
