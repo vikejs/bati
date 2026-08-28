@@ -290,8 +290,30 @@ function buildCombos(): Combo[] {
   return combos;
 }
 
+// Scaffolded apps declare `vike` as a caret range so that users keep receiving Vike releases, but
+// e2e must not float with them: a Vike release would otherwise turn CI red with no Bati commit
+// involved. Pin the generated app to the range's floor — the version the boilerplates declare and
+// Renovate bumps — so the version under test only ever changes in a commit.
+function pinVike(appDir: string) {
+  const pkgPath = join(appDir, "package.json");
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
+  let pinned = false;
+
+  for (const key of ["dependencies", "devDependencies"]) {
+    const range: unknown = pkg[key]?.vike;
+    // Anything but a caret/tilde range is left alone: already exact, or deliberately something else
+    if (typeof range === "string" && /^[\^~]\d/.test(range)) {
+      pkg[key].vike = range.slice(1);
+      pinned = true;
+    }
+  }
+
+  if (pinned) writeFileSync(pkgPath, JSON.stringify(pkg, undefined, 2));
+}
+
 async function generateApp(flags: string[]): Promise<string> {
   const appDir = await execLocalBati(context, flags);
+  pinVike(appDir);
   await exec(npmCli, ["install", "--prefer-offline"], {
     cwd: appDir,
     timeout: 300_000,
