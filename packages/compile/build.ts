@@ -104,53 +104,47 @@ export async function build() {
         deps: {
           neverBundle: true,
         },
-        onSuccess: async () => {
-          const distDir = path.join(process.cwd(), "dist", "types");
-          const emittedFiles = (await globby(["./dist/types/**/*.d.mts"]))
-            .map((f) => path.relative(distDir, path.resolve(f)).replace(/\\/g, "/"))
-            .sort();
-
-          const packageJsonTypes = emittedFiles.reduce(
-            (acc, cur) => {
-              const key = cur.slice(0, -".d.mts".length);
-              acc.exports[`./${key}`] = { types: `./dist/types/${cur}` };
-              acc.typesVersions["*"][key] = [`./dist/types/${cur}`];
-              return acc;
-            },
-            {
-              exports: {} as Record<string, { types: string }>,
-              typesVersions: { "*": {} as Record<string, string[]> },
-            },
-          );
-
-          const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
-          packageJson.exports = sortObject(packageJsonTypes.exports);
-          packageJson.typesVersions = sortObject(packageJsonTypes.typesVersions);
-
-          await writeFile(
-            "package.json",
-            `${JSON.stringify(packageJson, undefined, 2).replace(/\r\n/g, "\n")}\n`,
-            "utf-8",
-          );
-
-          console.log("Types generated into", distDir);
-          console.log("Build step complete");
-        },
       }),
     );
-  } else {
-    async function removeTypes() {
-      const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
-      delete packageJson.exports;
-      delete packageJson.typesVersions;
-
-      await writeFile("package.json", `${JSON.stringify(packageJson, undefined, 2).replace(/\r\n/g, "\n")}\n`, "utf-8");
-    }
-
-    buildPromises.push(removeTypes());
   }
 
   await Promise.all(buildPromises);
+  // tsdown reads package.json while resolving each build's config, so rewriting it while builds
+  // are still running races with them (truncated file → "Unexpected end of JSON input").
+  await updatePackageJsonTypes(dtsEntries.length > 0);
+}
+
+async function updatePackageJsonTypes(hasTypes: boolean) {
+  const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
+
+  if (hasTypes) {
+    const distDir = path.join(process.cwd(), "dist", "types");
+    const emittedFiles = (await globby(["./dist/types/**/*.d.mts"]))
+      .map((f) => path.relative(distDir, path.resolve(f)).replace(/\\/g, "/"))
+      .sort();
+
+    const packageJsonTypes = emittedFiles.reduce(
+      (acc, cur) => {
+        const key = cur.slice(0, -".d.mts".length);
+        acc.exports[`./${key}`] = { types: `./dist/types/${cur}` };
+        acc.typesVersions["*"][key] = [`./dist/types/${cur}`];
+        return acc;
+      },
+      {
+        exports: {} as Record<string, { types: string }>,
+        typesVersions: { "*": {} as Record<string, string[]> },
+      },
+    );
+
+    packageJson.exports = sortObject(packageJsonTypes.exports);
+    packageJson.typesVersions = sortObject(packageJsonTypes.typesVersions);
+    console.log("Types generated into", distDir);
+  } else {
+    delete packageJson.exports;
+    delete packageJson.typesVersions;
+  }
+
+  await writeFile("package.json", `${JSON.stringify(packageJson, undefined, 2).replace(/\r\n/g, "\n")}\n`, "utf-8");
 }
 
 function sortObject<T extends object>(obj: T): T {
