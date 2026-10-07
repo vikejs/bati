@@ -102,8 +102,7 @@ export async function build() {
           emitDtsOnly: true,
         },
         deps: {
-          skipNodeModulesBundle: true,
-          neverBundle: [/@batijs\/.*/],
+          neverBundle: true,
         },
         onSuccess: async () => {
           const distDir = path.join(process.cwd(), "dist", "types");

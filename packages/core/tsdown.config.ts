@@ -28,8 +28,7 @@ export default defineConfig([
       emitDtsOnly: true,
     },
     deps: {
-      skipNodeModulesBundle: true,
-      neverBundle: [/@batijs\/.*/],
+      neverBundle: true,
     },
     minify: true,
   },
@@ -65,8 +64,7 @@ export default defineConfig([
       emitDtsOnly: true,
     },
     deps: {
-      skipNodeModulesBundle: true,
-      neverBundle: [/@batijs\/.*/, /@codegraft\/.*/, "@types/unist", "@types/mdast"],
+      neverBundle: true,
       onlyBundle: false,
     },
     inputOptions: {
