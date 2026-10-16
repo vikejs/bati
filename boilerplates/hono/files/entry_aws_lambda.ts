@@ -9,18 +9,9 @@ Notes:
 
 */
 import type { Handler } from "aws-lambda";
-import { Hono } from "hono";
-import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
+import type { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 // @ts-expect-error loading file compiled by Vite
 import { app } from "./dist/server/aws.mjs";
 
-type Bindings = {
-  event: LambdaEvent;
-  lambdaContext: LambdaContext;
-};
-
-const lambdaApp = new Hono<{ Bindings: Bindings }>();
-
-lambdaApp.route("/", app as Hono);
-export const handler: Handler = handle(lambdaApp);
+export const handler: Handler = handle(app as Hono);

@@ -11,7 +11,7 @@ export default async function getPackageJson(props: TransformerProps): Promise<u
       preview: "vike build && vike preview",
     },
     dependencies: {
-      vike: "^0.4.260",
+      vike: "^0.4.268",
     },
     devDependencies: {
       typescript: "^6.0.3",
