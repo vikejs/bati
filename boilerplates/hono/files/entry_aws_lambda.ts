@@ -14,5 +14,4 @@ import { handle } from "hono/aws-lambda";
 // @ts-expect-error loading file compiled by Vite
 import { app } from "./dist/server/aws.mjs";
 
-// Serve the app that vike(app) was called on: mounting it into another app with app.route() breaks vike(app)
 export const handler: Handler = handle(app as Hono);
