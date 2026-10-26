@@ -273,7 +273,7 @@ function dataRoundTrip() {
         const res = await fetch("/_telefunc", {
           method: "POST",
           body: JSON.stringify({ file: "/pages/todo/TodoList.telefunc.ts", name: "onNewTodo", args: [{ text }] }),
-          headers: { "content-type": "application/json" },
+          headers: { "content-type": "application/json", "x-telefunc-request": "txt" },
         });
         expect(res.status).toBe(200);
       });
