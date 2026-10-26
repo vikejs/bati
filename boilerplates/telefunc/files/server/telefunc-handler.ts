@@ -3,12 +3,12 @@ import type { dbKysely, dbKyselyD1, dbKyselyPostgres } from "@batijs/kysely/data
 import type { db as pgDb } from "@batijs/postgres/database/postgres/db";
 import type { db as sqliteDb } from "@batijs/sqlite/database/sqlite/db";
 import { enhance, type UniversalHandler } from "@universal-middleware/core";
-import { telefunc } from "telefunc";
+import { serve } from "telefunc";
 
 // Note: You can directly define a server middleware instead of defining a Universal Middleware. (You can remove @universal-middleware/* — Vike's scaffolder uses it only to simplify its internal logic, see https://github.com/vikejs/vike/discussions/3116)
 export const telefuncHandler: UniversalHandler = enhance(
   async (request, context, runtime) => {
-    const httpResponse = await telefunc({
+    const httpResponse = await serve({
       request,
       context: {
         ...(context as $$.If<{
@@ -28,12 +28,9 @@ export const telefuncHandler: UniversalHandler = enhance(
         }>),
       },
     });
-    const { body, statusCode, contentType } = httpResponse;
-    return new Response(body, {
-      status: statusCode,
-      headers: {
-        "content-type": contentType,
-      },
+    return new Response(httpResponse.getReadableWebStream(), {
+      status: httpResponse.statusCode,
+      headers: httpResponse.headers,
     });
   },
   {
